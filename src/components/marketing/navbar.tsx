@@ -36,6 +36,10 @@ const NAV_ITEMS: NavItem[] = [
     link: "/#features",
   },
   {
+    name: "Ecosystem",
+    link: "/#ecosystem",
+  },
+  {
     name: "FAQ",
     link: "/#faq",
   },
