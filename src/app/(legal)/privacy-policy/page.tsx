@@ -172,7 +172,7 @@ export default function PrivacyPolicyPage() {
             Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
             <br />
             Website:{" "}
-            <a href="https://squarecampus.com" target="_blank" rel="noreferrer">
+            <a href="https://squarecampus.com" target="_blank" rel="noopener noreferrer">
               https://squarecampus.com
             </a>
           </p>

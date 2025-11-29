@@ -138,7 +138,7 @@ export default function PressPage() {
                           <Link
                             href={item.href}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="inline-flex rounded-full border border-neutral-600 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-neutral-200 transition hover:border-neutral-300 hover:text-white"
                           >
                             View article
@@ -170,7 +170,7 @@ export default function PressPage() {
                     <Link
                       href="https://www.linkedin.com/company/square-campus"
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center justify-center rounded-full border border-neutral-700/70 px-4 py-2 font-semibold uppercase tracking-[0.22em] text-neutral-200 transition hover:border-neutral-300 hover:text-white"
                     >
                       Follow on LinkedIn

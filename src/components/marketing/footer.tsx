@@ -88,7 +88,7 @@ export function Footer() {
             <Link
               href={linkedInHref}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-neutral-700/70 bg-neutral-900/70 px-3 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-neutral-200 transition-colors hover:border-neutral-300 hover:text-white"
             >
               <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />

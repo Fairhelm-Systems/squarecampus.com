@@ -215,7 +215,7 @@ export default function TermsOfServicePage() {
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />
             Website:{" "}
-            <a href="https://squarecampus.com" target="_blank" rel="noreferrer">
+            <a href="https://squarecampus.com" target="_blank" rel="noopener noreferrer">
               https://squarecampus.com
             </a>
           </p>

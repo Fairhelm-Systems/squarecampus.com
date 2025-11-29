@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useId } from "react";
+import React, { useId, useState, useTransition } from "react";
 import { IconMailFilled } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { MacbookScroll } from "./macbook";
+import { sendContactEmail, type ContactFormData } from "@/actions/contact";
+import { toast } from "sonner";
 
 const contactHighlights = [
     "Response in under 24 hours",
@@ -14,6 +15,48 @@ const contactHighlights = [
 ];
 
 export function ContactUs() {
+    const [isPending, startTransition] = useTransition();
+    const [formData, setFormData] = useState<ContactFormData>({
+        name: "",
+        email: "",
+        institution: "",
+        role: "",
+        students: "",
+        message: "",
+        website: "", // Honeypot field
+    });
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        startTransition(async () => {
+            const result = await sendContactEmail(formData);
+
+            if (result.success) {
+                toast.success(result.message);
+                // Reset form
+                setFormData({
+                    name: "",
+                    email: "",
+                    institution: "",
+                    role: "",
+                    students: "",
+                    message: "",
+                    website: "",
+                });
+            } else {
+                toast.error(result.message);
+            }
+        });
+    };
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
     return (
         <section
             className="relative bg-neutral-950 px-4 py-16 md:px-6 md:py-24"
@@ -145,9 +188,24 @@ export function ContactUs() {
                 {/* Right pane: form */}
                 <form
                     id="contact-form"
+                    onSubmit={handleSubmit}
                     className="relative mx-auto flex w-full max-w-2xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900 to-neutral-950 p-6 sm:p-10"
                 >
                     <Grid size={20} />
+
+                    {/* Honeypot field - hidden from users, catches bots */}
+                    <div className="absolute -left-[9999px]" aria-hidden="true">
+                        <label htmlFor="website">Website</label>
+                        <input
+                            type="text"
+                            id="website"
+                            name="website"
+                            value={formData.website}
+                            onChange={handleChange}
+                            tabIndex={-1}
+                            autoComplete="off"
+                        />
+                    </div>
 
                     <div className="space-y-2">
                         <label
@@ -161,8 +219,11 @@ export function ContactUs() {
                             type="text"
                             name="name"
                             required
+                            value={formData.name}
+                            onChange={handleChange}
+                            disabled={isPending}
                             placeholder="What should we call you?"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -178,8 +239,11 @@ export function ContactUs() {
                             type="email"
                             name="email"
                             required
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled={isPending}
                             placeholder="email@yourschool.com"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -195,8 +259,11 @@ export function ContactUs() {
                             name="institution"
                             type="text"
                             required
+                            value={formData.institution}
+                            onChange={handleChange}
+                            disabled={isPending}
                             placeholder="Your school or college"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -212,8 +279,11 @@ export function ContactUs() {
                                 id="role"
                                 name="role"
                                 type="text"
+                                value={formData.role}
+                                onChange={handleChange}
+                                disabled={isPending}
                                 placeholder="Administrator, Dean, Finance..."
-                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
                         <div className="space-y-2">
@@ -227,8 +297,11 @@ export function ContactUs() {
                                 id="students"
                                 name="students"
                                 type="text"
+                                value={formData.students}
+                                onChange={handleChange}
+                                disabled={isPending}
                                 placeholder="e.g., 1,200 across 2 branches"
-                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
                     </div>
@@ -244,16 +317,20 @@ export function ContactUs() {
                             id="message"
                             name="message"
                             rows={5}
+                            value={formData.message}
+                            onChange={handleChange}
+                            disabled={isPending}
                             placeholder="Tell us about your goals, current stack, and timeline"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="mt-2 rounded-2xl border border-transparent bg-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-neutral-900 transition hover:bg-neutral-100"
+                        disabled={isPending}
+                        className="mt-2 rounded-2xl border border-transparent bg-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-neutral-900 transition hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Send message
+                        {isPending ? "Sending..." : "Send message"}
                     </button>
 
                     <p className="mt-1 text-[0.7rem] text-neutral-500">
@@ -272,34 +349,6 @@ export function ContactUs() {
 }
 
 /* --- helpers unchanged --- */
-
-type PinProps = {
-    className?: string;
-    label?: string;
-    position?: {
-        top?: string;
-        bottom?: string;
-        left?: string;
-        right?: string;
-    };
-};
-
-const Pin = ({ className, label = "We are here", position }: PinProps) => {
-    return (
-        <motion.div
-            style={{
-                transform: "translateZ(1px)",
-                ...position,
-            }}
-            className={cn(
-                "pointer-events-none absolute z-[60] flex h-40 w-96 items-center justify-center opacity-100 transition duration-500",
-                className,
-            )}
-        >
-            {/* ...same as your existing Pin implementation... */}
-        </motion.div>
-    );
-};
 
 export const FeatureIconContainer = ({
     children,
