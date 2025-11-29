@@ -6,11 +6,33 @@ import React, { useRef, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { LogIn, CalendarClock } from 'lucide-react';
 import Balancer from 'react-wrap-balancer';
 import Link from 'next/link';
 import { LinkButton } from './link-button';
 import { useCalEmbed } from '@/hooks/useCalEmbed';
 import { CONSTANTS } from '@/constants/links';
+
+const heroHighlights = [
+  {
+    title: 'Single source of truth',
+    detail: 'Admissions, academics, finance, facilities, and communication stay synced across every branch.',
+  },
+  {
+    title: 'Automation for the day-to-day',
+    detail: 'Timetables, fee cycles, alerts, and approvals run on autopilot so teams focus on students.',
+  },
+  {
+    title: 'Enterprise-grade trust',
+    detail: 'Role-based permissions, audit trails, and 24x7 monitoring keep staff, teachers, and parents aligned.',
+  },
+];
+
+const heroStats = [
+  { value: '7 days', label: 'Implementation window' },
+  { value: '99.9%', label: 'Uptime across regions' },
+  { value: '15-20 hrs', label: 'Weekly time saved per team' },
+];
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,6 +49,7 @@ export function Hero() {
   });
   return (
     <div
+      id='home'
       ref={parentRef}
       className='relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40 bg-neutral-900'
     >
@@ -75,7 +98,7 @@ export function Hero() {
       <div className='text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-neutral-300 md:text-7xl'>
         <Balancer>
           <motion.h2>
-            {'Digitizing Every Corner of Your Institution'
+            {'The operating system that keeps every school day in sync'
               .split(' ')
               .map((word, index) => (
                 <motion.span
@@ -106,36 +129,76 @@ export function Hero() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.5 }}
-        className='relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-gray-200'
+        className='relative z-20 mx-auto mt-4 max-w-xl px-4 text-center text-base/6 text-gray-200'
       >
-        From admissions to attendance, grades to fees, libraries to timetables, manage it all seamlessly, all in one place.
+        SquareCampus is the all-in-one OS for schools and colleges,connecting admissions,
+        academics, finance, communication, and compliance in one responsive command center.
+        Every team works from the same playbook with zero manual stitching.
       </motion.p>
+      <div className='relative z-20 mt-8 grid w-full max-w-3xl grid-cols-1 gap-3 text-sm text-neutral-200 sm:grid-cols-3'>
+        {heroHighlights.map((highlight) => (
+          <div
+            key={highlight.title}
+            className='rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-4 text-left'
+          >
+            <p className='text-xs font-semibold uppercase tracking-[0.3em] text-white/70'>
+              {highlight.title}
+            </p>
+            <p className='mt-2 text-sm leading-relaxed text-neutral-300'>
+              {highlight.detail}
+            </p>
+          </div>
+        ))}
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.7 }}
-        className='mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20'
+        className="mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20"
       >
+        {/* Primary entry: existing users dropping into the system */}
         <LinkButton
           as={Link}
           href={CONSTANTS.LOGIN_LINK}
-          variant='dark'
-          className='hidden md:block w-40 text-center'
+          variant="dark"
+          className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 text-center sm:w-40"
         >
-          Login
+          <span>Login</span>
+          <LogIn
+            className="h-4 w-4 text-neutral-200 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5"
+            aria-hidden="true"
+          />
         </LinkButton>
 
+        {/* High-intent entry: new schools booking time with the team */}
         <LinkButton
           data-cal-namespace={calOptions.namespace}
           data-cal-link={CONSTANTS.CALCOM_LINK}
-          data-cal-config={`{'layout':'${calOptions.layout}'}`}
-          as='button'
-          variant='primary'
-          className='hidden md:block w-40'
+          data-cal-config={`{"layout":"${calOptions.layout}"}`}
+          as="button"
+          variant="primary"
+          className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 sm:w-40"
         >
-          Book a call
+          <span>Book a call</span>
+          <CalendarClock
+            className="h-4 w-4 text-neutral-900 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
+            aria-hidden="true"
+          />
         </LinkButton>
       </motion.div>
+      <div className='relative z-20 mt-6 grid w-full max-w-4xl grid-cols-1 gap-2 text-center sm:grid-cols-3'>
+        {heroStats.map((stat) => (
+          <div
+            key={stat.label}
+            className='rounded-2xl border border-neutral-800/60 bg-neutral-900/60 py-6 px-4 text-center'
+          >
+            <p className='text-lg font-semibold text-white'>{stat.value}</p>
+            <p className='text-xs uppercase tracking-[0.3em] text-neutral-400'>
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -180,24 +243,27 @@ const BackgroundGrids = () => {
   );
 };
 
-const CollisionMechanism = React.forwardRef<
-  HTMLDivElement,
-  {
-    containerRef: React.RefObject<HTMLDivElement>;
-    parentRef: React.RefObject<HTMLDivElement>;
-    beamOptions?: {
-      initialX?: number;
-      translateX?: number;
-      initialY?: number;
-      translateY?: number;
-      rotate?: number;
-      className?: string;
-      duration?: number;
-      delay?: number;
-      repeatDelay?: number;
-    };
-  }
->(({ parentRef, containerRef, beamOptions = {} }, ) => {
+type CollisionMechanismProps = {
+  containerRef: React.RefObject<HTMLDivElement>;
+  parentRef: React.RefObject<HTMLDivElement>;
+  beamOptions?: {
+    initialX?: number;
+    translateX?: number;
+    initialY?: number;
+    translateY?: number;
+    rotate?: number;
+    className?: string;
+    duration?: number;
+    delay?: number;
+    repeatDelay?: number;
+  };
+};
+
+const CollisionMechanism = ({
+  parentRef,
+  containerRef,
+  beamOptions = {},
+}: CollisionMechanismProps) => {
   const beamRef = useRef<HTMLDivElement>(null);
   const [collision, setCollision] = useState<{
     detected: boolean;
@@ -310,7 +376,7 @@ const CollisionMechanism = React.forwardRef<
       </AnimatePresence>
     </>
   );
-});
+};
 
 CollisionMechanism.displayName = 'CollisionMechanism';
 

@@ -1,481 +1,803 @@
 "use client";
 
-import {cn} from "@/lib/utils";
-import React, {useEffect, useId, useRef, useState} from "react";
-import {motion} from "framer-motion";
 import Image from "next/image";
-import createGlobe from "cobe";
-import {CloudUploadIcon} from "lucide-react";
-import {SkeletonFive} from "./skeletons/five";
-import {SkeletonTwo} from "./skeletons/two";
-import {SkeletonThree} from "./skeletons/three";
-import {SkeletonFour} from "./skeletons/four";
+import { AnimatePresence, motion, useAnimation, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AlertTriangle, Bell, CheckCircle2, Clock, Languages, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type LanguageMeta = {
+  code: string;
+  englishName: string;
+  nativeName: string;
+  locale: string;
+  glow: string;
+  fontClass?: string;
+  greetingNative?: string;
+  greetingEnglish: string;
+  notificationNative?: string;
+  notificationEnglish: string;
+};
+
+
+const featureData = [
+  {
+    title: "Realtime academic intelligence",
+    description:
+      "See the health of every class, branch, and student in one view so you can intervene early,no more stitching spreadsheets.",
+    points: [
+      "Live attendance, engagement, and performance signals",
+      "Drill to class, branch, or student in seconds",
+      "Board-ready exports for leadership and auditors",
+    ],
+  },
+  {
+    title: "Student lifecycle automation",
+    description:
+      "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
+    points: [
+      "Guided workflows from inquiry → graduation",
+      "Automated alerts for approvals, dues, transport, and hostel",
+      "Templates that mirror your institutional policies",
+    ],
+  },
+  {
+    title: "Unified communication & engagement",
+    description:
+      "Send the right message to the right audience with proof of delivery,parents, staff, and students stay aligned.",
+    points: [
+      "Multichannel announcements (email, SMS, app)",
+      "Two-way teacher–guardian collaboration with controls",
+      "Consent management, read receipts, and audit trails",
+    ],
+  },
+  {
+    title: "Infrastructure you can trust",
+    description:
+      "Security, scale, and uptime that feel invisible,so your campuses stay online and compliant year after year.",
+    points: [
+      "Encrypted storage and role-based access at every layer",
+      "24x7 monitoring, backups, and global delivery",
+      "Friendly integrations with LMS, ERP, and payments",
+    ],
+  },
+];
 
 export function Features() {
-    return (
-        <div
-            id="features"
-            className="w-full mx-auto bg-neutral-950 py-20 px-4 md:px-8"
-        >
-            <Header>
-                <h2 className="font-sans text-bold text-xl text-center md:text-4xl w-fit mx-auto font-bold tracking-tight text-neutral-8000 text-neutral-100">
-                    Empower Your Institution Digitally
-                </h2>
-            </Header>
-            <p className="max-w-lg text-sm text-neutral-400 text-center mx-auto mt-4">
-                SquareCampus offers everything schools and colleges need to simplify, scale, and succeed.
-            </p>
+  return (
+    <section
+      id="features"
+      className="bg-neutral-950 py-20 px-4 md:px-8"
+      aria-label="Core features of SquareCampus"
+    >
+      <div className="mx-auto max-w-6xl space-y-6 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/60">
+          Platform signals
+        </p>
+        <h2 className="text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
+          SquareCampus replaces 5+ disconnected tools with one campus OS
+        </h2>
+        <p className="mx-auto max-w-2xl text-sm text-neutral-400 md:text-base">
+          Run admissions, academics, finance, communication, and facilities in a single,
+          responsive workspace. One login, one timeline, one source of truth for every campus.
+        </p>
+      </div>
 
-            <div className="mt-20 grid cols-2 gap-3 md:grid-cols-3 md:auto-rows-[25rem] max-w-5xl mx-auto">
-                <Card className="flex flex-col justify-between col-span-1 md:col-span-2">
-                    <CardContent className="h-40">
-                        <CardTitle>Instant Reports & Analytics</CardTitle>
-                        <CardDescription>
-                            Generate academic and operational insights in a click.
-                        </CardDescription>
-                    </CardContent>
-                    <CardSkeletonBody>
-                        <div className="w-full h-full p-4 rounded-lg bg-neutral-800 border-neutral-700 ml-6 mt-2">
-                            <Image
-                                src="/images/marketing/dashboard.png"
-                                alt="Dashboard"
-                                width={500}
-                                height={500}
-                                className="w-full object-cover rounded-lg"
-                            />
-                        </div>
-                    </CardSkeletonBody>
-                </Card>
-
-                <Card className="flex flex-col justify-between">
-                    <CardContent>
-                        <CardTitle>Student Lifecycle Tracking</CardTitle>
-                        <CardDescription>
-                            Track attendance, grades, and activities in one unified view.
-                        </CardDescription>
-                    </CardContent>
-                    <CardSkeletonBody>
-                        <SkeletonTwo/>
-                    </CardSkeletonBody>
-                </Card>
-
-                <Card className="flex flex-col justify-between ">
-                    <CardSkeletonBody>
-                        <SkeletonThree/>
-                    </CardSkeletonBody>
-                    <CardContent className="h-40">
-                        <CardTitle>Optimized Cloud Hosting</CardTitle>
-                        <CardDescription>
-                            Fast, secure, and reliable hosting for every campus across the map.
-                        </CardDescription>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardContent>
-                        <CardTitle>An end-to-end suit</CardTitle>
-                        <CardDescription>
-                            Manage admissions, fees, attendance, and more in one place.
-                        </CardDescription>
-                    </CardContent>
-                    <CardSkeletonContainer>
-                        <SkeletonFour />
-                    </CardSkeletonContainer>
-                </Card>
-
-                <Card>
-                    <CardSkeletonContainer className="max-w-[16rem] mx-auto">
-                        <SkeletonFive />
-                    </CardSkeletonContainer>
-                    <CardContent>
-                        <CardTitle>Analytics for everything</CardTitle>
-                        <CardDescription>
-                            Check analytics, track your posts, and get insights into your
-                            audience.
-                        </CardDescription>
-                    </CardContent>
-                </Card>
+      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
+        {featureData.map((feature) => (
+          <article
+            key={feature.title}
+            className="flex flex-col justify-between rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 shadow-2xl shadow-black/40 p-6 text-sm text-neutral-200 backdrop-blur"
+          >
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
+                {feature.title}
+              </p>
+              <p className="mt-3 text-base text-neutral-100">{feature.description}</p>
             </div>
-        </div>
+            <ul className="mt-6 space-y-3 text-xs text-neutral-300">
+              {feature.points.map((point) => (
+                <li key={point} className="flex items-start gap-2">
+                  <span className="mt-1 inline-flex h-2 w-2 rotate-45 rounded-sm border border-white/60 bg-gradient-to-br from-blue-500 to-purple-500" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
 
-    );
+      <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/60">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="flex-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/40">
+              Platform snapshot
+            </p>
+            <p className="mt-2 text-lg font-semibold text-white">
+              Beautiful, legible dashboards that keep decisions visible.
+            </p>
+            <p className="mt-2 text-sm text-neutral-300">
+              Board-ready reports, compliance logs, and student journeys live in one place,no exports needed.
+            </p>
+          </div>
+          <Image
+            src="/images/marketing/dashboard.png"
+            alt="SquareCampus dashboard"
+            width={360}
+            height={220}
+            className="h-44 w-full max-w-xs rounded-2xl border border-white/10 object-cover shadow-lg shadow-blue-500/20"
+            priority
+          />
+        </div>
+      </div>
+      <FeatureVisual />
+      <LanguageSupportSection />
+    </section>
+  );
 }
 
-const Header = ({children}: { children: React.ReactNode }) => {
-    return (
-        <div className="relative w-fit mx-auto p-4 flex items-center justify-center">
-            <motion.div
-                initial={{
-                    width: 0,
-                    height: 0,
-                    borderRadius: 0,
-                }}
-                whileInView={{
-                    width: "100%",
-                    height: "100%",
-                }}
-                style={{
-                    transformOrigin: "top-left",
-                }}
-                transition={{
-                    duration: 1,
-                    ease: "easeInOut",
-                }}
-                className="absolute inset-0 h-full border border-neutral-800 w-full"
-            >
-                <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    transition={{duration: 1.1, ease: "easeInOut"}}
-                    className="absolute -top-1 -left-1 h-2 w-2 bg-neutral-800"
-                />
-                <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    transition={{duration: 1.1, ease: "easeInOut"}}
-                    className="absolute -top-1 -right-1 h-2 w-2 bg-neutral-800"
-                />
-                <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    transition={{duration: 1.1, ease: "easeInOut"}}
-                    className="absolute -bottom-1 -left-1 h-2 w-2 bg-neutral-800"
-                />
-                <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    transition={{duration: 1.1, ease: "easeInOut"}}
-                    className="absolute -bottom-1 -right-1 h-2 w-2 bg-neutral-800"
-                />
-            </motion.div>
-            {children}
+const FeatureVisual = () => {
+  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.3, once: true });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({ opacity: 1, y: 0 });
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={controls}
+      transition={{ duration: 0.8 }}
+      className="mx-auto mt-12 max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/70 to-neutral-950/90 p-6 shadow-2xl shadow-black/60"
+    >
+      <div className="relative flex flex-col-reverse gap-6 lg:flex-row lg:items-center">
+        {/* Narrative side – the briefing */}
+        <div className="flex-1 space-y-4 text-sm text-neutral-200">
+          <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
+            Pain-free operations
+          </p>
+          <h3 className="text-2xl font-semibold text-white">
+            Built to keep every school day on rails
+          </h3>
+          <p>
+            SquareCampus orchestrates academics, finance, communication, and
+            facilities so small schools stay agile and large institutions stay
+            predictable,no swivel-chairing between apps. It&apos;s not a
+            nice-to-have; it&apos;s the control center that keeps every bell,
+            bus, bill, and broadcast on time.
+          </p>
+          <ul className="grid gap-3 text-sm text-neutral-100 md:grid-cols-2">
+            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-blue-400" />
+              <span>
+                Single source of truth across admissions, academics, and finance.
+              </span>
+            </li>
+            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-purple-400" />
+              <span>
+                Predictable daily playbook with alerts before issues snowball.
+              </span>
+            </li>
+            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span>Audit-ready logs and approvals baked into every workflow.</span>
+            </li>
+            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-orange-400" />
+              <span>
+                7-day rollout with migration, training, and implementation support.
+              </span>
+            </li>
+          </ul>
         </div>
-    );
-};
 
-export const SkeletonOne = () => {
-    const Container = ({
-                           children,
-                           ...props
-                       }: { children: React.ReactNode } & React.ComponentProps<
-        typeof motion.div
-    >) => {
-        return (
+        {/* Cards side – the tactical layout */}
+        <div className="relative w-full max-w-md shrink-0 space-y-3">
+          <div className="grid gap-3 md:grid-cols-2">
             <motion.div
-                {...props}
-                className={cn(
-                    "w-full h-14 md:h-40 p-2 rounded-lg relative shadow-lg flex items-center bg-gradient-to-b from-neutral-800 to-neutral-700 justify-center",
-                    props.className
-                )}
+              className="rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/20 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-blue-500/20"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
-                {children}
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">
+                Non-negotiable
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                Control center for every workflow
+              </p>
+              <p className="mt-2 text-sm text-neutral-200">
+                Admissions, timetables, finance, transport, and communication
+                run on one timeline.
+              </p>
             </motion.div>
-        );
-    };
-    return (
-        <div className="relative flex items-center justify-center  w-full h-full">
-            <svg
-                width="128"
-                height="69"
-                viewBox="0 0 128 69"
-                fill="none"
-                className="absolute left-1/2 -translate-x-[90%]  -top-2 text-neutral-800"
-            >
-                <path
-                    d="M1.00002 0.5L1.00001 29.5862C1 36.2136 6.37259 41.5862 13 41.5862H115C121.627 41.5862 127 46.9588 127 53.5862L127 75"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                />
-                <motion.path
-                    d="M1.00002 0.5L1.00001 29.5862C1 36.2136 6.37259 41.5862 13 41.5862H115C121.627 41.5862 127 46.9588 127 53.5862L127 75"
-                    stroke="url(#gradient-2)"
-                    strokeWidth="1"
-                />
-
-                <defs>
-                    <motion.linearGradient
-                        initial={{
-                            x1: "0%",
-                            y1: "0%",
-                            x2: "0%",
-                            y2: "0%",
-                        }}
-                        animate={{
-                            x1: "100%",
-                            y1: "90%",
-                            x2: "120%",
-                            y2: "120%",
-                        }}
-                        id="gradient-2"
-                        transition={{
-                            duration: Math.random() * (7 - 2) + 2,
-                            ease: "linear",
-                            repeat: Infinity,
-                        }}
-                    >
-                        <stop stopColor="#001AFF" stopOpacity={`0`}/>
-                        <stop offset="1" stopColor="#6DD4F5"/>
-                        <stop offset="1" stopColor="#6DD4F5" stopOpacity="0"/>
-                    </motion.linearGradient>
-                </defs>
-            </svg>
-
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="62"
-                height="105"
-                viewBox="0 0 62 105"
-                fill="none"
-                className="absolute left-1/2 -translate-x-0  -bottom-2 text-neutral-200"
-            >
-                <path
-                    d="M1.00001 -69L1 57.5C1 64.1274 6.37258 69.5 13 69.5H49C55.6274 69.5 61 74.8726 61 81.5L61 105"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                />
-                <motion.path
-                    d="M1.00001 -69L1 57.5C1 64.1274 6.37258 69.5 13 69.5H49C55.6274 69.5 61 74.8726 61 81.5L61 105"
-                    stroke="url(#gradient-1)"
-                    strokeWidth="1"
-                />
-                <defs>
-                    <motion.linearGradient
-                        initial={{
-                            x1: "0%",
-                            y1: "0%",
-                            x2: "0%",
-                            y2: "0%",
-                        }}
-                        animate={{
-                            x1: "100%",
-                            y1: "90%",
-                            x2: "120%",
-                            y2: "120%",
-                        }}
-                        id="gradient-1"
-                        transition={{
-                            duration: Math.random() * (7 - 2) + 2,
-                            ease: "linear",
-                            repeat: Infinity,
-                        }}
-                    >
-                        <stop stopColor="#001AFF" stopOpacity={`0`}/>
-                        <stop offset="1" stopColor="#6DD4F5"/>
-                        <stop offset="1" stopColor="#6DD4F5" stopOpacity="0"/>
-                    </motion.linearGradient>
-                </defs>
-            </svg>
-            <div
-                className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-lg mx-auto w-full relative z-30 [perspective:1000px] [transform-style:preserve-3d] p-8 sm:p-0">
-                <Container
-                    initial={{y: 0}}
-                    animate={{y: [0, -10, 0], rotateX: [0, 10, 0]}}
-                    transition={{
-                        duration: 2,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 6,
-                    }}
-                    className="overflow-hidden px-2 flex-col justify-center font-mono items-start text-neutral-300"
-                >
-                    <p className="text-[8px] bg-transparent ">git add .</p>
-                    <p className="text-[8px] bg-transparent">
-                        git commit -m &quot;update&quot;
-                    </p>
-                    <p className="text-[8px] bg-transparent">git push</p>
-                </Container>
-                <Container
-                    initial={{y: 0}}
-                    animate={{y: [0, -10, 0], rotateX: [0, 10, 0]}}
-                    transition={{
-                        duration: 2,
-                        delay: 2,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 6,
-                    }}
-                >
-                    <GitHubLogo/>
-                </Container>
-                <Container
-                    initial={{y: 0}}
-                    animate={{y: [0, -10, 0], rotateX: [0, 10, 0]}}
-                    transition={{
-                        duration: 2,
-                        delay: 4,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 6,
-                    }}
-                    className="flex flex-col justify-center items-center"
-                >
-                    <AWSLogo/>
-                    <p className="text-[8px] bg-transparent ">your site is live ✨</p>
-                </Container>
+            <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/15 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-purple-500/20">
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">
+                Risk removed
+              </p>
+              <p className="mt-2 text-xl font-semibold text-white">
+                Audit-ready by default
+              </p>
+              <p className="mt-2 text-sm text-neutral-200">
+                Role-based access, approvals, and logs ensure compliance without
+                extra tools.
+              </p>
             </div>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
+                Uptime
+              </p>
+              <p className="text-lg font-semibold text-white">99.9%</p>
+              <p className="text-xs text-neutral-300">Monitored, resilient cloud</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
+                Go-live
+              </p>
+              <p className="text-lg font-semibold text-white">Under 7 days</p>
+              <p className="text-xs text-neutral-300">Migration + training included</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
+                Time saved
+              </p>
+              <p className="text-lg font-semibold text-white">15–20 hrs</p>
+              <p className="text-xs text-neutral-300">Per team every week</p>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+
+      {/* Bottom row – from abstract graph to real control view */}
+      <div className="mt-8 grid gap-4 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.2fr)]">
+        {/* Today at a glance – a mini day timeline */}
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.4em] text-white/50">
+            Today at a glance
+          </p>
+          <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
+            <div className="flex items-center gap-2 pb-3 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
+              <Clock className="h-3.5 w-3.5" />
+              <span>Campus timeline</span>
+            </div>
+            <div className="space-y-2">
+              {/* Row 1 */}
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-[0.78rem] text-neutral-300">08:00</span>
+                  <div>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">
+                      Morning attendance
+                    </p>
+                    <p className="text-[0.72rem] text-neutral-400">
+                      96% present · 4% absent
+                    </p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-emerald-500/20 px-2 py-1 text-[0.7rem] font-semibold text-emerald-300">
+                  On track
+                </span>
+              </div>
+              {/* Row 2 – lightly at risk */}
+              <motion.div
+                className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
+                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0.2)", "0 0 0 8px rgba(251,191,36,0)"] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-[0.78rem] text-neutral-300">10:30</span>
+                  <div>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">
+                      Mid-term exams
+                    </p>
+                    <p className="text-[0.72rem] text-neutral-200">
+                      2 rooms over capacity · 1 invigilator missing
+                    </p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-amber-500/20 px-2 py-1 text-[0.7rem] font-semibold text-amber-300">
+                  Needs action
+                </span>
+              </motion.div>
+              {/* Row 3 */}
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-[0.78rem] text-neutral-300">14:00</span>
+                  <div>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">
+                      Transport dispatch
+                    </p>
+                    <p className="text-[0.72rem] text-neutral-400">
+                      18 routes · 1 route delayed by 10 mins
+                    </p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-sky-500/15 px-2 py-1 text-[0.7rem] font-semibold text-sky-300">
+                  Monitored
+                </span>
+              </div>
+              {/* Row 4 */}
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-[0.78rem] text-neutral-300">17:30</span>
+                  <div>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">
+                      Fees & reminders
+                    </p>
+                    <p className="text-[0.72rem] text-neutral-400">
+                      Auto-reminders sent to 42 pending accounts
+                    </p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-neutral-700/80 px-2 py-1 text-[0.7rem] font-semibold text-neutral-200">
+                  Automated
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Exception queue – what actually needs attention */}
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.4em] text-white/50">
+            Exception queue
+          </p>
+          <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
+            <div className="flex items-center justify-between pb-3">
+              <div className="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
+                <Bell className="h-3.5 w-3.5" />
+                <span>Alerts that need humans</span>
+              </div>
+              <span className="rounded-full bg-neutral-800 px-2 py-1 text-[0.68rem] text-neutral-300">
+                3 open
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {/* Critical */}
+              <motion.div
+                className="flex items-start gap-3 rounded-xl border border-rose-500/60 bg-rose-500/10 px-3 py-2"
+                animate={{ opacity: [0.6, 1, 0.8, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="mt-0.5">
+                  <AlertTriangle className="h-3.5 w-3.5 text-rose-300" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[0.8rem] font-semibold text-rose-50">
+                    Attendance dip in Grade 9
+                  </p>
+                  <p className="text-[0.72rem] text-rose-100/90">
+                    4 sections below 80% · escalation recommended.
+                  </p>
+                  <div className="flex flex-wrap gap-2 text-[0.68rem]">
+                    <span className="rounded-full bg-rose-500/20 px-2 py-0.5 text-rose-100">
+                      Academic risk
+                    </span>
+                    <span className="rounded-full bg-neutral-900/80 px-2 py-0.5 text-neutral-200">
+                      Notify principal
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Medium */}
+              <div className="flex items-start gap-3 rounded-xl bg-neutral-850/80 px-3 py-2">
+                <div className="mt-0.5">
+                  <Clock className="h-3.5 w-3.5 text-amber-200" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[0.8rem] font-semibold text-neutral-100">
+                    Transport delay, Route 7
+                  </p>
+                  <p className="text-[0.72rem] text-neutral-300">
+                    Expected delay: 12 minutes · parents notified automatically.
+                  </p>
+                  <span className="inline-flex rounded-full bg-amber-500/15 px-2 py-0.5 text-[0.68rem] text-amber-200">
+                    In progress
+                  </span>
+                </div>
+              </div>
+
+              {/* Low */}
+              <div className="flex items-start gap-3 rounded-xl bg-neutral-850/80 px-3 py-2">
+                <div className="mt-0.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[0.8rem] font-semibold text-neutral-100">
+                    Fee follow-ups generated
+                  </p>
+                  <p className="text-[0.72rem] text-neutral-300">
+                    24 pending accounts queued for reminders today.
+                  </p>
+                  <span className="inline-flex rounded-full bg-emerald-500/15 px-2 py-0.5 text-[0.68rem] text-emerald-200">
+                    Automated task
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
-const GitHubLogo = () => {
-    return (
-        <svg
-            width="800px"
-            height="800px"
-            viewBox="0 0 20 20"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 object-contain text-white"
-        >
-            <g
-                id="Page-1"
-                stroke="none"
-                strokeWidth="1"
-                fill="none"
-                fillRule="evenodd"
+export const LanguageSupportSection = () => {
+  /*
+     Each language is an ally on the ground.
+     englishName: for clarity.
+     nativeName: for respect.
+     greeting*: for a small, human moment when someone clicks.
+  */
+     const languages: LanguageMeta[] = [
+      {
+        code: "EN",
+        englishName: "English",
+        nativeName: "English",
+        locale: "en-IN",
+        glow: "from-blue-400 to-blue-600",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "Welcome to SquareCampus.",
+        notificationEnglish: "Good morning! Here's to a great school day ahead.",
+        notificationNative: "Good morning! Here's to a great school day ahead.",
+      },
+      {
+        code: "HI",
+        englishName: "Hindi",
+        nativeName: "हिन्दी",
+        locale: "hi-IN",
+        glow: "from-amber-400 to-orange-500",
+        fontClass: "font-devanagari",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus में आपका स्वागत है।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो.।",
+      },
+      {
+        code: "KN",
+        englishName: "Kannada",
+        nativeName: "ಕನ್ನಡ",
+        locale: "kn-IN",
+        glow: "from-sky-400 to-sky-600",
+        fontClass: "font-kannada",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 ಶುಭೋದಯ! ಅద్భುತ ದಿನ ನಿಮಗಾಗಲಿ.",
+      },
+      {
+        code: "TA",
+        englishName: "Tamil",
+        nativeName: "தமிழ்",
+        locale: "ta-IN",
+        glow: "from-purple-400 to-purple-600",
+        fontClass: "font-tamil",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus-க்கு வரவேற்கிறோம்.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
+      },
+      {
+        code: "TE",
+        englishName: "Telugu",
+        nativeName: "తెలుగు",
+        locale: "te-IN",
+        glow: "from-emerald-400 to-emerald-600",
+        fontClass: "font-telugu",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus కు స్వాగతం.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 శుభోదయం! మీ రోజు అద్భుతంగా సాగాలి.",
+      },
+      {
+        code: "MR",
+        englishName: "Marathi",
+        nativeName: "मराठी",
+        locale: "mr-IN",
+        glow: "from-rose-400 to-rose-600",
+        fontClass: "font-devanagari",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus मध्ये आपले स्वागत आहे.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
+      },
+      {
+        code: "GU",
+        englishName: "Gujarati",
+        nativeName: "ગુજરાતી",
+        locale: "gu-IN",
+        glow: "from-cyan-400 to-cyan-600",
+        fontClass: "font-gujarati",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative:
+          "🔔 સુપ્રભાત! તમારો દિવસ સારો જાય.",
+      },
+      {
+        code: "ML",
+        englishName: "Malayalam",
+        nativeName: "മലയാളം",
+        locale: "ml-IN",
+        glow: "from-green-400 to-green-600",
+        fontClass: "font-malayalam",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus-ലേക്ക് സ്വാഗതം.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative:
+          "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
+      },
+      {
+        code: "BN",
+        englishName: "Bengali",
+        nativeName: "বাংলা",
+        locale: "bn-IN",
+        glow: "from-pink-400 to-pink-600",
+        fontClass: "font-bengali",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus-এ আপনাকে স্বাগতম।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative:
+          "🔔 সুপ্রভাত! আপনার দিনটি ভালো কাটুক।",
+      },
+      {
+        code: "PA",
+        englishName: "Punjabi",
+        nativeName: "ਪੰਜਾਬੀ",
+        locale: "pa-IN",
+        glow: "from-fuchsia-400 to-fuchsia-600",
+        fontClass: "font-gurmukhi",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative:
+          "🔔 ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
+      },
+    ];    
+
+  const [active, setActive] = useState<LanguageMeta | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+
+  // Close on outside click / Escape
+  useEffect(() => {
+    if (!active) return;
+
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActive(null);
+      }
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node)
+      ) {
+        setActive(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleKey);
+    document.addEventListener("mousedown", handleClick);
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [active]);
+
+  return (
+    <section className="relative mx-auto mt-28 max-w-6xl px-6 py-16 text-neutral-200">
+      <div className="mx-auto max-w-4xl space-y-4 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
+          Made for India
+        </p>
+        <h2 className="text-3xl font-semibold text-white md:text-4xl">
+          Built for the languages India speaks
+        </h2>
+        <p className="text-sm leading-relaxed text-neutral-400 md:text-base">
+          SquareCampus ships with support for India&apos;s major languages so
+          administrators, teachers, parents, and students can use the platform
+          comfortably in the language they prefer. Adoption improves, support
+          tickets drop, and communication becomes seamless.
+        </p>
+      </div>
+
+      {/* Language grid */}
+      <div className="relative mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {languages.map((lang, i) => (
+          <motion.button
+            key={lang.code}
+            type="button"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            viewport={{ once: true }}
+            onClick={() => setActive(lang)}
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
+          >
+            <div
+              className={cn(
+                "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-10",
+                lang.glow
+              )}
+            />
+            <p className="text-[0.7rem] uppercase tracking-[0.35em] text-neutral-400">
+              {lang.code}
+            </p>
+            <div className="mt-2 space-y-1">
+              <span
+                lang={lang.locale}
+                className={cn(
+                  "block text-sm font-semibold text-white",
+                  lang.fontClass
+                )}
+              >
+                {lang.nativeName}
+              </span>
+              <span className="block text-[0.7rem] uppercase tracking-[0.3em] text-neutral-500">
+                {lang.englishName}
+              </span>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Highlight card */}
+      <div className="mx-auto mt-14 max-w-xl rounded-2xl border border-white/10 bg-neutral-900/70 p-6 shadow-xl backdrop-blur">
+        <div className="flex flex-col items-center space-y-3 text-center">
+          <Languages className="h-8 w-8 text-neutral-400" />
+          <p className="text-sm text-neutral-300">
+            <span className="font-semibold text-white">
+              Parent-friendly. Teacher-friendly. Admin-friendly.
+            </span>{" "}
+            Interfaces adapt to the chosen language, while reports and exports
+            can still be generated in English for auditors and regulators.
+          </p>
+        </div>
+      </div>
+
+      {/* Popover – friendly greeting in the selected language */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Backdrop */}
+            <motion.div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              aria-hidden="true"
+            />
+
+            {/* Ambient glow */}
+            <motion.div
+              className="absolute inset-0 z-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.15 }}
+              exit={{ opacity: 0 }}
+              style={{
+                background:
+                  "radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 70%)",
+              }}
+            />
+
+            {/* Panel */}
+            <motion.div
+              ref={popoverRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="language-greeting-title"
+              initial={{
+                opacity: 0,
+                scale: 0.95,
+                y: 6,
+                filter: "blur(4px)",
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                filter: "blur(0px)",
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.97,
+                y: 6,
+                filter: "blur(6px)",
+              }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className={cn(
+                "relative z-10 w-full max-w-sm rounded-2xl border border-white/15 bg-neutral-950/95 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-xl",
+                "before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.05),transparent)] before:opacity-20",
+                "after:absolute after:inset-0 after:bg-[linear-gradient(-115deg,transparent,rgba(255,255,255,0.04),transparent)] after:opacity-20"
+              )}
             >
-                <g
-                    id="Dribbble-Light-Preview"
-                    transform="translate(-140.000000, -7559.000000)"
-                    fill="currentColor"
+              <div className="flex items-start justify-between gap-3 relative z-10">
+                <div>
+                  <p className="text-[0.65rem] uppercase tracking-[0.35em] text-neutral-400">
+                    Language selected
+                  </p>
+                  <h3
+                    id="language-greeting-title"
+                    className="mt-1 text-sm font-semibold text-white flex items-center gap-2"
+                  >
+                    <span>{active.nativeName}</span>
+                    <span className="text-neutral-400 text-xs">({active.englishName})</span>
+                    <span className="inline-flex items-center justify-center rounded-md border border-white/10 bg-neutral-900/80 px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-neutral-500">
+                      {active.code}
+                    </span>
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActive(null)}
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900 text-neutral-300 hover:border-neutral-300 hover:text-white hover:rotate-90 transition-transform duration-200"
                 >
-                    <g id="icons" transform="translate(56.000000, 160.000000)">
-                        <path
-                            d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
-                            id="github-[#142]"
-                        ></path>
-                    </g>
-                </g>
-            </g>
-        </svg>
-    );
-};
-const AWSLogo = () => {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 48 48"
-            width="48px"
-            height="48px"
-            className="h-8 w-8 object-contain text-white"
-        >
-            <path
-                fill="currentColor"
-                d="M13.527,21.529c0,0.597,0.064,1.08,0.176,1.435c0.128,0.355,0.287,0.742,0.511,1.161 c0.08,0.129,0.112,0.258,0.112,0.371c0,0.161-0.096,0.322-0.303,0.484l-1.006,0.677c-0.144,0.097-0.287,0.145-0.415,0.145 c-0.16,0-0.319-0.081-0.479-0.226c-0.224-0.242-0.415-0.5-0.575-0.758c-0.16-0.274-0.319-0.58-0.495-0.951 c-1.245,1.483-2.81,2.225-4.694,2.225c-1.341,0-2.411-0.387-3.193-1.161s-1.181-1.806-1.181-3.096c0-1.37,0.479-2.483,1.453-3.321 s2.267-1.258,3.911-1.258c0.543,0,1.102,0.048,1.692,0.129s1.197,0.21,1.836,0.355v-1.177c0-1.225-0.255-2.08-0.75-2.58 c-0.511-0.5-1.373-0.742-2.602-0.742c-0.559,0-1.133,0.064-1.724,0.21c-0.591,0.145-1.165,0.322-1.724,0.548 c-0.255,0.113-0.447,0.177-0.559,0.21c-0.112,0.032-0.192,0.048-0.255,0.048c-0.224,0-0.335-0.161-0.335-0.5v-0.79 c0-0.258,0.032-0.451,0.112-0.564c0.08-0.113,0.224-0.226,0.447-0.339c0.559-0.29,1.229-0.532,2.012-0.726 c0.782-0.21,1.612-0.306,2.49-0.306c1.9,0,3.289,0.435,4.183,1.306c0.878,0.871,1.325,2.193,1.325,3.966v5.224H13.527z M7.045,23.979c0.527,0,1.07-0.097,1.644-0.29c0.575-0.193,1.086-0.548,1.517-1.032c0.255-0.306,0.447-0.645,0.543-1.032 c0.096-0.387,0.16-0.855,0.16-1.403v-0.677c-0.463-0.113-0.958-0.21-1.469-0.274c-0.511-0.064-1.006-0.097-1.501-0.097 c-1.07,0-1.852,0.21-2.379,0.645s-0.782,1.048-0.782,1.854c0,0.758,0.192,1.322,0.591,1.709 C5.752,23.786,6.311,23.979,7.045,23.979z M19.865,25.721c-0.287,0-0.479-0.048-0.607-0.161c-0.128-0.097-0.239-0.322-0.335-0.629 l-3.752-12.463c-0.096-0.322-0.144-0.532-0.144-0.645c0-0.258,0.128-0.403,0.383-0.403h1.565c0.303,0,0.511,0.048,0.623,0.161 c0.128,0.097,0.223,0.322,0.319,0.629l2.682,10.674l2.49-10.674c0.08-0.322,0.176-0.532,0.303-0.629 c0.128-0.097,0.351-0.161,0.639-0.161h1.277c0.303,0,0.511,0.048,0.639,0.161c0.128,0.097,0.239,0.322,0.303,0.629l2.522,10.803 l2.762-10.803c0.096-0.322,0.208-0.532,0.319-0.629c0.128-0.097,0.335-0.161,0.623-0.161h1.485c0.255,0,0.399,0.129,0.399,0.403 c0,0.081-0.016,0.161-0.032,0.258s-0.048,0.226-0.112,0.403l-3.847,12.463c-0.096,0.322-0.208,0.532-0.335,0.629 s-0.335,0.161-0.607,0.161h-1.373c-0.303,0-0.511-0.048-0.639-0.161c-0.128-0.113-0.239-0.322-0.303-0.645l-2.474-10.4 L22.18,24.915c-0.08,0.322-0.176,0.532-0.303,0.645c-0.128,0.113-0.351,0.161-0.639,0.161H19.865z M40.379,26.156 c-0.83,0-1.66-0.097-2.458-0.29c-0.798-0.193-1.421-0.403-1.836-0.645c-0.255-0.145-0.431-0.306-0.495-0.451 c-0.064-0.145-0.096-0.306-0.096-0.451v-0.822c0-0.339,0.128-0.5,0.367-0.5c0.096,0,0.192,0.016,0.287,0.048 c0.096,0.032,0.239,0.097,0.399,0.161c0.543,0.242,1.133,0.435,1.756,0.564c0.639,0.129,1.261,0.193,1.9,0.193 c1.006,0,1.788-0.177,2.331-0.532c0.543-0.355,0.83-0.871,0.83-1.532c0-0.451-0.144-0.822-0.431-1.129 c-0.287-0.306-0.83-0.58-1.612-0.838l-2.315-0.726c-1.165-0.371-2.027-0.919-2.554-1.645c-0.527-0.709-0.798-1.499-0.798-2.338 c0-0.677,0.144-1.274,0.431-1.79s0.671-0.967,1.149-1.322c0.479-0.371,1.022-0.645,1.66-0.838C39.533,11.081,40.203,11,40.906,11 c0.351,0,0.718,0.016,1.07,0.064c0.367,0.048,0.702,0.113,1.038,0.177c0.319,0.081,0.623,0.161,0.91,0.258s0.511,0.193,0.671,0.29 c0.224,0.129,0.383,0.258,0.479,0.403c0.096,0.129,0.144,0.306,0.144,0.532v0.758c0,0.339-0.128,0.516-0.367,0.516 c-0.128,0-0.335-0.064-0.607-0.193c-0.91-0.419-1.932-0.629-3.065-0.629c-0.91,0-1.628,0.145-2.123,0.451 c-0.495,0.306-0.75,0.774-0.75,1.435c0,0.451,0.16,0.838,0.479,1.145c0.319,0.306,0.91,0.613,1.756,0.887l2.267,0.726 c1.149,0.371,1.98,0.887,2.474,1.548s0.734,1.419,0.734,2.257c0,0.693-0.144,1.322-0.415,1.87 c-0.287,0.548-0.671,1.032-1.165,1.419c-0.495,0.403-1.086,0.693-1.772,0.903C41.943,26.043,41.193,26.156,40.379,26.156z"
-            />
-            <path
-                fill="#f90"
-                d="M43.396,33.992c-5.252,3.918-12.883,5.998-19.445,5.998c-9.195,0-17.481-3.434-23.739-9.142 c-0.495-0.451-0.048-1.064,0.543-0.709c6.769,3.966,15.118,6.369,23.755,6.369c5.827,0,12.229-1.225,18.119-3.741 C43.508,32.364,44.258,33.347,43.396,33.992z M45.583,31.477c-0.671-0.871-4.438-0.419-6.146-0.21 c-0.511,0.064-0.591-0.387-0.128-0.726c3.001-2.128,7.934-1.516,8.509-0.806c0.575,0.726-0.16,5.708-2.969,8.094 c-0.431,0.371-0.846,0.177-0.655-0.306C44.833,35.927,46.254,32.331,45.583,31.477z"
-            />
-        </svg>
-    );
-};
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
 
-// Card structure
-const CardSkeletonBody = ({children, className,}: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    return (
-        <div className={cn("overflow-hidden relative w-full h-full", className)}>
-            {children}
-        </div>
-    );
-};
+              <div className="mt-4 space-y-3 text-sm text-neutral-200">
+                {/* Greeting Bubble */}
+                <p
+                  lang={active.locale}
+                  className={cn(
+                    "rounded-xl bg-neutral-900/60 border border-white/10 px-4 py-2 shadow-inner shadow-black/20",
+                    active.fontClass
+                  )}
+                >
+                  {active.greetingNative ?? active.greetingEnglish}
+                </p>
 
-const CardContent = ({
-                         children,
-                         className,
-                     }: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    return <div className={cn("p-6", className)}>{children}</div>;
-};
+                {active.greetingNative && (
+                  <p className="text-[0.8rem] text-neutral-400">
+                    {active.greetingEnglish}
+                  </p>
+                )}
+              </div>
 
-const CardTitle = ({
-                       children,
-                       className,
-                   }: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    const variants = { initial: { x: 0 }, animate: { x: 10 } }
-    // @ts-ignore
-    return (
-        <motion.h3
-            variants={variants}
-            transition={{ type: "tween", duration: 0.2 }}
-            className={cn(
-                "font-sans text-base font-medium tracking-tight text-neutral-700 dark:text-neutral-100",
-                className,
-            )}
-        >
-            {children}
-        </motion.h3>
-    );
-};
-const CardDescription = ({
-                             children,
-                             className,
-                         }: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    const variants = { initial: { x: 0 }, animate: { x: 15 } };
-    return (
-        <motion.p
-            variants={variants}
-            transition={{ type: "tween", duration: 0.2 }}
-            className={cn(
-                "mt-2 max-w-xs font-sans text-base font-normal tracking-tight text-neutral-500 dark:text-neutral-400",
-                className,
-            )}
-        >
-            {children}
-        </motion.p>
-    );
-};
+              {/* Example UI snippet */}
+              <div className="mt-4 rounded-xl border border-white/10 bg-neutral-900/60 p-3 text-xs text-neutral-300 font-medium">
+                <p
+                  lang={active.locale}
+                  className={cn("leading-relaxed", active.fontClass)}
+                >
+                  {active.notificationNative ?? active.notificationEnglish}
+                </p>
+                {active.notificationNative && (
+                  <p className="mt-1 text-[0.7rem] text-neutral-500">
+                    {active.notificationEnglish}
+                  </p>
+                )}
+              </div>
 
-const Card = ({
-                  children,
-                  className,
-              }: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    return (
-        <motion.div
-            whileHover="animate"
-            className={cn(
-                "group isolate flex flex-col rounded-2xl bg-neutral-900 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)] overflow-hidden",
-                className
-            )}
-        >
-            {children}
-        </motion.div>
-    );
-};
-
-export const CardSkeletonContainer = ({
-                                          className,
-                                          children,
-                                          showGradient = true,
-                                      }: {
-    className?: string;
-    children: React.ReactNode;
-    showGradient?: boolean;
-}) => {
-    return (
-        <div
-            className={cn(
-                "h-80 rounded-xl z-40",
-                className,
-                showGradient &&
-                " bg-[rgba(40,40,40,0.30)] mask-[radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]"
-            )}
-        >
-            {children}
-        </div>
-    );
+              <p className="mt-4 text-[0.78rem] text-neutral-400 leading-relaxed">
+                SquareCampus adapts key experiences into{" "}
+                <span className="font-semibold text-neutral-100">
+                  {active.englishName}
+                </span>
+                : parent apps, notifications, attendance updates, fee reminders ,
+                while admins can continue working in English if they prefer.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
 };

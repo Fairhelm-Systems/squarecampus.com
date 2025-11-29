@@ -23,7 +23,7 @@ export default function NotFound() {
                 </h1>
 
                 <p className="mt-6 text-xl sm:text-2xl text-muted-foreground">
-                    You've found a page that doesn't exist — or maybe one we’ve erased from memory.
+                    You've found a page that doesn't exist, or maybe one we’ve erased from memory.
                 </p>
 
                 <p className="mt-2 text-sm text-muted-foreground">
