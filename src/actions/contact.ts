@@ -3,7 +3,14 @@
 import { Resend } from "resend";
 import { headers } from "next/headers";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Validate API key exists
+if (!process.env.RESEND_API_KEY) {
+  console.error(
+    "RESEND_API_KEY is not set. Please add it to your environment variables."
+  );
+}
+
+const resend = new Resend(process.env.RESEND_API_KEY || "");
 
 // In-memory rate limiting (use Redis/Upstash in production for multi-instance deployments)
 const submissionTracking = new Map<
@@ -96,6 +103,16 @@ export async function sendContactEmail(
   formData: ContactFormData
 ): Promise<ContactFormResponse> {
   try {
+    // 0. VALIDATE API KEY EXISTS
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY environment variable is not set");
+      return {
+        success: false,
+        message:
+          "Email service is not configured. Please contact us directly at contact@squarecampus.com",
+      };
+    }
+
     const headersList = await headers();
 
     // 1. HONEYPOT CHECK - If website field is filled, it's a bot
