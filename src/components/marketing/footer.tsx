@@ -111,7 +111,7 @@ export function Footer() {
       </div>
 
       {/* Watermark wordmark – the name of the operation, fading into the floor */}
-      <p className="pointer-events-none relative z-0 mt-14 text-center font-bold uppercase text-transparent">
+      <p className="pointer-events-none relative z-0 mt-14 text-center font-extrabold uppercase text-transparent">
         <span className="bg-gradient-to-b from-neutral-900 to-neutral-800 bg-clip-text 
           text-4xl tracking-[0.1em]
           sm:text-5xl sm:tracking-[0.15em]
