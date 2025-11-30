@@ -24,7 +24,7 @@ const featureData = [
   {
     title: "Realtime academic intelligence",
     description:
-      "See the health of every class, branch, and student in one view so you can intervene early,no more stitching spreadsheets.",
+      "See the health of every class, branch, and student in one view so you can intervene early—no more stitching spreadsheets.",
     points: [
       "Live attendance, engagement, and performance signals",
       "Drill to class, branch, or student in seconds",
@@ -44,17 +44,17 @@ const featureData = [
   {
     title: "Unified communication & engagement",
     description:
-      "Send the right message to the right audience with proof of delivery,parents, staff, and students stay aligned.",
+      "Send the right message to the right audience with proof of delivery so parents, staff, and students stay aligned.",
     points: [
       "Multichannel announcements (email, SMS, app)",
-      "Two-way teacher–guardian collaboration with controls",
+      "Two-way teacher-guardian collaboration with controls",
       "Consent management, read receipts, and audit trails",
     ],
   },
   {
     title: "Infrastructure you can trust",
     description:
-      "Security, scale, and uptime that feel invisible,so your campuses stay online and compliant year after year.",
+      "Security, scale, and uptime that feel invisible so your campuses stay online and compliant year after year.",
     points: [
       "Encrypted storage and role-based access at every layer",
       "24x7 monitoring, backups, and global delivery",
@@ -117,7 +117,7 @@ export function Features() {
               Beautiful, legible dashboards that keep decisions visible.
             </p>
             <p className="mt-2 text-sm text-neutral-300">
-              Board-ready reports, compliance logs, and student journeys live in one place,no exports needed.
+              Board-ready reports, compliance logs, and student journeys live in one place—no exports needed.
             </p>
           </div>
           <Image
@@ -167,7 +167,7 @@ const FeatureVisual = () => {
           <p>
             SquareCampus orchestrates academics, finance, communication, and
             facilities so small schools stay agile and large institutions stay
-            predictable,no swivel-chairing between apps. It&apos;s not a
+            predictable, no swivel-chairing between apps. It&apos;s not a
             nice-to-have; it&apos;s the control center that keeps every bell,
             bus, bill, and broadcast on time.
           </p>
@@ -460,7 +460,7 @@ export const LanguageSupportSection = () => {
         greetingEnglish: "Welcome to SquareCampus.",
         greetingNative: "SquareCampus में आपका स्वागत है।",
         notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो.।",
+        notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो।",
       },
       {
         code: "KN",
@@ -521,7 +521,7 @@ export const LanguageSupportSection = () => {
         greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
         notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
         notificationNative:
-          "🔔 સુપ્રભાત! તમારો દિવસ સારો જાય.",
+          "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
       },
       {
         code: "ML",
@@ -560,7 +560,7 @@ export const LanguageSupportSection = () => {
         greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
         notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
         notificationNative:
-          "🔔 ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
+          "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
       },
     ];    
 
@@ -791,7 +791,7 @@ export const LanguageSupportSection = () => {
                 <span className="font-semibold text-neutral-100">
                   {active.englishName}
                 </span>
-                : parent apps, notifications, attendance updates, fee reminders ,
+                : parent apps, notifications, attendance updates, fee reminders,
                 while admins can continue working in English if they prefer.
               </p>
             </motion.div>

@@ -131,7 +131,7 @@ export function Hero() {
         transition={{ duration: 0.2, delay: 0.5 }}
         className='relative z-20 mx-auto mt-4 max-w-xl px-4 text-center text-base/6 text-gray-200'
       >
-        SquareCampus is the all-in-one OS for schools and colleges,connecting admissions,
+        SquareCampus is an all-in-one OS for schools and colleges, connecting admissions,
         academics, finance, communication, and compliance in one responsive command center.
         Every team works from the same playbook with zero manual stitching.
       </motion.p>

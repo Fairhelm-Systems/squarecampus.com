@@ -15,7 +15,11 @@ const resend = new Resend(process.env.RESEND_API_KEY || "");
 // In-memory rate limiting (use Redis/Upstash in production for multi-instance deployments)
 const submissionTracking = new Map<
   string,
-  { count: number; lastSubmission: number; cooldownUntil?: number }
+  { 
+    count: number; 
+    lastSubmission: number; 
+    cooldownUntil?: number 
+  }
 >();
 
 // Clean up old entries every 10 minutes

@@ -15,7 +15,7 @@ const FAQs = [
   {
     question: "What does SquareCampus actually replace?",
     answer:
-      "SquareCampus consolidates admissions, academics, finance, communication, transport, hostel, library, and compliance into one OS,replacing the patchwork of ERPs, SMS tools, and spreadsheets.",
+      "SquareCampus consolidates admissions, academics, finance, communication, transport, hostel, library, and compliance into one OS, replacing the patchwork of ERPs, SMS tools, and spreadsheets.",
   },
   {
     question: "Who is it for?",
@@ -55,17 +55,17 @@ const FAQs = [
   {
     question: "How does SquareCampus prove ROI?",
     answer:
-      "Automation reduces manual hours, dues collection leakage drops, and leadership gets real-time insight,saving 15–20 hours per team weekly on average.",
+      "Automation reduces manual hours, dues collection leakage drops, and leadership gets real-time insight, saving 15–20 hours per team weekly on average.",
   },
   {
     question: "How often is the product updated?",
     answer:
-      "Updates ship continuously with zero-downtime releases,covering new capabilities, performance boosts, and security patches.",
+      "Updates ship continuously with zero-downtime releases, covering new capabilities, performance boosts, and security patches.",
   },
   {
     question: "How do we get started?",
     answer:
-      "Book a tailored demo. We’ll map your workflows, share a rollout plan, and align on timelines and pricing.",
+      "Book a tailored demo. We'll map your workflows, share a rollout plan, and align on timelines and pricing.",
   },
 ];
 
@@ -79,7 +79,7 @@ export function FAQ() {
                 Frequently asked questions
               </h2>
               <p className="max-w-xl text-base text-neutral-200">
-                Everything you need to know about adopting SquareCampus,and why campuses of every size call it their operating system.
+              Everything you need to know about adopting SquareCampus, and why campuses of every size call it their operating system.
               </p>
             </div>
             <div className="grid gap-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">

@@ -39,7 +39,7 @@ const operationAreas = [
       "Announcements, feedback, and support routed to the right people with proof of delivery.",
     bullets: [
       "Role-aware messaging via email, SMS, and in-app",
-      "Two-way teacher–parent conversations",
+      "Two-way teacher-parent conversations",
       "Consent and read-receipt tracking",
     ],
   },
@@ -89,7 +89,7 @@ export function Operations() {
         </h2>
         <p className="mx-auto max-w-3xl text-sm text-neutral-300 md:text-base">
           SquareCampus replaces fragmented apps with a single, responsive command center.
-          Every workflow,admissions, academics, finance, communication, facilities,is connected
+          Every workflow—admissions, academics, finance, communication, and facilities—is connected
           so teams move faster and leaders stay in control.
         </p>
       </div>

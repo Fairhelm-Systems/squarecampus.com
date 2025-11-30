@@ -110,7 +110,7 @@ export function EcosystemSection() {
         </h2>
         <p className="max-w-2xl text-xs text-neutral-400 sm:text-sm md:text-base">
           SquareCampus isn&apos;t just an ERP screen for admins. It&apos;s a
-          connected ecosystem for management, staff, parents, and students,with
+          connected ecosystem for management, staff, parents, and students, with
           integrations that keep data flowing without duplication.
         </p>
       </div>
@@ -205,9 +205,7 @@ export function EcosystemSection() {
           </div>
 
           <p className="mt-4 text-[0.78rem] text-neutral-400 sm:text-xs">
-            Every action,attendance marked, fee paid, remark added, bus delay
-            logged,flows through the same source of truth, instead of
-            disappearing into disconnected apps and spreadsheets.
+          Every action—attendance marked, fee paid, remark added, bus delay logged—flows through the same source of truth instead of disappearing into disconnected apps and spreadsheets.
           </p>
         </motion.div>
 
