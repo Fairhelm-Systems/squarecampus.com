@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
+import { DevtoolsGuard } from "@/components/devtools-guard";
+import { BrowserWarning } from "@/components/browser-warning";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +45,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  referrer: "same-origin",
+  other: {
+    "permissions-policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  },
 };
 
 export default function RootLayout({
@@ -53,8 +59,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={"scrollbar-auto scroll-smooth"}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}
       >
+        <DevtoolsGuard />
+        <BrowserWarning />
         {children}
         <Toaster position="top-right" richColors />
       </body>
