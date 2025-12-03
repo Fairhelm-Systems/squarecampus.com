@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { cn } from "@/lib/utils";
 import {
   AppWindow,
@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { SkewedRectangles } from "./backgrounds/skewed-rectangles";
 
 type EcosystemItem = {
   label: string;
@@ -93,8 +94,12 @@ export function EcosystemSection() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative mx-auto mt-24 w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-10"
+      className="relative mx-auto mt-6 w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-10"
     >
+      <div className="pointer-events-none absolute inset-y-0 left-[calc(45%-45vw)] right-[calc(45%-45vw)] h-full">
+        <SkewedRectangles className="opacity-75 sm:opacity-90" />
+      </div>
+
       {/* Soft background halo */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-x-10 top-10 mx-auto h-72 max-w-4xl rounded-full bg-[radial-gradient(circle_at_center,rgba(80,80,80,0.26),transparent_70%)] blur-3xl" />
@@ -176,7 +181,7 @@ export function EcosystemSection() {
               </div>
 
               {/* Teacher tools */}
-              <div className="absolute right-[10%] top-[35%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute right-[8%] top-[35%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
                 <OrbitDot className="mb-1" />
                 <span>Teacher tools</span>
                 <span className="text-[0.65rem] text-neutral-400">
@@ -194,7 +199,7 @@ export function EcosystemSection() {
               </div>
 
               {/* Integrations */}
-              <div className="absolute right-[8%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute right-[10%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
                 <OrbitDot className="mb-1" />
                 <span>Integrations</span>
                 <span className="text-[0.65rem] text-neutral-400">
@@ -205,7 +210,7 @@ export function EcosystemSection() {
           </div>
 
           <p className="mt-4 text-[0.78rem] text-neutral-400 sm:text-xs">
-          Every action—attendance marked, fee paid, remark added, bus delay logged—flows through the same source of truth instead of disappearing into disconnected apps and spreadsheets.
+          Every action, attendance marked, fee paid, remark added, bus delay logged, flows through the same source of truth instead of disappearing into disconnected apps and spreadsheets.
           </p>
         </motion.div>
 
@@ -213,39 +218,61 @@ export function EcosystemSection() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
-          className="flex h-full flex-col justify-between gap-4 rounded-3xl border border-white/10 bg-neutral-950/90 p-5 sm:p-6"
+          className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 p-6 sm:p-8"
         >
-          <div className="space-y-2">
-            <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400">
-              Why it matters
-            </p>
-            <p className="text-sm font-semibold text-white sm:text-base">
+          {/* Background accent glow */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl" />
+          
+          {/* Subtle grid pattern */}
+          <div className='absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.02)1px,transparent_1px)] bg-[size:40px_40px] opacity-50' />
+          
+          <div className="relative space-y-3">
+            <div className="flex items-center gap-2">
+              <div className="h-1 w-8 rounded-full bg-gradient-to-r from-blue-400 to-emerald-400" />
+              <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400">
+                Why it matters
+              </p>
+            </div>
+            <p className="text-base font-semibold leading-relaxed text-white sm:text-lg">
               One ecosystem means fewer tools, fewer logins, and fewer places
               for data to go missing.
             </p>
           </div>
-          <ul className="space-y-2 text-[0.8rem] text-neutral-300 sm:text-xs">
-            <li>
-              • Leaders see the whole campus at a glance, not in fragments.
-            </li>
-            <li>• Staff avoid duplicate work moving data between apps.</li>
-            <li>• Parents use one channel instead of juggling multiple groups.</li>
-            <li>
-              • Future modules and integrations plug into the same backbone.
-            </li>
+
+          <ul className="relative space-y-3 text-[0.85rem] text-neutral-300 sm:text-sm">
+            {[
+              'Leaders see the whole campus at a glance, not in fragments.',
+              'Staff avoid duplicate work moving data between apps.',
+              'Parents use one channel instead of juggling multiple groups.',
+              'Future modules and integrations plug into the same backbone.',
+            ].map((item, idx) => (
+              <motion.li
+                key={idx}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 + idx * 0.1 }}
+                viewport={{ once: true }}
+                className="flex items-start gap-3"
+              >
+                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-400 to-emerald-400" />
+                <span className="leading-relaxed">{item}</span>
+              </motion.li>
+            ))}
           </ul>
-          <div className="pt-2">
+
+          <div className="relative pt-2">
             <a
               href="#contact-us"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-blue-400 transition hover:text-blue-300"
+              className="group inline-flex items-center gap-2 rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.3em] text-blue-400 transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-300"
             >
               Talk about your ecosystem
               <motion.span
-                initial={{ x: 0 }}
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.6, repeat: Infinity }}
+                className="text-base"
               >
                 ↗
               </motion.span>

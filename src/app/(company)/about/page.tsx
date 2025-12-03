@@ -1,15 +1,10 @@
 // app/about/page.tsx
+"use client";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-
-export const metadata: Metadata = {
-  title: "About | SquareCampus",
-  description:
-    "Learn about SquareCampus, the operating system for modern schools and colleges, and the team building it.",
-};
+import { motion } from "motion/react";
 
 type Value = {
   title: string;
@@ -94,33 +89,38 @@ export default function AboutPage() {
             </div>
 
             <div className="grid gap-4 text-xs text-muted-foreground sm:grid-cols-3">
-              <div className="rounded-xl border border-neutral-800/70 bg-neutral-900/60 px-4 py-3">
-                <p className="font-semibold text-neutral-100">
-                  Admissions to Alumni
-                </p>
-                <p className="mt-1 text-[0.75rem] leading-relaxed">
-                  Track the full student lifecycle in one system instead of
-                  chasing spreadsheets and exports.
-                </p>
-              </div>
-              <div className="rounded-xl border border-neutral-800/70 bg-neutral-900/60 px-4 py-3">
-                <p className="font-semibold text-neutral-100">
-                  Built for daily use
-                </p>
-                <p className="mt-1 text-[0.75rem] leading-relaxed">
-                  Designed for principals, office staff, teachers, and
-                  management, not just demos.
-                </p>
-              </div>
-              <div className="rounded-xl border border-neutral-800/70 bg-neutral-900/60 px-4 py-3">
-                <p className="font-semibold text-neutral-100">
-                  Cloud-hosted & scalable
-                </p>
-                <p className="mt-1 text-[0.75rem] leading-relaxed">
-                  Ready for multiple campuses, heavy usage, and long-term
-                  growth without constant rework.
-                </p>
-              </div>
+              {[
+                {
+                  title: "Admissions to Alumni",
+                  desc: "Track the full student lifecycle in one system instead of chasing spreadsheets and exports.",
+                },
+                {
+                  title: "Built for daily use",
+                  desc: "Designed for principals, office staff, teachers, and management, not just demos.",
+                },
+                {
+                  title: "Cloud-hosted & scalable",
+                  desc: "Ready for multiple campuses, heavy usage, and long-term growth without constant rework.",
+                },
+              ].map((item, idx) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group relative overflow-hidden rounded-xl border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 px-4 py-3 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-blue-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative">
+                    <p className="font-semibold text-neutral-100">
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-[0.75rem] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </section>
 
@@ -152,35 +152,32 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* Small “mission tiles” – the micro-ops inside the larger plan */}
+                {/* Small "mission tiles" – the micro-ops inside the larger plan */}
                 <div className="grid gap-3 text-[0.78rem] text-muted-foreground md:grid-cols-3">
-                  <div className="rounded-lg border border-neutral-800/80 bg-neutral-900/70 p-3">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-neutral-200">
-                      Less noise
-                    </p>
-                    <p className="mt-1 leading-relaxed">
-                      Fewer tools, fewer hand-offs, and fewer “who changed
-                      this?” moments.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-neutral-800/80 bg-neutral-900/70 p-3">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-neutral-200">
-                      More traceability
-                    </p>
-                    <p className="mt-1 leading-relaxed">
-                      Every change leaves a trail: what changed, when, and by
-                      whom.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-neutral-800/80 bg-neutral-900/70 p-3">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-neutral-200">
-                      Calm operations
-                    </p>
-                    <p className="mt-1 leading-relaxed">
-                      Offices that know what&apos;s pending, what&apos;s
-                      blocked, and what&apos;s on track.
-                    </p>
-                  </div>
+                  {[
+                    { title: "Less noise", desc: "Fewer tools, fewer hand-offs, and fewer \"who changed this?\" moments." },
+                    { title: "More traceability", desc: "Every change leaves a trail: what changed, when, and by whom." },
+                    { title: "Calm operations", desc: "Offices that know what's pending, what's blocked, and what's on track." },
+                  ].map((item, idx) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.1 }}
+                      className="group relative overflow-hidden rounded-lg border border-neutral-800/80 bg-neutral-900/70 p-3 transition-all duration-300 hover:scale-105 hover:border-blue-400/40 hover:bg-neutral-900/90 hover:shadow-lg hover:shadow-blue-500/5"
+                    >
+                      <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-blue-500/5 blur-2xl transition-all duration-300 group-hover:bg-blue-500/10" />
+                      <div className="relative">
+                        <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-neutral-200">
+                          {item.title}
+                        </p>
+                        <p className="mt-1 leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -199,37 +196,31 @@ export default function AboutPage() {
               </div>
 
               <div className="space-y-3 text-sm text-muted-foreground">
-                <div className="flex items-start gap-3 rounded-lg border border-neutral-800/60 bg-neutral-900/60 p-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-800 text-xs font-semibold text-neutral-100">
-                    MG
-                  </div>
-                  <div>
-                    <p className="text-neutral-100 text-sm font-medium">
-                      Mohit Gupta, Founder &amp; CTO
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed">
-                      Leads product and platform engineering, from
-                      architecture and reliability to how workflows feel for
-                      everyday users.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 rounded-lg border border-neutral-800/60 bg-neutral-900/60 p-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-800 text-xs font-semibold text-neutral-100">
-                    DK
-                  </div>
-                  <div>
-                    <p className="text-neutral-100 text-sm font-medium">
-                      Dhanraj Kotian, Co-founder &amp; CMO
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed">
-                      Works closely with institutions to understand ground
-                      reality, ensuring the product stays aligned with actual
-                      campus needs and communication flows.
-                    </p>
-                  </div>
-                </div>
+                {[
+                  { initials: "MG", name: "Mohit Gupta, Founder & CTO", desc: "Leads product and platform engineering, from architecture and reliability to how workflows feel for everyday users." },
+                  { initials: "DK", name: "Dhanraj Kotian, Co-founder & CMO", desc: "Works closely with institutions to understand ground reality, ensuring the product stays aligned with actual campus needs and communication flows." },
+                ].map((person, idx) => (
+                  <motion.div
+                    key={person.initials}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.15 }}
+                    className="group flex items-start gap-3 rounded-lg border border-neutral-800/60 bg-gradient-to-br from-neutral-900/70 to-neutral-900/50 p-4 transition-all duration-300 hover:scale-[1.02] hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/10"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-neutral-800 to-neutral-900 text-xs font-semibold text-neutral-100 ring-2 ring-neutral-700/50 transition-all duration-300 group-hover:ring-blue-500/50">
+                      {person.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-neutral-100 transition-colors group-hover:text-white">
+                        {person.name}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed">
+                        {person.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
 
               <p className="text-xs leading-relaxed text-muted-foreground">
@@ -253,20 +244,27 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
-              {values.map((value) => (
-                <Card
+              {values.map((value, idx) => (
+                <motion.div
                   key={value.title}
-                  className="border border-neutral-800/70 bg-neutral-900/60"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.15 }}
                 >
-                  <CardContent className="space-y-2 p-5">
-                    <p className="text-sm font-semibold text-neutral-100">
-                      {value.title}
-                    </p>
-                    <p className="text-xs leading-relaxed text-muted-foreground">
-                      {value.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <Card className="group relative h-full overflow-hidden border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-950/60 transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-transparent to-blue-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
+                    <CardContent className="relative space-y-2 p-5">
+                      <p className="text-sm font-semibold text-neutral-100 transition-colors group-hover:text-white">
+                        {value.title}
+                      </p>
+                      <p className="text-xs leading-relaxed text-muted-foreground">
+                        {value.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </section>
@@ -285,30 +283,48 @@ export default function AboutPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
-              {pillars.map((pillar) => (
-                <Card
+              {pillars.map((pillar, idx) => (
+                <motion.div
                   key={pillar.title}
-                  className="group border border-neutral-800/70 bg-neutral-900/60 transition-colors hover:border-neutral-300/60"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.2 }}
                 >
-                  <CardContent className="flex h-full flex-col gap-3 p-5">
-                    <div className="space-y-1">
-                      <p className="text-sm font-semibold text-neutral-50">
-                        {pillar.title}
-                      </p>
-                      <p className="text-[0.78rem] text-muted-foreground">
-                        {pillar.caption}
-                      </p>
-                    </div>
-                    <ul className="mt-1 space-y-2 text-[0.8rem] leading-relaxed text-neutral-300">
-                      {pillar.points.map((point) => (
-                        <li key={point} className="flex gap-2">
-                          <span className="mt-[0.3rem] h-1 w-1 shrink-0 rounded-full bg-neutral-400 group-hover:bg-neutral-200" />
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+                  <Card className="group relative h-full overflow-hidden border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-neutral-950/80 backdrop-blur-sm transition-all duration-500 hover:scale-[1.05] hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-500/20">
+                    {/* Animated border gradient */}
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/50 to-purple-500/0 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-30" />
+
+                    {/* Glow orb */}
+                    <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-blue-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-400/30" />
+
+                    <CardContent className="relative flex h-full flex-col gap-3 p-5">
+                      <div className="space-y-1">
+                        <p className="text-sm font-semibold text-neutral-50 transition-colors duration-300 group-hover:text-white">
+                          {pillar.title}
+                        </p>
+                        <p className="text-[0.78rem] text-muted-foreground">
+                          {pillar.caption}
+                        </p>
+                      </div>
+                      <ul className="mt-1 space-y-2 text-[0.8rem] leading-relaxed text-neutral-300">
+                        {pillar.points.map((point, pointIdx) => (
+                          <motion.li
+                            key={point}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.2 + pointIdx * 0.1 }}
+                            className="flex gap-2"
+                          >
+                            <span className="mt-[0.3rem] h-1 w-1 shrink-0 rounded-full bg-neutral-400 transition-all duration-300 group-hover:h-1.5 group-hover:w-1.5 group-hover:bg-blue-400" />
+                            <span className="transition-colors duration-300 group-hover:text-neutral-100">{point}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </section>

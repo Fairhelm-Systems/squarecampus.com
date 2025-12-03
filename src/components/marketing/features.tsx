@@ -1,9 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useAnimation, useInView } from "framer-motion";
+import { AnimatePresence, motion, useAnimation, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { AlertTriangle, Bell, CheckCircle2, Clock, Languages, X } from "lucide-react";
+import {
+  AlertTriangle,
+  Bell,
+  CheckCircle2,
+  Clock,
+  Languages,
+  X,
+  Activity,
+  Workflow,
+  Radio,
+  Shield,
+  TrendingUp,
+  Zap,
+  type LucideIcon
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type LanguageMeta = {
@@ -20,15 +34,28 @@ type LanguageMeta = {
 };
 
 
-const featureData = [
+const featureData: Array<{
+  title: string;
+  description: string;
+  points: string[];
+  icon: LucideIcon;
+  gradient: string;
+  stats: Array<{ icon: LucideIcon; value: string; label: string }>;
+}> = [
   {
     title: "Realtime academic intelligence",
     description:
-      "See the health of every class, branch, and student in one view so you can intervene early—no more stitching spreadsheets.",
+      "See the health of every class, branch, and student in one view so you can intervene early, no more stitching spreadsheets.",
     points: [
       "Live attendance, engagement, and performance signals",
       "Drill to class, branch, or student in seconds",
       "Board-ready exports for leadership and auditors",
+    ],
+    icon: Activity,
+    gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
+    stats: [
+      { icon: TrendingUp, value: "100%", label: "Real-time" },
+      { icon: Zap, value: "<1 sec", label: "Insights" },
     ],
   },
   {
@@ -40,6 +67,12 @@ const featureData = [
       "Automated alerts for approvals, dues, transport, and hostel",
       "Templates that mirror your institutional policies",
     ],
+    icon: Workflow,
+    gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
+    stats: [
+      { icon: Zap, value: "93%", label: "Automated" },
+      { icon: TrendingUp, value: "18 hrs/wk", label: "Saved" },
+    ],
   },
   {
     title: "Unified communication & engagement",
@@ -49,6 +82,12 @@ const featureData = [
       "Multichannel announcements (email, SMS, app)",
       "Two-way teacher-guardian collaboration with controls",
       "Consent management, read receipts, and audit trails",
+    ],
+    icon: Radio,
+    gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
+    stats: [
+      { icon: TrendingUp, value: "97%", label: "Reach rate" },
+      { icon: Zap, value: "4x faster", label: "Delivery" },
     ],
   },
   {
@@ -60,6 +99,12 @@ const featureData = [
       "24x7 monitoring, backups, and global delivery",
       "Friendly integrations with LMS, ERP, and payments",
     ],
+    icon: Shield,
+    gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
+    stats: [
+      { icon: Shield, value: "99.98%", label: "Uptime" },
+      { icon: CheckCircle2, value: "Zero", label: "Breaches" },
+    ],
   },
 ];
 
@@ -67,7 +112,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="bg-neutral-950 py-20 px-4 md:px-8"
+      className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral py-16 px-4 md:px-8 md:py-20"
       aria-label="Core features of SquareCampus"
     >
       <div className="mx-auto max-w-6xl space-y-6 text-center">
@@ -84,27 +129,85 @@ export function Features() {
       </div>
 
       <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
-        {featureData.map((feature) => (
-          <article
-            key={feature.title}
-            className="flex flex-col justify-between rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 shadow-2xl shadow-black/40 p-6 text-sm text-neutral-200 backdrop-blur"
-          >
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
-                {feature.title}
-              </p>
-              <p className="mt-3 text-base text-neutral-100">{feature.description}</p>
-            </div>
-            <ul className="mt-6 space-y-3 text-xs text-neutral-300">
-              {feature.points.map((point) => (
-                <li key={point} className="flex items-start gap-2">
-                  <span className="mt-1 inline-flex h-2 w-2 rotate-45 rounded-sm border border-white/60 bg-gradient-to-br from-blue-500 to-purple-500" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+        {featureData.map((feature, index) => {
+          const Icon = feature.icon;
+          return (
+            <motion.article
+              key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
+            >
+              {/* Gradient overlay on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+
+              {/* Content */}
+              <div className="relative">
+                {/* Icon header */}
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <motion.div
+                    className="rounded-xl border border-white/10 bg-white/5 p-2.5 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10"
+                    whileHover={{ rotate: [0, -8, 8, -8, 0], scale: 1.05 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Icon className="h-5 w-5 text-white/70 transition-colors duration-300 group-hover:text-white" />
+                  </motion.div>
+
+                  {/* Stats badges */}
+                  <div className="flex gap-1.5">
+                    {feature.stats.map((stat, statIndex) => {
+                      const StatIcon = stat.icon;
+                      return (
+                        <motion.div
+                          key={stat.label}
+                          initial={{ opacity: 0, x: 20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 + statIndex * 0.1 + 0.2 }}
+                          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/80 px-2 py-1 backdrop-blur-sm"
+                        >
+                          <StatIcon className="h-2.5 w-2.5 text-white/60" />
+                          <div className="text-right">
+                            <p className="text-[0.7rem] font-semibold leading-tight text-white">{stat.value}</p>
+                            <p className="text-[0.55rem] uppercase leading-tight tracking-wider text-white/40">{stat.label}</p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
+                    {feature.title}
+                  </p>
+                  <p className="mt-2 text-sm leading-snug text-neutral-100">{feature.description}</p>
+                </div>
+              </div>
+
+              <ul className="relative mt-3 space-y-2 text-xs text-neutral-300">
+                {feature.points.map((point, pointIndex) => (
+                  <motion.li
+                    key={point}
+                    className="flex items-start gap-2"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 + pointIndex * 0.05 + 0.3 }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.span
+                      className="mt-1 inline-flex h-2 w-2 rotate-45 rounded-sm border border-white/60 bg-gradient-to-br from-blue-500 to-purple-500 transition-all duration-300 group-hover:scale-125 group-hover:rotate-[225deg]"
+                      whileHover={{ rotate: 405 }}
+                    />
+                    <span>{point}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.article>
+          );
+        })}
       </div>
 
       <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/60">
@@ -117,7 +220,7 @@ export function Features() {
               Beautiful, legible dashboards that keep decisions visible.
             </p>
             <p className="mt-2 text-sm text-neutral-300">
-              Board-ready reports, compliance logs, and student journeys live in one place—no exports needed.
+              Board-ready reports, compliance logs, and student journeys live in one place, no exports needed.
             </p>
           </div>
           <Image

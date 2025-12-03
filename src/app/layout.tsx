@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | SquareCampus",
   },
   description:
-    "SquareCampus is the operating system for modern schools and colleges—unifying admissions, academics, finance, communication, transport, and compliance into one predictable platform.",
+    "SquareCampus is the operating system for modern schools and colleges, unifying admissions, academics, finance, communication, transport, and compliance into one predictable platform.",
   alternates: {
     canonical: "https://squarecampus.com/",
   },

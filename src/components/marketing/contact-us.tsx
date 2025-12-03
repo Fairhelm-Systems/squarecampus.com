@@ -7,6 +7,8 @@ import Link from "next/link";
 import { MacbookScroll } from "./macbook";
 import { sendContactEmail, type ContactFormData } from "@/actions/contact";
 import { toast } from "sonner";
+import { MaskedDots } from "./backgrounds/masked-dots";
+import { Logo } from "./logo";
 
 const contactHighlights = [
     "Response in under 24 hours",
@@ -59,9 +61,10 @@ export function ContactUs() {
 
     return (
         <section
-            className="relative bg-neutral-950 px-4 py-16 md:px-6 md:py-24"
+            className="relative w-full px-4 py-16 md:px-6 md:py-24"
             id="contact-us"
         >
+            <MaskedDots className="opacity-70 sm:opacity-85" />
             <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 lg:grid-cols-2">
                 {/* Left pane: narrative + contact options */}
                 <div className="flex flex-col gap-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950/80 p-8 shadow-2xl shadow-black/50">
@@ -340,10 +343,13 @@ export function ContactUs() {
                 </form>
             </div>
 
-            <MacbookScroll
-                src="/images/marketing/dashboard.png"
-                showGradient={true}
-            />
+            <MacbookScroll showGradient={true}>
+                <div className="flex items-center justify-center h-full w-full bg-gradient-to-br from-neutral-900 via-neutral-950 to-black">
+                    <div className="scale-150">
+                        <Logo />
+                    </div>
+                </div>
+            </MacbookScroll>
         </section>
     );
 }

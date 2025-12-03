@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import {
   IconBrightnessDown,
@@ -28,7 +28,7 @@ import Image from "next/image";
 
 const lidContainerVariants = {
   hover: {
-    rotateX: -35,
+    rotateX: -25,
     perspective: "200px",
   },
 };
@@ -43,19 +43,25 @@ export const MacbookScroll = ({
   src,
   showGradient,
   badge,
+  children,
 }: {
   src?: string;
   showGradient?: boolean;
   badge?: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   return (
     <motion.div
       whileHover="hover"
       whileTap="hover"
-      className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 [perspective:800px] transform md:scale-100  scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
+      style={{
+        perspective: "800px",
+        rotateX: "8deg",
+      }}
+      className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100  scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
     >
       {/* Lid */}
-      <Lid src={src} />
+      <Lid src={src} children={children} />
       {/* Base area */}
       <div className="h-[22rem] w-[32rem] bg-[#272729] rounded-2xl overflow-hidden relative -z-10">
         {/* above keyboard bar */}
@@ -84,7 +90,7 @@ export const MacbookScroll = ({
   );
 };
 
-export const Lid = ({ src }: { src?: string }) => {
+export const Lid = ({ src, children }: { src?: string; children?: React.ReactNode }) => {
   return (
     <motion.div className="relative [perspective:800px] z-50">
       <motion.div
@@ -116,12 +122,18 @@ export const Lid = ({ src }: { src?: string }) => {
           }}
           className="absolute inset-0 bg-[#010101] overflow-hidden h-[95%] w-[98.5%] m-auto rounded-xl flex items-center justify-center"
         >
-          <Image
-            src={src as string}
-            alt="aceternity logo"
-            fill
-            className="object-cover object-left-top rounded-lg inset-0 h-full w-full"
-          />
+          {children ? (
+            <div className="w-full h-full rounded-lg overflow-hidden">
+              {children}
+            </div>
+          ) : src ? (
+            <Image
+              src={src}
+              alt="aceternity logo"
+              fill
+              className="object-cover object-left-top rounded-lg inset-0 h-full w-full"
+            />
+          ) : null}
         </motion.div>
       </motion.div>
     </motion.div>

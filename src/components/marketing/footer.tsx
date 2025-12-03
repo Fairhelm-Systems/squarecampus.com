@@ -68,7 +68,7 @@ export function Footer() {
     "https://www.linkedin.com/company/square-campus";
 
   return (
-    <footer className="relative w-full overflow-hidden border-t border-white/10 bg-neutral-950 px-6 py-14 sm:px-8 lg:px-10 lg:py-20">
+    <footer className="relative w-full overflow-hidden border-t border-white/10 bg-neutral px-6 py-14 sm:px-8 lg:px-10 lg:py-20">
       {/* Soft radial glow behind the content – the last shimmer of the operation */}
       <div className="pointer-events-none absolute inset-x-0 bottom-[-40%] z-0 mx-auto h-80 w-[40rem] rounded-full bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.24),_transparent_60%)] opacity-70" />
 
@@ -112,13 +112,13 @@ export function Footer() {
 
       {/* Watermark wordmark – the name of the operation, fading into the floor */}
       <p className="pointer-events-none relative z-0 mt-14 text-center font-extrabold uppercase text-transparent">
-        <span className="bg-gradient-to-b from-neutral-900 to-neutral-800 bg-clip-text 
+        <span className="bg-gradient-to-b from-neutral-600 to-neutral-800 bg-clip-text 
           text-4xl tracking-[0.1em]
           sm:text-5xl sm:tracking-[0.15em]
-          md:text-6xl md:tracking-[0.2em]
-          lg:text-7xl lg:tracking-[0.25em]
-          xl:text-8xl xl:tracking-[0.25em]
-          2xl:text-9xl 2xl:tracking-[0.3em]">
+          md:text-6xl md:tracking-[0.15em]
+          lg:text-7xl lg:tracking-[0.15em]
+          xl:text-8xl xl:tracking-[0.15em]
+          2xl:text-9xl 2xl:tracking-[0.2em]">
           SquareCampus
         </span>
       </p>
