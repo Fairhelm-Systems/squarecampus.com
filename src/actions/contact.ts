@@ -321,36 +321,164 @@ export async function sendContactEmail(
       <html>
         <head>
           <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-            .field { margin-bottom: 20px; }
-            .label { font-weight: 600; color: #4b5563; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; margin-bottom: 5px; }
-            .value { color: #111827; font-size: 15px; }
-            .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              line-height: 1.6;
+              background: #0a0a0a;
+              padding: 40px 20px;
+            }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
+              background: #171717;
+              border-radius: 16px;
+              overflow: hidden;
+              border: 1px solid rgba(255, 255, 255, 0.08);
+              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            }
+            .header {
+              background: linear-gradient(135deg, #171717 0%, #262626 100%);
+              padding: 40px 32px;
+              border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+              position: relative;
+              overflow: hidden;
+            }
+            .header::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background: linear-gradient(90deg, rgba(56, 189, 248, 0) 0%, rgba(56, 189, 248, 0.6) 50%, rgba(56, 189, 248, 0) 100%);
+            }
+            .logo-section {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+            }
+            .logo-icon {
+              width: 32px;
+              height: 32px;
+              background: linear-gradient(135deg, #38bdf8 0%, #10b981 100%);
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              color: white;
+              font-size: 18px;
+            }
+            .logo-text {
+              color: #ffffff;
+              font-size: 18px;
+              font-weight: 600;
+              letter-spacing: -0.025em;
+            }
+            .header h1 {
+              color: #ffffff;
+              font-size: 24px;
+              font-weight: 600;
+              margin: 0 0 8px 0;
+              letter-spacing: -0.025em;
+            }
+            .header p {
+              color: rgba(255, 255, 255, 0.6);
+              font-size: 14px;
+              margin: 0;
+            }
+            .content {
+              background: #171717;
+              padding: 32px;
+            }
+            .field {
+              margin-bottom: 24px;
+              background: rgba(38, 38, 38, 0.5);
+              padding: 16px;
+              border-radius: 12px;
+              border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .label {
+              font-weight: 600;
+              color: rgba(56, 189, 248, 0.9);
+              text-transform: uppercase;
+              font-size: 11px;
+              letter-spacing: 1px;
+              margin-bottom: 8px;
+              display: block;
+            }
+            .value {
+              color: #f5f5f5;
+              font-size: 15px;
+              line-height: 1.6;
+            }
+            .value a {
+              color: #38bdf8;
+              text-decoration: none;
+              border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+              transition: border-color 0.2s;
+            }
+            .value a:hover {
+              border-bottom-color: #38bdf8;
+            }
+            .message-field {
+              background: rgba(38, 38, 38, 0.7);
+              border-left: 3px solid rgba(16, 185, 129, 0.5);
+            }
+            .footer {
+              margin-top: 32px;
+              padding-top: 24px;
+              border-top: 1px solid rgba(255, 255, 255, 0.08);
+              text-align: center;
+            }
+            .footer p {
+              font-size: 12px;
+              color: rgba(255, 255, 255, 0.4);
+              line-height: 1.5;
+            }
+            .badge {
+              display: inline-block;
+              background: rgba(56, 189, 248, 0.1);
+              color: #38bdf8;
+              padding: 4px 12px;
+              border-radius: 20px;
+              font-size: 11px;
+              font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              margin-top: 8px;
+              border: 1px solid rgba(56, 189, 248, 0.2);
+            }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1 style="margin: 0; font-size: 24px;">New Contact Form Submission</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">SquareCampus Marketing Website</p>
+              <div class="logo-section">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">SquareCampus</div>
+              </div>
+              <h1>New Contact Submission</h1>
+              <p>A new inquiry has been received from the marketing website</p>
             </div>
+
             <div class="content">
               <div class="field">
-                <div class="label">Full Name</div>
+                <span class="label">Full Name</span>
                 <div class="value">${sanitizedData.name}</div>
               </div>
 
               <div class="field">
-                <div class="label">Email</div>
-                <div class="value"><a href="mailto:${sanitizedData.email}" style="color: #2563eb;">${sanitizedData.email}</a></div>
+                <span class="label">Email Address</span>
+                <div class="value"><a href="mailto:${sanitizedData.email}">${sanitizedData.email}</a></div>
               </div>
 
               <div class="field">
-                <div class="label">Institution</div>
+                <span class="label">Institution</span>
                 <div class="value">${sanitizedData.institution}</div>
               </div>
 
@@ -358,7 +486,7 @@ export async function sendContactEmail(
                 sanitizedData.role
                   ? `
               <div class="field">
-                <div class="label">Role</div>
+                <span class="label">Role / Position</span>
                 <div class="value">${sanitizedData.role}</div>
               </div>
               `
@@ -369,7 +497,7 @@ export async function sendContactEmail(
                 sanitizedData.students
                   ? `
               <div class="field">
-                <div class="label">Number of Students</div>
+                <span class="label">Number of Students</span>
                 <div class="value">${sanitizedData.students}</div>
               </div>
               `
@@ -379,8 +507,8 @@ export async function sendContactEmail(
               ${
                 sanitizedData.message
                   ? `
-              <div class="field">
-                <div class="label">Message</div>
+              <div class="field message-field">
+                <span class="label">Message</span>
                 <div class="value" style="white-space: pre-wrap;">${sanitizedData.message}</div>
               </div>
               `
@@ -388,18 +516,24 @@ export async function sendContactEmail(
               }
 
               <div class="footer">
-                <p>This email was sent from the SquareCampus contact form at ${(() => {
-                  try {
-                    return new Date().toLocaleString("en-US", {
-                      timeZone: "Asia/Kolkata",
-                      dateStyle: "full",
-                      timeStyle: "short"
-                    }) + " IST";
-                  } catch (error) {
-                    console.warn("[contact] Date formatting error:", error);
-                    return new Date().toISOString();
-                  }
-                })()}</p>
+                <span class="badge">New Lead</span>
+                <p style="margin-top: 16px;">
+                  Received at ${(() => {
+                    try {
+                      return new Date().toLocaleString("en-US", {
+                        timeZone: "Asia/Kolkata",
+                        dateStyle: "full",
+                        timeStyle: "short"
+                      }) + " IST";
+                    } catch (error) {
+                      console.warn("[contact] Date formatting error:", error);
+                      return new Date().toISOString();
+                    }
+                  })()}
+                </p>
+                <p style="margin-top: 8px;">
+                  SquareCampus Contact Form · Marketing Website
+                </p>
               </div>
             </div>
           </div>
