@@ -2,33 +2,52 @@
 
 import { Resend } from "resend";
 import { headers } from "next/headers";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 
-// Validate API key exists
-if (!process.env.RESEND_API_KEY) {
-  console.error(
-    "RESEND_API_KEY is not set. Please add it to your environment variables."
-  );
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY || "");
-
-// In-memory rate limiting (use Redis/Upstash in production for multi-instance deployments)
 const submissionTracking = new Map<
   string,
-  { 
-    count: number; 
-    lastSubmission: number; 
-    cooldownUntil?: number 
+  {
+    count: number;
+    lastSubmission: number;
+    cooldownUntil?: number;
   }
 >();
 
+let redis: Redis | null = null;
+let upstashLimiter: Ratelimit | null = null;
+
+try {
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+
+    upstashLimiter = new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(5, "10 m"),
+      analytics: true,
+      prefix: "sc:contact",
+    });
+  }
+} catch (error) {
+  console.error("[contact] Failed to initialize Upstash Redis/Ratelimit:", error);
+  redis = null;
+  upstashLimiter = null;
+}
+
 // Clean up old entries every 10 minutes
 setInterval(() => {
-  const now = Date.now();
-  for (const [key, value] of submissionTracking.entries()) {
-    if (now - value.lastSubmission > 10 * 60 * 1000) {
-      submissionTracking.delete(key);
+  try {
+    const now = Date.now();
+    for (const [key, value] of submissionTracking.entries()) {
+      if (now - value.lastSubmission > 10 * 60 * 1000) {
+        submissionTracking.delete(key);
+      }
     }
+  } catch (error) {
+    console.error("[contact] Error during submission tracking cleanup:", error);
   }
 }, 10 * 60 * 1000);
 
@@ -39,7 +58,6 @@ export type ContactFormData = {
   role?: string;
   students?: string;
   message?: string;
-  // Honeypot field - should always be empty
   website?: string;
 };
 
@@ -49,7 +67,6 @@ export type ContactFormResponse = {
   cooldownSeconds?: number;
 };
 
-// List of disposable email domains to block
 const DISPOSABLE_EMAIL_DOMAINS = [
   "tempmail.com",
   "throwaway.email",
@@ -62,7 +79,6 @@ const DISPOSABLE_EMAIL_DOMAINS = [
   "temp-mail.org",
 ];
 
-// Spam keywords to detect
 const SPAM_KEYWORDS = [
   "viagra",
   "casino",
@@ -77,39 +93,54 @@ const SPAM_KEYWORDS = [
 ];
 
 function getClientIdentifier(email: string, headersList: Headers): string {
-  // Use email + IP for tracking (fallback to email only if no IP)
-  const forwarded = headersList.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0] : headersList.get("x-real-ip");
-  return ip ? `${email}:${ip}` : email;
+  try {
+    const forwarded = headersList.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(",")[0]?.trim() : headersList.get("x-real-ip");
+    return ip ? `${email}:${ip}` : email;
+  } catch (error) {
+    console.warn("[contact] Failed to get client identifier:", error);
+    return email; // Fallback to email only
+  }
 }
 
 function isDisposableEmail(email: string): boolean {
-  const domain = email.split("@")[1]?.toLowerCase();
-  return DISPOSABLE_EMAIL_DOMAINS.some((disposable) =>
-    domain?.includes(disposable)
-  );
+  try {
+    const domain = email.split("@")[1]?.toLowerCase();
+    if (!domain) return false;
+    return DISPOSABLE_EMAIL_DOMAINS.some((disposable) =>
+      domain.includes(disposable),
+    );
+  } catch (error) {
+    console.warn("[contact] Error checking disposable email:", error);
+    return false; // Fail open - allow the email through
+  }
 }
 
 function containsSpam(text: string): boolean {
-  const lowerText = text.toLowerCase();
-  return SPAM_KEYWORDS.some((keyword) => lowerText.includes(keyword));
+  try {
+    const lowerText = text.toLowerCase();
+    return SPAM_KEYWORDS.some((keyword) => lowerText.includes(keyword));
+  } catch (error) {
+    console.warn("[contact] Error checking spam content:", error);
+    return false; // Fail open - allow the content through
+  }
 }
 
-function validateTextLength(
-  text: string,
-  min: number,
-  max: number
-): boolean {
+function validateTextLength(text: string, min: number, max: number): boolean {
   return text.length >= min && text.length <= max;
 }
 
 export async function sendContactEmail(
-  formData: ContactFormData
+  formData: ContactFormData,
 ): Promise<ContactFormResponse> {
   try {
-    // 0. VALIDATE API KEY EXISTS
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY environment variable is not set");
+    // 🔐 0. Get API key at runtime, inside the operation
+    const apiKey = process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      console.error(
+        "[contact] RESEND_API_KEY environment variable is not set at runtime",
+      );
       return {
         success: false,
         message:
@@ -117,19 +148,30 @@ export async function sendContactEmail(
       };
     }
 
-    const headersList = await headers();
+    // Create client with the key that actually exists *here*
+    const resend = new Resend(apiKey);
 
-    // 1. HONEYPOT CHECK - If website field is filled, it's a bot
+    let headersList: Headers;
+    try {
+      headersList = await headers();
+    } catch (error) {
+      console.error("[contact] Failed to get request headers:", error);
+      return {
+        success: false,
+        message: "Unable to process request. Please try again.",
+      };
+    }
+
+    // 1. Honeypot
     if (formData.website && formData.website.trim() !== "") {
-      console.warn("Honeypot triggered - potential bot submission");
-      // Return success to not alert the bot
+      console.warn("[contact] Honeypot triggered - potential bot");
       return {
         success: true,
         message: "Thank you! We'll get back to you within 24 hours.",
       };
     }
 
-    // 2. VALIDATE REQUIRED FIELDS
+    // 2. Required fields
     if (!formData.name || !formData.email || !formData.institution) {
       return {
         success: false,
@@ -137,7 +179,7 @@ export async function sendContactEmail(
       };
     }
 
-    // 3. VALIDATE EMAIL FORMAT
+    // 3. Email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       return {
@@ -146,7 +188,7 @@ export async function sendContactEmail(
       };
     }
 
-    // 4. CHECK FOR DISPOSABLE EMAIL
+    // 4. Disposable email
     if (isDisposableEmail(formData.email)) {
       return {
         success: false,
@@ -155,7 +197,7 @@ export async function sendContactEmail(
       };
     }
 
-    // 5. VALIDATE TEXT LENGTHS
+    // 5. Text lengths
     if (!validateTextLength(formData.name, 2, 100)) {
       return {
         success: false,
@@ -177,10 +219,12 @@ export async function sendContactEmail(
       };
     }
 
-    // 6. CHECK FOR SPAM CONTENT
-    const allText = `${formData.name} ${formData.institution} ${formData.message || ""} ${formData.role || ""}`;
+    // 6. Spam content
+    const allText = `${formData.name} ${formData.institution} ${
+      formData.message || ""
+    } ${formData.role || ""}`;
     if (containsSpam(allText)) {
-      console.warn("Spam keywords detected in submission");
+      console.warn("[contact] Spam keywords detected in submission");
       return {
         success: false,
         message:
@@ -188,16 +232,36 @@ export async function sendContactEmail(
       };
     }
 
-    // 7. RATE LIMITING
+    // 7. Rate limiting
     const identifier = getClientIdentifier(formData.email, headersList);
+
+    if (upstashLimiter) {
+      try {
+        const rate = await upstashLimiter.limit(identifier);
+        if (!rate.success) {
+          const retryAfterSeconds = Math.max(
+            1,
+            Math.ceil(((rate.reset ?? 0) * 1000 - Date.now()) / 1000),
+          );
+          return {
+            success: false,
+            message: "Too many attempts. Please try again in a few minutes.",
+            cooldownSeconds: retryAfterSeconds,
+          };
+        }
+      } catch (error) {
+        console.error("[contact] Upstash rate limiter error", error);
+        // Fall back to in-memory limiter below
+      }
+    }
+
     const now = Date.now();
     const tracking = submissionTracking.get(identifier);
 
     if (tracking) {
-      // Check if in cooldown period
       if (tracking.cooldownUntil && now < tracking.cooldownUntil) {
         const remainingSeconds = Math.ceil(
-          (tracking.cooldownUntil - now) / 1000
+          (tracking.cooldownUntil - now) / 1000,
         );
         return {
           success: false,
@@ -206,14 +270,13 @@ export async function sendContactEmail(
         };
       }
 
-      // Check rate limits within 1 hour window
       const oneHourAgo = now - 60 * 60 * 1000;
+
       if (tracking.lastSubmission > oneHourAgo) {
         tracking.count += 1;
 
-        // More than 3 submissions in 1 hour = apply 1 hour cooldown
         if (tracking.count > 3) {
-          tracking.cooldownUntil = now + 60 * 60 * 1000; // 1 hour
+          tracking.cooldownUntil = now + 60 * 60 * 1000;
           return {
             success: false,
             message:
@@ -222,32 +285,27 @@ export async function sendContactEmail(
           };
         }
 
-        // Apply 5-minute cooldown after each submission
         tracking.cooldownUntil = now + 5 * 60 * 1000;
         tracking.lastSubmission = now;
       } else {
-        // Reset count if outside 1-hour window
         tracking.count = 1;
         tracking.lastSubmission = now;
         tracking.cooldownUntil = now + 5 * 60 * 1000;
       }
     } else {
-      // First submission from this identifier
       submissionTracking.set(identifier, {
         count: 1,
         lastSubmission: now,
-        cooldownUntil: now + 5 * 60 * 1000, // 5-minute cooldown
+        cooldownUntil: now + 5 * 60 * 1000,
       });
     }
 
-    // 8. SANITIZE INPUTS (prevent XSS in email)
-    const sanitize = (text: string) => {
-      return text
+    const sanitize = (text: string) =>
+      text
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#x27;");
-    };
 
     const sanitizedData = {
       name: sanitize(formData.name),
@@ -258,7 +316,6 @@ export async function sendContactEmail(
       message: formData.message ? sanitize(formData.message) : undefined,
     };
 
-    // 9. CREATE EMAIL HTML CONTENT
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -331,7 +388,18 @@ export async function sendContactEmail(
               }
 
               <div class="footer">
-                <p>This email was sent from the SquareCampus contact form at ${new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata", dateStyle: "full", timeStyle: "short" })} IST</p>
+                <p>This email was sent from the SquareCampus contact form at ${(() => {
+                  try {
+                    return new Date().toLocaleString("en-US", {
+                      timeZone: "Asia/Kolkata",
+                      dateStyle: "full",
+                      timeStyle: "short"
+                    }) + " IST";
+                  } catch (error) {
+                    console.warn("[contact] Date formatting error:", error);
+                    return new Date().toISOString();
+                  }
+                })()}</p>
               </div>
             </div>
           </div>
@@ -339,17 +407,26 @@ export async function sendContactEmail(
       </html>
     `;
 
-    // 10. SEND EMAIL USING RESEND
-    const { error } = await resend.emails.send({
-      from: "SquareCampus Contact <onboarding@resend.dev>",
-      to: ["contact@squarecampus.com"],
-      replyTo: formData.email,
-      subject: `New Contact: ${sanitizedData.name} from ${sanitizedData.institution}`,
-      html: emailHtml,
-    });
+    let emailResult;
+    try {
+      emailResult = await resend.emails.send({
+        from: "admin@squarecampus.com",
+        to: ["contact@squarecampus.com"],
+        replyTo: formData.email,
+        subject: `New Contact: ${sanitizedData.name} from ${sanitizedData.institution}`,
+        html: emailHtml,
+      });
+    } catch (sendError) {
+      console.error("[contact] Resend send exception:", sendError);
+      return {
+        success: false,
+        message:
+          "Failed to send message. Please try again or email us directly at contact@squarecampus.com",
+      };
+    }
 
-    if (error) {
-      console.error("Resend error:", error);
+    if (emailResult.error) {
+      console.error("[contact] Resend API error:", emailResult.error);
       return {
         success: false,
         message:
@@ -363,10 +440,31 @@ export async function sendContactEmail(
         "Thank you! We'll get back to you within 24 hours. You can submit another inquiry in 5 minutes if needed.",
     };
   } catch (error) {
-    console.error("Contact form error:", error);
+    console.error("[contact] Contact form error:", error);
+
+    // Provide more specific error messages based on error type
+    let errorMessage = "An unexpected error occurred. Please try again later.";
+
+    if (error instanceof Error) {
+      // Network errors
+      if (error.message.includes("fetch") || error.message.includes("network")) {
+        errorMessage = "Network error. Please check your connection and try again.";
+      }
+      // Timeout errors
+      else if (error.message.includes("timeout")) {
+        errorMessage = "Request timed out. Please try again.";
+      }
+      // Log the specific error for debugging
+      console.error("[contact] Error details:", {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      });
+    }
+
     return {
       success: false,
-      message: "An unexpected error occurred. Please try again later.",
+      message: errorMessage,
     };
   }
 }
