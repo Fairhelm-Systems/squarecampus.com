@@ -162,7 +162,6 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               <LinkButton
-                as={Link}
                 href={CONSTANTS.LOGIN_LINK}
                 variant="secondary"
                 className="group inline-flex items-center gap-1.5"
@@ -182,14 +181,13 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
           data-cal-namespace={calOptions.namespace}
           data-cal-link={CONSTANTS.CALCOM_LINK}
           data-cal-config={`{"layout":"${calOptions.layout}"}`}
-          as="button"
           variant="primary"
           className="group hidden items-center gap-1.5 md:inline-flex"
         >
           <span>Book a call</span>
           {/* The timing expert: a calendar that leans in as the user hovers */}
           <CalendarClock
-            className="h-4 w-4 text-neutral-900 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
+            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
             aria-hidden="true"
           />
         </LinkButton>
@@ -257,7 +255,6 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
           >
                           <div className="mt-2 flex flex-col gap-2">
                 <LinkButton
-                  as={Link}
                   href={CONSTANTS.LOGIN_LINK}
                   variant="secondary"
                   className="group flex w-full items-center justify-center gap-1.5"
@@ -274,7 +271,6 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
                   data-cal-namespace={calOptions.namespace}
                   data-cal-link={CONSTANTS.CALCOM_LINK}
                   data-cal-config={`{"layout":"${calOptions.layout}"}`}
-                  as="button"
                   variant="primary"
                   className="group flex w-full items-center justify-center gap-1.5"
                   onClick={() => setOpen(false)}

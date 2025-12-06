@@ -130,7 +130,6 @@ export function Hero() {
       >
         {/* Primary entry: existing users dropping into the system */}
         <LinkButton
-          as={Link}
           href={CONSTANTS.LOGIN_LINK}
           variant="dark"
           className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 text-center sm:w-40"
@@ -147,13 +146,12 @@ export function Hero() {
           data-cal-namespace={calOptions.namespace}
           data-cal-link={CONSTANTS.CALCOM_LINK}
           data-cal-config={`{"layout":"${calOptions.layout}"}`}
-          as="button"
           variant="primary"
           className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 sm:w-40"
         >
           <span>Book a call</span>
           <CalendarClock
-            className="h-4 w-4 text-neutral-900 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
+            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
             aria-hidden="true"
           />
         </LinkButton>
