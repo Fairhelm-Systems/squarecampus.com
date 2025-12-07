@@ -8,14 +8,14 @@ import {
   MessageSquare,
   Users,
   BarChart3,
-  type LucideIcon
-} from "lucide-react";
+  type IconComponent,
+} from "@/components/icons";
 
 const operationAreas: Array<{
   title: string;
   description: string;
   bullets: string[];
-  icon: LucideIcon;
+  icon: IconComponent;
   gradient: string;
   metric?: { label: string; value: string };
 }> = [

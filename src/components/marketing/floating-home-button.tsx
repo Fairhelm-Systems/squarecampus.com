@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowUp } from "lucide-react";
+import { ArrowUpRight, ArrowUp } from "@/components/icons";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 

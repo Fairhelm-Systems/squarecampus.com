@@ -16,8 +16,8 @@ import {
   Shield,
   TrendingUp,
   Zap,
-  type LucideIcon
-} from "lucide-react";
+  type IconComponent,
+} from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 type LanguageMeta = {
@@ -38,9 +38,9 @@ const featureData: Array<{
   title: string;
   description: string;
   points: string[];
-  icon: LucideIcon;
+  icon: IconComponent;
   gradient: string;
-  stats: Array<{ icon: LucideIcon; value: string; label: string }>;
+  stats: Array<{ icon: IconComponent; value: string; label: string }>;
 }> = [
   {
     title: "Realtime academic intelligence",
@@ -187,24 +187,23 @@ export function Features() {
                 </div>
               </div>
 
-              <ul className="relative mt-3 space-y-2 text-xs text-neutral-300">
+              <div className="relative mt-4 grid grid-cols-1 gap-2 text-xs text-neutral-100 sm:grid-cols-2">
                 {feature.points.map((point, pointIndex) => (
-                  <motion.li
+                  <motion.div
                     key={point}
-                    className="flex items-start gap-2"
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 + pointIndex * 0.05 + 0.3 }}
+                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 shadow-inner shadow-black/30 backdrop-blur-sm transition group-hover:border-white/25 group-hover:bg-white/10"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 + pointIndex * 0.06 + 0.25 }}
                     viewport={{ once: true }}
                   >
-                    <motion.span
-                      className="mt-1 inline-flex h-2 w-2 rotate-45 rounded-sm border border-white/60 bg-gradient-to-br from-blue-500 to-purple-500 transition-all duration-300 group-hover:scale-125 group-hover:rotate-[225deg]"
-                      whileHover={{ rotate: 405 }}
-                    />
-                    <span>{point}</span>
-                  </motion.li>
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-white/10 via-white/5 to-transparent text-[0.65rem] font-semibold text-white/70 shadow-lg shadow-black/40">
+                      {pointIndex + 1}
+                    </span>
+                    <span className="leading-snug text-neutral-200">{point}</span>
+                  </motion.div>
                 ))}
-              </ul>
+              </div>
             </motion.article>
           );
         })}
@@ -575,7 +574,7 @@ export const LanguageSupportSection = () => {
         greetingEnglish: "Welcome to SquareCampus.",
         greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
         notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 ಶುಭೋದಯ! ಅద్భುತ ದಿನ ನಿಮಗಾಗಲಿ.",
+        notificationNative: "🔔 ಶುಭೋದಯ! ನಿಮ್ಮ ದಿನ ಅದ್ಭುತವಾಗಲಿ.",
       },
       {
         code: "TA",
@@ -664,6 +663,61 @@ export const LanguageSupportSection = () => {
         notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
         notificationNative:
           "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
+      },
+      {
+        code: "UR",
+        englishName: "Urdu",
+        nativeName: "اردو",
+        locale: "ur-IN",
+        glow: "from-slate-300 to-slate-500",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus میں خوش آمدید۔",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 صبح بخیر! آپ کا دن شاندار گزرے۔",
+      },
+      {
+        code: "OR",
+        englishName: "Odia",
+        nativeName: "ଓଡିଆ",
+        locale: "or-IN",
+        glow: "from-amber-300 to-orange-500",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus କୁ ସ୍ୱାଗତ।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 ସୁପ୍ରଭାତ! ଆପଣଙ୍କ ଦିନ ଅଦ୍ଭୁତ ହେଉ।",
+      },
+      {
+        code: "AS",
+        englishName: "Assamese",
+        nativeName: "অসমীয়া",
+        locale: "as-IN",
+        glow: "from-lime-400 to-emerald-500",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus-লৈ স্বাগতম।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 শুভ প্ৰভাত! আপোনাৰ দিনটো অদ্ভুত হওক।",
+      },
+      {
+        code: "NE",
+        englishName: "Nepali",
+        nativeName: "नेपाली",
+        locale: "ne-IN",
+        glow: "from-indigo-400 to-indigo-600",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus मा तपाईंलाई स्वागत छ।",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 शुभ प्रभात! तपाईंको दिन रमाइलो होस्।",
+      },
+      {
+        code: "KO",
+        englishName: "Konkani",
+        nativeName: "कोंकणी",
+        locale: "kok-IN",
+        glow: "from-teal-400 to-cyan-600",
+        greetingEnglish: "Welcome to SquareCampus.",
+        greetingNative: "SquareCampus मध्ये तुमचं स्वागत आहे.",
+        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+        notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
       },
     ];    
 

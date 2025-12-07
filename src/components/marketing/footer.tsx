@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Linkedin } from "lucide-react";
+import { Heart, Linkedin } from "@/components/icons";
 import { Logo } from "./logo";
 
 type FooterLink = {
@@ -68,7 +68,7 @@ export function Footer() {
     "https://www.linkedin.com/company/square-campus";
 
   return (
-    <footer className="relative w-full overflow-hidden border-t border-white/10 bg-neutral px-6 py-14 sm:px-8 lg:px-10 lg:py-20">
+    <footer className="relative w-full overflow-hidden border-t border-white/10 bg-neutral-950 px-6 py-14 sm:px-8 lg:px-10 lg:py-20">
       {/* Soft radial glow behind the content – the last shimmer of the operation */}
       <div className="pointer-events-none absolute inset-x-0 bottom-[-40%] z-0 mx-auto h-80 w-[40rem] rounded-full bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.24),_transparent_60%)] opacity-70" />
 
@@ -96,9 +96,18 @@ export function Footer() {
             </Link>
           </div>
 
-          <p className="pt-2 text-xs text-neutral-500">
-            © {new Date().getFullYear()} SquareCampus. All rights reserved.
-          </p>
+          <div className="pt-3 space-y-1 text-xs text-neutral-400">
+            <div className="flex items-center gap-2">
+              <span className="uppercase tracking-[0.28em] text-neutral-500">
+                Made with
+              </span>
+              <Heart className="h-3.5 w-3.5 text-red-600" aria-hidden="true" />
+              <span className="text-neutral-200">in India</span>
+            </div>
+            <p className="text-neutral-500">
+              SquareCampus is a trademark of MDTechspire LLP. © {new Date().getFullYear()} SquareCampus. All rights reserved.
+            </p>
+          </div>
         </div>
 
         {/* Right block – navigation columns */}

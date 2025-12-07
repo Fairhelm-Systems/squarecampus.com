@@ -316,3 +316,19 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Hide all scrollbars globally while preserving scroll */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge legacy */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* WebKit-based browsers */
+}
+
+/* Ultra-smooth scrolling baseline */
+html {
+  scroll-behavior: smooth;
+}

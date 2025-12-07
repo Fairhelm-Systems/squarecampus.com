@@ -5,6 +5,8 @@ import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { DevtoolsGuard } from "@/components/devtools-guard";
 import { BrowserWarning } from "@/components/browser-warning";
+import { ScrollBeam } from "@/components/marketing/scroll-beam";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,6 +65,61 @@ export default function RootLayout({
       >
         <DevtoolsGuard />
         <BrowserWarning />
+        <ScrollBeam />
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://squarecampus.com/#org",
+                  name: "SquareCampus",
+                  url: "https://squarecampus.com",
+                  logo: "https://squarecampus.com/logo.png",
+                  sameAs: ["https://www.linkedin.com/company/square-campus"],
+                  brand: "SquareCampus",
+                  contactPoint: [
+                    {
+                      "@type": "ContactPoint",
+                      contactType: "sales",
+                      email: "contact@squarecampus.com",
+                    },
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  url: "https://squarecampus.com",
+                  name: "SquareCampus",
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: "https://squarecampus.com/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string",
+                  },
+                  inLanguage: "en",
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "SquareCampus",
+                  applicationCategory: "EducationalApplication",
+                  operatingSystem: "Web",
+                  url: "https://app.squarecampus.com",
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+                  potentialAction: {
+                    "@type": "Action",
+                    name: "Login",
+                    target: "https://app.squarecampus.com",
+                  },
+                  publisher: { "@id": "https://squarecampus.com/#org" },
+                  inLanguage: "en",
+                },
+              ],
+            }),
+          }}
+        />
         {children}
         <Toaster position="top-right" richColors />
       </body>

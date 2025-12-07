@@ -5,8 +5,9 @@ import Link from "next/link";
 export const Logo = () => {
   return (
     <Link
-      href="/public"
-      className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1  relative z-20"
+      href="/"
+      data-logo-anchor
+      className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1 relative z-20"
     >
       <Image
         src="/images/marketing/logo-light.png"

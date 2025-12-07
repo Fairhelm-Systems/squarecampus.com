@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { BookCallCta } from "@/components/marketing/ctas";
 import { motion } from "motion/react";
 
 type Value = {
@@ -342,12 +343,10 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-full border border-transparent bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-950 shadow-lg shadow-white/30 transition hover:bg-neutral-100"
-              >
-                Book a call
-              </Link>
+              <BookCallCta
+                context="about-closing"
+                className="justify-center sm:w-auto"
+              />
               <Link
                 href="/#features"
                 className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition hover:border-white hover:text-white"

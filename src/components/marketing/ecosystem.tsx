@@ -10,7 +10,7 @@ import {
   Smartphone,
   ShieldCheck,
   Sparkles,
-} from "lucide-react";
+} from "@/components/icons";
 import { SkewedRectangles } from "./backgrounds/skewed-rectangles";
 
 type EcosystemItem = {

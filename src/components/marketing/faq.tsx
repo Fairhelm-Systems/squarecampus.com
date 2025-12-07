@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+
+import { ChevronDown, ChevronUp } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 const faqHighlights = [
   "Launch and onboard in under seven working days",
@@ -163,64 +164,55 @@ const FAQItem = ({
     const isOpen = open === question;
 
     return (
-        <div
-            className="shadow-input mb-8 w-full cursor-pointer rounded-lg bg-neutral-900 p-4"
-            onClick={() => {
-                if (isOpen) {
-                    setOpen(null);
-                } else {
-                    setOpen(question);
-                }
-            }}
-        >
-            <div className="flex items-start">
-                <div className="relative mr-4 mt-1 h-6 w-6 flex-shrink-0">
-                    <IconChevronUp
-                        className={cn(
-                            "absolute inset-0 h-6 w-6 transform text-white transition-all duration-200",
-                            isOpen && "rotate-90 scale-0",
-                        )}
-                    />
-                    <IconChevronDown
-                        className={cn(
-                            "absolute inset-0 h-6 w-6 rotate-90 scale-0 transform text-white transition-all duration-200",
-                            isOpen && "rotate-0 scale-100",
-                        )}
-                    />
-                </div>
-                <div>
-                    <h3 className="text-lg font-medium text-neutral-200">
-                        {question}
-                    </h3>
-                    <AnimatePresence mode="wait">
-                        {isOpen && (
-                            <motion.div
-                                initial={{ height: 0 }}
-                                animate={{ height: "auto" }}
-                                exit={{ height: 0 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
-                                className="overflow-hidden text-neutral-400"
-                            >
-                                {answer.split("").map((line, index) => (
-                                    <motion.span
-                                        initial={{ opacity: 0, filter: "blur(5px)" }}
-                                        animate={{ opacity: 1, filter: "blur(0px)" }}
-                                        exit={{ opacity: 0, filter: "blur(0px)" }}
-                                        transition={{
-                                            duration: 0.2,
-                                            ease: "easeOut",
-                                            delay: index * 0.005,
-                                        }}
-                                        key={index}
-                                    >
-                                        {line}
-                                    </motion.span>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
-            </div>
+      <motion.button
+        type="button"
+        onClick={() => setOpen(isOpen ? null : question)}
+        className={cn(
+          "relative w-full rounded-2xl border border-white/10 bg-neutral-900/70 p-4 text-left shadow-lg shadow-black/40 transition-all duration-300",
+          "hover:border-white/25 hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        )}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.995 }}
+      >
+        <span className="absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
+
+        <div className="flex items-start gap-3">
+          <div className="relative mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 transition-transform duration-300",
+                isOpen && "-rotate-180 opacity-0"
+              )}
+            />
+            <ChevronUp
+              className={cn(
+                "absolute h-4 w-4 transition-transform duration-300",
+                isOpen ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
+              )}
+            />
+          </div>
+
+          <div className="flex-1 space-y-2">
+            <h3 className="text-base font-semibold text-neutral-50">
+              {question}
+            </h3>
+
+            <AnimatePresence initial={false} mode="wait">
+              {isOpen && (
+                <motion.p
+                  key="answer"
+                  initial={{ opacity: 0, height: 0, y: -4 }}
+                  animate={{ opacity: 1, height: "auto", y: 0 }}
+                  exit={{ opacity: 0, height: 0, y: -4 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="text-sm leading-relaxed text-neutral-300"
+                >
+                  {answer}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
+      </motion.button>
     );
 };

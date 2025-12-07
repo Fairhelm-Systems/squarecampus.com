@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X, LogIn, CalendarClock } from "lucide-react";
+import { Menu, X } from "@/components/icons";
 import {
   AnimatePresence,
   motion,
@@ -12,9 +12,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { LinkButton } from "./link-button";
-import { useCalEmbed } from "@/hooks/useCalEmbed";
-import { CONSTANTS } from "@/constants/links";
+import { BookCallCta, LoginCta } from "./ctas";
 
 type NavItem = {
   name: string;
@@ -91,17 +89,6 @@ export const Navbar = () => {
 const DesktopNav = ({ navItems, visible }: NavbarProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const calOptions = useCalEmbed({
-    namespace: CONSTANTS.CALCOM_NAMESPACE,
-    styles: {
-      branding: {
-        brandColor: CONSTANTS.CALCOM_BRAND_COLOR,
-      },
-    },
-    hideEventTypeDetails: CONSTANTS.CALCOM_HIDE_EVENT_TYPE_DETAILS,
-    layout: CONSTANTS.CALCOM_LAYOUT,
-  });
-
   return (
     <motion.nav
       onMouseLeave={() => setHovered(null)}
@@ -150,8 +137,8 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
         </div>
       </div>
 
-            {/* Right side – authentication & call booking, the entry points into the operation */}
-            <div className="flex items-center gap-3">
+      {/* Right side – authentication & call booking, the entry points into the operation */}
+      <div className="flex items-center gap-3">
         <AnimatePresence initial={false} mode="popLayout">
           {!visible && (
             <motion.div
@@ -161,36 +148,19 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
               exit={{ x: 60, opacity: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
-              <LinkButton
-                href={CONSTANTS.LOGIN_LINK}
+              <LoginCta
+                context="navbar-desktop"
                 variant="secondary"
-                className="group inline-flex items-center gap-1.5"
-              >
-                <span>Login</span>
-                {/* The subtle signal: a log-in icon that glides forward when hovered */}
-                <LogIn
-                  className="h-4 w-4 text-neutral-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5"
-                  aria-hidden="true"
-                />
-              </LinkButton>
+                className="inline-flex items-center gap-1.5"
+              />
             </motion.div>
           )}
         </AnimatePresence>
 
-        <LinkButton
-          data-cal-namespace={calOptions.namespace}
-          data-cal-link={CONSTANTS.CALCOM_LINK}
-          data-cal-config={`{"layout":"${calOptions.layout}"}`}
-          variant="primary"
-          className="group hidden items-center gap-1.5 md:inline-flex"
-        >
-          <span>Book a call</span>
-          {/* The timing expert: a calendar that leans in as the user hovers */}
-          <CalendarClock
-            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
-            aria-hidden="true"
-          />
-        </LinkButton>
+        <BookCallCta
+          context="navbar-desktop"
+          className="hidden items-center gap-1.5 md:inline-flex"
+        />
       </div>
     </motion.nav>
   );
@@ -203,17 +173,6 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
 */
 const MobileNav = ({ navItems, visible }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-
-  const calOptions = useCalEmbed({
-    namespace: CONSTANTS.CALCOM_NAMESPACE,
-    styles: {
-      branding: {
-        brandColor: CONSTANTS.CALCOM_BRAND_COLOR,
-      },
-    },
-    hideEventTypeDetails: CONSTANTS.CALCOM_HIDE_EVENT_TYPE_DETAILS,
-    layout: CONSTANTS.CALCOM_LAYOUT,
-  });
 
   return (
     <motion.nav
@@ -253,35 +212,20 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="absolute left-3 right-3 top-14 z-40 rounded-2xl border border-neutral-800 bg-neutral-950/98 px-4 py-5 shadow-[0_18px_60px_rgba(0,0,0,0.85)]"
           >
-                          <div className="mt-2 flex flex-col gap-2">
-                <LinkButton
-                  href={CONSTANTS.LOGIN_LINK}
-                  variant="secondary"
-                  className="group flex w-full items-center justify-center gap-1.5"
-                  onClick={() => setOpen(false)}
-                >
-                  <span>Login</span>
-                  <LogIn
-                    className="h-4 w-4 text-neutral-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5"
-                    aria-hidden="true"
-                  />
-                </LinkButton>
+            <div className="mt-2 flex flex-col gap-2">
+              <LoginCta
+                context="navbar-mobile"
+                variant="secondary"
+                className="flex w-full items-center justify-center gap-1.5"
+                onClick={() => setOpen(false)}
+              />
 
-                <LinkButton
-                  data-cal-namespace={calOptions.namespace}
-                  data-cal-link={CONSTANTS.CALCOM_LINK}
-                  data-cal-config={`{"layout":"${calOptions.layout}"}`}
-                  variant="primary"
-                  className="group flex w-full items-center justify-center gap-1.5"
-                  onClick={() => setOpen(false)}
-                >
-                  <span>Book a call</span>
-                  <CalendarClock
-                    className="h-4 w-4 text-neutral-900 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
-                    aria-hidden="true"
-                  />
-                </LinkButton>
-              </div>
+              <BookCallCta
+                context="navbar-mobile"
+                className="flex w-full items-center justify-center gap-1.5"
+                onClick={() => setOpen(false)}
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

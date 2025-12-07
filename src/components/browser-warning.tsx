@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X } from "@/components/icons";
 
 const STORAGE_KEY = "sc_browser_warn_dismissed";
 

@@ -3,20 +3,15 @@
 import { useEffect, useRef, useState, useId, useMemo } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
-  LogIn,
-  CalendarClock,
   Activity,
   BookOpen,
   DollarSign,
   Bus,
   Bell,
   ShieldCheck,
-} from 'lucide-react';
+} from '@/components/icons';
 import Balancer from 'react-wrap-balancer';
-import Link from 'next/link';
-import { LinkButton } from './link-button';
-import { useCalEmbed } from '@/hooks/useCalEmbed';
-import { CONSTANTS } from '@/constants/links';
+import { BookCallCta, LoginCta } from './ctas';
 import { cn } from '@/lib/utils';
 import { BackgroundLines } from './backgrounds/dot-and-glow';
 
@@ -43,16 +38,6 @@ const heroStats = [
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const calOptions = useCalEmbed({
-    namespace: CONSTANTS.CALCOM_NAMESPACE,
-    styles: {
-      branding: {
-        brandColor: CONSTANTS.CALCOM_BRAND_COLOR,
-      },
-    },
-    hideEventTypeDetails: CONSTANTS.CALCOM_HIDE_EVENT_TYPE_DETAILS,
-    layout: CONSTANTS.CALCOM_LAYOUT,
-  });
   return (
     <div
       id='home'
@@ -129,32 +114,17 @@ export function Hero() {
         className="mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20"
       >
         {/* Primary entry: existing users dropping into the system */}
-        <LinkButton
-          href={CONSTANTS.LOGIN_LINK}
+        <LoginCta
+          context="hero"
           variant="dark"
-          className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 text-center sm:w-40"
-        >
-          <span>Login</span>
-          <LogIn
-            className="h-4 w-4 text-neutral-200 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5"
-            aria-hidden="true"
-          />
-        </LinkButton>
+          className="w-full max-w-xs justify-center text-center sm:w-40"
+        />
 
         {/* High-intent entry: new schools booking time with the team */}
-        <LinkButton
-          data-cal-namespace={calOptions.namespace}
-          data-cal-link={CONSTANTS.CALCOM_LINK}
-          data-cal-config={`{"layout":"${calOptions.layout}"}`}
-          variant="primary"
-          className="group inline-flex w-full max-w-xs items-center justify-center gap-1.5 sm:w-40"
-        >
-          <span>Book a call</span>
-          <CalendarClock
-            className="h-4 w-4 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
-            aria-hidden="true"
-          />
-        </LinkButton>
+        <BookCallCta
+          context="hero"
+          className="w-full max-w-xs justify-center sm:w-40"
+        />
       </motion.div>
       
       <motion.div

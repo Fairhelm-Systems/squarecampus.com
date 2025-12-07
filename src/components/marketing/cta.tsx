@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useAnimation, useInView } from "motion/react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/icons";
 
 const BackgroundGrid = ({ className }: { className?: string }) => {
   const controls = useAnimation();
