@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import {
@@ -44,12 +44,32 @@ export const MacbookScroll = ({
   showGradient,
   badge,
   children,
+  autoZoom = false,
+  zoomUrl = "https://squarecampus.com",
+  className,
+  animateLid = false,
+  lidOpenAngle = -65,
+  lidClosedAngle = -110,
 }: {
   src?: string;
   showGradient?: boolean;
   badge?: React.ReactNode;
   children?: React.ReactNode;
+  autoZoom?: boolean;
+  zoomUrl?: string;
+  className?: string;
+  animateLid?: boolean;
+  lidOpenAngle?: number;
+  lidClosedAngle?: number;
 }) => {
+  const [showSite, setShowSite] = useState(false);
+
+  useEffect(() => {
+    if (!autoZoom) return;
+    const t = setTimeout(() => setShowSite(true), 750);
+    return () => clearTimeout(t);
+  }, [autoZoom]);
+
   return (
     <motion.div
       whileHover="hover"
@@ -58,10 +78,36 @@ export const MacbookScroll = ({
         perspective: "800px",
         rotateX: "8deg",
       }}
-      className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100  scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
+      initial={
+        autoZoom
+          ? { opacity: 1, scale: 0.95, y: 30 }
+          : undefined
+      }
+      animate={
+        autoZoom
+          ? { opacity: 1, scale: 1.05, y: -10 }
+          : undefined
+      }
+      transition={
+        autoZoom
+          ? { duration: 1.4, ease: "easeOut" }
+          : { type: "spring", stiffness: 300, damping: 28 }
+      }
+      className={cn(
+        "flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100 scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto",
+        className
+      )}
     >
       {/* Lid */}
-      <Lid src={src} children={children} />
+      <Lid
+        src={src}
+        children={children}
+        showSite={showSite}
+        zoomUrl={zoomUrl}
+        animateLid={animateLid}
+        lidOpenAngle={lidOpenAngle}
+        lidClosedAngle={lidClosedAngle}
+      />
       {/* Base area */}
       <div className="h-[22rem] w-[32rem] bg-[#272729] rounded-2xl overflow-hidden relative -z-10">
         {/* above keyboard bar */}
@@ -90,25 +136,68 @@ export const MacbookScroll = ({
   );
 };
 
-export const Lid = ({ src, children }: { src?: string; children?: React.ReactNode }) => {
+export const Lid = ({
+  src,
+  children,
+  showSite,
+  zoomUrl,
+  animateLid = false,
+  lidOpenAngle = -65,
+  lidClosedAngle = -110,
+}: {
+  src?: string;
+  children?: React.ReactNode;
+  showSite?: boolean;
+  zoomUrl?: string;
+  animateLid?: boolean;
+  lidOpenAngle?: number;
+  lidClosedAngle?: number;
+}) => {
   return (
     <motion.div className="relative [perspective:800px] z-50">
       <motion.div
         style={{
           perspective: "1000px",
-          rotateX: -65,
+          rotateX: lidOpenAngle,
           translateZ: 0,
           transformOrigin: "bottom",
           transformStyle: "preserve-3d",
-          boxShadow: "0px 2px 0px 2px var(--neutral-800) inset",
+          boxShadow: `
+            0px 2px 0px 2px var(--neutral-800) inset,
+            0 -4px 8px rgba(0,0,0,0.4),
+            0 -1px 0 rgba(107,114,128,0.4),
+            0 -2px 0 rgba(156,163,175,0.3),
+            0 -3px 0 rgba(75,85,99,0.2),
+            0 8px 30px rgba(0,0,0,0.35),
+            inset 0 1px 2px rgba(255,255,255,0.1)
+          `,
         }}
+        initial={animateLid ? { rotateX: lidClosedAngle } : { rotateX: lidOpenAngle }}
+        animate={animateLid ? { rotateX: lidOpenAngle } : { rotateX: lidOpenAngle }}
         variants={lidContainerVariants}
         transition={{
-          duration: 0.6,
+          duration: animateLid ? 1 : 0.6,
           ease: "easeInOut",
         }}
-        className="h-[12rem] w-[32rem] bg-[#010101] rounded-2xl p-2 relative overflow-hidden"
+        className="h-[12rem] w-[32rem] rounded-2xl p-2 relative overflow-visible bg-gradient-to-br from-neutral-800 to-neutral-900"
       >
+        {/* Top edge of lid (visible 3D thickness) */}
+        <div
+          className="absolute -top-[6px] left-0 right-0 h-[6px] rounded-t-2xl bg-gradient-to-b from-gray-400/90 via-gray-500/80 to-gray-600/70"
+          style={{
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.4), 0 1px 2px rgba(0,0,0,0.3)",
+          }}
+        />
+
+        {/* Left edge highlight */}
+        <div className="absolute top-0 -left-[2px] bottom-0 w-[2px] bg-gradient-to-r from-gray-500/50 to-transparent rounded-l-2xl" />
+
+        {/* Right edge highlight */}
+        <div className="absolute top-0 -right-[2px] bottom-0 w-[2px] bg-gradient-to-l from-gray-500/50 to-transparent rounded-r-2xl" />
+
+        {/* Metallic shine overlay */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+
         <motion.div
           style={{
             boxShadow: "0px 2px 0px 2px var(--neutral-800) inset",
@@ -134,6 +223,23 @@ export const Lid = ({ src, children }: { src?: string; children?: React.ReactNod
               className="object-cover object-left-top rounded-lg inset-0 h-full w-full"
             />
           ) : null}
+
+          {showSite && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="absolute inset-[4%] rounded-lg overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+            >
+              <iframe
+                src={zoomUrl}
+                title="SquareCampus live preview"
+                className="h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+          )}
         </motion.div>
       </motion.div>
     </motion.div>

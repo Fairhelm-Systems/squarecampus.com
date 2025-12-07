@@ -9,6 +9,7 @@ import {Navbar} from "@/components/marketing/navbar";
 import { Operations } from "@/components/marketing/operations";
 import type { Metadata } from "next";
 import { EcosystemSection } from "@/components/marketing/ecosystem";
+import { MacbookIntroOverlay } from "@/components/marketing/macbook-intro-overlay";
 
 export const metadata: Metadata = {
   title: "SquareCampus | The Operating System for Every School",
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
       <main className={'bg-black'}>
+        <MacbookIntroOverlay />
         <Navbar />
         <Hero/>
         <Operations />
