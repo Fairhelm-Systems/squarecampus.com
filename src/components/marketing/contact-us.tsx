@@ -343,7 +343,7 @@ export function ContactUs() {
                 </form>
             </div>
 
-            <MacbookScroll showGradient autoZoom zoomUrl="https://squarecampus.com">
+            <MacbookScroll showGradient>
                 <div className="flex items-center justify-center h-full w-full bg-gradient-to-br from-neutral-900 via-neutral-950 to-black">
                     <div className="scale-150">
                         <Logo />

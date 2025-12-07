@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Image from "next/image";
 
 export const MacbookIntroOverlay = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -102,11 +103,14 @@ export const MacbookIntroOverlay = () => {
       <div ref={stackRef} className="relative flex flex-col items-center gap-6">
         {/* Figma MacBook Mockup (empty screen) */}
         <div className="relative w-[400px] h-[250px] sm:w-[600px] sm:h-[375px] md:w-[800px] md:h-[500px]">
-          <img
+          <Image
             src="/images/marketing/splash.svg"
             alt="MacBook"
-            className="w-full h-full object-contain"
+            fill
+            sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
+            className="object-contain"
             style={{ willChange: 'transform' }}
+            priority
           />
 
           {/* Dark background - fades in behind logo/text */}
@@ -120,12 +124,15 @@ export const MacbookIntroOverlay = () => {
           <div className="absolute inset-0 flex items-center justify-center z-10" style={{ top: '-5%' }}>
             <div className="relative">
               {/* Logo - starts centered, moves left */}
-              <div ref={logoRef} className="translate-y-[5px] sm:translate-y-[8px] md:translate-y-[10px]">
-                <img
+              <div ref={logoRef} className="translate-y-[5px] sm:translate-y-[8px] md:translate-y-[10px] relative h-12 w-12 sm:h-20 sm:w-20 md:h-25 md:w-25">
+                <Image
                   src="/images/marketing/logo-light.png"
                   alt="SquareCampus"
-                  className="h-12 w-12 sm:h-20 sm:w-20 md:h-25 md:w-25"
+                  fill
+                  sizes="(max-width: 640px) 48px, (max-width: 768px) 80px, 100px"
+                  className="object-contain"
                   style={{ imageRendering: '-webkit-optimize-contrast' }}
+                  priority
                 />
               </div>
 
