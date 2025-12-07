@@ -164,6 +164,7 @@ export async function sendContactEmail(
     }
 
     // Create client with the key that actually exists *here*
+    console.log("RESEND API KEY", apiKey)
     const resend = new Resend(apiKey);
 
     let headersList: Headers;
