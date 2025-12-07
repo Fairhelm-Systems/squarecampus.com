@@ -154,7 +154,7 @@ export async function sendContactEmail(
       );
       console.error(
         "[contact] Available environment variables:",
-        Object.keys(process.env).slice(0, 20), // Log first 20 env var names
+        Object.keys(process.env).slice(0, 50), // Log first 50 env var names
       );
       return {
         success: false,
