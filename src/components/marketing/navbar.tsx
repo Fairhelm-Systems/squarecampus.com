@@ -195,10 +195,10 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
       <button
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900/80 text-neutral-100"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900/80 text-neutral-100 active:scale-95 transition-transform"
         onClick={() => setOpen((p) => !p)}
       >
-        {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {/* Sliding panel – appears from the top with a soft drop */}
@@ -212,17 +212,40 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="absolute left-3 right-3 top-14 z-40 rounded-2xl border border-neutral-800 bg-neutral-950/98 px-4 py-5 shadow-[0_18px_60px_rgba(0,0,0,0.85)]"
           >
-            <div className="mt-2 flex flex-col gap-2">
+            {/* Navigation Links */}
+            <div className="flex flex-col gap-1 border-b border-neutral-800/50 pb-4 mb-4">
+              {navItems.map((item, idx) => (
+                <Link
+                  key={item.name}
+                  href={item.link}
+                  onClick={() => setOpen(false)}
+                  className="group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-neutral-300 transition-all hover:bg-neutral-800/50 hover:text-white active:scale-[0.98]"
+                >
+                  <span>{item.name}</span>
+                  <motion.span
+                    className="text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={false}
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-2">
               <LoginCta
                 context="navbar-mobile"
                 variant="secondary"
-                className="flex w-full items-center justify-center gap-1.5"
+                className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
                 onClick={() => setOpen(false)}
               />
 
               <BookCallCta
                 context="navbar-mobile"
-                className="flex w-full items-center justify-center gap-1.5"
+                className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
                 onClick={() => setOpen(false)}
               />
             </div>

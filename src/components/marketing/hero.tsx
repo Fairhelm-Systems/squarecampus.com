@@ -41,7 +41,7 @@ export function Hero() {
   return (
     <div
       id='home'
-      className='relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-20 md:px-8 md:py-40 bg-dark'
+      className='relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-12 md:px-8 md:py-24 bg-dark'
     >
       <BackgroundLines />
 

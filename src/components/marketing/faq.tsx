@@ -73,7 +73,7 @@ const FAQs = [
 export function FAQ() {
     const [open, setOpen] = useState<string | null>(null);
     return (
-        <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-20 md:grid-cols-[2fr,1fr] md:px-8 md:py-40" id={'faq'}>
+        <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 md:grid-cols-[2fr,1fr] md:px-8 md:py-20" id={'faq'}>
           <div className="space-y-6">
             <div className="space-y-2">
               <h2 className="text-4xl font-medium tracking-tight text-neutral-50 md:text-5xl">

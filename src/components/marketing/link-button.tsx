@@ -37,7 +37,7 @@ const variantOuter: Record<Variant, string> = {
 };
 
 const innerBase =
-  "relative z-10 flex items-center gap-2 rounded-full py-0.5 px-4 ring-1";
+  "relative z-10 flex items-center gap-2 rounded-full py-2 px-4 min-h-[40px] ring-1 active:scale-95 transition-transform";
 
 const variantInner: Record<Variant, string> = {
   primary: "bg-zinc-950 ring-white/10",

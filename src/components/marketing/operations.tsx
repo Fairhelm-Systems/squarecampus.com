@@ -111,7 +111,7 @@ export function Operations() {
   return (
     <section
       id="operations"
-      className="relative overflow-hidden bg-neutral-950 px-4 py-16 md:px-8 md:py-20"
+      className="relative overflow-hidden bg-neutral-950 px-4 py-10 md:px-8 md:py-14"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.06),transparent_32%),radial-gradient(circle_at_40%_80%,rgba(59,130,246,0.05),transparent_28%)]" />
       <div className="relative mx-auto max-w-6xl space-y-4 text-center">

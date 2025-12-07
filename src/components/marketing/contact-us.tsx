@@ -61,7 +61,7 @@ export function ContactUs() {
 
     return (
         <section
-            className="relative w-full px-4 py-16 md:px-6 md:py-24"
+            className="relative w-full px-4 py-10 md:px-6 md:py-16"
             id="contact-us"
         >
             <MaskedDots className="opacity-70 sm:opacity-85" />
@@ -226,7 +226,7 @@ export function ContactUs() {
                             onChange={handleChange}
                             disabled={isPending}
                             placeholder="What should we call you?"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -246,7 +246,7 @@ export function ContactUs() {
                             onChange={handleChange}
                             disabled={isPending}
                             placeholder="email@yourschool.com"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -266,7 +266,7 @@ export function ContactUs() {
                             onChange={handleChange}
                             disabled={isPending}
                             placeholder="Your school or college"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
@@ -286,7 +286,7 @@ export function ContactUs() {
                                 onChange={handleChange}
                                 disabled={isPending}
                                 placeholder="Administrator, Dean, Finance..."
-                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
                         <div className="space-y-2">
@@ -304,7 +304,7 @@ export function ContactUs() {
                                 onChange={handleChange}
                                 disabled={isPending}
                                 placeholder="e.g., 1,200 across 2 branches"
-                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
                     </div>
@@ -324,14 +324,14 @@ export function ContactUs() {
                             onChange={handleChange}
                             disabled={isPending}
                             placeholder="Tell us about your goals, current stack, and timeline"
-                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full rounded-lg border border-white/5 bg-neutral-900/60 px-4 py-3 min-h-[44px] text-sm text-white placeholder:text-neutral-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                     </div>
 
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="mt-2 rounded-2xl border border-transparent bg-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-neutral-900 transition hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="mt-2 rounded-2xl border border-transparent bg-white px-5 py-4 min-h-[48px] text-sm font-semibold uppercase tracking-[0.4em] text-neutral-900 transition hover:bg-neutral-100 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isPending ? "Sending..." : "Send message"}
                     </button>

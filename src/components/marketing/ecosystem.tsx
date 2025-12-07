@@ -85,7 +85,7 @@ const OrbitDot = ({ className }: { className?: string }) => (
 
 export function EcosystemSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const inView = useInView(sectionRef, { amount: 0.3, once: true });
+  const inView = useInView(sectionRef, { amount: 0.1, once: true });
 
   return (
     <motion.section
@@ -94,7 +94,7 @@ export function EcosystemSection() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative mx-auto mt-6 w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-10"
+      className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-10"
     >
       <div className="pointer-events-none absolute inset-y-0 left-[calc(45%-45vw)] right-[calc(45%-45vw)] h-full">
         <SkewedRectangles className="opacity-75 sm:opacity-90" />
@@ -325,7 +325,7 @@ export function EcosystemSection() {
 
 function EcosystemHierarchy() {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { amount: 0.3, once: true });
+  const inView = useInView(ref, { amount: 0.1, once: true });
 
   return (
     <motion.div

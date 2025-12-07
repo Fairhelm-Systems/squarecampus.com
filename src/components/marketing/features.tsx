@@ -112,7 +112,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral py-16 px-4 md:px-8 md:py-20"
+      className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral py-10 px-4 md:px-8 md:py-14"
       aria-label="Core features of SquareCampus"
     >
       <div className="mx-auto max-w-6xl space-y-6 text-center">

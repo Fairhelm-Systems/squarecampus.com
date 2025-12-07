@@ -167,7 +167,7 @@ export function CTA() {
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={controls}
-          className="relative z-10 mx-auto w-full max-w-3xl py-10 text-center sm:py-12 md:py-16"
+          className="relative z-10 mx-auto w-full max-w-3xl py-8 text-center sm:py-10 md:py-12"
         >
           <BackgroundGrid className="z-0" />
 
