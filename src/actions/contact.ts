@@ -137,9 +137,24 @@ export async function sendContactEmail(
     // 🔐 0. Get API key at runtime, inside the operation
     const apiKey = process.env.RESEND_API_KEY;
 
+    // Enhanced logging for debugging AWS Amplify environment
+    console.log("[contact] Environment check:", {
+      hasResendKey: !!apiKey,
+      resendKeyLength: apiKey?.length || 0,
+      nodeEnv: process.env.NODE_ENV,
+      // Log all env var keys (not values) for debugging
+      availableEnvVars: Object.keys(process.env).filter(key =>
+        key.includes('RESEND') || key.includes('UPSTASH')
+      ),
+    });
+
     if (!apiKey) {
       console.error(
         "[contact] RESEND_API_KEY environment variable is not set at runtime",
+      );
+      console.error(
+        "[contact] Available environment variables:",
+        Object.keys(process.env).slice(0, 20), // Log first 20 env var names
       );
       return {
         success: false,
