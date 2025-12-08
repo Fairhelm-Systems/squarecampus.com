@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { getResendApiKey } from "@/lib/secrets";
 
 const submissionTracking = new Map<
   string,
@@ -100,21 +101,11 @@ function validateTextLength(text: string, min: number, max: number): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    // Get API key at runtime
-    const apiKey = process.env.RESEND_API_KEY;
-
-    console.log("[contact] Environment check:", {
-      hasResendKey: !!apiKey,
-      resendKeyLength: apiKey?.length || 0,
-      nodeEnv: process.env.NODE_ENV,
-      availableEnvVars: Object.keys(process.env).filter(key =>
-        key.includes('RESEND') || key.includes('UPSTASH')
-      ),
-    });
+    // Get API key from Secrets Manager (or environment for local dev)
+    const apiKey = await getResendApiKey();
 
     if (!apiKey) {
-      console.error("[contact] RESEND_API_KEY not available");
-      console.error("[contact] Available env vars:", Object.keys(process.env).slice(0, 20));
+      console.error("[contact] Failed to retrieve RESEND_API_KEY from Secrets Manager or environment");
       return NextResponse.json(
         {
           success: false,
@@ -124,6 +115,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("[contact] Successfully retrieved API key, length:", apiKey.length);
     const resend = new Resend(apiKey);
     const formData = await request.json();
 
