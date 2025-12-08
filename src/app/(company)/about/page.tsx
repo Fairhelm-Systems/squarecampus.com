@@ -232,6 +232,91 @@ export default function AboutPage() {
             </div>
           </section>
 
+          {/* Mission – why we exist */}
+          <section className="space-y-6">
+            <Card className="border border-blue-500/20 bg-gradient-to-br from-neutral-900/90 via-blue-950/20 to-neutral-950/90 shadow-2xl shadow-blue-500/10">
+              <CardContent className="space-y-6 p-6 md:p-10">
+                <div className="space-y-3">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-blue-400/80">
+                    Our Mission
+                  </p>
+                  <h2 className="text-2xl font-semibold text-neutral-50 md:text-3xl">
+                    Building EdTech that actually serves education
+                  </h2>
+                </div>
+
+                <div className="space-y-5 text-sm leading-relaxed text-neutral-300">
+                  <p className="text-base text-neutral-200">
+                    We believe educational institutions deserve software that helps them operate better—not software that extracts money while delivering recycled content or burning out staff.
+                  </p>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-3 rounded-xl border border-neutral-800/60 bg-neutral-900/50 p-5">
+                      <h3 className="text-sm font-semibold text-neutral-100">
+                        What we stand for
+                      </h3>
+                      <ul className="space-y-2 text-xs">
+                        {[
+                          "Real operational value for schools, teachers, and administrators",
+                          "Sustainable, honest business built on trust and results",
+                          "Treating our team with respect and building for the long term",
+                          "Software that quietly works, not software that needs constant rescue",
+                        ].map((item, idx) => (
+                          <motion.li
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="flex gap-2"
+                          >
+                            <span className="mt-1 text-emerald-400">✓</span>
+                            <span>{item}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-3 rounded-xl border border-neutral-800/60 bg-neutral-900/50 p-5">
+                      <h3 className="text-sm font-semibold text-neutral-100">
+                        What we reject
+                      </h3>
+                      <ul className="space-y-2 text-xs">
+                        {[
+                          "Predatory sales tactics and aggressive growth-at-all-costs mentality",
+                          "Prepackaged content disguised as transformation",
+                          "Platforms that look good in demos but fail in daily use",
+                          "Treating education as just another market to extract from",
+                        ].map((item, idx) => (
+                          <motion.li
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="flex gap-2"
+                          >
+                            <span className="mt-1 text-red-400">×</span>
+                            <span>{item}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 rounded-lg border-l-4 border-blue-500/50 bg-blue-950/20 p-4">
+                    <p className="text-sm italic text-neutral-200">
+                      &ldquo;Indian schools need tools that understand ground reality—complex fee structures, multi-branch operations, compliance requirements, and resource constraints. SquareCampus is built to handle that complexity without drama, so institutions can focus on what actually matters: education.&rdquo;
+                    </p>
+                    <p className="mt-2 text-xs text-neutral-400">
+                      — Mohit Gupta, Founder & CTO
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
           {/* Values – the rules of engagement */}
           <section className="space-y-6">
             <div className="space-y-2">
