@@ -231,72 +231,112 @@ export default function AboutPage() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2">
-              <div className="space-y-4 border-l-4 border-red-500/50 pl-6">
-                <h3 className="text-xl font-semibold text-white">
-                  What we reject
-                </h3>
-                <ul className="space-y-3 text-base text-neutral-300">
-                  {[
-                    "Predatory sales calls to struggling schools",
-                    "Recycled video content sold as &ldquo;transformation&rdquo;",
-                    "Software that works in demos, fails in reality",
-                    "Burning out staff to hit growth targets",
-                  ].map((item, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex gap-3"
-                    >
-                      <span className="text-red-400">×</span>
-                      <span>{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="group relative overflow-hidden rounded-2xl border border-red-500/20 bg-gradient-to-br from-red-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-red-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-red-500/40 hover:shadow-red-500/20"
+              >
+                {/* Glow effect */}
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-red-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-red-400/30" />
 
-              <div className="space-y-4 border-l-4 border-emerald-500/50 pl-6">
-                <h3 className="text-xl font-semibold text-white">
-                  What we build
-                </h3>
-                <ul className="space-y-3 text-base text-neutral-300">
-                  {[
-                    "Infrastructure that runs admission to alumni",
-                    "Systems that work during fee season, not just pilots",
-                    "Software built for Indian school reality",
-                    "A sustainable business that respects its team",
-                  ].map((item, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex gap-3"
-                    >
-                      <span className="text-emerald-400">✓</span>
-                      <span>{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
+                <div className="relative space-y-4">
+                  <h3 className="text-xl font-semibold text-white">
+                    What we reject
+                  </h3>
+                  <ul className="space-y-3 text-base text-neutral-300">
+                    {[
+                      "Predatory sales calls to struggling schools",
+                      "Recycled video content sold as 'transformation'",
+                      "Software that works in demos, fails in reality",
+                      "Burning out staff to hit growth targets",
+                    ].map((item, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex gap-3 transition-colors duration-300 group-hover:text-neutral-100"
+                      >
+                        <span className="text-red-400 transition-all duration-300 group-hover:scale-110">×</span>
+                        <span>{item}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="group relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-emerald-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-emerald-500/20"
+              >
+                {/* Glow effect */}
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-emerald-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-emerald-400/30" />
+
+                <div className="relative space-y-4">
+                  <h3 className="text-xl font-semibold text-white">
+                    What we build
+                  </h3>
+                  <ul className="space-y-3 text-base text-neutral-300">
+                    {[
+                      "Infrastructure that runs admission to alumni",
+                      "Systems that work during fee season, not just pilots",
+                      "Software built for Indian school reality",
+                      "A sustainable business that respects its team",
+                    ].map((item, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex gap-3 transition-colors duration-300 group-hover:text-neutral-100"
+                      >
+                        <span className="text-emerald-400 transition-all duration-300 group-hover:scale-110">✓</span>
+                        <span>{item}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
             </div>
 
-            <div className="border-l-4 border-blue-500 bg-blue-950/10 p-8">
-              <p className="text-xl leading-relaxed text-neutral-200 md:text-2xl">
-                &ldquo;Indian schools need software that understands their reality. Multi-branch operations. Complex fee structures. Resource constraints. Compliance requirements.
-                <br /><br />
-                <span className="font-semibold text-white">
-                  SquareCampus handles that complexity so schools can focus on education.
-                </span>
-                &rdquo;
-              </p>
-              <p className="mt-6 text-sm text-neutral-400">
-                — Mohit Gupta, Founder & CTO
-              </p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="group relative overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-neutral-900/90 to-neutral-950/90 p-10 shadow-2xl shadow-blue-500/20 transition-all duration-500 hover:scale-[1.01] hover:border-blue-400/50 hover:shadow-blue-400/30"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 via-blue-400/30 to-blue-500/0 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40" />
+
+              {/* Glow orbs */}
+              <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-400/30" />
+              <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-cyan-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-cyan-400/30" />
+
+              <div className="relative">
+                <p className="text-xl leading-relaxed text-neutral-200 transition-colors duration-300 group-hover:text-neutral-100 md:text-2xl">
+                  <span className="text-blue-300">"</span>Indian schools don't need another shiny dashboard, they need software that understands the messy, beautiful chaos of running real institutions in this country. Multiple branches operating like semi-autonomous worlds. Fee structures that look more like tax codes than invoices. Limited resources spread dangerously thin. Constant compliance pressure from every direction.
+                  <br /><br />
+                  <span className="font-semibold text-white transition-all duration-300 group-hover:text-blue-50">
+                  SquareCampus is built for that reality. It absorbs the complexity, tames the operational madness, and gives schools a single, dependable system so they can stop firefighting and start focusing on what actually matters: education.
+                  </span><span className="text-blue-300">"</span>
+                </p>
+                <div className="mt-8 flex items-center gap-4">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+                  <p className="text-sm font-medium text-blue-300/80 transition-colors duration-300 group-hover:text-blue-200">
+                    Mohit Gupta, Founder & CTO
+                  </p>
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+                </div>
+              </div>
+            </motion.div>
           </section>
 
           {/* Values – the rules of engagement */}
