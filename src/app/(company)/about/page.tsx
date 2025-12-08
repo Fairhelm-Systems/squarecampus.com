@@ -72,54 +72,34 @@ export default function AboutPage() {
       <main className="bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10">
         <div className="mx-auto flex max-w-5xl flex-col gap-16">
           {/* Hero – the opening brief */}
-          <section className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.45em] text-muted-foreground/80">
-              About SquareCampus
-            </p>
-            <div className="space-y-4">
-              <h1 className="text-3xl font-semibold text-neutral-50 md:text-4xl lg:text-5xl">
-                The operating system for modern institutions.
+          <section className="space-y-12">
+            <div className="space-y-8">
+              <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-7xl">
+                We&apos;re building the infrastructure
+                <br />
+                <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                  Indian education deserves.
+                </span>
               </h1>
-              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-muted-foreground">
-                SquareCampus is built for schools and colleges that are done
-                with fragmented tools and manual stitching. From admissions to
-                attendance, exams to fees, we focus on one thing: giving your
-                institution a calm, connected, and dependable system that can
-                scale without needing an army of IT staff.
+              <p className="max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
+                Every school in India struggles with the same chaos: scattered data, manual processes, disconnected systems. We&apos;re fixing that.
               </p>
             </div>
 
-            <div className="grid gap-4 text-xs text-muted-foreground sm:grid-cols-3">
+            <div className="grid gap-2 text-base text-neutral-400 md:grid-cols-3 md:gap-8">
               {[
-                {
-                  title: "Admissions to Alumni",
-                  desc: "Track the full student lifecycle in one system instead of chasing spreadsheets and exports.",
-                },
-                {
-                  title: "Built for daily use",
-                  desc: "Designed for principals, office staff, teachers, and management, not just demos.",
-                },
-                {
-                  title: "Cloud-hosted & scalable",
-                  desc: "Ready for multiple campuses, heavy usage, and long-term growth without constant rework.",
-                },
+                "One system. Not twenty tools duct-taped together.",
+                "Built for 1,000 students or 100,000. Same system.",
+                "Software that works Monday through Saturday. Not just demos.",
               ].map((item, idx) => (
                 <motion.div
-                  key={item.title}
+                  key={idx}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 px-4 py-3 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10"
+                  className="border-l-2 border-blue-500/30 pl-4 text-sm leading-relaxed md:text-base"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-blue-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="relative">
-                    <p className="font-semibold text-neutral-100">
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-[0.75rem] leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
+                  {item}
                 </motion.div>
               ))}
             </div>
@@ -233,88 +213,90 @@ export default function AboutPage() {
           </section>
 
           {/* Mission – why we exist */}
-          <section className="space-y-6">
-            <Card className="border border-blue-500/20 bg-gradient-to-br from-neutral-900/90 via-blue-950/20 to-neutral-950/90 shadow-2xl shadow-blue-500/10">
-              <CardContent className="space-y-6 p-6 md:p-10">
-                <div className="space-y-3">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-blue-400/80">
-                    Our Mission
-                  </p>
-                  <h2 className="text-2xl font-semibold text-neutral-50 md:text-3xl">
-                    Building EdTech that actually serves education
-                  </h2>
-                </div>
+          <section className="space-y-12 py-12">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+                Education in India is broken
+                <br />
+                at the operational level.
+              </h2>
+              <div className="max-w-3xl space-y-6 text-lg leading-relaxed text-neutral-300">
+                <p>
+                  Schools lose weeks to admission chaos. Teachers drown in attendance sheets. Finance teams reconcile fees in Excel. Every department runs on WhatsApp and memory.
+                </p>
+                <p className="text-xl font-semibold text-white">
+                  This isn&apos;t an education problem. It&apos;s an infrastructure problem.
+                </p>
+              </div>
+            </div>
 
-                <div className="space-y-5 text-sm leading-relaxed text-neutral-300">
-                  <p className="text-base text-neutral-200">
-                    We believe educational institutions deserve software that helps them operate better—not software that extracts money while delivering recycled content or burning out staff.
-                  </p>
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="space-y-4 border-l-4 border-red-500/50 pl-6">
+                <h3 className="text-xl font-semibold text-white">
+                  What we reject
+                </h3>
+                <ul className="space-y-3 text-base text-neutral-300">
+                  {[
+                    "Predatory sales calls to struggling schools",
+                    "Recycled video content sold as &ldquo;transformation&rdquo;",
+                    "Software that works in demos, fails in reality",
+                    "Burning out staff to hit growth targets",
+                  ].map((item, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex gap-3"
+                    >
+                      <span className="text-red-400">×</span>
+                      <span>{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-3 rounded-xl border border-neutral-800/60 bg-neutral-900/50 p-5">
-                      <h3 className="text-sm font-semibold text-neutral-100">
-                        What we stand for
-                      </h3>
-                      <ul className="space-y-2 text-xs">
-                        {[
-                          "Real operational value for schools, teachers, and administrators",
-                          "Sustainable, honest business built on trust and results",
-                          "Treating our team with respect and building for the long term",
-                          "Software that quietly works, not software that needs constant rescue",
-                        ].map((item, idx) => (
-                          <motion.li
-                            key={idx}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="flex gap-2"
-                          >
-                            <span className="mt-1 text-emerald-400">✓</span>
-                            <span>{item}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
+              <div className="space-y-4 border-l-4 border-emerald-500/50 pl-6">
+                <h3 className="text-xl font-semibold text-white">
+                  What we build
+                </h3>
+                <ul className="space-y-3 text-base text-neutral-300">
+                  {[
+                    "Infrastructure that runs admission to alumni",
+                    "Systems that work during fee season, not just pilots",
+                    "Software built for Indian school reality",
+                    "A sustainable business that respects its team",
+                  ].map((item, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex gap-3"
+                    >
+                      <span className="text-emerald-400">✓</span>
+                      <span>{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
-                    <div className="space-y-3 rounded-xl border border-neutral-800/60 bg-neutral-900/50 p-5">
-                      <h3 className="text-sm font-semibold text-neutral-100">
-                        What we reject
-                      </h3>
-                      <ul className="space-y-2 text-xs">
-                        {[
-                          "Predatory sales tactics and aggressive growth-at-all-costs mentality",
-                          "Prepackaged content disguised as transformation",
-                          "Platforms that look good in demos but fail in daily use",
-                          "Treating education as just another market to extract from",
-                        ].map((item, idx) => (
-                          <motion.li
-                            key={idx}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="flex gap-2"
-                          >
-                            <span className="mt-1 text-red-400">×</span>
-                            <span>{item}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 rounded-lg border-l-4 border-blue-500/50 bg-blue-950/20 p-4">
-                    <p className="text-sm italic text-neutral-200">
-                      &ldquo;Indian schools need tools that understand ground reality—complex fee structures, multi-branch operations, compliance requirements, and resource constraints. SquareCampus is built to handle that complexity without drama, so institutions can focus on what actually matters: education.&rdquo;
-                    </p>
-                    <p className="mt-2 text-xs text-neutral-400">
-                      — Mohit Gupta, Founder & CTO
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="border-l-4 border-blue-500 bg-blue-950/10 p-8">
+              <p className="text-xl leading-relaxed text-neutral-200 md:text-2xl">
+                &ldquo;Indian schools need software that understands their reality. Multi-branch operations. Complex fee structures. Resource constraints. Compliance requirements.
+                <br /><br />
+                <span className="font-semibold text-white">
+                  SquareCampus handles that complexity so schools can focus on education.
+                </span>
+                &rdquo;
+              </p>
+              <p className="mt-6 text-sm text-neutral-400">
+                — Mohit Gupta, Founder & CTO
+              </p>
+            </div>
           </section>
 
           {/* Values – the rules of engagement */}
