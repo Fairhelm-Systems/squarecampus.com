@@ -5,7 +5,15 @@ import { IconMailFilled } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { MacbookScroll } from "./macbook";
-import { sendContactEmail, type ContactFormData } from "@/actions/contact";
+export type ContactFormData = {
+  name: string;
+  email: string;
+  institution: string;
+  role?: string;
+  students?: string;
+  message?: string;
+  website?: string;
+};
 import { toast } from "sonner";
 import { MaskedDots } from "./backgrounds/masked-dots";
 import { Logo } from "./logo";
@@ -32,22 +40,35 @@ export function ContactUs() {
         e.preventDefault();
 
         startTransition(async () => {
-            const result = await sendContactEmail(formData);
-
-            if (result.success) {
-                toast.success(result.message);
-                // Reset form
-                setFormData({
-                    name: "",
-                    email: "",
-                    institution: "",
-                    role: "",
-                    students: "",
-                    message: "",
-                    website: "",
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
                 });
-            } else {
-                toast.error(result.message);
+
+                const result = await response.json();
+
+                if (result.success) {
+                    toast.success(result.message);
+                    // Reset form
+                    setFormData({
+                        name: "",
+                        email: "",
+                        institution: "",
+                        role: "",
+                        students: "",
+                        message: "",
+                        website: "",
+                    });
+                } else {
+                    toast.error(result.message);
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                toast.error('Failed to submit form. Please try again.');
             }
         });
     };
