@@ -161,7 +161,6 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
     }
 
     // Create client with the key that actually exists *here*
-    console.log("RESEND API KEY", apiKey);
     const resend = new Resend(apiKey);
 
     let headersList: Headers;
@@ -555,8 +554,8 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
     let emailResult;
     try {
       emailResult = await resend.emails.send({
-        from: "admin@squarecampus.com",
-        to: ["contact@squarecampus.com"],
+        from: "contact@squarecampus.com",
+        to: [process.env.MARKETING_EXEC_EMAIL ?? "contact@squarecampus.com"],
         replyTo: formData.email,
         subject: `New Contact: ${sanitizedData.name} from ${sanitizedData.institution}`,
         html: emailHtml,
