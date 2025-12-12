@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 80, 96, 128, 256, 384],
     minimumCacheTTL: 60,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.squarecampus.in",
+        pathname: "/**",
+      },
+    ],
   },
   async headers() {
     return [
@@ -50,9 +57,10 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' https:",
               "style-src 'self' 'unsafe-inline' https:",
-              "img-src 'self' data: blob: https:",
-              "font-src 'self' https: data:",
-              "connect-src 'self' https:",
+              "img-src 'self' data: blob: https://cdn.squarecampus.in https:",
+              "font-src 'self' https://cdn.squarecampus.in https: data:",
+              "media-src 'self' https://cdn.squarecampus.in https:",
+              "connect-src 'self' https://cdn.squarecampus.in https:",
               "frame-ancestors 'none'",
               "frame-src 'self' https:",
               "form-action 'self'",
