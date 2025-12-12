@@ -12,10 +12,7 @@
     "format:check": "biome format .",
     "check": "biome check .",
     "fix": "biome check --write .",
-    "check-types": "turbo run check-types",
-    "update:api-spec": "bun run scripts/refresh-openapi.ts",
-    "generate:api": "orval --config orval.config.ts",
-    "update:api": "bun run update:api-spec && bun run generate:api"
+    "check-types": "turbo run check-types"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.946.0",
