@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { Card, CardContent } from "@/components/ui/card";
 
 type LegalPageLink = {
   title: string;
@@ -34,12 +34,7 @@ type LegalShellProps = {
   children: ReactNode;
 };
 
-export function LegalShell({
-  title,
-  currentPage,
-  description,
-  children,
-}: LegalShellProps) {
+export function LegalShell({ title, currentPage, description, children }: LegalShellProps) {
   return (
     <>
       <main className="bg-neutral-950 min-h-screen px-4 py-14 sm:px-6 lg:px-10">
@@ -49,13 +44,9 @@ export function LegalShell({
               Legal Center
             </p>
             <div className="space-y-2">
-              <h1 className="text-3xl font-semibold text-neutral-100 md:text-4xl">
-                {title}
-              </h1>
+              <h1 className="text-3xl font-semibold text-neutral-100 md:text-4xl">{title}</h1>
               {description && (
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {description}
-                </p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
               )}
             </div>
             <nav className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">

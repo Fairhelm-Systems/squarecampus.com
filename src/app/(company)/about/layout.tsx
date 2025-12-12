@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About | SquareCampus",
+export const metadata: Metadata = createPageMetadata({
+  title: "About SquareCampus | Building the Operating System for Indian Education",
   description:
-    "Learn about SquareCampus, the operating system for modern schools and colleges, and the team building it.",
-};
+    "Learn about SquareCampus, the team building operational infrastructure for Indian schools and colleges. Our mission: calm, connected, and accountable campus management.",
+  path: "/about",
+  ogTitle: "About SquareCampus | The Team Behind India's School OS",
+  ogDescription:
+    "Meet the team building the operational backbone Indian education deserves. Single source of truth for admissions, academics, finance, and compliance.",
+  twitterDescription:
+    "Building operational infrastructure for Indian schools and colleges. Meet the founding team and learn our mission.",
+});
 
 type AboutLayoutProps = {
   children: ReactNode;

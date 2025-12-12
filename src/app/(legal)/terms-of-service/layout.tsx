@@ -1,12 +1,16 @@
-import {Metadata} from "next";
-import {ReactNode} from "react";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    title: "Terms of Service | SquareCampus",
-    description:
-      "Terms of Service governing use of the SquareCampus school and college management platform.",
-  };
+export const metadata: Metadata = createPageMetadata({
+  title: "Terms of Service | SquareCampus",
+  description:
+    "SquareCampus Terms of Service: Legal agreement governing the use of our school and college management platform for educational institutions.",
+  path: "/terms-of-service",
+  ogDescription:
+    "Legal terms and conditions for using the SquareCampus platform for your educational institution.",
+});
 
-export default function TOCLayout ({ children }: { children: ReactNode }) {
-    return <>{children}</>;
+export default function TOCLayout({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import type React from "react";
+import { useEffect, useRef } from "react";
 
 type RippleCSSVars = React.CSSProperties & {
   ["--ripple-x"]?: string;
@@ -38,10 +39,12 @@ export const BackgroundRippleEffect = () => {
     <div
       ref={containerRef}
       className="pointer-events-none absolute inset-0 overflow-hidden"
-      style={{
-        "--ripple-x": "52%",
-        "--ripple-y": "36%",
-      } as RippleCSSVars}
+      style={
+        {
+          "--ripple-x": "52%",
+          "--ripple-y": "36%",
+        } as RippleCSSVars
+      }
     >
       {/* Soft color wash that tracks the pointer */}
       <div className="absolute inset-0 opacity-80 transition-[background-position] duration-700 will-change-transform bg-[radial-gradient(circle_at_var(--ripple-x)_var(--ripple-y),rgba(59,130,246,0.18),transparent_42%),radial-gradient(circle_at_82%_18%,rgba(147,51,234,0.14),transparent_38%),radial-gradient(circle_at_18%_78%,rgba(52,211,153,0.14),transparent_40%)]" />

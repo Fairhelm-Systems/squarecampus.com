@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-const baseUrl = "https://www.squarecampus.com";
+const baseUrl = "https://squarecampus.com";
 
 export const metadata: Metadata = {
   title: {
@@ -25,8 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Careers at SquareCampus",
-    description:
-      "Help design and scale the operating system for modern institutions.",
+    description: "Help design and scale the operating system for modern institutions.",
   },
   robots: {
     index: true,

@@ -21,7 +21,7 @@ const suspiciousUrlFragments = [
   /%3Cscript/i,
   /union(\s+all)?\s+select/i,
   /(\bor\b|\band\b).+?=/i,
-  /(\%27)|(')|(--)|(\%23)|(#)/i,
+  /(%27)|(')|(--)|(%23)|(#)/i,
   /\.\.\/\.\.\//,
   /\/etc\/passwd/i,
 ];

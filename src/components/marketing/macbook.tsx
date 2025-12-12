@@ -1,30 +1,29 @@
 "use client";
-import React from "react";
-import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
 import {
   IconBrightnessDown,
   IconBrightnessUp,
+  IconCaretDownFilled,
+  IconCaretLeftFilled,
   IconCaretRightFilled,
   IconCaretUpFilled,
   IconChevronUp,
+  IconCommand,
   IconMicrophone,
   IconMoon,
   IconPlayerSkipForward,
   IconPlayerTrackNext,
   IconPlayerTrackPrev,
+  IconSearch,
   IconTable,
   IconVolume,
   IconVolume2,
   IconVolume3,
-  IconSearch,
   IconWorld,
-  IconCommand,
-  IconCaretLeftFilled,
-  IconCaretDownFilled
 } from "@tabler/icons-react";
-
+import { motion } from "motion/react";
 import Image from "next/image";
+import type React from "react";
+import { cn } from "@/lib/utils";
 
 const lidContainerVariants = {
   hover: {
@@ -123,9 +122,7 @@ export const Lid = ({ src, children }: { src?: string; children?: React.ReactNod
           className="absolute inset-0 bg-[#010101] overflow-hidden h-[95%] w-[98.5%] m-auto rounded-xl flex items-center justify-center"
         >
           {children ? (
-            <div className="w-full h-full rounded-lg overflow-hidden">
-              {children}
-            </div>
+            <div className="w-full h-full rounded-lg overflow-hidden">{children}</div>
           ) : src ? (
             <Image
               src={src}
@@ -461,10 +458,7 @@ export const Keypad = () => {
             <span className="block">option</span>
           </div>
         </KBtn>
-        <KBtn
-          className="w-8"
-          childrenClassName="h-full justify-between py-[4px]"
-        >
+        <KBtn className="w-8" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex justify-end w-full pr-1">
             <IconCommand className="h-[6px] w-[6px]" />
           </div>
@@ -473,10 +467,7 @@ export const Keypad = () => {
           </div>
         </KBtn>
         <KBtn className="w-[8.2rem]"></KBtn>
-        <KBtn
-          className="w-8"
-          childrenClassName="h-full justify-between py-[4px]"
-        >
+        <KBtn className="w-8" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex justify-start w-full pl-1">
             <IconCommand className="h-[6px] w-[6px]" />
           </div>
@@ -525,10 +516,7 @@ export const KBtn = ({
 }) => {
   return (
     <div
-      className={cn(
-        "p-[0.5px] rounded-[4px]",
-        backlit && "bg-white/[0.2] shadow-white shadow-xl"
-      )}
+      className={cn("p-[0.5px] rounded-[4px]", backlit && "bg-white/[0.2] shadow-white shadow-xl")}
     >
       <div
         className={cn(
@@ -536,8 +524,7 @@ export const KBtn = ({
           className
         )}
         style={{
-          boxShadow:
-            "0px -0.5px 2px 0 #0D0D0F inset, -0.5px 0px 2px 0 #0D0D0F inset",
+          boxShadow: "0px -0.5px 2px 0 #0D0D0F inset, -0.5px 0px 2px 0 #0D0D0F inset",
         }}
       >
         <div
@@ -555,11 +542,7 @@ export const KBtn = ({
 };
 
 export const Row = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="flex gap-[2px] mb-[2px] w-full flex-shrink-0">
-      {children}
-    </div>
-  );
+  return <div className="flex gap-[2px] mb-[2px] w-full flex-shrink-0">{children}</div>;
 };
 
 export const SpeakerGrid = () => {
@@ -567,8 +550,7 @@ export const SpeakerGrid = () => {
     <div
       className="flex px-[0.5px] gap-[2px] mt-2 h-40"
       style={{
-        backgroundImage:
-          "radial-gradient(circle, #08080A 0.5px, transparent 0.5px)",
+        backgroundImage: "radial-gradient(circle, #08080A 0.5px, transparent 0.5px)",
         backgroundSize: "3px 3px",
       }}
     ></div>
@@ -585,26 +567,13 @@ export const OptionKey = ({ className }: { className: string }) => {
       viewBox="0 0 32 32"
       className={className}
     >
-      <rect
-        stroke="currentColor"
-        strokeWidth={2}
-        x="18"
-        y="5"
-        width="10"
-        height="2"
-      />
+      <rect stroke="currentColor" strokeWidth={2} x="18" y="5" width="10" height="2" />
       <polygon
         stroke="currentColor"
         strokeWidth={2}
         points="10.6,5 4,5 4,7 9.4,7 18.4,27 28,27 28,25 19.6,25 "
       />
-      <rect
-        id="_Transparent_Rectangle_"
-        className="st0"
-        width="32"
-        height="32"
-        stroke="none"
-      />
+      <rect id="_Transparent_Rectangle_" className="st0" width="32" height="32" stroke="none" />
     </svg>
   );
 };

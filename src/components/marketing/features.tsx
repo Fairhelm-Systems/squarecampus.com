@@ -1,22 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import { AnimatePresence, motion, useAnimation, useInView } from "motion/react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
+  Activity,
   AlertTriangle,
   Bell,
   CheckCircle2,
   Clock,
+  type IconComponent,
   Languages,
-  X,
-  Activity,
-  Workflow,
   Radio,
   Shield,
   TrendingUp,
+  Workflow,
+  X,
   Zap,
-  type IconComponent,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,6 @@ type LanguageMeta = {
   notificationNative?: string;
   notificationEnglish: string;
 };
-
 
 const featureData: Array<{
   title: string;
@@ -123,8 +122,8 @@ export function Features() {
           SquareCampus replaces 5+ disconnected tools with one campus OS
         </h2>
         <p className="mx-auto max-w-2xl text-sm text-neutral-400 md:text-base">
-          Run admissions, academics, finance, communication, and facilities in a single,
-          responsive workspace. One login, one timeline, one source of truth for every campus.
+          Run admissions, academics, finance, communication, and facilities in a single, responsive
+          workspace. One login, one timeline, one source of truth for every campus.
         </p>
       </div>
 
@@ -142,7 +141,9 @@ export function Features() {
               className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
             >
               {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+              />
 
               {/* Content */}
               <div className="relative">
@@ -170,8 +171,12 @@ export function Features() {
                         >
                           <StatIcon className="h-2.5 w-2.5 text-white/60" />
                           <div className="text-right">
-                            <p className="text-[0.7rem] font-semibold leading-tight text-white">{stat.value}</p>
-                            <p className="text-[0.55rem] uppercase leading-tight tracking-wider text-white/40">{stat.label}</p>
+                            <p className="text-[0.7rem] font-semibold leading-tight text-white">
+                              {stat.value}
+                            </p>
+                            <p className="text-[0.55rem] uppercase leading-tight tracking-wider text-white/40">
+                              {stat.label}
+                            </p>
                           </div>
                         </motion.div>
                       );
@@ -183,7 +188,9 @@ export function Features() {
                   <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
                     {feature.title}
                   </p>
-                  <p className="mt-2 text-sm leading-snug text-neutral-100">{feature.description}</p>
+                  <p className="mt-2 text-sm leading-snug text-neutral-100">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
 
@@ -219,7 +226,8 @@ export function Features() {
               Beautiful, legible dashboards that keep decisions visible.
             </p>
             <p className="mt-2 text-sm text-neutral-300">
-              Board-ready reports, compliance logs, and student journeys live in one place, no exports needed.
+              Board-ready reports, compliance logs, and student journeys live in one place, no
+              exports needed.
             </p>
           </div>
           <Image
@@ -267,24 +275,19 @@ const FeatureVisual = () => {
             Built to keep every school day on rails
           </h3>
           <p>
-            SquareCampus orchestrates academics, finance, communication, and
-            facilities so small schools stay agile and large institutions stay
-            predictable, no swivel-chairing between apps. It&apos;s not a
-            nice-to-have; it&apos;s the control center that keeps every bell,
+            SquareCampus orchestrates academics, finance, communication, and facilities so small
+            schools stay agile and large institutions stay predictable, no swivel-chairing between
+            apps. It&apos;s not a nice-to-have; it&apos;s the control center that keeps every bell,
             bus, bill, and broadcast on time.
           </p>
           <ul className="grid gap-3 text-sm text-neutral-100 md:grid-cols-2">
             <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-blue-400" />
-              <span>
-                Single source of truth across admissions, academics, and finance.
-              </span>
+              <span>Single source of truth across admissions, academics, and finance.</span>
             </li>
             <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-purple-400" />
-              <span>
-                Predictable daily playbook with alerts before issues snowball.
-              </span>
+              <span>Predictable daily playbook with alerts before issues snowball.</span>
             </li>
             <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -292,9 +295,7 @@ const FeatureVisual = () => {
             </li>
             <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-orange-400" />
-              <span>
-                7-day rollout with migration, training, and implementation support.
-              </span>
+              <span>7-day rollout with migration, training, and implementation support.</span>
             </li>
           </ul>
         </div>
@@ -307,49 +308,35 @@ const FeatureVisual = () => {
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">
-                Non-negotiable
-              </p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Non-negotiable</p>
               <p className="mt-2 text-lg font-semibold text-white">
                 Control center for every workflow
               </p>
               <p className="mt-2 text-sm text-neutral-200">
-                Admissions, timetables, finance, transport, and communication
-                run on one timeline.
+                Admissions, timetables, finance, transport, and communication run on one timeline.
               </p>
             </motion.div>
             <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/15 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-purple-500/20">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">
-                Risk removed
-              </p>
-              <p className="mt-2 text-xl font-semibold text-white">
-                Audit-ready by default
-              </p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Risk removed</p>
+              <p className="mt-2 text-xl font-semibold text-white">Audit-ready by default</p>
               <p className="mt-2 text-sm text-neutral-200">
-                Role-based access, approvals, and logs ensure compliance without
-                extra tools.
+                Role-based access, approvals, and logs ensure compliance without extra tools.
               </p>
             </div>
           </div>
           <div className="grid gap-3 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-                Uptime
-              </p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Uptime</p>
               <p className="text-lg font-semibold text-white">99.9%</p>
               <p className="text-xs text-neutral-300">Monitored, resilient cloud</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-                Go-live
-              </p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Go-live</p>
               <p className="text-lg font-semibold text-white">Under 7 days</p>
               <p className="text-xs text-neutral-300">Migration + training included</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-                Time saved
-              </p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Time saved</p>
               <p className="text-lg font-semibold text-white">15–20 hrs</p>
               <p className="text-xs text-neutral-300">Per team every week</p>
             </div>
@@ -361,9 +348,7 @@ const FeatureVisual = () => {
       <div className="mt-8 grid gap-4 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.2fr)]">
         {/* Today at a glance – a mini day timeline */}
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/50">
-            Today at a glance
-          </p>
+          <p className="text-xs uppercase tracking-[0.4em] text-white/50">Today at a glance</p>
           <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
             <div className="flex items-center gap-2 pb-3 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               <Clock className="h-3.5 w-3.5" />
@@ -378,9 +363,7 @@ const FeatureVisual = () => {
                     <p className="text-[0.8rem] font-semibold text-neutral-100">
                       Morning attendance
                     </p>
-                    <p className="text-[0.72rem] text-neutral-400">
-                      96% present · 4% absent
-                    </p>
+                    <p className="text-[0.72rem] text-neutral-400">96% present · 4% absent</p>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-500/20 px-2 py-1 text-[0.7rem] font-semibold text-emerald-300">
@@ -390,15 +373,15 @@ const FeatureVisual = () => {
               {/* Row 2 – lightly at risk */}
               <motion.div
                 className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
-                animate={{ boxShadow: ["0 0 0 0 rgba(251,191,36,0.2)", "0 0 0 8px rgba(251,191,36,0)"] }}
+                animate={{
+                  boxShadow: ["0 0 0 0 rgba(251,191,36,0.2)", "0 0 0 8px rgba(251,191,36,0)"],
+                }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">10:30</span>
                   <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">
-                      Mid-term exams
-                    </p>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">Mid-term exams</p>
                     <p className="text-[0.72rem] text-neutral-200">
                       2 rooms over capacity · 1 invigilator missing
                     </p>
@@ -430,9 +413,7 @@ const FeatureVisual = () => {
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">17:30</span>
                   <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">
-                      Fees & reminders
-                    </p>
+                    <p className="text-[0.8rem] font-semibold text-neutral-100">Fees & reminders</p>
                     <p className="text-[0.72rem] text-neutral-400">
                       Auto-reminders sent to 42 pending accounts
                     </p>
@@ -448,9 +429,7 @@ const FeatureVisual = () => {
 
         {/* Exception queue – what actually needs attention */}
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/50">
-            Exception queue
-          </p>
+          <p className="text-xs uppercase tracking-[0.4em] text-white/50">Exception queue</p>
           <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
             <div className="flex items-center justify-between pb-3">
               <div className="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
@@ -540,186 +519,182 @@ export const LanguageSupportSection = () => {
      nativeName: for respect.
      greeting*: for a small, human moment when someone clicks.
   */
-     const languages: LanguageMeta[] = [
-      {
-        code: "EN",
-        englishName: "English",
-        nativeName: "English",
-        locale: "en-IN",
-        glow: "from-blue-400 to-blue-600",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "Welcome to SquareCampus.",
-        notificationEnglish: "Good morning! Here's to a great school day ahead.",
-        notificationNative: "Good morning! Here's to a great school day ahead.",
-      },
-      {
-        code: "HI",
-        englishName: "Hindi",
-        nativeName: "हिन्दी",
-        locale: "hi-IN",
-        glow: "from-amber-400 to-orange-500",
-        fontClass: "font-devanagari",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus में आपका स्वागत है।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो।",
-      },
-      {
-        code: "KN",
-        englishName: "Kannada",
-        nativeName: "ಕನ್ನಡ",
-        locale: "kn-IN",
-        glow: "from-sky-400 to-sky-600",
-        fontClass: "font-kannada",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 ಶುಭೋದಯ! ನಿಮ್ಮ ದಿನ ಅದ್ಭುತವಾಗಲಿ.",
-      },
-      {
-        code: "TA",
-        englishName: "Tamil",
-        nativeName: "தமிழ்",
-        locale: "ta-IN",
-        glow: "from-purple-400 to-purple-600",
-        fontClass: "font-tamil",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus-க்கு வரவேற்கிறோம்.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
-      },
-      {
-        code: "TE",
-        englishName: "Telugu",
-        nativeName: "తెలుగు",
-        locale: "te-IN",
-        glow: "from-emerald-400 to-emerald-600",
-        fontClass: "font-telugu",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus కు స్వాగతం.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 శుభోదయం! మీ రోజు అద్భుతంగా సాగాలి.",
-      },
-      {
-        code: "MR",
-        englishName: "Marathi",
-        nativeName: "मराठी",
-        locale: "mr-IN",
-        glow: "from-rose-400 to-rose-600",
-        fontClass: "font-devanagari",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus मध्ये आपले स्वागत आहे.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
-      },
-      {
-        code: "GU",
-        englishName: "Gujarati",
-        nativeName: "ગુજરાતી",
-        locale: "gu-IN",
-        glow: "from-cyan-400 to-cyan-600",
-        fontClass: "font-gujarati",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative:
-          "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
-      },
-      {
-        code: "ML",
-        englishName: "Malayalam",
-        nativeName: "മലയാളം",
-        locale: "ml-IN",
-        glow: "from-green-400 to-green-600",
-        fontClass: "font-malayalam",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus-ലേക്ക് സ്വാഗതം.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative:
-          "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
-      },
-      {
-        code: "BN",
-        englishName: "Bengali",
-        nativeName: "বাংলা",
-        locale: "bn-IN",
-        glow: "from-pink-400 to-pink-600",
-        fontClass: "font-bengali",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus-এ আপনাকে স্বাগতম।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative:
-          "🔔 সুপ্রভাত! আপনার দিনটি ভালো কাটুক।",
-      },
-      {
-        code: "PA",
-        englishName: "Punjabi",
-        nativeName: "ਪੰਜਾਬੀ",
-        locale: "pa-IN",
-        glow: "from-fuchsia-400 to-fuchsia-600",
-        fontClass: "font-gurmukhi",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative:
-          "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
-      },
-      {
-        code: "UR",
-        englishName: "Urdu",
-        nativeName: "اردو",
-        locale: "ur-IN",
-        glow: "from-slate-300 to-slate-500",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus میں خوش آمدید۔",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 صبح بخیر! آپ کا دن شاندار گزرے۔",
-      },
-      {
-        code: "OR",
-        englishName: "Odia",
-        nativeName: "ଓଡିଆ",
-        locale: "or-IN",
-        glow: "from-amber-300 to-orange-500",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus କୁ ସ୍ୱାଗତ।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 ସୁପ୍ରଭାତ! ଆପଣଙ୍କ ଦିନ ଅଦ୍ଭୁତ ହେଉ।",
-      },
-      {
-        code: "AS",
-        englishName: "Assamese",
-        nativeName: "অসমীয়া",
-        locale: "as-IN",
-        glow: "from-lime-400 to-emerald-500",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus-লৈ স্বাগতম।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 শুভ প্ৰভাত! আপোনাৰ দিনটো অদ্ভুত হওক।",
-      },
-      {
-        code: "NE",
-        englishName: "Nepali",
-        nativeName: "नेपाली",
-        locale: "ne-IN",
-        glow: "from-indigo-400 to-indigo-600",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus मा तपाईंलाई स्वागत छ।",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 शुभ प्रभात! तपाईंको दिन रमाइलो होस्।",
-      },
-      {
-        code: "KO",
-        englishName: "Konkani",
-        nativeName: "कोंकणी",
-        locale: "kok-IN",
-        glow: "from-teal-400 to-cyan-600",
-        greetingEnglish: "Welcome to SquareCampus.",
-        greetingNative: "SquareCampus मध्ये तुमचं स्वागत आहे.",
-        notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-        notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
-      },
-    ];    
+  const languages: LanguageMeta[] = [
+    {
+      code: "EN",
+      englishName: "English",
+      nativeName: "English",
+      locale: "en-IN",
+      glow: "from-blue-400 to-blue-600",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "Welcome to SquareCampus.",
+      notificationEnglish: "Good morning! Here's to a great school day ahead.",
+      notificationNative: "Good morning! Here's to a great school day ahead.",
+    },
+    {
+      code: "HI",
+      englishName: "Hindi",
+      nativeName: "हिन्दी",
+      locale: "hi-IN",
+      glow: "from-amber-400 to-orange-500",
+      fontClass: "font-devanagari",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus में आपका स्वागत है।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो।",
+    },
+    {
+      code: "KN",
+      englishName: "Kannada",
+      nativeName: "ಕನ್ನಡ",
+      locale: "kn-IN",
+      glow: "from-sky-400 to-sky-600",
+      fontClass: "font-kannada",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 ಶುಭೋದಯ! ನಿಮ್ಮ ದಿನ ಅದ್ಭುತವಾಗಲಿ.",
+    },
+    {
+      code: "TA",
+      englishName: "Tamil",
+      nativeName: "தமிழ்",
+      locale: "ta-IN",
+      glow: "from-purple-400 to-purple-600",
+      fontClass: "font-tamil",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus-க்கு வரவேற்கிறோம்.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
+    },
+    {
+      code: "TE",
+      englishName: "Telugu",
+      nativeName: "తెలుగు",
+      locale: "te-IN",
+      glow: "from-emerald-400 to-emerald-600",
+      fontClass: "font-telugu",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus కు స్వాగతం.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 శుభోదయం! మీ రోజు అద్భుతంగా సాగాలి.",
+    },
+    {
+      code: "MR",
+      englishName: "Marathi",
+      nativeName: "मराठी",
+      locale: "mr-IN",
+      glow: "from-rose-400 to-rose-600",
+      fontClass: "font-devanagari",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus मध्ये आपले स्वागत आहे.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
+    },
+    {
+      code: "GU",
+      englishName: "Gujarati",
+      nativeName: "ગુજરાતી",
+      locale: "gu-IN",
+      glow: "from-cyan-400 to-cyan-600",
+      fontClass: "font-gujarati",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
+    },
+    {
+      code: "ML",
+      englishName: "Malayalam",
+      nativeName: "മലയാളം",
+      locale: "ml-IN",
+      glow: "from-green-400 to-green-600",
+      fontClass: "font-malayalam",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus-ലേക്ക് സ്വാഗതം.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
+    },
+    {
+      code: "BN",
+      englishName: "Bengali",
+      nativeName: "বাংলা",
+      locale: "bn-IN",
+      glow: "from-pink-400 to-pink-600",
+      fontClass: "font-bengali",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus-এ আপনাকে স্বাগতম।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 সুপ্রভাত! আপনার দিনটি ভালো কাটুক।",
+    },
+    {
+      code: "PA",
+      englishName: "Punjabi",
+      nativeName: "ਪੰਜਾਬੀ",
+      locale: "pa-IN",
+      glow: "from-fuchsia-400 to-fuchsia-600",
+      fontClass: "font-gurmukhi",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
+    },
+    {
+      code: "UR",
+      englishName: "Urdu",
+      nativeName: "اردو",
+      locale: "ur-IN",
+      glow: "from-slate-300 to-slate-500",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus میں خوش آمدید۔",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 صبح بخیر! آپ کا دن شاندار گزرے۔",
+    },
+    {
+      code: "OR",
+      englishName: "Odia",
+      nativeName: "ଓଡିଆ",
+      locale: "or-IN",
+      glow: "from-amber-300 to-orange-500",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus କୁ ସ୍ୱାଗତ।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 ସୁପ୍ରଭାତ! ଆପଣଙ୍କ ଦିନ ଅଦ୍ଭୁତ ହେଉ।",
+    },
+    {
+      code: "AS",
+      englishName: "Assamese",
+      nativeName: "অসমীয়া",
+      locale: "as-IN",
+      glow: "from-lime-400 to-emerald-500",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus-লৈ স্বাগতম।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 শুভ প্ৰভাত! আপোনাৰ দিনটো অদ্ভুত হওক।",
+    },
+    {
+      code: "NE",
+      englishName: "Nepali",
+      nativeName: "नेपाली",
+      locale: "ne-IN",
+      glow: "from-indigo-400 to-indigo-600",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus मा तपाईंलाई स्वागत छ।",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 शुभ प्रभात! तपाईंको दिन रमाइलो होस्।",
+    },
+    {
+      code: "KO",
+      englishName: "Konkani",
+      nativeName: "कोंकणी",
+      locale: "kok-IN",
+      glow: "from-teal-400 to-cyan-600",
+      greetingEnglish: "Welcome to SquareCampus.",
+      greetingNative: "SquareCampus मध्ये तुमचं स्वागत आहे.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
+    },
+  ];
 
   const [active, setActive] = useState<LanguageMeta | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
@@ -735,10 +710,7 @@ export const LanguageSupportSection = () => {
     };
 
     const handleClick = (event: MouseEvent) => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(event.target as Node)
-      ) {
+      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         setActive(null);
       }
     };
@@ -762,10 +734,9 @@ export const LanguageSupportSection = () => {
           Built for the languages India speaks
         </h2>
         <p className="text-sm leading-relaxed text-neutral-400 md:text-base">
-          SquareCampus ships with support for India&apos;s major languages so
-          administrators, teachers, parents, and students can use the platform
-          comfortably in the language they prefer. Adoption improves, support
-          tickets drop, and communication becomes seamless.
+          SquareCampus ships with support for India&apos;s major languages so administrators,
+          teachers, parents, and students can use the platform comfortably in the language they
+          prefer. Adoption improves, support tickets drop, and communication becomes seamless.
         </p>
       </div>
 
@@ -794,10 +765,7 @@ export const LanguageSupportSection = () => {
             <div className="mt-2 space-y-1">
               <span
                 lang={lang.locale}
-                className={cn(
-                  "block text-sm font-semibold text-white",
-                  lang.fontClass
-                )}
+                className={cn("block text-sm font-semibold text-white", lang.fontClass)}
               >
                 {lang.nativeName}
               </span>
@@ -817,8 +785,8 @@ export const LanguageSupportSection = () => {
             <span className="font-semibold text-white">
               Parent-friendly. Teacher-friendly. Admin-friendly.
             </span>{" "}
-            Interfaces adapt to the chosen language, while reports and exports
-            can still be generated in English for auditors and regulators.
+            Interfaces adapt to the chosen language, while reports and exports can still be
+            generated in English for auditors and regulators.
           </p>
         </div>
       </div>
@@ -922,18 +890,13 @@ export const LanguageSupportSection = () => {
                 </p>
 
                 {active.greetingNative && (
-                  <p className="text-[0.8rem] text-neutral-400">
-                    {active.greetingEnglish}
-                  </p>
+                  <p className="text-[0.8rem] text-neutral-400">{active.greetingEnglish}</p>
                 )}
               </div>
 
               {/* Example UI snippet */}
               <div className="mt-4 rounded-xl border border-white/10 bg-neutral-900/60 p-3 text-xs text-neutral-300 font-medium">
-                <p
-                  lang={active.locale}
-                  className={cn("leading-relaxed", active.fontClass)}
-                >
+                <p lang={active.locale} className={cn("leading-relaxed", active.fontClass)}>
                   {active.notificationNative ?? active.notificationEnglish}
                 </p>
                 {active.notificationNative && (
@@ -945,11 +908,9 @@ export const LanguageSupportSection = () => {
 
               <p className="mt-4 text-[0.78rem] text-neutral-400 leading-relaxed">
                 SquareCampus adapts key experiences into{" "}
-                <span className="font-semibold text-neutral-100">
-                  {active.englishName}
-                </span>
-                : parent apps, notifications, attendance updates, fee reminders,
-                while admins can continue working in English if they prefer.
+                <span className="font-semibold text-neutral-100">{active.englishName}</span>: parent
+                apps, notifications, attendance updates, fee reminders, while admins can continue
+                working in English if they prefer.
               </p>
             </motion.div>
           </motion.div>

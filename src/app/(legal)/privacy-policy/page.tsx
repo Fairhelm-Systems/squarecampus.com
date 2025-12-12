@@ -1,5 +1,5 @@
-import { Separator } from "@/components/ui/separator";
 import { LegalSection, LegalShell } from "@/components/legal/legal-shell";
+import { Separator } from "@/components/ui/separator";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -19,9 +19,7 @@ export default function PrivacyPolicyPage() {
           <div className="space-y-4">
             <div>
               <p className="text-sm font-semibold text-white">1.1 Institution Information</p>
-              <p>
-                We may collect or receive details about the Institution, including:
-              </p>
+              <p>We may collect or receive details about the Institution, including:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>Institution name, type, and registered address;</li>
                 <li>Administrative contacts, emails, and phone numbers;</li>
@@ -37,7 +35,9 @@ export default function PrivacyPolicyPage() {
                 <li>Names, contact details, roles (student, parent, educator, staff);</li>
                 <li>Authentication records and hashed login credentials;</li>
                 <li>Academic data, attendance, assignments, assessments, and grades;</li>
-                <li>Messages, notifications, and collaboration history generated inside the Service.</li>
+                <li>
+                  Messages, notifications, and collaboration history generated inside the Service.
+                </li>
               </ul>
             </div>
 
@@ -55,9 +55,9 @@ export default function PrivacyPolicyPage() {
             <div>
               <p className="text-sm font-semibold text-white">1.4 Sensitive Data and Minors</p>
               <p>
-                SquareCampus may process information about minors (students) and
-                data that may be considered sensitive (photographs, health records,
-                disciplinary notes) strictly under the Institution's instructions.
+                SquareCampus may process information about minors (students) and data that may be
+                considered sensitive (photographs, health records, disciplinary notes) strictly
+                under the Institution's instructions.
               </p>
               <p>
                 Institutions are responsible for obtaining any necessary parental or guardian
@@ -83,9 +83,9 @@ export default function PrivacyPolicyPage() {
 
         <LegalSection title="3. Legal Basis for Processing">
           <p>
-            Our processing is typically governed by performance of an agreement with
-            the Institution, consent where appropriate, compliance with legal duties,
-            or legitimate interests that do not override individual rights.
+            Our processing is typically governed by performance of an agreement with the
+            Institution, consent where appropriate, compliance with legal duties, or legitimate
+            interests that do not override individual rights.
           </p>
         </LegalSection>
 
@@ -98,70 +98,63 @@ export default function PrivacyPolicyPage() {
             <li>Government or law enforcement authorities when required by law.</li>
           </ul>
           <p>
-            When personal data leaves India, we implement appropriate safeguards
-            required by applicable law.
+            When personal data leaves India, we implement appropriate safeguards required by
+            applicable law.
           </p>
         </LegalSection>
 
         <LegalSection title="5. Data Security">
           <p>
-            We deploy administrative, technical, and physical measures such as
-            encryption in transit and at rest, role-based access controls,
-            infrastructure hardening, monitoring, backups, and periodic reviews
-            to limit access to authorised personnel only.
+            We deploy administrative, technical, and physical measures such as encryption in transit
+            and at rest, role-based access controls, infrastructure hardening, monitoring, backups,
+            and periodic reviews to limit access to authorised personnel only.
           </p>
           <p>
-            No system is 100% secure, but we continually invest in improving our
-            posture and respond quickly to incidents.
+            No system is 100% secure, but we continually invest in improving our posture and respond
+            quickly to incidents.
           </p>
         </LegalSection>
 
         <LegalSection title="6. Data Retention">
           <p>
-            Data is retained for as long as necessary to provide the Service,
-            meet legal requirements, or resolve disputes. After an Institution’s
-            subscription ends, we may keep backup or audit data for a limited
-            period before securely deleting or anonymising it.
+            Data is retained for as long as necessary to provide the Service, meet legal
+            requirements, or resolve disputes. After an Institution’s subscription ends, we may keep
+            backup or audit data for a limited period before securely deleting or anonymising it.
           </p>
         </LegalSection>
 
         <LegalSection title="7. Rights of Institutions and Users">
           <p>
-            Subject to applicable law and our contracts with Institutions, Users
-            may request access, correction, data export, or deletion, subject to
-            legal and contractual limitations.
+            Subject to applicable law and our contracts with Institutions, Users may request access,
+            correction, data export, or deletion, subject to legal and contractual limitations.
           </p>
           <p>
-            Most requests should flow through the Institution, which controls user
-            data. We will collaborate with Institutions to fulfil requests when required.
+            Most requests should flow through the Institution, which controls user data. We will
+            collaborate with Institutions to fulfil requests when required.
           </p>
         </LegalSection>
 
         <LegalSection title="8. Cookies and Similar Technologies">
           <p>
-            Cookies and similar identifiers support authentication, session
-            persistence, and preference storage. We do not use third-party
-            advertising cookies in the core academic and administrative areas.
+            Cookies and similar identifiers support authentication, session persistence, and
+            preference storage. We do not use third-party advertising cookies in the core academic
+            and administrative areas.
           </p>
         </LegalSection>
 
         <LegalSection title="9. Children’s Privacy">
           <p>
-            SquareCampus is provided to Institutions, not directly to children.
-            Institutions are responsible for ensuring compliance with applicable
-            laws and policies regarding minors.
+            SquareCampus is provided to Institutions, not directly to children. Institutions are
+            responsible for ensuring compliance with applicable laws and policies regarding minors.
           </p>
         </LegalSection>
 
         <LegalSection title="10. Changes to This Policy">
           <p>
-            We may update this Privacy Policy occasionally. Updated versions
-            will appear here with a new “Last Updated” date, and we may provide
-            additional notices when appropriate.
+            We may update this Privacy Policy occasionally. Updated versions will appear here with a
+            new “Last Updated” date, and we may provide additional notices when appropriate.
           </p>
-          <p>
-            Continued use after changes means acceptance of the revised policy.
-          </p>
+          <p>Continued use after changes means acceptance of the revised policy.</p>
         </LegalSection>
 
         <LegalSection title="11. Contact Us">
@@ -181,9 +174,9 @@ export default function PrivacyPolicyPage() {
 
       <Separator className="mt-10" />
       <p className="text-xs text-muted-foreground">
-        This Privacy Policy is intended for transparency and does not constitute
-        legal advice. Institutions should consult legal counsel to confirm
-        compliance with applicable privacy laws.
+        This Privacy Policy is intended for transparency and does not constitute legal advice.
+        Institutions should consult legal counsel to confirm compliance with applicable privacy
+        laws.
       </p>
     </LegalShell>
   );

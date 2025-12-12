@@ -1,16 +1,9 @@
 "use client";
 
-import { useRef } from "react";
 import { motion, useInView } from "motion/react";
+import { useRef } from "react";
+import { AppWindow, Layers, Network, ShieldCheck, Smartphone, Sparkles } from "@/components/icons";
 import { cn } from "@/lib/utils";
-import {
-  AppWindow,
-  Layers,
-  Network,
-  Smartphone,
-  ShieldCheck,
-  Sparkles,
-} from "@/components/icons";
 import { SkewedRectangles } from "./backgrounds/skewed-rectangles";
 
 type EcosystemItem = {
@@ -74,10 +67,7 @@ const ecosystemItems: EcosystemItem[] = [
 
 const OrbitDot = ({ className }: { className?: string }) => (
   <motion.span
-    className={cn(
-      "h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500",
-      className,
-    )}
+    className={cn("h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500", className)}
     animate={{ opacity: [0.4, 1, 0.6], scale: [0.9, 1.15, 1] }}
     transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
   />
@@ -107,16 +97,14 @@ export function EcosystemSection() {
 
       {/* Heading */}
       <div className="mb-10 flex flex-col items-center gap-3 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
-          Ecosystem
-        </p>
+        <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">Ecosystem</p>
         <h2 className="text-2xl font-semibold text-white sm:text-3xl md:text-4xl">
           One platform. Multiple touchpoints. Single source of truth.
         </h2>
         <p className="max-w-2xl text-xs text-neutral-400 sm:text-sm md:text-base">
-          SquareCampus isn&apos;t just an ERP screen for admins. It&apos;s a
-          connected ecosystem for management, staff, parents, and students, with
-          integrations that keep data flowing without duplication.
+          SquareCampus isn&apos;t just an ERP screen for admins. It&apos;s a connected ecosystem for
+          management, staff, parents, and students, with integrations that keep data flowing without
+          duplication.
         </p>
       </div>
 
@@ -163,9 +151,7 @@ export function EcosystemSection() {
                 <span className="text-[0.7rem] uppercase tracking-[0.35em] text-neutral-400">
                   Core OS
                 </span>
-                <span className="text-sm font-semibold text-white">
-                  SquareCampus
-                </span>
+                <span className="text-sm font-semibold text-white">SquareCampus</span>
               </div>
             </div>
 
@@ -193,24 +179,22 @@ export function EcosystemSection() {
               <div className="absolute left-[8%] bottom-[22%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
                 <OrbitDot className="mb-1" />
                 <span>Parent app</span>
-                <span className="text-[0.65rem] text-neutral-400">
-                  Homework • Fees • Updates
-                </span>
+                <span className="text-[0.65rem] text-neutral-400">Homework • Fees • Updates</span>
               </div>
 
               {/* Integrations */}
               <div className="absolute right-[10%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
                 <OrbitDot className="mb-1" />
                 <span>Integrations</span>
-                <span className="text-[0.65rem] text-neutral-400">
-                  UPI • Messaging • Billing
-                </span>
+                <span className="text-[0.65rem] text-neutral-400">UPI • Messaging • Billing</span>
               </div>
             </div>
           </div>
 
           <p className="mt-4 text-[0.78rem] text-neutral-400 sm:text-xs">
-          Every action, attendance marked, fee paid, remark added, bus delay logged, flows through the same source of truth instead of disappearing into disconnected apps and spreadsheets.
+            Every action, attendance marked, fee paid, remark added, bus delay logged, flows through
+            the same source of truth instead of disappearing into disconnected apps and
+            spreadsheets.
           </p>
         </motion.div>
 
@@ -225,10 +209,10 @@ export function EcosystemSection() {
           {/* Background accent glow */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl" />
-          
+
           {/* Subtle grid pattern */}
-          <div className='absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.02)1px,transparent_1px)] bg-[size:40px_40px] opacity-50' />
-          
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.02)1px,transparent_1px)] bg-[size:40px_40px] opacity-50" />
+
           <div className="relative space-y-3">
             <div className="flex items-center gap-2">
               <div className="h-1 w-8 rounded-full bg-gradient-to-r from-blue-400 to-emerald-400" />
@@ -237,17 +221,17 @@ export function EcosystemSection() {
               </p>
             </div>
             <p className="text-base font-semibold leading-relaxed text-white sm:text-lg">
-              One ecosystem means fewer tools, fewer logins, and fewer places
-              for data to go missing.
+              One ecosystem means fewer tools, fewer logins, and fewer places for data to go
+              missing.
             </p>
           </div>
 
           <ul className="relative space-y-3 text-[0.85rem] text-neutral-300 sm:text-sm">
             {[
-              'Leaders see the whole campus at a glance, not in fragments.',
-              'Staff avoid duplicate work moving data between apps.',
-              'Parents use one channel instead of juggling multiple groups.',
-              'Future modules and integrations plug into the same backbone.',
+              "Leaders see the whole campus at a glance, not in fragments.",
+              "Staff avoid duplicate work moving data between apps.",
+              "Parents use one channel instead of juggling multiple groups.",
+              "Future modules and integrations plug into the same backbone.",
             ].map((item, idx) => (
               <motion.li
                 key={idx}
@@ -305,12 +289,8 @@ export function EcosystemSection() {
                     {item.tag}
                   </span>
                 </div>
-                <p className="text-sm font-semibold text-white">
-                  {item.title}
-                </p>
-                <p className="text-[0.8rem] text-neutral-300 sm:text-xs">
-                  {item.description}
-                </p>
+                <p className="text-sm font-semibold text-white">{item.title}</p>
+                <p className="text-[0.8rem] text-neutral-300 sm:text-xs">{item.description}</p>
               </div>
             </motion.div>
           );
@@ -335,9 +315,7 @@ function EcosystemHierarchy() {
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="mx-auto mt-16 w-full max-w-5xl rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/60 to-neutral-950/80 p-6 sm:p-8 shadow-xl shadow-black/50"
     >
-      <p className="mb-3 text-xs uppercase tracking-[0.5em] text-white/40">
-        Hierarchy · RBAC
-      </p>
+      <p className="mb-3 text-xs uppercase tracking-[0.5em] text-white/40">Hierarchy · RBAC</p>
       <h3 className="mb-6 text-xl font-semibold text-white md:text-2xl">
         A structure that mirrors real institutions
       </h3>

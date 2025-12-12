@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Blog | SquareCampus",
@@ -37,7 +37,7 @@ export default function BlogPage() {
   return (
     <>
       <main className="bg-neutral-950 min-h-[100dvh] px-4 py-16 sm:px-6 lg:px-10 flex flex-col">
-      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
+        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
           {/* Header */}
           <section className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground/80">
@@ -48,9 +48,9 @@ export default function BlogPage() {
                 Stories from the SquareCampus team
               </h1>
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                Updates, timelines, and behind-the-scenes notes on how we&apos;re
-                building an operating system for schools and colleges. Product
-                releases, implementation insights, and ideas from the field.
+                Updates, timelines, and behind-the-scenes notes on how we&apos;re building an
+                operating system for schools and colleges. Product releases, implementation
+                insights, and ideas from the field.
               </p>
             </div>
           </section>
@@ -66,18 +66,12 @@ export default function BlogPage() {
                   >
                     <CardContent className="flex h-full flex-col gap-3 p-5">
                       <div className="flex items-center justify-between text-xs text-neutral-400">
-                        <span className="uppercase tracking-[0.2em]">
-                          {post.tag ?? "Update"}
-                        </span>
+                        <span className="uppercase tracking-[0.2em]">{post.tag ?? "Update"}</span>
                         <span>{post.date}</span>
                       </div>
                       <div className="space-y-1">
-                        <h2 className="text-sm font-semibold text-neutral-50">
-                          {post.title}
-                        </h2>
-                        <p className="text-xs leading-relaxed text-neutral-300">
-                          {post.summary}
-                        </p>
+                        <h2 className="text-sm font-semibold text-neutral-50">{post.title}</h2>
+                        <p className="text-xs leading-relaxed text-neutral-300">{post.summary}</p>
                       </div>
                       <div className="mt-3">
                         <Link
@@ -101,9 +95,9 @@ export default function BlogPage() {
                     No posts yet, we&apos;re busy shipping.
                   </p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    We&apos;ll publish product updates, implementation stories,
-                    and practical playbooks here soon. Until then, follow us on
-                    LinkedIn for updates and new releases.
+                    We&apos;ll publish product updates, implementation stories, and practical
+                    playbooks here soon. Until then, follow us on LinkedIn for updates and new
+                    releases.
                   </p>
                   <div className="flex flex-wrap gap-3 text-xs">
                     <Link

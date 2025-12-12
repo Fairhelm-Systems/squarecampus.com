@@ -1,9 +1,9 @@
 "use server";
 
-import { Resend } from "resend";
-import { headers } from "next/headers";
-import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { headers } from "next/headers";
+import { Resend } from "resend";
 
 const submissionTracking = new Map<
   string,
@@ -38,18 +38,21 @@ try {
 }
 
 // Clean up old entries every 10 minutes
-setInterval(() => {
-  try {
-    const now = Date.now();
-    for (const [key, value] of submissionTracking.entries()) {
-      if (now - value.lastSubmission > 10 * 60 * 1000) {
-        submissionTracking.delete(key);
+setInterval(
+  () => {
+    try {
+      const now = Date.now();
+      for (const [key, value] of submissionTracking.entries()) {
+        if (now - value.lastSubmission > 10 * 60 * 1000) {
+          submissionTracking.delete(key);
+        }
       }
+    } catch (error) {
+      console.error("[contact] Error during submission tracking cleanup:", error);
     }
-  } catch (error) {
-    console.error("[contact] Error during submission tracking cleanup:", error);
-  }
-}, 10 * 60 * 1000);
+  },
+  10 * 60 * 1000
+);
 
 export type ContactFormData = {
   name: string;
@@ -107,9 +110,7 @@ function isDisposableEmail(email: string): boolean {
   try {
     const domain = email.split("@")[1]?.toLowerCase();
     if (!domain) return false;
-    return DISPOSABLE_EMAIL_DOMAINS.some((disposable) =>
-      domain.includes(disposable),
-    );
+    return DISPOSABLE_EMAIL_DOMAINS.some((disposable) => domain.includes(disposable));
   } catch (error) {
     console.warn("[contact] Error checking disposable email:", error);
     return false; // Fail open - allow the email through
@@ -130,9 +131,7 @@ function validateTextLength(text: string, min: number, max: number): boolean {
   return text.length >= min && text.length <= max;
 }
 
-export async function sendContactEmail(
-  formData: ContactFormData,
-): Promise<ContactFormResponse> {
+export async function sendContactEmail(formData: ContactFormData): Promise<ContactFormResponse> {
   try {
     // 🔐 0. Get API key at runtime, inside the operation
     const apiKey = process.env.RESEND_API_KEY;
@@ -143,18 +142,16 @@ export async function sendContactEmail(
       resendKeyLength: apiKey?.length || 0,
       nodeEnv: process.env.NODE_ENV,
       // Log all env var keys (not values) for debugging
-      availableEnvVars: Object.keys(process.env).filter(key =>
-        key.includes('RESEND') || key.includes('UPSTASH')
+      availableEnvVars: Object.keys(process.env).filter(
+        (key) => key.includes("RESEND") || key.includes("UPSTASH")
       ),
     });
 
     if (!apiKey) {
-      console.error(
-        "[contact] RESEND_API_KEY environment variable is not set at runtime",
-      );
+      console.error("[contact] RESEND_API_KEY environment variable is not set at runtime");
       console.error(
         "[contact] Available environment variables:",
-        Object.keys(process.env).slice(0, 50), // Log first 50 env var names
+        Object.keys(process.env).slice(0, 50) // Log first 50 env var names
       );
       return {
         success: false,
@@ -164,7 +161,7 @@ export async function sendContactEmail(
     }
 
     // Create client with the key that actually exists *here*
-    console.log("RESEND API KEY", apiKey)
+    console.log("RESEND API KEY", apiKey);
     const resend = new Resend(apiKey);
 
     let headersList: Headers;
@@ -208,8 +205,7 @@ export async function sendContactEmail(
     if (isDisposableEmail(formData.email)) {
       return {
         success: false,
-        message:
-          "Please use a valid business or institutional email address.",
+        message: "Please use a valid business or institutional email address.",
       };
     }
 
@@ -243,8 +239,7 @@ export async function sendContactEmail(
       console.warn("[contact] Spam keywords detected in submission");
       return {
         success: false,
-        message:
-          "Your message contains prohibited content. Please revise and try again.",
+        message: "Your message contains prohibited content. Please revise and try again.",
       };
     }
 
@@ -257,7 +252,7 @@ export async function sendContactEmail(
         if (!rate.success) {
           const retryAfterSeconds = Math.max(
             1,
-            Math.ceil(((rate.reset ?? 0) * 1000 - Date.now()) / 1000),
+            Math.ceil(((rate.reset ?? 0) * 1000 - Date.now()) / 1000)
           );
           return {
             success: false,
@@ -276,9 +271,7 @@ export async function sendContactEmail(
 
     if (tracking) {
       if (tracking.cooldownUntil && now < tracking.cooldownUntil) {
-        const remainingSeconds = Math.ceil(
-          (tracking.cooldownUntil - now) / 1000,
-        );
+        const remainingSeconds = Math.ceil((tracking.cooldownUntil - now) / 1000);
         return {
           success: false,
           message: `Please wait ${remainingSeconds} seconds before submitting again.`,
@@ -536,11 +529,13 @@ export async function sendContactEmail(
                 <p style="margin-top: 16px;">
                   Received at ${(() => {
                     try {
-                      return new Date().toLocaleString("en-US", {
-                        timeZone: "Asia/Kolkata",
-                        dateStyle: "full",
-                        timeStyle: "short"
-                      }) + " IST";
+                      return (
+                        new Date().toLocaleString("en-US", {
+                          timeZone: "Asia/Kolkata",
+                          dateStyle: "full",
+                          timeStyle: "short",
+                        }) + " IST"
+                      );
                     } catch (error) {
                       console.warn("[contact] Date formatting error:", error);
                       return new Date().toISOString();

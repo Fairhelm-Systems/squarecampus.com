@@ -1,11 +1,14 @@
-import { Metadata } from "next";
-import { ReactNode } from "react";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Acceptable Use Policy | SquareCampus",
   description:
-    "Acceptable Use Policy that explains permitted and prohibited behaviour on the SquareCampus platform.",
-};
+    "SquareCampus Acceptable Use Policy: Guidelines for permitted and prohibited behavior on our platform to ensure safe, compliant use by educational institutions.",
+  path: "/acceptable-use",
+  ogDescription: "Usage guidelines and prohibited activities for the SquareCampus platform.",
+});
 
 export default function TOCLayout({ children }: { children: ReactNode }) {
   return <>{children}</>;

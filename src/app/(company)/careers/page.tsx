@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Careers | SquareCampus",
@@ -36,7 +36,7 @@ export default function CareersPage() {
   return (
     <>
       <main className="bg-neutral-950 min-h-[100dvh] px-4 py-16 sm:px-6 lg:px-10 flex flex-col">
-      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
+        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
           {/* Header */}
           <section className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground/80">
@@ -47,9 +47,9 @@ export default function CareersPage() {
                 Build the backbone of modern institutions
               </h1>
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                SquareCampus is building long-term infrastructure for schools
-                and colleges. That means thoughtful engineering, calm execution,
-                and a team that cares about reliability as much as speed.
+                SquareCampus is building long-term infrastructure for schools and colleges. That
+                means thoughtful engineering, calm execution, and a team that cares about
+                reliability as much as speed.
               </p>
             </div>
           </section>
@@ -58,34 +58,27 @@ export default function CareersPage() {
           <section className="grid gap-6 md:grid-cols-3">
             <Card className="border border-neutral-800/70 bg-neutral-900/60">
               <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">
-                  Product-first culture
-                </p>
+                <p className="text-sm font-semibold text-neutral-50">Product-first culture</p>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  We optimise for quality of product and long-term stability
-                  over quick wins that don&apos;t hold in production.
+                  We optimise for quality of product and long-term stability over quick wins that
+                  don&apos;t hold in production.
                 </p>
               </CardContent>
             </Card>
             <Card className="border border-neutral-800/70 bg-neutral-900/60">
               <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">
-                  Thoughtful pace
-                </p>
+                <p className="text-sm font-semibold text-neutral-50">Thoughtful pace</p>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  We move quickly, but not chaotically. Clear scopes, clear
-                  ownership, and minimal unnecessary meetings.
+                  We move quickly, but not chaotically. Clear scopes, clear ownership, and minimal
+                  unnecessary meetings.
                 </p>
               </CardContent>
             </Card>
             <Card className="border border-neutral-800/70 bg-neutral-900/60">
               <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">
-                  Impact on real campuses
-                </p>
+                <p className="text-sm font-semibold text-neutral-50">Impact on real campuses</p>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Work that directly improves how schools and colleges operate
-                  every single day.
+                  Work that directly improves how schools and colleges operate every single day.
                 </p>
               </CardContent>
             </Card>
@@ -111,9 +104,7 @@ export default function CareersPage() {
                   >
                     <CardContent className="flex flex-col gap-3 p-5 md:flex-row md:items-start md:justify-between">
                       <div className="space-y-1">
-                        <p className="text-sm font-semibold text-neutral-50">
-                          {job.title}
-                        </p>
+                        <p className="text-sm font-semibold text-neutral-50">{job.title}</p>
                         <p className="text-xs text-neutral-400">
                           {job.location} · {job.type}
                         </p>
@@ -143,9 +134,9 @@ export default function CareersPage() {
                     We&apos;re not hiring for specific roles right now.
                   </p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    We&apos;ll publish roles here as we expand the team. If you
-                    strongly believe you can help shape SquareCampus, you can
-                    still reach out with a short note and your profile.
+                    We&apos;ll publish roles here as we expand the team. If you strongly believe you
+                    can help shape SquareCampus, you can still reach out with a short note and your
+                    profile.
                   </p>
                   <div className="flex flex-wrap gap-3 text-xs">
                     <Link

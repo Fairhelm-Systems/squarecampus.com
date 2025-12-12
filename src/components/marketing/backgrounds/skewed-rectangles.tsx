@@ -11,15 +11,11 @@ export const SkewedRectangles = ({ className }: SkewedRectanglesProps) => {
         "pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden [perspective:1000px] [transform-style:preserve-3d]",
         // Radial fade mask: fades on all 4 sides
         "[mask-image:radial-gradient(circle_at_center,white_60%,transparent_80%)]",
-        className,
+        className
       )}
     >
-      <Rectangles
-        style={{ transform: "rotateX(45deg)" }}
-      />
-      <Rectangles
-        style={{ transform: "rotateX(-45deg)" }}
-      />
+      <Rectangles style={{ transform: "rotateX(45deg)" }} />
+      <Rectangles style={{ transform: "rotateX(-45deg)" }} />
     </div>
   );
 };
@@ -37,7 +33,7 @@ const Rectangles = ({
     <div
       className={cn(
         "pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden mix-blend-screen",
-        className,
+        className
       )}
       {...props}
     >

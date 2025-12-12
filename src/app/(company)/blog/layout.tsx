@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-const baseUrl = "https://www.squarecampus.com";
+const baseUrl = "https://squarecampus.com";
 
 export const metadata: Metadata = {
   title: {

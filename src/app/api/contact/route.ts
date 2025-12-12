@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { type NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 import { getResendApiKey } from "@/lib/secrets";
 
 const submissionTracking = new Map<
@@ -76,9 +76,7 @@ function isDisposableEmail(email: string): boolean {
   try {
     const domain = email.split("@")[1]?.toLowerCase();
     if (!domain) return false;
-    return DISPOSABLE_EMAIL_DOMAINS.some((disposable) =>
-      domain.includes(disposable),
-    );
+    return DISPOSABLE_EMAIL_DOMAINS.some((disposable) => domain.includes(disposable));
   } catch (error) {
     console.warn("[contact] Error checking disposable email:", error);
     return false;
@@ -105,11 +103,14 @@ export async function POST(request: NextRequest) {
     const apiKey = await getResendApiKey();
 
     if (!apiKey) {
-      console.error("[contact] Failed to retrieve RESEND_API_KEY from Secrets Manager or environment");
+      console.error(
+        "[contact] Failed to retrieve RESEND_API_KEY from Secrets Manager or environment"
+      );
       return NextResponse.json(
         {
           success: false,
-          message: "Email service is not configured. Please contact us directly at contact@squarecampus.com",
+          message:
+            "Email service is not configured. Please contact us directly at contact@squarecampus.com",
         },
         { status: 500 }
       );
@@ -215,7 +216,7 @@ export async function POST(request: NextRequest) {
         if (!rate.success) {
           const retryAfterSeconds = Math.max(
             1,
-            Math.ceil(((rate.reset ?? 0) * 1000 - Date.now()) / 1000),
+            Math.ceil(((rate.reset ?? 0) * 1000 - Date.now()) / 1000)
           );
           return NextResponse.json(
             {
@@ -257,7 +258,8 @@ export async function POST(request: NextRequest) {
           return NextResponse.json(
             {
               success: false,
-              message: "Too many submission attempts. Please try again in 1 hour or email us directly at contact@squarecampus.com",
+              message:
+                "Too many submission attempts. Please try again in 1 hour or email us directly at contact@squarecampus.com",
               cooldownSeconds: 3600,
             },
             { status: 429 }
@@ -500,7 +502,7 @@ export async function POST(request: NextRequest) {
                   Received at ${new Date().toLocaleString("en-US", {
                     timeZone: "Asia/Kolkata",
                     dateStyle: "full",
-                    timeStyle: "short"
+                    timeStyle: "short",
                   })} IST
                 </p>
                 <p style="margin-top: 8px;">
@@ -526,7 +528,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Failed to send message. Please try again or email us directly at contact@squarecampus.com",
+          message:
+            "Failed to send message. Please try again or email us directly at contact@squarecampus.com",
         },
         { status: 500 }
       );
@@ -534,7 +537,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Thank you! We'll get back to you within 24 hours. You can submit another inquiry in 5 minutes if needed.",
+      message:
+        "Thank you! We'll get back to you within 24 hours. You can submit another inquiry in 5 minutes if needed.",
     });
   } catch (error) {
     console.error("[contact] Contact form error:", error);

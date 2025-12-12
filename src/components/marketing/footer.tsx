@@ -21,10 +21,7 @@ function FooterColumn({ title, links }: FooterColumnProps) {
       <ul className="space-y-3 text-sm text-neutral-300">
         {links.map((link) => (
           <li key={link.title}>
-            <Link
-              className="transition-colors hover:text-white"
-              href={link.href}
-            >
+            <Link className="transition-colors hover:text-white" href={link.href}>
               {link.title}
             </Link>
           </li>
@@ -65,8 +62,7 @@ export function Footer() {
   ];
 
   // Only LinkedIn – the one public signal we actually use.
-  const linkedInHref =
-    "https://www.linkedin.com/company/square-campus";
+  const linkedInHref = "https://www.linkedin.com/company/square-campus";
 
   return (
     <footer className="relative w-full overflow-hidden border-t border-white/10 bg-neutral-950 px-6 py-14 sm:px-8 lg:px-10 lg:py-20">
@@ -80,9 +76,8 @@ export function Footer() {
             <Logo />
           </div>
           <p className="text-sm leading-relaxed text-neutral-400">
-            SquareCampus is the operating system for schools and colleges,
-            bringing admissions, academics, finance, and communication into
-            one dependable control center.
+            SquareCampus is the operating system for schools and colleges, bringing admissions,
+            academics, finance, and communication into one dependable control center.
           </p>
 
           <div className="flex items-center gap-4 pt-2">
@@ -99,14 +94,13 @@ export function Footer() {
 
           <div className="pt-3 space-y-1 text-xs text-neutral-400">
             <div className="flex items-center gap-2">
-              <span className="uppercase tracking-[0.28em] text-neutral-500">
-                Made with
-              </span>
+              <span className="uppercase tracking-[0.28em] text-neutral-500">Made with</span>
               <Heart className="h-3.5 w-3.5 text-red-600" aria-hidden="true" />
               <span className="text-neutral-200">in India</span>
             </div>
             <p className="text-neutral-500">
-              SquareCampus is a trademark of MDTechspire LLP. © {new Date().getFullYear()} SquareCampus. All rights reserved.
+              SquareCampus is a trademark of MDTechspire LLP. © {new Date().getFullYear()}{" "}
+              SquareCampus. All rights reserved.
             </p>
           </div>
         </div>
@@ -122,13 +116,15 @@ export function Footer() {
 
       {/* Watermark wordmark – the name of the operation, fading into the floor */}
       <p className="pointer-events-none relative z-0 mt-14 text-center font-extrabold uppercase text-transparent">
-        <span className="bg-gradient-to-b from-neutral-600 to-neutral-800 bg-clip-text 
+        <span
+          className="bg-gradient-to-b from-neutral-600 to-neutral-800 bg-clip-text 
           text-4xl tracking-[0.1em]
           sm:text-5xl sm:tracking-[0.15em]
           md:text-6xl md:tracking-[0.15em]
           lg:text-7xl lg:tracking-[0.15em]
           xl:text-8xl xl:tracking-[0.15em]
-          2xl:text-9xl 2xl:tracking-[0.2em]">
+          2xl:text-9xl 2xl:tracking-[0.2em]"
+        >
           SquareCampus
         </span>
       </p>

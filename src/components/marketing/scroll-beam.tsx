@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Neon scroll tracer that hugs the top edge of the viewport.
@@ -38,8 +38,7 @@ export function ScrollBeam() {
           opacity: visible ? 1 : 0,
           background:
             "linear-gradient(90deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.9) 55%, rgba(14,165,233,0.95) 100%)",
-          boxShadow:
-            "0 0 25px rgba(56,189,248,0.6), 0 0 60px rgba(14,165,233,0.35)",
+          boxShadow: "0 0 25px rgba(56,189,248,0.6), 0 0 60px rgba(14,165,233,0.35)",
           filter: "drop-shadow(0 0 12px rgba(56,189,248,0.4))",
           transition: "opacity 0.25s ease-out",
         }}

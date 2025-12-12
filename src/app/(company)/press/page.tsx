@@ -1,13 +1,12 @@
 // app/press/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Press | SquareCampus",
-  description:
-    "Press resources, company overview, and media contact information for SquareCampus.",
+  description: "Press resources, company overview, and media contact information for SquareCampus.",
 };
 
 type PressItem = {
@@ -38,7 +37,7 @@ export default function PressPage() {
   return (
     <>
       <main className="bg-neutral-950 min-h-[100dvh] px-4 py-16 sm:px-6 lg:px-10 flex flex-col">
-      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
+        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
           {/* Header */}
           <section className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground/80">
@@ -49,8 +48,8 @@ export default function PressPage() {
                 Press resources & media contact
               </h1>
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                For journalists, partners, and event organizers who need a
-                concise view of what SquareCampus does and how to reach us.
+                For journalists, partners, and event organizers who need a concise view of what
+                SquareCampus does and how to reach us.
               </p>
             </div>
           </section>
@@ -63,9 +62,8 @@ export default function PressPage() {
                   Overview
                 </p>
                 <p className="text-xs leading-relaxed text-neutral-300">
-                  SquareCampus is an operating system for schools and colleges,
-                  connecting admissions, academics, finance, and communication
-                  into one platform.
+                  SquareCampus is an operating system for schools and colleges, connecting
+                  admissions, academics, finance, and communication into one platform.
                 </p>
               </CardContent>
             </Card>
@@ -75,8 +73,8 @@ export default function PressPage() {
                   Founded
                 </p>
                 <p className="text-xs leading-relaxed text-neutral-300">
-                  SquareCampus Private Limited is led by Founder &amp; CTO Mohit
-                  Gupta and Co-founder &amp; CMO Dhanraj Kotian.
+                  SquareCampus Private Limited is led by Founder &amp; CTO Mohit Gupta and
+                  Co-founder &amp; CMO Dhanraj Kotian.
                 </p>
               </CardContent>
             </Card>
@@ -120,18 +118,12 @@ export default function PressPage() {
                     <CardContent className="flex flex-col gap-3 p-5 md:flex-row md:items-start md:justify-between">
                       <div className="space-y-1">
                         <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-400">
-                          <span className="uppercase tracking-[0.2em]">
-                            {item.outlet}
-                          </span>
+                          <span className="uppercase tracking-[0.2em]">{item.outlet}</span>
                           <span className="h-1 w-1 rounded-full bg-neutral-500" />
                           <span>{item.date}</span>
                         </div>
-                        <p className="text-sm font-semibold text-neutral-50">
-                          {item.title}
-                        </p>
-                        <p className="text-xs leading-relaxed text-neutral-300">
-                          {item.summary}
-                        </p>
+                        <p className="text-sm font-semibold text-neutral-50">{item.title}</p>
+                        <p className="text-xs leading-relaxed text-neutral-300">{item.summary}</p>
                       </div>
                       {item.href && (
                         <div className="pt-2 md:pt-0">
@@ -156,9 +148,9 @@ export default function PressPage() {
                     No press releases published yet.
                   </p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    We&apos;ll share announcements and coverage here as we grow.
-                    For official quotes, background, or data points, reach out
-                    and we&apos;ll respond with what you need.
+                    We&apos;ll share announcements and coverage here as we grow. For official
+                    quotes, background, or data points, reach out and we&apos;ll respond with what
+                    you need.
                   </p>
                   <div className="flex flex-wrap gap-3 text-xs">
                     <Link

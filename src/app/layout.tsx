@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ReactNode } from "react";
-import { Toaster } from "sonner";
-import { DevtoolsGuard } from "@/components/devtools-guard";
-import { BrowserWarning } from "@/components/browser-warning";
-import { ScrollBeam } from "@/components/marketing/scroll-beam";
 import Script from "next/script";
+import type { ReactNode } from "react";
+import { Toaster } from "sonner";
+import { BrowserWarning } from "@/components/browser-warning";
+import { DevtoolsGuard } from "@/components/devtools-guard";
+import { ScrollBeam } from "@/components/marketing/scroll-beam";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,12 +36,21 @@ export const metadata: Metadata = {
     description:
       "Run every campus day on rails with unified admissions, academics, finance, communication, and transport on one OS.",
     siteName: "SquareCampus",
+    images: [
+      {
+        url: "https://cdn.squarecampus.in/application_files/logo-light.png",
+        width: 1200,
+        height: 630,
+        alt: "SquareCampus - The Operating System for Every School",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SquareCampus | The Operating System for Every School",
     description:
       "All-in-one OS for schools and colleges: admissions, academics, finance, transport, and communication.",
+    images: ["https://cdn.squarecampus.in/application_files/logo-light.png"],
   },
   robots: {
     index: true,
@@ -60,9 +69,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={"scrollbar-auto scroll-smooth"}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}>
         <DevtoolsGuard />
         <BrowserWarning />
         <ScrollBeam />

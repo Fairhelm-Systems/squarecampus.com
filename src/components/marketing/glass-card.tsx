@@ -1,7 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
 
 /*
    In the dimly lit corridors of UI design, there exists a card so subtle,
@@ -9,13 +9,7 @@ import { ReactNode } from "react";
    leaving only the sense that something premium just happened.
    This card is that specialist. Smooth, silent, reliable.
 */
-export function GlassCard({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function GlassCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn(

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import type { ComponentProps, ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 /**
  * Identities are masks. This construct can appear as a hyperlink
@@ -22,10 +22,7 @@ type Props = {
   children?: ReactNode;
   label?: string;
   className?: string;
-} & (
-  | ({ href: string } & ComponentProps<"a">)
-  | (ComponentProps<"button"> & { href?: never })
-);
+} & (({ href: string } & ComponentProps<"a">) | (ComponentProps<"button"> & { href?: never }));
 
 const outerBase =
   "relative inline-flex cursor-pointer rounded-full p-px text-xs font-semibold leading-6 no-underline text-white shadow-2xl group";
@@ -45,16 +42,14 @@ const variantInner: Record<Variant, string> = {
   dark: "bg-black ring-white/5",
 };
 
-const glowBase =
-  "absolute inset-0 rounded-full opacity-0 transition-opacity duration-500";
+const glowBase = "absolute inset-0 rounded-full opacity-0 transition-opacity duration-500";
 
 const variantGlow: Record<Variant, string> = {
   primary:
     "bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] group-hover:opacity-100",
   secondary:
     "bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.35)_0%,rgba(56,189,248,0)_75%)] group-hover:opacity-75",
-  dark:
-    "bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(148,163,184,0.35)_0%,rgba(148,163,184,0)_75%)] group-hover:opacity-60",
+  dark: "bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(148,163,184,0.35)_0%,rgba(148,163,184,0)_75%)] group-hover:opacity-60",
 };
 
 const trailBase =
@@ -63,10 +58,8 @@ const trailBase =
 const variantTrail: Record<Variant, string> = {
   primary:
     "bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 group-hover:opacity-40",
-  secondary:
-    "bg-gradient-to-r from-sky-400/0 via-sky-400/90 to-sky-400/0 group-hover:opacity-35",
-  dark:
-    "bg-gradient-to-r from-zinc-400/0 via-zinc-400/80 to-zinc-400/0 group-hover:opacity-30",
+  secondary: "bg-gradient-to-r from-sky-400/0 via-sky-400/90 to-sky-400/0 group-hover:opacity-35",
+  dark: "bg-gradient-to-r from-zinc-400/0 via-zinc-400/80 to-zinc-400/0 group-hover:opacity-30",
 };
 
 export function LinkButton({
@@ -79,12 +72,7 @@ export function LinkButton({
 }: Props) {
   const content = children ?? <span>{label}</span>;
 
-  const containerClass = cn(
-    outerBase,
-    variantOuter[variant],
-    "group",
-    className,
-  );
+  const containerClass = cn(outerBase, variantOuter[variant], "group", className);
 
   const innerClass = cn(innerBase, variantInner[variant]);
   const glowClass = cn(glowBase, variantGlow[variant]);

@@ -1,10 +1,10 @@
 // components/marketing/floating-home-button.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ArrowUpRight, ArrowUp } from "@/components/icons";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ArrowUp, ArrowUpRight } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 type BaseProps = {
@@ -68,8 +68,7 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const finalLabel =
-    label ?? (isTopVariant ? "Back to top" : "Back to home");
+  const finalLabel = label ?? (isTopVariant ? "Back to top" : "Back to home");
 
   return (
     <AnimatePresence>

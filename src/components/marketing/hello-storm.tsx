@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import type React from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * A small battalion of greetings,
@@ -9,22 +10,22 @@ import { gsap } from "gsap";
  * all smuggled into Latin transliteration.
  */
 const WORDS: string[] = [
-    "Hello",       // English
-    "नमस्ते",        // Hindi
-    "নমস্কার",       // Bengali
-    "வணக்கம்",   // Tamil
-    "నమస్కారం",    // Telugu
-    "नमस्कार",      // Marathi
-    "નમસ્તે",       // Gujarati
-    "ನಮಸ್ಕಾರ",    // Kannada
-    "നമസ്കാരം", // Malayalam
-    "ਸਤ ਸ੍ਰੀ ਅਕਾਲ", // Punjabi
-    "ନମସ୍କାର",     // Odia
-    "নমস্কাৰ",     // Assamese
-    "आदाब",      // Kashmiri
-    "नमस्कार",     // Konkani
-    "ᱡᱚᱦᱟᱨ"      // Santali
-  ];
+  "Hello", // English
+  "नमस्ते", // Hindi
+  "নমস্কার", // Bengali
+  "வணக்கம்", // Tamil
+  "నమస్కారం", // Telugu
+  "नमस्कार", // Marathi
+  "નમસ્તે", // Gujarati
+  "ನಮಸ್ಕಾರ", // Kannada
+  "നമസ്കാരം", // Malayalam
+  "ਸਤ ਸ੍ਰੀ ਅਕਾਲ", // Punjabi
+  "ନମସ୍କାର", // Odia
+  "নমস্কাৰ", // Assamese
+  "आदाब", // Kashmiri
+  "नमस्कार", // Konkani
+  "ᱡᱚᱦᱟᱨ", // Santali
+];
 
 type HelloStormProps = {
   /** Optional className for outer wrapper (e.g. to control height/layout). */
@@ -73,7 +74,7 @@ export const HelloStorm: React.FC<HelloStormProps> = ({ className }) => {
         y,
         scale: 0.1,
         opacity: 0,
-        filter: "blur(18px)"
+        filter: "blur(18px)",
       });
 
       // Emergence: sharp, fast, assertive.
@@ -93,14 +94,14 @@ export const HelloStorm: React.FC<HelloStormProps> = ({ className }) => {
             ease: "power2.in",
             onComplete: () => {
               el.remove();
-            }
+            },
           });
-        }
+        },
       });
     };
 
     /**
-     * Initial burst — we never start slow.
+     * Initial burst: we never start slow.
      * A small volley to ensure the canvas is noisy immediately.
      */
     const warmupCount = 14;
@@ -109,7 +110,7 @@ export const HelloStorm: React.FC<HelloStormProps> = ({ className }) => {
     }
 
     /**
-     * Continuous deployment — a heartbeat of chaos.
+     * Continuous deployment: a heartbeat of chaos.
      */
     intervalRef.current = window.setInterval(deployWord, 130) as unknown as number;
 
@@ -135,7 +136,7 @@ export const HelloStorm: React.FC<HelloStormProps> = ({ className }) => {
 
       <style>{`
         .hello-storm {
-          /* Outer shell — you can override via className */
+          /* Outer shell: you can override via className */
           display: flex;
           align-items: center;
           justify-content: center;
@@ -145,7 +146,7 @@ export const HelloStorm: React.FC<HelloStormProps> = ({ className }) => {
         }
 
         .hello-storm__viewport {
-          /* Inner stage — strictly 16:9, black, and hungry */
+          /* Inner stage: strictly 16:9, black, and hungry */
           position: relative;
           width: 100%;
           max-width: 960px;

@@ -1,15 +1,15 @@
-import {Hero} from "@/components/marketing/hero";
-import {Features} from "@/components/marketing/features";
-import {CTA} from "@/components/marketing/cta";
-import {ContactUs} from "@/components/marketing/contact-us";
-import {FAQ} from "@/components/marketing/faq";
-import {Footer} from "@/components/marketing/footer";
-import {FloatingHomeButton} from "@/components/marketing/floating-home-button";
-import {Navbar} from "@/components/marketing/navbar";
-import { Operations } from "@/components/marketing/operations";
 import type { Metadata } from "next";
+import { ContactUs } from "@/components/marketing/contact-us";
+import { CTA } from "@/components/marketing/cta";
 import { EcosystemSection } from "@/components/marketing/ecosystem";
+import { FAQ } from "@/components/marketing/faq";
+import { Features } from "@/components/marketing/features";
+import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
+import { Footer } from "@/components/marketing/footer";
+import { Hero } from "@/components/marketing/hero";
 import { MacbookIntroOverlay } from "@/components/marketing/macbook-intro-overlay";
+import { Navbar } from "@/components/marketing/navbar";
+import { Operations } from "@/components/marketing/operations";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 
 export const metadata: Metadata = {
@@ -19,23 +19,23 @@ export const metadata: Metadata = {
 };
 
 // Force dynamic rendering for Server Actions (contact form)
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
-      <main className={'bg-black'}>
-        <MacbookIntroOverlay />
-        <Navbar />
-        <Hero/>
-        <Operations />
-        <Features/>
-        <CTA/>
-        <EcosystemSection />
-        <TrustBanner />
-        <FAQ/>
-        <ContactUs />
-        <Footer />
-        <FloatingHomeButton label="Back to top" variant="top" />
-      </main>
+    <main className={"bg-black"}>
+      <MacbookIntroOverlay />
+      <Navbar />
+      <Hero />
+      <Operations />
+      <Features />
+      <CTA />
+      <EcosystemSection />
+      <TrustBanner />
+      <FAQ />
+      <ContactUs />
+      <Footer />
+      <FloatingHomeButton label="Back to top" variant="top" />
+    </main>
   );
 }

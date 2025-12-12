@@ -79,7 +79,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -132,14 +134,15 @@
 
 @theme inline {
   --animate-move: move 5s linear infinite;
-  --shadow-derek: 0px 0px 0px 1px rgb(0 0 0 / 0.06),
-  0px 1px 1px -0.5px rgb(0 0 0 / 0.06), 0px 3px 3px -1.5px rgb(0 0 0 / 0.06),
-  0px 6px 6px -3px rgb(0 0 0 / 0.06), 0px 12px 12px -6px rgb(0 0 0 / 0.06),
-  0px 24px 24px -12px rgb(0 0 0 / 0.06);
+  --shadow-derek:
+    0px 0px 0px 1px rgb(0 0 0 / 0.06),
+    0px 1px 1px -0.5px rgb(0 0 0 / 0.06), 0px 3px 3px -1.5px rgb(0 0 0 / 0.06),
+    0px 6px 6px -3px rgb(0 0 0 / 0.06), 0px 12px 12px -6px rgb(0 0 0 / 0.06),
+    0px 24px 24px -12px rgb(0 0 0 / 0.06);
 
-  --shadow-input: 0px 2px 3px -1px rgba(0, 0, 0, 0.1),
-  0px 1px 0px 0px rgba(25, 28, 33, 0.02),
-  0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+  --shadow-input:
+    0px 2px 3px -1px rgba(0, 0, 0, 0.1), 0px 1px 0px 0px rgba(25, 28, 33, 0.02), 0px 0px 0px 1px
+    rgba(25, 28, 33, 0.08);
 
   @keyframes move {
     0% {
@@ -156,105 +159,105 @@
    No extra plugin required!
    ─────────────────────────────────────────────────────────────── */
 
-   @layer utilities {
-    /* Firefox */
-    .scrollbar-thin {
-      scrollbar-width: thin;
-      scrollbar-color: oklch(var(--muted) / 0.3) transparent;
+@layer utilities {
+  /* Firefox */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--muted) / 0.3) transparent;
+  }
+
+  /* Chrome, Edge, Safari */
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--muted) / 0.3) transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
-  
-    /* Chrome, Edge, Safari */
-    .scrollbar-custom {
-      scrollbar-width: thin;
-      scrollbar-color: oklch(var(--muted) / 0.3) transparent;
-  
-      &::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-  
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-  
-      &::-webkit-scrollbar-corner {
-        background: transparent;
-      }
-  
-      &::-webkit-scrollbar-thumb {
-        background: oklch(var(--muted) / 0.3);
-        border: 2px solid transparent;
-        border-radius: 9999px;
-        background-clip: content-box;
-      }
-  
-      &:hover::-webkit-scrollbar-thumb {
-        background: oklch(var(--muted-foreground) / 0.5);
-        border-color: transparent;
-        background-clip: content-box;
-      }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
-  
-    /* Super clean – almost invisible but usable */
-    .scrollbar-hidden {
-      -ms-overflow-style: none;    /* IE and Edge */
-      scrollbar-width: none;       /* Firefox */
+
+    &::-webkit-scrollbar-corner {
+      background: transparent;
     }
-    .scrollbar-hidden::-webkit-scrollbar {
-      display: none;
+
+    &::-webkit-scrollbar-thumb {
+      background: oklch(var(--muted) / 0.3);
+      border: 2px solid transparent;
+      border-radius: 9999px;
+      background-clip: content-box;
     }
-  
-    /* Premium auto-adapting version (my favorite) */
-    .scrollbar-auto {
-      scrollbar-width: thin;
-  
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 9999px;
-        border: 3px solid transparent;
-        background: oklch(var(--foreground) / 0.18);
-        background-clip: content-box;
-        transition: all 0.3s ease;
-      }
-      &:hover::-webkit-scrollbar-thumb {
-        background: oklch(var(--foreground) / 0.32);
-        background-clip: content-box;
-      }
+
+    &:hover::-webkit-scrollbar-thumb {
+      background: oklch(var(--muted-foreground) / 0.5);
+      border-color: transparent;
+      background-clip: content-box;
     }
   }
 
-  @theme inline {
-    --animate-cell-ripple: cell-ripple var(--duration, 200ms) cubic-bezier(0.4, 0, 0.2, 1) none 1
-      var(--delay, 0ms);
+  /* Super clean – almost invisible but usable */
+  .scrollbar-hidden {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 
-    @keyframes cell-ripple {
-      0% {
-        opacity: 0.6;
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-      }
-      35% {
-        opacity: 1;
-        transform: scale(1.04);
-        box-shadow: 0 0 20px 2px rgba(59, 130, 246, 0.3);
-      }
-      70% {
-        opacity: 0.85;
-        transform: scale(1.02);
-        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.2);
-      }
-      100% {
-        opacity: 0.6;
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-      }
+  /* Premium auto-adapting version (my favorite) */
+  .scrollbar-auto {
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 9999px;
+      border: 3px solid transparent;
+      background: oklch(var(--foreground) / 0.18);
+      background-clip: content-box;
+      transition: all 0.3s ease;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: oklch(var(--foreground) / 0.32);
+      background-clip: content-box;
     }
   }
+}
+
+@theme inline {
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) cubic-bezier(0.4, 0, 0.2, 1) none 1
+    var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.6;
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+    35% {
+      opacity: 1;
+      transform: scale(1.04);
+      box-shadow: 0 0 20px 2px rgba(59, 130, 246, 0.3);
+    }
+    70% {
+      opacity: 0.85;
+      transform: scale(1.02);
+      box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.2);
+    }
+    100% {
+      opacity: 0.6;
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+  }
+}
 
 .ripple-ring {
   animation: ripple-ring 12s ease-in-out infinite;
@@ -298,14 +301,32 @@
   }
 }
 
-.font-devanagari { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Devanagari", "Hind", sans-serif; }
-.font-kannada   { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Kannada", "Tiro Kannada", sans-serif; }
-.font-tamil     { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Tamil", "Latha", sans-serif; }
-.font-telugu    { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Telugu", sans-serif; }
-.font-gujarati  { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Gujarati", sans-serif; }
-.font-malayalam { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Malayalam", sans-serif; }
-.font-bengali   { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Bengali", sans-serif; }
-.font-gurmukhi  { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Gurmukhi", sans-serif; }
+.font-devanagari {
+  font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Devanagari", "Hind", sans-serif;
+}
+.font-kannada {
+  font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Kannada", "Tiro Kannada", sans-serif;
+}
+.font-tamil {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Tamil", "Latha", sans-serif;
+}
+.font-telugu {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Telugu", sans-serif;
+}
+.font-gujarati {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Gujarati", sans-serif;
+}
+.font-malayalam {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Malayalam", sans-serif;
+}
+.font-bengali {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Bengali", sans-serif;
+}
+.font-gurmukhi {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Gurmukhi", sans-serif;
+}
 
 /* Hide scrollbar */
 .scrollbar-hide {
@@ -318,7 +339,8 @@
 }
 
 /* Hide all scrollbars globally while preserving scroll */
-html, body {
+html,
+body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge legacy */
 }

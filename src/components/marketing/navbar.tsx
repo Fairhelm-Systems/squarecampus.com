@@ -1,18 +1,13 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import Link from "next/link";
+import React, { useRef, useState } from "react";
 import { Menu, X } from "@/components/icons";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { Logo } from "./logo";
 import { BookCallCta, LoginCta } from "./ctas";
+import { Logo } from "./logo";
 
 type NavItem = {
   name: string;

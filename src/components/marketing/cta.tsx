@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { cn } from "@/lib/utils";
 import { motion, useAnimation, useInView } from "motion/react";
 import Link from "next/link";
+import React, { useEffect } from "react";
 import { ArrowRight } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 const BackgroundGrid = ({ className }: { className?: string }) => {
   const controls = useAnimation();
@@ -24,10 +24,7 @@ const BackgroundGrid = ({ className }: { className?: string }) => {
   return (
     <div
       ref={ref}
-      className={cn(
-        "pointer-events-none absolute inset-0 overflow-hidden",
-        className,
-      )}
+      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -79,7 +76,7 @@ const LineGradient = ({ position }: { position: "left" | "right" }) => {
       ref={ref}
       className={cn(
         "pointer-events-none absolute hidden h-full lg:block",
-        position === "left" ? "left-0" : "right-0",
+        position === "left" ? "left-0" : "right-0"
       )}
       xmlns="http://www.w3.org/2000/svg"
       width="89"
@@ -176,24 +173,21 @@ export function CTA() {
               className={cn(
                 "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight",
                 "bg-gradient-to-b from-[#A7A7A7] via-[#FFFFFF] to-[#787878]",
-                "bg-clip-text text-transparent",
+                "bg-clip-text text-transparent"
               )}
             >
               Make every school day predictable
             </h2>
 
             <p className="mx-auto max-w-md text-xs text-neutral-400 sm:max-w-lg sm:text-sm md:max-w-xl md:text-base">
-              SquareCampus is the single operating system for modern schools and
-              colleges, digitizing every workflow from admissions to alumni so
-              teams execute faster and families always know what&apos;s going on.
+              SquareCampus is the single operating system for modern schools and colleges,
+              digitizing every workflow from admissions to alumni so teams execute faster and
+              families always know what&apos;s going on.
             </p>
 
             <ul className="mx-auto max-w-sm space-y-2.5 text-left text-[0.8rem] text-neutral-200 sm:max-w-md sm:text-sm">
               {ctaHighlights.map((highlight) => (
-                <li
-                  key={highlight}
-                  className="flex items-start gap-2 text-neutral-300"
-                >
+                <li key={highlight} className="flex items-start gap-2 text-neutral-300">
                   <span className="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-gradient-to-br from-sky-400 to-violet-500" />
                   <span>{highlight}</span>
                 </li>
@@ -214,7 +208,7 @@ export function CTA() {
                   "h-10 px-6 sm:h-11 sm:px-8 md:h-12 md:px-10",
                   "shadow-[0_12px_40px_rgba(59,130,246,0.25)] hover:shadow-[0_16px_48px_rgba(59,130,246,0.35)]",
                   "transition-transform duration-200 hover:-translate-y-0.5",
-                  "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-neutral-950",
+                  "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-neutral-950"
                 )}
               >
                 <span>Get a tailored demo</span>

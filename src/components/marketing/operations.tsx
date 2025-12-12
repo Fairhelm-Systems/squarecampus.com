@@ -2,13 +2,13 @@
 
 import { motion } from "motion/react";
 import {
-  GraduationCap,
+  BarChart3,
   BookOpen,
   DollarSign,
+  GraduationCap,
+  type IconComponent,
   MessageSquare,
   Users,
-  BarChart3,
-  type IconComponent,
 } from "@/components/icons";
 
 const operationAreas: Array<{
@@ -86,8 +86,7 @@ const operationAreas: Array<{
   },
   {
     title: "Data you can act on",
-    description:
-      "Live dashboards and alerts so leadership sees gaps early and fixes them fast.",
+    description: "Live dashboards and alerts so leadership sees gaps early and fixes them fast.",
     bullets: [
       "Engagement and performance pulse by branch",
       "Exception alerts for dues, absenteeism, and SLAs",
@@ -122,9 +121,9 @@ export function Operations() {
           One operating system to keep every school day predictable
         </h2>
         <p className="mx-auto max-w-3xl text-sm text-neutral-300 md:text-base">
-          SquareCampus replaces fragmented apps with a single, responsive command center.
-          Every workflow, admissions, academics, finance, communication, and facilities, is connected
-          so teams move faster and leaders stay in control.
+          SquareCampus replaces fragmented apps with a single, responsive command center. Every
+          workflow, admissions, academics, finance, communication, and facilities, is connected so
+          teams move faster and leaders stay in control.
         </p>
       </div>
 
@@ -142,7 +141,9 @@ export function Operations() {
               className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-neutral-950/90 p-6 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:shadow-black/60"
             >
               {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+              />
 
               {/* Content */}
               <div className="relative space-y-4">
@@ -163,7 +164,9 @@ export function Operations() {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 + 0.3 }}
                     >
-                      <p className="text-[0.65rem] uppercase tracking-wider text-white/40">{area.metric.label}</p>
+                      <p className="text-[0.65rem] uppercase tracking-wider text-white/40">
+                        {area.metric.label}
+                      </p>
                       <p className="text-sm font-semibold text-white">{area.metric.value}</p>
                     </motion.div>
                   )}

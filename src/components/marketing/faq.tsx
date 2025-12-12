@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
+import React, { useState } from "react";
 
 import { ChevronDown, ChevronUp } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -71,148 +71,160 @@ const FAQs = [
 ];
 
 export function FAQ() {
-    const [open, setOpen] = useState<string | null>(null);
-    return (
-        <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 md:grid-cols-[2fr,1fr] md:px-8 md:py-20" id={'faq'}>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-4xl font-medium tracking-tight text-neutral-50 md:text-5xl">
-                Frequently asked questions
-              </h2>
-              <p className="max-w-xl text-base text-neutral-200">
-              Everything you need to know about adopting SquareCampus, and why campuses of every size call it their operating system.
-              </p>
-            </div>
-            <div className="grid gap-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">
-              {faqHighlights.map((highlight) => (
-                <p key={highlight} className="text-center text-[0.65rem]">
-                  {highlight}
-                </p>
-              ))}
-            </div>
-            <div className="space-y-4">
-              {FAQs.map((faq, index) => (
-                <FAQItem
-                  key={index}
-                  question={faq.question}
-                  answer={faq.answer}
-                  open={open}
-                  setOpen={setOpen}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/50">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
-                Need a faster answer?
-              </p>
-              <h3 className="mt-3 text-xl font-semibold text-white">Talk to a human</h3>
-              <p className="mt-2 text-sm text-neutral-200">
-                Get a tailored walkthrough, migration plan, and security notes in one call.
-              </p>
-              <div className="mt-4 space-y-2 text-sm text-neutral-100">
-                <a href="mailto:support@squarecampus.com" className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40">
-                  <span>Email: support@squarecampus.com</span>
-                  <span className="text-xs uppercase tracking-[0.3em] text-blue-300">24h reply</span>
-                </a>
-                <Link href="#contact-us" className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40">
-                  <span>Book a demo</span>
-                  <span className="text-xs uppercase tracking-[0.3em] text-blue-300">Personalized</span>
-                </Link>
-              </div>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/10 via-neutral-900 to-purple-500/10 p-6 shadow-2xl shadow-black/50">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
-                Objection busters
-              </p>
-              <ul className="mt-3 space-y-3 text-sm text-neutral-100">
-                <li className="flex items-start gap-2">
-                  <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-blue-400" />
-                  <span>Multi-branch ready with consistent policies and branch-level controls.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  <span>Migration support for admissions, academics, finance, and communication history.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-orange-400" />
-                  <span>Role-based onboarding and training for admins, teachers, finance, and support teams.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-purple-400" />
-                  <span>Offline-safe workflows with sync for low-connectivity environments.</span>
-                </li>
-              </ul>
-            </div>
+  const [open, setOpen] = useState<string | null>(null);
+  return (
+    <div
+      className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 md:grid-cols-[2fr,1fr] md:px-8 md:py-20"
+      id={"faq"}
+    >
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-4xl font-medium tracking-tight text-neutral-50 md:text-5xl">
+            Frequently asked questions
+          </h2>
+          <p className="max-w-xl text-base text-neutral-200">
+            Everything you need to know about adopting SquareCampus, and why campuses of every size
+            call it their operating system.
+          </p>
+        </div>
+        <div className="grid gap-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">
+          {faqHighlights.map((highlight) => (
+            <p key={highlight} className="text-center text-[0.65rem]">
+              {highlight}
+            </p>
+          ))}
+        </div>
+        <div className="space-y-4">
+          {FAQs.map((faq, index) => (
+            <FAQItem
+              key={index}
+              question={faq.question}
+              answer={faq.answer}
+              open={open}
+              setOpen={setOpen}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="space-y-4">
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/50">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
+            Need a faster answer?
+          </p>
+          <h3 className="mt-3 text-xl font-semibold text-white">Talk to a human</h3>
+          <p className="mt-2 text-sm text-neutral-200">
+            Get a tailored walkthrough, migration plan, and security notes in one call.
+          </p>
+          <div className="mt-4 space-y-2 text-sm text-neutral-100">
+            <a
+              href="mailto:support@squarecampus.com"
+              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40"
+            >
+              <span>Email: support@squarecampus.com</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">24h reply</span>
+            </a>
+            <Link
+              href="#contact-us"
+              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40"
+            >
+              <span>Book a demo</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">Personalized</span>
+            </Link>
           </div>
         </div>
-    );
+        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/10 via-neutral-900 to-purple-500/10 p-6 shadow-2xl shadow-black/50">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
+            Objection busters
+          </p>
+          <ul className="mt-3 space-y-3 text-sm text-neutral-100">
+            <li className="flex items-start gap-2">
+              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-blue-400" />
+              <span>Multi-branch ready with consistent policies and branch-level controls.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span>
+                Migration support for admissions, academics, finance, and communication history.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-orange-400" />
+              <span>
+                Role-based onboarding and training for admins, teachers, finance, and support teams.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-purple-400" />
+              <span>Offline-safe workflows with sync for low-connectivity environments.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const FAQItem = ({
-                     question,
-                     answer,
-                     setOpen,
-                     open,
-                 }: {
-    question: string;
-    answer: string;
-    open: string | null;
-    setOpen: (open: string | null) => void;
+  question,
+  answer,
+  setOpen,
+  open,
+}: {
+  question: string;
+  answer: string;
+  open: string | null;
+  setOpen: (open: string | null) => void;
 }) => {
-    const isOpen = open === question;
+  const isOpen = open === question;
 
-    return (
-      <motion.button
-        type="button"
-        onClick={() => setOpen(isOpen ? null : question)}
-        className={cn(
-          "relative w-full rounded-2xl border border-white/10 bg-neutral-900/70 p-4 text-left shadow-lg shadow-black/40 transition-all duration-300",
-          "hover:border-white/25 hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-        )}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.995 }}
-      >
-        <span className="absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
+  return (
+    <motion.button
+      type="button"
+      onClick={() => setOpen(isOpen ? null : question)}
+      className={cn(
+        "relative w-full rounded-2xl border border-white/10 bg-neutral-900/70 p-4 text-left shadow-lg shadow-black/40 transition-all duration-300",
+        "hover:border-white/25 hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      )}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.995 }}
+    >
+      <span className="absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
 
-        <div className="flex items-start gap-3">
-          <div className="relative mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
-            <ChevronDown
-              className={cn(
-                "h-4 w-4 transition-transform duration-300",
-                isOpen && "-rotate-180 opacity-0"
-              )}
-            />
-            <ChevronUp
-              className={cn(
-                "absolute h-4 w-4 transition-transform duration-300",
-                isOpen ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
-              )}
-            />
-          </div>
-
-          <div className="flex-1 space-y-2">
-            <h3 className="text-base font-semibold text-neutral-50">
-              {question}
-            </h3>
-
-            <AnimatePresence initial={false} mode="wait">
-              {isOpen && (
-                <motion.p
-                  key="answer"
-                  initial={{ opacity: 0, height: 0, y: -4 }}
-                  animate={{ opacity: 1, height: "auto", y: 0 }}
-                  exit={{ opacity: 0, height: 0, y: -4 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="text-sm leading-relaxed text-neutral-300"
-                >
-                  {answer}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
+      <div className="flex items-start gap-3">
+        <div className="relative mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-transform duration-300",
+              isOpen && "-rotate-180 opacity-0"
+            )}
+          />
+          <ChevronUp
+            className={cn(
+              "absolute h-4 w-4 transition-transform duration-300",
+              isOpen ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
+            )}
+          />
         </div>
-      </motion.button>
-    );
+
+        <div className="flex-1 space-y-2">
+          <h3 className="text-base font-semibold text-neutral-50">{question}</h3>
+
+          <AnimatePresence initial={false} mode="wait">
+            {isOpen && (
+              <motion.p
+                key="answer"
+                initial={{ opacity: 0, height: 0, y: -4 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -4 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="text-sm leading-relaxed text-neutral-300"
+              >
+                {answer}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.button>
+  );
 };
