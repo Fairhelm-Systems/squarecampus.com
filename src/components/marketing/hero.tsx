@@ -296,7 +296,8 @@ function DashboardShowcase() {
     return () => clearInterval(interval);
   }, []);
 
-  const active = departmentDeck[current];
+  const active = departmentDeck[current] ?? departmentDeck[0];
+  if (!active) return null;
 
   return (
     <div className='flex h-full w-full flex-col justify-between'>
@@ -950,15 +951,22 @@ function SparkWaveGraph({
     Array.from({ length: pointCount }, () => Math.floor(Math.random() * (56 - 6 + 1)) + 6),
     [pointCount]
   );
+  const safePoints =
+    points.length >= 2
+      ? points
+      : [points[0] ?? 30, points[0] ?? 30];
+  const pointSpacing =
+    safePoints.length > 1 ? 1 / (safePoints.length - 1) : 0;
   
   // Dynamic width based on point count (8 units per point)
-  const chartWidth = pointCount * 8;
+  const chartWidth = Math.max(safePoints.length, 1) * 8;
+  const firstPoint = safePoints[0] ?? 0;
   
-  const path = `M 0 ${60 - points[0]} ${points
-    .map((p, i) => `L ${(i / (points.length - 1)) * chartWidth} ${60 - p}`)
+  const path = `M 0 ${60 - firstPoint} ${safePoints
+    .map((p, i) => `L ${pointSpacing * i * chartWidth} ${60 - p}`)
     .join(' ')}`;
   const lastX = chartWidth;
-  const lastY = 60 - points[points.length - 1];
+  const lastY = 60 - (safePoints[safePoints.length - 1] ?? firstPoint);
 
   return (
     <div className='relative h-32 w-full overflow-hidden rounded-lg border border-white/10 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.06),transparent_35%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.05),transparent_35%),#0e0f14]'>
@@ -988,10 +996,10 @@ function SparkWaveGraph({
           transition={{ duration: 1.1, ease: 'easeInOut' }}
           className={toneMap[tone].glow}
         />
-        {points.map((p, i) => (
+        {safePoints.map((p, i) => (
           <motion.circle
             key={i}
-            cx={(i / (points.length - 1)) * chartWidth}
+            cx={pointSpacing * i * chartWidth}
             cy={60 - p}
             r={1.6}
             fill={toneMap[tone].stroke}

@@ -6,7 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "update:api-spec": "bun run scripts/refresh-openapi.ts",
+    "generate:api": "orval --config orval.config.ts",
+    "update:api": "bun run update:api-spec && bun run generate:api"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.946.0",

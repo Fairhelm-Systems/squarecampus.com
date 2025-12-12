@@ -370,6 +370,7 @@ export function ContactUs() {
                         <Logo />
                     </div>
                 </div>
+                
             </MacbookScroll>
         </section>
     );

@@ -9,7 +9,7 @@ const isVeryOldBrowser = () => {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent;
   const match = ua.match(/Chrome\/(\d+)/);
-  const chromeVersion = match ? parseInt(match[1], 10) : undefined;
+  const chromeVersion = match?.[1] ? Number.parseInt(match[1], 10) : undefined;
 
   return (
     /MSIE |Trident\//.test(ua) ||

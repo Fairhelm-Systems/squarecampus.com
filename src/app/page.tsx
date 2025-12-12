@@ -10,6 +10,7 @@ import { Operations } from "@/components/marketing/operations";
 import type { Metadata } from "next";
 import { EcosystemSection } from "@/components/marketing/ecosystem";
 import { MacbookIntroOverlay } from "@/components/marketing/macbook-intro-overlay";
+import { TrustBanner } from "@/components/marketing/trust-banner";
 
 export const metadata: Metadata = {
   title: "SquareCampus | The Operating System for Every School",
@@ -30,6 +31,7 @@ export default function Home() {
         <Features/>
         <CTA/>
         <EcosystemSection />
+        <TrustBanner />
         <FAQ/>
         <ContactUs />
         <Footer />
