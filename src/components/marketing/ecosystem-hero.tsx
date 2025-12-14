@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BookCallCta } from "./ctas";
-import { Network } from "@/icons";
+import { BookOpen, Component, Network } from "@/icons";
+import { LinkButton } from "./link-button";
 
 export function EcosystemHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -101,11 +102,18 @@ export function EcosystemHero() {
 
             <div className="flex flex-wrap gap-4">
               <BookCallCta
-                context="ecosystem-hero"
-                label="Book a Demo"
+                context="features-hero"
+                label="See It Yourself"
                 variant="primary"
-                className="rounded-full bg-gradient-to-r from-sky-500 to-violet-500 px-8 py-4 font-semibold shadow-xl shadow-sky-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/30"
               />
+              <LinkButton
+                href={"/about"}
+                variant={"dark"}
+                className={"group inline-flex items-center gap-1.5"}
+              >
+                <span>Our Story</span>
+                <BookOpen className={"w-4 h-4"} />
+              </LinkButton>
               <Link
                 href="#architecture"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
