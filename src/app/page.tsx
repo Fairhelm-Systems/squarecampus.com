@@ -19,9 +19,6 @@ export const metadata: Metadata = {
     "SquareCampus unifies admissions, academics, finance, communication, and compliance so schools of every size run predictable, connected operations.",
 };
 
-// Force dynamic rendering for Server Actions (contact form)
-export const dynamic = "force-dynamic";
-
 export default function Home() {
   return (
     <main className={"bg-black"}>

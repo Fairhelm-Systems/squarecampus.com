@@ -178,102 +178,102 @@ const departmentDeck: Array<{
   highlights: string[];
   accentColor: string;
 }> = [
-  {
-    key: "academics",
-    title: "Academics control",
-    subtitle: "Attendance, assessments, timetables stay in lockstep.",
-    accent: "academics",
-    icon: BookOpen,
-    accentColor: "text-emerald-300",
-    stats: [
-      { label: "Attendance", value: "96%", detail: "Live across 18 campuses" },
-      { label: "Assessments", value: "128", detail: "Running this week" },
-      { label: "Timetable drift", value: "+4m", detail: "Auto-resolved" },
-    ],
-    signals: [
-      { label: "3 rooms over capacity", tone: "amber" },
-      { label: "96% present · Grade 9", tone: "emerald" },
-      { label: "4 escalations cleared", tone: "sky" },
-    ],
-    highlights: ["Guided exams", "Auto attendance sync", "Grade-level SLA"],
-  },
-  {
-    key: "finance",
-    title: "Finance command",
-    subtitle: "Collections, dues, nudges, and reconciliations in one lane.",
-    accent: "finance",
-    icon: DollarSign,
-    accentColor: "text-emerald-300",
-    stats: [
-      { label: "Collection", value: "87%", detail: "Week-to-date" },
-      { label: "Pending", value: "₹3.2L", detail: "Fee nudges queued" },
-      { label: "Cleared", value: "₹84K", detail: "Last 24 hrs" },
-    ],
-    signals: [
-      { label: "15 auto-reminders sent", tone: "emerald" },
-      { label: "2 payment gateways live", tone: "sky" },
-      { label: "1 fee exception pending", tone: "amber" },
-    ],
-    highlights: ["Smart dues", "UPI + cards", "Board-ready exports"],
-  },
-  {
-    key: "operations",
-    title: "Operations rail",
-    subtitle: "Transport, facilities, inventory, and tickets stay on time.",
-    accent: "operations",
-    icon: Bus,
-    accentColor: "text-amber-300",
-    stats: [
-      { label: "Routes live", value: "18", detail: "1 delayed by 8m" },
-      { label: "Tickets", value: "42", detail: "3 critical" },
-      { label: "Utilization", value: "92%", detail: "Across facilities" },
-    ],
-    signals: [
-      { label: "Route 7 rerouted", tone: "amber" },
-      { label: "Lab AC maintenance", tone: "purple" },
-      { label: "Inventory restocked", tone: "emerald" },
-    ],
-    highlights: ["Route telemetry", "Facility uptime", "Automated tickets"],
-  },
-  {
-    key: "communication",
-    title: "Communication hub",
-    subtitle: "Announcements, nudges, receipts, and consent, single lane.",
-    accent: "communication",
-    icon: Bell,
-    accentColor: "text-purple-300",
-    stats: [
-      { label: "Sent today", value: "342", detail: "Multi-channel" },
-      { label: "Read", value: "92%", detail: "Parents & staff" },
-      { label: "Two-way threads", value: "48", detail: "Open conversations" },
-    ],
-    signals: [
-      { label: "Transport delay notice", tone: "amber" },
-      { label: "Exam venue update", tone: "sky" },
-      { label: "Fee receipt delivered", tone: "emerald" },
-    ],
-    highlights: ["SMS · Email · App", "Consent built-in", "Delivery proofs"],
-  },
-  {
-    key: "compliance",
-    title: "Trust & compliance",
-    subtitle: "RBAC, audit trails, monitoring, and uptime baked in.",
-    accent: "compliance",
-    icon: ShieldCheck,
-    accentColor: "text-sky-300",
-    stats: [
-      { label: "Uptime", value: "99.98%", detail: "Last 90 days" },
-      { label: "Access reviews", value: "12", detail: "Completed weekly" },
-      { label: "Alerts", value: "0 critical", detail: "Monitored 24x7" },
-    ],
-    signals: [
-      { label: "IP control active", tone: "sky" },
-      { label: "Audit log export ready", tone: "emerald" },
-      { label: "New role templates", tone: "purple" },
-    ],
-    highlights: ["Granular RBAC", "Audit-ready logs", "Global monitoring"],
-  },
-];
+    {
+      key: "academics",
+      title: "Academics control",
+      subtitle: "Attendance, assessments, timetables stay in lockstep.",
+      accent: "academics",
+      icon: BookOpen,
+      accentColor: "text-emerald-300",
+      stats: [
+        { label: "Attendance", value: "96%", detail: "Live across 18 campuses" },
+        { label: "Assessments", value: "128", detail: "Running this week" },
+        { label: "Timetable drift", value: "+4m", detail: "Auto-resolved" },
+      ],
+      signals: [
+        { label: "3 rooms over capacity", tone: "amber" },
+        { label: "96% present · Grade 9", tone: "emerald" },
+        { label: "4 escalations cleared", tone: "sky" },
+      ],
+      highlights: ["Guided exams", "Auto attendance sync", "Grade-level SLA"],
+    },
+    {
+      key: "finance",
+      title: "Finance command",
+      subtitle: "Collections, dues, nudges, and reconciliations in one lane.",
+      accent: "finance",
+      icon: DollarSign,
+      accentColor: "text-emerald-300",
+      stats: [
+        { label: "Collection", value: "87%", detail: "Week-to-date" },
+        { label: "Pending", value: "₹3.2L", detail: "Fee nudges queued" },
+        { label: "Cleared", value: "₹84K", detail: "Last 24 hrs" },
+      ],
+      signals: [
+        { label: "15 auto-reminders sent", tone: "emerald" },
+        { label: "2 payment gateways live", tone: "sky" },
+        { label: "1 fee exception pending", tone: "amber" },
+      ],
+      highlights: ["Smart dues", "UPI + cards", "Board-ready exports"],
+    },
+    {
+      key: "operations",
+      title: "Operations rail",
+      subtitle: "Transport, facilities, inventory, and tickets stay on time.",
+      accent: "operations",
+      icon: Bus,
+      accentColor: "text-amber-300",
+      stats: [
+        { label: "Routes live", value: "18", detail: "1 delayed by 8m" },
+        { label: "Tickets", value: "42", detail: "3 critical" },
+        { label: "Utilization", value: "92%", detail: "Across facilities" },
+      ],
+      signals: [
+        { label: "Route 7 rerouted", tone: "amber" },
+        { label: "Lab AC maintenance", tone: "purple" },
+        { label: "Inventory restocked", tone: "emerald" },
+      ],
+      highlights: ["Route telemetry", "Facility uptime", "Automated tickets"],
+    },
+    {
+      key: "communication",
+      title: "Communication hub",
+      subtitle: "Announcements, nudges, receipts, and consent, single lane.",
+      accent: "communication",
+      icon: Bell,
+      accentColor: "text-purple-300",
+      stats: [
+        { label: "Sent today", value: "342", detail: "Multi-channel" },
+        { label: "Read", value: "92%", detail: "Parents & staff" },
+        { label: "Two-way threads", value: "48", detail: "Open conversations" },
+      ],
+      signals: [
+        { label: "Transport delay notice", tone: "amber" },
+        { label: "Exam venue update", tone: "sky" },
+        { label: "Fee receipt delivered", tone: "emerald" },
+      ],
+      highlights: ["SMS · Email · App", "Consent built-in", "Delivery proofs"],
+    },
+    {
+      key: "compliance",
+      title: "Trust & compliance",
+      subtitle: "RBAC, audit trails, monitoring, and uptime baked in.",
+      accent: "compliance",
+      icon: ShieldCheck,
+      accentColor: "text-sky-300",
+      stats: [
+        { label: "Uptime", value: "99.98%", detail: "Last 90 days" },
+        { label: "Access reviews", value: "12", detail: "Completed weekly" },
+        { label: "Alerts", value: "0 critical", detail: "Monitored 24x7" },
+      ],
+      signals: [
+        { label: "IP control active", tone: "sky" },
+        { label: "Audit log export ready", tone: "emerald" },
+        { label: "New role templates", tone: "purple" },
+      ],
+      highlights: ["Granular RBAC", "Audit-ready logs", "Global monitoring"],
+    },
+  ];
 
 function DashboardShowcase() {
   const [current, setCurrent] = useState(0);
@@ -1036,7 +1036,6 @@ function SparkWaveGraph({
   const safePoints = points.length >= 2 ? points : [points[0] ?? 30, points[0] ?? 30];
   const pointSpacing = safePoints.length > 1 ? 1 / (safePoints.length - 1) : 0;
 
-  // Dynamic width based on point count (8 units per point)
   const chartWidth = Math.max(safePoints.length, 1) * 8;
   const firstPoint = safePoints[0] ?? 0;
 
@@ -1111,11 +1110,11 @@ function RouteMapVisual() {
     status: "active" | "busy" | "idle";
     connections: number[];
   }> = [
-    { x: "20%", y: "25%", label: "Downtown Hub", status: "active", connections: [1, 2] },
-    { x: "65%", y: "20%", label: "Airport Terminal", status: "busy", connections: [2, 3] },
-    { x: "75%", y: "60%", label: "Industrial Park", status: "active", connections: [3] },
-    { x: "35%", y: "70%", label: "Distribution Center", status: "idle", connections: [0] },
-  ];
+      { x: "20%", y: "25%", label: "Downtown Hub", status: "active", connections: [1, 2] },
+      { x: "65%", y: "20%", label: "Airport Terminal", status: "busy", connections: [2, 3] },
+      { x: "75%", y: "60%", label: "Industrial Park", status: "active", connections: [3] },
+      { x: "35%", y: "70%", label: "Distribution Center", status: "idle", connections: [0] },
+    ];
 
   const statusColors: Record<"active" | "busy" | "idle", string> = {
     active: "bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.6)]",
