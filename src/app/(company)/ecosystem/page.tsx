@@ -6,6 +6,7 @@ import { EcosystemModules } from "@/components/marketing/ecosystem-modules";
 import { RBACShowcase } from "@/components/marketing/rbac-showcase";
 import { ArchitectureDiagram } from "@/components/marketing/architecture-diagram";
 import { IntegrationShowcase } from "@/components/marketing/integration-showcase";
+import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import {
   createWebPageSchema,
   createBreadcrumbSchema,
@@ -30,24 +31,28 @@ export default function EcosystemPage() {
   ]);
 
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-white">
-      <EcosystemHero />
-      <EcosystemModules />
-      <RBACShowcase />
-      <ArchitectureDiagram />
-      <IntegrationShowcase />
+    <>
+      <div className="relative min-h-screen bg-neutral-950 text-white">
+        <EcosystemHero />
+        <EcosystemModules />
+        <RBACShowcase />
+        <ArchitectureDiagram />
+        <IntegrationShowcase />
 
-      {/* Structured Data */}
-      <Script
-        id="webpage-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-    </div>
+        {/* Structured Data */}
+        <Script
+          id="webpage-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+        />
+        <Script
+          id="breadcrumb-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+      </div>
+
+      <FloatingHomeButton href="/" label="Back to home" />
+    </>
   );
 }

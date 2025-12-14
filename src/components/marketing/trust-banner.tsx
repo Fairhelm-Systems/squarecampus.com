@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowUpRight, Eye, FileCheck, Lock, Shield, Sparkles } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { ArrowUpRight, Eye, FileCheck, Lock, Shield, Sparkles } from "@/icons";
 
 const trustFeatures = [
   {

@@ -1,7 +1,6 @@
 // app/about/page.tsx
 "use client";
 
-import { Activity, ArrowUpRight, Shield, Sparkles, Target } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import Script from "next/script";
@@ -14,6 +13,7 @@ import {
   createWebPageSchema,
   SEO_CONFIG,
 } from "@/lib/seo";
+import { Activity, ArrowUpRight, Shield, Sparkles, Target } from "@/icons";
 
 type Value = {
   title: string;

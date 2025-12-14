@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Check, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { AnimatedCounter } from "./backgrounds/why-different-bg";
+import { Check, X } from "@/icons";
 
 type ComparisonRow = {
   metric: string;
@@ -120,11 +120,10 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative grid grid-cols-3 gap-4 p-4 transition-all duration-200 md:p-6 ${
-        row.examples
+      className={`relative grid grid-cols-3 gap-4 p-4 transition-all duration-200 md:p-6 ${row.examples
           ? "cursor-pointer hover:bg-rose-500/5 hover:border-l-2 hover:border-l-rose-500/50"
           : "hover:bg-white/[0.02]"
-      }`}
+        }`}
       onMouseEnter={() => row.examples && setShowExamples(true)}
       onMouseLeave={() => setShowExamples(false)}
     >
@@ -144,9 +143,8 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
       </div>
       <div className="flex items-center justify-center">
         <span
-          className={`text-center text-lg font-bold md:text-2xl ${
-            row.themBad ? "text-rose-400" : "text-neutral-400"
-          }`}
+          className={`text-center text-lg font-bold md:text-2xl ${row.themBad ? "text-rose-400" : "text-neutral-400"
+            }`}
         >
           {typeof row.them === "number" && row.animated ? (
             <AnimatedCounter end={row.them} suffix="+" />
