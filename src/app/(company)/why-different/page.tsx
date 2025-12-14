@@ -4,20 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Sparkles,
-  Puzzle,
-  Clock,
-  Shield,
-  DollarSign,
-  Zap,
-  Users,
-  TrendingUp,
-  Check,
-  X,
-  ArrowRight,
-  AlertCircle,
-} from "lucide-react";
+
 import {
   createWebPageSchema,
   createBreadcrumbSchema,
@@ -28,7 +15,11 @@ import {
   SectionDivider,
   FloatingBadge,
 } from "@/components/marketing/backgrounds/why-different-bg";
+import { BookCallCta } from "@/components/marketing/ctas";
+import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { ComparisonTable, StatCard } from "@/components/marketing/comparison-table";
+import { AlertCircle, ArrowRight, Check, Clock, Component, DollarSign, Puzzle, Shield, Sparkles, TrendingUp, Users, X, Zap } from "@/icons";
+import { LinkButton } from "@/components/marketing/link-button";
 
 export default function WhyDifferentPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/why-different`;
@@ -307,19 +298,19 @@ export default function WhyDifferentPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/demo"
-                className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-8 py-3 font-medium text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-500/30"
+              <BookCallCta
+                context="features-hero"
+                label="See It Yourself"
+                variant="primary"
+              />
+              <LinkButton
+                href={"/about"}
+                variant={"dark"}
+                className={"group inline-flex items-center gap-1.5"}
               >
-                See It Yourself
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-3 font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10"
-              >
-                Our Story
-              </Link>
+                <span>Our Story</span>
+                <Component className={"w-4 h-4"} />
+              </LinkButton>
             </div>
           </motion.div>
         </div>
@@ -339,26 +330,23 @@ export default function WhyDifferentPage() {
                 className="group"
               >
                 <Card
-                  className={`relative overflow-hidden border transition-all duration-500 hover:scale-[1.02] ${
-                    stat.isCompetitor
-                      ? "border-rose-500/20 bg-gradient-to-br from-rose-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-rose-500/5 hover:border-rose-500/40 hover:shadow-rose-500/20"
-                      : "border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/40 hover:shadow-emerald-500/20"
-                  }`}
+                  className={`relative overflow-hidden border transition-all duration-500 hover:scale-[1.02] ${stat.isCompetitor
+                    ? "border-rose-500/20 bg-gradient-to-br from-rose-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-rose-500/5 hover:border-rose-500/40 hover:shadow-rose-500/20"
+                    : "border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/40 hover:shadow-emerald-500/20"
+                    }`}
                 >
                   {/* Glow effect */}
                   <div
-                    className={`pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150 ${
-                      stat.isCompetitor
-                        ? "bg-rose-500/20 group-hover:bg-rose-400/30"
-                        : "bg-emerald-500/20 group-hover:bg-emerald-400/30"
-                    }`}
+                    className={`pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150 ${stat.isCompetitor
+                      ? "bg-rose-500/20 group-hover:bg-rose-400/30"
+                      : "bg-emerald-500/20 group-hover:bg-emerald-400/30"
+                      }`}
                   />
 
                   <CardContent className="relative p-6 text-center">
                     <div
-                      className={`mb-2 text-4xl font-bold transition-all duration-300 group-hover:scale-110 ${
-                        stat.isCompetitor ? "text-rose-400" : "text-emerald-400"
-                      }`}
+                      className={`mb-2 text-4xl font-bold transition-all duration-300 group-hover:scale-110 ${stat.isCompetitor ? "text-rose-400" : "text-emerald-400"
+                        }`}
                     >
                       {stat.value}
                       <span className="text-2xl">{stat.suffix}</span>
@@ -517,7 +505,7 @@ export default function WhyDifferentPage() {
                                   className="flex items-start gap-2 text-sm text-neutral-300 transition-colors duration-300 group-hover/them:text-neutral-100"
                                 >
                                   <span className="mt-0.5 text-rose-400 transition-all duration-300 group-hover/them:scale-110">
-                                    ×
+                                    X
                                   </span>
                                   <span className="leading-relaxed">{point}</span>
                                 </li>
@@ -633,42 +621,41 @@ export default function WhyDifferentPage() {
             ].map((shame, index) => {
               const Icon = shame.icon;
               return (
-              <motion.div
-                key={shame.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-950/30 via-neutral-900/80 to-neutral-950/90 p-6 shadow-xl shadow-amber-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/40 hover:shadow-amber-500/20"
-              >
-                <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-amber-400/30" />
+                <motion.div
+                  key={shame.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-950/30 via-neutral-900/80 to-neutral-950/90 p-6 shadow-xl shadow-amber-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/40 hover:shadow-amber-500/20"
+                >
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-amber-400/30" />
 
-                <div className="relative">
-                  <div className="mb-4 flex items-center justify-between">
-                    <div className={`rounded-lg border border-white/10 bg-white/5 p-2 ${shame.iconClass}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <span
-                      className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wider ${
-                        shame.severity === "Critical"
+                  <div className="relative">
+                    <div className="mb-4 flex items-center justify-between">
+                      <div className={`rounded-lg border border-white/10 bg-white/5 p-2 ${shame.iconClass}`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <span
+                        className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wider ${shame.severity === "Critical"
                           ? "bg-rose-500/20 text-rose-400"
                           : shame.severity === "High"
                             ? "bg-orange-500/20 text-orange-400"
                             : "bg-yellow-500/20 text-yellow-400"
-                      }`}
-                    >
-                      {shame.severity}
-                    </span>
+                          }`}
+                      >
+                        {shame.severity}
+                      </span>
+                    </div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      {shame.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-neutral-400">
+                      {shame.description}
+                    </p>
                   </div>
-                  <h3 className="mb-2 text-lg font-bold text-white">
-                    {shame.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-neutral-400">
-                    {shame.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
+                </motion.div>
+              );
             })}
           </div>
 
@@ -924,7 +911,7 @@ export default function WhyDifferentPage() {
             </FloatingBadge>
 
             <h2 className="mb-6 text-3xl font-bold md:text-5xl">
-              Ready for Software That Actually Works?
+              Ready for Software That Actually Solves the Problems?
             </h2>
 
             <p className="mx-auto mb-10 max-w-2xl text-lg text-neutral-300">
@@ -932,21 +919,20 @@ export default function WhyDifferentPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/demo"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 font-semibold text-white shadow-xl shadow-blue-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/30"
+              <BookCallCta
+                context="features-hero"
+                label="Book a Demo"
+                variant="primary"
+              />
+              <LinkButton
+                href={"/features"}
+                variant={"dark"}
+                className={"group inline-flex items-center gap-1.5"}
               >
-                Book a Demo
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-              >
-                Explore Features
-              </Link>
+                <span>Explore Features</span>
+                <Component className={"w-4 h-4"} />
+              </LinkButton>
             </div>
-
             <div className="mt-10 text-sm text-neutral-500">
               No credit card required. No sales pressure. Just honest conversation.
             </div>
@@ -965,6 +951,8 @@ export default function WhyDifferentPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+
+      <FloatingHomeButton href="/" label="Back to home" />
     </div>
   );
 }

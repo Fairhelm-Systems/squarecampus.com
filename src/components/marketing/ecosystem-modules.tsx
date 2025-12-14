@@ -3,22 +3,8 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import {
-  GraduationCap,
-  DollarSign,
-  Users,
-  BookOpen,
-  Bus,
-  Home,
-  Calendar,
-  FileText,
-  Briefcase,
-  MessageSquare,
-  ShieldCheck,
-  Sparkles,
-  Database,
-  BarChart3,
-} from "lucide-react";
+import { BarChart3, BookOpen, Briefcase, Bus, Calendar, Database, DollarSign, FileText, GraduationCap, Home, MessageSquare, ShieldCheck, Sparkles } from "@/icons";
+
 
 const modules = [
   {

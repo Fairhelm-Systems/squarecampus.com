@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { BookCallCta } from "./ctas";
+import { LinkButton } from "./link-button";
+import { Component, Sparkles } from "@/icons";
 
 export function FeaturesPageHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,19 +92,19 @@ export function FeaturesPageHero() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/#contact-us"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 font-semibold text-white shadow-xl shadow-blue-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/30"
+            <BookCallCta
+              context="features-hero"
+              label="Book a Demo"
+              variant="primary"
+            />
+            <LinkButton
+              href={"#feature-explorer"}
+              variant={"dark"}
+              className={"group inline-flex items-center gap-1.5"}
             >
-              See It In Action
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link
-              href="#feature-explorer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-            >
-              Explore Features
-            </Link>
+              <span>Explore Features</span>
+              <Component className={"w-4 h-4"} />
+            </LinkButton>
           </div>
         </motion.div>
 

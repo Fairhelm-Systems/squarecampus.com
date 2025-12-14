@@ -4,6 +4,7 @@ import Script from "next/script";
 import { FeaturesPageHero } from "@/components/marketing/features-page-hero";
 import { FeatureExplorer } from "@/components/marketing/feature-explorer";
 import { LanguageSupportSection } from "@/components/marketing/features";
+import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import {
   createWebPageSchema,
   createBreadcrumbSchema,
@@ -28,22 +29,26 @@ export default function FeaturesPage() {
   ]);
 
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-white">
-      <FeaturesPageHero />
-      <FeatureExplorer />
-      <LanguageSupportSection />
+    <>
+      <div className="relative min-h-screen bg-neutral-950 text-white">
+        <FeaturesPageHero />
+        <FeatureExplorer />
+        <LanguageSupportSection />
 
-      {/* Structured Data */}
-      <Script
-        id="webpage-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-    </div>
+        {/* Structured Data */}
+        <Script
+          id="webpage-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+        />
+        <Script
+          id="breadcrumb-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+      </div>
+
+      <FloatingHomeButton href="/" label="Back to home" />
+    </>
   );
 }

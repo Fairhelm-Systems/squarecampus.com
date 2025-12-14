@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Code, Webhook, Zap, CreditCard, MessageSquare, Cloud, Database, Lock } from "lucide-react";
+import { Cloud, Code, CreditCard, Database, Lock, MessageSquare, Webhook, Zap } from "@/icons";
 
 const integrations = [
   {
@@ -158,7 +158,7 @@ export function IntegrationShowcase() {
               </div>
               <pre className="overflow-x-auto p-4 text-xs">
                 <code className="text-neutral-300">
-{`// Fetch student data
+                  {`// Fetch student data
 const response = await fetch('https://api.squarecampus.com/v1/students', {
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',

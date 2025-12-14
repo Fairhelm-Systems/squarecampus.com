@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Puzzle, Clock, Shield, DollarSign, Zap } from "lucide-react";
+import { ArrowRight, Clock, DollarSign, Puzzle, Shield, Sparkles, Zap } from "@/icons";
 
 export function WhyDifferent() {
   const painPoints = [

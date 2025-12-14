@@ -2,9 +2,10 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ArrowRight, Network } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { BookCallCta } from "./ctas";
+import { Network } from "@/icons";
 
 export function EcosystemHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -99,13 +100,12 @@ export function EcosystemHero() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="/#contact-us"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-violet-500 px-8 py-4 font-semibold text-white shadow-xl shadow-sky-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/30"
-              >
-                Explore the Ecosystem
-                <ArrowRight className="h-5 w-5" />
-              </Link>
+              <BookCallCta
+                context="ecosystem-hero"
+                label="Book a Demo"
+                variant="primary"
+                className="rounded-full bg-gradient-to-r from-sky-500 to-violet-500 px-8 py-4 font-semibold shadow-xl shadow-sky-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/30"
+              />
               <Link
                 href="#architecture"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"

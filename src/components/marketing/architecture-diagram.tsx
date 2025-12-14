@@ -3,19 +3,7 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import {
-  Smartphone,
-  Globe,
-  Server,
-  Database,
-  Shield,
-  Zap,
-  Cloud,
-  Lock,
-  Activity,
-  ArrowRight,
-  Layers,
-} from "lucide-react";
+import { Activity, ArrowRight, Cloud, Database, Globe, Layers, Lock, Server, Shield, Smartphone, Zap } from "@/icons";
 
 const architectureLayers = [
   {

@@ -3,18 +3,8 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import {
-  Shield,
-  Users,
-  Lock,
-  Eye,
-  Edit,
-  Trash2,
-  Check,
-  X,
-  Crown,
-  Sparkles,
-} from "lucide-react";
+import { Check, Crown, Edit, Eye, Lock, Shield, Sparkles, Trash2, Users, X } from "@/icons";
+
 
 const hierarchy = [
   {
@@ -208,11 +198,10 @@ export function RBACShowcase() {
                 whileHover={{ x: 8 }}
               >
                 <div
-                  className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${
-                    isSelected
-                      ? "border-white/30 bg-gradient-to-r from-neutral-900 to-neutral-950 shadow-xl"
-                      : "border-white/10 bg-neutral-900/50 hover:border-white/20"
-                  }`}
+                  className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${isSelected
+                    ? "border-white/30 bg-gradient-to-r from-neutral-900 to-neutral-950 shadow-xl"
+                    : "border-white/10 bg-neutral-900/50 hover:border-white/20"
+                    }`}
                 >
                   {/* Level indicator */}
                   <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b" style={{
