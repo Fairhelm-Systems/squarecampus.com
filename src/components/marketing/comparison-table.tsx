@@ -53,10 +53,10 @@ function ExampleHoverCard({ examples }: { examples: { title: string; items: stri
   return (
     <div
       ref={cardRef}
-      className="pointer-events-none absolute left-full top-1/2 z-[100] ml-4 w-80 -translate-y-1/2 rounded-xl border border-rose-500/40 bg-gradient-to-br from-rose-950/98 via-neutral-900/98 to-neutral-950/98 p-5 shadow-2xl shadow-rose-500/30 backdrop-blur-xl"
+      className="pointer-events-none absolute left-0 top-full z-[100] mt-2 w-full rounded-xl border border-rose-500/40 bg-gradient-to-br from-rose-950/98 via-neutral-900/98 to-neutral-950/98 p-5 shadow-2xl shadow-rose-500/30 backdrop-blur-xl md:left-full md:top-1/2 md:ml-4 md:mt-0 md:w-80 md:-translate-y-1/2"
     >
-      {/* Arrow pointing to the row */}
-      <div className="absolute right-full top-1/2 -mr-px -translate-y-1/2 border-[10px] border-transparent border-r-rose-950/98" />
+      {/* Arrow pointing up on mobile, pointing left on desktop */}
+      <div className="absolute bottom-full left-1/2 -mb-px -translate-x-1/2 border-[10px] border-transparent border-b-rose-950/98 md:bottom-auto md:left-auto md:right-full md:top-1/2 md:-mr-px md:-translate-y-1/2 md:translate-x-0 md:border-b-transparent md:border-r-rose-950/98" />
 
       <div className="mb-3 flex items-center gap-2">
         <div className="h-2 w-2 animate-pulse rounded-full bg-rose-400" />
@@ -113,6 +113,30 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
 // Individual table row with hover card
 function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
   const [showExamples, setShowExamples] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    // Detect touch capability
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  const handleInteraction = () => {
+    if (row.examples) {
+      if (isTouchDevice) {
+        // Toggle on touch devices
+        setShowExamples(prev => !prev);
+      } else {
+        // Show on desktop hover
+        setShowExamples(true);
+      }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isTouchDevice) {
+      setShowExamples(false);
+    }
+  };
 
   return (
     <motion.div
@@ -124,8 +148,9 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
           ? "cursor-pointer hover:bg-rose-500/5 hover:border-l-2 hover:border-l-rose-500/50"
           : "hover:bg-white/[0.02]"
         }`}
-      onMouseEnter={() => row.examples && setShowExamples(true)}
-      onMouseLeave={() => setShowExamples(false)}
+      onMouseEnter={handleInteraction}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleInteraction}
     >
       {/* Show hover card if examples exist */}
       {showExamples && row.examples && (
@@ -137,7 +162,7 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
         {row.examples && (
           <span className="inline-flex items-center gap-1 rounded-full border border-rose-500/30 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-rose-400">
             <span className="h-1 w-1 animate-pulse rounded-full bg-rose-400" />
-            hover for details
+            {isTouchDevice ? 'tap for details' : 'hover for details'}
           </span>
         )}
       </div>
