@@ -34,8 +34,9 @@ function FooterColumn({ title, links }: FooterColumnProps) {
 export function Footer() {
   const productLinks: FooterLink[] = [
     { title: "Home", href: "/#home" },
-    { title: "Features", href: "/#features" },
-    { title: "Ecosystem", href: "/#ecosystem" },
+    { title: "Features", href: "/features" },
+    { title: "Ecosystem", href: "/ecosystem" },
+    { title: "Why Different", href: "/why-different" },
     { title: "FAQs", href: "/#faq" },
   ];
 

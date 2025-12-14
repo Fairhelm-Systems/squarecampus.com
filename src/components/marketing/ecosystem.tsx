@@ -67,7 +67,7 @@ const ecosystemItems: EcosystemItem[] = [
 
 const OrbitDot = ({ className }: { className?: string }) => (
   <motion.span
-    className={cn("h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500", className)}
+    className={cn("orbit-dot h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500", className)}
     animate={{ opacity: [0.4, 1, 0.6], scale: [0.9, 1.15, 1] }}
     transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
   />
@@ -116,7 +116,7 @@ export function EcosystemSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 p-5 sm:p-6"
+          className="ecosystem-map relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 p-5 sm:p-6"
         >
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400">
@@ -132,7 +132,7 @@ export function EcosystemSection() {
             <div className="relative flex h-48 w-48 items-center justify-center rounded-full border border-white/15 bg-neutral-900/80 shadow-[0_18px_60px_rgba(0,0,0,0.7)]">
               {/* slow glow */}
               <motion.div
-                className="pointer-events-none absolute inset-0 rounded-full"
+                className="core-os-glow pointer-events-none absolute inset-0 rounded-full"
                 animate={{
                   boxShadow: [
                     "0 0 0px rgba(56,189,248,0.05)",
@@ -276,7 +276,7 @@ export function EcosystemSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: idx * 0.04 }}
               viewport={{ once: true }}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/90 p-4 shadow-[0_14px_50px_rgba(0,0,0,0.6)] backdrop-blur"
+              className="ecosystem-card relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/90 p-4 shadow-[0_14px_50px_rgba(0,0,0,0.6)] backdrop-blur"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.12),transparent_60%)] opacity-60" />
               <div className="relative z-10 space-y-2">
@@ -322,7 +322,7 @@ function EcosystemHierarchy() {
 
       <div className="relative space-y-6 pl-6">
         {/* vertical connector */}
-        <div className="absolute left-[12px] top-0 h-full w-[2px] bg-gradient-to-b from-blue-500/40 via-sky-400/30 to-purple-500/40" />
+        <div className="connection-line absolute left-[12px] top-0 h-full w-[2px] bg-gradient-to-b from-blue-500/40 via-sky-400/30 to-purple-500/40" />
 
         <HierarchyItem
           title="Organisation"
@@ -356,7 +356,7 @@ function HierarchyItem({ title, desc }: { title: string; desc: string }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       viewport={{ once: true }}
-      className="relative"
+      className="hierarchy-item relative"
     >
       <span className="absolute -left-[18px] top-[7px] h-3 w-3 rounded-full bg-gradient-to-br from-sky-400 to-violet-500" />
       <div className="rounded-xl border border-white/10 bg-white/5 p-4">

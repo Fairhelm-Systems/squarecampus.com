@@ -29,6 +29,10 @@ const NAV_ITEMS: NavItem[] = [
     link: "/#features",
   },
   {
+    name: "Why Us",
+    link: "/#why-different",
+  },
+  {
     name: "Ecosystem",
     link: "/#ecosystem",
   },
