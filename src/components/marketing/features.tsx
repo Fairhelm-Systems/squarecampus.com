@@ -138,7 +138,7 @@ export function Features() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true, amount: 0.3 }}
               whileHover={{ y: -6, scale: 1.01 }}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
+              className="feature-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
             >
               {/* Gradient overlay on hover */}
               <div
@@ -356,7 +356,7 @@ const FeatureVisual = () => {
             </div>
             <div className="space-y-2">
               {/* Row 1 */}
-              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">08:00</span>
                   <div>
@@ -372,7 +372,7 @@ const FeatureVisual = () => {
               </div>
               {/* Row 2 – lightly at risk */}
               <motion.div
-                className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
+                className="timeline-item flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
                 animate={{
                   boxShadow: ["0 0 0 0 rgba(251,191,36,0.2)", "0 0 0 8px rgba(251,191,36,0)"],
                 }}
@@ -392,7 +392,7 @@ const FeatureVisual = () => {
                 </span>
               </motion.div>
               {/* Row 3 */}
-              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">14:00</span>
                   <div>
@@ -409,7 +409,7 @@ const FeatureVisual = () => {
                 </span>
               </div>
               {/* Row 4 */}
-              <div className="flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
+              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">17:30</span>
                   <div>
@@ -751,7 +751,7 @@ export const LanguageSupportSection = () => {
             transition={{ duration: 0.4, delay: i * 0.05 }}
             viewport={{ once: true }}
             onClick={() => setActive(lang)}
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
+            className="language-card group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
           >
             <div
               className={cn(

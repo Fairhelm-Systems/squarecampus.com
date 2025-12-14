@@ -11,6 +11,7 @@ import { MacbookIntroOverlay } from "@/components/marketing/macbook-intro-overla
 import { Navbar } from "@/components/marketing/navbar";
 import { Operations } from "@/components/marketing/operations";
 import { TrustBanner } from "@/components/marketing/trust-banner";
+import { WhyDifferent } from "@/components/marketing/why-different";
 
 export const metadata: Metadata = {
   title: "SquareCampus | The Operating System for Every School",
@@ -29,6 +30,7 @@ export default function Home() {
       <Hero />
       <Operations />
       <Features />
+      <WhyDifferent />
       <CTA />
       <EcosystemSection />
       <TrustBanner />
