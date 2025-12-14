@@ -120,15 +120,17 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
-  const handleInteraction = () => {
-    if (row.examples) {
-      if (isTouchDevice) {
-        // Toggle on touch devices
-        setShowExamples(prev => !prev);
-      } else {
-        // Show on desktop hover
-        setShowExamples(true);
-      }
+  const handleClick = () => {
+    if (row.examples && isTouchDevice) {
+      // Toggle on touch devices
+      setShowExamples(prev => !prev);
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (row.examples && !isTouchDevice) {
+      // Show on desktop hover only
+      setShowExamples(true);
     }
   };
 
@@ -148,9 +150,9 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
           ? "cursor-pointer hover:bg-rose-500/5 hover:border-l-2 hover:border-l-rose-500/50"
           : "hover:bg-white/[0.02]"
         }`}
-      onMouseEnter={handleInteraction}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleInteraction}
+      onClick={handleClick}
     >
       {/* Show hover card if examples exist */}
       {showExamples && row.examples && (
