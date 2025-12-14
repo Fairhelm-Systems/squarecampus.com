@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { motion } from "motion/react";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
-
-export const metadata: Metadata = {
-  title: "Careers | SquareCampus",
-  description:
-    "Join SquareCampus and help build the operating system for modern schools and colleges.",
-};
+import { Users } from "@/icons";
 
 type Job = {
   id: string;
@@ -35,59 +32,87 @@ export default function CareersPage() {
 
   return (
     <>
-      <main className="bg-neutral-950 min-h-[100dvh] px-4 py-16 sm:px-6 lg:px-10 flex flex-col">
-        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
+      <main className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 px-4 py-16 sm:px-6 lg:px-10">
+        {/* Animated background orbs */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-emerald-500/10 blur-[128px]" />
+          <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-cyan-500/10 blur-[128px]" />
+        </div>
+
+        <div className="relative mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10">
           {/* Header */}
-          <section className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground/80">
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-neutral-400 backdrop-blur-sm">
+              <Users className="h-3 w-3" />
               Careers
-            </p>
+            </div>
             <div className="space-y-3">
-              <h1 className="text-3xl font-semibold text-neutral-50 md:text-4xl">
+              <h1 className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
                 Build the backbone of modern institutions
               </h1>
-              <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              <p className="max-w-2xl text-base leading-relaxed text-neutral-300">
                 SquareCampus is building long-term infrastructure for schools and colleges. That
                 means thoughtful engineering, calm execution, and a team that cares about
                 reliability as much as speed.
               </p>
             </div>
-          </section>
+          </motion.section>
 
           {/* Working at SquareCampus */}
-          <section className="grid gap-6 md:grid-cols-3">
-            <Card className="border border-neutral-800/70 bg-neutral-900/60">
-              <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">Product-first culture</p>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  We optimise for quality of product and long-term stability over quick wins that
-                  don&apos;t hold in production.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="border border-neutral-800/70 bg-neutral-900/60">
-              <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">Thoughtful pace</p>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  We move quickly, but not chaotically. Clear scopes, clear ownership, and minimal
-                  unnecessary meetings.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="border border-neutral-800/70 bg-neutral-900/60">
-              <CardContent className="space-y-2 p-5">
-                <p className="text-sm font-semibold text-neutral-50">Impact on real campuses</p>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  Work that directly improves how schools and colleges operate every single day.
-                </p>
-              </CardContent>
-            </Card>
-          </section>
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid gap-6 md:grid-cols-3"
+          >
+            {[
+              {
+                title: "Product-first culture",
+                description:
+                  "We optimise for quality of product and long-term stability over quick wins that don't hold in production.",
+              },
+              {
+                title: "Thoughtful pace",
+                description:
+                  "We move quickly, but not chaotically. Clear scopes, clear ownership, and minimal unnecessary meetings.",
+              },
+              {
+                title: "Impact on real campuses",
+                description:
+                  "Work that directly improves how schools and colleges operate every single day.",
+              },
+            ].map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+              >
+                <Card className="group relative overflow-hidden border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 shadow-xl shadow-black/20 transition-all duration-300 hover:border-white/20 hover:scale-[1.02]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-cyan-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <CardContent className="relative space-y-2 p-6">
+                    <p className="text-base font-semibold text-white">{value.title}</p>
+                    <p className="text-sm leading-relaxed text-neutral-300">{value.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.section>
 
           {/* Open roles / empty state */}
-          <section className="space-y-4">
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="space-y-4"
+          >
             <div className="flex items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-neutral-400">
+              <h2 className="bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-sm font-semibold uppercase tracking-[0.25em] text-transparent">
                 Open roles
               </h2>
               <span className="text-xs text-neutral-500">
@@ -97,51 +122,60 @@ export default function CareersPage() {
 
             {hasJobs ? (
               <div className="space-y-4">
-                {jobs.map((job) => (
-                  <Card
+                {jobs.map((job, index) => (
+                  <motion.div
                     key={job.id}
-                    className="border border-neutral-800/70 bg-neutral-900/60 transition-colors hover:border-neutral-300/70"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                   >
-                    <CardContent className="flex flex-col gap-3 p-5 md:flex-row md:items-start md:justify-between">
-                      <div className="space-y-1">
-                        <p className="text-sm font-semibold text-neutral-50">{job.title}</p>
-                        <p className="text-xs text-neutral-400">
-                          {job.location} · {job.type}
-                        </p>
-                        <p className="mt-1 text-xs leading-relaxed text-neutral-300">
-                          {job.description}
-                        </p>
-                      </div>
-                      <div className="pt-2 md:pt-0">
-                        {/* Later: link to /careers/[id] or external ATS */}
-                        <Link
-                          href={`mailto:careers@squarecampus.com?subject=${encodeURIComponent(
-                            `Application: ${job.title}`
-                          )}`}
-                          className="inline-flex rounded-full border border-neutral-600 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-neutral-200 transition hover:border-neutral-300 hover:text-white"
-                        >
-                          Apply
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    <Card className="group relative overflow-hidden border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 shadow-xl shadow-black/20 transition-all duration-300 hover:border-white/20 hover:shadow-2xl">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-cyan-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <CardContent className="relative flex flex-col gap-3 p-6 md:flex-row md:items-start md:justify-between">
+                        <div className="space-y-2">
+                          <p className="text-lg font-semibold text-white">{job.title}</p>
+                          <p className="text-sm text-neutral-400">
+                            {job.location} · {job.type}
+                          </p>
+                          <p className="text-sm leading-relaxed text-neutral-300">
+                            {job.description}
+                          </p>
+                        </div>
+                        <div className="pt-2 md:pt-0">
+                          {/* Later: link to /careers/[id] or external ATS */}
+                          <Link
+                            href={`mailto:careers@squarecampus.com?subject=${encodeURIComponent(
+                              `Application: ${job.title}`
+                            )}`}
+                            className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+                          >
+                            Apply
+                          </Link>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
             ) : (
-              <Card className="border border-dashed border-neutral-800 bg-neutral-900/60">
-                <CardContent className="space-y-4 p-6">
-                  <p className="text-sm font-semibold text-neutral-50">
-                    We&apos;re not hiring for specific roles right now.
+              <Card className="relative overflow-hidden border border-dashed border-white/10 bg-gradient-to-br from-neutral-900/60 to-neutral-950/80 shadow-xl backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent" />
+                <CardContent className="relative space-y-4 p-8">
+                  <div className="inline-flex rounded-lg border border-white/10 bg-white/5 p-3">
+                    <Users className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <p className="text-lg font-semibold text-white">
+                    We're not hiring for specific roles right now.
                   </p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    We&apos;ll publish roles here as we expand the team. If you strongly believe you
+                  <p className="text-sm leading-relaxed text-neutral-300">
+                    We'll publish roles here as we expand the team. If you strongly believe you
                     can help shape SquareCampus, you can still reach out with a short note and your
                     profile.
                   </p>
-                  <div className="flex flex-wrap gap-3 text-xs">
+                  <div className="flex flex-wrap gap-3 pt-2">
                     <Link
                       href="mailto:careers@squarecampus.com?subject=General%20application%20for%20SquareCampus"
-                      className="inline-flex items-center justify-center rounded-full border border-neutral-700 bg-neutral-900 px-4 py-2 font-semibold uppercase tracking-[0.22em] text-neutral-200 transition hover:border-neutral-300 hover:text-white"
+                      className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.22em] text-white transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
                     >
                       Send a general application
                     </Link>
@@ -149,7 +183,7 @@ export default function CareersPage() {
                       href="https://www.linkedin.com/company/square-campus"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-neutral-700/70 px-4 py-2 font-semibold uppercase tracking-[0.22em] text-neutral-200 transition hover:border-neutral-300 hover:text-white"
+                      className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 font-semibold uppercase tracking-[0.22em] text-white transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
                     >
                       Follow updates on LinkedIn
                     </Link>
@@ -157,7 +191,7 @@ export default function CareersPage() {
                 </CardContent>
               </Card>
             )}
-          </section>
+          </motion.section>
         </div>
       </main>
       <FloatingHomeButton href="/" label="Back to home" />

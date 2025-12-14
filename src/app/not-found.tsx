@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BookOpen, GraduationCap, Home } from "@/icons";
 import { BookCallCta } from "@/components/marketing/ctas";
+import { LinkButton } from "@/components/marketing/link-button";
 
 export default function NotFound() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -166,19 +167,18 @@ export default function NotFound() {
           className="mb-6 flex flex-wrap items-center justify-center gap-4"
         >
           <BookCallCta
-            context="404-page"
-            label="See SquareCampus in Action"
+            context="features-hero"
+            label="Book a Demo"
             variant="primary"
-            className="rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4 font-semibold shadow-xl shadow-blue-500/25 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/30"
           />
-
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+          <LinkButton
+            href={"/"}
+            variant={"dark"}
+            className={"group inline-flex items-center gap-1.5"}
           >
-            <Home className="h-5 w-5" />
-            Back to Home
-          </Link>
+            <span>Back to Home</span>
+            <Home className={"w-4 h-4"} />
+          </LinkButton>
         </motion.div>
 
         {/* Quick links to key pages */}

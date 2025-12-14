@@ -36,7 +36,7 @@ export function Footer() {
     { title: "Home", href: "/#home" },
     { title: "Features", href: "/features" },
     { title: "Ecosystem", href: "/ecosystem" },
-    { title: "Why Different", href: "/why-different" },
+    { title: "How are we Different?", href: "/why-different" },
     { title: "FAQs", href: "/#faq" },
   ];
 
