@@ -80,8 +80,31 @@ function ExampleHoverCard({ examples }: { examples: { title: string; items: stri
 }
 
 export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
+  const [openRowIndex, setOpenRowIndex] = useState<number | null>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Close on click outside for touch devices
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
+        setOpenRowIndex(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="group relative overflow-visible rounded-2xl border border-neutral-800/60 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 shadow-2xl shadow-black/40 transition-all duration-500 hover:border-neutral-700/80 hover:shadow-2xl hover:shadow-blue-500/10">
+    <div
+      ref={tableRef}
+      className="group relative overflow-visible rounded-2xl border border-neutral-800/60 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 shadow-2xl shadow-black/40 transition-all duration-500 hover:border-neutral-700/80 hover:shadow-2xl hover:shadow-blue-500/10"
+    >
       {/* Glow effects */}
       <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-500/20" />
       <div className="pointer-events-none absolute -left-20 bottom-0 h-40 w-40 rounded-full bg-purple-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-purple-500/15" />
@@ -103,7 +126,13 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
       {/* Rows */}
       <div className="relative divide-y divide-white/5">
         {rows.map((row, index) => (
-          <TableRow key={row.metric} row={row} index={index} />
+          <TableRow
+            key={row.metric}
+            row={row}
+            index={index}
+            isOpen={openRowIndex === index}
+            onToggle={() => setOpenRowIndex(openRowIndex === index ? null : index)}
+          />
         ))}
       </div>
     </div>
@@ -111,32 +140,46 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
 }
 
 // Individual table row with hover card
-function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
-  const [showExamples, setShowExamples] = useState(false);
+function TableRow({
+  row,
+  index,
+  isOpen,
+  onToggle
+}: {
+  row: ComparisonRow;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [localHover, setLocalHover] = useState(false);
 
   useEffect(() => {
     // Detect touch capability
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
+  // On touch devices, use the parent-controlled isOpen state
+  // On desktop, use local hover state
+  const shouldShowExamples = isTouchDevice ? isOpen : localHover;
+
   const handleClick = () => {
     if (row.examples && isTouchDevice) {
-      // Toggle on touch devices
-      setShowExamples(prev => !prev);
+      // Toggle via parent state on touch devices
+      onToggle();
     }
   };
 
   const handleMouseEnter = () => {
     if (row.examples && !isTouchDevice) {
       // Show on desktop hover only
-      setShowExamples(true);
+      setLocalHover(true);
     }
   };
 
   const handleMouseLeave = () => {
     if (!isTouchDevice) {
-      setShowExamples(false);
+      setLocalHover(false);
     }
   };
 
@@ -155,7 +198,7 @@ function TableRow({ row, index }: { row: ComparisonRow; index: number }) {
       onClick={handleClick}
     >
       {/* Show hover card if examples exist */}
-      {showExamples && row.examples && (
+      {shouldShowExamples && row.examples && (
         <ExampleHoverCard examples={row.examples} />
       )}
 
