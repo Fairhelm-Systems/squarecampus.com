@@ -21,6 +21,10 @@ interface NavbarProps {
 
 const NAV_ITEMS: NavItem[] = [
   {
+    name: "School management system",
+    link: "/school-management-system",
+  },
+  {
     name: "Platform",
     link: "/#operations",
   },
