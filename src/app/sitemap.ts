@@ -5,19 +5,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: "https://squarecampus.com/",
       lastModified: new Date(),
+      changeFrequency: "always",
+      priority: 1,
+    },
+    {
+      url: "https://squarecampus.com/school-management-system",
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 1,
+    },
+    {
+      url: "https://squarecampus.com/why-different",
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 1,
+    },
+    {
+      url: "https://squarecampus.com/ecosystem",
+      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: "https://squarecampus.com/about",
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: "https://squarecampus.com/security",
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.7,
     },
     {

@@ -33,6 +33,7 @@ function FooterColumn({ title, links }: FooterColumnProps) {
 
 export function Footer() {
   const productLinks: FooterLink[] = [
+    { title: "school management system", href: "/school-management-system" },
     { title: "Home", href: "/#home" },
     { title: "Features", href: "/features" },
     { title: "Ecosystem", href: "/ecosystem" },
