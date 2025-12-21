@@ -1,16 +1,31 @@
 // SEO configuration and utilities for consistent metadata across the application
+// --------------------------------------------------------------
+// This file is the “identity kit” we hand to search engines.
+// Not hype. Not vibes. Just clear, consistent signals.
 
 export const SEO_CONFIG = {
   baseUrl: "https://squarecampus.com",
   siteName: "SquareCampus",
-  defaultTitle: "SquareCampus | The Operating System for Every School",
+  // Your category: School OS. Your search reality: “school management system”.
+  // Our metadata must hold both truths without sounding confused.
+  defaultTitle: "SquareCampus | School OS for Modern Schools",
   defaultDescription:
-    "SquareCampus is the operating system for modern schools and colleges, unifying admissions, academics, finance, communication, transport, and compliance into one predictable platform.",
+    "SquareCampus is a School Operating System for modern schools and colleges—admissions, academics, fees, transport, communication, compliance, and analytics in one predictable platform.",
   ogImage: {
     default: "https://cdn.squarecampus.in/application_files/logo-light.png",
     width: 1200,
     height: 630,
   },
+
+  // Optional, but powerful when set: links that reinforce brand/entity.
+  // Fill these when ready.
+  sameAs: [
+    // "https://www.linkedin.com/company/squarecampus",
+    // "https://x.com/squarecampus",
+    // "https://www.youtube.com/@squarecampus",
+  ],
+  // Logo used in structured data.
+  logo: "https://cdn.squarecampus.in/application_files/logo-light.png",
 } as const;
 
 export type PageMetadataConfig = {
@@ -28,7 +43,12 @@ export type PageMetadataConfig = {
 
 /**
  * Generate consistent metadata for pages
- * Follows Next.js 14+ App Router metadata conventions
+ * Follows Next.js App Router metadata conventions
+ *
+ * The plan:
+ * - Canonicals are non-negotiable.
+ * - OG/Twitter are consistent across pages (avoid mismatch penalties).
+ * - robots flags are configurable per route.
  */
 export function createPageMetadata(config: PageMetadataConfig) {
   const {
@@ -87,7 +107,49 @@ export function createPageMetadata(config: PageMetadataConfig) {
 }
 
 /**
- * Generate JSON-LD structured data for WebPage
+ * JSON-LD: WebSite schema (site-level identity).
+ * This anchors the #website entity referenced by other schemas.
+ */
+export function createWebSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SEO_CONFIG.baseUrl}/#website`,
+    url: SEO_CONFIG.baseUrl,
+    name: SEO_CONFIG.siteName,
+    description: SEO_CONFIG.defaultDescription,
+    inLanguage: "en",
+  };
+}
+
+/**
+ * JSON-LD: Organization schema (brand/entity).
+ * This helps Google connect the site to a real-world entity.
+ */
+export function createOrganizationSchema(config?: {
+  name?: string;
+  url?: string;
+  logo?: string;
+  sameAs?: string[];
+}) {
+  const name = config?.name ?? SEO_CONFIG.siteName;
+  const url = config?.url ?? SEO_CONFIG.baseUrl;
+  const logo = config?.logo ?? SEO_CONFIG.logo;
+  const sameAs = config?.sameAs ?? SEO_CONFIG.sameAs;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${url}/#organization`,
+    name,
+    url,
+    logo,
+    sameAs: sameAs.length ? sameAs : undefined,
+  };
+}
+
+/**
+ * JSON-LD: WebPage schema (page-level identity)
  */
 export function createWebPageSchema(config: { name: string; description: string; url: string }) {
   return {
@@ -104,7 +166,8 @@ export function createWebPageSchema(config: { name: string; description: string;
 }
 
 /**
- * Generate JSON-LD BreadcrumbList schema
+ * JSON-LD: BreadcrumbList schema
+ * Breadcrumbs help Google understand hierarchy (and sometimes show it).
  */
 export function createBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: string }>) {
   return {
@@ -120,15 +183,60 @@ export function createBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: s
 }
 
 /**
- * Generate JSON-LD AboutPage schema
+ * JSON-LD: AboutPage schema
  */
 export function createAboutPageSchema(config: { name: string; description: string; url: string }) {
   return {
+    "@context": "https://schema.org",
     "@type": "AboutPage",
     "@id": `${config.url}#aboutpage`,
     url: config.url,
     name: config.name,
     description: config.description,
     inLanguage: "en",
+    isPartOf: {
+      "@id": `${SEO_CONFIG.baseUrl}/#website`,
+    },
+  };
+}
+
+/**
+ * JSON-LD: SoftwareApplication schema (SquareCampus is a product, not just a website).
+ * Use this on high-intent pages like:
+ * - /school-management-system
+ * - /features
+ * - /ecosystem
+ *
+ * Note: Keep claims conservative; avoid review/rating unless you have real review data.
+ */
+export function createSoftwareApplicationSchema(config?: {
+  name?: string;
+  url?: string;
+  description?: string;
+  operatingSystem?: string;
+  applicationCategory?: string;
+}) {
+  const name = config?.name ?? "SquareCampus";
+  const url = config?.url ?? SEO_CONFIG.baseUrl;
+  const description = config?.description ?? SEO_CONFIG.defaultDescription;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name,
+    url,
+    description,
+    applicationCategory: config?.applicationCategory ?? "BusinessApplication",
+    operatingSystem: config?.operatingSystem ?? "Web",
+    offers: {
+      "@type": "Offer",
+      // Avoid hard pricing here if you do “book a call” style pricing.
+      price: "0",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+    },
+    publisher: {
+      "@id": `${SEO_CONFIG.baseUrl}/#organization`,
+    },
   };
 }
