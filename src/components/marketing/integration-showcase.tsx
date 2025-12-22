@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { Cloud, Code, CreditCard, Database, Lock, MessageSquare, Webhook, Zap } from "@/icons";
 
 const integrations = [

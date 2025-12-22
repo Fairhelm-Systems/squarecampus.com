@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className={"bg-black"}>
+    <main className={"bg-black text-white"}>
       <MacbookIntroOverlay />
       <Navbar />
       <Hero />

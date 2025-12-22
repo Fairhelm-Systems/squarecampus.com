@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen } from "@/icons";

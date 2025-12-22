@@ -1,9 +1,9 @@
 "use client";
-import { AnimatePresence, motion } from "motion/react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import React, { useState } from "react";
 
 import { ChevronDown, ChevronUp } from "@/components/icons";
+import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 
 const faqHighlights = [
@@ -72,29 +72,39 @@ const FAQs = [
 
 export function FAQ() {
   const [open, setOpen] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(sectionRef, { y: 24 });
+  useGsapReveal(listRef, { selector: ".js-faq-item", stagger: 0.06 });
+
   return (
     <div
+      ref={sectionRef}
       className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 md:grid-cols-[2fr,1fr] md:px-8 md:py-20"
       id={"faq"}
     >
       <div className="space-y-6">
         <div className="space-y-2">
-          <h2 className="text-4xl font-medium tracking-tight text-neutral-50 md:text-5xl">
+          <h2 className="text-3xl font-medium tracking-tight text-neutral-50 sm:text-4xl md:text-5xl">
             Frequently asked questions
           </h2>
-          <p className="max-w-xl text-base text-neutral-200">
+          <p className="max-w-xl text-sm text-neutral-200 sm:text-base">
             Everything you need to know about adopting SquareCampus, and why campuses of every size
             call it their operating system.
           </p>
         </div>
-        <div className="grid gap-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">
-          {faqHighlights.map((highlight) => (
-            <p key={highlight} className="text-center text-[0.65rem]">
+        <div className="grid gap-3 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">
+          {faqHighlights.map((highlight, idx) => (
+            <p
+              key={highlight}
+              className={cn("text-center text-[0.6rem] sm:text-[0.65rem]", idx === 2 && "hidden sm:block")}
+            >
               {highlight}
             </p>
           ))}
         </div>
-        <div className="space-y-4">
+        <div ref={listRef} className="space-y-4">
           {FAQs.map((faq, index) => (
             <FAQItem
               key={index}
@@ -178,15 +188,14 @@ const FAQItem = ({
   const isOpen = open === question;
 
   return (
-    <motion.button
+    <button
       type="button"
       onClick={() => setOpen(isOpen ? null : question)}
       className={cn(
         "relative w-full rounded-2xl border border-white/10 bg-neutral-900/70 p-4 text-left shadow-lg shadow-black/40 transition-all duration-300",
-        "hover:border-white/25 hover:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        "hover:border-white/25 hover:bg-neutral-900 hover:-translate-y-0.5 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+        "js-faq-item"
       )}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.995 }}
     >
       <span className="absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
 
@@ -209,22 +218,11 @@ const FAQItem = ({
         <div className="flex-1 space-y-2">
           <h3 className="text-base font-semibold text-neutral-50">{question}</h3>
 
-          <AnimatePresence initial={false} mode="wait">
-            {isOpen && (
-              <motion.p
-                key="answer"
-                initial={{ opacity: 0, height: 0, y: -4 }}
-                animate={{ opacity: 1, height: "auto", y: 0 }}
-                exit={{ opacity: 0, height: 0, y: -4 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="text-sm leading-relaxed text-neutral-300"
-              >
-                {answer}
-              </motion.p>
-            )}
-          </AnimatePresence>
+          {isOpen && (
+            <p className="text-xs leading-relaxed text-neutral-300 sm:text-sm">{answer}</p>
+          )}
         </div>
       </div>
-    </motion.button>
+    </button>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import Link from "next/link";
 import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef } from "react";
 import {
   BarChart3,
   BookOpen,
@@ -10,6 +10,7 @@ import {
   MessageSquare,
   Users,
 } from "@/components/icons";
+import { useGsapReveal } from "@/lib/gsap-utils";
 
 const operationAreas: Array<{
   title: string;
@@ -107,6 +108,12 @@ const dayInLife = [
 ];
 
 export function Operations() {
+  const cardsRef = useRef<HTMLDivElement | null>(null);
+  const dayRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(cardsRef, { selector: ".js-ops-card", stagger: 0.08 });
+  useGsapReveal(dayRef, { y: 20 });
+
   return (
     <section
       id="operations"
@@ -127,18 +134,16 @@ export function Operations() {
         </p>
       </div>
 
-      <div className="relative mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {operationAreas.map((area, index) => {
+      <div
+        ref={cardsRef}
+        className="relative mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {operationAreas.map((area) => {
           const Icon = area.icon;
           return (
-            <motion.article
+            <article
               key={area.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-neutral-950/90 p-6 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:shadow-black/60"
+              className="js-ops-card group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-neutral-950/90 p-6 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl hover:shadow-black/60"
             >
               {/* Gradient overlay on hover */}
               <div
@@ -149,26 +154,21 @@ export function Operations() {
               <div className="relative space-y-4">
                 {/* Icon and metric row */}
                 <div className="flex items-start justify-between">
-                  <motion.div
+                  <div
                     className="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10"
-                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                    transition={{ duration: 0.5 }}
                   >
                     <Icon className="h-6 w-6 text-white/80 transition-colors duration-300 group-hover:text-white" />
-                  </motion.div>
+                  </div>
 
                   {area.metric && (
-                    <motion.div
+                    <div
                       className="rounded-xl border border-white/10 bg-neutral-900/80 px-3 py-1.5 text-right backdrop-blur-sm"
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 + 0.3 }}
                     >
                       <p className="text-[0.65rem] uppercase tracking-wider text-white/40">
                         {area.metric.label}
                       </p>
                       <p className="text-sm font-semibold text-white">{area.metric.value}</p>
-                    </motion.div>
+                    </div>
                   )}
                 </div>
 
@@ -180,36 +180,37 @@ export function Operations() {
                 </div>
               </div>
 
-              <ul className="relative mt-3 space-y-2 text-xs text-neutral-300">
+              <ul className="relative mt-3 space-y-2 text-[0.7rem] text-neutral-300 sm:text-xs">
                 {area.bullets.map((bullet, bulletIndex) => (
-                  <motion.li
+                  <li
                     key={bullet}
                     className="flex items-start gap-2"
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 + bulletIndex * 0.05 }}
-                    viewport={{ once: true }}
                   >
                     <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 transition-transform duration-300 group-hover:scale-125" />
                     <span>{bullet}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-            </motion.article>
+            </article>
           );
         })}
       </div>
 
-      <div className="relative mx-auto mt-12 grid max-w-6xl gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+      <div
+        ref={dayRef}
+        className="relative mx-auto mt-12 grid max-w-6xl gap-6 lg:grid-cols-[1.2fr,0.8fr]"
+      >
         <div className="rounded-3xl border border-white/10 bg-neutral-900/70 p-6 shadow-2xl shadow-black/50">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/50">
             A predictable day on SquareCampus
           </p>
           <div className="mt-4 space-y-3 text-sm text-neutral-100">
-            {dayInLife.map((item) => (
+            {dayInLife.map((item, idx) => (
               <div
                 key={item}
-                className="rounded-2xl border border-white/5 bg-white/5 px-4 py-3 text-left text-neutral-200"
+                className={`rounded-2xl border border-white/5 bg-white/5 px-4 py-3 text-left text-neutral-200 ${
+                  idx > 2 ? "hidden sm:block" : ""
+                }`}
               >
                 {item}
               </div>

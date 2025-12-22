@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { AnimatedCounter } from "./backgrounds/why-different-bg";

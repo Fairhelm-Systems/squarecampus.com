@@ -68,7 +68,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={"scrollbar-auto scroll-smooth"}>
+    <html lang="en" className={"dark scrollbar-auto scroll-smooth"}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}>
         <DevtoolsGuard />
         <BrowserWarning />

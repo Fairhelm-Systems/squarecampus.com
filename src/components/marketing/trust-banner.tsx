@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView } from "@/lib/motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";

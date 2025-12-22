@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { AppWindow, Layers, Network, ShieldCheck, Smartphone, Sparkles } from "@/components/icons";
+import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 import { SkewedRectangles } from "./backgrounds/skewed-rectangles";
 
@@ -65,25 +66,51 @@ const ecosystemItems: EcosystemItem[] = [
   },
 ];
 
-const OrbitDot = ({ className }: { className?: string }) => (
-  <motion.span
-    className={cn("orbit-dot h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500", className)}
-    animate={{ opacity: [0.4, 1, 0.6], scale: [0.9, 1.15, 1] }}
-    transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
-  />
-);
+const OrbitDot = ({ className }: { className?: string }) => {
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const tween = gsap.to(ref.current, {
+      opacity: 1,
+      scale: 1.15,
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    return () => {
+      tween.kill();
+    };
+  }, []);
+
+  return (
+    <span
+      ref={ref}
+      className={cn(
+        "orbit-dot h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500 opacity-70",
+        className
+      )}
+    />
+  );
+};
 
 export function EcosystemSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const inView = useInView(sectionRef, { amount: 0.1, once: true });
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const whyRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(sectionRef, { y: 24, threshold: 0.1 });
+  useGsapReveal(mapRef, { y: 16 });
+  useGsapReveal(whyRef, { y: 16 });
+  useGsapReveal(whyRef, { selector: ".js-why-item", stagger: 0.08, threshold: 0.1 });
+  useGsapReveal(cardsRef, { selector: ".js-ecosystem-card", stagger: 0.05, threshold: 0.1 });
 
   return (
-    <motion.section
+    <section
       id="ecosystem"
       ref={sectionRef}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
       className="relative mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-10"
     >
       <div className="pointer-events-none absolute inset-y-0 left-[calc(45%-45vw)] right-[calc(45%-45vw)] h-full">
@@ -111,11 +138,8 @@ export function EcosystemSection() {
       {/* Top row: map + why it matters */}
       <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         {/* Map */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          viewport={{ once: true }}
+        <div
+          ref={mapRef}
           className="ecosystem-map relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 p-5 sm:p-6"
         >
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
@@ -127,24 +151,12 @@ export function EcosystemSection() {
             </span>
           </div>
 
-          <div className="relative flex items-center justify-center py-8">
+          <div className="relative flex items-center justify-center py-6 sm:py-8">
             {/* Orbit container */}
-            <div className="relative flex h-48 w-48 items-center justify-center rounded-full border border-white/15 bg-neutral-900/80 shadow-[0_18px_60px_rgba(0,0,0,0.7)]">
+            <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-white/15 bg-neutral-900/80 shadow-[0_18px_60px_rgba(0,0,0,0.7)] sm:h-48 sm:w-48">
               {/* slow glow */}
-              <motion.div
+              <div
                 className="core-os-glow pointer-events-none absolute inset-0 rounded-full"
-                animate={{
-                  boxShadow: [
-                    "0 0 0px rgba(56,189,248,0.05)",
-                    "0 0 40px rgba(56,189,248,0.20)",
-                    "0 0 0px rgba(56,189,248,0.05)",
-                  ],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               />
 
               <div className="relative z-10 flex flex-col items-center gap-1 text-center">
@@ -158,52 +170,53 @@ export function EcosystemSection() {
             {/* Orbiting nodes + labels */}
             <div className="pointer-events-none absolute inset-0">
               {/* Admin console */}
-              <div className="absolute left-[10%] top-[30%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute left-[10%] top-[30%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
                 <OrbitDot className="mb-1" />
                 <span>Admin console</span>
-                <span className="text-[0.65rem] text-neutral-400">
+                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
                   Roles • Workflows • Controls
                 </span>
               </div>
 
               {/* Teacher tools */}
-              <div className="absolute right-[8%] top-[35%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute right-[8%] top-[35%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
                 <OrbitDot className="mb-1" />
                 <span>Teacher tools</span>
-                <span className="text-[0.65rem] text-neutral-400">
+                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
                   Lessons • Assessments • Remarks
                 </span>
               </div>
 
               {/* Parent app */}
-              <div className="absolute left-[8%] bottom-[22%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute left-[8%] bottom-[22%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
                 <OrbitDot className="mb-1" />
                 <span>Parent app</span>
-                <span className="text-[0.65rem] text-neutral-400">Homework • Fees • Updates</span>
+                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
+                  Homework • Fees • Updates
+                </span>
               </div>
 
               {/* Integrations */}
-              <div className="absolute right-[10%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.7rem] text-neutral-200">
+              <div className="absolute right-[10%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
                 <OrbitDot className="mb-1" />
                 <span>Integrations</span>
-                <span className="text-[0.65rem] text-neutral-400">UPI • Messaging • Billing</span>
+                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
+                  UPI • Messaging • Billing
+                </span>
               </div>
             </div>
           </div>
 
-          <p className="mt-4 text-[0.78rem] text-neutral-400 sm:text-xs">
+          <p className="mt-4 text-[0.72rem] text-neutral-400 sm:text-xs">
             Every action, attendance marked, fee paid, remark added, bus delay logged, flows through
             the same source of truth instead of disappearing into disconnected apps and
             spreadsheets.
           </p>
-        </motion.div>
+        </div>
 
         {/* Why it matters */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          viewport={{ once: true }}
+        <div
+          ref={whyRef}
           className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 p-6 sm:p-8"
         >
           {/* Background accent glow */}
@@ -233,17 +246,13 @@ export function EcosystemSection() {
               "Parents use one channel instead of juggling multiple groups.",
               "Future modules and integrations plug into the same backbone.",
             ].map((item, idx) => (
-              <motion.li
+              <li
                 key={idx}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 + idx * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-start gap-3"
+                className="js-why-item flex items-start gap-3"
               >
                 <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-400 to-emerald-400" />
                 <span className="leading-relaxed">{item}</span>
-              </motion.li>
+              </li>
             ))}
           </ul>
 
@@ -253,30 +262,20 @@ export function EcosystemSection() {
               className="group inline-flex items-center gap-2 rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.3em] text-blue-400 transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-300"
             >
               Talk about your ecosystem
-              <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity }}
-                className="text-base"
-              >
-                ↗
-              </motion.span>
+              <span className="text-base animate-pulse">↗</span>
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Ecosystem modules grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div ref={cardsRef} className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {ecosystemItems.map((item, idx) => {
           const Icon = item.icon;
           return (
-            <motion.div
+            <div
               key={item.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: idx * 0.04 }}
-              viewport={{ once: true }}
-              className="ecosystem-card relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/90 p-4 shadow-[0_14px_50px_rgba(0,0,0,0.6)] backdrop-blur"
+              className="js-ecosystem-card ecosystem-card relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/90 p-4 shadow-[0_14px_50px_rgba(0,0,0,0.6)] backdrop-blur"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.12),transparent_60%)] opacity-60" />
               <div className="relative z-10 space-y-2">
@@ -290,37 +289,37 @@ export function EcosystemSection() {
                   </span>
                 </div>
                 <p className="text-sm font-semibold text-white">{item.title}</p>
-                <p className="text-[0.8rem] text-neutral-300 sm:text-xs">{item.description}</p>
+                <p className="text-[0.75rem] text-neutral-300 sm:text-xs">{item.description}</p>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
       {/* Hierarchy / RBAC */}
       <EcosystemHierarchy />
-    </motion.section>
+    </section>
   );
 }
 
 function EcosystemHierarchy() {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { amount: 0.1, once: true });
+  const itemsRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(ref, { y: 20, threshold: 0.1 });
+  useGsapReveal(itemsRef, { selector: ".js-hierarchy-item", stagger: 0.08, threshold: 0.1 });
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      className="mx-auto mt-16 w-full max-w-5xl rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/60 to-neutral-950/80 p-6 sm:p-8 shadow-xl shadow-black/50"
+      className="mx-auto mt-12 w-full max-w-5xl rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/60 to-neutral-950/80 p-6 sm:mt-16 sm:p-8 shadow-xl shadow-black/50"
     >
       <p className="mb-3 text-xs uppercase tracking-[0.5em] text-white/40">Hierarchy · RBAC</p>
       <h3 className="mb-6 text-xl font-semibold text-white md:text-2xl">
         A structure that mirrors real institutions
       </h3>
 
-      <div className="relative space-y-6 pl-6">
+      <div ref={itemsRef} className="relative space-y-6 pl-6">
         {/* vertical connector */}
         <div className="connection-line absolute left-[12px] top-0 h-full w-[2px] bg-gradient-to-b from-blue-500/40 via-sky-400/30 to-purple-500/40" />
 
@@ -345,24 +344,18 @@ function EcosystemHierarchy() {
           desc="Fine-grained permissions for organisation admins, school admins, campus admins, department heads, teachers, finance, transport, parents, and students."
         />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 function HierarchyItem({ title, desc }: { title: string; desc: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      viewport={{ once: true }}
-      className="hierarchy-item relative"
-    >
+    <div className="js-hierarchy-item hierarchy-item relative">
       <span className="absolute -left-[18px] top-[7px] h-3 w-3 rounded-full bg-gradient-to-br from-sky-400 to-violet-500" />
       <div className="rounded-xl border border-white/10 bg-white/5 p-4">
         <p className="text-sm font-semibold text-white">{title}</p>
-        <p className="mt-1 text-xs text-neutral-300">{desc}</p>
+        <p className="mt-1 text-[0.7rem] text-neutral-300 sm:text-xs">{desc}</p>
       </div>
-    </motion.div>
+    </div>
   );
 }

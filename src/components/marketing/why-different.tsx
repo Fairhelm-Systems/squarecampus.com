@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import Link from "next/link";
 import { ArrowRight, Clock, DollarSign, Puzzle, Shield, Sparkles, Zap } from "@/icons";
 
@@ -10,7 +10,9 @@ export function WhyDifferent() {
       icon: Sparkles,
       title: "AI That Actually Works",
       problem: "\"AI-powered insights\" (it's a bar chart). AI mentioned 47 times on homepage, 0 actual AI features.",
+      problemShort: "“AI-powered insights” that are just charts.",
       solution: "Auto-categorize expenses, predict enrollment trends, natural language queries. Real AI solving real problems.",
+      solutionShort: "Real AI: forecasting, insights, and natural language queries.",
       gradient: "from-purple-500/20 via-pink-500/10",
       iconColor: "text-purple-400",
     },
@@ -18,7 +20,9 @@ export function WhyDifferent() {
       icon: Puzzle,
       title: "One System, Not 8 Products",
       problem: "AdmissionsPro™ + FinancePro™ + ReportsPro™... Data in 8 databases. Want a unified report? Good luck.",
+      problemShort: "Eight tools, eight databases, zero clarity.",
       solution: "One unified platform. One database. One source of truth. Everything included. No juggling act required.",
+      solutionShort: "One platform, one database, one source of truth.",
       gradient: "from-blue-500/20 via-cyan-500/10",
       iconColor: "text-blue-400",
     },
@@ -26,7 +30,9 @@ export function WhyDifferent() {
       icon: Clock,
       title: "7 Days, Not 6 Months",
       problem: "6-12 month implementations. \"Please wait while we migrate your data...\" (still waiting since Q2)",
+      problemShort: "6–12 month rollouts and endless migrations.",
       solution: "Live in 7 days. Data migration included. Training included. No 6-month nightmare of downtime and chaos.",
+      solutionShort: "Live in 7 days with migration + training included.",
       gradient: "from-emerald-500/20 via-green-500/10",
       iconColor: "text-emerald-400",
     },
@@ -34,7 +40,9 @@ export function WhyDifferent() {
       icon: DollarSign,
       title: "One Price, No Shell Games",
       problem: "₹8/student \"Basic\" (missing features) → ₹80/student \"Pro\" (10x price!). Hidden fees appear after contract.",
+      problemShort: "Tiered pricing with surprise add-ons.",
       solution: "Full platform, one price. Parent login included. Mobile apps: one-time fee. No surprise bills. Ever.",
+      solutionShort: "One price, full platform, no hidden fees.",
       gradient: "from-rose-500/20 via-red-500/10",
       iconColor: "text-rose-400",
     },
@@ -42,7 +50,9 @@ export function WhyDifferent() {
       icon: Shield,
       title: "School OS, Not Rebranded ERP",
       problem: "Built for factories in the 90s. \"Student\" is just \"Customer\" renamed in the database schema.",
+      problemShort: "ERP software renamed for schools.",
       solution: "Built for schools from day one. Terms, sections, academic calendars, grading periods. Not generic business software.",
+      solutionShort: "Built for schools, with real academic logic.",
       gradient: "from-amber-500/20 via-orange-500/10",
       iconColor: "text-amber-400",
     },
@@ -50,7 +60,9 @@ export function WhyDifferent() {
       icon: Zap,
       title: "Fast, Not \"Loading...\"",
       problem: "5+ second page loads. \"Please wait while we fetch your data...\" (it's 10 rows). Times out on enrollment day.",
+      problemShort: "Slow loads and timeouts on critical days.",
       solution: "Sub-second loads. Built for peak load (result day, enrollment day). Your school runs fast. Your system should too.",
+      solutionShort: "Sub-second loads built for peak days.",
       gradient: "from-sky-500/20 via-cyan-500/10",
       iconColor: "text-sky-400",
     },
@@ -80,10 +92,10 @@ export function WhyDifferent() {
             </span>
             The Truth
           </div>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
             Why We're Different
           </h2>
-          <p className="mx-auto max-w-2xl text-base text-neutral-300 md:text-lg">
+          <p className="mx-auto max-w-2xl text-sm text-neutral-300 sm:text-base md:text-lg">
             We're not going to name names. But if you've shopped around, you know exactly what we're talking about.
           </p>
         </motion.div>
@@ -123,7 +135,8 @@ export function WhyDifferent() {
                     </span>
                   </div>
                   <p className="text-xs leading-relaxed text-neutral-400 line-through md:text-sm">
-                    {point.problem}
+                    <span className="sm:hidden">{point.problemShort}</span>
+                    <span className="hidden sm:inline">{point.problem}</span>
                   </p>
                 </div>
 
@@ -135,7 +148,8 @@ export function WhyDifferent() {
                     </span>
                   </div>
                   <p className="text-xs leading-relaxed text-neutral-200 md:text-sm">
-                    {point.solution}
+                    <span className="sm:hidden">{point.solutionShort}</span>
+                    <span className="hidden sm:inline">{point.solution}</span>
                   </p>
                 </div>
 

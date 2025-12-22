@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { useEffect, useState } from "react";
 
 type FloatingOrb = {
