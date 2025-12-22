@@ -1,9 +1,9 @@
 // components/marketing/floating-home-button.tsx
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import gsap from "gsap";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ArrowUpRight } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +32,7 @@ type FloatingHomeButtonProps = HomeVariantProps | TopVariantProps;
 export function FloatingHomeButton(props: FloatingHomeButtonProps) {
   const { label, className } = props;
   const [visible, setVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const isTopVariant = props.variant === "top";
   const href = !isTopVariant ? props.href : undefined;
@@ -70,14 +71,20 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
 
   const finalLabel = label ?? (isTopVariant ? "Back to top" : "Back to home");
 
+  useEffect(() => {
+    if (!visible || !containerRef.current) return;
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }
+    );
+  }, [visible]);
+
   return (
-    <AnimatePresence>
+    <>
       {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 40 }}
-          transition={{ duration: 0.22, ease: "easeOut" }}
+        <div
+          ref={containerRef}
           className="pointer-events-none fixed bottom-6 right-4 z-50 sm:bottom-8 sm:right-6"
         >
           {isTopVariant ? (
@@ -112,8 +119,8 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
               <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           )}
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }

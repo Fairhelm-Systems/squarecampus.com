@@ -20,23 +20,11 @@ import {
   IconVolume3,
   IconWorld,
 } from "@tabler/icons-react";
-import { motion } from "motion/react";
+import gsap from "gsap";
 import Image from "next/image";
 import type React from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-
-const lidContainerVariants = {
-  hover: {
-    rotateX: -25,
-    perspective: "200px",
-  },
-};
-
-const imageVariants = {
-  hover: {
-    opacity: 1,
-  },
-};
 
 export const MacbookScroll = ({
   src,
@@ -49,18 +37,68 @@ export const MacbookScroll = ({
   badge?: React.ReactNode;
   children?: React.ReactNode;
 }) => {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const lidRef = useRef<HTMLDivElement | null>(null);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!rootRef.current || !lidRef.current || !screenRef.current) return;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const hoverIn = () => {
+      gsap.to(lidRef.current, {
+        rotateX: -25,
+        duration: 0.6,
+        ease: "power2.inOut",
+      });
+      gsap.to(screenRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.inOut",
+      });
+    };
+
+    const hoverOut = () => {
+      gsap.to(lidRef.current, {
+        rotateX: -65,
+        duration: 0.6,
+        ease: "power2.inOut",
+      });
+      gsap.to(screenRef.current, {
+        opacity: 0.2,
+        duration: 0.6,
+        ease: "power2.inOut",
+      });
+    };
+
+    const el = rootRef.current;
+    el.addEventListener("mouseenter", hoverIn);
+    el.addEventListener("mouseleave", hoverOut);
+    el.addEventListener("pointerdown", hoverIn);
+    el.addEventListener("pointerup", hoverOut);
+    el.addEventListener("pointercancel", hoverOut);
+
+    return () => {
+      el.removeEventListener("mouseenter", hoverIn);
+      el.removeEventListener("mouseleave", hoverOut);
+      el.removeEventListener("pointerdown", hoverIn);
+      el.removeEventListener("pointerup", hoverOut);
+      el.removeEventListener("pointercancel", hoverOut);
+    };
+  }, []);
+
   return (
-    <motion.div
-      whileHover="hover"
-      whileTap="hover"
+    <div
+      ref={rootRef}
       style={{
         perspective: "800px",
-        rotateX: "8deg",
+        transform: "rotateX(8deg)",
       }}
-      className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100  scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
+      className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100 scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
     >
       {/* Lid */}
-      <Lid src={src} children={children} />
+      <Lid src={src} children={children} lidRef={lidRef} screenRef={screenRef} />
       {/* Base area */}
       <div className="h-[22rem] w-[32rem] bg-[#272729] rounded-2xl overflow-hidden relative -z-10">
         {/* above keyboard bar */}
@@ -85,39 +123,40 @@ export const MacbookScroll = ({
         )}
         {badge && <div className="absolute bottom-4 left-4">{badge}</div>}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export const Lid = ({ src, children }: { src?: string; children?: React.ReactNode }) => {
+export const Lid = ({
+  src,
+  children,
+  lidRef,
+  screenRef,
+}: {
+  src?: string;
+  children?: React.ReactNode;
+  lidRef: React.RefObject<HTMLDivElement | null>;
+  screenRef: React.RefObject<HTMLDivElement | null>;
+}) => {
   return (
-    <motion.div className="relative [perspective:800px] z-50">
-      <motion.div
+    <div className="relative [perspective:800px] z-50">
+      <div
+        ref={lidRef}
         style={{
           perspective: "1000px",
-          rotateX: -65,
-          translateZ: 0,
+          transform: "rotateX(-65deg)",
+          translate: "0px",
           transformOrigin: "bottom",
           transformStyle: "preserve-3d",
           boxShadow: "0px 2px 0px 2px var(--neutral-800) inset",
         }}
-        variants={lidContainerVariants}
-        transition={{
-          duration: 0.6,
-          ease: "easeInOut",
-        }}
         className="h-[12rem] w-[32rem] bg-[#010101] rounded-2xl p-2 relative overflow-hidden"
       >
-        <motion.div
+        <div
+          ref={screenRef}
           style={{
             boxShadow: "0px 2px 0px 2px var(--neutral-800) inset",
             opacity: 0.2,
-          }}
-          variants={imageVariants}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut",
-            delay: 0.2,
           }}
           className="absolute inset-0 bg-[#010101] overflow-hidden h-[95%] w-[98.5%] m-auto rounded-xl flex items-center justify-center"
         >
@@ -131,9 +170,9 @@ export const Lid = ({ src, children }: { src?: string; children?: React.ReactNod
               className="object-cover object-left-top rounded-lg inset-0 h-full w-full"
             />
           ) : null}
-        </motion.div>
-      </motion.div>
-    </motion.div>
+        </div>
+      </div>
+    </div>
   );
 };
 

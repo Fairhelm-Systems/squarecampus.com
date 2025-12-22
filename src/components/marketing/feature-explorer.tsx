@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "@/lib/motion";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BookOpen, Briefcase, Bus, Check, DollarSign, GraduationCap, Home, MessageSquare, Sparkles, Users } from "@/icons";

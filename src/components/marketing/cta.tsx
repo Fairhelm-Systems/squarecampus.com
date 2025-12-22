@@ -1,70 +1,64 @@
 "use client";
 
-import { motion, useAnimation, useInView } from "motion/react";
+import gsap from "gsap";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { ArrowRight } from "@/components/icons";
+import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 
 const BackgroundGrid = ({ className }: { className?: string }) => {
-  const controls = useAnimation();
   const ref = React.useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { amount: 0.3, once: true });
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({
-        opacity: 1,
-        scale: 1,
-        transition: { duration: 1 },
-      });
-    }
-  }, [controls, inView]);
+  useGsapReveal(ref, { y: 0, opacity: 0, duration: 1 });
 
   return (
     <div
       ref={ref}
       className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={controls}
+      <div
         className="absolute h-full w-full"
         style={{
           background:
             "radial-gradient(circle at center, rgba(40,40,40,0.8) 0%, rgba(30,30,30,0.6) 30%, rgba(20,20,20,0.6) 55%, rgba(0,0,0,0.4) 80%)",
         }}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.18 }}
-          transition={{ duration: 1, delay: 0.5 }}
+        <div
           className="absolute inset-0"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.28) 1px, transparent 1px)",
             backgroundSize: "120px 120px",
+            opacity: 0.18,
           }}
         />
-      </motion.div>
+      </div>
     </div>
   );
 };
 
 const LineGradient = ({ position }: { position: "left" | "right" }) => {
-  const controls = useAnimation();
   const ref = React.useRef<SVGSVGElement | null>(null);
-  const inView = useInView(ref, { amount: 0.3, once: true });
+  const pathRef = React.useRef<SVGPathElement | null>(null);
 
   useEffect(() => {
-    if (inView) {
-      controls.start({
-        pathLength: 1,
-        opacity: 1,
-        transition: { duration: 1.5, ease: "easeInOut" },
-      });
-    }
-  }, [controls, inView]);
+    if (!ref.current || !pathRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const length = pathRef.current?.getTotalLength() ?? 0;
+          gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length, opacity: 0 });
+          gsap.to(pathRef.current, { strokeDashoffset: 0, opacity: 1, duration: 1.5, ease: "power2.inOut" });
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const path =
     position === "left"
@@ -84,40 +78,17 @@ const LineGradient = ({ position }: { position: "left" | "right" }) => {
       viewBox="0 0 89 568"
       fill="none"
     >
-      <motion.path
-        d={path}
-        stroke="url(#animation_gradient)"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={controls}
-      />
-      <motion.path d={path} stroke={`url(#paint0_linear_${position})`} />
+      <path ref={pathRef} d={path} stroke="url(#animation_gradient)" />
+      <path d={path} stroke={`url(#paint0_linear_${position})`} />
       <defs>
-        <motion.linearGradient
+        <linearGradient
           id="animation_gradient"
-          initial={{
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 0,
-          }}
-          animate={{
-            x1: 0,
-            y1: "120%",
-            x2: 0,
-            y2: "100%",
-          }}
-          transition={{
-            duration: 2,
-            ease: "linear",
-            repeat: Infinity,
-            repeatDelay: 2,
-          }}
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#2EB9DF" stopOpacity="0" />
           <stop stopColor="#2EB9DF" />
           <stop offset="1" stopColor="#9E00FF" stopOpacity="0" />
-        </motion.linearGradient>
+        </linearGradient>
         <linearGradient
           id={`paint0_linear_${position}`}
           x1={position === "left" ? "1" : "88"}
@@ -141,29 +112,23 @@ const ctaHighlights = [
   "Launch in under 7 days with migration, training, and a dedicated success partner.",
 ];
 
-export function CTA() {
-  const controls = useAnimation();
-  const ref = React.useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { amount: 0.3, once: true });
+const ctaSignals = [
+  { label: "Go-live", value: "< 7 days" },
+  { label: "Uptime", value: "99.9%" },
+  { label: "Teams saved", value: "15–20 hrs/wk" },
+];
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.8 },
-      });
-    }
-  }, [controls, inView]);
+export function CTA() {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(ref, { y: 24, duration: 0.8 });
 
   return (
     <section className="relative w-full px-4 sm:px-6 lg:px-8">
       <div className="relative mx-auto flex min-h-[30vh] max-w-7xl items-center justify-center md:min-h-[60vh]">
         <LineGradient position="left" />
-        <motion.div
+        <div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={controls}
           className="relative z-10 mx-auto w-full max-w-3xl py-8 text-center sm:py-10 md:py-12"
         >
           <BackgroundGrid className="z-0" />
@@ -185,7 +150,18 @@ export function CTA() {
               families always know what&apos;s going on.
             </p>
 
-            <ul className="mx-auto max-w-sm space-y-2.5 text-left text-[0.8rem] text-neutral-200 sm:max-w-md sm:text-sm">
+            <div className="mx-auto flex max-w-md flex-wrap items-center justify-center gap-2 text-[0.65rem] uppercase tracking-[0.35em] text-white/60 sm:gap-3 sm:text-[0.7rem]">
+              {ctaSignals.map((signal) => (
+                <span
+                  key={signal.label}
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70"
+                >
+                  {signal.label} · {signal.value}
+                </span>
+              ))}
+            </div>
+
+            <ul className="mx-auto max-w-sm space-y-2.5 text-left text-[0.78rem] text-neutral-200 sm:max-w-md sm:text-sm">
               {ctaHighlights.map((highlight) => (
                 <li key={highlight} className="flex items-start gap-2 text-neutral-300">
                   <span className="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-gradient-to-br from-sky-400 to-violet-500" />
@@ -194,12 +170,7 @@ export function CTA() {
               ))}
             </ul>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={controls}
-              transition={{ duration: 0.5, delay: 0.25 }}
-              className="pt-3"
-            >
+            <div className="pt-3">
               <Link
                 href="#contact-us"
                 className={cn(
@@ -214,9 +185,9 @@ export function CTA() {
                 <span>Get a tailored demo</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
         <LineGradient position="right" />
       </div>
     </section>

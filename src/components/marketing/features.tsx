@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useAnimation, useInView } from "motion/react";
+import gsap from "gsap";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -18,6 +18,7 @@ import {
   X,
   Zap,
 } from "@/components/icons";
+import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 
 type LanguageMeta = {
@@ -36,6 +37,7 @@ type LanguageMeta = {
 const featureData: Array<{
   title: string;
   description: string;
+  shortDescription: string;
   points: string[];
   icon: IconComponent;
   gradient: string;
@@ -45,6 +47,7 @@ const featureData: Array<{
     title: "Realtime academic intelligence",
     description:
       "See the health of every class, branch, and student in one view so you can intervene early, no more stitching spreadsheets.",
+    shortDescription: "Live academic health across every class and branch.",
     points: [
       "Live attendance, engagement, and performance signals",
       "Drill to class, branch, or student in seconds",
@@ -61,6 +64,7 @@ const featureData: Array<{
     title: "Student lifecycle automation",
     description:
       "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
+    shortDescription: "Admissions to exams on one shared timeline.",
     points: [
       "Guided workflows from inquiry → graduation",
       "Automated alerts for approvals, dues, transport, and hostel",
@@ -77,6 +81,7 @@ const featureData: Array<{
     title: "Unified communication & engagement",
     description:
       "Send the right message to the right audience with proof of delivery so parents, staff, and students stay aligned.",
+    shortDescription: "Targeted messaging with delivery proof built in.",
     points: [
       "Multichannel announcements (email, SMS, app)",
       "Two-way teacher-guardian collaboration with controls",
@@ -93,6 +98,7 @@ const featureData: Array<{
     title: "Infrastructure you can trust",
     description:
       "Security, scale, and uptime that feel invisible so your campuses stay online and compliant year after year.",
+    shortDescription: "Secure, compliant, and always-on infrastructure.",
     points: [
       "Encrypted storage and role-based access at every layer",
       "24x7 monitoring, backups, and global delivery",
@@ -108,6 +114,12 @@ const featureData: Array<{
 ];
 
 export function Features() {
+  const cardsRef = useRef<HTMLDivElement | null>(null);
+  const snapshotRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(cardsRef, { selector: ".js-feature-card", stagger: 0.08 });
+  useGsapReveal(snapshotRef, { y: 24 });
+
   return (
     <section
       id="features"
@@ -122,23 +134,23 @@ export function Features() {
           SquareCampus replaces 5+ disconnected tools with one campus OS
         </h2>
         <p className="mx-auto max-w-2xl text-sm text-neutral-400 md:text-base">
-          Run admissions, academics, finance, communication, and facilities in a single, responsive
-          workspace. One login, one timeline, one source of truth for every campus.
+          <span className="sm:hidden">
+            One OS for admissions, academics, finance, and communication.
+          </span>
+          <span className="hidden sm:inline">
+            Run admissions, academics, finance, communication, and facilities in a single,
+            responsive workspace. One login, one timeline, one source of truth for every campus.
+          </span>
         </p>
       </div>
 
-      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
-        {featureData.map((feature, index) => {
+      <div ref={cardsRef} className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
+        {featureData.map((feature) => {
           const Icon = feature.icon;
           return (
-            <motion.article
+            <article
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="feature-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
+              className="js-feature-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
             >
               {/* Gradient overlay on hover */}
               <div
@@ -149,25 +161,23 @@ export function Features() {
               <div className="relative">
                 {/* Icon header */}
                 <div className="mb-3 flex items-start justify-between gap-3">
-                  <motion.div
+                  <div
                     className="rounded-xl border border-white/10 bg-white/5 p-2.5 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10"
-                    whileHover={{ rotate: [0, -8, 8, -8, 0], scale: 1.05 }}
-                    transition={{ duration: 0.5 }}
                   >
                     <Icon className="h-5 w-5 text-white/70 transition-colors duration-300 group-hover:text-white" />
-                  </motion.div>
+                  </div>
 
                   {/* Stats badges */}
                   <div className="flex gap-1.5">
                     {feature.stats.map((stat, statIndex) => {
                       const StatIcon = stat.icon;
                       return (
-                        <motion.div
+                        <div
                           key={stat.label}
-                          initial={{ opacity: 0, x: 20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 + statIndex * 0.1 + 0.2 }}
-                          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/80 px-2 py-1 backdrop-blur-sm"
+                          className={cn(
+                            "flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/80 px-2 py-1 backdrop-blur-sm",
+                            statIndex === 1 && "hidden sm:flex"
+                          )}
                         >
                           <StatIcon className="h-2.5 w-2.5 text-white/60" />
                           <div className="text-right">
@@ -178,7 +188,7 @@ export function Features() {
                               {stat.label}
                             </p>
                           </div>
-                        </motion.div>
+                        </div>
                       );
                     })}
                   </div>
@@ -189,34 +199,34 @@ export function Features() {
                     {feature.title}
                   </p>
                   <p className="mt-2 text-sm leading-snug text-neutral-100">
-                    {feature.description}
+                    <span className="sm:hidden">{feature.shortDescription}</span>
+                    <span className="hidden sm:inline">{feature.description}</span>
                   </p>
                 </div>
               </div>
 
               <div className="relative mt-4 grid grid-cols-1 gap-2 text-xs text-neutral-100 sm:grid-cols-2">
                 {feature.points.map((point, pointIndex) => (
-                  <motion.div
+                  <div
                     key={point}
-                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 shadow-inner shadow-black/30 backdrop-blur-sm transition group-hover:border-white/25 group-hover:bg-white/10"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 + pointIndex * 0.06 + 0.25 }}
-                    viewport={{ once: true }}
+                    className={cn(
+                      "flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 shadow-inner shadow-black/30 backdrop-blur-sm transition group-hover:border-white/25 group-hover:bg-white/10",
+                      pointIndex === 2 && "hidden sm:flex"
+                    )}
                   >
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-white/10 via-white/5 to-transparent text-[0.65rem] font-semibold text-white/70 shadow-lg shadow-black/40">
-                      {pointIndex + 1}
-                    </span>
                     <span className="leading-snug text-neutral-200">{point}</span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.article>
+            </article>
           );
         })}
       </div>
 
-      <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/60">
+      <div
+        ref={snapshotRef}
+        className="mx-auto mt-12 max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/60"
+      >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/40">
@@ -236,7 +246,6 @@ export function Features() {
             width={360}
             height={220}
             className="h-44 w-full max-w-xs rounded-2xl border border-white/10 object-cover shadow-lg shadow-blue-500/20"
-            priority
           />
         </div>
       </div>
@@ -247,23 +256,58 @@ export function Features() {
 }
 
 const FeatureVisual = () => {
-  const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.3, once: true });
+  const floatRef = useRef<HTMLDivElement>(null);
+  const riskRef = useRef<HTMLDivElement>(null);
+  const criticalRef = useRef<HTMLDivElement>(null);
+
+  useGsapReveal(ref, { y: 24 });
 
   useEffect(() => {
-    if (inView) {
-      controls.start({ opacity: 1, y: 0 });
-    }
-  }, [controls, inView]);
+    if (!floatRef.current) return;
+    const tween = gsap.to(floatRef.current, {
+      y: -6,
+      duration: 3.6,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    return () => {
+      tween.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!riskRef.current) return;
+    const tween = gsap.fromTo(
+      riskRef.current,
+      { boxShadow: "0 0 0 0 rgba(251,191,36,0.2)" },
+      { boxShadow: "0 0 0 8px rgba(251,191,36,0)", duration: 2.2, repeat: -1, ease: "power1.out" }
+    );
+    return () => {
+      tween.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!criticalRef.current) return;
+    gsap.set(criticalRef.current, { opacity: 0.75 });
+    const tween = gsap.to(criticalRef.current, {
+      opacity: 1,
+      duration: 1.2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+    return () => {
+      tween.kill();
+    };
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={controls}
-      transition={{ duration: 0.8 }}
-      className="mx-auto mt-12 max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/70 to-neutral-950/90 p-6 shadow-2xl shadow-black/60"
+      className="mx-auto mt-8 max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/70 to-neutral-950/90 p-6 shadow-2xl shadow-black/60 sm:mt-12"
     >
       <div className="relative flex flex-col-reverse gap-6 lg:flex-row lg:items-center">
         {/* Narrative side – the briefing */}
@@ -303,10 +347,9 @@ const FeatureVisual = () => {
         {/* Cards side – the tactical layout */}
         <div className="relative w-full max-w-md shrink-0 space-y-3">
           <div className="grid gap-3 md:grid-cols-2">
-            <motion.div
+            <div
+              ref={floatRef}
               className="rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/20 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-blue-500/20"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
               <p className="text-xs uppercase tracking-[0.35em] text-white/60">Non-negotiable</p>
               <p className="mt-2 text-lg font-semibold text-white">
@@ -315,7 +358,7 @@ const FeatureVisual = () => {
               <p className="mt-2 text-sm text-neutral-200">
                 Admissions, timetables, finance, transport, and communication run on one timeline.
               </p>
-            </motion.div>
+            </div>
             <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/15 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-purple-500/20">
               <p className="text-xs uppercase tracking-[0.35em] text-white/60">Risk removed</p>
               <p className="mt-2 text-xl font-semibold text-white">Audit-ready by default</p>
@@ -371,12 +414,9 @@ const FeatureVisual = () => {
                 </span>
               </div>
               {/* Row 2 – lightly at risk */}
-              <motion.div
+              <div
+                ref={riskRef}
                 className="timeline-item flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
-                animate={{
-                  boxShadow: ["0 0 0 0 rgba(251,191,36,0.2)", "0 0 0 8px rgba(251,191,36,0)"],
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-[0.78rem] text-neutral-300">10:30</span>
@@ -390,7 +430,7 @@ const FeatureVisual = () => {
                 <span className="rounded-full bg-amber-500/20 px-2 py-1 text-[0.7rem] font-semibold text-amber-300">
                   Needs action
                 </span>
-              </motion.div>
+              </div>
               {/* Row 3 */}
               <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
                 <div className="flex items-center gap-3">
@@ -443,10 +483,9 @@ const FeatureVisual = () => {
 
             <div className="space-y-2">
               {/* Critical */}
-              <motion.div
+              <div
+                ref={criticalRef}
                 className="flex items-start gap-3 rounded-xl border border-rose-500/60 bg-rose-500/10 px-3 py-2"
-                animate={{ opacity: [0.6, 1, 0.8, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div className="mt-0.5">
                   <AlertTriangle className="h-3.5 w-3.5 text-rose-300" />
@@ -467,7 +506,7 @@ const FeatureVisual = () => {
                     </span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Medium */}
               <div className="flex items-start gap-3 rounded-xl bg-neutral-850/80 px-3 py-2">
@@ -508,7 +547,7 @@ const FeatureVisual = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -698,6 +737,13 @@ export const LanguageSupportSection = () => {
 
   const [active, setActive] = useState<LanguageMeta | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
+  useGsapReveal(sectionRef, { y: 24 });
+  useGsapReveal(gridRef, { selector: ".js-language-card", stagger: 0.04, threshold: 0.1 });
 
   // Close on outside click / Escape
   useEffect(() => {
@@ -724,8 +770,26 @@ export const LanguageSupportSection = () => {
     };
   }, [active]);
 
+  useEffect(() => {
+    if (!active) return;
+
+    if (modalRef.current) {
+      gsap.fromTo(modalRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+    }
+    if (panelRef.current) {
+      gsap.fromTo(
+        panelRef.current,
+        { opacity: 0, scale: 0.96, y: 8, filter: "blur(4px)" },
+        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }
+      );
+    }
+  }, [active]);
+
   return (
-    <section className="relative mx-auto mt-28 max-w-6xl px-6 py-16 text-neutral-200">
+    <section
+      ref={sectionRef}
+      className="relative mx-auto mt-28 max-w-6xl px-6 py-16 text-neutral-200"
+    >
       <div className="mx-auto max-w-4xl space-y-4 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
           Made for India
@@ -741,17 +805,16 @@ export const LanguageSupportSection = () => {
       </div>
 
       {/* Language grid */}
-      <div className="relative mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {languages.map((lang, i) => (
-          <motion.button
+      <div
+        ref={gridRef}
+        className="relative mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+      >
+        {languages.map((lang) => (
+          <button
             key={lang.code}
             type="button"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            viewport={{ once: true }}
             onClick={() => setActive(lang)}
-            className="language-card group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
+            className="js-language-card group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
           >
             <div
               className={cn(
@@ -773,7 +836,7 @@ export const LanguageSupportSection = () => {
                 {lang.englishName}
               </span>
             </div>
-          </motion.button>
+          </button>
         ))}
       </div>
 
@@ -792,66 +855,38 @@ export const LanguageSupportSection = () => {
       </div>
 
       {/* Popover – friendly greeting in the selected language */}
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+      {active && (
+        <div
+          ref={modalRef}
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
+
+          {/* Ambient glow */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 70%)",
+            }}
+          />
+
+          {/* Panel */}
+          <div
+            ref={(node) => {
+              popoverRef.current = node;
+              panelRef.current = node;
+            }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="language-greeting-title"
+            className={cn(
+              "relative z-10 w-full max-w-sm rounded-2xl border border-white/15 bg-neutral-950/95 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-xl",
+              "before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.05),transparent)] before:opacity-20",
+              "after:absolute after:inset-0 after:bg-[linear-gradient(-115deg,transparent,rgba(255,255,255,0.04),transparent)] after:opacity-20"
+            )}
           >
-            {/* Backdrop */}
-            <motion.div
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              aria-hidden="true"
-            />
-
-            {/* Ambient glow */}
-            <motion.div
-              className="absolute inset-0 z-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.15 }}
-              exit={{ opacity: 0 }}
-              style={{
-                background:
-                  "radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 70%)",
-              }}
-            />
-
-            {/* Panel */}
-            <motion.div
-              ref={popoverRef}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="language-greeting-title"
-              initial={{
-                opacity: 0,
-                scale: 0.95,
-                y: 6,
-                filter: "blur(4px)",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                filter: "blur(0px)",
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.97,
-                y: 6,
-                filter: "blur(6px)",
-              }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className={cn(
-                "relative z-10 w-full max-w-sm rounded-2xl border border-white/15 bg-neutral-950/95 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-xl",
-                "before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.05),transparent)] before:opacity-20",
-                "after:absolute after:inset-0 after:bg-[linear-gradient(-115deg,transparent,rgba(255,255,255,0.04),transparent)] after:opacity-20"
-              )}
-            >
               <div className="flex items-start justify-between gap-3 relative z-10">
                 <div>
                   <p className="text-[0.65rem] uppercase tracking-[0.35em] text-neutral-400">
@@ -912,10 +947,9 @@ export const LanguageSupportSection = () => {
                 apps, notifications, attendance updates, fee reminders, while admins can continue
                 working in English if they prefer.
               </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

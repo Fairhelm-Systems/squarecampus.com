@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import Link from "next/link";
 import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
@@ -41,33 +41,33 @@ export default function WhyDifferentPage() {
   const detailedComparisons = [
     {
       icon: Sparkles,
-      title: "The AI Buzzword Olympics",
-      subtitle: "Everyone's racing to put AI on their homepage. Few can explain what it does.",
+      title: "AI That Earns Its Keep",
+      subtitle: "If it doesn't move a workflow, we don't ship it.",
       them: [
-        "\"AI-powered insights\" (it's a bar chart)",
-        "\"Machine learning analytics\" (it's Excel formulas)",
-        "\"Predictive algorithms\" (coming soon™)",
-        "AI mentioned 47 times on homepage, 0 actual AI features",
+        "\"AI-powered insights (its a bar chart)\" with no workflow automation",
+        "Charts that look smart but don't act smart",
+        "Predictions promised, never operationalized",
       ],
+      themQuote: "“Our AI roadmap is exciting - you'll see it in the next release.”",
       us: [
         "AI that actually helps: auto-categorize expenses, predict enrollment trends",
         "Natural language queries for complex reports",
         "Smart scheduling that learns from historical patterns",
-        "We say what it does, not just that it has AI",
+        "Measured impact before launch, every time",
       ],
       gradient: "from-purple-500/20 via-pink-500/10",
       iconColor: "text-purple-400",
     },
     {
       icon: Puzzle,
-      title: "The Product Collection Trap",
-      subtitle: "Why buy one product when you can buy eight that don't talk to each other?",
+      title: "One OS, Not a Patchwork",
+      subtitle: "All modules share one data model, one set of workflows, one operating system.",
       them: [
-        "Admissions Suite™ + Finance Pro™ + Communication Hub™ + ...",
-        "Each product sold separately, of course",
-        "\"Seamless integration\" requires a $50k implementation project",
-        "Data lives in 8 different databases. Good luck with reports.",
+        "Admissions, finance, HR, and comms sold as separate apps",
+        "Each module needs its own login, admin, and export",
+        "Unified reports require manual reconciliation",
       ],
+      themQuote: "“We can integrate that for an additional implementation fee.”",
       us: [
         "One unified platform. Everything included.",
         "Admissions sees finance data. Finance sees academic data. It's called architecture.",
@@ -79,14 +79,14 @@ export default function WhyDifferentPage() {
     },
     {
       icon: Clock,
-      title: "The Roadmap Graveyard",
-      subtitle: "Feature requests where dreams go to die.",
+      title: "The Roadmap That Ships",
+      subtitle: "If it’s on the site, it’s in production.",
       them: [
-        "\"We're working on it\" (for 3 years)",
-        "\"It's on the roadmap\" (Translation: maybe never)",
-        "Homepage features that don't exist yet",
-        "Beta features stuck in beta since 2019",
+        "Roadmaps that never land in production",
+        "Beta features stuck in limbo",
+        "Marketing pages ahead of reality",
       ],
+      themQuote: "“It’s on the roadmap.”",
       us: [
         "If it's on our website, it's live in production",
         "Features ship when they're ready, not when marketing wants them",
@@ -98,14 +98,14 @@ export default function WhyDifferentPage() {
     },
     {
       icon: Shield,
-      title: "ERP Cosplaying as EdTech",
-      subtitle: "Manufacturing software from 1995, now with a school icon!",
+      title: "Built for Education, Not Retrofitted",
+      subtitle: "Academic structures are native, not hacks.",
       them: [
-        "Built for factories, reskinned for schools",
-        "\"Student\" is just \"Customer\" renamed in the database",
-        "Academic calendars? Just use the fiscal year feature!",
-        "Multi-campus = manually duplicate everything",
+        "Factory software reskinned with a school logo",
+        "Academic terms squeezed into fiscal-year fields",
+        "Multi-campus equals manual duplication",
       ],
+      themQuote: "“Just treat classes as departments - it works the same.”",
       us: [
         "Built for schools from day one",
         "Understands terms, sections, academic calendars, grading periods",
@@ -117,24 +117,18 @@ export default function WhyDifferentPage() {
     },
     {
       icon: DollarSign,
-      title: "The Pricing Shell Game",
-      subtitle: "The price they quote is never the price you pay.",
+      title: "Pricing Without Landmines",
+      subtitle: "Transparent from the first call to renewal.",
       them: [
-        "Base price (doesn't include anything useful)",
-        "\"Basic\" version: ₹8/student/month (missing key features)",
-        "\"Pro\" version: ₹80/student/month (10x price for features that should be standard!)",
-        "+ Per-module pricing (Finance: extra. Reports: extra. Everything: extra)",
-        "+ Parent login feature: ₹5k/year extra",
-        "+ Mobile app: ₹15k one-time + ₹3k/year maintenance",
-        "+ White-labeled app: Add another ₹20k",
-        "+ Per-user licensing tiers (because why not?)",
-        "+ Implementation (6-12 months) + Training + Support",
-        "= 3-5x the original quote. Surprise!",
+        "Tiered pricing where essentials are upsells",
+        "Add-on fees for parent login, reports, and exports",
+        "Final invoice multiples the initial quote",
       ],
+      themQuote: "“That feature is in our Pro+ tier.”",
       us: [
         "Full platform, one price. Every module included.",
         "Parent login enabled by default. No extra fees.",
-        "Mobile apps: One-time fee. White-labeling included.",
+        "Mobile apps included. White-labeling is a one-time fee.",
         "Forever free updates and feature releases.",
         "Simple pricing: Based on max students + staff count. That's it.",
         "Generous storage included. Need more? Reasonable rates, not highway robbery.",
@@ -146,14 +140,14 @@ export default function WhyDifferentPage() {
     },
     {
       icon: Zap,
-      title: "The Performance Theater",
-      subtitle: "Fast* (*after we finish loading for 30 seconds)",
+      title: "Performance Without Excuses",
+      subtitle: "Peak-day reliability isn’t a feature. It’s the baseline.",
       them: [
-        "Pages that take 5+ seconds to load",
-        "\"Please wait while we fetch your data...\" (it's 10 rows)",
-        "Times out during peak enrollment periods",
-        "Mobile app is just a wrapped web view that barely works",
+        "5+ second page loads for basic screens",
+        "Timeouts during admissions and results",
+        "Mobile feels like a sluggish web wrapper",
       ],
+      themQuote: "“Please refresh and try again.”",
       us: [
         "Sub-second page loads. We cache intelligently.",
         "Built for peak load (enrollment day, result publishing)",
@@ -175,10 +169,11 @@ export default function WhyDifferentPage() {
   const comparisonTableData = [
     {
       metric: "Products",
-      them: 8,
-      us: 1,
+      them: "8+",
+      us: "1",
       themBad: true,
-      animated: true,
+      animated: false,
+      takeaway: "One platform",
       examples: {
         title: "The Product Maze",
         items: [
@@ -192,10 +187,11 @@ export default function WhyDifferentPage() {
     },
     {
       metric: "Databases",
-      them: 8,
-      us: 1,
+      them: "8+",
+      us: "1",
       themBad: true,
-      animated: true,
+      animated: false,
+      takeaway: "Single source",
       examples: {
         title: "Data Chaos",
         items: [
@@ -209,10 +205,11 @@ export default function WhyDifferentPage() {
     },
     {
       metric: "Login Systems",
-      them: 8,
-      us: 1,
+      them: "8+",
+      us: "1",
       themBad: true,
-      animated: true,
+      animated: false,
+      takeaway: "One login",
       examples: {
         title: "Password Hell",
         items: [
@@ -224,12 +221,13 @@ export default function WhyDifferentPage() {
         ],
       },
     },
-    { metric: "Implementation (days)", them: 180, us: 7, themBad: true, animated: true },
+    { metric: "Implementation", them: "180 days", us: "7 days", themBad: true, animated: false, takeaway: "Go live fast" },
     {
       metric: "Support Teams",
       them: "???",
       us: 1,
       themBad: false,
+      takeaway: "One team",
       examples: {
         title: "Support Roulette",
         items: [
@@ -246,6 +244,7 @@ export default function WhyDifferentPage() {
       them: "Many",
       us: "Zero",
       themBad: true,
+      takeaway: "No surprises",
       examples: {
         title: "The Fine Print",
         items: [
@@ -283,7 +282,7 @@ export default function WhyDifferentPage() {
           >
             <FloatingBadge className="text-neutral-400">
               <AlertCircle className="h-3 w-3" />
-              The Industry Needs This
+              Built for the schools that run everything
             </FloatingBadge>
 
             <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
@@ -293,8 +292,11 @@ export default function WhyDifferentPage() {
               </span>
             </h1>
 
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-neutral-300 md:text-xl">
-              The school software industry has a truth problem. Let's talk about it.
+            <p className="mx-auto mb-5 max-w-2xl text-lg text-neutral-300 md:text-xl">
+              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities across India—without breaking.
+            </p>
+            <p className="mx-auto mb-8 max-w-2xl text-base font-semibold uppercase tracking-[0.24em] text-emerald-300">
+              Verdict: fragmented systems are the tax on growth. We remove the tax.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -365,26 +367,87 @@ export default function WhyDifferentPage() {
 
       {/* Comparison Table Section */}
       <section className="relative border-b border-white/5 px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="space-y-6 lg:sticky lg:top-24"
           >
-            <FloatingBadge className="mb-4 text-purple-400">
+            <FloatingBadge className="text-purple-400">
               <Sparkles className="h-3 w-3" />
               By The Numbers
             </FloatingBadge>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              The Math Doesn't Lie
-            </h2>
-            <p className="mx-auto max-w-2xl text-neutral-300">
-              When you actually count the systems, databases, and headaches, the difference becomes crystal clear.
-            </p>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-bold md:text-4xl">The Math Doesn&apos;t Lie</h2>
+              <p className="text-neutral-300">
+                Count the systems, count the databases, count the handoffs. The gaps show up fast.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-neutral-900/70 p-5">
+              <div className="space-y-4 text-sm text-neutral-300">
+                <div className="flex items-start gap-3">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                  <p>Every extra product adds a login, a workflow gap, and a data sync job.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-400/80" />
+                  <p>Every extra database means reporting delays and reconciliation risk.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-rose-400/80" />
+                  <p>Every extra vendor adds finger-pointing during critical school days.</p>
+                </div>
+              </div>
+              <div className="mt-4 rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs uppercase tracking-[0.2em] text-neutral-400">
+                Click a row to see the real-world examples.
+              </div>
+            </div>
+            <div className="grid gap-4">
+              {[
+                { label: "Time to value", value: "7 days" },
+                { label: "Operational handoffs", value: "1 system" },
+                { label: "Support ownership", value: "Single team" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center justify-between rounded-xl border border-white/10 bg-neutral-900/60 px-4 py-3 text-sm"
+                >
+                  <span className="text-neutral-400">{item.label}</span>
+                  <span className="font-semibold text-emerald-300">{item.value}</span>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-900/30 via-neutral-900/80 to-neutral-950/90 p-5 text-sm text-neutral-200">
+              A single OS that survives anything you throw at it. That’s the quiet advantage schools feel every day.
+            </div>
           </motion.div>
 
-          <ComparisonTable rows={comparisonTableData} />
+          <div className="relative">
+            <div className="pointer-events-none absolute -right-16 top-6 h-40 w-40 rounded-full bg-purple-500/10 blur-[90px]" />
+            <div className="pointer-events-none absolute -left-12 bottom-6 h-40 w-40 rounded-full bg-blue-500/10 blur-[90px]" />
+            <ComparisonTable rows={comparisonTableData} />
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-b border-white/5 px-4 py-12 md:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 rounded-2xl border border-white/10 bg-neutral-900/70 px-6 py-6 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-emerald-300">
+              Calm, connected operations
+            </p>
+            <p className="text-lg font-semibold text-white">
+              Ready to move fast? We’ll build your migration plan and start immediately.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <BookCallCta context="why-different-mid" label="Book a walkthrough" variant="primary" />
+            <LinkButton href="/security" variant="dark" className="group inline-flex items-center gap-1.5">
+              <span>Security brief</span>
+              <ArrowRight className="h-4 w-4" />
+            </LinkButton>
+          </div>
         </div>
       </section>
 
@@ -405,7 +468,7 @@ export default function WhyDifferentPage() {
               Where It Really Matters
             </h2>
             <p className="mx-auto max-w-2xl text-neutral-300">
-              The metrics that actually impact your school's daily operations.
+              The numbers that decide whether a school day feels calm or chaotic.
             </p>
           </motion.div>
 
@@ -417,8 +480,25 @@ export default function WhyDifferentPage() {
                 themValue={stat.themValue}
                 usValue={stat.usValue}
                 icon={stat.icon}
-                delay={index * 0.1}
+                delay={index * 0.08}
               />
+            ))}
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {[
+              { label: "Migration playbook", value: "7–14 days" },
+              { label: "Support response", value: "< 2 hours" },
+              { label: "Peak-day uptime", value: "99.9%" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-2xl border border-white/10 bg-neutral-900/70 px-5 py-4"
+              >
+                <p className="text-xs uppercase tracking-[0.24em] text-neutral-500">
+                  {item.label}
+                </p>
+                <p className="mt-2 text-lg font-semibold text-white">{item.value}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -443,7 +523,7 @@ export default function WhyDifferentPage() {
               The Uncomfortable Truths
             </h2>
             <p className="mx-auto max-w-2xl text-neutral-300">
-              We're not trying to be mean. We're trying to be honest about what schools actually face when shopping for software.
+              We’re not naming names. We’re naming patterns schools shouldn’t have to accept anymore.
             </p>
           </motion.div>
 
@@ -511,6 +591,11 @@ export default function WhyDifferentPage() {
                                 </li>
                               ))}
                             </ul>
+                            {comparison.themQuote && (
+                              <div className="rounded-xl border border-rose-500/20 bg-black/40 px-4 py-3 text-xs italic text-rose-200/80">
+                                {comparison.themQuote}
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -570,7 +655,7 @@ export default function WhyDifferentPage() {
               Practices We Refuse to Copy
             </h2>
             <p className="mx-auto max-w-2xl text-neutral-300">
-              Real behaviors from real competitors. No names needed—you'll recognize them instantly.
+              Real behaviors from real competitors. No names needed-you'll recognize them instantly.
             </p>
           </motion.div>
 
@@ -666,7 +751,7 @@ export default function WhyDifferentPage() {
             className="mt-12 text-center"
           >
             <p className="text-sm italic text-neutral-500">
-              "If your current provider is doing any of these... you deserve better." — Your IT Team
+              "If your current provider is doing any of these... you deserve better." - Your IT Team
             </p>
           </motion.div>
         </div>

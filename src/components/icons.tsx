@@ -124,6 +124,7 @@ export const Bus = (props: IconProps) => (
   </svg>
 );
 
+
 export const Calendar = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M8 2v4" />

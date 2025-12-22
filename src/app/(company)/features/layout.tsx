@@ -7,16 +7,19 @@ export const metadata: Metadata = {
     "Explore SquareCampus features: real-time academic intelligence, student lifecycle automation, unified communication, multi-language support, and enterprise-grade infrastructure. One platform for admissions, academics, finance, and operations.",
   keywords: [
     "school management features",
+    "school management system India",
+    "school ERP features",
     "campus management system",
     "academic intelligence",
     "student lifecycle automation",
     "school communication platform",
     "multi-language school software",
-    "school ERP features",
     "real-time attendance tracking",
     "fee management system",
     "parent communication app",
     "educational institution software",
+    "CBSE school ERP",
+    "ICSE school management",
   ],
   openGraph: {
     title: "Features - SquareCampus School Management Platform",
@@ -24,6 +27,7 @@ export const metadata: Metadata = {
       "Real-time intelligence, automated workflows, unified communication, and enterprise infrastructure. Explore features that make SquareCampus the complete School OS.",
     url: `${SEO_CONFIG.baseUrl}/features`,
     type: "website",
+    locale: "en_IN",
     images: [
       {
         url: `${SEO_CONFIG.baseUrl}/og-image.png`,

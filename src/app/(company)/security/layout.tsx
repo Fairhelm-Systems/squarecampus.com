@@ -7,6 +7,15 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "SquareCampus protects your institution's data with bank-grade security, SOC 2 compliance-ready infrastructure, transparent audit trails, and 24-hour breach notification.",
   path: "/security",
+  keywords: [
+    "school ERP security",
+    "school management system security",
+    "data security for schools India",
+    "education compliance India",
+    "audit trails school software",
+    "RBAC school management",
+    "secure school management system",
+  ],
   ogTitle: "Security & Compliance | SquareCampus",
   ogDescription:
     "Bank-grade security, compliance-ready infrastructure, and transparent data practices for Indian educational institutions.",

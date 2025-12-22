@@ -63,6 +63,12 @@ export function Footer() {
     { title: "Support", href: "mailto:support@squarecampus.com" },
   ];
 
+  const footerSignals = [
+    { label: "Uptime", value: "99.9%" },
+    { label: "Go-live", value: "< 7 days" },
+    { label: "Support", value: "24x7" },
+  ];
+
   // Only LinkedIn – the one public signal we actually use.
   const linkedInHref = "https://www.linkedin.com/company/square-campus";
 
@@ -81,6 +87,17 @@ export function Footer() {
             SquareCampus is the operating system for schools and colleges, bringing admissions,
             academics, finance, and communication into one dependable control center.
           </p>
+
+          <div className="flex flex-wrap gap-2 text-[0.6rem] uppercase tracking-[0.35em] text-white/60">
+            {footerSignals.map((signal) => (
+              <span
+                key={signal.label}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70"
+              >
+                {signal.label} · {signal.value}
+              </span>
+            ))}
+          </div>
 
           <div className="flex items-center gap-4 pt-2">
             <Link

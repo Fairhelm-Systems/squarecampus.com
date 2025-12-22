@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Activity, ArrowRight, Cloud, Database, Globe, Layers, Lock, Server, Shield, Smartphone, Zap } from "@/icons";

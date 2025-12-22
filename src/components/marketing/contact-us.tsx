@@ -19,6 +19,7 @@ export type ContactFormData = {
 import { toast } from "sonner";
 import { MaskedDots } from "./backgrounds/masked-dots";
 import { Logo } from "./logo";
+import { ArrowUpRight } from "../icons";
 
 const contactHighlights = [
   "Response in under 24 hours",
@@ -81,25 +82,25 @@ export function ContactUs() {
   };
 
   return (
-    <section className="relative w-full px-4 py-10 md:px-6 md:py-16" id="contact-us">
+    <section className="relative w-full px-4 py-12 md:px-6 md:py-16" id="contact-us">
       <MaskedDots className="opacity-70 sm:opacity-85" />
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 lg:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left pane: narrative + contact options */}
-        <div className="flex flex-col gap-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950/80 p-8 shadow-2xl shadow-black/50">
+        <div className="flex flex-col gap-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950/80 p-6 shadow-2xl shadow-black/50 sm:p-8">
           <div className="flex items-center justify-between">
             <FeatureIconContainer className="flex items-center justify-center overflow-hidden">
               <IconMailFilled className="h-6 w-6 text-blue-400" />
             </FeatureIconContainer>
-            <span className="text-xs uppercase tracking-[0.6em] text-white/40">
+            <span className="text-[0.6rem] uppercase tracking-[0.4em] text-white/40 sm:text-xs sm:tracking-[0.6em]">
               Let&apos;s talk
             </span>
           </div>
 
           <div>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">
+            <h2 className="text-2xl font-semibold text-white sm:text-3xl md:text-4xl">
               Build your campus command center with us
             </h2>
-            <p className="mt-4 text-base text-neutral-300">
+            <p className="mt-4 text-sm text-neutral-300 sm:text-base">
               Tell us about your campuses, goals, and timelines, and get a tailored rollout plan,
               migration approach, and pricing designed for your branches.
             </p>
@@ -122,7 +123,7 @@ export function ContactUs() {
             </a>
           </div>
 
-          <div className="grid gap-3 text-[0.6rem] uppercase tracking-[0.4em] text-white/50">
+          <div className="grid gap-3 text-[0.55rem] uppercase tracking-[0.4em] text-white/50 sm:text-[0.6rem]">
             {contactHighlights.map((highlight) => (
               <p
                 key={highlight}
@@ -136,16 +137,17 @@ export function ContactUs() {
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
               href="#contact-form"
-              className="rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-white transition hover:border-white"
+              className="rounded-full border border-white/40 px-5 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-white transition hover:border-white sm:text-xs sm:tracking-[0.4em]"
             >
               Book a demo
             </a>
-            <Link href="#ecosystem" className="text-sm text-blue-400 hover:underline">
-              Explore ecosystem ↗
+            <Link href="/ecosystem" className="text-sm text-blue-400 ml-auto inline-flex hover:underline">
+              Explore ecosystem
+              <ArrowUpRight className={"h-4 w-4"} />
             </Link>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Go-live</p>
               <p className="text-lg font-semibold text-white">Under 7 days</p>
@@ -186,7 +188,7 @@ export function ContactUs() {
         <form
           id="contact-form"
           onSubmit={handleSubmit}
-          className="relative mx-auto flex w-full max-w-2xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900 to-neutral-950 p-6 sm:p-10"
+          className="relative mx-auto flex w-full max-w-2xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900 to-neutral-950 p-5 sm:p-8 md:p-10"
         >
           <Grid size={20} />
 
@@ -313,7 +315,7 @@ export function ContactUs() {
             <textarea
               id="message"
               name="message"
-              rows={5}
+              rows={8}
               value={formData.message}
               onChange={handleChange}
               disabled={isPending}
@@ -336,13 +338,15 @@ export function ContactUs() {
         </form>
       </div>
 
-      <MacbookScroll showGradient>
-        <div className="flex items-center justify-center h-full w-full bg-gradient-to-br from-neutral-900 via-neutral-950 to-black">
-          <div className="scale-150">
-            <Logo />
+      <div className="hidden md:block">
+        <MacbookScroll showGradient>
+          <div className="flex items-center justify-center h-full w-full bg-gradient-to-br from-neutral-900 via-neutral-950 to-black">
+            <div className="scale-150">
+              <Logo />
+            </div>
           </div>
-        </div>
-      </MacbookScroll>
+        </MacbookScroll>
+      </div>
     </section>
   );
 }
@@ -374,13 +378,27 @@ export const FeatureIconContainer = ({
 };
 
 export const Grid = ({ pattern, size }: { pattern?: number[][]; size?: number }) => {
-  const p = pattern ?? [
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-  ];
+  const seed = useId();
+  const seededRandom = (seedValue: string) => {
+    let hash = 0;
+    for (let i = 0; i < seedValue.length; i += 1) {
+      hash = (hash << 5) - hash + seedValue.charCodeAt(i);
+      hash |= 0;
+    }
+    return () => {
+      hash = (hash * 1664525 + 1013904223) | 0;
+      return (hash >>> 0) / 4294967296;
+    };
+  };
+  const p =
+    pattern ??
+    (() => {
+      const rand = seededRandom(seed);
+      return Array.from({ length: 5 }, () => [
+        Math.floor(rand() * 4) + 7,
+        Math.floor(rand() * 6) + 1,
+      ]);
+    })();
   return (
     <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
       <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/30 to-zinc-900/30 opacity-10 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">

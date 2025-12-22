@@ -1,9 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "@/lib/motion";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { AnimatedCounter } from "./backgrounds/why-different-bg";
 import { Check, X } from "@/icons";
 
 type ComparisonRow = {
@@ -12,6 +10,7 @@ type ComparisonRow = {
   us: string | number;
   themBad?: boolean;
   animated?: boolean;
+  takeaway?: string;
   examples?: {
     title: string;
     items: string[];
@@ -19,58 +18,17 @@ type ComparisonRow = {
 };
 
 // GSAP-animated hover card showing competitor examples
-function ExampleHoverCard({ examples }: { examples: { title: string; items: string[] } }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    const items = itemsRef.current?.children;
-    if (!card || !items) return;
-
-    // GSAP entrance animation
-    const tl = gsap.timeline();
-
-    // Animate card entrance
-    gsap.fromTo(
-      card,
-      { scale: 0.8, opacity: 0, y: 10 },
-      { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.7)" }
-    );
-
-    // Animate items with stagger
-    gsap.fromTo(
-      items,
-      { opacity: 0, x: -20 },
-      { opacity: 1, x: 0, duration: 0.3, stagger: 0.05, delay: 0.15, ease: "power2.out" }
-    );
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
+function InlineExamples({ examples }: { examples: { title: string; items: string[] } }) {
   return (
-    <div
-      ref={cardRef}
-      className="pointer-events-none absolute left-0 top-full z-[100] mt-2 w-full rounded-xl border border-rose-500/40 bg-gradient-to-br from-rose-950/98 via-neutral-900/98 to-neutral-950/98 p-5 shadow-2xl shadow-rose-500/30 backdrop-blur-xl md:left-full md:top-1/2 md:ml-4 md:mt-0 md:w-80 md:-translate-y-1/2"
-    >
-      {/* Arrow pointing up on mobile, pointing left on desktop */}
-      <div className="absolute bottom-full left-1/2 -mb-px -translate-x-1/2 border-[10px] border-transparent border-b-rose-950/98 md:bottom-auto md:left-auto md:right-full md:top-1/2 md:-mr-px md:-translate-y-1/2 md:translate-x-0 md:border-b-transparent md:border-r-rose-950/98" />
-
-      <div className="mb-3 flex items-center gap-2">
-        <div className="h-2 w-2 animate-pulse rounded-full bg-rose-400" />
-        <p className="text-xs font-bold uppercase tracking-wider text-rose-400">
-          {examples.title}
-        </p>
+    <div className="col-span-3 mt-4 rounded-xl border border-rose-500/30 bg-gradient-to-br from-rose-950/80 via-neutral-900/90 to-neutral-950/95 p-4 text-sm text-neutral-200">
+      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-rose-300">
+        <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+        {examples.title}
       </div>
-      <div ref={itemsRef} className="space-y-2.5">
-        {examples.items.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-start gap-2 text-sm text-neutral-200"
-          >
-            <span className="mt-0.5 font-bold text-rose-400">→</span>
+      <div className="space-y-2">
+        {examples.items.map((item, index) => (
+          <div key={index} className="flex items-start gap-2">
+            <span className="mt-1 text-rose-300">→</span>
             <span className="leading-relaxed">{item}</span>
           </div>
         ))}
@@ -103,37 +61,39 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
   return (
     <div
       ref={tableRef}
-      className="group relative overflow-visible rounded-2xl border border-neutral-800/60 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 shadow-2xl shadow-black/40 transition-all duration-500 hover:border-neutral-700/80 hover:shadow-2xl hover:shadow-blue-500/10"
+      className="group relative overflow-visible rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 p-1 shadow-2xl shadow-black/50 transition-all duration-500 hover:border-white/20"
     >
       {/* Glow effects */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-500/20" />
-      <div className="pointer-events-none absolute -left-20 bottom-0 h-40 w-40 rounded-full bg-purple-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-purple-500/15" />
-      {/* Header */}
-      <div className="relative grid grid-cols-3 gap-4 border-b border-white/10 bg-neutral-900/50 p-4 backdrop-blur-sm md:p-6">
-        <div className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-          Metric
+      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-500/15" />
+      <div className="pointer-events-none absolute -left-16 bottom-0 h-36 w-36 rounded-full bg-purple-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-purple-500/12" />
+      <div className="relative overflow-hidden rounded-[22px] border border-white/5 bg-neutral-950/70">
+        {/* Header */}
+        <div className="relative grid grid-cols-3 gap-4 border-b border-white/10 bg-neutral-900/60 p-4 backdrop-blur-sm md:p-6">
+          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
+            Metric
+          </div>
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-rose-400">
+            <X className="h-4 w-4" />
+            Others
+          </div>
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300">
+            <Check className="h-4 w-4" />
+            SquareCampus
+          </div>
         </div>
-        <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wider text-rose-400">
-          <X className="h-4 w-4" />
-          Them
-        </div>
-        <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wider text-emerald-400">
-          <Check className="h-4 w-4" />
-          Us
-        </div>
-      </div>
 
-      {/* Rows */}
-      <div className="relative divide-y divide-white/5">
-        {rows.map((row, index) => (
-          <TableRow
-            key={row.metric}
-            row={row}
-            index={index}
-            isOpen={openRowIndex === index}
-            onToggle={() => setOpenRowIndex(openRowIndex === index ? null : index)}
-          />
-        ))}
+        {/* Rows */}
+        <div className="relative divide-y divide-white/5">
+          {rows.map((row, index) => (
+            <TableRow
+              key={row.metric}
+              row={row}
+              index={index}
+              isOpen={openRowIndex === index}
+              onToggle={() => setOpenRowIndex(openRowIndex === index ? null : index)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -151,37 +111,11 @@ function TableRow({
   isOpen: boolean;
   onToggle: () => void;
 }) {
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [localHover, setLocalHover] = useState(false);
-
-  useEffect(() => {
-    // Detect touch capability
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
-
-  // On touch devices, use the parent-controlled isOpen state
-  // On desktop, use local hover state
-  const shouldShowExamples = isTouchDevice ? isOpen : localHover;
-
   const handleClick = () => {
-    if (row.examples && isTouchDevice) {
-      // Toggle via parent state on touch devices
-      onToggle();
-    }
+    if (row.examples) onToggle();
   };
-
-  const handleMouseEnter = () => {
-    if (row.examples && !isTouchDevice) {
-      // Show on desktop hover only
-      setLocalHover(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!isTouchDevice) {
-      setLocalHover(false);
-    }
-  };
+  const themValue = typeof row.them === "number" ? row.them.toString() : row.them;
+  const usValue = typeof row.us === "number" ? row.us.toString() : row.us;
 
   return (
     <motion.div
@@ -189,49 +123,37 @@ function TableRow({
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative grid grid-cols-3 gap-4 p-4 transition-all duration-200 md:p-6 ${row.examples
-          ? "cursor-pointer hover:bg-rose-500/5 hover:border-l-2 hover:border-l-rose-500/50"
+      className={`relative grid grid-cols-3 gap-4 p-4 transition-colors duration-200 md:p-6 ${row.examples
+          ? "cursor-pointer border-l-2 border-transparent hover:bg-rose-500/5 hover:border-l-rose-500/50"
           : "hover:bg-white/[0.02]"
-        }`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+        } ${isOpen ? "bg-rose-500/5 border-l-rose-500/60" : ""}`}
       onClick={handleClick}
     >
-      {/* Show hover card if examples exist */}
-      {shouldShowExamples && row.examples && (
-        <ExampleHoverCard examples={row.examples} />
-      )}
-
-      <div className="flex items-center gap-2 text-sm text-neutral-300 md:text-base">
-        {row.metric}
-        {row.examples && (
-          <span className="inline-flex items-center gap-1 rounded-full border border-rose-500/30 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-rose-400">
-            <span className="h-1 w-1 animate-pulse rounded-full bg-rose-400" />
-            {isTouchDevice ? 'tap for details' : 'hover for details'}
-          </span>
+      <div className="space-y-1 text-sm text-neutral-300 md:text-base">
+        <div>{row.metric}</div>
+        {row.takeaway && (
+          <div className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">
+            {row.takeaway}
+          </div>
         )}
       </div>
       <div className="flex items-center justify-center">
         <span
-          className={`text-center text-lg font-bold md:text-2xl ${row.themBad ? "text-rose-400" : "text-neutral-400"
+          className={`rounded-full border px-3 py-1 text-center text-lg font-semibold md:text-2xl ${row.themBad
+            ? "border-rose-500/30 bg-rose-500/10 text-rose-300"
+            : "border-neutral-700/60 bg-neutral-900/60 text-neutral-300"
             }`}
         >
-          {typeof row.them === "number" && row.animated ? (
-            <AnimatedCounter end={row.them} suffix="+" />
-          ) : (
-            row.them
-          )}
+          {themValue}
         </span>
       </div>
       <div className="flex items-center justify-center">
-        <span className="text-center text-lg font-bold text-emerald-400 md:text-2xl">
-          {typeof row.us === "number" && row.animated ? (
-            <AnimatedCounter end={row.us} />
-          ) : (
-            row.us
-          )}
+        <span className="rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-center text-lg font-semibold text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.2)] md:text-2xl">
+          {usValue}
         </span>
       </div>
+
+      {isOpen && row.examples && <InlineExamples examples={row.examples} />}
     </motion.div>
   );
 }
@@ -260,16 +182,15 @@ export function StatCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className="group relative overflow-hidden rounded-2xl border border-neutral-800/60 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 p-6 shadow-xl shadow-black/20 transition-all duration-500 hover:scale-[1.02] hover:border-neutral-700/80 hover:shadow-xl hover:shadow-blue-500/10"
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/70 p-6 shadow-xl shadow-black/30 transition-all duration-500 hover:border-white/20"
     >
-      {/* Glow effect */}
-      <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-500/20" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
 
       <div className="relative mb-4 flex items-center gap-3">
         <div className="rounded-lg border border-white/10 bg-white/5 p-2">
-          <Icon className="h-5 w-5 text-blue-400" />
+          <Icon className="h-5 w-5 text-blue-300" />
         </div>
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
+        <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-neutral-400">
           {label}
         </h3>
       </div>
@@ -278,17 +199,15 @@ export function StatCard({
       <div className="relative mb-4 space-y-2">
         <div className="flex items-center justify-between text-xs">
           <span className="text-neutral-500">Others</span>
-          <span className="font-mono font-semibold text-rose-400">
-            <AnimatedCounter end={themValue} />
-          </span>
+          <span className="font-mono text-base font-semibold text-rose-400">{themValue}</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-neutral-800">
+        <div className="h-2.5 overflow-hidden rounded-full bg-neutral-800/80">
           <motion.div
             className="h-full bg-gradient-to-r from-rose-500 to-red-600"
             initial={{ width: 0 }}
             whileInView={{ width: `${themPercentage}%` }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: delay + 0.3, ease: "easeOut" }}
+            transition={{ duration: 1, delay: delay + 0.25, ease: "easeOut" }}
           />
         </div>
       </div>
@@ -297,17 +216,15 @@ export function StatCard({
       <div className="relative space-y-2">
         <div className="flex items-center justify-between text-xs">
           <span className="text-neutral-500">SquareCampus</span>
-          <span className="font-mono font-semibold text-emerald-400">
-            <AnimatedCounter end={usValue} />
-          </span>
+          <span className="font-mono text-base font-semibold text-emerald-400">{usValue}</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-neutral-800">
+        <div className="h-2.5 overflow-hidden rounded-full bg-neutral-800/80">
           <motion.div
             className="h-full bg-gradient-to-r from-emerald-500 to-green-600"
             initial={{ width: 0 }}
             whileInView={{ width: `${usPercentage}%` }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: delay + 0.3, ease: "easeOut" }}
+            transition={{ duration: 1, delay: delay + 0.25, ease: "easeOut" }}
           />
         </div>
       </div>
