@@ -19,6 +19,7 @@ export type ContactFormData = {
 import { toast } from "sonner";
 import { MaskedDots } from "./backgrounds/masked-dots";
 import { Logo } from "./logo";
+import { ArrowUpRight } from "../icons";
 
 const contactHighlights = [
   "Response in under 24 hours",
@@ -140,8 +141,9 @@ export function ContactUs() {
             >
               Book a demo
             </a>
-            <Link href="#ecosystem" className="text-sm text-blue-400 hover:underline">
-              Explore ecosystem ↗
+            <Link href="/ecosystem" className="text-sm text-blue-400 ml-auto inline-flex hover:underline">
+              Explore ecosystem
+              <ArrowUpRight className={"h-4 w-4"} />
             </Link>
           </div>
 
@@ -313,7 +315,7 @@ export function ContactUs() {
             <textarea
               id="message"
               name="message"
-              rows={5}
+              rows={8}
               value={formData.message}
               onChange={handleChange}
               disabled={isPending}
@@ -376,13 +378,27 @@ export const FeatureIconContainer = ({
 };
 
 export const Grid = ({ pattern, size }: { pattern?: number[][]; size?: number }) => {
-  const p = pattern ?? [
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-  ];
+  const seed = useId();
+  const seededRandom = (seedValue: string) => {
+    let hash = 0;
+    for (let i = 0; i < seedValue.length; i += 1) {
+      hash = (hash << 5) - hash + seedValue.charCodeAt(i);
+      hash |= 0;
+    }
+    return () => {
+      hash = (hash * 1664525 + 1013904223) | 0;
+      return (hash >>> 0) / 4294967296;
+    };
+  };
+  const p =
+    pattern ??
+    (() => {
+      const rand = seededRandom(seed);
+      return Array.from({ length: 5 }, () => [
+        Math.floor(rand() * 4) + 7,
+        Math.floor(rand() * 6) + 1,
+      ]);
+    })();
   return (
     <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
       <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/30 to-zinc-900/30 opacity-10 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">

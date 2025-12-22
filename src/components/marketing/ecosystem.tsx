@@ -2,7 +2,7 @@
 
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { AppWindow, Layers, Network, ShieldCheck, Smartphone, Sparkles } from "@/components/icons";
+import { AppWindow, ArrowUpRight, Layers, Network, ShieldCheck, Smartphone, Sparkles } from "@/components/icons";
 import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 import { SkewedRectangles } from "./backgrounds/skewed-rectangles";
@@ -427,13 +427,13 @@ export function EcosystemSection() {
             ))}
           </ul>
 
-          <div className="relative pt-2">
+          <div className="relative mt-auto pt-2">
             <a
-              href="#contact-us"
+              href="/ecosystem"
               className="group inline-flex items-center gap-2 rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.3em] text-blue-400 transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-300"
             >
-              Talk about your ecosystem
-              <span className="text-base animate-pulse">↗</span>
+              Explore our ecosystem
+              <ArrowUpRight className={"h-4 w-4 animate-pulse"} />
             </a>
           </div>
         </div>

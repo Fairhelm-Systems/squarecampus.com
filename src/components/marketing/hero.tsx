@@ -995,6 +995,17 @@ function SparkWaveGraph({
   pointCount?: number;
 }) {
   const id = useId();
+  const seededRandom = (seed: string) => {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i += 1) {
+      hash = (hash << 5) - hash + seed.charCodeAt(i);
+      hash |= 0;
+    }
+    return () => {
+      hash = (hash * 1664525 + 1013904223) | 0;
+      return (hash >>> 0) / 4294967296;
+    };
+  };
   const toneMap = {
     emerald: {
       stroke: "rgba(16,185,129,0.95)",
@@ -1013,10 +1024,10 @@ function SparkWaveGraph({
     },
   };
 
-  const points = useMemo(
-    () => Array.from({ length: pointCount }, () => Math.floor(Math.random() * (56 - 6 + 1)) + 6),
-    [pointCount]
-  );
+  const points = useMemo(() => {
+    const rand = seededRandom(id);
+    return Array.from({ length: pointCount }, () => Math.floor(rand() * (56 - 6 + 1)) + 6);
+  }, [pointCount, id]);
   const safePoints = points.length >= 2 ? points : [points[0] ?? 30, points[0] ?? 30];
   const pointSpacing = safePoints.length > 1 ? 1 / (safePoints.length - 1) : 0;
 

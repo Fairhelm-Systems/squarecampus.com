@@ -67,7 +67,7 @@ export function TrustBanner() {
                 className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-blue-200"
               >
                 <Shield className="h-3.5 w-3.5" />
-                Trust & Security
+                <span className={"mt-1"}>Trust & Security</span>
               </motion.div>
 
               <motion.h2
@@ -161,9 +161,9 @@ export function TrustBanner() {
               <div className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-emerald-500/15 blur-3xl" />
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-200 ring-1 ring-emerald-500/30">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-200 ring-1 ring-emerald-500/30 items-center">
                     <Sparkles className="h-3.5 w-3.5" />
-                    Proof, not promises
+                    <span className="flex items-center mt-1 h-full">Proof, not promises</span>
                   </div>
                   <p className="text-sm text-neutral-200">
                     Annual VAPT, real-time anomaly detection, and breach-notify in 24 hours—no
