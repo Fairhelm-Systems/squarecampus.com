@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppWindow, Layers, Network, ShieldCheck, Smartphone, Sparkles } from "@/components/icons";
 import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
@@ -66,46 +66,140 @@ const ecosystemItems: EcosystemItem[] = [
   },
 ];
 
-const OrbitDot = ({ className }: { className?: string }) => {
-  const ref = useRef<HTMLSpanElement | null>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const tween = gsap.to(ref.current, {
-      opacity: 1,
-      scale: 1.15,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-    return () => {
-      tween.kill();
-    };
-  }, []);
-
-  return (
-    <span
-      ref={ref}
-      className={cn(
-        "orbit-dot h-2 w-2 rounded-full bg-gradient-to-br from-sky-400 to-violet-500 opacity-70",
-        className
-      )}
-    />
-  );
+type GraphNode = {
+  id: string;
+  label: string;
+  detail: string;
+  tag: string;
+  x: string;
+  y: string;
+  glow: string;
 };
+
+const graphNodes: GraphNode[] = [
+  {
+    id: "admin",
+    label: "Admin OS",
+    detail: "Includes: Online Application Portal · Admission Management.",
+    tag: "Core",
+    x: "18%",
+    y: "28%",
+    glow: "shadow-[0_0_22px_rgba(56,189,248,0.4)]",
+  },
+  {
+    id: "teachers",
+    label: "Teacher tools",
+    detail: "Includes: Timetable & Scheduling · Exam & Assessment.",
+    tag: "Staff",
+    x: "78%",
+    y: "22%",
+    glow: "shadow-[0_0_22px_rgba(59,130,246,0.4)]",
+  },
+  {
+    id: "parents",
+    label: "Parent app",
+    detail: "Includes: Parent Portal & App · Notice Board & Events.",
+    tag: "Mobile",
+    x: "78%",
+    y: "62%",
+    glow: "shadow-[0_0_22px_rgba(16,185,129,0.4)]",
+  },
+  {
+    id: "payments",
+    label: "Payments",
+    detail: "Includes: Payment Collection · Financial Reports.",
+    tag: "Finance",
+    x: "26%",
+    y: "68%",
+    glow: "shadow-[0_0_22px_rgba(251,191,36,0.4)]",
+  },
+  {
+    id: "security",
+    label: "Security layer",
+    detail: "Includes: Audit trails · Compliance-ready reporting.",
+    tag: "Trust",
+    x: "50%",
+    y: "85%",
+    glow: "shadow-[0_0_22px_rgba(147,51,234,0.4)]",
+  },
+  {
+    id: "analytics",
+    label: "Insights",
+    detail: "Includes: Attendance analytics · Board-ready exports.",
+    tag: "Analytics",
+    x: "50%",
+    y: "10%",
+    glow: "shadow-[0_0_22px_rgba(56,189,248,0.45)]",
+  },
+];
 
 export function EcosystemSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const whyRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
+  const [activeNode, setActiveNode] = useState<GraphNode | null>(graphNodes[0] ?? null);
 
   useGsapReveal(sectionRef, { y: 24, threshold: 0.1 });
   useGsapReveal(mapRef, { y: 16 });
   useGsapReveal(whyRef, { y: 16 });
   useGsapReveal(whyRef, { selector: ".js-why-item", stagger: 0.08, threshold: 0.1 });
   useGsapReveal(cardsRef, { selector: ".js-ecosystem-card", stagger: 0.05, threshold: 0.1 });
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const ctx = gsap.context(() => {
+      const glow = mapRef.current?.querySelector<HTMLElement>(".js-core-glow");
+      const ring = mapRef.current?.querySelector<HTMLElement>(".js-ecosystem-ring");
+      const routes = gsap.utils.toArray<SVGPathElement>(".js-ecosystem-route");
+      const nodes = gsap.utils.toArray<HTMLElement>(".js-ecosystem-node");
+
+      if (glow) {
+        gsap.to(glow, {
+          boxShadow: "0 0 46px rgba(56,189,248,0.35)",
+          duration: 4.6,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      if (ring) {
+        gsap.to(ring, {
+          rotate: 360,
+          duration: 24,
+          repeat: -1,
+          ease: "none",
+          transformOrigin: "50% 50%",
+        });
+      }
+
+      if (routes.length) {
+        routes.forEach((path, idx) => {
+          gsap.set(path, { strokeDasharray: "10 8" });
+          gsap.to(path, {
+            strokeDashoffset: -120,
+            duration: 6 + idx,
+            repeat: -1,
+            ease: "none",
+          });
+        });
+      }
+
+      if (nodes.length) {
+        gsap.to(nodes, {
+          y: -6,
+          duration: 3.8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          stagger: 0.2,
+        });
+      }
+    }, mapRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -152,12 +246,69 @@ export function EcosystemSection() {
           </div>
 
           <div className="relative flex items-center justify-center py-6 sm:py-8">
+            <svg
+              className="js-ecosystem-ring pointer-events-none absolute h-64 w-64 text-white/10 sm:h-72 sm:w-72"
+              viewBox="0 0 100 100"
+              aria-hidden="true"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.6"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                opacity="0.5"
+              />
+            </svg>
+
+            <svg
+              className="pointer-events-none absolute h-64 w-64 sm:h-72 sm:w-72"
+              viewBox="0 0 100 100"
+              aria-hidden="true"
+            >
+              <path
+                className="js-ecosystem-route"
+                d="M18 50 Q 50 20 82 50"
+                stroke="rgba(56,189,248,0.35)"
+                strokeWidth="0.8"
+                fill="none"
+              />
+              <path
+                className="js-ecosystem-route"
+                d="M22 62 Q 50 82 78 62"
+                stroke="rgba(147,51,234,0.35)"
+                strokeWidth="0.8"
+                fill="none"
+              />
+              <path
+                className="js-ecosystem-route"
+                d="M35 18 Q 52 46 65 82"
+                stroke="rgba(16,185,129,0.3)"
+                strokeWidth="0.7"
+                fill="none"
+              />
+              <path
+                className="js-ecosystem-route"
+                d="M20 72 Q 48 58 80 32"
+                stroke="rgba(251,191,36,0.3)"
+                strokeWidth="0.7"
+                fill="none"
+              />
+            </svg>
+
             {/* Orbit container */}
             <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-white/15 bg-neutral-900/80 shadow-[0_18px_60px_rgba(0,0,0,0.7)] sm:h-48 sm:w-48">
               {/* slow glow */}
-              <div
-                className="core-os-glow pointer-events-none absolute inset-0 rounded-full"
-              />
+              <div className="js-core-glow pointer-events-none absolute inset-0 rounded-full" />
 
               <div className="relative z-10 flex flex-col items-center gap-1 text-center">
                 <span className="text-[0.7rem] uppercase tracking-[0.35em] text-neutral-400">
@@ -165,46 +316,66 @@ export function EcosystemSection() {
                 </span>
                 <span className="text-sm font-semibold text-white">SquareCampus</span>
               </div>
+
             </div>
 
-            {/* Orbiting nodes + labels */}
-            <div className="pointer-events-none absolute inset-0">
-              {/* Admin console */}
-              <div className="absolute left-[10%] top-[30%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
-                <OrbitDot className="mb-1" />
-                <span>Admin console</span>
-                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
-                  Roles • Workflows • Controls
-                </span>
-              </div>
-
-              {/* Teacher tools */}
-              <div className="absolute right-[8%] top-[35%] flex -translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
-                <OrbitDot className="mb-1" />
-                <span>Teacher tools</span>
-                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
-                  Lessons • Assessments • Remarks
-                </span>
-              </div>
-
-              {/* Parent app */}
-              <div className="absolute left-[8%] bottom-[22%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
-                <OrbitDot className="mb-1" />
-                <span>Parent app</span>
-                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
-                  Homework • Fees • Updates
-                </span>
-              </div>
-
-              {/* Integrations */}
-              <div className="absolute right-[10%] bottom-[20%] flex translate-y-1/2 flex-col items-center gap-1 text-[0.68rem] text-neutral-200 sm:text-[0.7rem]">
-                <OrbitDot className="mb-1" />
-                <span>Integrations</span>
-                <span className="hidden text-[0.65rem] text-neutral-400 sm:block">
-                  UPI • Messaging • Billing
-                </span>
-              </div>
+            {/* 3D node graph */}
+            <div className="absolute inset-0" style={{ perspective: "900px" }}>
+              {graphNodes.map((node) => (
+                <button
+                  key={node.id}
+                  type="button"
+                  onMouseEnter={() => setActiveNode(node)}
+                  onFocus={() => setActiveNode(node)}
+                  onClick={() => setActiveNode(node)}
+                  className={cn(
+                    "js-ecosystem-node group absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-neutral-900/90 px-3 py-2 text-left text-[0.65rem] uppercase tracking-[0.26em] text-white/80 shadow-lg backdrop-blur",
+                    "transition-transform hover:-translate-y-[54%] hover:scale-[1.03]",
+                    node.glow,
+                    activeNode?.id === node.id && "border-white/30 text-white"
+                  )}
+                  style={{
+                    left: node.x,
+                    top: node.y,
+                    transform: "translate(-50%, -50%) translateZ(18px)",
+                  }}
+                >
+                  <span className="block text-[0.6rem] text-neutral-400">{node.tag}</span>
+                  <span className="block text-[0.75rem] font-semibold text-white">
+                    {node.label}
+                  </span>
+                </button>
+              ))}
             </div>
+          </div>
+
+          <div className="mt-2 grid gap-2 sm:grid-cols-3">
+            {[
+              { label: "Data sync", value: "Every 5s" },
+              { label: "Events/day", value: "120K+" },
+              { label: "Roles", value: "25+" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[0.65rem] uppercase tracking-[0.28em] text-white/70"
+              >
+                <span className="block text-[0.6rem] text-neutral-400">{item.label}</span>
+                <span className="block text-[0.7rem] text-white">{item.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-left">
+            <p className="text-[0.65rem] uppercase tracking-[0.35em] text-white/50">
+              Ecosystem focus
+            </p>
+            <p className="mt-2 text-sm font-semibold text-white">
+              {activeNode?.label ?? "Hover a node"}
+            </p>
+            <p className="mt-1 text-[0.72rem] text-neutral-300 sm:text-xs">
+              {activeNode?.detail ??
+                "Hover any node to see how that part of the ecosystem connects back to the core."}
+            </p>
           </div>
 
           <p className="mt-4 text-[0.72rem] text-neutral-400 sm:text-xs">

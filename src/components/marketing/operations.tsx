@@ -11,6 +11,7 @@ import {
   Users,
 } from "@/components/icons";
 import { useGsapReveal } from "@/lib/gsap-utils";
+import { DottedGlowBackground } from "./backgrounds/dotted-glow";
 
 const operationAreas: Array<{
   title: string;
@@ -119,6 +120,20 @@ export function Operations() {
       id="operations"
       className="relative overflow-hidden bg-neutral-950 px-4 py-10 md:px-8 md:py-14"
     >
+      <DottedGlowBackground
+        className="pointer-events-none opacity-60"
+        gap={18}
+        radius={1.4}
+        color="rgba(148, 163, 184, 0.16)"
+        darkColor="rgba(148, 163, 184, 0.2)"
+        glowColor="rgba(56, 189, 248, 0.45)"
+        darkGlowColor="rgba(56, 189, 248, 0.6)"
+        opacity={0.45}
+        backgroundOpacity={0.1}
+        speedMin={0.22}
+        speedMax={0.85}
+        speedScale={0.65}
+      />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.06),transparent_32%),radial-gradient(circle_at_40%_80%,rgba(59,130,246,0.05),transparent_28%)]" />
       <div className="relative mx-auto max-w-6xl space-y-4 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/60">
