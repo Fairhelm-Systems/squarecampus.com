@@ -70,11 +70,11 @@ export function BookCallCta({
       data-cal-link={CONSTANTS.CALCOM_LINK}
       data-cal-config={`{"layout":"${calOptions.layout}"}`}
       variant={variant}
-      className={cn("group inline-flex items-center gap-1.5", className)}
+      className={cn("group inline-flex items-center gap-1.5 whitespace-nowrap", className)}
       onClick={handleClick}
       type="button"
     >
-      <span>{label}</span>
+      <span className="whitespace-nowrap">{label}</span>
       <CalendarClock
         className="h-4 w-4 text-neutral-300 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6"
         aria-hidden="true"
