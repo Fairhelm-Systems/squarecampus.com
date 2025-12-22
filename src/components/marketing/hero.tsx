@@ -1,5 +1,6 @@
 "use client";
 
+import gsap from "gsap";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import Balancer from "react-wrap-balancer";
 import { Activity, Bell, BookOpen, Bus, DollarSign, ShieldCheck } from "@/components/icons";
@@ -101,10 +102,10 @@ export function Hero() {
 
       <div
         ref={containerRef}
-        className="relative mx-auto mt-10 md:mt-14 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[1400px] px-4"
+        className="relative mx-auto mt-8 md:mt-12 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[1400px] px-4"
       >
         {/* Stats cards - positioned to pop out from dashboard */}
-        <div className="relative z-5 grid w-full grid-cols-1 gap-2 px-2 text-center sm:absolute sm:left-0 sm:right-0 sm:top-0 sm:grid-cols-3 sm:px-4 md:px-8">
+        <div className="relative z-5 grid w-full grid-cols-1 gap-2 px-2 text-center sm:absolute sm:left-0 sm:right-0 sm:top-0 sm:grid-cols-3 sm:-translate-y-20 sm:px-4 md:px-8">
           {heroStats.map((stat, idx) => (
             <div
               key={stat.label}
@@ -251,6 +252,8 @@ const departmentDeck: Array<{
 
 function DashboardShowcase() {
   const [current, setCurrent] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const surfaceRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -262,8 +265,57 @@ function DashboardShowcase() {
   const active = departmentDeck[current] ?? departmentDeck[0];
   if (!active) return null;
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const isMobile = window.matchMedia?.("(max-width: 640px)").matches;
+    const floatY = isMobile ? 2.5 : 6;
+    const driftY = isMobile ? 4 : 10;
+
+    const ctx = gsap.context(() => {
+      gsap.to(".js-dashboard-shell", {
+        y: -floatY,
+        duration: 4.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".js-dashboard-float", {
+        y: -driftY,
+        duration: 3.4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 0.15,
+      });
+
+      gsap.to(".js-dashboard-drift", {
+        x: 6,
+        y: -4,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    if (!surfaceRef.current) return;
+    gsap.fromTo(
+      surfaceRef.current,
+      { autoAlpha: 0, y: 12, scale: 0.985 },
+      { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, ease: "power2.out" }
+    );
+  }, [active.key]);
+
   return (
-    <div className="flex h-full w-full flex-col justify-between">
+    <div ref={containerRef} className="js-dashboard-shell flex h-full w-full flex-col justify-between">
       <div className="flex items-center justify-between gap-3 px-4 pt-3 text-xs uppercase tracking-[0.26em] text-neutral-300">
         <div className="flex items-center gap-2">
           <Activity className="h-3.5 w-3.5 text-emerald-300" />
@@ -277,7 +329,10 @@ function DashboardShowcase() {
 
       <div className="relative flex-1 px-4 pb-4 pt-3">
         <div className="pointer-events-none absolute inset-4 rounded-2xl border border-white/5" />
-        <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/80 backdrop-blur">
+        <div
+          ref={surfaceRef}
+          className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/80 backdrop-blur"
+        >
           <AccentHalo accent={active.accent} />
 
           <div className="flex items-center justify-between gap-3 border-b border-white/5 px-5 py-3 text-sm text-white">
@@ -297,10 +352,10 @@ function DashboardShowcase() {
             </div>
           </div>
 
-          <div className="grid h-[calc(100%-64px)] grid-cols-1 gap-4 p-4 md:grid-cols-[1.2fr,1fr]">
-            <DepartmentCanvas active={active} />
-            <PlaybookPanel highlights={active.highlights} />
-          </div>
+            <div className="grid h-[calc(100%-64px)] grid-cols-1 gap-4 p-4 md:grid-cols-[1.2fr,1fr]">
+              <DepartmentCanvas active={active} />
+              <PlaybookPanel highlights={active.highlights} />
+            </div>
         </div>
       </div>
 
@@ -371,14 +426,14 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
   switch (active.key) {
     case "academics":
       return (
-        <div className="grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
+        <div className="js-dashboard-float grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Timetable · Week grid
             </p>
             <CalendarGrid />
           </div>
-          <div className="space-y-3 rounded-lg border border-white/10 bg-black/50 p-3">
+          <div className="js-dashboard-float space-y-3 rounded-lg border border-white/10 bg-black/50 p-3">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">Signals</p>
             <div className="grid grid-cols-2 gap-2">
               {active.stats.slice(0, 2).map((stat) => (
@@ -394,8 +449,8 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
       );
     case "finance":
       return (
-        <div className="grid gap-3 md:grid-cols-[1.1fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
+        <div className="js-dashboard-float grid gap-3 md:grid-cols-[1.1fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Cashflow pulse
             </p>
@@ -409,7 +464,7 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
               ))}
             </div>
           </div>
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Transactions
             </p>
@@ -424,14 +479,14 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
       );
     case "operations":
       return (
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
+        <div className="js-dashboard-float grid grid-cols-2 gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Transport · live map
             </p>
             <RouteMapVisual />
           </div>
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Routes table
             </p>
@@ -456,14 +511,14 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
       );
     case "communication":
       return (
-        <div className="grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
+        <div className="js-dashboard-float grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Delivery stream
             </p>
             <MessageFeed />
           </div>
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-3">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Channel mix
             </p>
@@ -478,8 +533,8 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
     case "compliance":
     default:
       return (
-        <div className="grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
+        <div className="js-dashboard-float grid gap-3 md:grid-cols-[1.2fr,1fr] rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               Health & uptime
             </p>
@@ -505,7 +560,7 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
               />
             </div>
           </div>
-          <div className="rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
+          <div className="js-dashboard-float rounded-lg border border-white/10 bg-black/50 p-3 space-y-2">
             <p className="text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
               RBAC snapshot
             </p>
@@ -528,7 +583,7 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
 
 function PlaybookPanel({ highlights }: { highlights: string[] }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
+    <div className="js-dashboard-float flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-3 shadow-inner shadow-black/40">
       <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
         <span>Playbook</span>
         <span className="flex items-center gap-1 text-emerald-300">
@@ -1020,6 +1075,9 @@ function SparkWaveGraph({
 }
 
 function RouteMapVisual() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const trackerRef = useRef<HTMLDivElement | null>(null);
+
   const hubs: Array<{
     x: string;
     y: string;
@@ -1039,8 +1097,101 @@ function RouteMapVisual() {
     idle: "bg-slate-400 shadow-[0_0_12px_rgba(148,163,184,0.5)]",
   };
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ctx = gsap.context(() => {
+      const paths = gsap.utils.toArray<SVGPathElement>(".js-route-path");
+      const dots = gsap.utils.toArray<HTMLElement>(".js-route-dot");
+      const hubs = gsap.utils.toArray<HTMLElement>(".js-route-hub");
+      const rings = gsap.utils.toArray<HTMLElement>(".js-route-ring");
+
+      paths.forEach((path, idx) => {
+        const length = path.getTotalLength();
+        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length, opacity: 0 });
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          opacity: 0.75,
+          duration: 1.6,
+          delay: idx * 0.2,
+          ease: "power2.inOut",
+        });
+        gsap.to(path, {
+          strokeDashoffset: -length,
+          duration: 5 + idx,
+          repeat: -1,
+          ease: "none",
+          delay: 2.2,
+        });
+      });
+
+      if (dots[0]) {
+        gsap.to(dots[0], {
+          keyframes: [
+            { left: "20%", top: "25%" },
+            { left: "42%", top: "15%" },
+            { left: "65%", top: "20%" },
+          ],
+          duration: 3,
+          repeat: -1,
+          ease: "none",
+        });
+      }
+      if (dots[1]) {
+        gsap.to(dots[1], {
+          keyframes: [
+            { left: "65%", top: "20%" },
+            { left: "72%", top: "40%" },
+            { left: "75%", top: "60%" },
+          ],
+          duration: 3,
+          repeat: -1,
+          ease: "none",
+          delay: 0.5,
+        });
+      }
+
+      if (hubs.length) {
+        gsap.to(hubs, {
+          scale: 1.2,
+          duration: 1.8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          stagger: 0.2,
+        });
+      }
+
+      if (rings.length) {
+        gsap.to(rings, {
+          scale: 1.5,
+          opacity: 0,
+          duration: 2.2,
+          repeat: -1,
+          ease: "sine.out",
+          stagger: 0.25,
+        });
+      }
+
+      if (trackerRef.current) {
+        gsap.to(trackerRef.current, {
+          x: 120,
+          y: 60,
+          duration: 5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-lg border border-white/10 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.08),transparent_45%),radial-gradient(circle_at_70%_70%,rgba(16,185,129,0.08),transparent_45%),#0c0c0f]">
+    <div
+      ref={containerRef}
+      className="js-dashboard-drift relative h-full w-full overflow-hidden rounded-lg border border-white/10 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.08),transparent_45%),radial-gradient(circle_at_70%_70%,rgba(16,185,129,0.08),transparent_45%),#0c0c0f]"
+    >
       {/* Grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.03)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.03)1px,transparent_1px)] bg-[size:40px_40px] opacity-60" />
 
@@ -1062,6 +1213,7 @@ function RouteMapVisual() {
 
         {/* Route connections */}
         <path
+          className="js-route-path"
           d="M 20% 25% Q 42% 15%, 65% 20%"
           stroke="url(#route-gradient-1)"
           strokeWidth="2"
@@ -1069,6 +1221,7 @@ function RouteMapVisual() {
           strokeDasharray="6 4"
         />
         <path
+          className="js-route-path"
           d="M 65% 20% Q 72% 40%, 75% 60%"
           stroke="url(#route-gradient-2)"
           strokeWidth="2"
@@ -1076,6 +1229,7 @@ function RouteMapVisual() {
           strokeDasharray="6 4"
         />
         <path
+          className="js-route-path"
           d="M 75% 60% Q 55% 68%, 35% 70%"
           stroke="url(#route-gradient-1)"
           strokeWidth="2"
@@ -1083,6 +1237,7 @@ function RouteMapVisual() {
           strokeDasharray="6 4"
         />
         <path
+          className="js-route-path"
           d="M 35% 70% Q 25% 48%, 20% 25%"
           stroke="url(#route-gradient-2)"
           strokeWidth="2"
@@ -1092,14 +1247,17 @@ function RouteMapVisual() {
       </svg>
 
       {/* Moving indicators along routes */}
+      <div className="js-route-dot absolute h-1.5 w-1.5 rounded-full bg-emerald-400 blur-[1px]" />
+      <div className="js-route-dot absolute h-1.5 w-1.5 rounded-full bg-amber-400 blur-[1px]" />
+
+      {/* Live tracking overlay */}
       <div
-        className="absolute h-1.5 w-1.5 rounded-full bg-emerald-400 blur-[1px]"
-        style={{ left: "42%", top: "18%" }}
-      />
-      <div
-        className="absolute h-1.5 w-1.5 rounded-full bg-amber-400 blur-[1px]"
-        style={{ left: "72%", top: "45%" }}
-      />
+        ref={trackerRef}
+        className="absolute left-[30%] top-[42%] hidden sm:flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-emerald-200"
+      >
+        <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+        Live tracking
+      </div>
 
       {/* Hub nodes */}
       {hubs.map((hub, idx) => (
@@ -1110,14 +1268,14 @@ function RouteMapVisual() {
         >
           {/* Outer pulse ring */}
           <div
-            className="absolute inset-0 rounded-full border-2 border-white/20"
+            className="js-route-ring absolute inset-0 rounded-full border-2 border-white/20"
             style={{ width: "40px", height: "40px", left: "-20px", top: "-20px" }}
           />
 
           {/* Center node */}
           <div className="relative flex flex-col items-center gap-1.5">
             <div
-              className={`h-3 w-3 rounded-full ${statusColors[hub.status]}`}
+              className={`js-route-hub h-3 w-3 rounded-full ${statusColors[hub.status]}`}
             />
             <div className="rounded-md border border-white/20 bg-black/80 px-2 py-1 backdrop-blur-sm">
               <div className="text-[0.65rem] font-medium text-neutral-100">{hub.label}</div>

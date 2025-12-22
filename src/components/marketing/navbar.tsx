@@ -21,10 +21,6 @@ interface NavbarProps {
 
 const NAV_ITEMS: NavItem[] = [
   {
-    name: "School management system",
-    link: "/school-management-system",
-  },
-  {
     name: "Platform",
     link: "/#operations",
   },
@@ -223,38 +219,38 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
           ref={menuRef}
           className="absolute left-3 right-3 top-14 z-40 rounded-2xl border border-neutral-800 bg-neutral-950/98 px-4 py-5 shadow-[0_18px_60px_rgba(0,0,0,0.85)]"
         >
-            {/* Navigation Links */}
-            <div className="flex flex-col gap-1 border-b border-neutral-800/50 pb-4 mb-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.link}
-                  onClick={() => setOpen(false)}
-                  className="group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-neutral-300 transition-all hover:bg-neutral-800/50 hover:text-white active:scale-[0.98]"
-                >
-                  <span>{item.name}</span>
-                  <span className="text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                    →
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-2">
-              <LoginCta
-                context="navbar-mobile"
-                variant="secondary"
-                className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
+          {/* Navigation Links */}
+          <div className="flex flex-col gap-1 border-b border-neutral-800/50 pb-4 mb-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.link}
                 onClick={() => setOpen(false)}
-              />
+                className="group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-neutral-300 transition-all hover:bg-neutral-800/50 hover:text-white active:scale-[0.98]"
+              >
+                <span>{item.name}</span>
+                <span className="text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  →
+                </span>
+              </Link>
+            ))}
+          </div>
 
-              <BookCallCta
-                context="navbar-mobile"
-                className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
-                onClick={() => setOpen(false)}
-              />
-            </div>
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-2">
+            <LoginCta
+              context="navbar-mobile"
+              variant="secondary"
+              className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
+              onClick={() => setOpen(false)}
+            />
+
+            <BookCallCta
+              context="navbar-mobile"
+              className="flex w-full items-center justify-center gap-1.5 min-h-[44px]"
+              onClick={() => setOpen(false)}
+            />
+          </div>
         </div>
       )}
     </nav>
