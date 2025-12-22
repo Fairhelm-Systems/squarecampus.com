@@ -21,21 +21,39 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://squarecampus.com"),
   title: {
-    default: "SquareCampus | The Operating System for Every School",
+    default: "SquareCampus | School Management System & School ERP in India",
     template: "%s | SquareCampus",
   },
   description:
-    "SquareCampus is the operating system for modern schools and colleges, unifying admissions, academics, finance, communication, transport, and compliance into one predictable platform.",
+    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, compliance, and analytics in one connected School OS.",
+  keywords: [
+    "school management system",
+    "school management system India",
+    "school ERP",
+    "school ERP software",
+    "school management software",
+    "CBSE school ERP",
+    "ICSE school management",
+    "K-12 school software",
+    "college management system",
+    "university management system",
+    "student information system India",
+    "fee management system",
+    "attendance management system",
+    "transport management for schools",
+    "parent app for schools",
+  ],
   alternates: {
     canonical: "https://squarecampus.com/",
   },
   openGraph: {
     type: "website",
     url: "https://squarecampus.com/",
-    title: "SquareCampus | The Operating System for Every School",
+    title: "SquareCampus | School Management System & School ERP in India",
     description:
-      "Run every campus day on rails with unified admissions, academics, finance, communication, and transport on one OS.",
+      "Run every campus day on rails with unified admissions, academics, fees, transport, communication, and compliance.",
     siteName: "SquareCampus",
+    locale: "en_IN",
     images: [
       {
         url: "https://cdn.squarecampus.in/application_files/logo-light.png",
@@ -47,9 +65,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SquareCampus | The Operating System for Every School",
+    title: "SquareCampus | School Management System & School ERP in India",
     description:
-      "All-in-one OS for schools and colleges: admissions, academics, finance, transport, and communication.",
+      "School management system for India: admissions, academics, fees, transport, and communication in one OS.",
     images: ["https://cdn.squarecampus.in/application_files/logo-light.png"],
   },
   robots: {
@@ -89,6 +107,10 @@ export default function RootLayout({
                   logo: "https://squarecampus.com/logo.png",
                   sameAs: ["https://www.linkedin.com/company/square-campus"],
                   brand: "SquareCampus",
+                  areaServed: {
+                    "@type": "Country",
+                    name: "India",
+                  },
                   contactPoint: [
                     {
                       "@type": "ContactPoint",
@@ -106,7 +128,7 @@ export default function RootLayout({
                     target: "https://squarecampus.com/search?q={search_term_string}",
                     "query-input": "required name=search_term_string",
                   },
-                  inLanguage: "en",
+                  inLanguage: "en-IN",
                 },
                 {
                   "@type": "SoftwareApplication",
@@ -114,7 +136,7 @@ export default function RootLayout({
                   applicationCategory: "EducationalApplication",
                   operatingSystem: "Web",
                   url: "https://app.squarecampus.com",
-                  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                   potentialAction: {
                     "@type": "Action",
                     name: "Login",

@@ -293,7 +293,7 @@ export default function WhyDifferentPage() {
             </h1>
 
             <p className="mx-auto mb-5 max-w-2xl text-lg text-neutral-300 md:text-xl">
-              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities-without breaking.
+              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities across India—without breaking.
             </p>
             <p className="mx-auto mb-8 max-w-2xl text-base font-semibold uppercase tracking-[0.24em] text-emerald-300">
               Verdict: fragmented systems are the tax on growth. We remove the tax.

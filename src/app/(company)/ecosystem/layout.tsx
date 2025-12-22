@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   keywords: [
     "school management ecosystem",
     "connected campus platform",
+    "school management system India",
     "admin console",
     "teacher tools",
     "parent app",
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
     "role-based access control",
     "school hierarchy management",
     "multi-campus management",
+    "college management system India",
+    "university management system India",
   ],
   openGraph: {
     title: "Ecosystem - SquareCampus Connected School Platform",
@@ -26,6 +29,7 @@ export const metadata: Metadata = {
       "One platform with multiple touchpoints: admin console, teacher workspace, mobile apps for parents & students, integrations, and AI layer. Single source of truth.",
     url: `${SEO_CONFIG.baseUrl}/ecosystem`,
     type: "website",
+    locale: "en_IN",
     images: [
       {
         url: `${SEO_CONFIG.baseUrl}/og-image.png`,

@@ -1,4 +1,3 @@
-// app/about/page.tsx
 "use client";
 
 import { motion } from "@/lib/motion";
@@ -195,13 +194,14 @@ export default function AboutPage() {
                   Every school in India fights the same chaos: scattered systems, manual
                   reconciliations, and fragile processes. SquareCampus gives you a single nervous
                   system to run admissions, academics, finance, and compliance with clarity and
-                  trust.
+                  trust. Our team has built systems that process 100M+ records per day with strict
+                  efficiency, and we bring that same operational discipline to education.
                 </motion.p>
 
                 <div className="flex flex-wrap gap-3">
                   <BookCallCta context="about-hero" className="justify-center sm:w-auto" />
                   <Link
-                    href="/#features"
+                    href="/features"
                     className="inline-flex items-center gap-2 rounded-full border border-neutral-700/70 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition hover:border-white hover:text-white"
                   >
                     Explore features
@@ -286,6 +286,10 @@ export default function AboutPage() {
                   <div className="flex items-center gap-2 text-xs text-neutral-400">
                     <div className="h-2 w-2 rounded-full bg-emerald-400" />
                     Human support, not ticket bots; product teams close the loop.
+                  </div>
+                  <div className="rounded-xl border border-emerald-500/20 bg-neutral-900/50 px-4 py-3 text-xs text-neutral-200">
+                    Scale proof: the team has built systems handling 100M+ records daily with
+                    high-throughput reliability.
                   </div>
                 </div>
               </motion.div>
@@ -372,7 +376,7 @@ export default function AboutPage() {
                   {
                     initials: "MG",
                     name: "Mohit Gupta, Founder & CTO",
-                    desc: "Leads product and platform engineering, from architecture and reliability to how workflows feel for everyday users.",
+                    desc: "Leads product and platform engineering. Built systems processing 100M+ records daily and brings that reliability mindset to every workflow.",
                   },
                   {
                     initials: "DK",

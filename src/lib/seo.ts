@@ -8,9 +8,28 @@ export const SEO_CONFIG = {
   siteName: "SquareCampus",
   // Your category: School OS. Your search reality: “school management system”.
   // Our metadata must hold both truths without sounding confused.
-  defaultTitle: "SquareCampus | School OS for Modern Schools",
+  defaultTitle: "SquareCampus | School Management System & School ERP in India",
   defaultDescription:
-    "SquareCampus is a School Operating System for modern schools and colleges—admissions, academics, fees, transport, communication, compliance, and analytics in one predictable platform.",
+    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, compliance, and analytics in one connected School OS.",
+  defaultKeywords: [
+    "school management system",
+    "school management system India",
+    "school ERP",
+    "school ERP software",
+    "school management software",
+    "CBSE school ERP",
+    "ICSE school management",
+    "K-12 school software",
+    "college management system",
+    "university management system",
+    "student information system India",
+    "fee management system",
+    "attendance management system",
+    "transport management for schools",
+    "parent app for schools",
+  ],
+  language: "en-IN",
+  openGraphLocale: "en_IN",
   ogImage: {
     default: "https://cdn.squarecampus.in/application_files/logo-light.png",
     width: 1200,
@@ -32,6 +51,7 @@ export type PageMetadataConfig = {
   title: string;
   description: string;
   path: string;
+  keywords?: string[];
   ogTitle?: string;
   ogDescription?: string;
   twitterTitle?: string;
@@ -55,6 +75,7 @@ export function createPageMetadata(config: PageMetadataConfig) {
     title,
     description,
     path,
+    keywords,
     ogTitle,
     ogDescription,
     twitterTitle,
@@ -70,6 +91,7 @@ export function createPageMetadata(config: PageMetadataConfig) {
   return {
     title,
     description,
+    keywords: keywords?.length ? Array.from(keywords) : Array.from(SEO_CONFIG.defaultKeywords),
     alternates: {
       canonical: canonicalUrl,
     },
@@ -79,7 +101,7 @@ export function createPageMetadata(config: PageMetadataConfig) {
       url: canonicalUrl,
       siteName: SEO_CONFIG.siteName,
       type: "website" as const,
-      locale: "en_US",
+      locale: SEO_CONFIG.openGraphLocale,
       images: [
         {
           url: imageUrl,
@@ -118,7 +140,7 @@ export function createWebSiteSchema() {
     url: SEO_CONFIG.baseUrl,
     name: SEO_CONFIG.siteName,
     description: SEO_CONFIG.defaultDescription,
-    inLanguage: "en",
+    inLanguage: SEO_CONFIG.language,
   };
 }
 
@@ -158,7 +180,7 @@ export function createWebPageSchema(config: { name: string; description: string;
     name: config.name,
     description: config.description,
     url: config.url,
-    inLanguage: "en",
+    inLanguage: SEO_CONFIG.language,
     isPartOf: {
       "@id": `${SEO_CONFIG.baseUrl}/#website`,
     },
@@ -193,7 +215,7 @@ export function createAboutPageSchema(config: { name: string; description: strin
     url: config.url,
     name: config.name,
     description: config.description,
-    inLanguage: "en",
+    inLanguage: SEO_CONFIG.language,
     isPartOf: {
       "@id": `${SEO_CONFIG.baseUrl}/#website`,
     },
@@ -226,7 +248,7 @@ export function createSoftwareApplicationSchema(config?: {
     name,
     url,
     description,
-    applicationCategory: config?.applicationCategory ?? "BusinessApplication",
+    applicationCategory: config?.applicationCategory ?? "EducationalApplication",
     operatingSystem: config?.operatingSystem ?? "Web",
     offers: {
       "@type": "Offer",

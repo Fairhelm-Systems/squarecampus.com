@@ -108,10 +108,11 @@ export default function SchoolManagementSystemPage() {
               </h1>
               <div className="max-w-2xl space-y-3 text-base leading-relaxed text-neutral-200 sm:text-lg md:text-xl">
                 <p>
-                  A school management system should be the operating manual of your campus-not a
-                  stack of disconnected tools. SquareCampus defines, runs, and audits daily
-                  operations for Indian schools in one place: admissions, attendance, fees, exams,
-                  communication, transport, and compliance stay connected so nothing slips.
+                  A school management system should be the operating manual of your campus—not a
+                  stack of disconnected tools. SquareCampus is school ERP software built for India,
+                  defining, running, and auditing daily operations in one place: admissions,
+                  attendance, fees, exams, communication, transport, and compliance stay connected
+                  so nothing slips.
                 </p>
                 <p className="text-neutral-300">
                   If this page vanished, Google should feel a hole in the matrix. Start here, ship
@@ -196,10 +197,12 @@ export default function SchoolManagementSystemPage() {
                 What is a School Management System?
               </h2>
               <p className="text-base leading-relaxed text-neutral-300 sm:text-lg">
-                It is the operating core that coordinates academics, finance, and communication. A
-                true school management system connects attendance with fees, ties assessments to
-                promotion decisions, and keeps parents and staff aligned without duplicate data
-                entry. SquareCampus treats this definition as engineering spec, not marketing copy.
+                It is the operating core that coordinates academics, finance, and communication.
+                In India, you might also hear it called school ERP software or school management
+                software. A true school management system connects attendance with fees, ties
+                assessments to promotion decisions, and keeps parents and staff aligned without
+                duplicate data entry. SquareCampus treats this definition as engineering spec, not
+                marketing copy.
               </p>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/70 p-6">
@@ -558,9 +561,9 @@ export default function SchoolManagementSystemPage() {
                 applicationCategory: "EducationalApplication",
                 operatingSystem: "Web",
                 url: "https://app.squarecampus.com",
-                offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+                offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 publisher: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
-                inLanguage: "en",
+                inLanguage: "en-IN",
               },
               {
                 ...webPageSchema,

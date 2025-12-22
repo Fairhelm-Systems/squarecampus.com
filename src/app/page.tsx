@@ -14,9 +14,21 @@ import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhyDifferent } from "@/components/marketing/why-different";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | The Operating System for Every School",
+  title: "SquareCampus | School Management System & School ERP in India",
   description:
-    "SquareCampus unifies admissions, academics, finance, communication, and compliance so schools of every size run predictable, connected operations.",
+    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, and compliance in one connected School OS.",
+  keywords: [
+    "school management system",
+    "school management system India",
+    "school ERP",
+    "school ERP software India",
+    "school management software",
+    "CBSE school ERP",
+    "ICSE school management system",
+    "K-12 school management",
+    "college management system India",
+    "university management system India",
+  ],
 };
 
 export default function Home() {
