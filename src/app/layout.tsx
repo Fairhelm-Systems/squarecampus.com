@@ -11,11 +11,17 @@ import { ScrollBeam } from "@/components/marketing/scroll-beam";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  fallback: ["system-ui", "Segoe UI", "Arial", "sans-serif"],
+  adjustFontFallback: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -87,6 +93,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={"dark scrollbar-auto scroll-smooth"}>
+      <head>
+        <link rel="preconnect" href="https://cdn.squarecampus.in" />
+        <link rel="dns-prefetch" href="https://cdn.squarecampus.in" />
+        <link rel="preconnect" href="https://app.squarecampus.com" />
+        <link rel="dns-prefetch" href="https://app.squarecampus.com" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}>
         <DevtoolsGuard />
         <BrowserWarning />

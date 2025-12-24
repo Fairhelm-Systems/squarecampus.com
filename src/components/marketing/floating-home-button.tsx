@@ -4,7 +4,7 @@
 import gsap from "gsap";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, ArrowUpRight } from "@/components/icons";
+import { ArrowUp, Home } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 type BaseProps = {
@@ -69,7 +69,7 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const finalLabel = label ?? (isTopVariant ? "Back to top" : "Back to home");
+  const finalLabel = label ?? "Back to top";
 
   useEffect(() => {
     if (!visible || !containerRef.current) return;
@@ -104,20 +104,32 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
               <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
           ) : (
-            // Variant: "home" – standard Link back to some route.
-            <Link
-              href={href!}
+            // Variant: "home" – home icon on the left, back-to-top on the right.
+            <div
               className={cn(
-                "pointer-events-auto inline-flex items-center gap-2 rounded-full border border-neutral-700/80",
-                "bg-neutral-900/95 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-neutral-100",
+                "pointer-events-auto inline-flex items-center overflow-hidden rounded-full border border-neutral-700/80",
+                "bg-neutral-900/95 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-neutral-100",
                 "shadow-[0_18px_60px_rgba(0,0,0,0.75)] backdrop-blur-md",
                 "transition hover:border-neutral-300 hover:text-white",
                 className
               )}
             >
-              <span>{finalLabel}</span>
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
+              <Link
+                href={href!}
+                aria-label="Go to home"
+                className="inline-flex items-center justify-center border-r border-neutral-700/70 px-3 py-2 transition hover:bg-white/10"
+              >
+                <Home className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+              <button
+                type="button"
+                onClick={handleTopClick}
+                className="inline-flex items-center gap-2 px-4 py-2 transition hover:bg-white/10"
+              >
+                <span>Back to top</span>
+                <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            </div>
           )}
         </div>
       )}

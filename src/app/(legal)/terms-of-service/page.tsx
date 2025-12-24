@@ -14,13 +14,61 @@ export default function TermsOfServicePage() {
         Last Updated: 27 November 2025
       </p>
 
+      <nav
+        aria-label="Table of contents"
+        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
+            On this page
+          </p>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+            Jump to
+          </span>
+        </div>
+        <div className="mt-4 grid gap-3 text-xs text-muted-foreground sm:grid-cols-2">
+          {[
+            { label: "Company & Contracting Entity", href: "#company-entity" },
+            { label: "Description of the Service", href: "#service-description" },
+            { label: "Account Registration and Security", href: "#account-security" },
+            { label: "License and Permitted Use", href: "#license" },
+            { label: "Subscription, Fees, and Billing", href: "#billing" },
+            { label: "Data Ownership and Rights", href: "#data-ownership" },
+            { label: "Privacy and Data Protection", href: "#privacy-data" },
+            { label: "Security & Data Protection Reference", href: "#security-reference" },
+            { label: "Service Availability and Maintenance", href: "#availability" },
+            { label: "Prohibited Conduct", href: "#prohibited-conduct" },
+            { label: "Term, Suspension, and Termination", href: "#termination" },
+            { label: "Intellectual Property", href: "#intellectual-property" },
+            { label: "Disclaimers", href: "#disclaimers" },
+            { label: "Limitation of Liability", href: "#liability" },
+            { label: "Changes to the Terms", href: "#changes" },
+            { label: "Governing Law and Jurisdiction", href: "#governing-law" },
+            { label: "Contact Information", href: "#contact" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <div className="space-y-10">
-        <LegalSection title="1. Parties and Authority">
+        <LegalSection title="1. Company & Contracting Entity" id="company-entity">
           <p>
-            These Terms form a binding agreement between SquareCampus Private Limited and the
-            Institution or individual User accessing the Service. If you are accepting these Terms
-            on behalf of an Institution, you confirm that you have the authority to bind that
-            Institution.
+            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
+            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            form.
+          </p>
+          <p>References to "SquareCampus" in these Terms mean MDTechSpire LLP.</p>
+          <p>
+            These Terms form a binding agreement between MDTechSpire LLP and the Institution or
+            individual User accessing the Service. If you are accepting these Terms on behalf of an
+            Institution, you confirm that you have the authority to bind that Institution.
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>The Institution is the entity subscribing to SquareCampus (“Institution”); and</li>
@@ -31,7 +79,7 @@ export default function TermsOfServicePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="2. Description of the Service">
+        <LegalSection title="2. Description of the Service" id="service-description">
           <p>
             SquareCampus is a SaaS platform for schools, colleges, and other educational
             institutions to manage admissions, attendance, grades, examinations, fees,
@@ -43,7 +91,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="3. Account Registration and Security">
+        <LegalSection title="3. Account Registration and Security" id="account-security">
           <p>Institutions and Users agree to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Provide accurate and complete registration information;</li>
@@ -63,11 +111,11 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="4. License and Permitted Use">
+        <LegalSection title="4. License and Permitted Use" id="license">
           <p>
             Subject to these Terms and any applicable order form, SquareCampus grants Institutions a
-            limited, revocable, non-exclusive, non-transferable license to use the Service for
-            internal educational and administrative purposes.
+            limited, revocable, non-exclusive, non-transferable, and non-sublicensable license to
+            use the Service for internal educational and administrative purposes.
           </p>
           <p>Unless expressly permitted, you must not:</p>
           <ul className="list-disc space-y-2 pl-5">
@@ -80,7 +128,7 @@ export default function TermsOfServicePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="5. Subscription, Fees, and Billing">
+        <LegalSection title="5. Subscription, Fees, and Billing" id="billing">
           <p>
             Access is provided on a subscription basis. Pricing, billing frequency, and modules are
             defined in the relevant proposal or order form.
@@ -89,12 +137,12 @@ export default function TermsOfServicePage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>Fees are payable in advance per billing period;</li>
             <li>Add-ons or overages may be billed pro-rata for the remaining period;</li>
-            <li>Fees are non-refundable except where required by law or our Refund Policy.</li>
+            <li>Fees are non-refundable except where required by law or stated in an order form.</li>
           </ul>
           <p>Non-payment may result in suspension or termination of Service access.</p>
         </LegalSection>
 
-        <LegalSection title="6. Data Ownership and Rights">
+        <LegalSection title="6. Data Ownership and Rights" id="data-ownership">
           <p>Subject to these Terms:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -111,7 +159,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="7. Privacy and Data Protection">
+        <LegalSection title="7. Privacy and Data Protection" id="privacy-data">
           <p>
             SquareCampus processes personal data according to its Privacy Policy, which forms part
             of these Terms.
@@ -121,12 +169,28 @@ export default function TermsOfServicePage() {
             2000, and the DPDP Act, 2023.
           </p>
           <p>
+            SquareCampus service data is hosted and processed in India. We do not transfer or store
+            customer data outside India.
+          </p>
+          <p>We pledge to keep data within the borders of India, no excuses or compromises.</p>
+          <p>
             Institutions remain responsible for obtaining any consents required for processing
             student, staff, or parent data.
           </p>
         </LegalSection>
 
-        <LegalSection title="8. Service Availability and Maintenance">
+        <LegalSection title="8. Security & Data Protection Reference" id="security-reference">
+          <p>
+            A summary of our security program, data residency, encryption, and audit practices is
+            available at{" "}
+            <a href="/security" className="text-white">
+              https://squarecampus.com/security
+            </a>
+            .
+          </p>
+        </LegalSection>
+
+        <LegalSection title="9. Service Availability and Maintenance" id="availability">
           <p>
             We aim to offer a reliable Service but cannot guarantee uninterrupted or error-free
             operation.
@@ -137,7 +201,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="9. Prohibited Conduct">
+        <LegalSection title="10. Prohibited Conduct" id="prohibited-conduct">
           <p>
             You must not use the Service to store, share, or process content that is unlawful,
             harmful, defamatory, obscene, or otherwise objectionable.
@@ -149,7 +213,7 @@ export default function TermsOfServicePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="10. Term, Suspension, and Termination">
+        <LegalSection title="11. Term, Suspension, and Termination" id="termination">
           <p>
             These Terms remain effective until the Institution’s subscription ends or the Agreement
             is terminated.
@@ -163,11 +227,11 @@ export default function TermsOfServicePage() {
           </ul>
           <p>
             After termination, access ceases and data may be retained for a limited period for
-            legal, accounting, or backup reasons.
+            legal, accounting, or backup reasons, after which it will be deleted or anonymised.
           </p>
         </LegalSection>
 
-        <LegalSection title="11. Intellectual Property">
+        <LegalSection title="12. Intellectual Property" id="intellectual-property">
           <p>
             All rights to the Service, interfaces, documentation, and technology belong to
             SquareCampus or its licensors.
@@ -178,7 +242,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="12. Disclaimers">
+        <LegalSection title="13. Disclaimers" id="disclaimers">
           <p>The Service is provided “as is” and “as available.”</p>
           <p>
             To the fullest extent permitted by law, SquareCampus disclaims express, implied,
@@ -187,7 +251,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="13. Limitation of Liability">
+        <LegalSection title="14. Limitation of Liability" id="liability">
           <p>
             SquareCampus shall not be liable for indirect, incidental, consequential, special,
             exemplary, or punitive damages, or loss of profits, data, or goodwill arising out of the
@@ -199,7 +263,7 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="14. Changes to the Terms">
+        <LegalSection title="15. Changes to the Terms" id="changes">
           <p>
             We may update these Terms from time to time. The “Last Updated” date at the top will
             change, and we may provide additional notice.
@@ -207,7 +271,7 @@ export default function TermsOfServicePage() {
           <p>Your continued use after changes means you accept the revised Terms.</p>
         </LegalSection>
 
-        <LegalSection title="15. Governing Law and Jurisdiction">
+        <LegalSection title="16. Governing Law and Jurisdiction" id="governing-law">
           <p>These Terms are governed by Indian law, without regard to conflict of law rules.</p>
           <p>
             Subject to mandatory requirements, the courts in Bengaluru, Karnataka, India have
@@ -215,10 +279,10 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="16. Contact Information">
+        <LegalSection title="17. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>SquareCampus Private Limited</strong>
+            <strong>MDTechSpire LLP</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />
