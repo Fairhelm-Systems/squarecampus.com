@@ -14,11 +14,69 @@ export default function PrivacyPolicyPage() {
         Last Updated: 27 November 2025
       </p>
 
+      <nav
+        aria-label="Table of contents"
+        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
+            On this page
+          </p>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+            Jump to
+          </span>
+        </div>
+        <div className="mt-4 grid gap-3 text-xs text-muted-foreground sm:grid-cols-2">
+          {[
+            { label: "Company & Data Controller", href: "#company-controller" },
+            { label: "Information We Collect", href: "#information-collected" },
+            { label: "How We Use the Information", href: "#use-of-information" },
+            { label: "Legal Basis for Processing", href: "#legal-basis" },
+            { label: "Data Sharing and Transfers", href: "#data-sharing" },
+            { label: "Data Security", href: "#data-security" },
+            { label: "Data Retention", href: "#data-retention" },
+            { label: "Rights of Institutions and Users", href: "#rights" },
+            { label: "Cookies and Similar Technologies", href: "#cookies" },
+            { label: "Children’s Privacy", href: "#children" },
+            { label: "Changes to This Policy", href: "#changes" },
+            { label: "Contact Us", href: "#contact" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <div className="space-y-10">
-        <LegalSection title="1. Information We Collect">
+        <LegalSection title="1. Company & Data Controller" id="company-controller">
+          <p>
+            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
+            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            form.
+          </p>
+          <p>References to "SquareCampus" in this Policy mean MDTechSpire LLP.</p>
+          <p>
+            For the purposes of applicable data protection law, MDTechSpire LLP acts as the Data
+            Controller for its own business operations and the SquareCampus website. When
+            processing personal data on behalf of an Institution within the Service, MDTechSpire
+            LLP acts as a Data Processor as described in the Data Processing Addendum.
+          </p>
+          <p>
+            SquareCampus service data is hosted and processed in India. We do not transfer or store
+            customer data outside India.
+          </p>
+          <p>We pledge to keep data within the borders of India, no excuses or compromises.</p>
+        </LegalSection>
+
+        <LegalSection title="2. Information We Collect" id="information-collected">
           <div className="space-y-4">
             <div>
-              <p className="text-sm font-semibold text-white">1.1 Institution Information</p>
+              <p className="text-sm font-semibold text-white">2.1 Institution Information</p>
               <p>We may collect or receive details about the Institution, including:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>Institution name, type, and registered address;</li>
@@ -29,7 +87,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">1.2 User Information</p>
+              <p className="text-sm font-semibold text-white">2.2 User Information</p>
               <p>We receive, process, or store data about individual users, such as:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>Names, contact details, roles (student, parent, educator, staff);</li>
@@ -42,7 +100,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">1.3 Technical and Usage Data</p>
+              <p className="text-sm font-semibold text-white">2.3 Technical and Usage Data</p>
               <p>Automatic information we collect includes:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>IP address, device, and browser metadata;</li>
@@ -53,7 +111,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">1.4 Sensitive Data and Minors</p>
+              <p className="text-sm font-semibold text-white">2.4 Sensitive Data and Minors</p>
               <p>
                 SquareCampus may process information about minors (students) and data that may be
                 considered sensitive (photographs, health records, disciplinary notes) strictly
@@ -67,7 +125,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </LegalSection>
 
-        <LegalSection title="2. How We Use the Information">
+        <LegalSection title="3. How We Use the Information" id="use-of-information">
           <p>We use the collected data to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Provide, operate, and improve the SquareCampus Service;</li>
@@ -81,7 +139,7 @@ export default function PrivacyPolicyPage() {
           <p>We do not sell personal data to advertisers or unrelated third parties.</p>
         </LegalSection>
 
-        <LegalSection title="3. Legal Basis for Processing">
+        <LegalSection title="4. Legal Basis for Processing" id="legal-basis">
           <p>
             Our processing is typically governed by performance of an agreement with the
             Institution, consent where appropriate, compliance with legal duties, or legitimate
@@ -89,7 +147,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="4. Data Sharing and Transfers">
+        <LegalSection title="5. Data Sharing and Transfers" id="data-sharing">
           <p>We may share data with:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Authorised Institution staff as allowed by internal controls;</li>
@@ -98,12 +156,12 @@ export default function PrivacyPolicyPage() {
             <li>Government or law enforcement authorities when required by law.</li>
           </ul>
           <p>
-            When personal data leaves India, we implement appropriate safeguards required by
-            applicable law.
+            We may use sub-processors to deliver the Service. A current list of sub-processors is
+            available upon request.
           </p>
         </LegalSection>
 
-        <LegalSection title="5. Data Security">
+        <LegalSection title="6. Data Security" id="data-security">
           <p>
             We deploy administrative, technical, and physical measures such as encryption in transit
             and at rest, role-based access controls, infrastructure hardening, monitoring, backups,
@@ -113,17 +171,24 @@ export default function PrivacyPolicyPage() {
             No system is 100% secure, but we continually invest in improving our posture and respond
             quickly to incidents.
           </p>
-        </LegalSection>
-
-        <LegalSection title="6. Data Retention">
           <p>
-            Data is retained for as long as necessary to provide the Service, meet legal
-            requirements, or resolve disputes. After an Institution’s subscription ends, we may keep
-            backup or audit data for a limited period before securely deleting or anonymising it.
+            A summary of our security practices is available at{" "}
+            <a href="/security" className="text-white">
+              https://squarecampus.com/security
+            </a>
+            .
           </p>
         </LegalSection>
 
-        <LegalSection title="7. Rights of Institutions and Users">
+        <LegalSection title="7. Data Retention" id="data-retention">
+          <p>
+            Data is retained during active use to provide the Service. After an Institution’s
+            subscription ends, we may keep data for a limited period for legal, accounting, or
+            backup reasons, after which it will be deleted or anonymised.
+          </p>
+        </LegalSection>
+
+        <LegalSection title="8. Rights of Institutions and Users" id="rights">
           <p>
             Subject to applicable law and our contracts with Institutions, Users may request access,
             correction, data export, or deletion, subject to legal and contractual limitations.
@@ -134,7 +199,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="8. Cookies and Similar Technologies">
+        <LegalSection title="9. Cookies and Similar Technologies" id="cookies">
           <p>
             Cookies and similar identifiers support authentication, session persistence, and
             preference storage. We do not use third-party advertising cookies in the core academic
@@ -142,14 +207,15 @@ export default function PrivacyPolicyPage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="9. Children’s Privacy">
+        <LegalSection title="10. Children’s Privacy" id="children">
           <p>
             SquareCampus is provided to Institutions, not directly to children. Institutions are
-            responsible for ensuring compliance with applicable laws and policies regarding minors.
+            responsible for ensuring compliance with applicable laws and policies regarding minors
+            and for managing access on behalf of students.
           </p>
         </LegalSection>
 
-        <LegalSection title="10. Changes to This Policy">
+        <LegalSection title="11. Changes to This Policy" id="changes">
           <p>
             We may update this Privacy Policy occasionally. Updated versions will appear here with a
             new “Last Updated” date, and we may provide additional notices when appropriate.
@@ -157,10 +223,10 @@ export default function PrivacyPolicyPage() {
           <p>Continued use after changes means acceptance of the revised policy.</p>
         </LegalSection>
 
-        <LegalSection title="11. Contact Us">
+        <LegalSection title="12. Contact Us" id="contact">
           <p>If you have questions or requests, contact:</p>
           <p>
-            <strong>SquareCampus Private Limited</strong>
+            <strong>MDTechSpire LLP</strong>
             <br />
             Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
             <br />

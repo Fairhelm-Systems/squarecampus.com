@@ -7,9 +7,9 @@ import { Features } from "@/components/marketing/features";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Footer } from "@/components/marketing/footer";
 import { Hero } from "@/components/marketing/hero";
-import { MacbookIntroOverlay } from "@/components/marketing/macbook-intro-overlay";
 import { Navbar } from "@/components/marketing/navbar";
 import { Operations } from "@/components/marketing/operations";
+import { ParallaxSection } from "@/components/marketing/parallax-section";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhyDifferent } from "@/components/marketing/why-different";
 
@@ -34,17 +34,32 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className={"bg-black text-white"}>
-      <MacbookIntroOverlay />
       <Navbar />
       <Hero />
-      <Operations />
-      <Features />
-      <WhyDifferent />
-      <CTA />
-      <EcosystemSection />
-      <TrustBanner />
-      <FAQ />
-      <ContactUs />
+      <ParallaxSection strength={28} glow={false}>
+        <Operations />
+      </ParallaxSection>
+      <ParallaxSection strength={-22}>
+        <Features />
+      </ParallaxSection>
+      <ParallaxSection strength={26}>
+        <WhyDifferent />
+      </ParallaxSection>
+      <ParallaxSection strength={-18}>
+        <CTA />
+      </ParallaxSection>
+      <ParallaxSection strength={24}>
+        <EcosystemSection />
+      </ParallaxSection>
+      <ParallaxSection strength={-20} glow={false}>
+        <TrustBanner />
+      </ParallaxSection>
+      <ParallaxSection strength={22}>
+        <FAQ />
+      </ParallaxSection>
+      <ParallaxSection strength={-16}>
+        <ContactUs />
+      </ParallaxSection>
       <Footer />
       <FloatingHomeButton label="Back to top" variant="top" />
     </main>

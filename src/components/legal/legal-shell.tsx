@@ -25,6 +25,10 @@ export const legalPageLinks: LegalPageLink[] = [
     title: "Acceptable Use",
     href: "/acceptable-use",
   },
+  {
+    title: "AI Policy",
+    href: "/ai-policy",
+  },
 ];
 
 type LegalShellProps = {
@@ -49,15 +53,15 @@ export function LegalShell({ title, currentPage, description, children }: LegalS
                 <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
               )}
             </div>
-            <nav className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
+            <nav className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
               {legalPageLinks.map((link) => {
                 const isActive = link.title === currentPage;
                 return (
                   <Link
                     key={link.title}
                     href={link.href}
-                    className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition
-                      flex items-center justify-center text-center  /* ← This is the key part */
+                    className={`whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition
+                      flex items-center justify-center text-center
                       ${
                         isActive
                           ? "border-transparent bg-white text-neutral-950 shadow-lg shadow-white/40"
@@ -85,12 +89,13 @@ export function LegalShell({ title, currentPage, description, children }: LegalS
 
 type LegalSectionProps = {
   title: string;
+  id?: string;
   children: ReactNode;
 };
 
-export function LegalSection({ title, children }: LegalSectionProps) {
+export function LegalSection({ title, id, children }: LegalSectionProps) {
   return (
-    <section className="space-y-3">
+    <section className="space-y-3" id={id}>
       <h2 className="text-base font-semibold text-neutral-100">{title}</h2>
       <div className="space-y-3">{children}</div>
     </section>

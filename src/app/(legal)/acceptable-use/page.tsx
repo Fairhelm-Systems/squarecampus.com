@@ -8,15 +8,30 @@ export default function AcceptableUsePage() {
       currentPage="Acceptable Use"
       description="SquareCampus exists to help institutions operate safely while keeping misuse or disruption out of the system."
     >
-      <p className="text-sm font-medium text-muted-foreground">Effective Date: 27 November 2025</p>
+      <p className="text-sm font-medium text-muted-foreground">
+        Effective Date: 27 November 2025
+        <br />
+        Last Updated: 27 November 2025
+      </p>
 
       <div className="space-y-10">
-        <LegalSection title="1. Scope and Purpose">
+        <LegalSection title="1. Company & Scope">
+          <p>
+            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
+            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            form.
+          </p>
+          <p>References to "SquareCampus" in this Policy mean MDTechSpire LLP.</p>
           <p>
             These guidelines apply to everyone who accesses SquareCampus, including institutions,
-            staff, teachers, parents, and students. The Service must be used for its intended
-            academic and administrative purposes while respecting laws, institutional rules, and the
-            rights of other users.
+            staff, teachers, parents, and students.
+          </p>
+        </LegalSection>
+
+        <LegalSection title="2. Scope and Purpose">
+          <p>
+            The Service must be used for its intended academic and administrative purposes while
+            respecting laws, institutional rules, and the rights of other users.
           </p>
           <p>
             We expect decisions made on the platform to be grounded in the academic mission of the
@@ -25,7 +40,7 @@ export default function AcceptableUsePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="2. Permitted Use">
+        <LegalSection title="3. Permitted Use">
           <p>Use SquareCampus to:</p>
           <ul className="list-disc pl-5">
             <li>
@@ -44,7 +59,7 @@ export default function AcceptableUsePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="3. Prohibited Conduct">
+        <LegalSection title="4. Prohibited Conduct">
           <p>You must not use the Service to:</p>
           <ul className="list-disc pl-5">
             <li>Store or share unlawful, obscene, defamatory, harassing, or infringing content.</li>
@@ -52,6 +67,7 @@ export default function AcceptableUsePage() {
               Reverse engineer, attack, overload, or otherwise interfere with the platform or its
               infrastructure.
             </li>
+            <li>Circumvent security safeguards, access controls, or audit mechanisms.</li>
             <li>Share credentials with unauthorised third parties.</li>
             <li>Gain unauthorised access to another account or impersonate another user.</li>
             <li>
@@ -62,21 +78,33 @@ export default function AcceptableUsePage() {
               Host non-educational or unrelated products that compromise performance or violate the
               security of SquareCampus.
             </li>
+            <li>
+              Misuse AI features, including attempting to extract sensitive data, bypass safeguards,
+              or automate decisions without institutional approval.
+            </li>
           </ul>
         </LegalSection>
 
-        <LegalSection title="4. Security, Enforcement, and Reporting">
+        <LegalSection title="5. Security, Enforcement, and Reporting">
           <p>
             We may suspend or terminate access if we observe activities that threaten the Service,
             violate applicable laws, or place an undue burden on the platform. Institutions remain
             responsible for the conduct of their users.
           </p>
           <p>
-            Please report suspected abuse or vulnerabilities to{" "}
+            Please report suspected abuse to{" "}
             <a href="mailto:support@squarecampus.com" className="text-white">
               support@squarecampus.com
             </a>{" "}
+            and security vulnerabilities to{" "}
+            <a href="mailto:security@squarecampus.com" className="text-white">
+              security@squarecampus.com
+            </a>{" "}
             so we can act swiftly.
+          </p>
+          <p>
+            We welcome good-faith security research and responsible disclosure. If you report a
+            vulnerability responsibly and do not exploit it, we will not pursue action against you.
           </p>
         </LegalSection>
       </div>

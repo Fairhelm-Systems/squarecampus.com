@@ -43,75 +43,75 @@ const featureData: Array<{
   gradient: string;
   stats: Array<{ icon: IconComponent; value: string; label: string }>;
 }> = [
-  {
-    title: "Realtime academic intelligence",
-    description:
-      "See the health of every class, branch, and student in one view so you can intervene early, no more stitching spreadsheets.",
-    shortDescription: "Live academic health across every class and branch.",
-    points: [
-      "Live attendance, engagement, and performance signals",
-      "Drill to class, branch, or student in seconds",
-      "Board-ready exports for leadership and auditors",
-    ],
-    icon: Activity,
-    gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
-    stats: [
-      { icon: TrendingUp, value: "100%", label: "Real-time" },
-      { icon: Zap, value: "<1 sec", label: "Insights" },
-    ],
-  },
-  {
-    title: "Student lifecycle automation",
-    description:
-      "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
-    shortDescription: "Admissions to exams on one shared timeline.",
-    points: [
-      "Guided workflows from inquiry → graduation",
-      "Automated alerts for approvals, dues, transport, and hostel",
-      "Templates that mirror your institutional policies",
-    ],
-    icon: Workflow,
-    gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
-    stats: [
-      { icon: Zap, value: "93%", label: "Automated" },
-      { icon: TrendingUp, value: "18 hrs/wk", label: "Saved" },
-    ],
-  },
-  {
-    title: "Unified communication & engagement",
-    description:
-      "Send the right message to the right audience with proof of delivery so parents, staff, and students stay aligned.",
-    shortDescription: "Targeted messaging with delivery proof built in.",
-    points: [
-      "Multichannel announcements (email, SMS, app)",
-      "Two-way teacher-guardian collaboration with controls",
-      "Consent management, read receipts, and audit trails",
-    ],
-    icon: Radio,
-    gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
-    stats: [
-      { icon: TrendingUp, value: "97%", label: "Reach rate" },
-      { icon: Zap, value: "4x faster", label: "Delivery" },
-    ],
-  },
-  {
-    title: "Infrastructure you can trust",
-    description:
-      "Security, scale, and uptime that feel invisible so your campuses stay online and compliant year after year.",
-    shortDescription: "Secure, compliant, and always-on infrastructure.",
-    points: [
-      "Encrypted storage and role-based access at every layer",
-      "24x7 monitoring, backups, and global delivery",
-      "Friendly integrations with LMS, ERP, and payments",
-    ],
-    icon: Shield,
-    gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
-    stats: [
-      { icon: Shield, value: "99.98%", label: "Uptime" },
-      { icon: CheckCircle2, value: "Zero", label: "Breaches" },
-    ],
-  },
-];
+    {
+      title: "Realtime academic intelligence",
+      description:
+        "See the health of every class, branch, and student in one view so you can intervene early, no more stitching spreadsheets.",
+      shortDescription: "Live academic health across every class and branch.",
+      points: [
+        "Live attendance, engagement, and performance signals",
+        "Drill to class, branch, or student in seconds",
+        "Board-ready exports for leadership and auditors",
+      ],
+      icon: Activity,
+      gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
+      stats: [
+        { icon: TrendingUp, value: "100%", label: "Real-time" },
+        { icon: Zap, value: "<1 sec", label: "Insights" },
+      ],
+    },
+    {
+      title: "Student lifecycle automation",
+      description:
+        "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
+      shortDescription: "Admissions to exams on one shared timeline.",
+      points: [
+        "Guided workflows from inquiry → graduation",
+        "Automated alerts for approvals, dues, transport, and hostel",
+        "Templates that mirror your institutional policies",
+      ],
+      icon: Workflow,
+      gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
+      stats: [
+        { icon: Zap, value: "93%", label: "Automated" },
+        { icon: TrendingUp, value: "18 hrs/wk", label: "Saved" },
+      ],
+    },
+    {
+      title: "Unified communication & engagement",
+      description:
+        "Send the right message to the right audience with proof of delivery so parents, staff, and students stay aligned.",
+      shortDescription: "Targeted messaging with delivery proof built in.",
+      points: [
+        "Multichannel announcements (email, SMS, app)",
+        "Two-way teacher-guardian collaboration with controls",
+        "Consent management, read receipts, and audit trails",
+      ],
+      icon: Radio,
+      gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
+      stats: [
+        { icon: TrendingUp, value: "97%", label: "Reach rate" },
+        { icon: Zap, value: "4x faster", label: "Delivery" },
+      ],
+    },
+    {
+      title: "Infrastructure you can trust",
+      description:
+        "Security, scale, and uptime that feel invisible so your campuses stay online and compliant year after year.",
+      shortDescription: "Secure, compliant, and always-on infrastructure.",
+      points: [
+        "Encrypted storage and role-based access at every layer",
+        "24x7 monitoring, backups, and global delivery",
+        "Friendly integrations with LMS, ERP, and payments",
+      ],
+      icon: Shield,
+      gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
+      stats: [
+        { icon: Shield, value: "99.98%", label: "Uptime" },
+        { icon: CheckCircle2, value: "Zero", label: "Breaches" },
+      ],
+    },
+  ];
 
 export function Features() {
   const cardsRef = useRef<HTMLDivElement | null>(null);
@@ -887,66 +887,66 @@ export const LanguageSupportSection = () => {
               "after:absolute after:inset-0 after:bg-[linear-gradient(-115deg,transparent,rgba(255,255,255,0.04),transparent)] after:opacity-20"
             )}
           >
-              <div className="flex items-start justify-between gap-3 relative z-10">
-                <div>
-                  <p className="text-[0.65rem] uppercase tracking-[0.35em] text-neutral-400">
-                    Language selected
-                  </p>
-                  <h3
-                    id="language-greeting-title"
-                    className="mt-1 text-sm font-semibold text-white flex items-center gap-2"
-                  >
-                    <span>{active.nativeName}</span>
-                    <span className="text-neutral-400 text-xs">({active.englishName})</span>
-                    <span className="inline-flex items-center justify-center rounded-md border border-white/10 bg-neutral-900/80 px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-neutral-500">
-                      {active.code}
-                    </span>
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setActive(null)}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900 text-neutral-300 hover:border-neutral-300 hover:text-white hover:rotate-90 transition-transform duration-200"
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              </div>
-
-              <div className="mt-4 space-y-3 text-sm text-neutral-200">
-                {/* Greeting Bubble */}
-                <p
-                  lang={active.locale}
-                  className={cn(
-                    "rounded-xl bg-neutral-900/60 border border-white/10 px-4 py-2 shadow-inner shadow-black/20",
-                    active.fontClass
-                  )}
-                >
-                  {active.greetingNative ?? active.greetingEnglish}
+            <div className="flex items-start justify-between gap-3 relative z-10">
+              <div>
+                <p className="text-[0.65rem] uppercase tracking-[0.35em] text-neutral-400">
+                  Language selected
                 </p>
-
-                {active.greetingNative && (
-                  <p className="text-[0.8rem] text-neutral-400">{active.greetingEnglish}</p>
-                )}
+                <h3
+                  id="language-greeting-title"
+                  className="mt-1 text-sm font-semibold text-white flex items-center gap-2"
+                >
+                  <span>{active.nativeName}</span>
+                  <span className="text-neutral-400 text-xs">({active.englishName})</span>
+                  <span className="inline-flex items-center justify-center rounded-md border border-white/10 bg-neutral-900/80 px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-neutral-500">
+                    {active.code}
+                  </span>
+                </h3>
               </div>
+              <button
+                type="button"
+                onClick={() => setActive(null)}
+                className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900 text-neutral-300 hover:border-neutral-300 hover:text-white hover:rotate-90 transition-transform duration-200"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
 
-              {/* Example UI snippet */}
-              <div className="mt-4 rounded-xl border border-white/10 bg-neutral-900/60 p-3 text-xs text-neutral-300 font-medium">
-                <p lang={active.locale} className={cn("leading-relaxed", active.fontClass)}>
-                  {active.notificationNative ?? active.notificationEnglish}
-                </p>
-                {active.notificationNative && (
-                  <p className="mt-1 text-[0.7rem] text-neutral-500">
-                    {active.notificationEnglish}
-                  </p>
+            <div className="mt-4 space-y-3 text-sm text-neutral-200">
+              {/* Greeting Bubble */}
+              <p
+                lang={active.locale}
+                className={cn(
+                  "rounded-xl bg-neutral-900/60 border border-white/10 px-4 py-2 shadow-inner shadow-black/20",
+                  active.fontClass
                 )}
-              </div>
-
-              <p className="mt-4 text-[0.78rem] text-neutral-400 leading-relaxed">
-                SquareCampus adapts key experiences into{" "}
-                <span className="font-semibold text-neutral-100">{active.englishName}</span>: parent
-                apps, notifications, attendance updates, fee reminders, while admins can continue
-                working in English if they prefer.
+              >
+                {active.greetingNative ?? active.greetingEnglish}
               </p>
+
+              {active.greetingNative && (
+                <p className="text-[0.8rem] text-neutral-400">{active.greetingEnglish}</p>
+              )}
+            </div>
+
+            {/* Example UI snippet */}
+            <div className="mt-4 rounded-xl border border-white/10 bg-neutral-900/60 p-3 text-xs text-neutral-300 font-medium">
+              <p lang={active.locale} className={cn("leading-relaxed", active.fontClass)}>
+                {active.notificationNative ?? active.notificationEnglish}
+              </p>
+              {active.notificationNative && (
+                <p className="mt-1 text-[0.7rem] text-neutral-500">
+                  {active.notificationEnglish}
+                </p>
+              )}
+            </div>
+
+            <p className="mt-4 text-[0.78rem] text-neutral-400 leading-relaxed">
+              SquareCampus adapts key experiences into{" "}
+              <span className="font-semibold text-neutral-100">{active.englishName}</span>: parent
+              apps, notifications, attendance updates, fee reminders, while admins can continue
+              working in English if they prefer.
+            </p>
           </div>
         </div>
       )}

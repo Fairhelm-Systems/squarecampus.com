@@ -34,23 +34,76 @@ const heroStats = [
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isCompact, setIsCompact] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    const update = () => setIsCompact(window.innerWidth < 640);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    if (!heroRef.current || !headingRef.current || !descriptionRef.current) return;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      const words = headingRef.current?.querySelectorAll("span") ?? [];
+      const tl = gsap.timeline();
+
+      const subheaderWords =
+        descriptionRef.current?.querySelectorAll(".js-hero-subheader span") ?? [];
+
+      tl.fromTo(
+        words,
+        { autoAlpha: 0, y: 18 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: 0.025,
+        }
+      )
+        .fromTo(
+          subheaderWords,
+          { autoAlpha: 0, y: 12 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power3.out",
+            stagger: 0.012,
+          },
+          "-=0.25"
+        )
+        .fromTo(
+          ".js-hero-dashboard",
+          { autoAlpha: 0, y: 20, scale: 0.98 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" },
+          "-=0.15"
+        );
+
+      gsap.to(".js-hero-monitor", {
+        y: -4,
+        duration: 9,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
     <div
       id="home"
+      ref={heroRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-4 py-12 md:px-8 md:py-24"
     >
       <BackgroundLines />
 
-      <div className="text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-neutral-300 md:text-7xl">
+      <div
+        ref={headingRef}
+        className="text-balance relative z-20 mx-auto mb-4 mt-4 max-w-4xl text-center text-3xl font-semibold tracking-tight text-neutral-300 md:text-7xl"
+      >
         <h2>
           <Balancer>
             {"The operating system that keeps every school day in sync"
@@ -64,11 +117,18 @@ export function Hero() {
         </h2>
       </div>
       <p
-        className="relative z-20 mx-auto mt-4 max-w-xl px-4 text-center text-base/6 text-gray-200"
+        ref={descriptionRef}
+        className="relative z-20 mx-auto mt-4 max-w-xl overflow-hidden px-4 text-center text-base/6 text-gray-200"
       >
-        SquareCampus is an all-in-one OS for schools and colleges, connecting admissions, academics,
-        finance, communication, and compliance in one responsive command center. Every team works
-        from the same playbook with zero manual stitching.
+        <span className="js-hero-subheader block">
+          {"SquareCampus is an all-in-one OS for schools and colleges, connecting admissions, academics, finance, communication, and compliance in one responsive command center. Every team works from the same playbook with zero manual stitching."
+            .split(" ")
+            .map((word, index) => (
+              <span className="inline-block" key={index}>
+                {word}&nbsp;
+              </span>
+            ))}
+        </span>
       </p>
       <div className="relative z-20 mt-8 grid w-full max-w-3xl grid-cols-1 gap-3 text-sm text-neutral-200 sm:grid-cols-3">
         {heroHighlights.map((highlight, idx) => (
@@ -102,16 +162,16 @@ export function Hero() {
 
       <div
         ref={containerRef}
-        className="relative mx-auto mt-8 md:mt-12 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[1400px] px-4"
+        className="js-hero-dashboard relative mx-auto mt-8 md:mt-12 w-full max-w-[95%] lg:max-w-[85%] xl:max-w-[1400px] px-4"
       >
-        {/* Stats cards - positioned to pop out from dashboard */}
-        <div className="relative z-5 grid w-full grid-cols-1 gap-2 px-2 text-center sm:absolute sm:left-0 sm:right-0 sm:top-0 sm:grid-cols-3 sm:-translate-y-20 sm:px-4 md:px-8">
+        {/* Stats cards use responsive padding to avoid hydration-time layout shifts. */}
+        <div className="relative z-5 grid w-full grid-cols-1 gap-2 px-2 text-center sm:absolute sm:left-1/2 sm:top-0 sm:w-[77%] sm:-translate-x-1/2 sm:-translate-y-20 sm:grid-cols-3 sm:px-0">
           {heroStats.map((stat, idx) => (
             <div
               key={stat.label}
               className={cn(
                 "rounded-2xl border border-neutral-800/60 bg-neutral-900/95 px-4 pt-4 text-center text-neutral-100 shadow-2xl shadow-black/50",
-                isCompact ? "pb-6 backdrop-blur-sm" : "pb-12 backdrop-blur-xl"
+                "pb-6 backdrop-blur-sm sm:pb-12 sm:backdrop-blur-xl"
               )}
             >
               <p className="text-lg font-semibold text-white">{stat.value}</p>
@@ -121,19 +181,24 @@ export function Hero() {
         </div>
 
         <div className="pointer-events-none absolute inset-0 rounded-[28px] border border-white/10 [mask-image:linear-gradient(180deg,rgba(255,255,255,0.25),rgba(255,255,255,0.05))]" />
-        {/* Monitor-style container with 16:9 aspect ratio */}
-        <div className="relative rounded-3xl border border-neutral-800/60 bg-gradient-to-b from-neutral-900/90 to-black z-10 p-3 md:p-6 lg:p-8 shadow-2xl shadow-black/50">
-          <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(147,51,234,0.09),transparent_25%)]" />
-          <div className="relative w-full aspect-video rounded-2xl border border-neutral-700/60 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 overflow-hidden shadow-inner shadow-black/60">
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)1px,transparent_1px)] bg-[size:90px_90px]" />
-            <div className="absolute inset-8 rounded-2xl border border-white/10" />
-            <div className="relative z-10 h-full w-full">
-              <DashboardShowcase />
+        <div className="relative z-10 w-full">
+          <div className="js-hero-monitor relative w-full aspect-[1500/906]">
+            <img
+              src="/images/marketing/splash.svg"
+              alt=""
+              className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+              loading="eager"
+              decoding="async"
+              aria-hidden="true"
+            />
+            <div className="absolute left-[10.2%] top-[3.3%] h-[84.3%] w-[79.9%] overflow-hidden rounded-[18px] bg-black sm:rounded-[22px] md:rounded-[24px]">
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)1px,transparent_1px)] bg-[size:90px_90px] opacity-50" />
+              <div className="absolute inset-6 rounded-2xl border border-white/10" />
+              <div className="relative z-10 h-full w-full">
+                <DashboardShowcase />
+              </div>
             </div>
           </div>
-          {/* Monitor stand effect */}
-          <div className="mx-auto mt-6 h-3 w-40 md:w-48 rounded-t-xl bg-gradient-to-b from-neutral-800 to-neutral-900" />
-          <div className="mx-auto h-2 w-56 md:w-64 rounded-b-lg bg-gradient-to-b from-neutral-900 to-neutral-950" />
         </div>
       </div>
     </div>
@@ -250,7 +315,7 @@ const departmentDeck: Array<{
     },
   ];
 
-function DashboardShowcase() {
+export function DashboardShowcase() {
   const [current, setCurrent] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const surfaceRef = useRef<HTMLDivElement | null>(null);

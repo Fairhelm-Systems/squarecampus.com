@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { BookCallCta, LoginCta } from "@/components/marketing/ctas";
+import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO_CONFIG, createBreadcrumbSchema, createWebPageSchema } from "@/lib/seo";
@@ -36,6 +36,21 @@ const faqItems = [
     question: "How is data secured inside the school management system?",
     answer:
       "Role-based access, scoped permissions, SSO readiness, encryption in transit and at rest, activity logs, and export controls keep data safe. Every action is traceable.",
+  },
+  {
+    question: "How is school data protected and accessed securely?",
+    answer:
+      "Access is role-based and scoped by campus, department, and workflow. Encryption in transit and at rest protects data, and immutable audit trails show every change with user and timestamp.",
+  },
+  {
+    question: "Can we see documentation for your security posture?",
+    answer:
+      "Yes. We can share a security and compliance pack with data flow summaries, subprocessors, and incident response overview upon request.",
+  },
+  {
+    question: "Do you support secure SSO integrations with our identity provider?",
+    answer:
+      "We are SSO-ready and can align with your identity provider for scoped, role-based access and streamlined onboarding.",
   },
   {
     question: "What does pricing look like?",
@@ -114,9 +129,9 @@ export default function SchoolManagementSystemPage() {
                   attendance, fees, exams, communication, transport, and compliance stay connected
                   so nothing slips.
                 </p>
-                <p className="text-neutral-300">
-                  If this page vanished, Google should feel a hole in the matrix. Start here, ship
-                  fast, and let every other page point back to this crown.
+                <p>
+                  Unified operations. Compliance built in. Enterprise-grade security and audit
+                  trails help reduce risk for principals, CIOs, and procurement teams.
                 </p>
               </div>
 
@@ -133,9 +148,14 @@ export default function SchoolManagementSystemPage() {
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <BookCallCta context="sms-hero" label="Book a call" variant="primary" />
-                <LoginCta context="sms-hero" variant="dark" />
                 <Link
-                  href="/#operations"
+                  href="/#contact-us"
+                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/40 hover:bg-white/10"
+                >
+                  Contact Us
+                </Link>
+                <Link
+                  href="/ecosystem"
                   className="text-sm font-semibold text-emerald-200 underline-offset-4 hover:text-white hover:underline"
                 >
                   See how the workflows connect
@@ -374,6 +394,69 @@ export default function SchoolManagementSystemPage() {
             </Card>
           </div>
 
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <Card className="relative overflow-hidden border-white/10 bg-neutral-900/70">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_60%)]" />
+              <CardContent className="relative space-y-4 p-6">
+                <h3 className="text-2xl font-semibold text-white">
+                  Data Governance & Access Controls
+                </h3>
+                <p className="text-sm text-neutral-300 sm:text-base">
+                  Built for Indian schools. Audited workflows. Traceable outcomes that align with
+                  compliance expectations.
+                </p>
+                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
+                  {[
+                    "Role-based access with fine-grained scopes across campuses, departments, and modules.",
+                    "TLS 1.3 in transit and AES-256 at rest for sensitive records.",
+                    "SSO and identity federation readiness with scoped permission exports.",
+                    "Immutable change logs tied to user identity and timestamps.",
+                    "Admin review dashboards to track access and change trends.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <Link
+                    href={
+                      "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
+                    }
+                    className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-200"
+                  >
+                    Request Security & Compliance Pack
+                  </Link>
+                  <BookCallCta context="sms-governance" label="Book a Demo" variant="dark" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="relative overflow-hidden border-white/10 bg-white/5">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_60%)]" />
+              <CardContent className="relative space-y-4 p-6">
+                <h3 className="text-2xl font-semibold text-white">Device & Endpoint Assurance</h3>
+                <p className="text-sm text-neutral-300 sm:text-base">
+                  Managed device posture helps ensure only compliant, up-to-date devices connect to
+                  school systems.
+                </p>
+                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
+                  {[
+                    "Remote wipe and lockout controls on corporate devices.",
+                    "Browser and session controls to reduce unsafe access.",
+                    "Device health checks help enforce secure access standards.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="relative overflow-hidden border-white/10 bg-white/5">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_55%)]" />
@@ -417,6 +500,54 @@ export default function SchoolManagementSystemPage() {
               </CardContent>
             </Card>
           </div>
+
+          <Card className="relative overflow-hidden border-white/10 bg-neutral-900/70">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.12),transparent_60%)]" />
+            <CardContent className="relative space-y-4 p-6">
+              <h2 className="text-3xl font-semibold text-white">Operational Compliance Support</h2>
+              <p className="text-sm text-neutral-300 sm:text-base">
+                Support complex fee plans, CBSE/ICSE norms, and multi-branch autonomy with audit-ready
+                workflows and data governance that match Indian compliance expectations.
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
+                  {[
+                    "Alignment with DPDPA and local education data guidelines.",
+                    "Audit-ready logs with traceable approvals and exports.",
+                    "Regular internal reviews and penetration testing to maintain risk posture.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
+                  {[
+                    "Data flow diagrams, subprocessors list, and incident response plan summary available on request.",
+                    "Vendor security questionnaire support for procurement teams.",
+                    "Clear data residency posture for Indian institutions.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href={
+                    "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
+                  }
+                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/30 hover:bg-white/10"
+                >
+                  Request Security & Compliance Pack
+                </Link>
+                <BookCallCta context="sms-compliance" label="Book a Demo" variant="primary" />
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="relative overflow-hidden border-white/10 bg-white/5">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.12),transparent_55%)]" />
@@ -530,8 +661,15 @@ export default function SchoolManagementSystemPage() {
                 the academic calendar.
               </p>
               <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <BookCallCta context="sms-bottom" variant="primary" />
-                <LoginCta context="sms-bottom" variant="dark" />
+                <Link
+                  href={
+                    "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
+                  }
+                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/40 hover:bg-white/10"
+                >
+                  Request Security & Compliance Pack
+                </Link>
+                <BookCallCta context="sms-bottom" label="Book a Demo" variant="primary" />
               </div>
             </div>
           </section>
