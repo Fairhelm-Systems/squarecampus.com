@@ -17,7 +17,7 @@ export default function EcosystemPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/ecosystem`;
   const pageName = "SquareCampus Ecosystem";
   const pageDescription =
-    "Connected ecosystem for school management: admin console, teacher tools, mobile apps, integrations, security, and AI. One platform, multiple touchpoints, single source of truth.";
+    "Connected ecosystem for school management: admin console, teacher tools, mobile apps, integrations, and security. One platform, multiple touchpoints, single source of truth.";
 
   const webPageSchema = createWebPageSchema({
     name: pageName,

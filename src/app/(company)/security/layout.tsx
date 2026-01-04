@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Trust & Security | SquareCampus",
   description:
-    "SquareCampus protects your institution's data with bank-grade security, compliance-ready infrastructure, transparent audit trails, and 24-hour breach notification.",
+    "SquareCampus protects your institution's data with bank-grade security, compliance-ready infrastructure, and transparent audit trails.",
   path: "/security",
   keywords: [
     "school ERP security",
@@ -20,7 +20,7 @@ export const metadata: Metadata = createPageMetadata({
   ogDescription:
     "Bank-grade security, compliance-ready infrastructure, and transparent data practices for Indian educational institutions.",
   twitterDescription:
-    "How SquareCampus protects your institution's data: encryption, compliance, audit trails, and 24-hour breach notification.",
+    "How SquareCampus protects your institution's data: encryption, compliance, and audit trails.",
 });
 
 type SecurityLayoutProps = {

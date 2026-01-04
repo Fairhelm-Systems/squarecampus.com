@@ -22,7 +22,7 @@ import { Logo } from "./logo";
 import { ArrowUpRight } from "../icons";
 
 const contactHighlights = [
-  "Response in under 24 hours",
+  "Response windows shared after inquiry",
   "Strategic onboarding for every campus",
   "Dedicated customer success and security reviews",
 ];
@@ -115,11 +115,11 @@ export function ContactUs() {
               <p className="text-sm text-white">contact@squarecampus.com</p>
             </a>
             <a
-              href="tel:+1800123XX21"
+              href="#contact-form"
               className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left transition hover:border-white"
             >
               <p className="text-xs uppercase tracking-[0.4em] text-white/50">Call</p>
-              <p className="text-sm text-white">+1 (800) 123 XX21</p>
+              <p className="text-sm text-white">Request a callback</p>
             </a>
           </div>
 
@@ -150,7 +150,7 @@ export function ContactUs() {
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Go-live</p>
-              <p className="text-lg font-semibold text-white">Under 7 days</p>
+              <p className="text-lg font-semibold text-white">Guided rollout</p>
               <p className="text-xs text-neutral-300">Migration + role-based training</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
@@ -160,7 +160,7 @@ export function ContactUs() {
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Support</p>
-              <p className="text-lg font-semibold text-white">24x7</p>
+              <p className="text-lg font-semibold text-white">Responsive</p>
               <p className="text-xs text-neutral-300">Dedicated success partner</p>
             </div>
           </div>

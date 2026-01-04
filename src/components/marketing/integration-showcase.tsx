@@ -80,11 +80,11 @@ export function IntegrationShowcase() {
             Integrations & APIs
           </div>
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Plug Into Your Existing Stack
+            Connect to the tools you already trust
           </h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            SquareCampus plays well with others. Connect to payment gateways, messaging platforms,
-            cloud storage, and build custom integrations with our comprehensive API.
+            SquareCampus keeps workflows connected while integrating with payment gateways, messaging
+            platforms, and cloud storage through secure APIs.
           </p>
         </motion.div>
 
@@ -142,11 +142,11 @@ export function IntegrationShowcase() {
           <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 shadow-2xl">
             <div className="mb-4 flex items-center gap-3">
               <Webhook className="h-5 w-5 text-sky-400" />
-              <h3 className="text-xl font-semibold text-white">Developer-Friendly API</h3>
-            </div>
-            <p className="mb-6 text-sm text-neutral-300">
-              Build custom integrations, automate workflows, and extend SquareCampus with our RESTful API.
-            </p>
+            <h3 className="text-xl font-semibold text-white">Developer-Friendly API</h3>
+          </div>
+          <p className="mb-6 text-sm text-neutral-300">
+              Build custom integrations, automate workflows, and extend SquareCampus with secure APIs.
+          </p>
 
             {/* Code snippet */}
             <div className="overflow-hidden rounded-lg border border-white/10 bg-neutral-950">

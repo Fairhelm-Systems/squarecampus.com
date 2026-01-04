@@ -57,12 +57,12 @@ const ecosystemItems: EcosystemItem[] = [
     tag: "Enterprise",
   },
   {
-    label: "AI Layer",
-    title: "Intelligent campus ops",
+    label: "Operations layer",
+    title: "Operational intelligence",
     description:
-      "Predictive timetables, anomaly detection, parent nudges, and staffing insights powered by SquareCampus AI.",
+      "Timetable support, anomaly detection, parent nudges, and staffing insights tied to real workflows.",
     icon: Sparkles,
-    tag: "Intelligent",
+    tag: "Insight",
   },
 ];
 
@@ -223,8 +223,8 @@ export function EcosystemSection() {
           One platform. Multiple touchpoints. Single source of truth.
         </h2>
         <p className="max-w-2xl text-xs text-neutral-400 sm:text-sm md:text-base">
-          SquareCampus isn&apos;t just an ERP screen for admins. It&apos;s a connected ecosystem for
-          management, staff, parents, and students, with integrations that keep data flowing without
+          SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected ecosystem for leadership,
+          staff, parents, and students, with integrations that keep data flowing without
           duplication.
         </p>
       </div>
@@ -351,9 +351,9 @@ export function EcosystemSection() {
 
           <div className="mt-2 grid gap-2 sm:grid-cols-3">
             {[
-              { label: "Data sync", value: "Every 5s" },
-              { label: "Events/day", value: "120K+" },
-              { label: "Roles", value: "25+" },
+              { label: "Data sync", value: "Always on" },
+              { label: "Events/day", value: "High volume" },
+              { label: "Roles", value: "Granular" },
             ].map((item) => (
               <div
                 key={item.label}

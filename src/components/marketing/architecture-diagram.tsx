@@ -224,7 +224,7 @@ export function ArchitectureDiagram() {
             {
               icon: Zap,
               title: "High Performance",
-              description: "Sub-second response times with intelligent caching and CDN delivery",
+              description: "Fast response times with intelligent caching and CDN delivery",
               color: "from-yellow-500 to-orange-500",
             },
             {
@@ -236,19 +236,19 @@ export function ArchitectureDiagram() {
             {
               icon: Lock,
               title: "Bank-Grade Security",
-              description: "Encrypted data, SOC 2 compliant infrastructure, regular security audits",
+              description: "Encrypted data, SOC 2-aligned practices, regular security audits",
               color: "from-emerald-500 to-green-500",
             },
             {
               icon: Activity,
-              title: "99.9% Uptime",
+              title: "High Availability",
               description: "Multi-region deployment with automatic failover and health monitoring",
               color: "from-purple-500 to-violet-500",
             },
             {
               icon: Database,
-              title: "Daily Backups",
-              description: "Automated backups with point-in-time recovery up to 30 days",
+              title: "Regular Backups",
+              description: "Automated backups with point-in-time recovery",
               color: "from-rose-500 to-pink-500",
             },
             {

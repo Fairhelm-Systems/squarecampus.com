@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { SEO_CONFIG } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Ecosystem | SquareCampus - Connected School Management Platform",
+  title: "Ecosystem | SquareCampus - Connected School OS",
   description:
-    "Explore the SquareCampus ecosystem: admin console, teacher tools, parent & student apps, integrations, security layer, and AI-powered operations. One platform, multiple touchpoints, single source of truth.",
+    "Explore the SquareCampus ecosystem: admin console, teacher tools, parent & student apps, integrations, and security. One platform, multiple touchpoints, single source of truth.",
   keywords: [
     "school management ecosystem",
     "connected campus platform",
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     "university management system India",
   ],
   openGraph: {
-    title: "Ecosystem - SquareCampus Connected School Platform",
+    title: "Ecosystem - SquareCampus Connected School OS",
     description:
-      "One platform with multiple touchpoints: admin console, teacher workspace, mobile apps for parents & students, integrations, and AI layer. Single source of truth.",
+      "One platform with multiple touchpoints: admin console, teacher workspace, mobile apps for parents & students, integrations, and security. Single source of truth.",
     url: `${SEO_CONFIG.baseUrl}/ecosystem`,
     type: "website",
     locale: "en_IN",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ecosystem - SquareCampus Connected School Platform",
+    title: "Ecosystem - SquareCampus Connected School OS",
     description:
-      "Admin console, teacher tools, mobile apps, integrations, and AI. One platform, multiple touchpoints, single source of truth.",
+      "Admin console, teacher tools, mobile apps, integrations, and security. One platform, multiple touchpoints, single source of truth.",
     images: [`${SEO_CONFIG.baseUrl}/og-image.png`],
   },
   alternates: {

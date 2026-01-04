@@ -44,37 +44,37 @@ const featureData: Array<{
   stats: Array<{ icon: IconComponent; value: string; label: string }>;
 }> = [
     {
-      title: "Realtime academic intelligence",
+      title: "Live academic visibility",
       description:
-        "See the health of every class, branch, and student in one view so you can intervene early, no more stitching spreadsheets.",
+        "See the health of every class, branch, and student in one view so you can intervene early without stitching spreadsheets.",
       shortDescription: "Live academic health across every class and branch.",
       points: [
-        "Live attendance, engagement, and performance signals",
-        "Drill to class, branch, or student in seconds",
-        "Board-ready exports for leadership and auditors",
+        "Attendance, engagement, and performance signals in one view",
+        "Drill to class, branch, or student without reconciling exports",
+        "Board-ready summaries for leadership and audits",
       ],
       icon: Activity,
       gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
       stats: [
-        { icon: TrendingUp, value: "100%", label: "Real-time" },
-        { icon: Zap, value: "<1 sec", label: "Insights" },
+        { icon: TrendingUp, value: "Live", label: "Signals" },
+        { icon: Zap, value: "Fast", label: "Insights" },
       ],
     },
     {
-      title: "Student lifecycle automation",
+      title: "Student lifecycle orchestration",
       description:
         "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
       shortDescription: "Admissions to exams on one shared timeline.",
       points: [
         "Guided workflows from inquiry → graduation",
-        "Automated alerts for approvals, dues, transport, and hostel",
+        "Alerts for approvals, dues, transport, and hostel",
         "Templates that mirror your institutional policies",
       ],
       icon: Workflow,
       gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
       stats: [
-        { icon: Zap, value: "93%", label: "Automated" },
-        { icon: TrendingUp, value: "18 hrs/wk", label: "Saved" },
+        { icon: Zap, value: "Connected", label: "Workflows" },
+        { icon: TrendingUp, value: "Less", label: "Rework" },
       ],
     },
     {
@@ -90,25 +90,25 @@ const featureData: Array<{
       icon: Radio,
       gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
       stats: [
-        { icon: TrendingUp, value: "97%", label: "Reach rate" },
-        { icon: Zap, value: "4x faster", label: "Delivery" },
+        { icon: TrendingUp, value: "Clear", label: "Reach" },
+        { icon: Zap, value: "Timely", label: "Delivery" },
       ],
     },
     {
       title: "Infrastructure you can trust",
       description:
-        "Security, scale, and uptime that feel invisible so your campuses stay online and compliant year after year.",
+        "Security, scale, and uptime that stay calm in the background so campuses stay online and compliant.",
       shortDescription: "Secure, compliant, and always-on infrastructure.",
       points: [
         "Encrypted storage and role-based access at every layer",
-        "24x7 monitoring, backups, and global delivery",
-        "Friendly integrations with LMS, ERP, and payments",
+        "Monitoring, backups, and clear incident response",
+        "Integrations with LMS, ERP, and payments",
       ],
       icon: Shield,
       gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
       stats: [
-        { icon: Shield, value: "99.98%", label: "Uptime" },
-        { icon: CheckCircle2, value: "Zero", label: "Breaches" },
+        { icon: Shield, value: "Resilient", label: "Uptime" },
+        { icon: CheckCircle2, value: "Auditable", label: "Controls" },
       ],
     },
   ];
@@ -233,11 +233,11 @@ export function Features() {
               Platform snapshot
             </p>
             <p className="mt-2 text-lg font-semibold text-white">
-              Beautiful, legible dashboards that keep decisions visible.
+              Clear dashboards that keep decisions visible.
             </p>
             <p className="mt-2 text-sm text-neutral-300">
-              Board-ready reports, compliance logs, and student journeys live in one place, no
-              exports needed.
+              Board-ready reports, compliance logs, and student journeys live in one place with
+              fewer exports.
             </p>
           </div>
           <Image
@@ -339,7 +339,7 @@ const FeatureVisual = () => {
             </li>
             <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-orange-400" />
-              <span>7-day rollout with migration, training, and implementation support.</span>
+              <span>Guided rollout with migration, training, and implementation support.</span>
             </li>
           </ul>
         </div>
@@ -370,18 +370,18 @@ const FeatureVisual = () => {
           <div className="grid gap-3 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Uptime</p>
-              <p className="text-lg font-semibold text-white">99.9%</p>
+              <p className="text-lg font-semibold text-white">Reliable</p>
               <p className="text-xs text-neutral-300">Monitored, resilient cloud</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Go-live</p>
-              <p className="text-lg font-semibold text-white">Under 7 days</p>
+              <p className="text-lg font-semibold text-white">Guided</p>
               <p className="text-xs text-neutral-300">Migration + training included</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
               <p className="text-xs uppercase tracking-[0.35em] text-white/50">Time saved</p>
-              <p className="text-lg font-semibold text-white">15–20 hrs</p>
-              <p className="text-xs text-neutral-300">Per team every week</p>
+              <p className="text-lg font-semibold text-white">Hours back</p>
+              <p className="text-xs text-neutral-300">Per team each week</p>
             </div>
           </div>
         </div>

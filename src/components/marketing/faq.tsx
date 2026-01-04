@@ -7,9 +7,9 @@ import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 
 const faqHighlights = [
-  "Launch and onboard in under seven working days",
-  "99.9% uptime on a modern, multi-tenant cloud",
-  "Dedicated success partner plus 24x7 support",
+  "Launch and onboard with a guided rollout",
+  "Resilient uptime on a modern cloud stack",
+  "Dedicated success partner plus responsive support",
 ];
 
 const FAQs = [
@@ -26,7 +26,7 @@ const FAQs = [
   {
     question: "How fast can we go live?",
     answer:
-      "Typical launch is under seven working days with migration support, role-based training, and a success partner to configure your policies and timelines.",
+      "Typical launch is measured in days, not months, with migration support, role-based training, and a success partner to configure your policies and timelines.",
   },
   {
     question: "How secure is our data?",
@@ -41,7 +41,7 @@ const FAQs = [
   {
     question: "Do you have mobile apps?",
     answer:
-      "Mobile apps are on the roadmap. Today, SquareCampus is fully responsive across devices so staff, students, and parents can act from any browser.",
+      "Yes. Parents and students use mobile apps, and staff have a full responsive web experience for day-to-day work.",
   },
   {
     question: "What about support after launch?",
@@ -51,12 +51,12 @@ const FAQs = [
   {
     question: "How do you price?",
     answer:
-      "Pricing is based on student count, modules selected, and branches. We tailor a quote to your context during the demo.",
+      "Pricing is based on student count and campus structure. We share a clear quote after understanding your workflows during the demo.",
   },
   {
     question: "How does SquareCampus prove ROI?",
     answer:
-      "Automation reduces manual hours, dues collection leakage drops, and leadership gets real-time insight, saving 15–20 hours per team weekly on average.",
+      "Automation reduces manual hours, collections get more predictable, and leadership sees live insight without manual consolidation.",
   },
   {
     question: "How often is the product updated?",
@@ -131,7 +131,7 @@ export function FAQ() {
               className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40"
             >
               <span>Email: support@squarecampus.com</span>
-              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">24h reply</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">Quick reply</span>
             </a>
             <Link
               href="#contact-us"

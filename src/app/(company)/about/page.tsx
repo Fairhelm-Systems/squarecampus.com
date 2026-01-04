@@ -248,8 +248,8 @@ export default function AboutPage() {
                     Operating posture
                   </div>
                   <p className="text-sm leading-relaxed text-neutral-200">
-                    Built for multi-campus complexity, India-first compliance, and a 24-hour breach
-                    notification promise backed by transparent audit trails.
+                    Built for multi-campus complexity, India-first compliance, and a breach
+                    notification commitment backed by transparent audit trails.
                   </p>
                   <div className="grid gap-4 grid-rows-3">
                     {heroStats.map((stat, idx) => (

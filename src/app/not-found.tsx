@@ -121,9 +121,9 @@ export default function NotFound() {
           className="mb-8 grid gap-4 sm:grid-cols-3"
         >
           {[
-            { label: "12 Modules", desc: "One Platform" },
-            { label: "7 Days", desc: "To Go Live" },
-            { label: "99.9%", desc: "Uptime SLA" },
+            { label: "Core Modules", desc: "One Platform" },
+            { label: "Guided Rollout", desc: "Go Live Support" },
+            { label: "Uptime SLA", desc: "Committed" },
           ].map((stat, i) => (
             <div
               key={stat.label}

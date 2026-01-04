@@ -8,9 +8,9 @@ export const SEO_CONFIG = {
   siteName: "SquareCampus",
   // Your category: School OS. Your search reality: “school management system”.
   // Our metadata must hold both truths without sounding confused.
-  defaultTitle: "SquareCampus | School Management System & School ERP in India",
+  defaultTitle: "SquareCampus | School OS & School Management System in India",
   defaultDescription:
-    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, compliance, and analytics in one connected School OS.",
+    "SquareCampus is the School OS for India—admissions, academics, fees, transport, communication, compliance, and analytics connected in one school management system.",
   defaultKeywords: [
     "school management system",
     "school management system India",

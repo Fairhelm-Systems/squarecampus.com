@@ -15,7 +15,7 @@ const faqItems = [
   {
     question: "How is SquareCampus different from legacy school ERPs?",
     answer:
-      "Legacy ERPs bolt modules together and feel like eight products that do not talk to each other. SquareCampus is architected as one operating system-shared database, consistent workflows, faster launches, and human support included.",
+      "Legacy ERPs bolt modules together and feel like separate products. SquareCampus is architected as one operating system: shared database, consistent workflows, and human support included.",
   },
   {
     question: "Does SquareCampus handle Indian fee structures and compliance?",
@@ -25,7 +25,7 @@ const faqItems = [
   {
     question: "How fast can we go live?",
     answer:
-      "Most schools launch in 7–14 days. We import historical data, run a parallel dry run, train admins and teachers, and then flip production with a rollback plan ready.",
+      "Most schools launch in days, not months. We import historical data, run a parallel dry run, train admins and teachers, and then go live with a rollback plan ready.",
   },
   {
     question: "Is there a mobile experience for parents and staff?",
@@ -55,7 +55,7 @@ const faqItems = [
   {
     question: "What does pricing look like?",
     answer:
-      "Transparent, all-inclusive pricing based on students and staff. No per-module surprises, no hidden mobile fees, and implementation plus training are included.",
+      "Transparent pricing based on students and staff. No per-module surprises, no hidden mobile fees, and implementation plus training are included.",
   },
   {
     question: "Can SquareCampus integrate with our existing tools?",
@@ -86,7 +86,7 @@ export default function SchoolManagementSystemPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/school-management-system`;
   const pageName = "School Management System for Indian Schools";
   const pageDescription =
-    "SquareCampus is a school management system built for Indian schools-fees, attendance, exams, communication, and compliance in one unified operating system.";
+    "SquareCampus is a school management system built for Indian schools-fees, attendance, exams, communication, and compliance in one unified School OS.";
 
   const webPageSchema = createWebPageSchema({
     name: pageName,
@@ -124,8 +124,9 @@ export default function SchoolManagementSystemPage() {
               <div className="max-w-2xl space-y-3 text-base leading-relaxed text-neutral-200 sm:text-lg md:text-xl">
                 <p>
                   A school management system should be the operating manual of your campus—not a
-                  stack of disconnected tools. SquareCampus is school ERP software built for India,
-                  defining, running, and auditing daily operations in one place: admissions,
+                  stack of disconnected tools. Sometimes labeled as school ERP software, but
+                  SquareCampus is a School OS built for India—defining, running, and auditing daily
+                  operations in one place: admissions,
                   attendance, fees, exams, communication, transport, and compliance stay connected
                   so nothing slips.
                 </p>
@@ -136,7 +137,7 @@ export default function SchoolManagementSystemPage() {
               </div>
 
               <div className="flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-200">
-                {["7-14 day launch", "Single source of truth", "Compliance baked in"].map((item) => (
+                {["Guided rollout", "Single source of truth", "Compliance baked in"].map((item) => (
                   <span
                     key={item}
                     className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5"
@@ -187,9 +188,9 @@ export default function SchoolManagementSystemPage() {
                   />
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {[
-                    { label: "Time to launch", value: "7-14 days" },
-                    { label: "Modules included", value: "All" },
+                    {[
+                    { label: "Time to launch", value: "Guided rollout" },
+                    { label: "Modules included", value: "Unified platform" },
                     { label: "Support", value: "Human + product" },
                   ].map((item) => (
                     <Card
@@ -582,8 +583,8 @@ export default function SchoolManagementSystemPage() {
                   },
                   {
                     title: "Implementation",
-                    us: "7–14 days with parallel run and live training.",
-                    them: "6–12 months with endless customization tickets.",
+                    us: "Guided rollout with parallel run and live training.",
+                    them: "Months of customization tickets and delays.",
                   },
                   {
                     title: "Pricing",

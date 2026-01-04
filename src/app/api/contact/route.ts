@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
       console.warn("[contact] Honeypot triggered");
       return NextResponse.json({
         success: true,
-        message: "Thank you! We'll get back to you within 24 hours.",
+        message: "Thank you! We'll get back to you soon with next steps.",
       });
     }
 
@@ -538,7 +538,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message:
-        "Thank you! We'll get back to you within 24 hours. You can submit another inquiry in 5 minutes if needed.",
+        "Thank you! We'll get back to you soon. You can submit another inquiry in 5 minutes if needed.",
     });
   } catch (error) {
     console.error("[contact] Contact form error:", error);

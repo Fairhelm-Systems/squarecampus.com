@@ -17,13 +17,13 @@ export function WhyDifferent() {
   const painPoints = [
     {
       icon: Sparkles,
-      title: "AI That Actually Works",
+      title: "Automation That Actually Works",
       problem:
-        "\"AI-powered insights\" that stop at static charts. Lots of buzzwords, very little automation.",
-      problemShort: "AI slogans, no automation.",
+        "\"Smart insights\" that stop at static charts. Lots of buzzwords, very little automation.",
+      problemShort: "Slogans, no automation.",
       solution:
-        "Auto-categorize expenses, forecast enrollment, and ask questions in natural language. Real AI solving real problems.",
-      solutionShort: "Forecasting + auto-categorization + natural language queries.",
+        "Auto-categorize expenses, forecast enrollment, and build reports without manual exports.",
+      solutionShort: "Forecasting + auto-categorization + usable reports.",
       gradient: "from-purple-500/20 via-pink-500/10",
       iconColor: "text-purple-400",
     },
@@ -41,13 +41,13 @@ export function WhyDifferent() {
     },
     {
       icon: Clock,
-      title: "7 Days, Not 6 Months",
+      title: "Days, Not Months",
       problem:
         "Quarter-long rollouts with repeated data imports and training resets. Time lost and momentum broken.",
       problemShort: "Quarter-long rollouts and redo cycles.",
       solution:
-        "Live in 7 days. Data migration and training included. Fast, guided onboarding without chaos.",
-      solutionShort: "Live in 7 days with migration + training.",
+        "Guided rollout with data migration and training included. Onboarding without chaos.",
+      solutionShort: "Guided rollout with migration + training.",
       gradient: "from-emerald-500/20 via-green-500/10",
       iconColor: "text-emerald-400",
     },
@@ -79,11 +79,11 @@ export function WhyDifferent() {
       icon: Zap,
       title: "Fast, Not \"Loading...\"",
       problem:
-        "Seconds-long loads and timeouts on results day. Basic lists should not feel like data migrations.",
+        "Long loads and timeouts on results day. Basic lists should not feel like data migrations.",
       problemShort: "Slow on critical days.",
       solution:
-        "Sub-second loads built for peak days: admissions, results, and fee deadlines.",
-      solutionShort: "Sub-second loads for peak days.",
+        "Fast loads built for peak days: admissions, results, and fee deadlines.",
+      solutionShort: "Fast loads for peak days.",
       gradient: "from-sky-500/20 via-cyan-500/10",
       iconColor: "text-sky-400",
     },
