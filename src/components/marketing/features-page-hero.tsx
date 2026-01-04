@@ -80,15 +80,16 @@ export function FeaturesPageHero() {
           </div>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
-            Every Feature You Need.
+            A School OS,
             <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Nothing You Don't.
+              not a feature pile.
             </span>
           </h1>
 
           <p className="mx-auto mb-10 max-w-3xl text-lg text-neutral-300 md:text-xl">
-            From admissions to graduation, SquareCampus handles every aspect of your institution.
-            No bolt-ons, no integrations, no compromises. Just one powerful platform.
+            From admissions to graduation, SquareCampus keeps every workflow connected across the
+            institution. One platform, one data model, one source of truth that holds steady during
+            peak weeks and inspection days.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">

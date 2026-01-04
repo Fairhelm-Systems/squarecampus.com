@@ -92,6 +92,17 @@ export const Bell = (props: IconProps) => (
   </svg>
 );
 
+export const Building2 = (props: IconProps) => (
+  <svg {...baseAttrs} {...props}>
+    <path d="M21 10V5a2 2 0 0 0-2-2h-6" />
+    <path d="M13 21h8" />
+    <path d="M13 10h8" />
+    <path d="M1 14v6a2 2 0 0 0 2 2h6" />
+    <rect width="7" height="5" x="10" y="16" rx="1" />
+    <rect width="7" height="5" x="17" y="16" rx="1" />
+  </svg>
+);
+
 export const BookOpen = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M12 7v14" />
@@ -173,6 +184,15 @@ export const ChevronDown = (props: IconProps) => (
 export const ChevronUp = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="m18 15-6-6-6 6" />
+  </svg>
+);
+
+export const ClipboardCheck = (props: IconProps) => (
+  <svg {...baseAttrs} {...props}>
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <rect width="4" height="4" x="16" y="4" rx="1" />
+    <path d="M16 12h-3a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h3" />
+    <path d="m9 12 2 2 4-4" />
   </svg>
 );
 

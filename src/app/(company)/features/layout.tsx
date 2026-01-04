@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { SEO_CONFIG } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Features | SquareCampus - Complete School Management Platform",
+  title: "Features | SquareCampus School OS for India",
   description:
-    "Explore SquareCampus features: real-time academic intelligence, student lifecycle automation, unified communication, multi-language support, and enterprise-grade infrastructure. One platform for admissions, academics, finance, and operations.",
+    "Explore SquareCampus features: connected workflows for admissions, academics, finance, communication, and operations. One School OS built for Indian institutions.",
   keywords: [
     "school management features",
     "school management system India",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "ICSE school management",
   ],
   openGraph: {
-    title: "Features - SquareCampus School Management Platform",
+    title: "Features - SquareCampus School OS",
     description:
-      "Real-time intelligence, automated workflows, unified communication, and enterprise infrastructure. Explore features that make SquareCampus the complete School OS.",
+      "Connected workflows, unified communication, and enterprise-grade controls. Explore features that make SquareCampus the School OS.",
     url: `${SEO_CONFIG.baseUrl}/features`,
     type: "website",
     locale: "en_IN",
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Features - SquareCampus School Management Platform",
+    title: "Features - SquareCampus School OS",
     description:
-      "Real-time intelligence, automated workflows, unified communication. Explore features that make SquareCampus the complete School OS.",
+      "Connected workflows and unified communication for Indian schools. Explore the SquareCampus School OS.",
     images: [`${SEO_CONFIG.baseUrl}/og-image.png`],
   },
   alternates: {

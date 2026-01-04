@@ -109,13 +109,13 @@ const LineGradient = ({ position }: { position: "left" | "right" }) => {
 const ctaHighlights = [
   "Replace admissions, academics, finance, and communication silos with one OS.",
   "Give staff live visibility, parents radical transparency, and students clarity.",
-  "Launch in under 7 days with migration, training, and a dedicated success partner.",
+  "Launch with guided migration, training, and a dedicated success partner.",
 ];
 
 const ctaSignals = [
-  { label: "Go-live", value: "< 7 days" },
-  { label: "Uptime", value: "99.9%" },
-  { label: "Teams saved", value: "15–20 hrs/wk" },
+  { label: "Go-live", value: "Guided" },
+  { label: "Uptime", value: "Resilient" },
+  { label: "Teams saved", value: "Hours back" },
 ];
 
 export function CTA() {

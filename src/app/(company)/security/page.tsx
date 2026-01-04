@@ -51,8 +51,8 @@ const heroSignals = [
 ];
 
 const heroStats = [
-  { label: "Uptime SLA", value: "99.9%", accent: "bg-emerald-500/20 text-emerald-200" },
-  { label: "Breach notify", value: "< 24h", accent: "bg-blue-500/15 text-blue-100" },
+  { label: "Uptime SLA", value: "Committed", accent: "bg-emerald-500/20 text-emerald-200" },
+  { label: "Breach notify", value: "Defined", accent: "bg-blue-500/15 text-blue-100" },
   { label: "Data residency", value: "India", accent: "bg-cyan-500/15 text-cyan-100" },
 ];
 
@@ -85,7 +85,7 @@ const securityFeatures: SecurityFeature[] = [
     description: "Complete visibility into every action and change",
     details: [
       "Immutable audit logs for all data changes",
-      "24x7 security monitoring and alerts",
+      "Continuous security monitoring and alerts",
       "Real-time threat detection",
       "Automated anomaly detection",
     ],
@@ -107,7 +107,7 @@ const securityFeatures: SecurityFeature[] = [
     description: "Reliable disaster recovery to protect against data loss",
     details: [
       "Daily automated backups with encryption",
-      "99.9% uptime SLA with redundancy",
+      "Uptime SLA commitments with redundancy",
       "Point-in-time recovery capabilities",
       "Tested disaster recovery procedures",
     ],
@@ -117,7 +117,7 @@ const securityFeatures: SecurityFeature[] = [
     title: "Incident Response",
     description: "Rapid response protocols for security events",
     details: [
-      "24-hour breach notification protocol",
+      "Defined breach notification protocol",
       "Dedicated incident response team",
       "Clear escalation procedures",
       "Post-incident analysis and reporting",
@@ -279,7 +279,8 @@ export default function SecurityPage() {
                 >
                   SquareCampus is a school OS and school management platform built for student data
                   security—combining data residency in India, encryption, audit trails, and
-                  continuous monitoring to protect daily campus operations.
+                  continuous monitoring to protect daily campus operations. It is the foundation
+                  for operational trust when teams are under pressure.
                 </motion.p>
 
                 <div className="grid gap-4 md:grid-cols-3">
@@ -321,7 +322,7 @@ export default function SecurityPage() {
                     Operational posture
                   </div>
                   <p className="text-sm leading-relaxed text-neutral-200">
-                    India data residency, quarterly DR drills, and a 24-hour breach notification
+                    India data residency, quarterly DR drills, and a defined breach notification
                     policy backed by a dedicated response team.
                   </p>
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -337,7 +338,7 @@ export default function SecurityPage() {
                   </div>
                   <div className="flex items-center gap-2 text-xs text-neutral-400">
                     <div className="h-2 w-2 rounded-full bg-emerald-400" />
-                    External VAPT annually + continuous monitoring every day.
+                    External VAPT annually + continuous monitoring.
                   </div>
                 </div>
               </motion.div>
@@ -758,7 +759,7 @@ export default function SecurityPage() {
               >
                 security@squarecampus.com
               </a>
-              . We take all reports seriously and will respond within 24 hours. We appreciate
+              . We take all reports seriously and will respond promptly. We appreciate
               responsible disclosure and will work with you to address any issues promptly.
             </p>
           </div>

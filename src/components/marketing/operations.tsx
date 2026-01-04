@@ -24,20 +24,20 @@ const operationAreas: Array<{
   {
     title: "Admissions to alumni",
     description:
-      "Collect applications, shortlist, enroll, and keep alumni connected without switching tools.",
+      "Collect applications, shortlist, enroll, and keep alumni connected in one operating flow.",
     bullets: [
       "Smart forms, merit lists, and waitlists",
-      "Automated fee plans and document collection",
-      "Alumni CRM for placements and fundraising",
+      "Fee plans and document collection tied to admissions",
+      "Alumni records that stay linked to student history",
     ],
     icon: GraduationCap,
     gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
-    metric: { label: "Faster enrollment", value: "3x" },
+    metric: { label: "Outcome", value: "Faster enrollments" },
   },
   {
     title: "Academics & assessments",
     description:
-      "Timetables, lesson plans, assessments, and grading stay perfectly in sync for every class.",
+      "Timetables, lesson plans, assessments, and grading stay in sync for every class.",
     bullets: [
       "Curriculum mapping and subject allocation",
       "Digital gradebooks with moderation controls",
@@ -45,12 +45,12 @@ const operationAreas: Array<{
     ],
     icon: BookOpen,
     gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
-    metric: { label: "Admin time saved", value: "25+ hrs/wk" },
+    metric: { label: "Outcome", value: "Less admin churn" },
   },
   {
     title: "Finance & compliance",
     description:
-      "Transparent finances with automated reconciliations and audit-ready records for every branch.",
+      "Transparent finances with reconciliations and audit-ready records for every branch.",
     bullets: [
       "Fee schedules, waivers, and dues tracking",
       "Ledger exports with payment partner sync",
@@ -58,7 +58,7 @@ const operationAreas: Array<{
     ],
     icon: DollarSign,
     gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
-    metric: { label: "Collection rate", value: "↑ 40%" },
+    metric: { label: "Outcome", value: "Predictable collections" },
   },
   {
     title: "Communication that lands",
@@ -71,7 +71,7 @@ const operationAreas: Array<{
     ],
     icon: MessageSquare,
     gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
-    metric: { label: "Parent engagement", value: "98%" },
+    metric: { label: "Outcome", value: "Clearer reach" },
   },
   {
     title: "People, assets, and services",
@@ -84,7 +84,7 @@ const operationAreas: Array<{
     ],
     icon: Users,
     gradient: "from-rose-500/20 via-pink-500/10 to-transparent",
-    metric: { label: "Ops automated", value: "91%" },
+    metric: { label: "Outcome", value: "Fewer breakdowns" },
   },
   {
     title: "Data you can act on",
@@ -96,14 +96,14 @@ const operationAreas: Array<{
     ],
     icon: BarChart3,
     gradient: "from-sky-500/20 via-blue-500/10 to-transparent",
-    metric: { label: "Decisions faster", value: "5x" },
+    metric: { label: "Outcome", value: "Faster decisions" },
   },
 ];
 
 const dayInLife = [
-  "7:30 AM, attendance syncs from every class; no spreadsheets to reconcile.",
-  "10:00 AM, finance gets live fee recoveries and pending dues alerts.",
-  "1:00 PM, teachers publish graded assessments with moderated marks.",
+  "7:30 AM, attendance syncs from every class with no spreadsheets to reconcile.",
+  "10:00 AM, finance sees live fee recoveries and pending dues alerts.",
+  "1:00 PM, teachers publish assessments with moderated marks.",
   "4:00 PM, transport, hostel, and library logs roll into daily compliance.",
   "Evening, parents get tailored updates; leadership sees campus health in one view.",
 ];
@@ -242,15 +242,15 @@ export function Operations() {
             </h3>
             <p className="mt-2 text-sm text-neutral-200">
               Multi-branch institutions, independent schools, and colleges run daily operations on
-              SquareCampus with the same reliability: 99.9% uptime, enterprise-grade security, and
-              responsive support.
+              SquareCampus with the same reliability: enterprise-grade security, clear workflows,
+              and responsive support.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm text-white">
-            <Stat label="Time saved weekly" value="15–20 hrs" />
-            <Stat label="Manual errors reduced" value="↓ 60%" />
-            <Stat label="Launch window" value="< 7 days" />
-            <Stat label="Parent satisfaction" value="98%+" />
+            <Stat label="Time saved weekly" value="Hours reclaimed" />
+            <Stat label="Manual errors reduced" value="Fewer corrections" />
+            <Stat label="Launch window" value="Guided rollout" />
+            <Stat label="Parent experience" value="Clearer updates" />
           </div>
         </div>
       </div>

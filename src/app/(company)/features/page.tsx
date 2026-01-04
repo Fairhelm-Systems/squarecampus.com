@@ -15,7 +15,7 @@ export default function FeaturesPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/features`;
   const pageName = "SquareCampus Features";
   const pageDescription =
-    "Comprehensive features for school management: real-time academic intelligence, automated student lifecycle, unified communication, and enterprise infrastructure.";
+    "Connected features for school operations: admissions, academics, finance, communication, and enterprise controls in one School OS.";
 
   const webPageSchema = createWebPageSchema({
     name: pageName,

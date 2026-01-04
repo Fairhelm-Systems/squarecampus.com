@@ -97,7 +97,8 @@ export function EcosystemHero() {
 
             <p className="mb-8 text-lg text-neutral-300 md:text-xl">
               SquareCampus isn't just software—it's a complete ecosystem. Admin console, teacher tools,
-              mobile apps, integrations, and AI, all connected through a single source of truth.
+              mobile apps, integrations, and shared data flows connected through a single source of truth.
+              That backbone stays stable when campuses are stretched.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -125,9 +126,9 @@ export function EcosystemHero() {
             {/* Stats */}
             <div className="mt-12 grid grid-cols-3 gap-6">
               {[
-                { value: "6", label: "Core Modules" },
-                { value: "20+", label: "Integrations" },
-                { value: "1", label: "Source of Truth" },
+                { value: "Core", label: "Modules" },
+                { value: "Growing", label: "Integrations" },
+                { value: "Single", label: "Source of truth" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -176,7 +177,7 @@ export function EcosystemHero() {
                 { label: "Parents", angle: 120, ring: 1 },
                 { label: "Students", angle: 180, ring: 1 },
                 { label: "API", angle: 240, ring: 1 },
-                { label: "AI", angle: 300, ring: 1 },
+                { label: "Insights", angle: 300, ring: 1 },
               ].map((node, index) => {
                 const radius = 140;
                 const x = Math.cos((node.angle * Math.PI) / 180) * radius;

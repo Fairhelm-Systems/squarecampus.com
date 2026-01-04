@@ -195,7 +195,8 @@ export default function AboutPage() {
                   reconciliations, and fragile processes. SquareCampus gives you a single nervous
                   system to run admissions, academics, finance, and compliance with clarity and
                   trust. Our team has built systems that process 100M+ records per day with strict
-                  efficiency, and we bring that same operational discipline to education.
+                  efficiency, and we bring that same operational discipline to education. We build
+                  for the days when institutions are under pressure, not just the quiet ones.
                 </motion.p>
 
                 <div className="flex flex-wrap gap-3">
@@ -248,8 +249,8 @@ export default function AboutPage() {
                     Operating posture
                   </div>
                   <p className="text-sm leading-relaxed text-neutral-200">
-                    Built for multi-campus complexity, India-first compliance, and a 24-hour breach
-                    notification promise backed by transparent audit trails.
+                    Built for multi-campus complexity, India-first compliance, and a breach
+                    notification commitment backed by transparent audit trails.
                   </p>
                   <div className="grid gap-4 grid-rows-3">
                     {heroStats.map((stat, idx) => (

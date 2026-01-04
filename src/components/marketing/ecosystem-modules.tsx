@@ -167,8 +167,8 @@ export function EcosystemModules() {
             12 Modules. One Platform.
           </h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            Every module shares the same database, same user roles, same source of truth.
-            No integrations, no data silos, no complexity.
+            Every module shares the same database, identity, and source of truth.
+            Fewer handoffs, fewer sync issues, and clearer accountability.
           </p>
         </motion.div>
 
@@ -223,7 +223,7 @@ export function EcosystemModules() {
               </h3>
               <p className="text-sm text-neutral-400">
                 Every module accesses the same student data, same user roles, same permissions.
-                No duplicate entries, no data sync issues, no headaches.
+                Fewer duplicate entries and cleaner daily operations.
               </p>
             </div>
           </div>

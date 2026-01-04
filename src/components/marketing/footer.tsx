@@ -64,9 +64,9 @@ export function Footer() {
   ];
 
   const footerSignals = [
-    { label: "Uptime", value: "99.9%" },
-    { label: "Go-live", value: "< 7 days" },
-    { label: "Support", value: "24x7" },
+    { label: "Uptime", value: "Monitored" },
+    { label: "Go-live", value: "Guided" },
+    { label: "Support", value: "Responsive" },
   ];
 
   // Only LinkedIn – the one public signal we actually use.

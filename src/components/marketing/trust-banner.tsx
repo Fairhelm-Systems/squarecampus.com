@@ -118,7 +118,7 @@ export function TrustBanner() {
                 </svg>
               </Link>
               <p className="mt-3 text-[11px] text-neutral-500">
-                Annual audits, India data residency, no dark patterns.
+                Regular audits, India data residency, no dark patterns.
               </p>
             </motion.div>
           </div>
@@ -166,8 +166,8 @@ export function TrustBanner() {
                     <span className="flex items-center mt-1 h-full">Proof, not promises</span>
                   </div>
                   <p className="text-sm text-neutral-200">
-                    Annual VAPT, real-time anomaly detection, and breach-notify in 24 hours—no
-                    exceptions.
+                    Annual VAPT, anomaly detection, and defined breach-notify timelines backed by
+                    clear processes.
                   </p>
                   <ul className="space-y-2 text-[12px] text-neutral-400">
                     <li className="flex items-center gap-2">
@@ -203,15 +203,15 @@ export function TrustBanner() {
           >
             <div className="flex items-center gap-2 rounded-full bg-neutral-900/60 px-3 py-1.5 ring-1 ring-neutral-800">
               <div className="h-2 w-2 rounded-full bg-emerald-400" />
-              <span>99.9% Uptime SLA</span>
+              <span>Uptime commitments</span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-neutral-900/60 px-3 py-1.5 ring-1 ring-neutral-800">
               <div className="h-2 w-2 rounded-full bg-blue-400" />
-              <span>24x7 Security Monitoring</span>
+              <span>Security monitoring</span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-neutral-900/60 px-3 py-1.5 ring-1 ring-neutral-800">
               <div className="h-2 w-2 rounded-full bg-cyan-400" />
-              <span>Annual Third-Party Audits</span>
+              <span>Regular third-party audits</span>
             </div>
           </motion.div>
         </div>

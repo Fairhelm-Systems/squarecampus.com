@@ -41,19 +41,19 @@ export default function WhyDifferentPage() {
   const detailedComparisons = [
     {
       icon: Sparkles,
-      title: "AI That Earns Its Keep",
+      title: "Automation That Earns Its Keep",
       subtitle: "If it doesn't move a workflow, we don't ship it.",
       them: [
-        "\"AI-powered insights (its a bar chart)\" with no workflow automation",
-        "Charts that look smart but don't act smart",
+        "\"Smart insights\" that stop at static charts",
+        "Dashboards that look good but don't act",
         "Predictions promised, never operationalized",
       ],
-      themQuote: "“Our AI roadmap is exciting - you'll see it in the next release.”",
+      themQuote: "“Our automation roadmap is exciting - you'll see it in the next release.”",
       us: [
-        "AI that actually helps: auto-categorize expenses, predict enrollment trends",
-        "Natural language queries for complex reports",
-        "Smart scheduling that learns from historical patterns",
-        "Measured impact before launch, every time",
+        "Automation that helps: auto-categorize expenses, forecast enrollment trends",
+        "Action-ready reports without manual exports",
+        "Scheduling that reflects historical constraints",
+        "Measured operational impact before launch",
       ],
       gradient: "from-purple-500/20 via-pink-500/10",
       iconColor: "text-purple-400",
@@ -132,7 +132,7 @@ export default function WhyDifferentPage() {
         "Forever free updates and feature releases.",
         "Simple pricing: Based on max students + staff count. That's it.",
         "Generous storage included. Need more? Reasonable rates, not highway robbery.",
-        "Implementation (7 days) + Training included.",
+        "Implementation + training included.",
         "One invoice. Transparent pricing. No shell games.",
       ],
       gradient: "from-rose-500/20 via-red-500/10",
@@ -160,72 +160,71 @@ export default function WhyDifferentPage() {
   ];
 
   const stats = [
-    { label: "One unified system", value: "1", suffix: "" },
-    { label: "Products to juggle", value: "8+", suffix: "", isCompetitor: true },
-    { label: "Implementation time", value: "7", suffix: " days" },
-    { label: "Their implementation", value: "6-12", suffix: " months", isCompetitor: true },
+    { label: "Unified system", value: "1", suffix: "" },
+    { label: "Fragmented stack", value: "Many", suffix: "", isCompetitor: true },
+    { label: "Implementation time", value: "Days", suffix: "" },
+    { label: "Legacy rollouts", value: "Months", suffix: "", isCompetitor: true },
   ];
 
   const comparisonTableData = [
     {
       metric: "Products",
-      them: "8+",
-      us: "1",
+      them: "Many",
+      us: "One",
       themBad: true,
       animated: false,
       takeaway: "One platform",
       examples: {
         title: "The Product Maze",
         items: [
-          "SchoolPro™ + FeePro™ + AdmissionPro™",
-          "Each sold separately, of course",
-          "Want reports? That's ReportPro™ (extra)",
-          "Parent app? That's ParentConnect™ ($5k/year)",
-          "Total: 8+ products, 8+ invoices, 1 headache",
+          "Admissions + fees + academics sold separately",
+          "Reports locked behind another module",
+          "Parent app treated as an add-on",
+          "Multiple invoices, one headache",
         ],
       },
     },
     {
       metric: "Databases",
-      them: "8+",
-      us: "1",
+      them: "Many",
+      us: "One",
       themBad: true,
       animated: false,
       takeaway: "Single source",
       examples: {
         title: "Data Chaos",
         items: [
-          "Student data in DB1, fees in DB2, attendance in DB3...",
+          "Student data in one system, fees in another...",
           "Want a unified report? Good luck with that",
           "Data sync issues? \"Known limitation\"",
-          "8 databases = 8x the backup nightmares",
-          "One student, scattered across 8 systems",
+          "Multiple databases = multiple backup nightmares",
+          "One student, scattered across systems",
         ],
       },
     },
     {
       metric: "Login Systems",
-      them: "8+",
-      us: "1",
+      them: "Many",
+      us: "One",
       themBad: true,
       animated: false,
       takeaway: "One login",
       examples: {
         title: "Password Hell",
         items: [
-          "Different login for each module. Remember 8 passwords!",
+          "Different login for each module",
           "Admin portal, Parent portal, Teacher portal... all separate",
           "Password reset emails go to... which support team?",
-          "SSO? That's an enterprise add-on ($$$)",
+          "SSO treated as an enterprise add-on",
           "Students forget passwords weekly. Good luck, IT team.",
         ],
       },
     },
-    { metric: "Implementation", them: "180 days", us: "7 days", themBad: true, animated: false, takeaway: "Go live fast" },
+    { metric: "Implementation", them: "Months", us: "Days", themBad: true, animated: false, takeaway: "Go live fast" },
     {
       metric: "Support Teams",
-      them: "???",
-      us: 1,
+      them: "Multiple",
+      us: "Single",
       themBad: false,
       takeaway: "One team",
       examples: {
@@ -241,29 +240,62 @@ export default function WhyDifferentPage() {
     },
     {
       metric: "Hidden Fees",
-      them: "Many",
-      us: "Zero",
+      them: "Common",
+      us: "No surprises",
       themBad: true,
       takeaway: "No surprises",
       examples: {
         title: "The Fine Print",
         items: [
-          "Implementation: Extra. Data migration: Extra. Training: Extra.",
-          "Annual maintenance: 18-22% of license cost (surprise!)",
-          "Storage: 10GB free, then ₹5k/GB/month (!)",
+          "Implementation, migration, and training billed separately",
+          "Annual maintenance added after contract signature",
+          "Storage and exports charged as surprise line items",
           "Per-user licensing with complex tier calculations",
-          "Mobile app updates: Subscription within a subscription",
-          "Priority support: Only for platinum tier customers",
+          "Mobile apps gated behind add-ons",
+          "Priority support only for top-tier customers",
         ],
       },
     },
   ];
 
   const visualStats = [
-    { label: "Time to Value", themValue: 180, usValue: 7, icon: Clock },
-    { label: "System Complexity", themValue: 8, usValue: 1, icon: Puzzle },
-    { label: "Uptime %", themValue: 95, usValue: 99.9, icon: Shield },
-    { label: "Learning Curve (days)", themValue: 90, usValue: 7, icon: TrendingUp },
+    { label: "Time to value (relative)", themValue: 3, usValue: 9, icon: Clock },
+    { label: "System complexity (relative)", themValue: 9, usValue: 3, icon: Puzzle },
+    { label: "Operational reliability (relative)", themValue: 4, usValue: 8, icon: Shield },
+    { label: "Training effort (relative)", themValue: 8, usValue: 3, icon: TrendingUp },
+  ];
+
+  const positioningTable = [
+    {
+      aspect: "Data model",
+      schoolOS: "Single shared data model",
+      bundledErp: "Modules stitched with sync gaps",
+      pointTools: "Separate silos per tool",
+    },
+    {
+      aspect: "Workflows",
+      schoolOS: "Connected end-to-end flows",
+      bundledErp: "Module-by-module handoffs",
+      pointTools: "Manual handoffs between apps",
+    },
+    {
+      aspect: "Reporting",
+      schoolOS: "Live, auditable outputs",
+      bundledErp: "Exports + reconciliation",
+      pointTools: "Manual consolidation",
+    },
+    {
+      aspect: "Rollout",
+      schoolOS: "Guided rollout by campus",
+      bundledErp: "Heavy implementation projects",
+      pointTools: "DIY integration burden",
+    },
+    {
+      aspect: "Ownership",
+      schoolOS: "Single vendor accountability",
+      bundledErp: "Multiple teams and partners",
+      pointTools: "Many vendors, unclear ownership",
+    },
   ];
 
   return (
@@ -293,7 +325,7 @@ export default function WhyDifferentPage() {
             </h1>
 
             <p className="mx-auto mb-5 max-w-2xl text-lg text-neutral-300 md:text-xl">
-              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities across India—without breaking.
+              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One School OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities across India.
             </p>
             <p className="mx-auto mb-8 max-w-2xl text-base font-semibold uppercase tracking-[0.24em] text-emerald-300">
               Verdict: fragmented systems are the tax on growth. We remove the tax.
@@ -315,6 +347,45 @@ export default function WhyDifferentPage() {
               </LinkButton>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* School OS vs ERP vs Point Tools */}
+      <section className="border-b border-white/5 px-4 py-16 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <FloatingBadge className="text-neutral-400">
+              <Sparkles className="h-3 w-3" />
+              School OS vs the rest
+            </FloatingBadge>
+            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+              School OS vs Bundled ERP vs Point Tools
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
+              Clear differences that show up in day-to-day operations, not just on spec sheets.
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/70">
+            <div className="grid grid-cols-4 gap-4 border-b border-white/10 bg-neutral-950/60 px-6 py-4 text-xs uppercase tracking-[0.24em] text-neutral-500">
+              <div>Aspect</div>
+              <div className="text-emerald-300">School OS</div>
+              <div className="text-neutral-300">Bundled ERP</div>
+              <div className="text-neutral-300">Point Tools</div>
+            </div>
+            <div className="divide-y divide-white/5">
+              {positioningTable.map((row) => (
+                <div
+                  key={row.aspect}
+                  className="grid grid-cols-4 gap-4 px-6 py-4 text-sm text-neutral-200"
+                >
+                  <div className="text-neutral-300">{row.aspect}</div>
+                  <div className="text-emerald-200">{row.schoolOS}</div>
+                  <div className="text-neutral-400">{row.bundledErp}</div>
+                  <div className="text-neutral-400">{row.pointTools}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -365,6 +436,100 @@ export default function WhyDifferentPage() {
         </div>
       </section>
 
+      {/* Implementation reality */}
+      <section className="border-b border-white/5 px-4 py-16 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <FloatingBadge className="text-emerald-300">
+              <Check className="h-3 w-3" />
+              Implementation reality
+            </FloatingBadge>
+            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+              Onboarding without the theatre
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
+              Clear steps, real guardrails, and a rollout that matches how your institution actually works.
+            </p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: "Onboarding",
+                desc: "Workflow mapping with principals and admin teams before configuration.",
+              },
+              {
+                title: "Migration",
+                desc: "Structured data import with parallel runs to validate accuracy.",
+              },
+              {
+                title: "Training",
+                desc: "Role-based onboarding for admins, teachers, and finance teams.",
+              },
+              {
+                title: "Guardrails",
+                desc: "RBAC, approvals, and audit trails active from day one.",
+              },
+            ].map((item) => (
+              <Card
+                key={item.title}
+                className="border border-white/10 bg-neutral-900/70 shadow-xl shadow-black/20"
+              >
+                <CardContent className="space-y-2 p-5">
+                  <p className="text-sm font-semibold text-white">{item.title}</p>
+                  <p className="text-xs leading-relaxed text-neutral-300">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Works in demos vs works under pressure */}
+      <section className="border-b border-white/5 px-4 py-16 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <FloatingBadge className="text-sky-300">
+              <Shield className="h-3 w-3" />
+              Operational resilience
+            </FloatingBadge>
+            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+              Works in demos vs works on inspection day
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
+              The hardest days reveal whether a system is a brochure or a backbone.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="border border-white/10 bg-neutral-900/70 shadow-xl shadow-black/20">
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-rose-300">
+                  <X className="h-4 w-4" />
+                  Works in demos
+                </div>
+                <ul className="space-y-3 text-sm text-neutral-300">
+                  <li>Looks smooth in ideal data and quiet weeks.</li>
+                  <li>Breaks into exports and manual follow-ups under load.</li>
+                  <li>Requires heroic staff effort during audits and deadlines.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/10">
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                  <Check className="h-4 w-4" />
+                  Works on inspection day
+                </div>
+                <ul className="space-y-3 text-sm text-neutral-200">
+                  <li>Stays stable during peak admissions and fee spikes.</li>
+                  <li>Keeps workflows auditable when policies change mid-session.</li>
+                  <li>Gives teams clear, predictable operations under pressure.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Table Section */}
       <section className="relative border-b border-white/5 px-4 py-20 md:px-8 md:py-28">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -405,8 +570,8 @@ export default function WhyDifferentPage() {
             </div>
             <div className="grid gap-4">
               {[
-                { label: "Time to value", value: "7 days" },
-                { label: "Operational handoffs", value: "1 system" },
+                { label: "Time to value", value: "Days" },
+                { label: "Operational handoffs", value: "Single system" },
                 { label: "Support ownership", value: "Single team" },
               ].map((item) => (
                 <div
@@ -486,9 +651,9 @@ export default function WhyDifferentPage() {
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
-              { label: "Migration playbook", value: "7–14 days" },
-              { label: "Support response", value: "< 2 hours" },
-              { label: "Peak-day uptime", value: "99.9%" },
+              { label: "Migration playbook", value: "Guided rollout" },
+              { label: "Support response", value: "Responsive" },
+              { label: "Peak-day uptime", value: "Reliable" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -670,7 +835,7 @@ export default function WhyDifferentPage() {
               },
               {
                 title: "The Eternal Beta",
-                description: "\"Coming soon\" since 2019. Still coming.",
+                description: "\"Coming soon\" for years. Still coming.",
                 severity: "High",
                 icon: Clock,
                 iconClass: "text-orange-400",
@@ -684,7 +849,7 @@ export default function WhyDifferentPage() {
               },
               {
                 title: "The Upgrade Trap",
-                description: "Free tier unusable. Paid tier starts at ₹50k/year",
+                description: "Free tier unusable. Paid tier starts at a steep annual fee",
                 severity: "High",
                 icon: DollarSign,
                 iconClass: "text-amber-400",
@@ -698,7 +863,7 @@ export default function WhyDifferentPage() {
               },
               {
                 title: "The Support Void",
-                description: "Email-only support. Response time: 5-7 business days",
+                description: "Email-only support. Responses take multiple business days",
                 severity: "Medium",
                 icon: Users,
                 iconClass: "text-neutral-400",
@@ -961,7 +1126,7 @@ export default function WhyDifferentPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                      <span>Modern, responsive, sub-second loads</span>
+                      <span>Modern, responsive, fast loads</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="mt-0.5 h-4 w-4 text-emerald-400" />

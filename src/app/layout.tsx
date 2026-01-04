@@ -27,11 +27,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://squarecampus.com"),
   title: {
-    default: "SquareCampus | School Management System & School ERP in India",
+    default: "SquareCampus | School OS & School Management System in India",
     template: "%s | SquareCampus",
   },
   description:
-    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, compliance, and analytics in one connected School OS.",
+    "SquareCampus is the School OS for India—admissions, academics, fees, transport, communication, compliance, and analytics connected in one school management system.",
   keywords: [
     "school management system",
     "school management system India",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://squarecampus.com/",
-    title: "SquareCampus | School Management System & School ERP in India",
+    title: "SquareCampus | School OS & School Management System in India",
     description:
       "Run every campus day on rails with unified admissions, academics, fees, transport, communication, and compliance.",
     siteName: "SquareCampus",
@@ -71,9 +71,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SquareCampus | School Management System & School ERP in India",
+    title: "SquareCampus | School OS & School Management System in India",
     description:
-      "School management system for India: admissions, academics, fees, transport, and communication in one OS.",
+      "School management system for India: admissions, academics, fees, transport, and communication in one School OS.",
     images: ["https://cdn.squarecampus.in/application_files/logo-light.png"],
   },
   robots: {

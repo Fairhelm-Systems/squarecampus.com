@@ -28,32 +28,35 @@ const categories: Category[] = [
     features: [
       {
         name: "Online Application Portal",
-        description: "Accept applications 24/7 with customizable forms, document uploads, and payment integration.",
+        description:
+          "Collect applications with configurable forms, document uploads, and fee collection in one intake flow.",
         highlights: [
-          "Custom application forms per program",
-          "Document verification workflow",
-          "Application fee payment gateway",
-          "Automated acknowledgment emails",
+          "Replaces: paper forms and email threads",
+          "Operational shift: one intake workflow per program",
+          "Outputs: verified applicant lists and pending documents",
+          "Controls: role-based review and status tracking",
         ],
       },
       {
         name: "Admission Management",
-        description: "Track applicants through every stage from inquiry to enrollment with automated workflows.",
+        description:
+          "Move applicants from inquiry to enrollment with a single tracked workflow and clear ownership.",
         highlights: [
-          "Lead tracking and follow-ups",
-          "Interview scheduling automation",
-          "Merit list generation",
-          "Admission confirmation & fee collection",
+          "Replaces: spreadsheets and manual follow-ups",
+          "Operational shift: stage-by-stage approvals",
+          "Outputs: merit lists, offer letters, confirmations",
+          "Controls: audit trail for every status change",
         ],
       },
       {
         name: "Entrance Exam Management",
-        description: "Conduct entrance exams, grade automatically, and publish results seamlessly.",
+        description:
+          "Plan entrance exams, capture scores, and publish results within the same admissions flow.",
         highlights: [
-          "Online exam creation and scheduling",
-          "Automated grading and ranking",
-          "Result publication with analytics",
-          "Integration with admission workflow",
+          "Replaces: separate exam tools and CSV merges",
+          "Operational shift: scores flow into selection",
+          "Outputs: ranked lists and cutoff views",
+          "Controls: invigilator roles and result locks",
         ],
       },
     ],
@@ -66,32 +69,34 @@ const categories: Category[] = [
     features: [
       {
         name: "Fee Structure Management",
-        description: "Define complex fee structures per program, class, or student with discounts and installments.",
+        description:
+          "Model fee structures by program, class, or campus with concessions and installment plans.",
         highlights: [
-          "Multi-tier fee structures",
-          "Scholarships and discounts",
-          "Installment plans",
-          "Late fee automation",
+          "Replaces: fee charts in spreadsheets",
+          "Operational shift: centralized fee policy with campus overrides",
+          "Outputs: student fee plans and schedules",
+          "Controls: approvals for waivers and changes",
         ],
       },
       {
         name: "Payment Collection",
-        description: "Accept payments online, offline, and via multiple gateways with automated receipts.",
+        description:
+          "Collect fees across modes with auto-receipts and clean reconciliation hooks.",
         highlights: [
-          "UPI, cards, net banking, wallets",
-          "Cash/cheque counter collection",
-          "Auto-generated receipts",
-          "Payment reminders via SMS/email",
+          "Replaces: manual receipts and fragmented gateways",
+          "Operational shift: one collection ledger for all channels",
+          "Outputs: receipts, dues lists, reconciliation summaries",
+          "Controls: role-based refunds and adjustments",
         ],
       },
       {
         name: "Financial Reports",
-        description: "Real-time dashboards and audit-ready reports for complete financial visibility.",
+        description: "Audit-ready reports from live collections, dues, and approvals.",
         highlights: [
-          "Daily collection reports",
-          "Outstanding dues tracking",
-          "Expense management",
-          "Balance sheets and ledgers",
+          "Replaces: manual month-end consolidations",
+          "Operational shift: live financial visibility by campus",
+          "Outputs: ledgers, balance summaries, audit exports",
+          "Controls: approval history and audit trails",
         ],
       },
     ],
@@ -104,32 +109,35 @@ const categories: Category[] = [
     features: [
       {
         name: "Timetable & Scheduling",
-        description: "AI-powered timetable generation that avoids conflicts and optimizes resource allocation.",
+        description:
+          "Build conflict-free timetables aligned to faculty, rooms, and academic calendars.",
         highlights: [
-          "Automatic conflict detection",
-          "Teacher and room optimization",
-          "Substitute teacher management",
-          "Class rescheduling tools",
+          "Replaces: manual timetable grids",
+          "Operational shift: shared schedules across campuses",
+          "Outputs: class schedules and faculty allocations",
+          "Controls: conflict alerts and change logs",
         ],
       },
       {
         name: "Attendance Tracking",
-        description: "Biometric, RFID, or manual attendance with real-time sync and parent notifications.",
+        description:
+          "Capture attendance with multiple inputs and keep parents informed in real time.",
         highlights: [
-          "Multiple attendance modes",
-          "Period-wise and day-wise tracking",
-          "Automated absence alerts",
-          "Attendance analytics and reports",
+          "Replaces: paper registers and delayed uploads",
+          "Operational shift: attendance feeds reports instantly",
+          "Outputs: daily summaries and exception lists",
+          "Controls: role-based edits and audit logs",
         ],
       },
       {
         name: "Exam & Assessment",
-        description: "Conduct exams, record marks, calculate grades, and generate report cards automatically.",
+        description:
+          "Run exams, record marks, and publish report cards in one continuous flow.",
         highlights: [
-          "Flexible exam structures",
-          "Online and offline assessments",
-          "Auto grade calculation",
-          "Digital report cards",
+          "Replaces: disconnected exam tools and spreadsheets",
+          "Operational shift: marks flow into grading automatically",
+          "Outputs: report cards, rank lists, transcripts",
+          "Controls: moderation and approval steps",
         ],
       },
     ],
@@ -142,32 +150,35 @@ const categories: Category[] = [
     features: [
       {
         name: "Multi-Channel Messaging",
-        description: "Send announcements, alerts, and updates via SMS, email, app notifications, and WhatsApp.",
+        description:
+          "Send announcements, alerts, and updates through approved channels with delivery proof.",
         highlights: [
-          "Bulk messaging to groups",
-          "Scheduled announcements",
-          "Read receipts and delivery status",
-          "Two-way parent-teacher chat",
+          "Replaces: ad-hoc WhatsApp groups and SMS lists",
+          "Operational shift: role-aware broadcast and targeting",
+          "Outputs: delivery status and read receipts",
+          "Controls: approval gates for sensitive messages",
         ],
       },
       {
         name: "Parent Portal & App",
-        description: "Give parents 24/7 access to attendance, homework, fees, and school updates.",
+        description:
+          "Give families one place for attendance, homework, fees, and school updates.",
         highlights: [
-          "Real-time attendance updates",
-          "Homework and assignments",
-          "Fee dues and payment history",
-          "Event calendar and circulars",
+          "Replaces: scattered portals and notice boards",
+          "Operational shift: parents self-serve without office calls",
+          "Outputs: real-time updates and fee history",
+          "Controls: permissioned access per guardian",
         ],
       },
       {
         name: "Notice Board & Events",
-        description: "Centralized notice board for announcements, events, holidays, and important dates.",
+        description:
+          "Publish announcements, events, and calendars in one verified stream.",
         highlights: [
-          "Digital notice board",
-          "Event RSVP management",
-          "Holiday calendar",
-          "Photo gallery sharing",
+          "Replaces: paper circulars and manual follow-ups",
+          "Operational shift: scheduled notices with ownership",
+          "Outputs: event RSVPs and acknowledgements",
+          "Controls: publishing approval and audit trail",
         ],
       },
     ],
@@ -180,32 +191,32 @@ const categories: Category[] = [
     features: [
       {
         name: "Route & Vehicle Management",
-        description: "Plan routes, assign vehicles, track drivers, and manage transport schedules.",
+        description: "Plan routes, assign vehicles, and track transport compliance.",
         highlights: [
-          "Route optimization",
-          "Vehicle maintenance tracking",
-          "Driver assignment",
-          "Fuel and expense logs",
+          "Replaces: route sheets and manual registers",
+          "Operational shift: transport data tied to student records",
+          "Outputs: route rosters and driver logs",
+          "Controls: vehicle maintenance checklists",
         ],
       },
       {
         name: "Live GPS Tracking",
-        description: "Real-time bus tracking with ETA notifications for parents.",
+        description: "Provide live bus status and ETAs with clear alerts.",
         highlights: [
-          "Live bus location on map",
-          "Pickup/drop notifications",
-          "Delay alerts",
-          "Trip history and reports",
+          "Replaces: phone calls and manual ETA updates",
+          "Operational shift: real-time visibility for parents",
+          "Outputs: trip history and delay logs",
+          "Controls: exception alerts for deviations",
         ],
       },
       {
         name: "Transport Fee Management",
-        description: "Separate transport fee collection with route-wise charges and receipts.",
+        description: "Collect transport fees with route-wise pricing and receipts.",
         highlights: [
-          "Route-wise fee configuration",
-          "Integrated fee collection",
-          "Transport receipts",
-          "Monthly/quarterly billing",
+          "Replaces: separate fee sheets",
+          "Operational shift: transport dues flow into finance",
+          "Outputs: route-wise billing and receipts",
+          "Controls: fee approvals and audit trail",
         ],
       },
     ],
@@ -218,32 +229,32 @@ const categories: Category[] = [
     features: [
       {
         name: "Room Allocation",
-        description: "Manage hostel blocks, rooms, beds, and student allocation with ease.",
+        description: "Track blocks, rooms, and bed allocation with availability in view.",
         highlights: [
-          "Block and room master data",
-          "Bed allocation and swaps",
-          "Occupancy tracking",
-          "Room maintenance logs",
+          "Replaces: manual allocation registers",
+          "Operational shift: allocations tied to student records",
+          "Outputs: occupancy reports and waitlists",
+          "Controls: swap approvals and logs",
         ],
       },
       {
         name: "Hostel Fee & Billing",
-        description: "Separate hostel fee collection with mess charges, laundry, and other expenses.",
+        description: "Manage hostel fees, mess charges, and ancillary billing.",
         highlights: [
-          "Hostel fee configuration",
-          "Mess bill management",
-          "Guest charges",
-          "Integrated receipts",
+          "Replaces: separate hostel billing ledgers",
+          "Operational shift: hostel dues flow into finance",
+          "Outputs: billing schedules and receipts",
+          "Controls: approvals for concessions",
         ],
       },
       {
         name: "Attendance & Security",
-        description: "Track hostel attendance, visitor logs, and gate pass management.",
+        description: "Track hostel attendance, visitors, and gate passes with accountability.",
         highlights: [
-          "In/out tracking",
-          "Visitor registration",
-          "Gate pass approval",
-          "Night attendance",
+          "Replaces: paper gate registers",
+          "Operational shift: daily logs tied to student records",
+          "Outputs: visitor logs and exceptions",
+          "Controls: approval workflow for passes",
         ],
       },
     ],
@@ -256,32 +267,32 @@ const categories: Category[] = [
     features: [
       {
         name: "Book Cataloging",
-        description: "Maintain comprehensive book database with ISBN, categories, and availability status.",
+        description: "Maintain catalog with copies, categories, and availability status.",
         highlights: [
-          "ISBN-based cataloging",
-          "Multi-copy management",
-          "Category and author tagging",
-          "Digital library support",
+          "Replaces: card catalogs and ad-hoc lists",
+          "Operational shift: centralized catalog across campuses",
+          "Outputs: availability status and inventory lists",
+          "Controls: issuance policies by role",
         ],
       },
       {
         name: "Issue & Return",
-        description: "Track book issues, returns, renewals, and overdue fines automatically.",
+        description: "Track issues, returns, renewals, and overdue fines with due dates.",
         highlights: [
-          "Barcode/RFID scanning",
-          "Due date tracking",
-          "Auto fine calculation",
-          "Renewal requests",
+          "Replaces: manual issue slips",
+          "Operational shift: automated overdue tracking",
+          "Outputs: borrower history and fine reports",
+          "Controls: approvals for waivers",
         ],
       },
       {
         name: "Library Analytics",
-        description: "Insights on popular books, reading trends, and inventory utilization.",
+        description: "Understand usage trends and inventory needs.",
         highlights: [
-          "Most issued books",
-          "Student reading history",
-          "Lost/damaged tracking",
-          "Stock reports",
+          "Replaces: manual stock checks",
+          "Operational shift: live utilization insights",
+          "Outputs: popular titles and loss reports",
+          "Controls: audit-ready circulation logs",
         ],
       },
     ],
@@ -294,32 +305,32 @@ const categories: Category[] = [
     features: [
       {
         name: "Staff Management",
-        description: "Maintain complete employee records with documents, qualifications, and contracts.",
+        description: "Maintain employee records with documents, credentials, and contracts.",
         highlights: [
-          "Employee master data",
-          "Document repository",
-          "Leave management",
-          "Performance reviews",
+          "Replaces: paper files and scattered docs",
+          "Operational shift: centralized staff profile source",
+          "Outputs: compliance-ready staff records",
+          "Controls: access by role and department",
         ],
       },
       {
         name: "Payroll Processing",
-        description: "Automated salary calculation with allowances, deductions, and tax computations.",
+        description: "Calculate payroll with attendance and statutory deductions.",
         highlights: [
-          "Salary structure configuration",
-          "Attendance-linked payroll",
-          "TDS and compliance",
-          "Payslip generation",
+          "Replaces: manual salary sheets",
+          "Operational shift: payroll tied to attendance data",
+          "Outputs: payslips and payroll registers",
+          "Controls: approval workflow for payouts",
         ],
       },
       {
         name: "Staff Attendance",
-        description: "Biometric/RFID attendance for staff with shift management and overtime tracking.",
+        description: "Track staff attendance with shifts and overtime controls.",
         highlights: [
-          "Multiple attendance modes",
-          "Shift roster management",
-          "Overtime calculation",
-          "Leave approval workflow",
+          "Replaces: manual attendance registers",
+          "Operational shift: attendance flows into payroll",
+          "Outputs: shift summaries and exceptions",
+          "Controls: supervisor approvals",
         ],
       },
     ],
@@ -330,6 +341,11 @@ export function FeatureExplorer() {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [activeFeature, setActiveFeature] = useState(categories[0].features[0]);
   const featureRef = useRef<HTMLDivElement>(null);
+  const roleNav = [
+    { label: "Academics", categoryId: "academic" },
+    { label: "Administration", categoryId: "admissions" },
+    { label: "Finance", categoryId: "finance" },
+  ];
 
   useEffect(() => {
     if (!featureRef.current) return;
@@ -358,8 +374,29 @@ export function FeatureExplorer() {
             Explore by Category
           </h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            Dive deep into each module. Click a category to explore features in detail.
+            Dive deep into each module. Click a category to explore features built for calm,
+            predictable operations under load.
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs uppercase tracking-[0.3em] text-neutral-400">
+            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
+              Explore by role
+            </span>
+            {roleNav.map((role) => (
+              <button
+                key={role.label}
+                type="button"
+                onClick={() => {
+                  const nextCategory = categories.find((category) => category.id === role.categoryId);
+                  if (!nextCategory) return;
+                  setActiveCategory(nextCategory);
+                  setActiveFeature(nextCategory.features[0]);
+                }}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold tracking-[0.2em] text-neutral-200 transition hover:border-white/25 hover:text-white"
+              >
+                {role.label}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         <div className="grid gap-8 lg:grid-cols-[300px_1fr]">

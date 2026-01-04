@@ -10,13 +10,14 @@ import { Hero } from "@/components/marketing/hero";
 import { Navbar } from "@/components/marketing/navbar";
 import { Operations } from "@/components/marketing/operations";
 import { ParallaxSection } from "@/components/marketing/parallax-section";
+import { SchoolOsClarity } from "@/components/marketing/school-os-clarity";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhyDifferent } from "@/components/marketing/why-different";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | School Management System & School ERP in India",
+  title: "SquareCampus | School OS & School Management System in India",
   description:
-    "SquareCampus is a school management system built for India—admissions, academics, fees, transport, communication, and compliance in one connected School OS.",
+    "SquareCampus is the School OS for India—admissions, academics, fees, transport, communication, and compliance connected in one school management system.",
   keywords: [
     "school management system",
     "school management system India",
@@ -36,6 +37,9 @@ export default function Home() {
     <main className={"bg-black text-white"}>
       <Navbar />
       <Hero />
+      <ParallaxSection strength={28} glow={false}>
+        <SchoolOsClarity />
+      </ParallaxSection>
       <ParallaxSection strength={28} glow={false}>
         <Operations />
       </ParallaxSection>

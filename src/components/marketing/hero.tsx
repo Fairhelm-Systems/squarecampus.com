@@ -15,21 +15,21 @@ const heroHighlights = [
       "Admissions, academics, finance, facilities, and communication stay synced across every branch.",
   },
   {
-    title: "Automation for the day-to-day",
+    title: "Connected workflows",
     detail:
-      "Timetables, fee cycles, alerts, and approvals run on autopilot so teams focus on students.",
+      "Timetables, fee cycles, alerts, and approvals move in one connected flow, not separate tools.",
   },
   {
-    title: "Enterprise-grade trust",
+    title: "Auditable operations",
     detail:
-      "Role-based permissions, audit trails, and 24x7 monitoring keep staff, teachers, and parents aligned.",
+      "Role-based permissions and audit trails keep staff, teachers, and parents aligned.",
   },
 ];
 
 const heroStats = [
-  { value: "7 days", label: "Implementation window" },
-  { value: "99.9%", label: "Uptime across regions" },
-  { value: "15-20 hrs", label: "Weekly time saved per team" },
+  { value: "Guided rollout", label: "Implementation support" },
+  { value: "Reliable uptime", label: "Always-on operations" },
+  { value: "Time reclaimed", label: "Weekly admin relief" },
 ];
 
 export function Hero() {
@@ -106,7 +106,7 @@ export function Hero() {
       >
         <h2>
           <Balancer>
-            {"The operating system that keeps every school day in sync"
+            {"The School OS that keeps every campus day in sync"
               .split(" ")
               .map((word, index) => (
                 <span className="inline-block" key={index}>
@@ -121,7 +121,7 @@ export function Hero() {
         className="relative z-20 mx-auto mt-4 max-w-xl overflow-hidden px-4 text-center text-base/6 text-gray-200"
       >
         <span className="js-hero-subheader block">
-          {"SquareCampus is an all-in-one OS for schools and colleges, connecting admissions, academics, finance, communication, and compliance in one responsive command center. Every team works from the same playbook with zero manual stitching."
+          {"SquareCampus is the operating system for schools and colleges, connecting admissions, academics, finance, communication, and compliance in one responsive command center. Every team works from the same source of truth without manual stitching."
             .split(" ")
             .map((word, index) => (
               <span className="inline-block" key={index}>
@@ -302,9 +302,9 @@ const departmentDeck: Array<{
       icon: ShieldCheck,
       accentColor: "text-sky-300",
       stats: [
-        { label: "Uptime", value: "99.98%", detail: "Last 90 days" },
-        { label: "Access reviews", value: "12", detail: "Completed weekly" },
-        { label: "Alerts", value: "0 critical", detail: "Monitored 24x7" },
+        { label: "Uptime", value: "Stable", detail: "Recent period" },
+        { label: "Access reviews", value: "Scheduled", detail: "Completed weekly" },
+        { label: "Alerts", value: "No critical", detail: "Continuous monitoring" },
       ],
       signals: [
         { label: "IP control active", tone: "sky" },
@@ -604,9 +604,9 @@ function DepartmentCanvas({ active }: { active: (typeof departmentDeck)[number] 
               Health & uptime
             </p>
             <div className="grid gap-2 md:grid-cols-3">
-              <HealthStat label="API latency" value="28ms" tone="emerald" />
-              <HealthStat label="Load" value="42%" tone="sky" />
-              <HealthStat label="Uptime" value="99.98%" tone="emerald" />
+              <HealthStat label="API latency" value="Low" tone="emerald" />
+              <HealthStat label="Load" value="Normal" tone="sky" />
+              <HealthStat label="Uptime" value="Stable" tone="emerald" />
             </div>
             <div className="grid gap-2 md:grid-cols-2 pt-2">
               <DonutChart
