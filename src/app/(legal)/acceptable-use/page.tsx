@@ -14,8 +14,39 @@ export default function AcceptableUsePage() {
         Last Updated: 27 November 2025
       </p>
 
+      <nav
+        aria-label="Table of contents"
+        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
+            On this page
+          </p>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+            Jump to
+          </span>
+        </div>
+        <div className="mt-4 grid gap-3 text-xs text-muted-foreground sm:grid-cols-2">
+          {[
+            { label: "Company & Scope", href: "#company-scope" },
+            { label: "Scope and Purpose", href: "#scope-purpose" },
+            { label: "Permitted Use", href: "#permitted-use" },
+            { label: "Prohibited Conduct", href: "#prohibited-conduct" },
+            { label: "Security, Enforcement, and Reporting", href: "#security-enforcement" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <div className="space-y-10">
-        <LegalSection title="1. Company & Scope">
+        <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
             SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
             provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
@@ -28,7 +59,7 @@ export default function AcceptableUsePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="2. Scope and Purpose">
+        <LegalSection title="2. Scope and Purpose" id="scope-purpose">
           <p>
             The Service must be used for its intended academic and administrative purposes while
             respecting laws, institutional rules, and the rights of other users.
@@ -40,7 +71,7 @@ export default function AcceptableUsePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="3. Permitted Use">
+        <LegalSection title="3. Permitted Use" id="permitted-use">
           <p>Use SquareCampus to:</p>
           <ul className="list-disc pl-5">
             <li>
@@ -59,7 +90,7 @@ export default function AcceptableUsePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="4. Prohibited Conduct">
+        <LegalSection title="4. Prohibited Conduct" id="prohibited-conduct">
           <p>You must not use the Service to:</p>
           <ul className="list-disc pl-5">
             <li>Store or share unlawful, obscene, defamatory, harassing, or infringing content.</li>
@@ -85,7 +116,7 @@ export default function AcceptableUsePage() {
           </ul>
         </LegalSection>
 
-        <LegalSection title="5. Security, Enforcement, and Reporting">
+        <LegalSection title="5. Security, Enforcement, and Reporting" id="security-enforcement">
           <p>
             We may suspend or terminate access if we observe activities that threaten the Service,
             violate applicable laws, or place an undue burden on the platform. Institutions remain

@@ -37,7 +37,7 @@ export default function Home() {
     <main className={"bg-black text-white"}>
       <Navbar />
       <Hero />
-      <ParallaxSection strength={18} glow={false}>
+      <ParallaxSection strength={28} glow={false}>
         <SchoolOsClarity />
       </ParallaxSection>
       <ParallaxSection strength={28} glow={false}>
