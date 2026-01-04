@@ -374,7 +374,8 @@ export function FeatureExplorer() {
             Explore by Category
           </h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            Dive deep into each module. Click a category to explore features in detail.
+            Dive deep into each module. Click a category to explore features built for calm,
+            predictable operations under load.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs uppercase tracking-[0.3em] text-neutral-400">
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">

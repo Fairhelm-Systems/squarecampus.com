@@ -88,7 +88,8 @@ export function FeaturesPageHero() {
 
           <p className="mx-auto mb-10 max-w-3xl text-lg text-neutral-300 md:text-xl">
             From admissions to graduation, SquareCampus keeps every workflow connected across the
-            institution. One platform, one data model, one source of truth.
+            institution. One platform, one data model, one source of truth that holds steady during
+            peak weeks and inspection days.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">

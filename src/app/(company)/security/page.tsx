@@ -279,7 +279,8 @@ export default function SecurityPage() {
                 >
                   SquareCampus is a school OS and school management platform built for student data
                   security—combining data residency in India, encryption, audit trails, and
-                  continuous monitoring to protect daily campus operations.
+                  continuous monitoring to protect daily campus operations. It is the foundation
+                  for operational trust when teams are under pressure.
                 </motion.p>
 
                 <div className="grid gap-4 md:grid-cols-3">

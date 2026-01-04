@@ -225,7 +225,7 @@ export function EcosystemSection() {
         <p className="max-w-2xl text-xs text-neutral-400 sm:text-sm md:text-base">
           SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected ecosystem for leadership,
           staff, parents, and students, with integrations that keep data flowing without
-          duplication.
+          duplication. Fragmentation is a risk; one backbone removes it.
         </p>
       </div>
 

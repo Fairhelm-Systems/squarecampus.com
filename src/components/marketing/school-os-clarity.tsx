@@ -117,6 +117,17 @@ export function SchoolOsClarity() {
           </motion.div>
         </div>
 
+        <div className="rounded-3xl border border-white/10 bg-neutral-900/70 p-6 text-sm text-neutral-200">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
+            Operational resilience
+          </p>
+          <p className="mt-3">
+            SquareCampus is designed to keep working when reality gets messy, peak admissions,
+            fee spikes, audits, staffing changes, or mid-session policy shifts. The system stays
+            calm so teams can focus on decisions, not recovery.
+          </p>
+        </div>
+
         <div className="rounded-3xl border border-white/10 bg-neutral-900/70 p-6">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
             <Users className="h-3.5 w-3.5 text-blue-300" />

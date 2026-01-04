@@ -484,6 +484,52 @@ export default function WhyDifferentPage() {
         </div>
       </section>
 
+      {/* Works in demos vs works under pressure */}
+      <section className="border-b border-white/5 px-4 py-16 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <FloatingBadge className="text-sky-300">
+              <Shield className="h-3 w-3" />
+              Operational resilience
+            </FloatingBadge>
+            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+              Works in demos vs works on inspection day
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
+              The hardest days reveal whether a system is a brochure or a backbone.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="border border-white/10 bg-neutral-900/70 shadow-xl shadow-black/20">
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-rose-300">
+                  <X className="h-4 w-4" />
+                  Works in demos
+                </div>
+                <ul className="space-y-3 text-sm text-neutral-300">
+                  <li>Looks smooth in ideal data and quiet weeks.</li>
+                  <li>Breaks into exports and manual follow-ups under load.</li>
+                  <li>Requires heroic staff effort during audits and deadlines.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/10">
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                  <Check className="h-4 w-4" />
+                  Works on inspection day
+                </div>
+                <ul className="space-y-3 text-sm text-neutral-200">
+                  <li>Stays stable during peak admissions and fee spikes.</li>
+                  <li>Keeps workflows auditable when policies change mid-session.</li>
+                  <li>Gives teams clear, predictable operations under pressure.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Table Section */}
       <section className="relative border-b border-white/5 px-4 py-20 md:px-8 md:py-28">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
