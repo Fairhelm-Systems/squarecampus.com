@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { BrowserWarning } from "@/components/browser-warning";
 import { DevtoolsGuard } from "@/components/devtools-guard";
 import { ScrollBeam } from "@/components/marketing/scroll-beam";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -100,6 +101,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://app.squarecampus.com" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}>
+        <ScrollToTop />
         <DevtoolsGuard />
         <BrowserWarning />
         <ScrollBeam />

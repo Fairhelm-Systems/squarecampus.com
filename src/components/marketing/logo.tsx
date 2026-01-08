@@ -15,7 +15,7 @@ export const Logo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-white">SquareCampus</span>
+      <span className="text-xl font-medium text-white">SquareCampus</span>
     </Link>
   );
 };

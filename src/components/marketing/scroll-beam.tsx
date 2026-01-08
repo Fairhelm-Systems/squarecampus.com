@@ -1,59 +1,104 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/**
- * Neon scroll tracer that hugs the top edge of the viewport.
- *  - Responds to scroll progress in real time
- *  - Auto-hides shortly after scrolling stops
- *  - Pointer-events disabled so it never blocks clicks
- */
-export function ScrollBeam() {
-  const [visible, setVisible] = useState(false);
-  const hideTimer = useRef<NodeJS.Timeout | null>(null);
-  const beamRef = useRef<HTMLDivElement | null>(null);
+gsap.registerPlugin(ScrollTrigger);
+
+interface ScrollBeamProps {
+  /** Gradient colors for the bar */
+  colors?: {
+    from: string;
+    via?: string;
+    to: string;
+  };
+  /** Height of the bar in pixels */
+  height?: number;
+  /** Z-index for stacking */
+  zIndex?: number;
+  /** Position: top or bottom */
+  position?: "top" | "bottom";
+  /** Scrub smoothness (0 = instant, higher = smoother) */
+  scrub?: number;
+}
+
+export function ScrollBeam({
+  colors = { from: "rgb(16, 185, 129)", via: "rgb(59, 130, 246)", to: "rgb(157, 16, 185)" },
+  height = 1,
+  zIndex = 1000,
+  position = "top",
+  scrub = 0.3,
+}: ScrollBeamProps) {
+  const barRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      if (beamRef.current) {
-        gsap.to(beamRef.current, { scaleX: progress, duration: 0.2, ease: "power2.out" });
-      }
+    if (!barRef.current) return;
 
-      setVisible(true);
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-      hideTimer.current = setTimeout(() => setVisible(false), 900);
+    const bar = barRef.current;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const getMaxScroll = () =>
+      Math.max(1, ScrollTrigger.maxScroll(window) || document.documentElement.scrollHeight - window.innerHeight);
+
+    const setScale = gsap.quickTo(bar, "scaleX", {
+      duration: prefersReducedMotion ? 0 : scrub,
+      ease: "power2.out",
+    });
+
+    const syncProgress = () => {
+      const maxScroll = getMaxScroll();
+      const progress = maxScroll === 0 ? 0 : window.scrollY / maxScroll;
+      setScale(Math.min(Math.max(progress, 0), 1));
     };
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const refresh = () => ScrollTrigger.refresh();
+    const handleResize = () => {
+      refresh();
+      syncProgress();
+    };
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", syncProgress, { passive: true });
+    ScrollTrigger.addEventListener("refresh", syncProgress);
+
+    const resizeObserver = new ResizeObserver(() => refresh());
+    resizeObserver.observe(document.body);
+
+    const raf = requestAnimationFrame(() => {
+      refresh();
+      syncProgress();
+    });
+    const timeout = window.setTimeout(() => {
+      refresh();
+      syncProgress();
+    }, 400);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (hideTimer.current) clearTimeout(hideTimer.current);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", syncProgress);
+      ScrollTrigger.removeEventListener("refresh", syncProgress);
+      resizeObserver.disconnect();
+      cancelAnimationFrame(raf);
+      clearTimeout(timeout);
     };
-  }, []);
+  }, [scrub, pathname]);
+
+  const gradientStyle = colors.via
+    ? `linear-gradient(to right, ${colors.from}, ${colors.via}, ${colors.to})`
+    : `linear-gradient(to right, ${colors.from}, ${colors.to})`;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-2">
-      <div
-        ref={beamRef}
-        className="absolute inset-0 h-[4px] origin-left rounded-full"
-        style={{
-          opacity: visible ? 1 : 0,
-          background:
-            "linear-gradient(90deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.9) 55%, rgba(14,165,233,0.95) 100%)",
-          boxShadow: "0 0 25px rgba(56,189,248,0.6), 0 0 60px rgba(14,165,233,0.35)",
-          filter: "drop-shadow(0 0 12px rgba(56,189,248,0.4))",
-          transition: "opacity 0.25s ease-out",
-        }}
-      />
-      <div className="absolute inset-0 h-full bg-gradient-to-b from-sky-400/15 to-transparent blur-md" />
-    </div>
+    <div
+      ref={barRef}
+      className="pointer-events-none fixed left-0 w-full origin-left"
+      style={{
+        [position]: 0,
+        height: `${height}px`,
+        zIndex,
+        transform: "scaleX(0)",
+        background: gradientStyle,
+      }}
+    />
   );
 }

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/motion.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -298,6 +299,151 @@
   }
   100% {
     transform: translate3d(-80px, -60px, 0);
+  }
+}
+
+/* Card visual animations */
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-dash {
+  animation: dash 3s linear infinite;
+}
+
+.animate-draw {
+  animation: draw 2s ease-out forwards;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-grow-up {
+  animation: grow-up 1s ease-out forwards;
+}
+
+/* Finance chart cycle */
+.chart-bar-cycle {
+  animation: chart-bar-cycle 9s ease-in-out infinite;
+  transform-origin: 100px 100px;
+}
+
+.chart-pie-cycle {
+  animation: chart-pie-cycle 9s ease-in-out infinite;
+  transform-origin: 100px 100px;
+}
+
+.chart-column-cycle {
+  animation: chart-column-cycle 9s ease-in-out infinite;
+  transform-origin: 100px 100px;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes grow-up {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes chart-bar-cycle {
+  0%, 30% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  35%, 100% {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+}
+
+@keyframes chart-pie-cycle {
+  0%, 33% {
+    opacity: 0;
+    transform: scale(0.92) rotate(-6deg);
+  }
+  38%, 62% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  67%, 100% {
+    opacity: 0;
+    transform: scale(0.94) rotate(6deg);
+  }
+}
+
+@keyframes chart-column-cycle {
+  0%, 66% {
+    opacity: 0;
+    transform: scale(0.92) translateX(6px);
+  }
+  71%, 96% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.94) translateX(-4px);
   }
 }
 

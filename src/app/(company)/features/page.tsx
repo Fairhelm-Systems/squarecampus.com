@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { FeaturesPageHero } from "@/components/marketing/features-page-hero";
 import { FeatureExplorer } from "@/components/marketing/feature-explorer";
-import { LanguageSupportSection } from "@/components/marketing/features";
+import { LanguageSupport } from "@/components/marketing/language-support";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import {
   createWebPageSchema,
@@ -33,7 +33,7 @@ export default function FeaturesPage() {
       <div className="relative min-h-screen bg-neutral-950 text-white">
         <FeaturesPageHero />
         <FeatureExplorer />
-        <LanguageSupportSection />
+        <LanguageSupport />
 
         {/* Structured Data */}
         <Script
