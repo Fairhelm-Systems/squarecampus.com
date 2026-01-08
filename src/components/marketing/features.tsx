@@ -1,900 +1,352 @@
 "use client";
 
-import gsap from "gsap";
+import { useRef } from "react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useGsapReveal } from "@/lib/gsap-utils";
 import {
   Activity,
-  AlertTriangle,
-  Bell,
-  CheckCircle2,
-  Clock,
-  type IconComponent,
-  Languages,
   Radio,
   Shield,
-  TrendingUp,
   Workflow,
-  X,
-  Zap,
 } from "@/components/icons";
-import { useGsapReveal } from "@/lib/gsap-utils";
 import { cn } from "@/lib/utils";
 
-type LanguageMeta = {
-  code: string;
-  englishName: string;
-  nativeName: string;
-  locale: string;
-  glow: string;
-  fontClass?: string;
-  greetingNative?: string;
-  greetingEnglish: string;
-  notificationNative?: string;
-  notificationEnglish: string;
-};
-
-const featureData: Array<{
-  title: string;
-  description: string;
-  shortDescription: string;
-  points: string[];
-  icon: IconComponent;
-  gradient: string;
-  stats: Array<{ icon: IconComponent; value: string; label: string }>;
-}> = [
-    {
-      title: "Live academic visibility",
-      description:
-        "See the health of every class, branch, and student in one view so you can intervene early without stitching spreadsheets.",
-      shortDescription: "Live academic health across every class and branch.",
-      points: [
-        "Attendance, engagement, and performance signals in one view",
-        "Drill to class, branch, or student without reconciling exports",
-        "Board-ready summaries for leadership and audits",
-      ],
-      icon: Activity,
-      gradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
-      stats: [
-        { icon: TrendingUp, value: "Live", label: "Signals" },
-        { icon: Zap, value: "Fast", label: "Insights" },
-      ],
-    },
-    {
-      title: "Student lifecycle orchestration",
-      description:
-        "Admissions, timetables, exams, and fee cycles run on one timeline so your team prioritizes people over paperwork.",
-      shortDescription: "Admissions to exams on one shared timeline.",
-      points: [
-        "Guided workflows from inquiry → graduation",
-        "Alerts for approvals, dues, transport, and hostel",
-        "Templates that mirror your institutional policies",
-      ],
-      icon: Workflow,
-      gradient: "from-purple-500/20 via-violet-500/10 to-transparent",
-      stats: [
-        { icon: Zap, value: "Connected", label: "Workflows" },
-        { icon: TrendingUp, value: "Less", label: "Rework" },
-      ],
-    },
-    {
-      title: "Unified communication & engagement",
-      description:
-        "Send the right message to the right audience with proof of delivery so parents, staff, and students stay aligned.",
-      shortDescription: "Targeted messaging with delivery proof built in.",
-      points: [
-        "Multichannel announcements (email, SMS, app)",
-        "Two-way teacher-guardian collaboration with controls",
-        "Consent management, read receipts, and audit trails",
-      ],
-      icon: Radio,
-      gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
-      stats: [
-        { icon: TrendingUp, value: "Clear", label: "Reach" },
-        { icon: Zap, value: "Timely", label: "Delivery" },
-      ],
-    },
-    {
-      title: "Infrastructure you can trust",
-      description:
-        "Security, scale, and uptime that stay calm in the background so campuses stay online and compliant.",
-      shortDescription: "Secure, compliant, and always-on infrastructure.",
-      points: [
-        "Encrypted storage and role-based access at every layer",
-        "Monitoring, backups, and clear incident response",
-        "Integrations with LMS, ERP, and payments",
-      ],
-      icon: Shield,
-      gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
-      stats: [
-        { icon: Shield, value: "Resilient", label: "Uptime" },
-        { icon: CheckCircle2, value: "Auditable", label: "Controls" },
-      ],
-    },
-  ];
+/* ---------------------------------------------
+   Component: Features (Bento Grid)
+---------------------------------------------- */
 
 export function Features() {
-  const cardsRef = useRef<HTMLDivElement | null>(null);
-  const snapshotRef = useRef<HTMLDivElement | null>(null);
-
-  useGsapReveal(cardsRef, { selector: ".js-feature-card", stagger: 0.08 });
-  useGsapReveal(snapshotRef, { y: 24 });
-
-  return (
-    <section
-      id="features"
-      className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral py-10 px-4 md:px-8 md:py-14"
-      aria-label="Core features of SquareCampus"
-    >
-      <div className="mx-auto max-w-6xl space-y-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/60">
-          Platform signals
-        </p>
-        <h2 className="text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
-          SquareCampus replaces 5+ disconnected tools with one campus OS
-        </h2>
-        <p className="mx-auto max-w-2xl text-sm text-neutral-400 md:text-base">
-          <span className="sm:hidden">
-            One OS for admissions, academics, finance, and communication.
-          </span>
-          <span className="hidden sm:inline">
-            Run admissions, academics, finance, communication, and facilities in a single,
-            responsive workspace. One login, one timeline, one source of truth for every campus.
-          </span>
-        </p>
-      </div>
-
-      <div ref={cardsRef} className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
-        {featureData.map((feature) => {
-          const Icon = feature.icon;
-          return (
-            <article
-              key={feature.title}
-              className="js-feature-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-neutral-900/70 to-neutral-950 p-5 text-sm text-neutral-200 shadow-2xl shadow-black/40 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:border-white/15 hover:shadow-2xl hover:shadow-black/60"
-            >
-              {/* Gradient overlay on hover */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
-              />
-
-              {/* Content */}
-              <div className="relative">
-                {/* Icon header */}
-                <div className="mb-3 flex items-start justify-between gap-3">
-                  <div
-                    className="rounded-xl border border-white/10 bg-white/5 p-2.5 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10"
-                  >
-                    <Icon className="h-5 w-5 text-white/70 transition-colors duration-300 group-hover:text-white" />
-                  </div>
-
-                  {/* Stats badges */}
-                  <div className="flex gap-1.5">
-                    {feature.stats.map((stat, statIndex) => {
-                      const StatIcon = stat.icon;
-                      return (
-                        <div
-                          key={stat.label}
-                          className={cn(
-                            "flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/80 px-2 py-1 backdrop-blur-sm",
-                            statIndex === 1 && "hidden sm:flex"
-                          )}
-                        >
-                          <StatIcon className="h-2.5 w-2.5 text-white/60" />
-                          <div className="text-right">
-                            <p className="text-[0.7rem] font-semibold leading-tight text-white">
-                              {stat.value}
-                            </p>
-                            <p className="text-[0.55rem] uppercase leading-tight tracking-wider text-white/40">
-                              {stat.label}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
-                    {feature.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-snug text-neutral-100">
-                    <span className="sm:hidden">{feature.shortDescription}</span>
-                    <span className="hidden sm:inline">{feature.description}</span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative mt-4 grid grid-cols-1 gap-2 text-xs text-neutral-100 sm:grid-cols-2">
-                {feature.points.map((point, pointIndex) => (
-                  <div
-                    key={point}
-                    className={cn(
-                      "flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 shadow-inner shadow-black/30 backdrop-blur-sm transition group-hover:border-white/25 group-hover:bg-white/10",
-                      pointIndex === 2 && "hidden sm:flex"
-                    )}
-                  >
-                    <span className="leading-snug text-neutral-200">{point}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-          );
-        })}
-      </div>
-
-      <div
-        ref={snapshotRef}
-        className="mx-auto mt-12 max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/60"
-      >
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/40">
-              Platform snapshot
-            </p>
-            <p className="mt-2 text-lg font-semibold text-white">
-              Clear dashboards that keep decisions visible.
-            </p>
-            <p className="mt-2 text-sm text-neutral-300">
-              Board-ready reports, compliance logs, and student journeys live in one place with
-              fewer exports.
-            </p>
-          </div>
-          <Image
-            src="/images/marketing/dashboard.png"
-            alt="SquareCampus dashboard"
-            width={360}
-            height={220}
-            className="h-44 w-full max-w-xs rounded-2xl border border-white/10 object-cover shadow-lg shadow-blue-500/20"
-          />
-        </div>
-      </div>
-      <FeatureVisual />
-      <LanguageSupportSection />
-    </section>
-  );
-}
-
-const FeatureVisual = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const floatRef = useRef<HTMLDivElement>(null);
-  const riskRef = useRef<HTMLDivElement>(null);
-  const criticalRef = useRef<HTMLDivElement>(null);
-
-  useGsapReveal(ref, { y: 24 });
-
-  useEffect(() => {
-    if (!floatRef.current) return;
-    const tween = gsap.to(floatRef.current, {
-      y: -6,
-      duration: 3.6,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-    return () => {
-      tween.kill();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!riskRef.current) return;
-    const tween = gsap.fromTo(
-      riskRef.current,
-      { boxShadow: "0 0 0 0 rgba(251,191,36,0.2)" },
-      { boxShadow: "0 0 0 8px rgba(251,191,36,0)", duration: 2.2, repeat: -1, ease: "power1.out" }
-    );
-    return () => {
-      tween.kill();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!criticalRef.current) return;
-    gsap.set(criticalRef.current, { opacity: 0.75 });
-    const tween = gsap.to(criticalRef.current, {
-      opacity: 1,
-      duration: 1.2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-    return () => {
-      tween.kill();
-    };
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className="mx-auto mt-8 max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/70 to-neutral-950/90 p-6 shadow-2xl shadow-black/60 sm:mt-12"
-    >
-      <div className="relative flex flex-col-reverse gap-6 lg:flex-row lg:items-center">
-        {/* Narrative side – the briefing */}
-        <div className="flex-1 space-y-4 text-sm text-neutral-200">
-          <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
-            Pain-free operations
-          </p>
-          <h3 className="text-2xl font-semibold text-white">
-            Built to keep every school day on rails
-          </h3>
-          <p>
-            SquareCampus orchestrates academics, finance, communication, and facilities so small
-            schools stay agile and large institutions stay predictable, no swivel-chairing between
-            apps. It&apos;s not a nice-to-have; it&apos;s the control center that keeps every bell,
-            bus, bill, and broadcast on time.
-          </p>
-          <ul className="grid gap-3 text-sm text-neutral-100 md:grid-cols-2">
-            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-blue-400" />
-              <span>Single source of truth across admissions, academics, and finance.</span>
-            </li>
-            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-purple-400" />
-              <span>Predictable daily playbook with alerts before issues snowball.</span>
-            </li>
-            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              <span>Audit-ready logs and approvals baked into every workflow.</span>
-            </li>
-            <li className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-orange-400" />
-              <span>Guided rollout with migration, training, and implementation support.</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Cards side – the tactical layout */}
-        <div className="relative w-full max-w-md shrink-0 space-y-3">
-          <div className="grid gap-3 md:grid-cols-2">
-            <div
-              ref={floatRef}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/20 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-blue-500/20"
-            >
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Non-negotiable</p>
-              <p className="mt-2 text-lg font-semibold text-white">
-                Control center for every workflow
-              </p>
-              <p className="mt-2 text-sm text-neutral-200">
-                Admissions, timetables, finance, transport, and communication run on one timeline.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/15 via-neutral-900 to-neutral-950 p-4 shadow-xl shadow-purple-500/20">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Risk removed</p>
-              <p className="mt-2 text-xl font-semibold text-white">Audit-ready by default</p>
-              <p className="mt-2 text-sm text-neutral-200">
-                Role-based access, approvals, and logs ensure compliance without extra tools.
-              </p>
-            </div>
-          </div>
-          <div className="grid gap-3 md:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Uptime</p>
-              <p className="text-lg font-semibold text-white">Reliable</p>
-              <p className="text-xs text-neutral-300">Monitored, resilient cloud</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Go-live</p>
-              <p className="text-lg font-semibold text-white">Guided</p>
-              <p className="text-xs text-neutral-300">Migration + training included</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/50">Time saved</p>
-              <p className="text-lg font-semibold text-white">Hours back</p>
-              <p className="text-xs text-neutral-300">Per team each week</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom row – from abstract graph to real control view */}
-      <div className="mt-8 grid gap-4 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.2fr)]">
-        {/* Today at a glance – a mini day timeline */}
-        <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/50">Today at a glance</p>
-          <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
-            <div className="flex items-center gap-2 pb-3 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
-              <Clock className="h-3.5 w-3.5" />
-              <span>Campus timeline</span>
-            </div>
-            <div className="space-y-2">
-              {/* Row 1 */}
-              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-[0.78rem] text-neutral-300">08:00</span>
-                  <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">
-                      Morning attendance
-                    </p>
-                    <p className="text-[0.72rem] text-neutral-400">96% present · 4% absent</p>
-                  </div>
-                </div>
-                <span className="rounded-full bg-emerald-500/20 px-2 py-1 text-[0.7rem] font-semibold text-emerald-300">
-                  On track
-                </span>
-              </div>
-              {/* Row 2 – lightly at risk */}
-              <div
-                ref={riskRef}
-                className="timeline-item flex items-center justify-between gap-3 rounded-xl border border-amber-500/50 bg-amber-500/10 px-3 py-2"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-[0.78rem] text-neutral-300">10:30</span>
-                  <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">Mid-term exams</p>
-                    <p className="text-[0.72rem] text-neutral-200">
-                      2 rooms over capacity · 1 invigilator missing
-                    </p>
-                  </div>
-                </div>
-                <span className="rounded-full bg-amber-500/20 px-2 py-1 text-[0.7rem] font-semibold text-amber-300">
-                  Needs action
-                </span>
-              </div>
-              {/* Row 3 */}
-              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-[0.78rem] text-neutral-300">14:00</span>
-                  <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">
-                      Transport dispatch
-                    </p>
-                    <p className="text-[0.72rem] text-neutral-400">
-                      18 routes · 1 route delayed by 10 mins
-                    </p>
-                  </div>
-                </div>
-                <span className="rounded-full bg-sky-500/15 px-2 py-1 text-[0.7rem] font-semibold text-sky-300">
-                  Monitored
-                </span>
-              </div>
-              {/* Row 4 */}
-              <div className="timeline-item flex items-center justify-between gap-3 rounded-xl bg-neutral-800/70 px-3 py-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-[0.78rem] text-neutral-300">17:30</span>
-                  <div>
-                    <p className="text-[0.8rem] font-semibold text-neutral-100">Fees & reminders</p>
-                    <p className="text-[0.72rem] text-neutral-400">
-                      Auto-reminders sent to 42 pending accounts
-                    </p>
-                  </div>
-                </div>
-                <span className="rounded-full bg-neutral-700/80 px-2 py-1 text-[0.7rem] font-semibold text-neutral-200">
-                  Automated
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Exception queue – what actually needs attention */}
-        <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/50">Exception queue</p>
-          <div className="rounded-2xl border border-white/10 bg-neutral-900/80 p-3 text-xs text-neutral-200">
-            <div className="flex items-center justify-between pb-3">
-              <div className="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.28em] text-neutral-400">
-                <Bell className="h-3.5 w-3.5" />
-                <span>Alerts that need humans</span>
-              </div>
-              <span className="rounded-full bg-neutral-800 px-2 py-1 text-[0.68rem] text-neutral-300">
-                3 open
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {/* Critical */}
-              <div
-                ref={criticalRef}
-                className="flex items-start gap-3 rounded-xl border border-rose-500/60 bg-rose-500/10 px-3 py-2"
-              >
-                <div className="mt-0.5">
-                  <AlertTriangle className="h-3.5 w-3.5 text-rose-300" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[0.8rem] font-semibold text-rose-50">
-                    Attendance dip in Grade 9
-                  </p>
-                  <p className="text-[0.72rem] text-rose-100/90">
-                    4 sections below 80% · escalation recommended.
-                  </p>
-                  <div className="flex flex-wrap gap-2 text-[0.68rem]">
-                    <span className="rounded-full bg-rose-500/20 px-2 py-0.5 text-rose-100">
-                      Academic risk
-                    </span>
-                    <span className="rounded-full bg-neutral-900/80 px-2 py-0.5 text-neutral-200">
-                      Notify principal
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Medium */}
-              <div className="flex items-start gap-3 rounded-xl bg-neutral-850/80 px-3 py-2">
-                <div className="mt-0.5">
-                  <Clock className="h-3.5 w-3.5 text-amber-200" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[0.8rem] font-semibold text-neutral-100">
-                    Transport delay, Route 7
-                  </p>
-                  <p className="text-[0.72rem] text-neutral-300">
-                    Expected delay: 12 minutes · parents notified automatically.
-                  </p>
-                  <span className="inline-flex rounded-full bg-amber-500/15 px-2 py-0.5 text-[0.68rem] text-amber-200">
-                    In progress
-                  </span>
-                </div>
-              </div>
-
-              {/* Low */}
-              <div className="flex items-start gap-3 rounded-xl bg-neutral-850/80 px-3 py-2">
-                <div className="mt-0.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[0.8rem] font-semibold text-neutral-100">
-                    Fee follow-ups generated
-                  </p>
-                  <p className="text-[0.72rem] text-neutral-300">
-                    24 pending accounts queued for reminders today.
-                  </p>
-                  <span className="inline-flex rounded-full bg-emerald-500/15 px-2 py-0.5 text-[0.68rem] text-emerald-200">
-                    Automated task
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const LanguageSupportSection = () => {
-  /*
-     Each language is an ally on the ground.
-     englishName: for clarity.
-     nativeName: for respect.
-     greeting*: for a small, human moment when someone clicks.
-  */
-  const languages: LanguageMeta[] = [
-    {
-      code: "EN",
-      englishName: "English",
-      nativeName: "English",
-      locale: "en-IN",
-      glow: "from-blue-400 to-blue-600",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "Welcome to SquareCampus.",
-      notificationEnglish: "Good morning! Here's to a great school day ahead.",
-      notificationNative: "Good morning! Here's to a great school day ahead.",
-    },
-    {
-      code: "HI",
-      englishName: "Hindi",
-      nativeName: "हिन्दी",
-      locale: "hi-IN",
-      glow: "from-amber-400 to-orange-500",
-      fontClass: "font-devanagari",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus में आपका स्वागत है।",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो।",
-    },
-    {
-      code: "KN",
-      englishName: "Kannada",
-      nativeName: "ಕನ್ನಡ",
-      locale: "kn-IN",
-      glow: "from-sky-400 to-sky-600",
-      fontClass: "font-kannada",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 ಶುಭೋದಯ! ನಿಮ್ಮ ದಿನ ಅದ್ಭುತವಾಗಲಿ.",
-    },
-    {
-      code: "TA",
-      englishName: "Tamil",
-      nativeName: "தமிழ்",
-      locale: "ta-IN",
-      glow: "from-purple-400 to-purple-600",
-      fontClass: "font-tamil",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus-க்கு வரவேற்கிறோம்.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
-    },
-    {
-      code: "TE",
-      englishName: "Telugu",
-      nativeName: "తెలుగు",
-      locale: "te-IN",
-      glow: "from-emerald-400 to-emerald-600",
-      fontClass: "font-telugu",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus కు స్వాగతం.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 శుభోదయం! మీ రోజు అద్భుతంగా సాగాలి.",
-    },
-    {
-      code: "MR",
-      englishName: "Marathi",
-      nativeName: "मराठी",
-      locale: "mr-IN",
-      glow: "from-rose-400 to-rose-600",
-      fontClass: "font-devanagari",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus मध्ये आपले स्वागत आहे.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
-    },
-    {
-      code: "GU",
-      englishName: "Gujarati",
-      nativeName: "ગુજરાતી",
-      locale: "gu-IN",
-      glow: "from-cyan-400 to-cyan-600",
-      fontClass: "font-gujarati",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
-    },
-    {
-      code: "ML",
-      englishName: "Malayalam",
-      nativeName: "മലയാളം",
-      locale: "ml-IN",
-      glow: "from-green-400 to-green-600",
-      fontClass: "font-malayalam",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus-ലേക്ക് സ്വാഗതം.",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
-    },
-    {
-      code: "BN",
-      englishName: "Bengali",
-      nativeName: "বাংলা",
-      locale: "bn-IN",
-      glow: "from-pink-400 to-pink-600",
-      fontClass: "font-bengali",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus-এ আপনাকে স্বাগতম।",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 সুপ্রভাত! আপনার দিনটি ভালো কাটুক।",
-    },
-    {
-      code: "PA",
-      englishName: "Punjabi",
-      nativeName: "ਪੰਜਾਬੀ",
-      locale: "pa-IN",
-      glow: "from-fuchsia-400 to-fuchsia-600",
-      fontClass: "font-gurmukhi",
-      greetingEnglish: "Welcome to SquareCampus.",
-      greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
-      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
-      notificationNative: "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
-    }
-  ];
-
-  const [active, setActive] = useState<LanguageMeta | null>(null);
-  const popoverRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const panelRef = useRef<HTMLDivElement | null>(null);
 
   useGsapReveal(sectionRef, { y: 24 });
-  useGsapReveal(gridRef, { selector: ".js-language-card", stagger: 0.04, threshold: 0.1 });
-
-  // Close on outside click / Escape
-  useEffect(() => {
-    if (!active) return;
-
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setActive(null);
-      }
-    };
-
-    const handleClick = (event: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
-        setActive(null);
-      }
-    };
-
-    document.addEventListener("keydown", handleKey);
-    document.addEventListener("mousedown", handleClick);
-
-    return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [active]);
-
-  useEffect(() => {
-    if (!active) return;
-
-    if (modalRef.current) {
-      gsap.fromTo(modalRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
-    }
-    if (panelRef.current) {
-      gsap.fromTo(
-        panelRef.current,
-        { opacity: 0, scale: 0.96, y: 8, filter: "blur(4px)" },
-        { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }
-      );
-    }
-  }, [active]);
+  useGsapReveal(gridRef, { selector: ".bento-card", stagger: 0.08, threshold: 0.1 });
 
   return (
     <section
       ref={sectionRef}
-      className="relative mx-auto mt-28 max-w-6xl px-6 py-16 text-neutral-200"
+      id="features"
+      data-section="features"
+      className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 py-24 px-4 md:px-8"
+      aria-label="Core features of SquareCampus"
     >
-      <div className="mx-auto max-w-4xl space-y-4 text-center">
+      <div className="mx-auto max-w-6xl space-y-6 text-center mb-16">
         <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/50">
-          Made for India
+          Platform signals
         </p>
-        <h2 className="text-3xl font-semibold text-white md:text-4xl">
-          Built for the languages India speaks
+        <h2 className="text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
+          One OS for the entire School Infrastructure
         </h2>
-        <p className="text-sm leading-relaxed text-neutral-400 md:text-base">
-          SquareCampus ships with support for India&apos;s major languages so administrators,
-          teachers, parents, and students can use the platform comfortably in the language they
-          prefer. Adoption improves, support tickets drop, and communication becomes seamless.
+        <p className="mx-auto max-w-2xl text-sm text-neutral-400 md:text-base">
+          Run admissions, academics, finance, communication, and facilities in a single workspace.
+          One login, one timeline, one source of truth.
         </p>
       </div>
 
-      {/* Language grid */}
+      {/* Bento Grid */}
       <div
         ref={gridRef}
-        className="relative mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+        className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[200px]"
       >
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            type="button"
-            onClick={() => setActive(lang)}
-            className="js-language-card group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-4 text-left shadow-[0_0_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur outline-none ring-offset-0 transition hover:border-white/40 focus-visible:ring-2 focus-visible:ring-neutral-200"
-          >
-            <div
-              className={cn(
-                "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-10",
-                lang.glow
-              )}
-            />
-            <p className="text-[0.7rem] uppercase tracking-[0.35em] text-neutral-400">
-              {lang.code}
-            </p>
-            <div className="mt-2 space-y-1">
-              <span
-                lang={lang.locale}
-                className={cn("block text-sm font-semibold text-white", lang.fontClass)}
-              >
-                {lang.nativeName}
-              </span>
-              <span className="block text-[0.7rem] uppercase tracking-[0.3em] text-neutral-500">
-                {lang.englishName}
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
+        {/* Hero Card - Academic (Large) */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 lg:col-span-7 lg:row-span-2">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-transparent" />
+          <div className="pointer-events-none absolute -right-32 -top-32 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl transition-transform duration-700 group-hover:scale-150" />
 
-      {/* Highlight card */}
-      <div className="mx-auto mt-14 max-w-xl rounded-2xl border border-white/10 bg-neutral-900/70 p-6 shadow-xl backdrop-blur">
-        <div className="flex flex-col items-center space-y-3 text-center">
-          <Languages className="h-8 w-8 text-neutral-400" />
-          <p className="text-sm text-neutral-300">
-            <span className="font-semibold text-white">
-              Parent-friendly. Teacher-friendly. Admin-friendly.
-            </span>{" "}
-            Interfaces adapt to the chosen language, while reports and exports can still be
-            generated in English for auditors and regulators.
-          </p>
-        </div>
-      </div>
-
-      {/* Popover – friendly greeting in the selected language */}
-      {active && (
-        <div
-          ref={modalRef}
-          className="fixed inset-0 z-50 flex items-center justify-center px-4"
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
-
-          {/* Ambient glow */}
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 70%)",
-            }}
-          />
-
-          {/* Panel */}
-          <div
-            ref={(node) => {
-              popoverRef.current = node;
-              panelRef.current = node;
-            }}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="language-greeting-title"
-            className={cn(
-              "relative z-10 w-full max-w-sm rounded-2xl border border-white/15 bg-neutral-950/95 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-xl",
-              "before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.05),transparent)] before:opacity-20",
-              "after:absolute after:inset-0 after:bg-[linear-gradient(-115deg,transparent,rgba(255,255,255,0.04),transparent)] after:opacity-20"
-            )}
-          >
-            <div className="flex items-start justify-between gap-3 relative z-10">
-              <div>
-                <p className="text-[0.65rem] uppercase tracking-[0.35em] text-neutral-400">
-                  Language selected
-                </p>
-                <h3
-                  id="language-greeting-title"
-                  className="mt-1 text-sm font-semibold text-white flex items-center gap-2"
-                >
-                  <span>{active.nativeName}</span>
-                  <span className="text-neutral-400 text-xs">({active.englishName})</span>
-                  <span className="inline-flex items-center justify-center rounded-md border border-white/10 bg-neutral-900/80 px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-neutral-500">
-                    {active.code}
-                  </span>
-                </h3>
+          <div className="relative flex h-full flex-col p-6 lg:p-8">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="rounded-2xl border border-blue-400/20 bg-blue-500/10 p-3">
+                  <Activity className="h-5 w-5 text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Live Academic Visibility</h3>
+                  <p className="text-sm text-neutral-400 mt-1">Real-time health of every class and student</p>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setActive(null)}
-                className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-700/70 bg-neutral-900 text-neutral-300 hover:border-neutral-300 hover:text-white hover:rotate-90 transition-transform duration-200"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[0.65rem] uppercase tracking-wider text-emerald-400/80">Live</span>
+              </div>
             </div>
 
-            <div className="mt-4 space-y-3 text-sm text-neutral-200">
-              {/* Greeting Bubble */}
-              <p
-                lang={active.locale}
-                className={cn(
-                  "rounded-xl bg-neutral-900/60 border border-white/10 px-4 py-2 shadow-inner shadow-black/20",
-                  active.fontClass
-                )}
-              >
-                {active.greetingNative ?? active.greetingEnglish}
-              </p>
+            {/* Visual - Dashboard Preview */}
+            <div className="flex-1 rounded-2xl border border-white/10 bg-black/40 p-4 overflow-hidden">
+              <div className="h-full flex flex-col">
+                {/* Mini metrics row */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[
+                    { label: "Attendance", value: "94.2%", color: "emerald" },
+                    { label: "Engagement", value: "87.5%", color: "blue" },
+                    { label: "Performance", value: "91.0%", color: "purple" },
+                  ].map((m) => (
+                    <div key={m.label} className="rounded-xl border border-white/10 bg-white/5 p-3 text-center">
+                      <p className={cn("text-xl font-bold", {
+                        "text-emerald-400": m.color === "emerald",
+                        "text-blue-400": m.color === "blue",
+                        "text-purple-400": m.color === "purple",
+                      })}>{m.value}</p>
+                      <p className="text-[0.6rem] uppercase tracking-wider text-white/40 mt-1">{m.label}</p>
+                    </div>
+                  ))}
+                </div>
 
-              {active.greetingNative && (
-                <p className="text-[0.8rem] text-neutral-400">{active.greetingEnglish}</p>
-              )}
+                {/* Class bars */}
+                <div className="flex-1 space-y-2">
+                  {[
+                    { name: "Class 10-A", value: 96, alert: false },
+                    { name: "Class 10-B", value: 88, alert: true },
+                    { name: "Class 9-A", value: 94, alert: false },
+                    { name: "Class 9-B", value: 91, alert: false },
+                  ].map((cls) => (
+                    <div key={cls.name} className="flex items-center gap-3">
+                      <span className="text-[0.7rem] text-white/60 w-20">{cls.name}</span>
+                      <div className="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
+                        <div
+                          className={cn("h-full rounded-full transition-all duration-1000", {
+                            "bg-gradient-to-r from-blue-500 to-cyan-400": !cls.alert,
+                            "bg-gradient-to-r from-amber-500 to-amber-400": cls.alert,
+                          })}
+                          style={{ width: `${cls.value}%` }}
+                        />
+                      </div>
+                      <span className="text-[0.65rem] text-white/50 w-10 text-right">{cls.value}%</span>
+                      {cls.alert && <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Alert */}
+                <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 flex items-center gap-3">
+                  <span className="text-lg">⚠️</span>
+                  <p className="text-[0.7rem] text-amber-200/80 flex-1">3 students need attention in Class 10-B</p>
+                  <span className="text-[0.6rem] text-amber-300 uppercase tracking-wider">Review →</span>
+                </div>
+              </div>
             </div>
-
-            {/* Example UI snippet */}
-            <div className="mt-4 rounded-xl border border-white/10 bg-neutral-900/60 p-3 text-xs text-neutral-300 font-medium">
-              <p lang={active.locale} className={cn("leading-relaxed", active.fontClass)}>
-                {active.notificationNative ?? active.notificationEnglish}
-              </p>
-              {active.notificationNative && (
-                <p className="mt-1 text-[0.7rem] text-neutral-500">
-                  {active.notificationEnglish}
-                </p>
-              )}
-            </div>
-
-            <p className="mt-4 text-[0.78rem] text-neutral-400 leading-relaxed">
-              SquareCampus adapts key experiences into{" "}
-              <span className="font-semibold text-neutral-100">{active.englishName}</span>: parent
-              apps, notifications, attendance updates, fee reminders, while admins can continue
-              working in English if they prefer.
-            </p>
           </div>
-        </div>
-      )}
+        </article>
+
+        {/* Lifecycle Card */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 lg:col-span-5 lg:row-span-1">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-transparent" />
+          <div className="pointer-events-none absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-purple-500/10 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+
+          <div className="relative flex h-full flex-col p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="rounded-xl border border-purple-400/20 bg-purple-500/10 p-2.5">
+                <Workflow className="h-4 w-4 text-purple-400" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-white">Student Lifecycle</h3>
+                <p className="text-[0.7rem] text-neutral-500">Inquiry to graduation</p>
+              </div>
+            </div>
+
+            {/* Journey visualization */}
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative flex items-center gap-2 w-full max-w-xs">
+                <div className="absolute top-1/2 left-6 right-6 h-0.5 bg-gradient-to-r from-purple-500/60 via-purple-400/40 to-white/10 -translate-y-1/2" />
+                {[
+                  { icon: "📝", label: "Inquiry", active: true },
+                  { icon: "📋", label: "Admit", active: true },
+                  { icon: "✅", label: "Enroll", active: true, current: true },
+                  { icon: "🎓", label: "Graduate", active: false },
+                ].map((s) => (
+                  <div key={s.label} className="relative z-10 flex flex-col items-center flex-1">
+                    <div className={cn(
+                      "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all",
+                      s.current ? "border-purple-400 bg-purple-500/40 scale-110" :
+                      s.active ? "border-purple-400/50 bg-purple-500/20" :
+                      "border-white/10 bg-neutral-800"
+                    )}>
+                      <span className="text-base">{s.icon}</span>
+                    </div>
+                    <span className={cn(
+                      "mt-1.5 text-[0.55rem] uppercase tracking-wider",
+                      s.current ? "text-purple-300" : s.active ? "text-purple-300/60" : "text-white/30"
+                    )}>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+
+        {/* Communication Card */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 lg:col-span-5 lg:row-span-1">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent" />
+          <div className="pointer-events-none absolute -left-20 -top-20 h-48 w-48 rounded-full bg-amber-500/10 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+
+          <div className="relative flex h-full flex-col p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="rounded-xl border border-amber-400/20 bg-amber-500/10 p-2.5">
+                  <Radio className="h-4 w-4 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Communication Hub</h3>
+                  <p className="text-[0.7rem] text-neutral-500">All channels unified</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-[0.55rem] text-emerald-400">Live</span>
+              </div>
+            </div>
+
+            {/* Channel stats */}
+            <div className="flex-1 grid grid-cols-4 gap-2">
+              {[
+                { icon: "📧", label: "Email", value: "2.4k" },
+                { icon: "💬", label: "SMS", value: "1.8k" },
+                { icon: "📱", label: "App", value: "3.2k" },
+                { icon: "💚", label: "WA", value: "890" },
+              ].map((ch) => (
+                <div key={ch.label} className="rounded-xl border border-white/10 bg-white/5 p-2 flex flex-col items-center justify-center text-center hover:bg-white/10 transition-colors">
+                  <span className="text-lg">{ch.icon}</span>
+                  <p className="text-sm font-bold text-white mt-1">{ch.value}</p>
+                  <p className="text-[0.5rem] text-white/40">{ch.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </article>
+
+        {/* Infrastructure Card (Wide) */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 lg:col-span-7 lg:row-span-1">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-green-500/5 to-transparent" />
+          <div className="pointer-events-none absolute -right-32 -bottom-32 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+
+          <div className="relative flex h-full p-6 gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-2.5">
+                  <Shield className="h-4 w-4 text-emerald-400" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Enterprise Infrastructure</h3>
+                  <p className="text-[0.7rem] text-neutral-500">Secure, scalable, always-on</p>
+                </div>
+              </div>
+
+              {/* Uptime stat */}
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 mt-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-white">99.97%</span>
+                  <span className="text-[0.65rem] uppercase tracking-wider text-emerald-300/60">Uptime</span>
+                </div>
+                <p className="text-[0.65rem] text-emerald-300/50 mt-1">Last 90 days • 0 critical incidents</p>
+              </div>
+            </div>
+
+            {/* Services & badges */}
+            <div className="w-48 flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-2 flex-1">
+                {[
+                  { icon: "🗄️", name: "Database" },
+                  { icon: "🔌", name: "API" },
+                  { icon: "🔐", name: "Auth" },
+                  { icon: "📁", name: "Storage" },
+                ].map((s) => (
+                  <div key={s.name} className="rounded-lg border border-white/10 bg-white/5 p-2 flex items-center gap-2">
+                    <span className="text-sm">{s.icon}</span>
+                    <div>
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 mb-0.5" />
+                      <p className="text-[0.55rem] text-white/60">{s.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Status bar */}
+              <div className="flex gap-0.5">
+                {Array.from({ length: 20 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn("flex-1 h-6 rounded-sm", i === 8 ? "bg-amber-400/50" : "bg-emerald-400/40")}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+
+        {/* Why Different Card - Comparison */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 lg:col-span-5 lg:row-span-1">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-rose-500/5 via-neutral-500/5 to-emerald-500/5" />
+
+          <div className="relative flex h-full flex-col p-6">
+            <div className="flex-1 grid grid-cols-2 gap-3">
+              {/* The Trap */}
+              <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-3 flex flex-col">
+                <p className="text-[0.6rem] uppercase tracking-wider text-rose-400/70 mb-2">The Trap</p>
+                <div className="flex-1 flex flex-wrap gap-1 content-start">
+                  {["ERP", "LMS", "Fee", "SMS", "Mail", "HR", "Bus"].map((tool) => (
+                    <span key={tool} className="rounded bg-rose-500/10 border border-rose-500/20 px-1.5 py-0.5 text-[0.5rem] text-rose-300/60">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[0.55rem] text-rose-300/50 mt-2">7+ tools, 7+ logins, 0 sync</p>
+              </div>
+
+              {/* The OS */}
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 flex flex-col">
+                <p className="text-[0.6rem] uppercase tracking-wider text-emerald-400/70 mb-2">The OS</p>
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="relative">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 border border-emerald-400/30 flex items-center justify-center p-2">
+                      <Image
+                        src="https://cdn.squarecampus.in/application_files/logo-light.png"
+                        alt="SquareCampus"
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                      />
+                    </div>
+                    <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-emerald-400 border-2 border-neutral-900" />
+                  </div>
+                </div>
+                <p className="text-[0.55rem] text-emerald-300/50 mt-2">1 platform, infinite clarity</p>
+              </div>
+            </div>
+
+            <a
+              href="/why-different"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-2 text-[0.65rem] uppercase tracking-wider text-white/60 hover:bg-white/10 hover:text-white transition-colors"
+            >
+              See why schools switch
+              <span className="text-white/40">→</span>
+            </a>
+          </div>
+        </article>
+
+        {/* Stats Row - Spans full width on large screens */}
+        <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 md:col-span-2 lg:col-span-12 lg:row-span-1">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-emerald-500/5" />
+
+          <div className="relative flex h-full items-center justify-between p-6 lg:px-12">
+            {[
+              { value: "50+", label: "Integrated Modules", icon: "🧩" },
+              { value: "10M+", label: "Student Records", icon: "📊" },
+              { value: "99.97%", label: "Platform Uptime", icon: "⚡" },
+              { value: "24/7", label: "Support Coverage", icon: "🛟" },
+            ].map((stat, i) => (
+              <div key={stat.label} className="flex items-center gap-4">
+                {i > 0 && <div className="hidden lg:block h-12 w-px bg-white/10" />}
+                <div className={cn("flex items-center gap-4", i > 0 && "lg:pl-8")}>
+                  <span className="text-2xl">{stat.icon}</span>
+                  <div>
+                    <p className="text-2xl font-bold text-white">{stat.value}</p>
+                    <p className="text-[0.65rem] uppercase tracking-wider text-white/40">{stat.label}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+      </div>
     </section>
   );
-};
+}

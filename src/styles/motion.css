@@ -1,0 +1,101 @@
+/* Motion scaffolding: keep the GPU primed without forcing layout shifts. */
+[data-section="school-os-clarity"] [data-soc-card],
+[data-section="school-os-clarity"] [data-soc-persona],
+[data-section="school-os-clarity"] [data-soc-resilience],
+[data-section="school-os-clarity"] [data-soc-heading] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-section="school-os-clarity"] [data-soc-glow] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-section="operations"] [data-ops-card],
+[data-section="operations"] [data-ops-day],
+[data-section="operations"] [data-ops-proof],
+[data-section="operations"] [data-ops-heading],
+[data-section="operations"] [data-ops-stat] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-section="operations"] [data-ops-surface],
+[data-section="operations"] [data-ops-overlay] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-section="operations"] [data-ops-proof-sheen] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-section="operations"] .ops-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+[data-feature-tour] .feature-tour__visual {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 1023px) {
+  [data-feature-tour] .feature-tour__visual {
+    position: relative;
+    top: auto;
+    transform: none;
+  }
+}
+
+[data-feature-tour] .feature-visual-frame {
+  min-height: 520px;
+}
+
+@media (max-width: 767px) {
+  [data-feature-tour] .feature-visual-frame {
+    min-height: 440px;
+  }
+}
+
+[data-feature-tour] .feature-viz-stack {
+  min-height: 360px;
+}
+
+@media (max-width: 767px) {
+  [data-feature-tour] .feature-viz-stack {
+    min-height: 320px;
+  }
+}
+
+[data-feature-tour] [data-feature-viz] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  pointer-events: none;
+}
+
+[data-feature-tour] [data-feature-step] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+[data-feature-tour] [data-feature-step][data-active="true"] {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(3, 7, 18, 0.9));
+}
+
+[data-feature-tour] [data-feature-step-body] {
+  will-change: opacity, transform;
+}
+
+[data-feature-tour] [data-feature-dot][data-active="true"] {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+[data-feature-tour] .feature-progress-bar {
+  will-change: transform;
+}

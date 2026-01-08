@@ -7,6 +7,7 @@ import { Activity, Bell, BookOpen, Bus, DollarSign, ShieldCheck } from "@/compon
 import { cn } from "@/lib/utils";
 import { BackgroundLines } from "./backgrounds/dot-and-glow";
 import { BookCallCta, LoginCta } from "./ctas";
+import { FeatureVisual } from "./feature-visual";
 
 const heroHighlights = [
   {
@@ -195,7 +196,8 @@ export function Hero() {
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)1px,transparent_1px)] bg-[size:90px_90px] opacity-50" />
               <div className="absolute inset-6 rounded-2xl border border-white/10" />
               <div className="relative z-10 h-full w-full">
-                <DashboardShowcase />
+                {/* <DashboardShowcase /> */}
+                <FeatureVisual />
               </div>
             </div>
           </div>
@@ -417,10 +419,10 @@ export function DashboardShowcase() {
             </div>
           </div>
 
-            <div className="grid h-[calc(100%-64px)] grid-cols-1 gap-4 p-4 md:grid-cols-[1.2fr,1fr]">
-              <DepartmentCanvas active={active} />
-              <PlaybookPanel highlights={active.highlights} />
-            </div>
+          <div className="grid h-[calc(100%-64px)] grid-cols-1 gap-4 p-4 md:grid-cols-[1.2fr,1fr]">
+            <DepartmentCanvas active={active} />
+            <PlaybookPanel highlights={active.highlights} />
+          </div>
         </div>
       </div>
 

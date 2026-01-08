@@ -33,11 +33,11 @@ function FooterColumn({ title, links }: FooterColumnProps) {
 
 export function Footer() {
   const productLinks: FooterLink[] = [
-    { title: "school management system", href: "/school-management-system" },
     { title: "Home", href: "/" },
     { title: "Features", href: "/features" },
     { title: "Ecosystem", href: "/ecosystem" },
     { title: "Why SquareCampus", href: "/why-different" },
+    { title: "School Management System", href: "/school-management-system" },
     { title: "FAQs", href: "/#faq" },
   ];
 
