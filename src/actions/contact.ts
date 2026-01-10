@@ -4,6 +4,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { headers } from "next/headers";
 import { Resend } from "resend";
+import { z } from "zod";
 
 const submissionTracking = new Map<
   string,
@@ -95,10 +96,36 @@ const SPAM_KEYWORDS = [
   "act now",
 ];
 
+const optionalText = (max: number) =>
+  z.preprocess(
+    (value) => {
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        return trimmed === "" ? undefined : trimmed;
+      }
+      return value;
+    },
+    z.string().max(max).optional()
+  );
+
+const contactSchema = z
+  .object({
+    name: z.string().trim().min(2).max(100),
+    email: z.string().trim().email().max(254),
+    institution: z.string().trim().min(2).max(200),
+    role: optionalText(100),
+    students: optionalText(50),
+    message: optionalText(2000),
+    website: optionalText(200),
+  })
+  .strict();
+
 function getClientIdentifier(email: string, headersList: Headers): string {
   try {
+    const cfConnectingIp = headersList.get("cf-connecting-ip");
     const forwarded = headersList.get("x-forwarded-for");
-    const ip = forwarded ? forwarded.split(",")[0]?.trim() : headersList.get("x-real-ip");
+    const ip =
+      cfConnectingIp ?? (forwarded ? forwarded.split(",")[0]?.trim() : headersList.get("x-real-ip"));
     return ip ? `${email}:${ip}` : email;
   } catch (error) {
     console.warn("[contact] Failed to get client identifier:", error);
@@ -127,32 +154,13 @@ function containsSpam(text: string): boolean {
   }
 }
 
-function validateTextLength(text: string, min: number, max: number): boolean {
-  return text.length >= min && text.length <= max;
-}
-
 export async function sendContactEmail(formData: ContactFormData): Promise<ContactFormResponse> {
   try {
     // 🔐 0. Get API key at runtime, inside the operation
     const apiKey = process.env.RESEND_API_KEY;
 
-    // Enhanced logging for debugging AWS Amplify environment
-    console.log("[contact] Environment check:", {
-      hasResendKey: !!apiKey,
-      resendKeyLength: apiKey?.length || 0,
-      nodeEnv: process.env.NODE_ENV,
-      // Log all env var keys (not values) for debugging
-      availableEnvVars: Object.keys(process.env).filter(
-        (key) => key.includes("RESEND") || key.includes("UPSTASH")
-      ),
-    });
-
     if (!apiKey) {
       console.error("[contact] RESEND_API_KEY environment variable is not set at runtime");
-      console.error(
-        "[contact] Available environment variables:",
-        Object.keys(process.env).slice(0, 50) // Log first 50 env var names
-      );
       return {
         success: false,
         message:
@@ -174,8 +182,18 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       };
     }
 
+    const parsed = contactSchema.safeParse(formData);
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: "Please check the submitted fields.",
+      };
+    }
+
+    const normalizedData = parsed.data;
+
     // 1. Honeypot
-    if (formData.website && formData.website.trim() !== "") {
+    if (normalizedData.website && normalizedData.website.trim() !== "") {
       console.warn("[contact] Honeypot triggered - potential bot");
       return {
         success: true,
@@ -183,57 +201,18 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       };
     }
 
-    // 2. Required fields
-    if (!formData.name || !formData.email || !formData.institution) {
-      return {
-        success: false,
-        message: "Please fill in all required fields.",
-      };
-    }
-
-    // 3. Email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      return {
-        success: false,
-        message: "Please enter a valid email address.",
-      };
-    }
-
-    // 4. Disposable email
-    if (isDisposableEmail(formData.email)) {
+    // 2. Disposable email
+    if (isDisposableEmail(normalizedData.email)) {
       return {
         success: false,
         message: "Please use a valid business or institutional email address.",
       };
     }
 
-    // 5. Text lengths
-    if (!validateTextLength(formData.name, 2, 100)) {
-      return {
-        success: false,
-        message: "Name must be between 2 and 100 characters.",
-      };
-    }
-
-    if (!validateTextLength(formData.institution, 2, 200)) {
-      return {
-        success: false,
-        message: "Institution name must be between 2 and 200 characters.",
-      };
-    }
-
-    if (formData.message && !validateTextLength(formData.message, 0, 2000)) {
-      return {
-        success: false,
-        message: "Message must not exceed 2000 characters.",
-      };
-    }
-
-    // 6. Spam content
-    const allText = `${formData.name} ${formData.institution} ${
-      formData.message || ""
-    } ${formData.role || ""}`;
+    // 3. Spam content
+    const allText = `${normalizedData.name} ${normalizedData.institution} ${
+      normalizedData.message || ""
+    } ${normalizedData.role || ""}`;
     if (containsSpam(allText)) {
       console.warn("[contact] Spam keywords detected in submission");
       return {
@@ -242,8 +221,8 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       };
     }
 
-    // 7. Rate limiting
-    const identifier = getClientIdentifier(formData.email, headersList);
+    // 4. Rate limiting
+    const identifier = getClientIdentifier(normalizedData.email, headersList);
 
     if (upstashLimiter) {
       try {
@@ -316,12 +295,12 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
         .replace(/'/g, "&#x27;");
 
     const sanitizedData = {
-      name: sanitize(formData.name),
-      email: sanitize(formData.email),
-      institution: sanitize(formData.institution),
-      role: formData.role ? sanitize(formData.role) : undefined,
-      students: formData.students ? sanitize(formData.students) : undefined,
-      message: formData.message ? sanitize(formData.message) : undefined,
+      name: sanitize(normalizedData.name),
+      email: sanitize(normalizedData.email),
+      institution: sanitize(normalizedData.institution),
+      role: normalizedData.role ? sanitize(normalizedData.role) : undefined,
+      students: normalizedData.students ? sanitize(normalizedData.students) : undefined,
+      message: normalizedData.message ? sanitize(normalizedData.message) : undefined,
     };
 
     const emailHtml = `
@@ -556,7 +535,7 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       emailResult = await resend.emails.send({
         from: "contact@squarecampus.com",
         to: [process.env.MARKETING_EXEC_EMAIL ?? "contact@squarecampus.com"],
-        replyTo: formData.email,
+        replyTo: normalizedData.email,
         subject: `New Contact: ${sanitizedData.name} from ${sanitizedData.institution}`,
         html: emailHtml,
       });
@@ -598,12 +577,6 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       else if (error.message.includes("timeout")) {
         errorMessage = "Request timed out. Please try again.";
       }
-      // Log the specific error for debugging
-      console.error("[contact] Error details:", {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
     }
 
     return {

@@ -12,23 +12,9 @@ export const runtime = "nodejs";
  */
 export async function GET() {
   try {
-    // Basic health checks
     const health = {
       status: "ok",
       timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV,
-      version: process.env.npm_package_version || "unknown",
-      // Add additional checks as needed
-      checks: {
-        memory: {
-          used: process.memoryUsage().heapUsed,
-          total: process.memoryUsage().heapTotal,
-          percentage: Math.round(
-            (process.memoryUsage().heapUsed / process.memoryUsage().heapTotal) * 100
-          ),
-        },
-      },
     };
 
     // Optional: Add database connectivity check

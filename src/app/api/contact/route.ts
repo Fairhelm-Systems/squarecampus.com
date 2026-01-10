@@ -5,6 +5,8 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { getResendApiKey } from "@/lib/secrets";
 
+export const runtime = "nodejs";
+
 const submissionTracking = new Map<
   string,
   {
@@ -93,7 +95,7 @@ function getClientIdentifier(email: string, request: NextRequest): string {
     const cfConnectingIp = request.headers.get("cf-connecting-ip");
     const forwarded = request.headers.get("x-forwarded-for");
     const ip =
-      cfConnectingIp || forwarded ? forwarded?.split(",")[0]?.trim() : request.headers.get("x-real-ip");
+      cfConnectingIp ?? (forwarded ? forwarded.split(",")[0]?.trim() : request.headers.get("x-real-ip"));
     return ip ? `${email}:${ip}` : email;
   } catch (error) {
     console.warn("[contact] Failed to get client identifier:", error);
@@ -120,10 +122,6 @@ function containsSpam(text: string): boolean {
     console.warn("[contact] Error checking spam content:", error);
     return false;
   }
-}
-
-function validateTextLength(text: string, min: number, max: number): boolean {
-  return text.length >= min && text.length <= max;
 }
 
 export async function POST(request: NextRequest) {
