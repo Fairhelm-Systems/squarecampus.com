@@ -13,6 +13,7 @@ import { SchoolOsClarity } from "@/components/marketing/school-os-clarity";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhyDifferent } from "@/components/marketing/why-different";
 import { LanguageSupport } from "@/components/marketing/language-support";
+import Nexus from "@/components/marketing/nexus";
 
 export const metadata: Metadata = {
   title: "SquareCampus | School OS & School Management System in India",
@@ -42,6 +43,7 @@ export default function Home() {
       <Operations />
       <Features />
       <LanguageSupport />
+      <Nexus />
       <WhyDifferent />
       <CTA />
       <EcosystemSection />
