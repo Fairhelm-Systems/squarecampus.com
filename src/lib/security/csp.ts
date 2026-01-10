@@ -3,7 +3,7 @@ type CspOptions = {
 };
 
 const CALCOM_DOMAINS = ["https://cal.com", "https://*.cal.com", "https://api.cal.com"];
-const CDN_DOMAINS = ["https://cdn.squarecampus.in"];
+const CDN_DOMAINS = ["https://cdn.mdtechspire.com"];
 
 function formatDirectives(directives: Record<string, string[]>): string {
   return Object.entries(directives)

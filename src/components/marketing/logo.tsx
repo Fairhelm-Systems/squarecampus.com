@@ -17,7 +17,7 @@ export const Logo = ({ className }: { className?: string }) => {
     >
       <div className="relative flex h-8 w-8 items-center justify-center">
         <Image
-          src="https://cdn.squarecampus.in/application_files/logo-light.png"
+          src="https://cdn.mdtechspire.com/application_files/logo/squarecampus.png"
           alt="SquareCampus"
           width={32}
           height={32}

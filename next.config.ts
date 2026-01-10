@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.squarecampus.in",
+        hostname: "cdn.mdtechspire.com",
         pathname: "/**",
       },
     ],
