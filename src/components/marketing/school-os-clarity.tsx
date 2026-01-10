@@ -879,8 +879,8 @@ export function SchoolOsClarity() {
           </div>
         </div>
 
-        {/* Live Dashboard Showcase */}
-        <div ref={dashboardRef} className="relative">
+        {/* Live Dashboard Showcase - hidden on mobile due to flickering */}
+        <div ref={dashboardRef} className="relative hidden md:block">
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10">
