@@ -117,7 +117,7 @@ export function Features() {
           Platform Signals
         </p>
         <h2 className="text-3xl font-semibold text-white sm:text-4xl md:text-5xl">
-          One OS for the entire campus
+          One OS for the entire school
         </h2>
         <p className="mx-auto max-w-2xl text-base text-neutral-400">
           Run admissions, academics, finance, communication, and facilities in a single workspace.
