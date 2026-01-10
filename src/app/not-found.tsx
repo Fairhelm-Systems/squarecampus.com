@@ -209,7 +209,7 @@ export default function NotFound() {
           className="mt-8 text-sm text-neutral-500"
         >
           Still can't find what you're looking for?{" "}
-          <Link href="/#contact-us" className="text-sky-400 underline-offset-4 hover:underline">
+          <Link href="/contact-us" className="text-sky-400 underline-offset-4 hover:underline">
             Contact our team
           </Link>
         </motion.p>

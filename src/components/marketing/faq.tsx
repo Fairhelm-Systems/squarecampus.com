@@ -1,10 +1,13 @@
 "use client";
-import { useRef, useState } from "react";
-import Link from "next/link";
 
-import { ChevronDown, ChevronUp } from "@/components/icons";
-import { useGsapReveal } from "@/lib/gsap-utils";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { ChevronDown, MessageSquare } from "@/components/icons";
 import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const faqHighlights = [
   "Launch and onboard with a guided rollout",
@@ -73,38 +76,130 @@ const FAQs = [
 export function FAQ() {
   const [open, setOpen] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-  useGsapReveal(sectionRef, { y: 24 });
-  useGsapReveal(listRef, { selector: ".js-faq-item", stagger: 0.06 });
+  // GSAP scroll animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Heading animation
+      if (headingRef.current) {
+        gsap.fromTo(
+          headingRef.current.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // FAQ items animation
+      if (listRef.current) {
+        const items = listRef.current.querySelectorAll(".js-faq-item");
+        gsap.fromTo(
+          items,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: listRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Sidebar animation
+      if (sidebarRef.current) {
+        gsap.fromTo(
+          sidebarRef.current.children,
+          { opacity: 0, x: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sidebarRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div
+    <section
       ref={sectionRef}
-      className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-12 md:grid-cols-[2fr,1fr] md:px-8 md:py-20"
-      id={"faq"}
+      id="faq"
+      className="relative mx-auto grid w-full max-w-7xl gap-8 px-4 py-16 md:grid-cols-[2fr,1fr] md:px-8 md:py-24"
     >
+      {/* Background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-1/3 top-1/4 h-[400px] w-[400px] rounded-full bg-blue-500/[0.05] blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 h-[300px] w-[300px] rounded-full bg-purple-500/[0.05] blur-[100px]" />
+      </div>
+
       <div className="space-y-6">
-        <div className="space-y-2">
-          <h2 className="text-3xl font-medium tracking-tight text-neutral-50 sm:text-4xl md:text-5xl">
-            Frequently asked questions
+        {/* Heading */}
+        <div ref={headingRef} className="space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
+            <MessageSquare className="h-4 w-4 text-blue-400" />
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
+              FAQ
+            </span>
+          </div>
+
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
+            Frequently asked{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              questions
+            </span>
           </h2>
-          <p className="max-w-xl text-sm text-neutral-200 sm:text-base">
-            Everything you need to know about adopting SquareCampus, and why campuses of every size
-            call it their operating system.
+
+          <p className="max-w-xl text-sm leading-relaxed text-neutral-400 sm:text-base">
+            Everything you need to know about adopting SquareCampus, and why
+            campuses of every size call it their operating system.
           </p>
         </div>
-        <div className="grid gap-3 rounded-2xl border border-white/10 bg-neutral-900/80 p-4 text-xs uppercase tracking-[0.4em] text-white/70 sm:grid-cols-3">
+
+        {/* Highlights */}
+        <div className="grid gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm sm:grid-cols-3">
           {faqHighlights.map((highlight, idx) => (
             <p
               key={highlight}
-              className={cn("text-center text-[0.6rem] sm:text-[0.65rem]", idx === 2 && "hidden sm:block")}
+              className={cn(
+                "text-center text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-400 sm:text-[0.65rem]",
+                idx === 2 && "hidden sm:block"
+              )}
             >
               {highlight}
             </p>
           ))}
         </div>
-        <div ref={listRef} className="space-y-4">
+
+        {/* FAQ List */}
+        <div ref={listRef} className="space-y-3">
           {FAQs.map((faq, index) => (
             <FAQItem
               key={index}
@@ -116,61 +211,92 @@ export function FAQ() {
           ))}
         </div>
       </div>
-      <div className="space-y-4">
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900/80 to-neutral-950 p-6 shadow-2xl shadow-black/50">
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
+
+      {/* Sidebar */}
+      <div ref={sidebarRef} className="space-y-4">
+        {/* Talk to human card */}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-6 backdrop-blur-sm">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
+
+          <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
             Need a faster answer?
           </p>
-          <h3 className="mt-3 text-xl font-semibold text-white">Talk to a human</h3>
-          <p className="mt-2 text-sm text-neutral-200">
-            Get a tailored walkthrough, migration plan, and security notes in one call.
+          <h3 className="mt-3 text-xl font-semibold text-white">
+            Talk to a human
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+            Get a tailored walkthrough, migration plan, and security notes in
+            one call.
           </p>
-          <div className="mt-4 space-y-2 text-sm text-neutral-100">
+
+          <div className="mt-4 space-y-2">
             <a
               href="mailto:support@squarecampus.com"
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40"
+              className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
             >
-              <span>Email: support@squarecampus.com</span>
-              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">Quick reply</span>
+              <span className="text-sm text-neutral-200">
+                support@squarecampus.com
+              </span>
+              <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
+                Quick reply
+              </span>
             </a>
             <Link
-              href="#contact-us"
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-white/40"
+              href="/contact-us"
+              className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
             >
-              <span>Book a demo</span>
-              <span className="text-xs uppercase tracking-[0.3em] text-blue-300">Personalized</span>
+              <span className="text-sm text-neutral-200">Book a demo</span>
+              <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
+                Personalized
+              </span>
             </Link>
           </div>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/10 via-neutral-900 to-purple-500/10 p-6 shadow-2xl shadow-black/50">
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
-            Objection busters
-          </p>
-          <ul className="mt-3 space-y-3 text-sm text-neutral-100">
-            <li className="flex items-start gap-2">
-              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-blue-400" />
-              <span>Multi-branch ready with consistent policies and branch-level controls.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              <span>
-                Migration support for admissions, academics, finance, and communication history.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-orange-400" />
-              <span>
-                Role-based onboarding and training for admins, teachers, finance, and support teams.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-[6px] inline-flex h-2 w-2 rounded-full bg-purple-400" />
-              <span>Offline-safe workflows with sync for low-connectivity environments.</span>
-            </li>
+
+        {/* Objection busters card */}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-blue-500/[0.08] via-neutral-900/50 to-purple-500/[0.08] p-6 backdrop-blur-sm">
+          <div className="flex items-center gap-2">
+            <MessageSquare className="h-4 w-4 text-blue-400" />
+            <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
+              Objection busters
+            </p>
+          </div>
+
+          <ul className="mt-4 space-y-3">
+            {[
+              {
+                text: "Multi-branch ready with consistent policies and branch-level controls.",
+                color: "bg-blue-400",
+              },
+              {
+                text: "Migration support for admissions, academics, finance, and communication history.",
+                color: "bg-emerald-400",
+              },
+              {
+                text: "Role-based onboarding and training for admins, teachers, finance, and support teams.",
+                color: "bg-amber-400",
+              },
+              {
+                text: "Offline-safe workflows with sync for low-connectivity environments.",
+                color: "bg-purple-400",
+              },
+            ].map((item, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <span
+                  className={cn(
+                    "mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full",
+                    item.color
+                  )}
+                />
+                <span className="text-sm leading-relaxed text-neutral-300">
+                  {item.text}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -186,41 +312,61 @@ const FAQItem = ({
   setOpen: (open: string | null) => void;
 }) => {
   const isOpen = open === question;
+  const contentRef = useRef<HTMLDivElement>(null);
 
   return (
     <button
       type="button"
       onClick={() => setOpen(isOpen ? null : question)}
       className={cn(
-        "relative w-full rounded-2xl border border-white/10 bg-neutral-900/70 p-4 text-left shadow-lg shadow-black/40 transition-all duration-300",
-        "hover:border-white/25 hover:bg-neutral-900 hover:-translate-y-0.5 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
-        "js-faq-item"
+        "js-faq-item group relative w-full overflow-hidden rounded-xl text-left",
+        "border border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm",
+        "transition-all duration-300",
+        "hover:border-white/15 hover:bg-neutral-900/70",
+        isOpen && "border-white/15"
       )}
     >
-      <span className="absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-60" />
+      {/* Top gradient line */}
+      <span className="pointer-events-none absolute inset-x-4 top-0 block h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-      <div className="flex items-start gap-3">
-        <div className="relative mt-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
-          <ChevronDown
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          {/* Icon */}
+          <div
             className={cn(
-              "h-4 w-4 transition-transform duration-300",
-              isOpen && "-rotate-180 opacity-0"
+              "mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg",
+              "border border-white/[0.08] bg-white/[0.03]",
+              "transition-all duration-300",
+              isOpen && "border-blue-500/30 bg-blue-500/10"
             )}
-          />
-          <ChevronUp
-            className={cn(
-              "absolute h-4 w-4 transition-transform duration-300",
-              isOpen ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
-            )}
-          />
-        </div>
+          >
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-neutral-400 transition-all duration-300",
+                isOpen && "rotate-180 text-blue-400"
+              )}
+            />
+          </div>
 
-        <div className="flex-1 space-y-2">
-          <h3 className="text-base font-semibold text-neutral-50">{question}</h3>
+          <div className="flex-1">
+            <h3 className="text-sm font-semibold text-white sm:text-base">
+              {question}
+            </h3>
 
-          {isOpen && (
-            <p className="text-xs leading-relaxed text-neutral-300 sm:text-sm">{answer}</p>
-          )}
+            <div
+              ref={contentRef}
+              className={cn(
+                "grid transition-all duration-300",
+                isOpen ? "mt-2 grid-rows-[1fr]" : "grid-rows-[0fr]"
+              )}
+            >
+              <div className="overflow-hidden">
+                <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">
+                  {answer}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </button>

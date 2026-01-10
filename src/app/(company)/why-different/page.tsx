@@ -1,1194 +1,683 @@
 "use client";
 
-import { motion } from "@/lib/motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import Script from "next/script";
-import { Card, CardContent } from "@/components/ui/card";
-
-import {
-  createWebPageSchema,
-  createBreadcrumbSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
-import {
-  WhyDifferentBackground,
-  SectionDivider,
-  FloatingBadge,
-} from "@/components/marketing/backgrounds/why-different-bg";
+import { useEffect, useRef } from "react";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-import { ComparisonTable, StatCard } from "@/components/marketing/comparison-table";
-import { AlertCircle, ArrowRight, Check, Clock, Component, DollarSign, Puzzle, Shield, Sparkles, TrendingUp, Users, X, Zap } from "@/icons";
-import { LinkButton } from "@/components/marketing/link-button";
+import {
+  ArrowRight,
+  Check,
+  Database,
+  Eye,
+  FileCheck,
+  Lock,
+  Puzzle,
+  Shield,
+  Sparkles,
+  Users,
+  X,
+  Zap,
+} from "@/components/icons";
+import { cn } from "@/lib/utils";
+import {
+  createBreadcrumbSchema,
+  createWebPageSchema,
+  SEO_CONFIG,
+} from "@/lib/seo";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Floating particles for ambient effect
+function FloatingParticles() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className={cn(
+            "absolute h-1 w-1 rounded-full",
+            i % 3 === 0 ? "bg-blue-400/25" : i % 3 === 1 ? "bg-emerald-400/25" : "bg-purple-400/25"
+          )}
+          style={{
+            left: `${8 + (i * 7) % 84}%`,
+            top: `${10 + (i * 11) % 80}%`,
+            animation: `float-why ${8 + (i % 4) * 2}s ease-in-out infinite`,
+            animationDelay: `${i * 0.5}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes float-why {
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+          50% { transform: translateY(-15px) translateX(8px); opacity: 0.4; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// Outcome cards data
+const outcomeCards = [
+  {
+    title: "Everything connected",
+    description: "Admissions, finance, academics, and communication share one data model. No exports, no reconciliation.",
+    icon: <Puzzle className="h-5 w-5" />,
+    color: "blue",
+  },
+  {
+    title: "Fewer tools, less manual work",
+    description: "Replace scattered apps with one platform. One login, one workflow, one source of truth.",
+    icon: <Zap className="h-5 w-5" />,
+    color: "emerald",
+  },
+  {
+    title: "Built for real school days",
+    description: "Designed for peak loads: admission rushes, fee deadlines, and results publishing.",
+    icon: <Shield className="h-5 w-5" />,
+    color: "purple",
+  },
+];
+
+// Comparison data - 3 columns
+const comparisonData = {
+  headers: ["Traditional ERP", "Point Tools", "School OS (SquareCampus)"],
+  rows: [
+    {
+      erp: "Modules stitched together with sync gaps",
+      point: "Separate databases per app",
+      schoolOS: "Single shared data model across all modules",
+    },
+    {
+      erp: "Generic business workflows adapted for schools",
+      point: "Each tool has its own logic",
+      schoolOS: "Academic structures native: terms, sections, calendars",
+    },
+    {
+      erp: "Heavy implementation, multi-month rollouts",
+      point: "DIY integration burden",
+      schoolOS: "Guided rollout with data migration included",
+    },
+    {
+      erp: "Reports require exports and reconciliation",
+      point: "Manual consolidation from multiple apps",
+      schoolOS: "Live, auditable reports from one source",
+    },
+    {
+      erp: "Multiple support teams and partners",
+      point: "Many vendors, unclear ownership",
+      schoolOS: "Single vendor accountability, direct support",
+    },
+  ],
+};
+
+// School OS explanation bullets
+const schoolOSBullets = [
+  {
+    title: "Shared identity and permissions",
+    description: "One login for staff, teachers, students, and parents. Role-based access controls apply everywhere.",
+    icon: <Users className="h-4 w-4" />,
+  },
+  {
+    title: "Shared records across modules",
+    description: "Student data flows from admissions to academics to finance. No duplicate entry, no sync failures.",
+    icon: <Database className="h-4 w-4" />,
+  },
+  {
+    title: "Fewer exports and imports",
+    description: "Reports pull from live data. No nightly exports, no spreadsheet reconciliation.",
+    icon: <FileCheck className="h-4 w-4" />,
+  },
+  {
+    title: "Consistent experience everywhere",
+    description: "Same interface patterns across all modules. Learn once, use everywhere.",
+    icon: <Puzzle className="h-4 w-4" />,
+  },
+  {
+    title: "Audit-friendly logs by default",
+    description: "Every change is tracked. Who changed what, when, and why - always available.",
+    icon: <Eye className="h-4 w-4" />,
+  },
+  {
+    title: "Configurable workflows",
+    description: "Approval chains, notifications, and automations adapt to how your institution works.",
+    icon: <Sparkles className="h-4 w-4" />,
+  },
+];
+
+// Mechanism / Principles data
+const principles = [
+  {
+    title: "Unified data model",
+    description: "All modules share one database. A student record in admissions is the same record in finance, academics, and transport.",
+    color: "blue",
+  },
+  {
+    title: "Role-based access by design",
+    description: "RBAC is built into the platform, not bolted on. Permissions cascade across modules automatically.",
+    color: "emerald",
+  },
+  {
+    title: "Operational reliability under bursts",
+    description: "Designed to handle peak days: admission deadlines, fee collection windows, and result publishing.",
+    color: "purple",
+  },
+  {
+    title: "Designed for adoption",
+    description: "Guided onboarding with role-based training. Migration support and parallel runs before go-live.",
+    color: "cyan",
+  },
+  {
+    title: "Security posture baked in",
+    description: "Encryption at rest and in transit. Audit logs for compliance. India data residency by default.",
+    color: "amber",
+  },
+];
+
+const accentColors: Record<string, { border: string; bg: string; text: string; glow: string }> = {
+  blue: {
+    border: "border-blue-500/30",
+    bg: "bg-blue-500/10",
+    text: "text-blue-400",
+    glow: "bg-blue-500/20",
+  },
+  emerald: {
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    glow: "bg-emerald-500/20",
+  },
+  purple: {
+    border: "border-purple-500/30",
+    bg: "bg-purple-500/10",
+    text: "text-purple-400",
+    glow: "bg-purple-500/20",
+  },
+  cyan: {
+    border: "border-cyan-500/30",
+    bg: "bg-cyan-500/10",
+    text: "text-cyan-400",
+    glow: "bg-cyan-500/20",
+  },
+  amber: {
+    border: "border-amber-500/30",
+    bg: "bg-amber-500/10",
+    text: "text-amber-400",
+    glow: "bg-amber-500/20",
+  },
+};
 
 export default function WhyDifferentPage() {
-  const pageUrl = `${SEO_CONFIG.baseUrl}/why-different`;
-  const pageName = "Why SquareCampus Is Different";
-  const pageDescription =
-    "Professional comparison showing why SquareCampus is a unified School OS, not another educational ERP.";
+  const pageRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const comparisonRef = useRef<HTMLElement>(null);
+  const schoolOSRef = useRef<HTMLElement>(null);
+  const mechanismRef = useRef<HTMLElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
+  const midCtaRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!pageRef.current) return;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      // Hero animations
+      if (heroRef.current) {
+        gsap.fromTo(
+          heroRef.current.querySelectorAll(".js-hero-animate"),
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+          }
+        );
+      }
+
+      // Comparison section
+      if (comparisonRef.current) {
+        gsap.fromTo(
+          comparisonRef.current.querySelectorAll(".js-comparison-animate"),
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: comparisonRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Mid CTA
+      if (midCtaRef.current) {
+        gsap.fromTo(
+          midCtaRef.current,
+          { autoAlpha: 0, y: 20 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: midCtaRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+
+      // School OS section
+      if (schoolOSRef.current) {
+        gsap.fromTo(
+          schoolOSRef.current.querySelectorAll(".js-schoolos-animate"),
+          { autoAlpha: 0, x: -20 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: schoolOSRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Mechanism section
+      if (mechanismRef.current) {
+        gsap.fromTo(
+          mechanismRef.current.querySelectorAll(".js-principle-card"),
+          { autoAlpha: 0, y: 40, scale: 0.95 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: mechanismRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Final CTA
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ctaRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const pageUrl = `${SEO_CONFIG.baseUrl}/why-different`;
   const webPageSchema = createWebPageSchema({
-    name: pageName,
-    description: pageDescription,
+    name: "Why SquareCampus Is Different",
+    description: "See how SquareCampus differs from traditional ERPs and point tools. One unified School OS for all campus operations.",
     url: pageUrl,
   });
-
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: "Home", url: SEO_CONFIG.baseUrl },
     { name: "Why Different", url: pageUrl },
   ]);
 
-  const detailedComparisons = [
-    {
-      icon: Sparkles,
-      title: "Automation That Earns Its Keep",
-      subtitle: "If it doesn't move a workflow, we don't ship it.",
-      them: [
-        "\"Smart insights\" that stop at static charts",
-        "Dashboards that look good but don't act",
-        "Predictions promised, never operationalized",
-      ],
-      themQuote: "“Our automation roadmap is exciting - you'll see it in the next release.”",
-      us: [
-        "Automation that helps: auto-categorize expenses, forecast enrollment trends",
-        "Action-ready reports without manual exports",
-        "Scheduling that reflects historical constraints",
-        "Measured operational impact before launch",
-      ],
-      gradient: "from-purple-500/20 via-pink-500/10",
-      iconColor: "text-purple-400",
-    },
-    {
-      icon: Puzzle,
-      title: "One OS, Not a Patchwork",
-      subtitle: "All modules share one data model, one set of workflows, one operating system.",
-      them: [
-        "Admissions, finance, HR, and comms sold as separate apps",
-        "Each module needs its own login, admin, and export",
-        "Unified reports require manual reconciliation",
-      ],
-      themQuote: "“We can integrate that for an additional implementation fee.”",
-      us: [
-        "One unified platform. Everything included.",
-        "Admissions sees finance data. Finance sees academic data. It's called architecture.",
-        "One database, one source of truth, one bill",
-        "Real-time data everywhere because it's actually the same system",
-      ],
-      gradient: "from-blue-500/20 via-cyan-500/10",
-      iconColor: "text-blue-400",
-    },
-    {
-      icon: Clock,
-      title: "The Roadmap That Ships",
-      subtitle: "If it’s on the site, it’s in production.",
-      them: [
-        "Roadmaps that never land in production",
-        "Beta features stuck in limbo",
-        "Marketing pages ahead of reality",
-      ],
-      themQuote: "“It’s on the roadmap.”",
-      us: [
-        "If it's on our website, it's live in production",
-        "Features ship when they're ready, not when marketing wants them",
-        "Public changelog with actual dates",
-        "No vaporware. No false promises.",
-      ],
-      gradient: "from-emerald-500/20 via-green-500/10",
-      iconColor: "text-emerald-400",
-    },
-    {
-      icon: Shield,
-      title: "Built for Education, Not Retrofitted",
-      subtitle: "Academic structures are native, not hacks.",
-      them: [
-        "Factory software reskinned with a school logo",
-        "Academic terms squeezed into fiscal-year fields",
-        "Multi-campus equals manual duplication",
-      ],
-      themQuote: "“Just treat classes as departments - it works the same.”",
-      us: [
-        "Built for schools from day one",
-        "Understands terms, sections, academic calendars, grading periods",
-        "Multi-campus architecture baked in, not bolted on",
-        "School-specific workflows, not generic business processes",
-      ],
-      gradient: "from-amber-500/20 via-orange-500/10",
-      iconColor: "text-amber-400",
-    },
-    {
-      icon: DollarSign,
-      title: "Pricing Without Landmines",
-      subtitle: "Transparent from the first call to renewal.",
-      them: [
-        "Tiered pricing where essentials are upsells",
-        "Add-on fees for parent login, reports, and exports",
-        "Final invoice multiples the initial quote",
-      ],
-      themQuote: "“That feature is in our Pro+ tier.”",
-      us: [
-        "Full platform, one price. Every module included.",
-        "Parent login enabled by default. No extra fees.",
-        "Mobile apps included. White-labeling is a one-time fee.",
-        "Forever free updates and feature releases.",
-        "Simple pricing: Based on max students + staff count. That's it.",
-        "Generous storage included. Need more? Reasonable rates, not highway robbery.",
-        "Implementation + training included.",
-        "One invoice. Transparent pricing. No shell games.",
-      ],
-      gradient: "from-rose-500/20 via-red-500/10",
-      iconColor: "text-rose-400",
-    },
-    {
-      icon: Zap,
-      title: "Performance Without Excuses",
-      subtitle: "Peak-day reliability isn’t a feature. It’s the baseline.",
-      them: [
-        "5+ second page loads for basic screens",
-        "Timeouts during admissions and results",
-        "Mobile feels like a sluggish web wrapper",
-      ],
-      themQuote: "“Please refresh and try again.”",
-      us: [
-        "Sub-second page loads. We cache intelligently.",
-        "Built for peak load (enrollment day, result publishing)",
-        "Real mobile apps, not web wrappers",
-        "Your school runs fast. Your system should too.",
-      ],
-      gradient: "from-sky-500/20 via-cyan-500/10",
-      iconColor: "text-sky-400",
-    },
-  ];
-
-  const stats = [
-    { label: "Unified system", value: "1", suffix: "" },
-    { label: "Fragmented stack", value: "Many", suffix: "", isCompetitor: true },
-    { label: "Implementation time", value: "Days", suffix: "" },
-    { label: "Legacy rollouts", value: "Months", suffix: "", isCompetitor: true },
-  ];
-
-  const comparisonTableData = [
-    {
-      metric: "Products",
-      them: "Many",
-      us: "One",
-      themBad: true,
-      animated: false,
-      takeaway: "One platform",
-      examples: {
-        title: "The Product Maze",
-        items: [
-          "Admissions + fees + academics sold separately",
-          "Reports locked behind another module",
-          "Parent app treated as an add-on",
-          "Multiple invoices, one headache",
-        ],
-      },
-    },
-    {
-      metric: "Databases",
-      them: "Many",
-      us: "One",
-      themBad: true,
-      animated: false,
-      takeaway: "Single source",
-      examples: {
-        title: "Data Chaos",
-        items: [
-          "Student data in one system, fees in another...",
-          "Want a unified report? Good luck with that",
-          "Data sync issues? \"Known limitation\"",
-          "Multiple databases = multiple backup nightmares",
-          "One student, scattered across systems",
-        ],
-      },
-    },
-    {
-      metric: "Login Systems",
-      them: "Many",
-      us: "One",
-      themBad: true,
-      animated: false,
-      takeaway: "One login",
-      examples: {
-        title: "Password Hell",
-        items: [
-          "Different login for each module",
-          "Admin portal, Parent portal, Teacher portal... all separate",
-          "Password reset emails go to... which support team?",
-          "SSO treated as an enterprise add-on",
-          "Students forget passwords weekly. Good luck, IT team.",
-        ],
-      },
-    },
-    { metric: "Implementation", them: "Months", us: "Days", themBad: true, animated: false, takeaway: "Go live fast" },
-    {
-      metric: "Support Teams",
-      them: "Multiple",
-      us: "Single",
-      themBad: false,
-      takeaway: "One team",
-      examples: {
-        title: "Support Roulette",
-        items: [
-          "Finance issue? Call Team A. Admissions? Team B.",
-          "Teams don't talk to each other. You're the middleman.",
-          "Ticket gets bounced between 3 departments",
-          "\"That's not our module\" - everyone's favorite response",
-          "Resolution time: 2 weeks (if you're lucky)",
-        ],
-      },
-    },
-    {
-      metric: "Hidden Fees",
-      them: "Common",
-      us: "No surprises",
-      themBad: true,
-      takeaway: "No surprises",
-      examples: {
-        title: "The Fine Print",
-        items: [
-          "Implementation, migration, and training billed separately",
-          "Annual maintenance added after contract signature",
-          "Storage and exports charged as surprise line items",
-          "Per-user licensing with complex tier calculations",
-          "Mobile apps gated behind add-ons",
-          "Priority support only for top-tier customers",
-        ],
-      },
-    },
-  ];
-
-  const visualStats = [
-    { label: "Time to value (relative)", themValue: 3, usValue: 9, icon: Clock },
-    { label: "System complexity (relative)", themValue: 9, usValue: 3, icon: Puzzle },
-    { label: "Operational reliability (relative)", themValue: 4, usValue: 8, icon: Shield },
-    { label: "Training effort (relative)", themValue: 8, usValue: 3, icon: TrendingUp },
-  ];
-
-  const positioningTable = [
-    {
-      aspect: "Data model",
-      schoolOS: "Single shared data model",
-      bundledErp: "Modules stitched with sync gaps",
-      pointTools: "Separate silos per tool",
-    },
-    {
-      aspect: "Workflows",
-      schoolOS: "Connected end-to-end flows",
-      bundledErp: "Module-by-module handoffs",
-      pointTools: "Manual handoffs between apps",
-    },
-    {
-      aspect: "Reporting",
-      schoolOS: "Live, auditable outputs",
-      bundledErp: "Exports + reconciliation",
-      pointTools: "Manual consolidation",
-    },
-    {
-      aspect: "Rollout",
-      schoolOS: "Guided rollout by campus",
-      bundledErp: "Heavy implementation projects",
-      pointTools: "DIY integration burden",
-    },
-    {
-      aspect: "Ownership",
-      schoolOS: "Single vendor accountability",
-      bundledErp: "Multiple teams and partners",
-      pointTools: "Many vendors, unclear ownership",
-    },
-  ];
-
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-white">
-      {/* Animated Background */}
-      <WhyDifferentBackground />
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-white/5 px-4 py-20 md:px-8 md:py-32">
-
-        <div className="relative mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <FloatingBadge className="text-neutral-400">
-              <AlertCircle className="h-3 w-3" />
-              Built for the schools that run everything
-            </FloatingBadge>
-
-            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-              Not Just Another
-              <span className="block bg-gradient-to-r from-rose-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Educational ERP
-              </span>
-            </h1>
-
-            <p className="mx-auto mb-5 max-w-2xl text-lg text-neutral-300 md:text-xl">
-              Built from the ground up: every technology vetted, every feature battle-tested, every workflow measured for real-world value. One School OS that scales from small schools to K-12 groups, coaching institutes, and multi-campus universities across India.
-            </p>
-            <p className="mx-auto mb-8 max-w-2xl text-base font-semibold uppercase tracking-[0.24em] text-emerald-300">
-              Verdict: fragmented systems are the tax on growth. We remove the tax.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <BookCallCta
-                context="features-hero"
-                label="See It Yourself"
-                variant="primary"
-              />
-              <LinkButton
-                href={"/about"}
-                variant={"dark"}
-                className={"group inline-flex items-center gap-1.5"}
-              >
-                <span>Our Story</span>
-                <Component className={"w-4 h-4"} />
-              </LinkButton>
-            </div>
-          </motion.div>
+    <>
+      <div
+        ref={pageRef}
+        className="relative min-h-screen overflow-hidden bg-neutral-950 text-white"
+      >
+        {/* Background effects */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-10 top-20 h-72 w-72 rounded-full bg-blue-500/[0.06] blur-[100px]" />
+          <div className="absolute right-10 top-40 h-64 w-64 rounded-full bg-purple-500/[0.05] blur-[100px]" />
+          <div className="absolute bottom-1/3 left-1/3 h-80 w-80 rounded-full bg-emerald-500/[0.04] blur-[120px]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         </div>
-      </section>
 
-      {/* School OS vs ERP vs Point Tools */}
-      <section className="border-b border-white/5 px-4 py-16 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <FloatingBadge className="text-neutral-400">
-              <Sparkles className="h-3 w-3" />
-              School OS vs the rest
-            </FloatingBadge>
-            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
-              School OS vs Bundled ERP vs Point Tools
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-              Clear differences that show up in day-to-day operations, not just on spec sheets.
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/70">
-            <div className="grid grid-cols-4 gap-4 border-b border-white/10 bg-neutral-950/60 px-6 py-4 text-xs uppercase tracking-[0.24em] text-neutral-500">
-              <div>Aspect</div>
-              <div className="text-emerald-300">School OS</div>
-              <div className="text-neutral-300">Bundled ERP</div>
-              <div className="text-neutral-300">Point Tools</div>
-            </div>
-            <div className="divide-y divide-white/5">
-              {positioningTable.map((row) => (
-                <div
-                  key={row.aspect}
-                  className="grid grid-cols-4 gap-4 px-6 py-4 text-sm text-neutral-200"
-                >
-                  <div className="text-neutral-300">{row.aspect}</div>
-                  <div className="text-emerald-200">{row.schoolOS}</div>
-                  <div className="text-neutral-400">{row.bundledErp}</div>
-                  <div className="text-neutral-400">{row.pointTools}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+        <FloatingParticles />
 
-      {/* Stats Section */}
-      <section className="border-b border-white/5 px-4 py-16 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group"
-              >
-                <Card
-                  className={`relative overflow-hidden border transition-all duration-500 hover:scale-[1.02] ${stat.isCompetitor
-                    ? "border-rose-500/20 bg-gradient-to-br from-rose-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-rose-500/5 hover:border-rose-500/40 hover:shadow-rose-500/20"
-                    : "border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/40 hover:shadow-emerald-500/20"
-                    }`}
-                >
-                  {/* Glow effect */}
-                  <div
-                    className={`pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150 ${stat.isCompetitor
-                      ? "bg-rose-500/20 group-hover:bg-rose-400/30"
-                      : "bg-emerald-500/20 group-hover:bg-emerald-400/30"
-                      }`}
-                  />
+        {/* SECTION 1: Hero */}
+        <section
+          ref={heroRef}
+          className="relative px-4 py-16 md:px-8 md:py-24"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-12 text-center">
+              <div className="js-hero-animate mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
+                <Sparkles className="h-4 w-4" />
+                School OS
+              </div>
 
-                  <CardContent className="relative p-6 text-center">
-                    <div
-                      className={`mb-2 text-4xl font-bold transition-all duration-300 group-hover:scale-110 ${stat.isCompetitor ? "text-rose-400" : "text-emerald-400"
-                        }`}
-                    >
-                      {stat.value}
-                      <span className="text-2xl">{stat.suffix}</span>
-                    </div>
-                    <div className="text-sm text-neutral-400 transition-colors duration-300 group-hover:text-neutral-200">
-                      {stat.isCompetitor && "× "}
-                      {stat.label}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <h1 className="js-hero-animate mb-5 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                Why SquareCampus is{" "}
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
+                  different
+                </span>
+              </h1>
 
-      {/* Implementation reality */}
-      <section className="border-b border-white/5 px-4 py-16 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <FloatingBadge className="text-emerald-300">
-              <Check className="h-3 w-3" />
-              Implementation reality
-            </FloatingBadge>
-            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
-              Onboarding without the theatre
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-              Clear steps, real guardrails, and a rollout that matches how your institution actually works.
-            </p>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: "Onboarding",
-                desc: "Workflow mapping with principals and admin teams before configuration.",
-              },
-              {
-                title: "Migration",
-                desc: "Structured data import with parallel runs to validate accuracy.",
-              },
-              {
-                title: "Training",
-                desc: "Role-based onboarding for admins, teachers, and finance teams.",
-              },
-              {
-                title: "Guardrails",
-                desc: "RBAC, approvals, and audit trails active from day one.",
-              },
-            ].map((item) => (
-              <Card
-                key={item.title}
-                className="border border-white/10 bg-neutral-900/70 shadow-xl shadow-black/20"
-              >
-                <CardContent className="space-y-2 p-5">
-                  <p className="text-sm font-semibold text-white">{item.title}</p>
-                  <p className="text-xs leading-relaxed text-neutral-300">{item.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Works in demos vs works under pressure */}
-      <section className="border-b border-white/5 px-4 py-16 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <FloatingBadge className="text-sky-300">
-              <Shield className="h-3 w-3" />
-              Operational resilience
-            </FloatingBadge>
-            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
-              Works in demos vs works on inspection day
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-neutral-300">
-              The hardest days reveal whether a system is a brochure or a backbone.
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card className="border border-white/10 bg-neutral-900/70 shadow-xl shadow-black/20">
-              <CardContent className="space-y-4 p-6">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-rose-300">
-                  <X className="h-4 w-4" />
-                  Works in demos
-                </div>
-                <ul className="space-y-3 text-sm text-neutral-300">
-                  <li>Looks smooth in ideal data and quiet weeks.</li>
-                  <li>Breaks into exports and manual follow-ups under load.</li>
-                  <li>Requires heroic staff effort during audits and deadlines.</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 shadow-xl shadow-emerald-500/10">
-              <CardContent className="space-y-4 p-6">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
-                  <Check className="h-4 w-4" />
-                  Works on inspection day
-                </div>
-                <ul className="space-y-3 text-sm text-neutral-200">
-                  <li>Stays stable during peak admissions and fee spikes.</li>
-                  <li>Keeps workflows auditable when policies change mid-session.</li>
-                  <li>Gives teams clear, predictable operations under pressure.</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table Section */}
-      <section className="relative border-b border-white/5 px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6 lg:sticky lg:top-24"
-          >
-            <FloatingBadge className="text-purple-400">
-              <Sparkles className="h-3 w-3" />
-              By The Numbers
-            </FloatingBadge>
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold md:text-4xl">The Math Doesn&apos;t Lie</h2>
-              <p className="text-neutral-300">
-                Count the systems, count the databases, count the handoffs. The gaps show up fast.
+              <p className="js-hero-animate mx-auto max-w-2xl text-lg leading-relaxed text-neutral-300 md:text-xl">
+                Not another ERP with modules stitched together. A unified School OS where
+                admissions, academics, finance, and communication share one backbone.
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-neutral-900/70 p-5">
-              <div className="space-y-4 text-sm text-neutral-300">
-                <div className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
-                  <p>Every extra product adds a login, a workflow gap, and a data sync job.</p>
+
+            {/* Outcome cards */}
+            <div className="grid gap-5 md:grid-cols-3">
+              {outcomeCards.map((card) => {
+                const colors = accentColors[card.color];
+                return (
+                  <div
+                    key={card.title}
+                    className="js-hero-animate group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  >
+                    <div
+                      className={cn(
+                        "absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
+                    <div className="relative">
+                      <div
+                        className={cn(
+                          "mb-4 inline-flex items-center justify-center rounded-lg p-3 ring-1",
+                          colors.bg,
+                          colors.text,
+                          colors.border
+                        )}
+                      >
+                        {card.icon}
+                      </div>
+                      <h3 className="mb-2 text-lg font-semibold text-white">{card.title}</h3>
+                      <p className="text-sm leading-relaxed text-neutral-400">{card.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: The Comparison */}
+        <section
+          ref={comparisonRef}
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="js-comparison-animate mb-10 text-center">
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">The difference at a glance</h2>
+              <p className="mx-auto max-w-xl text-sm text-neutral-400">
+                How School OS compares to traditional ERPs and point tools in day-to-day operations.
+              </p>
+            </div>
+
+            {/* Comparison table - mobile: stacked cards, desktop: table */}
+            <div className="js-comparison-animate overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm">
+              {/* Desktop table header */}
+              <div className="hidden border-b border-white/[0.08] md:grid md:grid-cols-3">
+                <div className="border-r border-white/[0.08] bg-rose-500/[0.03] px-6 py-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-rose-300">
+                    <X className="h-4 w-4" />
+                    Traditional ERP
+                  </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-400/80" />
-                  <p>Every extra database means reporting delays and reconciliation risk.</p>
+                <div className="border-r border-white/[0.08] bg-amber-500/[0.03] px-6 py-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-amber-300">
+                    <X className="h-4 w-4" />
+                    Point Tools
+                  </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-rose-400/80" />
-                  <p>Every extra vendor adds finger-pointing during critical school days.</p>
+                <div className="bg-emerald-500/[0.05] px-6 py-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-emerald-300">
+                    <Check className="h-4 w-4" />
+                    School OS
+                  </div>
                 </div>
               </div>
-              <div className="mt-4 rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs uppercase tracking-[0.2em] text-neutral-400">
-                Click a row to see the real-world examples.
+
+              {/* Rows */}
+              <div className="divide-y divide-white/[0.06]">
+                {comparisonData.rows.map((row, idx) => (
+                  <div key={idx} className="md:grid md:grid-cols-3">
+                    {/* Mobile: stacked layout */}
+                    <div className="block space-y-3 p-5 md:hidden">
+                      <div className="flex items-start gap-2">
+                        <X className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" />
+                        <div>
+                          <span className="text-[0.65rem] font-medium uppercase tracking-wide text-rose-400">ERP</span>
+                          <p className="text-sm text-neutral-400">{row.erp}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <X className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                        <div>
+                          <span className="text-[0.65rem] font-medium uppercase tracking-wide text-amber-400">Point</span>
+                          <p className="text-sm text-neutral-400">{row.point}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                        <div>
+                          <span className="text-[0.65rem] font-medium uppercase tracking-wide text-emerald-400">School OS</span>
+                          <p className="text-sm text-neutral-200">{row.schoolOS}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Desktop: side by side */}
+                    <div className="hidden border-r border-white/[0.06] px-6 py-4 md:block">
+                      <p className="text-sm text-neutral-500">{row.erp}</p>
+                    </div>
+                    <div className="hidden border-r border-white/[0.06] px-6 py-4 md:block">
+                      <p className="text-sm text-neutral-500">{row.point}</p>
+                    </div>
+                    <div className="hidden bg-emerald-500/[0.02] px-6 py-4 md:block">
+                      <p className="text-sm text-neutral-200">{row.schoolOS}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="grid gap-4">
-              {[
-                { label: "Time to value", value: "Days" },
-                { label: "Operational handoffs", value: "Single system" },
-                { label: "Support ownership", value: "Single team" },
-              ].map((item) => (
+          </div>
+        </section>
+
+        {/* Mid-page CTA */}
+        <div
+          ref={midCtaRef}
+          className="border-y border-white/[0.06] bg-gradient-to-r from-blue-500/[0.03] via-purple-500/[0.03] to-emerald-500/[0.03] px-4 py-10 md:px-8"
+        >
+          <div className="mx-auto flex max-w-5xl flex-col items-center gap-5 text-center md:flex-row md:justify-between md:text-left">
+            <div className="space-y-1">
+              <p className="text-lg font-semibold text-white">See how it works for your institution</p>
+              <p className="text-sm text-neutral-400">
+                Walk through workflows, data flows, and reporting with your specific use case.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <BookCallCta context="why-different-mid" label="Schedule walkthrough" variant="primary" />
+              <Link
+                href="/features"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+              >
+                Explore features
+                <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 3: What School OS means */}
+        <section
+          ref={schoolOSRef}
+          className="relative px-4 py-16 md:px-8 md:py-20"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="js-schoolos-animate mb-10">
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">What "School OS" actually means</h2>
+              <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
+                Not just a label. A different architecture that changes how data flows, how teams work, and how reports get generated.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {schoolOSBullets.map((bullet) => (
                 <div
-                  key={item.label}
-                  className="flex items-center justify-between rounded-xl border border-white/10 bg-neutral-900/60 px-4 py-3 text-sm"
+                  key={bullet.title}
+                  className="js-schoolos-animate group flex gap-4 rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
                 >
-                  <span className="text-neutral-400">{item.label}</span>
-                  <span className="font-semibold text-emerald-300">{item.value}</span>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 ring-1 ring-blue-500/30 transition-all duration-300 group-hover:scale-105">
+                    {bullet.icon}
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-semibold text-neutral-100">{bullet.title}</h3>
+                    <p className="text-xs leading-relaxed text-neutral-400">{bullet.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-900/30 via-neutral-900/80 to-neutral-950/90 p-5 text-sm text-neutral-200">
-              A single OS that survives anything you throw at it. That’s the quiet advantage schools feel every day.
+          </div>
+        </section>
+
+        {/* SECTION 4: How we deliver it (Mechanism) */}
+        <section
+          ref={mechanismRef}
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-10 text-center">
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">How we deliver it</h2>
+              <p className="mx-auto max-w-xl text-sm text-neutral-400">
+                The principles behind the platform. Built for schools that need reliability, not just features.
+              </p>
             </div>
-          </motion.div>
 
-          <div className="relative">
-            <div className="pointer-events-none absolute -right-16 top-6 h-40 w-40 rounded-full bg-purple-500/10 blur-[90px]" />
-            <div className="pointer-events-none absolute -left-12 bottom-6 h-40 w-40 rounded-full bg-blue-500/10 blur-[90px]" />
-            <ComparisonTable rows={comparisonTableData} />
-          </div>
-        </div>
-      </section>
-
-      <section className="relative border-b border-white/5 px-4 py-12 md:px-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 rounded-2xl border border-white/10 bg-neutral-900/70 px-6 py-6 text-center sm:flex-row sm:justify-between sm:text-left">
-          <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-emerald-300">
-              Calm, connected operations
-            </p>
-            <p className="text-lg font-semibold text-white">
-              Ready to move fast? We’ll build your migration plan and start immediately.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <BookCallCta context="why-different-mid" label="Book a walkthrough" variant="primary" />
-            <LinkButton href="/security" variant="dark" className="group inline-flex items-center gap-1.5">
-              <span>Security brief</span>
-              <ArrowRight className="h-4 w-4" />
-            </LinkButton>
-          </div>
-        </div>
-      </section>
-
-      {/* Visual Stats with Progress Bars */}
-      <section className="relative border-b border-white/5 px-4 py-20 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-12 text-center"
-          >
-            <FloatingBadge className="mb-4 text-blue-400">
-              <TrendingUp className="h-3 w-3" />
-              Performance Metrics
-            </FloatingBadge>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Where It Really Matters
-            </h2>
-            <p className="mx-auto max-w-2xl text-neutral-300">
-              The numbers that decide whether a school day feels calm or chaotic.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {visualStats.map((stat, index) => (
-              <StatCard
-                key={stat.label}
-                label={stat.label}
-                themValue={stat.themValue}
-                usValue={stat.usValue}
-                icon={stat.icon}
-                delay={index * 0.08}
-              />
-            ))}
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[
-              { label: "Migration playbook", value: "Guided rollout" },
-              { label: "Support response", value: "Responsive" },
-              { label: "Peak-day uptime", value: "Reliable" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border border-white/10 bg-neutral-900/70 px-5 py-4"
-              >
-                <p className="text-xs uppercase tracking-[0.24em] text-neutral-500">
-                  {item.label}
-                </p>
-                <p className="mt-2 text-lg font-semibold text-white">{item.value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Detailed Comparisons */}
-      <section className="relative px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <FloatingBadge className="mb-4 text-rose-400">
-              <AlertCircle className="h-3 w-3" />
-              Real Talk
-            </FloatingBadge>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              The Uncomfortable Truths
-            </h2>
-            <p className="mx-auto max-w-2xl text-neutral-300">
-              We’re not naming names. We’re naming patterns schools shouldn’t have to accept anymore.
-            </p>
-          </motion.div>
-
-          <div className="space-y-12">
-            {detailedComparisons.map((comparison, index) => {
-              const Icon = comparison.icon;
-              return (
-                <motion.div
-                  key={comparison.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group"
-                >
-                  <Card className="relative overflow-hidden rounded-2xl border border-neutral-800/60 bg-gradient-to-br from-neutral-900/60 via-neutral-950 to-neutral-950 shadow-2xl shadow-black/40 transition-all duration-500 hover:scale-[1.02] hover:border-neutral-700/80 hover:shadow-2xl hover:shadow-neutral-900/60">
-                    {/* Glow effect */}
-                    <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-purple-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-purple-500/20" />
-                    <div className="pointer-events-none absolute -left-12 bottom-0 h-32 w-32 rounded-full bg-blue-500/0 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-500/15" />
-
-                    <CardContent className="relative p-8 md:p-10">
-                      {/* Header */}
-                      <div className="mb-8 flex items-start gap-4">
-                        <div
-                          className={`rounded-lg border border-white/10 bg-white/5 p-3 ${comparison.iconColor}`}
-                        >
-                          <Icon className="h-7 w-7" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="mb-2 text-2xl font-bold text-white md:text-3xl">
-                            {comparison.title}
-                          </h3>
-                          <p className="text-neutral-400">
-                            {comparison.subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Comparison Grid */}
-                      <div className="grid gap-6 md:grid-cols-2">
-                        {/* Them */}
-                        <div className="group/them relative overflow-hidden rounded-xl border border-rose-500/20 bg-gradient-to-br from-rose-950/30 via-neutral-900/80 to-neutral-950/90 p-6 shadow-xl shadow-rose-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-rose-500/40 hover:shadow-rose-500/20">
-                          {/* Glow effect */}
-                          <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-rose-500/20 blur-3xl transition-all duration-700 group-hover/them:scale-150 group-hover/them:bg-rose-400/30" />
-
-                          <div className="relative space-y-4">
-                            <div className="flex items-center gap-2">
-                              <div className="rounded-full bg-rose-500/20 p-1.5">
-                                <X className="h-4 w-4 text-rose-400" />
-                              </div>
-                              <h4 className="font-semibold uppercase tracking-wider text-rose-400">
-                                The Rest
-                              </h4>
-                            </div>
-                            <ul className="space-y-3">
-                              {comparison.them.map((point, i) => (
-                                <li
-                                  key={i}
-                                  className="flex items-start gap-2 text-sm text-neutral-300 transition-colors duration-300 group-hover/them:text-neutral-100"
-                                >
-                                  <span className="mt-0.5 text-rose-400 transition-all duration-300 group-hover/them:scale-110">
-                                    X
-                                  </span>
-                                  <span className="leading-relaxed">{point}</span>
-                                </li>
-                              ))}
-                            </ul>
-                            {comparison.themQuote && (
-                              <div className="rounded-xl border border-rose-500/20 bg-black/40 px-4 py-3 text-xs italic text-rose-200/80">
-                                {comparison.themQuote}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Us */}
-                        <div className="group/us relative overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-6 shadow-xl shadow-emerald-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-emerald-500/20">
-                          {/* Glow effect */}
-                          <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-emerald-500/20 blur-3xl transition-all duration-700 group-hover/us:scale-150 group-hover/us:bg-emerald-400/30" />
-
-                          <div className="relative space-y-4">
-                            <div className="flex items-center gap-2">
-                              <div className="rounded-full bg-emerald-500/20 p-1.5">
-                                <Check className="h-4 w-4 text-emerald-400" />
-                              </div>
-                              <h4 className="font-semibold uppercase tracking-wider text-emerald-400">
-                                SquareCampus
-                              </h4>
-                            </div>
-                            <ul className="space-y-3">
-                              {comparison.us.map((point, i) => (
-                                <li
-                                  key={i}
-                                  className="flex items-start gap-2 text-sm text-neutral-200 transition-colors duration-300 group-hover/us:text-neutral-50"
-                                >
-                                  <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400 transition-all duration-300 group-hover/us:scale-110" />
-                                  <span className="leading-relaxed">{point}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Hall of Shame */}
-      <section className="relative px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <FloatingBadge className="mb-4 text-amber-400">
-              <AlertCircle className="h-3 w-3" />
-              Hall of Shame
-            </FloatingBadge>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Practices We Refuse to Copy
-            </h2>
-            <p className="mx-auto max-w-2xl text-neutral-300">
-              Real behaviors from real competitors. No names needed-you'll recognize them instantly.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "The Phantom Feature",
-                description: "Listed on homepage, doesn't exist in product",
-                severity: "Critical",
-                icon: Sparkles,
-                iconClass: "text-purple-400",
-              },
-              {
-                title: "The Eternal Beta",
-                description: "\"Coming soon\" for years. Still coming.",
-                severity: "High",
-                icon: Clock,
-                iconClass: "text-orange-400",
-              },
-              {
-                title: "The Hidden Module",
-                description: "Core features locked behind \"Premium\" tier",
-                severity: "Critical",
-                icon: Shield,
-                iconClass: "text-rose-400",
-              },
-              {
-                title: "The Upgrade Trap",
-                description: "Free tier unusable. Paid tier starts at a steep annual fee",
-                severity: "High",
-                icon: DollarSign,
-                iconClass: "text-amber-400",
-              },
-              {
-                title: "The Data Hostage",
-                description: "Export data? Pay exit fee or lose everything",
-                severity: "Critical",
-                icon: AlertCircle,
-                iconClass: "text-red-400",
-              },
-              {
-                title: "The Support Void",
-                description: "Email-only support. Responses take multiple business days",
-                severity: "Medium",
-                icon: Users,
-                iconClass: "text-neutral-400",
-              },
-            ].map((shame, index) => {
-              const Icon = shame.icon;
-              return (
-                <motion.div
-                  key={shame.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-950/30 via-neutral-900/80 to-neutral-950/90 p-6 shadow-xl shadow-amber-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-amber-500/40 hover:shadow-amber-500/20"
-                >
-                  <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-amber-500/20 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-amber-400/30" />
-
-                  <div className="relative">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className={`rounded-lg border border-white/10 bg-white/5 p-2 ${shame.iconClass}`}>
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <span
-                        className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wider ${shame.severity === "Critical"
-                          ? "bg-rose-500/20 text-rose-400"
-                          : shame.severity === "High"
-                            ? "bg-orange-500/20 text-orange-400"
-                            : "bg-yellow-500/20 text-yellow-400"
-                          }`}
-                      >
-                        {shame.severity}
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-lg font-bold text-white">
-                      {shame.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-neutral-400">
-                      {shame.description}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <p className="text-sm italic text-neutral-500">
-              "If your current provider is doing any of these... you deserve better." - Your IT Team
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* UI Comparison: Cluttered vs Clean */}
-      <section className="relative px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <FloatingBadge className="mb-4 text-sky-400">
-              <Zap className="h-3 w-3" />
-              UI Showdown
-            </FloatingBadge>
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Complexity vs Clarity
-            </h2>
-            <p className="mx-auto max-w-2xl text-neutral-300">
-              One shows you everything. The other shows you what matters.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-8 lg:grid-cols-2">
-            {/* Them: Cluttered */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-2xl border border-rose-500/20 bg-gradient-to-br from-rose-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-rose-500/5"
-            >
-              <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-rose-500/20 blur-3xl" />
-
-              <div className="relative">
-                <div className="mb-6 flex items-center gap-3">
-                  <X className="h-6 w-6 text-rose-400" />
-                  <h3 className="text-2xl font-bold text-white">Their UI</h3>
-                </div>
-
-                <div className="space-y-3">
-                  {/* Mock cluttered sidebar */}
-                  <div className="overflow-hidden rounded border border-rose-500/20 bg-rose-500/5 p-2">
-                    <div className="mb-2 flex items-center gap-2 text-xs text-rose-400">
-                      <div className="h-2 w-2 rounded-full bg-rose-400" />
-                      <span>47 menu items (good luck finding anything)</span>
-                    </div>
-                    <div className="max-h-32 space-y-0.5 overflow-hidden text-[9px] text-neutral-500">
-                      {[
-                        "Dashboard", "Students", "Student List", "Student Details", "Student History",
-                        "Admissions", "Admission Forms", "Admission Reports", "Admission Settings",
-                        "Finance", "Fee Collection", "Fee Reports", "Fee Settings", "Fee History",
-                        "Academic", "Classes", "Sections", "Subjects", "Timetable", "Attendance",
-                        "Attendance Reports", "Leave Management", "Exams", "Exam Schedule",
-                        "Grades", "Grade Reports", "Report Cards", "Certificates",
-                        "Library", "Books", "Issue Books", "Return Books", "Library Reports",
-                        "Transport", "Routes", "Vehicles", "Transport Fees", "Settings",
-                        "User Settings", "System Settings", "Module Settings", "Reports",
-                        "Custom Reports", "Scheduled Reports", "Report Builder", "Help"
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-1 rounded bg-neutral-800/50 px-1.5 py-0.5">
-                          <div className="h-1 w-1 rounded-full bg-neutral-600" />
-                          <span className="truncate">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mock nested tabs */}
-                  <div className="space-y-1 rounded border border-rose-500/20 bg-rose-500/5 p-2">
-                    <div className="flex gap-1">
-                      {["Main", "Admin", "Reports", "Settings"].map((tab, i) => (
-                        <div key={i} className="rounded-t bg-neutral-800 px-2 py-0.5 text-[8px] text-neutral-400">
-                          {tab}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex gap-1 pl-2">
-                      {["Sub1", "Sub2", "Sub3", "More..."].map((tab, i) => (
-                        <div key={i} className="rounded-t bg-neutral-800/70 px-1.5 py-0.5 text-[7px] text-neutral-500">
-                          {tab}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex gap-1 pl-4">
-                      {["Detail", "Options"].map((tab, i) => (
-                        <div key={i} className="rounded-t bg-neutral-800/50 px-1 py-0.5 text-[6px] text-neutral-600">
-                          {tab}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mock overlapping dialogs */}
-                  <div className="relative h-24 rounded border border-rose-500/20 bg-rose-500/5 p-2">
-                    <div className="absolute left-2 top-2 h-16 w-24 rounded border border-neutral-700 bg-neutral-900 p-1 text-[7px] text-neutral-500">
-                      Dialog 1
-                    </div>
-                    <div className="absolute left-6 top-6 h-16 w-24 rounded border border-neutral-700 bg-neutral-900 p-1 text-[7px] text-neutral-500">
-                      Dialog 2
-                    </div>
-                    <div className="absolute left-10 top-10 h-16 w-24 rounded border border-neutral-700 bg-neutral-900 p-1 text-[7px] text-neutral-400">
-                      Dialog 3
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2 text-sm text-neutral-300">
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-400">×</span>
-                      <span>3 levels of tabs (because why not?)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-400">×</span>
-                      <span>Pop-ups on top of pop-ups on top of pop-ups</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-400">×</span>
-                      <span>5+ clicks to do anything simple</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-400">×</span>
-                      <span>Designed in 2005, still looks like it</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Us: Clean */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-emerald-500/5"
-            >
-              <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-emerald-500/20 blur-3xl" />
-
-              <div className="relative">
-                <div className="mb-6 flex items-center gap-3">
-                  <Check className="h-6 w-6 text-emerald-400" />
-                  <h3 className="text-2xl font-bold text-white">SquareCampus</h3>
-                </div>
-
-                <div className="space-y-3">
-                  {/* Mock search bar */}
-                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2">
-                    <div className="mb-2 flex items-center gap-2 text-xs text-emerald-400">
-                      <div className="h-2 w-2 rounded-full bg-emerald-400" />
-                      <span>Universal search (find anything instantly)</span>
-                    </div>
-                    <div className="flex items-center gap-2 rounded bg-emerald-500/10 p-2">
-                      <div className="h-2 w-2 rounded-full bg-emerald-300" />
-                      <span className="text-[10px] text-emerald-200">
-                        Search students, fees, reports, anything...
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Mock clean navigation */}
-                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-3">
-                    <div className="mb-2 flex items-center gap-2 text-xs text-emerald-400">
-                      <div className="h-2 w-2 rounded-full bg-emerald-400" />
-                      <span>6 core sections. Everything else is search.</span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {["Dashboard", "Students", "Finance", "Academic", "Reports", "Settings"].map(
-                        (item, i) => (
-                          <div
-                            key={i}
-                            className="rounded bg-emerald-500/10 p-2 text-center text-[10px] text-emerald-300"
-                          >
-                            {item}
-                          </div>
-                        )
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {principles.map((principle, idx) => {
+                const colors = accentColors[principle.color];
+                return (
+                  <div
+                    key={principle.title}
+                    className={cn(
+                      "js-principle-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]",
+                      idx === 4 && "md:col-span-2 lg:col-span-1"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
                       )}
-                    </div>
-                  </div>
-
-                  {/* Mock action cards */}
-                  <div className="space-y-1.5 rounded border border-emerald-500/20 bg-emerald-500/5 p-2">
-                    <div className="flex items-center gap-2 text-xs text-emerald-400">
-                      <div className="h-2 w-2 rounded-full bg-emerald-400" />
-                      <span>Quick actions (no nested menus)</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {["Admit Student", "Collect Fee", "Mark Attendance", "Generate Report"].map(
-                        (action, i) => (
-                          <div
-                            key={i}
-                            className="rounded bg-emerald-500/10 px-2 py-1 text-center text-[9px] text-emerald-200"
-                          >
-                            {action}
-                          </div>
-                        )
+                    />
+                    <div
+                      className={cn(
+                        "absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                        `via-${principle.color}-400/70`
                       )}
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${
+                          principle.color === "blue" ? "rgba(96,165,250,0.7)" :
+                          principle.color === "emerald" ? "rgba(52,211,153,0.7)" :
+                          principle.color === "purple" ? "rgba(168,85,247,0.7)" :
+                          principle.color === "cyan" ? "rgba(34,211,238,0.7)" :
+                          "rgba(251,191,36,0.7)"
+                        }, transparent)`,
+                      }}
+                    />
+                    <div className="relative">
+                      <div className="mb-2 flex items-center gap-2">
+                        <div className={cn("h-2 w-2 rounded-full", colors.text, "bg-current")} />
+                        <span className={cn("text-[0.65rem] font-semibold uppercase tracking-[0.15em]", colors.text)}>
+                          Principle
+                        </span>
+                      </div>
+                      <h3 className="mb-2 text-base font-semibold text-white">{principle.title}</h3>
+                      <p className="text-sm leading-relaxed text-neutral-400">{principle.description}</p>
                     </div>
                   </div>
-
-                  <ul className="space-y-2 text-sm text-neutral-200">
-                    <li className="flex items-start gap-2">
-                      <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                      <span>Flat hierarchy. 1-2 clicks max.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                      <span>Modern, responsive, fast loads</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                      <span>Context-aware shortcuts (learn what you use)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="mt-0.5 h-4 w-4 text-emerald-400" />
-                      <span>No pop-ups. No clutter. No training needed.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <SectionDivider />
+        {/* SECTION 5: Final CTA + Trust Notes */}
+        <section
+          ref={ctaRef}
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-24"
+        >
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
+              <Check className="h-4 w-4" />
+              Ready to see it
+            </div>
 
-      {/* Final CTA */}
-      <section className="relative px-4 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <FloatingBadge className="mb-6 border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
-              <Check className="h-3 w-3" />
-              No Nonsense
-            </FloatingBadge>
-
-            <h2 className="mb-6 text-3xl font-bold md:text-5xl">
-              Ready for Software That Actually Solves the Problems?
+            <h2 className="mb-5 text-3xl font-bold md:text-4xl">
+              See how SquareCampus fits your institution
             </h2>
 
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-neutral-300">
-              No buzzwords. No hidden fees. No 8-product bundle. Just a unified School OS that does what it says on the tin.
+            <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-neutral-300">
+              Walk through real workflows, see how data flows between modules, and understand
+              the migration path from your current setup.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <BookCallCta
-                context="features-hero"
-                label="Book a Demo"
-                variant="primary"
-              />
-              <LinkButton
-                href={"/features"}
-                variant={"dark"}
-                className={"group inline-flex items-center gap-1.5"}
+              <BookCallCta context="why-different-bottom" label="Book a demo" variant="primary" />
+              <Link
+                href="/features"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-6 py-2.5 text-sm font-medium text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
               >
-                <span>Explore Features</span>
-                <Component className={"w-4 h-4"} />
-              </LinkButton>
+                Explore features
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
             </div>
-            <div className="mt-10 text-sm text-neutral-500">
-              No credit card required. No sales pressure. Just honest conversation.
+
+            {/* Trust notes */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-neutral-500">
+              <div className="flex items-center gap-2">
+                <Lock className="h-3 w-3" />
+                <span>Security-first</span>
+              </div>
+              <div className="h-3 w-px bg-white/10" />
+              <div className="flex items-center gap-2">
+                <Shield className="h-3 w-3" />
+                <span>Privacy-aware</span>
+              </div>
+              <div className="h-3 w-px bg-white/10" />
+              <div className="flex items-center gap-2">
+                <Zap className="h-3 w-3" />
+                <span>Built for schools that run on deadlines</span>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
 
       {/* Structured Data */}
       <Script
@@ -1203,6 +692,6 @@ export default function WhyDifferentPage() {
       />
 
       <FloatingHomeButton href="/" label="Back to home" />
-    </div>
+    </>
   );
 }

@@ -1,195 +1,335 @@
 "use client";
 
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { ArrowRight } from "@/components/icons";
-import { useGsapReveal } from "@/lib/gsap-utils";
+import React, { useEffect, useRef } from "react";
+import { ArrowRight, Check, Sparkles } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
-const BackgroundGrid = ({ className }: { className?: string }) => {
-  const ref = React.useRef<HTMLDivElement | null>(null);
+gsap.registerPlugin(ScrollTrigger);
 
-  useGsapReveal(ref, { y: 0, opacity: 0, duration: 1 });
-
+// Enhanced background with gradient and grid
+function EnhancedBackground() {
   return (
-    <div
-      ref={ref}
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
-    >
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Base radial gradient */}
       <div
-        className="absolute h-full w-full"
+        className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(40,40,40,0.8) 0%, rgba(30,30,30,0.6) 30%, rgba(20,20,20,0.6) 55%, rgba(0,0,0,0.4) 80%)",
+            "radial-gradient(ellipse at center, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.05) 30%, transparent 70%)",
         }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.28) 1px, transparent 1px)",
-            backgroundSize: "120px 120px",
-            opacity: 0.18,
-          }}
-        />
-      </div>
+      />
+
+      {/* Grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
+
+      {/* Animated glow orbs */}
+      <div className="absolute left-1/4 top-1/3 h-[400px] w-[400px] animate-pulse rounded-full bg-blue-500/[0.06] blur-[100px]" />
+      <div
+        className="absolute bottom-1/3 right-1/4 h-[400px] w-[400px] animate-pulse rounded-full bg-purple-500/[0.06] blur-[100px]"
+        style={{ animationDelay: "1.5s" }}
+      />
     </div>
   );
-};
+}
 
-const LineGradient = ({ position }: { position: "left" | "right" }) => {
-  const ref = React.useRef<SVGSVGElement | null>(null);
-  const pathRef = React.useRef<SVGPathElement | null>(null);
+// Animated border lines
+function AnimatedLine({ position }: { position: "left" | "right" }) {
+  const pathRef = useRef<SVGPathElement | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    if (!ref.current || !pathRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const length = pathRef.current?.getTotalLength() ?? 0;
-          gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length, opacity: 0 });
-          gsap.to(pathRef.current, { strokeDashoffset: 0, opacity: 1, duration: 1.5, ease: "power2.inOut" });
-          observer.disconnect();
-        });
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(ref.current);
-    return () => observer.disconnect();
+    if (!svgRef.current || !pathRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const length = pathRef.current?.getTotalLength() ?? 0;
+      gsap.set(pathRef.current, {
+        strokeDasharray: length,
+        strokeDashoffset: length,
+        opacity: 0,
+      });
+
+      gsap.to(pathRef.current, {
+        strokeDashoffset: 0,
+        opacity: 1,
+        duration: 2,
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: svgRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const path =
     position === "left"
-      ? "M1 0.23938V207.654L88 285.695C88 285.695 87.5 493.945 88 567.813"
-      : "M88 0.23938V207.654L1 285.695C1 285.695 1.5 493.945 1 567.813";
+      ? "M1 0V180L70 250V450"
+      : "M70 0V180L1 250V450";
 
   return (
     <svg
-      ref={ref}
+      ref={svgRef}
       className={cn(
         "pointer-events-none absolute hidden h-full lg:block",
-        position === "left" ? "left-0" : "right-0"
+        position === "left" ? "left-8" : "right-8"
       )}
       xmlns="http://www.w3.org/2000/svg"
-      width="89"
-      height="568"
-      viewBox="0 0 89 568"
+      width="71"
+      height="450"
+      viewBox="0 0 71 450"
       fill="none"
     >
-      <path ref={pathRef} d={path} stroke="url(#animation_gradient)" />
-      <path d={path} stroke={`url(#paint0_linear_${position})`} />
+      <path
+        ref={pathRef}
+        d={path}
+        stroke="url(#cta-gradient)"
+        strokeWidth="1"
+      />
       <defs>
         <linearGradient
-          id="animation_gradient"
+          id="cta-gradient"
+          x1="35"
+          y1="0"
+          x2="35"
+          y2="450"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#2EB9DF" stopOpacity="0" />
-          <stop stopColor="#2EB9DF" />
-          <stop offset="1" stopColor="#9E00FF" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient
-          id={`paint0_linear_${position}`}
-          x1={position === "left" ? "1" : "88"}
-          y1="4.50012"
-          x2={position === "left" ? "1" : "88"}
-          y2="568"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6F6F6F" stopOpacity="0.3" />
-          <stop offset="0.8" stopColor="#6F6F6F" />
-          <stop offset="1" stopColor="#6F6F6F" stopOpacity="0" />
+          <stop stopColor="#3B82F6" stopOpacity="0" />
+          <stop offset="0.3" stopColor="#3B82F6" stopOpacity="0.5" />
+          <stop offset="0.5" stopColor="#8B5CF6" stopOpacity="0.6" />
+          <stop offset="0.7" stopColor="#8B5CF6" stopOpacity="0.5" />
+          <stop offset="1" stopColor="#8B5CF6" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
   );
-};
+}
+
+// Floating particles
+function FloatingParticles() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute h-1 w-1 rounded-full bg-white/25"
+          style={{
+            left: `${15 + Math.random() * 70}%`,
+            top: `${15 + Math.random() * 70}%`,
+            animation: `cta-float ${5 + Math.random() * 6}s ease-in-out infinite`,
+            animationDelay: `${Math.random() * 3}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes cta-float {
+          0%,
+          100% {
+            transform: translateY(0) translateX(0);
+            opacity: 0.2;
+          }
+          50% {
+            transform: translateY(-25px) translateX(15px);
+            opacity: 0.5;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 const ctaHighlights = [
-  "Replace admissions, academics, finance, and communication silos with one OS.",
-  "Give staff live visibility, parents radical transparency, and students clarity.",
-  "Launch with guided migration, training, and a dedicated success partner.",
+  "Replace admissions, academics, finance, and communication silos with one OS",
+  "Give staff live visibility, parents radical transparency, and students clarity",
+  "Launch with guided migration, training, and a dedicated success partner",
 ];
 
 const ctaSignals = [
-  { label: "Go-live", value: "Guided" },
-  { label: "Uptime", value: "Resilient" },
-  { label: "Teams saved", value: "Hours back" },
+  { label: "Go-live", value: "Guided", color: "text-emerald-400" },
+  { label: "Uptime", value: "Resilient", color: "text-blue-400" },
+  { label: "Teams saved", value: "Hours back", color: "text-purple-400" },
 ];
 
 export function CTA() {
-  const ref = React.useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
-  useGsapReveal(ref, { y: 24, duration: 0.8 });
+  // GSAP scroll animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (contentRef.current) {
+        const elements = contentRef.current.children;
+        gsap.fromTo(
+          elements,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative w-full px-4 sm:px-6 lg:px-8">
-      <div className="relative mx-auto flex min-h-[30vh] max-w-7xl items-center justify-center md:min-h-[60vh]">
-        <LineGradient position="left" />
-        <div
-          ref={ref}
-          className="relative z-10 mx-auto w-full max-w-3xl py-8 text-center sm:py-10 md:py-12"
-        >
-          <BackgroundGrid className="z-0" />
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden px-4 py-16 sm:px-6 sm:py-20 md:py-28 lg:px-8"
+    >
+      <EnhancedBackground />
+      <FloatingParticles />
 
-          <div className="relative z-10 space-y-5 sm:space-y-6 md:space-y-8">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-center">
+        <AnimatedLine position="left" />
+
+        <div
+          ref={contentRef}
+          className="relative z-10 mx-auto w-full max-w-3xl text-center"
+        >
+          {/* Badge */}
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
+            <Sparkles className="h-4 w-4 text-blue-400" />
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
+              Your School OS awaits
+            </span>
+          </div>
+
+          {/* Heading with glow */}
+          <div className="relative">
+            {/* Glow behind heading */}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <div className="h-32 w-96 rounded-full bg-blue-500/20 blur-[80px]" />
+            </div>
+
             <h2
               className={cn(
-                "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight",
-                "bg-gradient-to-b from-[#A7A7A7] via-[#FFFFFF] to-[#787878]",
+                "relative text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl",
+                "bg-gradient-to-b from-white via-white to-neutral-400",
                 "bg-clip-text text-transparent"
               )}
             >
-              Make every school day predictable
+              Make every school day{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                predictable
+              </span>
             </h2>
+          </div>
 
-            <p className="mx-auto max-w-md text-xs text-neutral-400 sm:max-w-lg sm:text-sm md:max-w-xl md:text-base">
-              SquareCampus is the single operating system for modern schools and colleges,
-              digitizing every workflow from admissions to alumni so teams execute faster and
-              families always know what&apos;s going on.
-            </p>
+          {/* Description */}
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-neutral-400 sm:text-base md:text-lg">
+            SquareCampus is the single operating system for modern schools and
+            colleges, digitizing every workflow from admissions to alumni.
+          </p>
 
-            <div className="mx-auto flex max-w-md flex-wrap items-center justify-center gap-2 text-[0.65rem] uppercase tracking-[0.35em] text-white/60 sm:gap-3 sm:text-[0.7rem]">
-              {ctaSignals.map((signal) => (
-                <span
-                  key={signal.label}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70"
-                >
-                  {signal.label} · {signal.value}
+          {/* Signal badges */}
+          <div className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-3">
+            {ctaSignals.map((signal) => (
+              <div
+                key={signal.label}
+                className="group flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]"
+              >
+                <span className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-neutral-500">
+                  {signal.label}
                 </span>
-              ))}
-            </div>
+                <span className="h-1 w-1 rounded-full bg-white/20" />
+                <span
+                  className={cn(
+                    "text-[0.7rem] font-semibold uppercase tracking-[0.15em]",
+                    signal.color
+                  )}
+                >
+                  {signal.value}
+                </span>
+              </div>
+            ))}
+          </div>
 
-            <ul className="mx-auto max-w-sm space-y-2.5 text-left text-[0.78rem] text-neutral-200 sm:max-w-md sm:text-sm">
-              {ctaHighlights.map((highlight) => (
-                <li key={highlight} className="flex items-start gap-2 text-neutral-300">
-                  <span className="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-gradient-to-br from-sky-400 to-violet-500" />
-                  <span>{highlight}</span>
+          {/* Highlights list */}
+          <div className="mx-auto mt-10 max-w-lg">
+            <ul className="space-y-3 text-left">
+              {ctaHighlights.map((highlight, index) => (
+                <li
+                  key={index}
+                  className="group flex items-start gap-3 rounded-xl border border-transparent px-4 py-2.5 transition-all duration-300 hover:border-white/[0.06] hover:bg-white/[0.02]"
+                >
+                  <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                    <Check className="h-3 w-3 text-blue-400" />
+                  </div>
+                  <span className="text-sm leading-relaxed text-neutral-300">
+                    {highlight}
+                  </span>
                 </li>
               ))}
             </ul>
+          </div>
 
-            <div className="pt-3">
-              <Link
-                href="#contact-us"
-                className={cn(
-                  "inline-flex items-center justify-center gap-2 rounded-full",
-                  "bg-primary text-primary-foreground text-xs font-semibold sm:text-sm md:text-base",
-                  "h-10 px-6 sm:h-11 sm:px-8 md:h-12 md:px-10",
-                  "shadow-[0_12px_40px_rgba(59,130,246,0.25)] hover:shadow-[0_16px_48px_rgba(59,130,246,0.35)]",
-                  "transition-transform duration-200 hover:-translate-y-0.5",
-                  "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-neutral-950"
-                )}
-              >
+          {/* CTA Button */}
+          <div className="mt-10">
+            <Link
+              href="/contact-us"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px]"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60" />
+
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 overflow-hidden rounded-full">
+                <div className="absolute -inset-full animate-cta-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              </div>
+
+              <span className="relative flex items-center gap-2 rounded-full bg-neutral-950 px-8 py-4 text-sm font-medium text-white transition-all duration-300 group-hover:bg-neutral-900 sm:text-base">
                 <span>Get a tailored demo</span>
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </Link>
+
+            <p className="mt-4 text-xs text-neutral-500">
+              No commitment · 30-minute walkthrough · See your use case
+            </p>
           </div>
         </div>
-        <LineGradient position="right" />
+
+        <AnimatedLine position="right" />
       </div>
+
+      {/* Shimmer animation */}
+      <style jsx>{`
+        @keyframes cta-shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+        .animate-cta-shimmer {
+          animation: cta-shimmer 3s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }
