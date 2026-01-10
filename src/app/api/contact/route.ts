@@ -2,7 +2,10 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { z } from "zod";
 import { getResendApiKey } from "@/lib/secrets";
+
+export const runtime = "nodejs";
 
 const submissionTracking = new Map<
   string,
@@ -61,10 +64,38 @@ const SPAM_KEYWORDS = [
   "act now",
 ];
 
+const MAX_BODY_BYTES = 10 * 1024;
+
+const optionalText = (max: number) =>
+  z.preprocess(
+    (value) => {
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        return trimmed === "" ? undefined : trimmed;
+      }
+      return value;
+    },
+    z.string().max(max).optional()
+  );
+
+const contactSchema = z
+  .object({
+    name: z.string().trim().min(2).max(100),
+    email: z.string().trim().email().max(254),
+    institution: z.string().trim().min(2).max(200),
+    role: optionalText(100),
+    students: optionalText(50),
+    message: optionalText(2000),
+    website: optionalText(200),
+  })
+  .strict();
+
 function getClientIdentifier(email: string, request: NextRequest): string {
   try {
+    const cfConnectingIp = request.headers.get("cf-connecting-ip");
     const forwarded = request.headers.get("x-forwarded-for");
-    const ip = forwarded ? forwarded.split(",")[0]?.trim() : request.headers.get("x-real-ip");
+    const ip =
+      cfConnectingIp ?? (forwarded ? forwarded.split(",")[0]?.trim() : request.headers.get("x-real-ip"));
     return ip ? `${email}:${ip}` : email;
   } catch (error) {
     console.warn("[contact] Failed to get client identifier:", error);
@@ -93,10 +124,6 @@ function containsSpam(text: string): boolean {
   }
 }
 
-function validateTextLength(text: string, min: number, max: number): boolean {
-  return text.length >= min && text.length <= max;
-}
-
 export async function POST(request: NextRequest) {
   try {
     // Get API key from Secrets Manager (or environment for local dev)
@@ -116,9 +143,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("[contact] Successfully retrieved API key, length:", apiKey.length);
     const resend = new Resend(apiKey);
-    const formData = await request.json();
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { success: false, message: "Payload too large." },
+        { status: 413 }
+      );
+    }
+
+    const rawBody = await request.text();
+    if (!rawBody) {
+      return NextResponse.json(
+        { success: false, message: "Invalid request body." },
+        { status: 400 }
+      );
+    }
+    if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { success: false, message: "Payload too large." },
+        { status: 413 }
+      );
+    }
+
+    let parsedBody: unknown;
+    try {
+      parsedBody = JSON.parse(rawBody);
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Invalid JSON payload." },
+        { status: 400 }
+      );
+    }
+
+    const parsed = contactSchema.safeParse(parsedBody);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, message: "Please check the submitted fields." },
+        { status: 400 }
+      );
+    }
+    const formData = parsed.data;
 
     // 1. Honeypot
     if (formData.website && formData.website.trim() !== "") {
@@ -129,30 +194,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 2. Required fields
-    if (!formData.name || !formData.email || !formData.institution) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Please fill in all required fields.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // 3. Email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Please enter a valid email address.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // 4. Disposable email
+    // 2. Disposable email
     if (isDisposableEmail(formData.email)) {
       return NextResponse.json(
         {
@@ -163,38 +205,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 5. Text lengths
-    if (!validateTextLength(formData.name, 2, 100)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Name must be between 2 and 100 characters.",
-        },
-        { status: 400 }
-      );
-    }
-
-    if (!validateTextLength(formData.institution, 2, 200)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Institution name must be between 2 and 200 characters.",
-        },
-        { status: 400 }
-      );
-    }
-
-    if (formData.message && !validateTextLength(formData.message, 0, 2000)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Message must not exceed 2000 characters.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // 6. Spam content
+    // 3. Spam content
     const allText = `${formData.name} ${formData.institution} ${formData.message || ""} ${formData.role || ""}`;
     if (containsSpam(allText)) {
       console.warn("[contact] Spam keywords detected");
@@ -207,7 +218,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 7. Rate limiting
+    // 4. Rate limiting
     const identifier = getClientIdentifier(formData.email, request);
 
     if (upstashLimiter) {

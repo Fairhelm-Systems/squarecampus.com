@@ -223,6 +223,112 @@ export function createAboutPageSchema(config: { name: string; description: strin
 }
 
 /**
+ * JSON-LD: ContactPage schema
+ * Rich contact page schema with organization contact details for enhanced search results.
+ */
+export function createContactPageSchema(config: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${config.url}#contactpage`,
+    url: config.url,
+    name: config.name,
+    description: config.description,
+    inLanguage: SEO_CONFIG.language,
+    isPartOf: {
+      "@id": `${SEO_CONFIG.baseUrl}/#website`,
+    },
+    mainEntity: {
+      "@type": "Organization",
+      "@id": `${SEO_CONFIG.baseUrl}/#organization`,
+      name: "SquareCampus",
+      url: SEO_CONFIG.baseUrl,
+      logo: SEO_CONFIG.logo,
+      description: "India's leading School OS - unified school management system for admissions, academics, fees, transport, and communication.",
+      email: "contact@squarecampus.com",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: "contact@squarecampus.com",
+          availableLanguage: ["English", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: "support@squarecampus.com",
+          availableLanguage: ["English", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "security",
+          email: "security@squarecampus.com",
+          availableLanguage: ["English"],
+          areaServed: "IN",
+        },
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Mumbai",
+        addressCountry: "IN",
+      },
+    },
+  };
+}
+
+/**
+ * JSON-LD: FAQPage schema for contact/demo related FAQs
+ * Helps get rich FAQ snippets in search results.
+ */
+export function createContactFAQSchema() {
+  const faqs = [
+    {
+      question: "How can I book a demo of SquareCampus?",
+      answer: "You can book a free demo by filling out the contact form on our website or emailing contact@squarecampus.com. We typically respond within one business day and schedule demos at your convenience.",
+    },
+    {
+      question: "What is the pricing for SquareCampus school management system?",
+      answer: "SquareCampus pricing is tailored based on your institution size, number of students, and required modules. Contact us for a personalized quote. We offer flexible plans for schools of all sizes.",
+    },
+    {
+      question: "How long does it take to implement SquareCampus?",
+      answer: "Implementation typically takes 2-4 weeks depending on your institution size and data migration needs. Our dedicated success team guides you through the entire process.",
+    },
+    {
+      question: "Can SquareCampus migrate data from our existing school ERP?",
+      answer: "Yes, we provide full migration support from any existing school management system including Fedena, Entab, Campus Care, and others. Our team handles data migration to ensure zero data loss.",
+    },
+    {
+      question: "Is SquareCampus suitable for multi-branch schools?",
+      answer: "Absolutely. SquareCampus is designed for single schools as well as multi-branch school chains. You get centralized management with branch-level controls and consolidated reporting.",
+    },
+    {
+      question: "What support do you provide after implementation?",
+      answer: "We provide dedicated customer support via email with response within one business day. Each institution gets a dedicated success partner, and we offer training for your staff.",
+    },
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
  * JSON-LD: SoftwareApplication schema (SquareCampus is a product, not just a website).
  * Use this on high-intent pages like:
  * - /school-management-system
