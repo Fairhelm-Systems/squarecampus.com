@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import {
   BarChart3,
   BookOpen,
-  DollarSign,
   GraduationCap,
   type IconComponent,
   MessageSquare,
+  Rupee,
   Users,
 } from "@/components/icons";
 import { DottedGlowBackground } from "./backgrounds/dotted-glow";
@@ -72,7 +72,7 @@ const operationAreas: Array<{
         "Ledger exports with payment partner sync",
         "Audit trails and approvals baked into workflows",
       ],
-      icon: DollarSign,
+      icon: Rupee,
       gradient: "from-emerald-500/30 via-green-500/15 to-emerald-900/25",
       accentColor: "rgb(16, 185, 129)",
       accentColorLight: "rgba(16, 185, 129, 0.15)",
@@ -138,10 +138,10 @@ const operationAreas: Array<{
       visual: { type: "proof" },
       isProofCard: true,
       stats: [
-        { label: "Time saved weekly", value: "Hours reclaimed" },
-        { label: "Manual errors reduced", value: "Fewer corrections" },
-        { label: "Launch window", value: "Guided rollout" },
-        { label: "Parent experience", value: "Clearer updates" },
+        { label: "Time saved", value: "Hours back" },
+        { label: "Errors cut", value: "Fewer fixes" },
+        { label: "Go-live", value: "Guided setup" },
+        { label: "Parents", value: "Clear updates" },
       ],
     },
   ];
@@ -154,15 +154,24 @@ export function Operations() {
   const headingRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
-  // Check for mobile/touch devices
+  // Check for mobile/tablet/touch devices
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024 || "ontouchstart" in window);
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+      // Mobile: small screens (phones)
+      setIsMobile(width < 768);
+
+      // Tablet: touch device with medium-large screen (iPad, Android tablets)
+      // These get native horizontal scroll instead of GSAP ScrollTrigger
+      setIsTablet(hasTouch && width >= 768 && width < 1280);
     };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
   // GSAP ScrollTrigger horizontal scroll
@@ -209,8 +218,8 @@ export function Operations() {
         }
       });
 
-      // Desktop: ScrollTrigger horizontal scroll
-      if (!isMobile && trackRef.current && triggerRef.current) {
+      // Desktop: ScrollTrigger horizontal scroll (NOT for tablets - they use native scroll)
+      if (!isMobile && !isTablet && trackRef.current && triggerRef.current) {
         const track = trackRef.current;
         const cardCount = cards.length;
 
@@ -480,10 +489,30 @@ export function Operations() {
           }
         );
       }
+
+      // Tablet: fade in cards for native horizontal scroll
+      if (isTablet && cards.length) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, x: 40 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: trackRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isMobile]);
+  }, [isMobile, isTablet]);
 
   return (
     <section
@@ -531,11 +560,17 @@ export function Operations() {
       {/* Pinned horizontal scroll area */}
       <div
         ref={triggerRef}
-        className="relative lg:flex lg:min-h-screen lg:items-center"
+        className={`
+          relative
+          ${isTablet
+            ? "" // Tablet: no special container styling, let it flow normally
+            : "lg:flex lg:min-h-screen lg:items-center"
+          }
+        `}
       >
-        {/* Strong edge gradients for drama */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-48 bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent lg:block" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-48 bg-gradient-to-l from-neutral-950 via-neutral-950/90 to-transparent lg:block" />
+        {/* Strong edge gradients for drama - hide on tablet since we have native scroll */}
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent ${isMobile || isTablet ? "hidden" : "hidden lg:block"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-48 bg-gradient-to-l from-neutral-950 via-neutral-950/90 to-transparent ${isMobile || isTablet ? "hidden" : "hidden lg:block"}`} />
 
         {/* Track */}
         <div
@@ -544,9 +579,15 @@ export function Operations() {
             flex
             ${isMobile
               ? "flex-col items-center gap-6 px-4 py-6"
-              : "items-center gap-8 py-0"
+              : isTablet
+                ? "snap-x snap-mandatory gap-6 overflow-x-auto px-6 py-8 scrollbar-hide"
+                : "items-center gap-8 py-0"
             }
           `}
+          style={isTablet ? {
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+          } : undefined}
         >
           {operationAreas.map((area, index) => {
             const Icon = area.icon;
@@ -559,11 +600,13 @@ export function Operations() {
                 data-accent={area.accentColor}
                 className={`
                   group relative flex shrink-0 flex-col overflow-hidden rounded-[2rem]
-                  border border-white/[0.08] bg-neutral-900/80 
+                  border border-white/[0.08] bg-neutral-900/80
                   backdrop-blur-sm transition-colors duration-700 hover:border-white/15
                   ${isMobile
                     ? "w-full max-w-lg"
-                    : "h-[80vh] max-h-[700px] w-[70vw] max-w-[900px]"
+                    : isTablet
+                      ? "h-[70vh] max-h-[600px] w-[80vw] max-w-[700px] snap-center"
+                      : "h-[75vh] max-h-[700px] w-[70vw] max-w-[900px]"
                   }
                 `}
                 style={{
@@ -625,58 +668,258 @@ export function Operations() {
                   data-card-content
                   className={`
                     relative flex h-full
-                    ${isMobile ? "flex-col p-6" : area.isProofCard ? "flex-col p-10 lg:p-14" : "flex-row p-0"}
+                    ${isMobile
+                      ? "flex-col p-6"
+                      : isTablet
+                        ? "flex-col p-6"
+                        : area.isProofCard
+                          ? "flex-col p-10 lg:p-14"
+                          : "flex-row p-0"
+                    }
                   `}
                 >
                   {area.isProofCard ? (
-                    // Proof card special layout
-                    <>
-                      <div className="mb-auto">
-                        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
-                          Proof it works
-                        </p>
+                    // Proof card - cutting edge layout
+                    <div className={`relative flex h-full ${isMobile ? "flex-col" : "flex-row"}`}>
+                      {/* Left content */}
+                      <div
+                        className={`
+                          relative z-10 flex flex-col
+                          ${isMobile ? "p-6" : "w-1/2 p-10 lg:p-14"}
+                        `}
+                      >
+                        {/* Badge */}
+                        <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5">
+                          <span className="relative flex h-2 w-2">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75" />
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-purple-500" />
+                          </span>
+                          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">
+                            Live across campuses
+                          </span>
+                        </div>
+
                         <h3
                           className={`
-                            mt-4 font-semibold text-white
-                            ${isMobile ? "text-xl" : "text-2xl lg:text-3xl"}
+                            font-semibold text-white
+                            ${isMobile ? "text-xl" : "text-2xl lg:text-4xl"}
                           `}
                         >
                           {area.title}
                         </h3>
                         <p
                           className={`
-                            mt-4 leading-relaxed text-neutral-200/90
-                            ${isMobile ? "text-sm" : "text-base lg:text-lg max-w-2xl"}
+                            mt-4 leading-relaxed text-neutral-300
+                            ${isMobile ? "text-sm" : "text-base lg:text-lg"}
                           `}
                         >
                           {area.description}
                         </p>
+
+                        {/* Stats - compact vertical cards */}
+                        <div
+                          className={`
+                            mt-auto grid gap-2 pt-6
+                            ${isMobile ? "grid-cols-2" : "grid-cols-4"}
+                          `}
+                        >
+                          {area.stats?.map((stat, statIndex) => {
+                            const statIcons = ["⏱", "✓", "🚀", "💬"];
+                            const statColors = [
+                              { border: "border-blue-500/20", bg: "bg-blue-500/5", glow: "rgba(59,130,246,0.2)", text: "text-blue-400" },
+                              { border: "border-emerald-500/20", bg: "bg-emerald-500/5", glow: "rgba(16,185,129,0.2)", text: "text-emerald-400" },
+                              { border: "border-amber-500/20", bg: "bg-amber-500/5", glow: "rgba(245,158,11,0.2)", text: "text-amber-400" },
+                              { border: "border-pink-500/20", bg: "bg-pink-500/5", glow: "rgba(236,72,153,0.2)", text: "text-pink-400" },
+                            ];
+                            const color = statColors[statIndex] || statColors[0];
+
+                            return (
+                              <div
+                                key={stat.label}
+                                data-stat
+                                className={`
+                                  group/stat relative overflow-hidden rounded-xl border text-center
+                                  ${color.border} ${color.bg}
+                                  px-2 py-3 backdrop-blur-sm transition-all duration-300
+                                  hover:border-white/20
+                                `}
+                              >
+                                <span
+                                  className="mx-auto flex h-8 w-8 items-center justify-center rounded-lg text-base"
+                                  style={{ background: color.glow }}
+                                >
+                                  {statIcons[statIndex]}
+                                </span>
+                                <p className={`mt-2 text-[9px] font-semibold uppercase tracking-[0.15em] ${color.text}`}>
+                                  {stat.label}
+                                </p>
+                                <p className="mt-0.5 text-xs font-semibold text-white">
+                                  {stat.value}
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
 
-                      {/* Stats grid */}
-                      <div
-                        className={`
-                          mt-auto grid gap-4
-                          ${isMobile ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4"}
-                        `}
-                      >
-                        {area.stats?.map((stat, statIndex) => (
+                      {/* Right - Orbital visualization */}
+                      {!isMobile && (
+                        <div className="relative flex w-1/2 items-center justify-center overflow-hidden">
+                          {/* Background glow */}
                           <div
-                            key={stat.label}
-                            data-stat
-                            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-left backdrop-blur-sm"
-                            style={{ animationDelay: `${statIndex * 0.1}s` }}
-                          >
-                            <p className="text-xs uppercase tracking-[0.35em] text-white/50">
-                              {stat.label}
-                            </p>
-                            <p className="mt-1 text-lg font-semibold text-white lg:text-xl">
-                              {stat.value}
-                            </p>
+                            className="absolute inset-0"
+                            style={{
+                              background: `
+                                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15), transparent 60%),
+                                radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.1), transparent 50%),
+                                radial-gradient(circle at 70% 70%, rgba(16, 185, 129, 0.1), transparent 50%)
+                              `,
+                            }}
+                          />
+
+                          {/* Orbital system */}
+                          <div className="relative h-[400px] w-[400px]">
+                            {/* Grid overlay */}
+                            <svg className="absolute inset-0 h-full w-full opacity-10">
+                              <defs>
+                                <pattern id="proof-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                                  <circle cx="15" cy="15" r="1" fill="white" />
+                                </pattern>
+                              </defs>
+                              <rect width="100%" height="100%" fill="url(#proof-grid)" />
+                            </svg>
+
+                            {/* Orbital rings */}
+                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 400 400">
+                              {/* Outer ring */}
+                              <ellipse
+                                cx="200" cy="200" rx="180" ry="80"
+                                fill="none" stroke="url(#orbit-gradient-1)" strokeWidth="1"
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}
+                              />
+                              {/* Middle ring */}
+                              <ellipse
+                                cx="200" cy="200" rx="140" ry="60"
+                                fill="none" stroke="url(#orbit-gradient-2)" strokeWidth="1"
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "25s", animationDirection: "reverse" }}
+                              />
+                              {/* Inner ring */}
+                              <ellipse
+                                cx="200" cy="200" rx="100" ry="40"
+                                fill="none" stroke="url(#orbit-gradient-3)" strokeWidth="1"
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "20s" }}
+                              />
+
+                              {/* Gradients */}
+                              <defs>
+                                <linearGradient id="orbit-gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
+                                  <stop offset="50%" stopColor="rgba(139, 92, 246, 0.5)" />
+                                  <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+                                </linearGradient>
+                                <linearGradient id="orbit-gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="0%" stopColor="rgba(59, 130, 246, 0)" />
+                                  <stop offset="50%" stopColor="rgba(59, 130, 246, 0.4)" />
+                                  <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
+                                </linearGradient>
+                                <linearGradient id="orbit-gradient-3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="0%" stopColor="rgba(16, 185, 129, 0)" />
+                                  <stop offset="50%" stopColor="rgba(16, 185, 129, 0.4)" />
+                                  <stop offset="100%" stopColor="rgba(16, 185, 129, 0)" />
+                                </linearGradient>
+                              </defs>
+
+                              {/* Orbiting nodes */}
+                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}>
+                                <circle cx="380" cy="200" r="8" fill="rgba(139, 92, 246, 0.8)">
+                                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                                <circle cx="380" cy="200" r="16" fill="none" stroke="rgba(139, 92, 246, 0.3)" strokeWidth="1">
+                                  <animate attributeName="r" values="16;24;16" dur="2s" repeatCount="indefinite" />
+                                  <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                              </g>
+
+                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}>
+                                <circle cx="20" cy="200" r="6" fill="rgba(139, 92, 246, 0.6)">
+                                  <animate attributeName="r" values="6;8;6" dur="2.5s" repeatCount="indefinite" />
+                                </circle>
+                              </g>
+
+                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "25s", animationDirection: "reverse" }}>
+                                <circle cx="340" cy="200" r="7" fill="rgba(59, 130, 246, 0.8)">
+                                  <animate attributeName="r" values="7;9;7" dur="1.8s" repeatCount="indefinite" />
+                                </circle>
+                                <circle cx="60" cy="200" r="5" fill="rgba(59, 130, 246, 0.5)" />
+                              </g>
+
+                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "20s" }}>
+                                <circle cx="300" cy="200" r="6" fill="rgba(16, 185, 129, 0.8)">
+                                  <animate attributeName="r" values="6;8;6" dur="2.2s" repeatCount="indefinite" />
+                                </circle>
+                                <circle cx="100" cy="200" r="4" fill="rgba(16, 185, 129, 0.5)" />
+                              </g>
+
+                              {/* Center core */}
+                              <circle cx="200" cy="200" r="35" fill="url(#core-gradient)" />
+                              <circle cx="200" cy="200" r="35" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+                              <circle cx="200" cy="200" r="45" fill="none" stroke="rgba(139, 92, 246, 0.2)" strokeWidth="1">
+                                <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
+                                <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" />
+                              </circle>
+
+                              {/* Core gradient */}
+                              <defs>
+                                <radialGradient id="core-gradient" cx="50%" cy="50%" r="50%">
+                                  <stop offset="0%" stopColor="rgba(139, 92, 246, 0.4)" />
+                                  <stop offset="70%" stopColor="rgba(139, 92, 246, 0.2)" />
+                                  <stop offset="100%" stopColor="rgba(139, 92, 246, 0.05)" />
+                                </radialGradient>
+                              </defs>
+
+                              {/* Center icon placeholder */}
+                              <text x="200" y="208" textAnchor="middle" fill="white" fontSize="24" fontWeight="bold" opacity="0.9">
+                                SC
+                              </text>
+                            </svg>
+
+                            {/* Floating particles */}
+                            {[...Array(12)].map((_, i) => (
+                              <div
+                                key={i}
+                                className="absolute h-1 w-1 rounded-full bg-purple-400/60"
+                                style={{
+                                  left: `${20 + Math.random() * 60}%`,
+                                  top: `${20 + Math.random() * 60}%`,
+                                  animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+                                  animationDelay: `${Math.random() * 2}s`,
+                                }}
+                              />
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </>
+
+                          {/* Connection lines */}
+                          <div className="pointer-events-none absolute inset-0">
+                            <svg className="h-full w-full opacity-20">
+                              <line x1="10%" y1="20%" x2="40%" y2="40%" stroke="url(#line-gradient)" strokeWidth="1" />
+                              <line x1="90%" y1="30%" x2="60%" y2="45%" stroke="url(#line-gradient)" strokeWidth="1" />
+                              <line x1="20%" y1="80%" x2="45%" y2="55%" stroke="url(#line-gradient)" strokeWidth="1" />
+                              <line x1="85%" y1="75%" x2="58%" y2="52%" stroke="url(#line-gradient)" strokeWidth="1" />
+                              <defs>
+                                <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
+                                  <stop offset="50%" stopColor="rgba(139, 92, 246, 0.6)" />
+                                  <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+                                </linearGradient>
+                              </defs>
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     // Regular card layout
                     <>
@@ -684,7 +927,7 @@ export function Operations() {
                       <div
                         className={`
                           flex flex-col
-                          ${isMobile ? "" : "w-[55%] p-10 lg:p-14"}
+                          ${isMobile || isTablet ? "" : "w-[55%] p-10 lg:p-14"}
                         `}
                       >
                         {/* Top row: Icon + Metric */}
@@ -746,34 +989,63 @@ export function Operations() {
                         {/* Bullets */}
                         <ul
                           className={`
-                            mt-auto space-y-3 text-neutral-300
-                            ${isMobile ? "pt-6 text-sm" : "pt-8 text-sm lg:text-base"}
+                            mt-auto space-y-2
+                            ${isMobile ? "pt-6" : "pt-8"}
                           `}
                         >
                           {area.bullets.map((bullet) => (
                             <li
                               key={bullet}
                               data-bullet
-                              className="flex items-start gap-3"
+                              className={`
+                                group/bullet flex items-center gap-3 rounded-xl
+                                border border-white/[0.04] bg-white/[0.02]
+                                backdrop-blur-sm transition-all duration-300
+                                hover:border-white/10 hover:bg-white/[0.05]
+                                ${isMobile ? "px-3 py-2.5" : "px-4 py-3"}
+                              `}
+                              style={{
+                                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.03)`,
+                              }}
                             >
                               <span
                                 className={`
-                                  shrink-0 rounded-full transition-transform duration-300 group-hover:scale-110
-                                  ${isMobile ? "mt-1.5 h-2 w-2" : "mt-1.5 h-2.5 w-2.5"}
+                                  flex shrink-0 items-center justify-center rounded-lg
+                                  border transition-all duration-300
+                                  group-hover/bullet:scale-110
+                                  ${isMobile ? "h-6 w-6" : "h-7 w-7"}
                                 `}
                                 style={{
-                                  background: `linear-gradient(135deg, ${area.accentColor}, ${area.accentColor}80)`,
-                                  boxShadow: `0 0 12px ${area.accentColor}40`,
+                                  borderColor: `${area.accentColor}30`,
+                                  background: `linear-gradient(135deg, ${area.accentColor}15, ${area.accentColor}05)`,
+                                  boxShadow: `0 0 20px ${area.accentColor}15`,
                                 }}
-                              />
-                              <span className="leading-relaxed">{bullet}</span>
+                              >
+                                <span
+                                  className="h-1.5 w-1.5 rounded-full"
+                                  style={{
+                                    background: area.accentColor,
+                                    boxShadow: `0 0 8px ${area.accentColor}`,
+                                  }}
+                                />
+                              </span>
+                              <span
+                                className={`
+                                  leading-snug text-neutral-300
+                                  transition-colors duration-300
+                                  group-hover/bullet:text-neutral-100
+                                  ${isMobile ? "text-sm" : "text-sm lg:text-[15px]"}
+                                `}
+                              >
+                                {bullet}
+                              </span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
                       {/* Right: Visual illustration */}
-                      {!isMobile && (
+                      {!isMobile && !isTablet && (
                         <div
                           data-visual
                           className="relative flex w-[45%] items-center justify-center overflow-hidden"

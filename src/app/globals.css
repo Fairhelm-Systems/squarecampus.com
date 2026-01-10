@@ -325,23 +325,36 @@
   animation: float 4s ease-in-out infinite;
 }
 
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-grow-up {
   animation: grow-up 1s ease-out forwards;
 }
 
 /* Finance chart cycle */
 .chart-bar-cycle {
-  animation: chart-bar-cycle 9s ease-in-out infinite;
+  animation: chart-bar-cycle 6s ease-in-out infinite;
   transform-origin: 100px 100px;
 }
 
 .chart-pie-cycle {
-  animation: chart-pie-cycle 9s ease-in-out infinite;
+  animation: chart-pie-cycle 6s ease-in-out infinite;
   transform-origin: 100px 100px;
 }
 
 .chart-column-cycle {
-  animation: chart-column-cycle 9s ease-in-out infinite;
+  animation: chart-column-cycle 6s ease-in-out infinite;
   transform-origin: 100px 100px;
 }
 

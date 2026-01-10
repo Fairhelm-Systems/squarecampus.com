@@ -1,17 +1,31 @@
 "use client";
 
-import { motion } from "@/lib/motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Database, Eye, FileCheck, Lock, Shield } from "@/components/icons";
+import {
+  AlertCircle,
+  ChevronRight,
+  Database,
+  Eye,
+  FileCheck,
+  Lock,
+  Shield,
+} from "@/components/icons";
+import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type SecurityFeature = {
   icon: React.ReactNode;
   title: string;
   description: string;
   details: string[];
+  color: string;
 };
 
 type ComplianceItem = {
@@ -24,6 +38,7 @@ type OperationsSection = {
   title: string;
   description: string;
   bullets: string[];
+  color: string;
 };
 
 const complianceStatusStyles: Record<ComplianceItem["status"], string> = {
@@ -37,23 +52,26 @@ const heroSignals = [
     icon: <Lock className="h-4 w-4" />,
     title: "Encryption everywhere",
     description: "TLS 1.3 in transit, AES-256 at rest, keys rotated.",
+    color: "blue",
   },
   {
     icon: <Eye className="h-4 w-4" />,
     title: "Observable & auditable",
     description: "Immutable audit logs across admin, finance, and student data.",
+    color: "emerald",
   },
   {
     icon: <Shield className="h-4 w-4" />,
     title: "Zero trust posture",
     description: "MFA, RBAC, IP controls, and least-privilege by design.",
+    color: "purple",
   },
 ];
 
 const heroStats = [
-  { label: "Uptime SLA", value: "Committed", accent: "bg-emerald-500/20 text-emerald-200" },
-  { label: "Breach notify", value: "Defined", accent: "bg-blue-500/15 text-blue-100" },
-  { label: "Data residency", value: "India", accent: "bg-cyan-500/15 text-cyan-100" },
+  { label: "Uptime SLA", value: "Committed", color: "emerald" },
+  { label: "Breach notify", value: "Defined", color: "blue" },
+  { label: "Data residency", value: "India", color: "cyan" },
 ];
 
 const securityFeatures: SecurityFeature[] = [
@@ -67,6 +85,7 @@ const securityFeatures: SecurityFeature[] = [
       "Encrypted database backups",
       "Key rotation and management protocols",
     ],
+    color: "blue",
   },
   {
     icon: <Shield className="h-5 w-5" />,
@@ -78,6 +97,7 @@ const securityFeatures: SecurityFeature[] = [
       "IP whitelisting for admin access",
       "Session management and auto-logout",
     ],
+    color: "emerald",
   },
   {
     icon: <Eye className="h-5 w-5" />,
@@ -89,6 +109,7 @@ const securityFeatures: SecurityFeature[] = [
       "Real-time threat detection",
       "Automated anomaly detection",
     ],
+    color: "purple",
   },
   {
     icon: <Database className="h-5 w-5" />,
@@ -100,6 +121,7 @@ const securityFeatures: SecurityFeature[] = [
       "Compliance with data localization norms",
       "Option to choose specific data center regions",
     ],
+    color: "cyan",
   },
   {
     icon: <FileCheck className="h-5 w-5" />,
@@ -111,6 +133,7 @@ const securityFeatures: SecurityFeature[] = [
       "Point-in-time recovery capabilities",
       "Tested disaster recovery procedures",
     ],
+    color: "amber",
   },
   {
     icon: <AlertCircle className="h-5 w-5" />,
@@ -122,6 +145,7 @@ const securityFeatures: SecurityFeature[] = [
       "Clear escalation procedures",
       "Post-incident analysis and reporting",
     ],
+    color: "red",
   },
 ];
 
@@ -165,6 +189,7 @@ const operationsSections: OperationsSection[] = [
       "Remote device lock and wipe on loss or exit",
       "USB/external storage restrictions where applicable for sensitive roles",
     ],
+    color: "blue",
   },
   {
     title: "Identity & Access Controls",
@@ -177,6 +202,7 @@ const operationsSections: OperationsSection[] = [
       "Offboarding controls: access revoked, tokens rotated, and device wipe for company-owned assets",
       "Conditional access based on device compliance posture",
     ],
+    color: "emerald",
   },
   {
     title: "Data Loss Prevention & Secure Sharing",
@@ -188,6 +214,7 @@ const operationsSections: OperationsSection[] = [
       "Audit logs for export and download operations",
       "Secure sharing workflows designed to keep data within approved channels",
     ],
+    color: "purple",
   },
 ];
 
@@ -228,96 +255,375 @@ const securityFaqs = [
   },
 ];
 
+const dataRightsItems = [
+  {
+    title: "Data Portability",
+    description:
+      "Export your complete data anytime in standard formats. No lock-in, no hassle.",
+    icon: <Database className="h-5 w-5" />,
+    color: "blue",
+  },
+  {
+    title: "Right to Deletion",
+    description:
+      "Request deletion of student or staff data in compliance with DPDPA and institutional policies.",
+    icon: <AlertCircle className="h-5 w-5" />,
+    color: "red",
+  },
+  {
+    title: "Access Transparency",
+    description: "Complete audit logs showing who accessed what data, when, and why.",
+    icon: <Eye className="h-5 w-5" />,
+    color: "emerald",
+  },
+  {
+    title: "Data Processing Agreement",
+    description:
+      "Clear contractual commitments on how we process and protect your data.",
+    icon: <FileCheck className="h-5 w-5" />,
+    color: "purple",
+  },
+];
+
+const accentColors: Record<
+  string,
+  { border: string; bg: string; text: string; glow: string; gradient: string }
+> = {
+  blue: {
+    border: "border-blue-500/30",
+    bg: "bg-blue-500/10",
+    text: "text-blue-400",
+    glow: "bg-blue-500/20",
+    gradient: "from-blue-400/70 via-blue-500/15 to-transparent",
+  },
+  emerald: {
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    glow: "bg-emerald-500/20",
+    gradient: "from-emerald-400/70 via-emerald-500/15 to-transparent",
+  },
+  purple: {
+    border: "border-purple-500/30",
+    bg: "bg-purple-500/10",
+    text: "text-purple-400",
+    glow: "bg-purple-500/20",
+    gradient: "from-purple-400/70 via-purple-500/15 to-transparent",
+  },
+  cyan: {
+    border: "border-cyan-500/30",
+    bg: "bg-cyan-500/10",
+    text: "text-cyan-400",
+    glow: "bg-cyan-500/20",
+    gradient: "from-cyan-400/70 via-cyan-500/15 to-transparent",
+  },
+  amber: {
+    border: "border-amber-500/30",
+    bg: "bg-amber-500/10",
+    text: "text-amber-400",
+    glow: "bg-amber-500/20",
+    gradient: "from-amber-400/70 via-amber-500/15 to-transparent",
+  },
+  red: {
+    border: "border-red-500/30",
+    bg: "bg-red-500/10",
+    text: "text-red-400",
+    glow: "bg-red-500/20",
+    gradient: "from-red-400/70 via-red-500/15 to-transparent",
+  },
+};
+
+function FloatingParticles() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className={cn(
+            "absolute h-1 w-1 rounded-full",
+            i % 3 === 0 ? "bg-blue-400/30" : i % 3 === 1 ? "bg-emerald-400/30" : "bg-purple-400/30"
+          )}
+          style={{
+            left: `${8 + (i * 6) % 84}%`,
+            top: `${12 + (i * 9) % 76}%`,
+            animation: `float-security ${7 + (i % 5) * 2}s ease-in-out infinite`,
+            animationDelay: `${i * 0.4}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes float-security {
+          0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.2; }
+          25% { transform: translateY(-15px) translateX(8px) scale(1.3); opacity: 0.5; }
+          50% { transform: translateY(-8px) translateX(-4px) scale(0.9); opacity: 0.3; }
+          75% { transform: translateY(-20px) translateX(12px) scale(1.1); opacity: 0.4; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export default function SecurityPage() {
+  const pageRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLElement>(null);
+  const operationsRef = useRef<HTMLElement>(null);
+  const complianceRef = useRef<HTMLElement>(null);
+  const dataRightsRef = useRef<HTMLElement>(null);
+  const assuranceRef = useRef<HTMLElement>(null);
+  const faqRef = useRef<HTMLElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!pageRef.current) return;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      // Hero animations
+      if (heroRef.current) {
+        gsap.fromTo(
+          heroRef.current.querySelectorAll(".js-hero-animate"),
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+          }
+        );
+      }
+
+      // Features section
+      if (featuresRef.current) {
+        gsap.fromTo(
+          featuresRef.current.querySelectorAll(".js-feature-card"),
+          { autoAlpha: 0, y: 40, scale: 0.95 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: featuresRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Operations section
+      if (operationsRef.current) {
+        gsap.fromTo(
+          operationsRef.current.querySelectorAll(".js-ops-card"),
+          { autoAlpha: 0, y: 30, rotateX: 8 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            rotateX: 0,
+            duration: 0.6,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: operationsRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Compliance section
+      if (complianceRef.current) {
+        gsap.fromTo(
+          complianceRef.current.querySelectorAll(".js-compliance-card"),
+          { autoAlpha: 0, x: -20 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: complianceRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Data rights section
+      if (dataRightsRef.current) {
+        gsap.fromTo(
+          dataRightsRef.current.querySelectorAll(".js-rights-card"),
+          { autoAlpha: 0, y: 25 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: dataRightsRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // Assurance section
+      if (assuranceRef.current) {
+        gsap.fromTo(
+          assuranceRef.current.querySelectorAll(".js-assurance-animate"),
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: assuranceRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // FAQ section
+      if (faqRef.current) {
+        gsap.fromTo(
+          faqRef.current.querySelectorAll(".js-faq-item"),
+          { autoAlpha: 0, x: -15 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: faqRef.current,
+              start: "top 80%",
+            },
+          }
+        );
+      }
+
+      // CTA section
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ctaRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
-      <main className="relative overflow-hidden bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10">
+      <main
+        ref={pageRef}
+        className="relative overflow-hidden bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10"
+      >
+        {/* Background effects */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
-          <div className="absolute right-6 top-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-[110px]" />
+          <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-blue-500/[0.06] blur-3xl" />
+          <div className="absolute right-6 top-24 h-72 w-72 rounded-full bg-emerald-500/[0.06] blur-[110px]" />
+          <div className="absolute bottom-1/3 left-1/4 h-80 w-80 rounded-full bg-purple-500/[0.04] blur-[120px]" />
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         </div>
 
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-16">
+        <FloatingParticles />
+
+        <div className="relative mx-auto flex max-w-6xl flex-col gap-20">
           {/* Hero Section */}
-          <section className="relative overflow-hidden rounded-3xl border border-blue-500/15 bg-gradient-to-br from-blue-950/60 via-neutral-950 to-neutral-950 p-8 shadow-xl shadow-blue-500/10 md:p-10">
+          <section
+            ref={heroRef}
+            className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 shadow-xl shadow-blue-500/10 backdrop-blur-sm md:p-10"
+          >
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -left-10 top-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl" />
-              <div className="absolute right-2 top-0 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
-              <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+              <div className="absolute -left-10 top-10 h-40 w-40 rounded-full bg-blue-500/[0.12] blur-3xl" />
+              <div className="absolute right-2 top-0 h-56 w-56 rounded-full bg-emerald-500/[0.06] blur-3xl" />
+              <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
             </div>
 
             <div className="relative grid items-start gap-10 lg:grid-cols-[1.6fr_1fr]">
               <div className="space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-200"
-                >
+                <div className="js-hero-animate inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
                   <Shield className="h-4 w-4" />
                   Trust & Security
-                </motion.div>
+                </div>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl"
-                >
+                <h1 className="js-hero-animate text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
                   Security
                   <span className="block bg-gradient-to-r from-blue-400 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
                     Built-in, always-on, and accountable.
                   </span>
-                </motion.h1>
+                </h1>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl"
-                >
+                <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
                   SquareCampus is a school OS and school management platform built for student data
                   security—combining data residency in India, encryption, audit trails, and
                   continuous monitoring to protect daily campus operations. It is the foundation
                   for operational trust when teams are under pressure.
-                </motion.p>
+                </p>
 
                 <div className="grid gap-4 md:grid-cols-3">
-                  {heroSignals.map((signal, idx) => (
-                    <motion.div
-                      key={signal.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.3 + idx * 0.08 }}
-                      className="group relative overflow-hidden rounded-xl border border-neutral-800/60 bg-neutral-900/40 p-4"
-                    >
-                      <div className="absolute -right-6 -top-8 h-16 w-16 rounded-full bg-blue-500/0 blur-2xl transition-all duration-500 group-hover:bg-emerald-400/20" />
-                      <div className="relative flex items-start gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/20">
-                          {signal.icon}
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-sm font-semibold text-neutral-100">{signal.title}</p>
-                          <p className="text-xs leading-relaxed text-neutral-400">
-                            {signal.description}
-                          </p>
+                  {heroSignals.map((signal) => {
+                    const colors = accentColors[signal.color];
+                    return (
+                      <div
+                        key={signal.title}
+                        className="js-hero-animate group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                      >
+                        <div
+                          className={cn(
+                            "absolute -right-6 -top-8 h-16 w-16 rounded-full blur-2xl transition-all duration-500 group-hover:scale-150",
+                            colors.glow
+                          )}
+                        />
+                        <div className="relative flex items-start gap-3">
+                          <div
+                            className={cn(
+                              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1",
+                              colors.bg,
+                              colors.text,
+                              colors.border
+                            )}
+                          >
+                            {signal.icon}
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-sm font-semibold text-neutral-100">{signal.title}</p>
+                            <p className="text-xs leading-relaxed text-neutral-400">
+                              {signal.description}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/15 via-neutral-950 to-neutral-950 p-6 shadow-lg shadow-emerald-500/10"
-              >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.18),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.12),transparent_35%)]" />
+              <div className="js-hero-animate relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/[0.08] via-neutral-950 to-neutral-950 p-6 shadow-lg shadow-emerald-500/10 backdrop-blur-sm">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.12),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.08),transparent_35%)]" />
                 <div className="relative space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-emerald-100 ring-1 ring-emerald-500/30">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-emerald-100 ring-1 ring-emerald-500/30">
                     <AlertCircle className="h-3.5 w-3.5" />
                     Operational posture
                   </div>
@@ -326,27 +632,39 @@ export default function SecurityPage() {
                     policy backed by a dedicated response team.
                   </p>
                   <div className="grid gap-3 sm:grid-cols-3">
-                    {heroStats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className={`rounded-xl border border-white/5 px-3 py-3 ${stat.accent}`}
-                      >
-                        <div className="text-lg font-semibold">{stat.value}</div>
-                        <p className="text-[12px] text-white/70">{stat.label}</p>
-                      </div>
-                    ))}
+                    {heroStats.map((stat) => {
+                      const colors = accentColors[stat.color];
+                      return (
+                        <div
+                          key={stat.label}
+                          className={cn(
+                            "group relative overflow-hidden rounded-xl border border-white/[0.08] px-3 py-3 transition-all duration-300 hover:border-white/[0.15]",
+                            colors.bg
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r",
+                              colors.gradient
+                            )}
+                          />
+                          <div className={cn("text-lg font-semibold", colors.text)}>{stat.value}</div>
+                          <p className="text-[12px] text-white/70">{stat.label}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="flex items-center gap-2 text-xs text-neutral-400">
-                    <div className="h-2 w-2 rounded-full bg-emerald-400" />
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                     External VAPT annually + continuous monitoring.
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
 
           {/* Security Infrastructure */}
-          <section className="space-y-8">
+          <section ref={featuresRef} className="space-y-8">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-white md:text-4xl">Security Infrastructure</h2>
               <p className="max-w-3xl text-base leading-relaxed text-neutral-400">
@@ -356,19 +674,35 @@ export default function SecurityPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {securityFeatures.map((feature, idx) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                >
-                  <Card className="group relative h-full overflow-hidden border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-950/60 transition-all duration-300 hover:scale-[1.02] hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10">
-                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
+              {securityFeatures.map((feature) => {
+                const colors = accentColors[feature.color];
+                return (
+                  <Card
+                    key={feature.title}
+                    className="js-feature-card group relative h-full overflow-hidden border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-white/[0.15] hover:shadow-2xl"
+                  >
+                    <div
+                      className={cn(
+                        "absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
+                    <div
+                      className={cn(
+                        "absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                        colors.gradient
+                      )}
+                    />
 
                     <CardContent className="relative space-y-4 p-6">
-                      <div className="inline-flex items-center justify-center rounded-lg bg-blue-500/10 p-3 text-blue-400 ring-1 ring-blue-500/20">
+                      <div
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-lg p-3 ring-1",
+                          colors.bg,
+                          colors.text,
+                          colors.border
+                        )}
+                      >
                         {feature.icon}
                       </div>
 
@@ -376,26 +710,33 @@ export default function SecurityPage() {
                         <h3 className="text-base font-semibold text-neutral-100">
                           {feature.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">{feature.description}</p>
+                        <p className="text-sm text-neutral-400">{feature.description}</p>
                       </div>
 
                       <ul className="space-y-2 text-xs text-neutral-400">
                         {feature.details.map((detail, detailIdx) => (
                           <li key={detailIdx} className="flex items-start gap-2">
-                            <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-blue-400" />
-                            <span>{detail}</span>
+                            <span
+                              className={cn(
+                                "mt-1.5 h-1 w-1 shrink-0 rounded-full bg-current",
+                                colors.text
+                              )}
+                            />
+                            <span className="transition-colors duration-300 group-hover:text-neutral-300">
+                              {detail}
+                            </span>
                           </li>
                         ))}
                       </ul>
                     </CardContent>
                   </Card>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </section>
 
           {/* Operational Security */}
-          <section className="space-y-8">
+          <section ref={operationsRef} className="space-y-8">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-white md:text-4xl">
                 Internal Operational Security
@@ -408,41 +749,50 @@ export default function SecurityPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {operationsSections.map((section, idx) => (
-                <motion.div
-                  key={section.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="h-full"
-                >
-                  <Card className="group relative h-full overflow-hidden border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-950/60">
-                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-emerald-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
+              {operationsSections.map((section) => {
+                const colors = accentColors[section.color];
+                return (
+                  <Card
+                    key={section.title}
+                    className="js-ops-card group relative h-full overflow-hidden border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:shadow-xl"
+                  >
+                    <div
+                      className={cn(
+                        "absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <CardContent className="relative space-y-4 p-6">
                       <div className="space-y-2">
                         <h3 className="text-base font-semibold text-neutral-100">
                           {section.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">{section.description}</p>
+                        <p className="text-sm text-neutral-400">{section.description}</p>
                       </div>
                       <ul className="space-y-2 text-xs text-neutral-400">
                         {section.bullets.map((bullet, bulletIdx) => (
                           <li key={bulletIdx} className="flex items-start gap-2">
-                            <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
-                            <span>{bullet}</span>
+                            <span
+                              className={cn(
+                                "mt-1.5 h-1 w-1 shrink-0 rounded-full bg-current",
+                                colors.text
+                              )}
+                            />
+                            <span className="transition-colors duration-300 group-hover:text-neutral-300">
+                              {bullet}
+                            </span>
                           </li>
                         ))}
                       </ul>
                     </CardContent>
                   </Card>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </section>
 
           {/* Compliance Framework */}
-          <section className="space-y-8">
+          <section ref={complianceRef} className="space-y-8">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-white md:text-4xl">Compliance Framework</h2>
               <p className="max-w-3xl text-base leading-relaxed text-neutral-400">
@@ -452,43 +802,42 @@ export default function SecurityPage() {
 
             <div className="grid gap-6 md:grid-cols-2">
               {complianceItems.map((item, idx) => (
-                <motion.div
+                <Card
                   key={item.title}
-                  initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className={cn(
+                    "js-compliance-card group relative h-full overflow-hidden border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:shadow-xl",
+                    idx % 2 === 0 ? "hover:shadow-emerald-500/5" : "hover:shadow-blue-500/5"
+                  )}
                 >
-                  <Card className="group relative h-full overflow-hidden border border-neutral-800/70 bg-gradient-to-br from-neutral-900/80 to-neutral-950/60 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/5">
-                    <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
+                  <div
+                    className={cn(
+                      "absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                      idx % 2 === 0 ? "bg-emerald-500/10" : "bg-blue-500/10"
+                    )}
+                  />
 
-                    <CardContent className="relative space-y-3 p-6">
-                      <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-sm font-semibold text-neutral-100">{item.title}</h3>
-                        <span
-                          className={`shrink-0 rounded-full px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide ${complianceStatusStyles[item.status]}`}
-                        >
-                          {item.status}
-                        </span>
-                      </div>
-                      <p className="text-xs leading-relaxed text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  <CardContent className="relative space-y-3 p-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-sm font-semibold text-neutral-100">{item.title}</h3>
+                      <span
+                        className={cn(
+                          "shrink-0 rounded-full px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide",
+                          complianceStatusStyles[item.status]
+                        )}
+                      >
+                        {item.status}
+                      </span>
+                    </div>
+                    <p className="text-xs leading-relaxed text-neutral-400">{item.description}</p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-6"
-            >
-              <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
+            <div className="js-compliance-card group relative overflow-hidden rounded-xl border border-blue-500/20 bg-blue-500/[0.03] p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30">
+              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
+              <div className="relative flex items-start gap-4">
+                <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400 ring-1 ring-blue-500/30">
                   <FileCheck className="h-5 w-5" />
                 </div>
                 <div className="space-y-2">
@@ -500,11 +849,11 @@ export default function SecurityPage() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </section>
 
           {/* Data Protection & Your Rights */}
-          <section className="space-y-8">
+          <section ref={dataRightsRef} className="space-y-8">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-white md:text-4xl">Your Data, Your Control</h2>
               <p className="max-w-3xl text-base leading-relaxed text-neutral-400">
@@ -513,55 +862,36 @@ export default function SecurityPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              {[
-                {
-                  title: "Data Portability",
-                  description:
-                    "Export your complete data anytime in standard formats. No lock-in, no hassle.",
-                  icon: <Database className="h-5 w-5" />,
-                },
-                {
-                  title: "Right to Deletion",
-                  description:
-                    "Request deletion of student or staff data in compliance with DPDPA and institutional policies.",
-                  icon: <AlertCircle className="h-5 w-5" />,
-                },
-                {
-                  title: "Access Transparency",
-                  description: "Complete audit logs showing who accessed what data, when, and why.",
-                  icon: <Eye className="h-5 w-5" />,
-                },
-                {
-                  title: "Data Processing Agreement",
-                  description:
-                    "Clear contractual commitments on how we process and protect your data.",
-                  icon: <FileCheck className="h-5 w-5" />,
-                },
-              ].map((item, idx) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group flex gap-4 rounded-lg border border-neutral-800/60 bg-neutral-900/40 p-5 transition-all duration-300 hover:border-neutral-700 hover:bg-neutral-900/60"
-                >
-                  <div className="flex items-center justify-center rounded-lg bg-neutral-800/60 p-3 text-neutral-400 transition-colors group-hover:bg-neutral-800 group-hover:text-blue-400" style={{ height: "44px", width: "44px" }}>
-                    {item.icon}
+              {dataRightsItems.map((item) => {
+                const colors = accentColors[item.color];
+                return (
+                  <div
+                    key={item.title}
+                    className="js-rights-card group flex gap-4 rounded-lg border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  >
+                    <div
+                      className={cn(
+                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ring-1 transition-all duration-300",
+                        colors.bg,
+                        colors.text,
+                        colors.border,
+                        "group-hover:scale-110"
+                      )}
+                    >
+                      {item.icon}
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-sm font-semibold text-neutral-100">{item.title}</h3>
+                      <p className="text-xs leading-relaxed text-neutral-400">{item.description}</p>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <h3 className="text-sm font-semibold text-neutral-100">{item.title}</h3>
-                    <p className="text-xs leading-relaxed text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </section>
 
           {/* Security Assurance & Documentation */}
-          <section className="space-y-6">
+          <section ref={assuranceRef} className="space-y-6">
             <div className="space-y-3">
               <h2 className="text-2xl font-bold text-white md:text-3xl">
                 Security Assurance & Documentation
@@ -573,39 +903,29 @@ export default function SecurityPage() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="relative isolate">
-                {/* Security aura glow */}
+              <div className="js-assurance-animate relative isolate">
                 <div
                   aria-hidden
                   className="pointer-events-none absolute -inset-6 z-0 rounded-2xl blur-2xl"
                 >
                   <div
-                    className="absolute inset-0 h-full w-full rounded-2xl opacity-70"
+                    className="absolute inset-0 h-full w-full rounded-2xl opacity-50"
                     style={{
                       background:
-                        "radial-gradient(ellipse 180% 80% at 70% -20%, rgba(30,58,138,0.35) 0%, rgba(0,0,0,0) 70%)",
+                        "radial-gradient(ellipse 180% 80% at 70% -20%, rgba(30,58,138,0.25) 0%, rgba(0,0,0,0) 70%)",
                     }}
                   />
                   <div
-                    className="absolute -bottom-6 left-1/2 h-28 w-52 -translate-x-1/2 rounded-full opacity-70"
+                    className="absolute -bottom-6 left-1/2 h-28 w-52 -translate-x-1/2 rounded-full opacity-50"
                     style={{
                       background:
-                        "radial-gradient(circle at 60% 40%, rgba(8,145,178,0.6) 0%, transparent 70%)",
-                    }}
-                  />
-                  <div
-                    className="absolute -top-8 left-6 h-16 w-28 rounded-full opacity-60"
-                    style={{
-                      background:
-                        "radial-gradient(circle at 60% 40%, rgba(56,189,248,0.55) 0%, transparent 75%)",
+                        "radial-gradient(circle at 60% 40%, rgba(8,145,178,0.4) 0%, transparent 70%)",
                     }}
                   />
                 </div>
-                <Card className="relative z-10 border border-neutral-800/70 bg-neutral-900/40">
+                <Card className="relative z-10 border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm">
                   <CardContent className="space-y-4 p-6">
-                    <h3 className="text-sm font-semibold text-neutral-100">
-                      Available on request
-                    </h3>
+                    <h3 className="text-sm font-semibold text-neutral-100">Available on request</h3>
                     <ul className="space-y-2 text-xs text-neutral-400">
                       {securityAssuranceItems.map((item) => (
                         <li key={item} className="flex items-start gap-2">
@@ -618,7 +938,7 @@ export default function SecurityPage() {
                 </Card>
               </div>
 
-              <Card className="border border-neutral-800/70 bg-gradient-to-br from-blue-500/10 via-neutral-950 to-neutral-950">
+              <Card className="js-assurance-animate border border-white/[0.08] bg-gradient-to-br from-blue-500/[0.05] via-neutral-950 to-neutral-950 backdrop-blur-sm">
                 <CardContent className="space-y-4 p-6">
                   <h3 className="text-sm font-semibold text-neutral-100">
                     Request the security packet
@@ -629,14 +949,15 @@ export default function SecurityPage() {
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Link
-                      href="/#contact-us"
-                      className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-200"
+                      href="/contact-us"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-900 transition-all duration-300 hover:bg-neutral-200"
                     >
                       Request Security Packet
+                      <ChevronRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </Link>
                     <Link
-                      href="/#contact-us"
-                      className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition hover:border-white hover:text-white"
+                      href="/contact-us"
+                      className="inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
                     >
                       Talk to Sales
                     </Link>
@@ -645,7 +966,7 @@ export default function SecurityPage() {
               </Card>
             </div>
 
-            <div className="space-y-3">
+            <div className="js-assurance-animate space-y-3">
               <h3 className="text-lg font-semibold text-neutral-100">Legal & policy documents</h3>
               <p className="max-w-3xl text-sm leading-relaxed text-neutral-400">
                 Public policy documents remain available for review at any time.
@@ -657,42 +978,23 @@ export default function SecurityPage() {
                 { title: "Privacy Policy", href: "/privacy-policy" },
                 { title: "Data Processing Addendum", href: "/data-processing-addendum" },
                 { title: "Terms of Service", href: "/terms-of-service" },
-              ].map((doc, idx) => (
-                <motion.div
+              ].map((doc) => (
+                <Link
                   key={doc.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.1 }}
+                  href={doc.href}
+                  className="js-assurance-animate group flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                 >
-                  <Link
-                    href={doc.href}
-                    className="group flex items-center justify-between rounded-lg border border-neutral-800/60 bg-neutral-900/40 p-4 transition-all duration-300 hover:border-neutral-700 hover:bg-neutral-900/60"
-                  >
-                    <span className="text-sm font-medium text-neutral-200 group-hover:text-white">
-                      {doc.title}
-                    </span>
-                    <svg
-                      className="h-4 w-4 text-neutral-500 transition-transform group-hover:translate-x-1 group-hover:text-neutral-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
-                </motion.div>
+                  <span className="text-sm font-medium text-neutral-200 group-hover:text-white">
+                    {doc.title}
+                  </span>
+                  <ChevronRight className="h-4 w-4 text-neutral-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-neutral-300" />
+                </Link>
               ))}
             </div>
           </section>
 
           {/* Security FAQ */}
-          <section className="space-y-6">
+          <section ref={faqRef} className="space-y-6">
             <div className="space-y-3">
               <h2 className="text-2xl font-bold text-white md:text-3xl">Security FAQ</h2>
               <p className="max-w-3xl text-base leading-relaxed text-neutral-400">
@@ -704,11 +1006,13 @@ export default function SecurityPage() {
               {securityFaqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="group rounded-2xl border border-neutral-800/70 bg-neutral-900/50 px-5 py-4"
+                  className="js-faq-item group rounded-2xl border border-white/[0.08] bg-white/[0.02] px-5 py-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.12] open:border-blue-500/20 open:bg-blue-500/[0.02]"
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-neutral-100">
-                    <span>{faq.question}</span>
-                    <span className="text-xs font-semibold uppercase tracking-wide text-blue-300 transition group-open:text-emerald-300">
+                    <span className="transition-colors duration-300 group-hover:text-white">
+                      {faq.question}
+                    </span>
+                    <span className="rounded-full bg-white/[0.05] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-blue-300 transition group-open:bg-emerald-500/10 group-open:text-emerald-300">
                       View
                     </span>
                   </summary>
@@ -719,19 +1023,16 @@ export default function SecurityPage() {
           </section>
 
           {/* Questions or Security Review CTA */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mt-8 rounded-2xl border border-neutral-800/80 bg-gradient-to-r from-neutral-900/80 via-neutral-900/60 to-neutral-900/40 p-8"
+          <section
+            ref={ctaRef}
+            className="mt-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 backdrop-blur-sm"
           >
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-neutral-50">
                   Need a security review or have questions?
                 </h3>
-                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
                   Our team can walk you through our security architecture, provide audit reports, or
                   arrange a dedicated security review for your institution's requirements.
                 </p>
@@ -740,27 +1041,27 @@ export default function SecurityPage() {
                 <BookCallCta context="security-page" className="justify-center sm:w-auto" />
                 <Link
                   href="mailto:security@squarecampus.com"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition hover:border-white hover:text-white"
+                  className="inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
                 >
                   Email Security Team
                 </Link>
               </div>
             </div>
-          </motion.section>
+          </section>
 
           {/* Footer Note */}
-          <div className="rounded-lg border border-neutral-800/40 bg-neutral-900/20 p-6">
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.01] p-6">
             <p className="text-xs leading-relaxed text-neutral-500">
               <strong className="text-neutral-400">Security Disclosure:</strong> If you discover a
               security vulnerability in SquareCampus, please report it to{" "}
               <a
                 href="mailto:security@squarecampus.com"
-                className="text-blue-400 hover:text-blue-300"
+                className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
               >
                 security@squarecampus.com
               </a>
-              . We take all reports seriously and will respond promptly. We appreciate
-              responsible disclosure and will work with you to address any issues promptly.
+              . We take all reports seriously and will respond promptly. We appreciate responsible
+              disclosure and will work with you to address any issues promptly.
             </p>
           </div>
         </div>

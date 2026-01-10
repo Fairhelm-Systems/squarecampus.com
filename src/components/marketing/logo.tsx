@@ -1,21 +1,32 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export const Logo = () => {
+export const Logo = ({ className }: { className?: string }) => {
   return (
     <Link
       href="/"
       data-logo-anchor
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-white"
+      className={cn(
+        "group relative z-20 flex items-center gap-2.5 rounded-xl px-2 py-1.5",
+        "transition-all duration-200 hover:bg-white/5",
+        className
+      )}
     >
-      <Image
-        src="https://cdn.squarecampus.in/application_files/logo-light.png"
-        alt="logo"
-        width={30}
-        height={30}
-      />
-      <span className="text-xl font-medium text-white">SquareCampus</span>
+      <div className="relative flex h-8 w-8 items-center justify-center">
+        <Image
+          src="https://cdn.squarecampus.in/application_files/logo-light.png"
+          alt="SquareCampus"
+          width={32}
+          height={32}
+          className="transition-transform duration-200 group-hover:scale-105"
+        />
+      </div>
+      <span className="text-lg font-semibold tracking-tight text-white">
+        SquareCampus
+      </span>
     </Link>
   );
 };

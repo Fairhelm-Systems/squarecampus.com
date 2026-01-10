@@ -150,7 +150,7 @@ export default function SchoolManagementSystemPage() {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <BookCallCta context="sms-hero" label="Book a call" variant="primary" />
                 <Link
-                  href="/#contact-us"
+                  href="/contact-us"
                   className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/40 hover:bg-white/10"
                 >
                   Contact Us
