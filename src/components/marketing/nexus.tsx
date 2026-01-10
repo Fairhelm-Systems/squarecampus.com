@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useId } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -27,30 +27,42 @@ interface NexusLogoProps {
 }
 
 const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoProps) => {
+  const uid = useId();
+
   const sizeMap = {
     sm: { width: 20, height: 20, nodeR: 2.5, centerR: 4 },
     md: { width: 32, height: 32, nodeR: 3.5, centerR: 6 },
     lg: { width: 48, height: 48, nodeR: 5, centerR: 8 },
-  };
+  } as const;
 
   const { width, height, nodeR, centerR } = sizeMap[size];
   const cx = width / 2;
   const cy = height / 2;
 
-  // Orbital nodes positioned around the center
   const orbitRadius = width * 0.32;
+
+  const colors = {
+    blue: "#3b82f6",
+    purple: "#8b5cf6",
+    emerald: "#10b981",
+  } as const;
+
   const nodes = [
-    { angle: 0, color: "#3b82f6" },       // Blue - right
-    { angle: 72, color: "#8b5cf6" },      // Purple
-    { angle: 144, color: "#10b981" },     // Emerald
-    { angle: 216, color: "#3b82f6" },     // Blue
-    { angle: 288, color: "#8b5cf6" },     // Purple
+    { angle: 0, color: colors.blue },
+    { angle: 72, color: colors.purple },
+    { angle: 144, color: colors.emerald },
+    { angle: 216, color: colors.blue },
+    { angle: 288, color: colors.purple },
   ].map((n, i) => ({
     ...n,
     x: cx + Math.cos((n.angle * Math.PI) / 180) * orbitRadius,
     y: cy + Math.sin((n.angle * Math.PI) / 180) * orbitRadius,
     delay: i * 0.15,
   }));
+
+  const glowId = `nexusGlow-${uid}`;
+  const centerGradId = `centerGrad-${uid}`;
+  const pulseGradId = `pulseGrad-${uid}`;
 
   return (
     <svg
@@ -60,10 +72,11 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-label="Nexus"
+      role="img"
     >
       <defs>
-        {/* Glow filter */}
-        <filter id="nexusGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
@@ -71,21 +84,18 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
           </feMerge>
         </filter>
 
-        {/* Center gradient */}
-        <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="50%" stopColor="#8b5cf6" />
-          <stop offset="100%" stopColor="#10b981" />
+        <radialGradient id={centerGradId} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={colors.blue} />
+          <stop offset="50%" stopColor={colors.purple} />
+          <stop offset="100%" stopColor={colors.emerald} />
         </radialGradient>
 
-        {/* Pulse animation gradient */}
-        <radialGradient id="pulseGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+        <radialGradient id={pulseGradId} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={colors.blue} stopOpacity="0.6" />
+          <stop offset="100%" stopColor={colors.blue} stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      {/* Connection lines from center to nodes */}
       {nodes.map((node, i) => (
         <line
           key={`line-${i}`}
@@ -93,7 +103,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
           y1={cy}
           x2={node.x}
           y2={node.y}
-          stroke="url(#centerGrad)"
+          stroke={`url(#${centerGradId})`}
           strokeWidth={size === "sm" ? 0.5 : 1}
           strokeOpacity={0.4}
           className={animate ? "nexus-logo-line" : ""}
@@ -101,24 +111,21 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
         />
       ))}
 
-      {/* Outer pulse ring (animated) */}
       {animate && (
         <circle
           cx={cx}
           cy={cy}
           r={orbitRadius + nodeR}
           fill="none"
-          stroke="url(#centerGrad)"
+          stroke={`url(#${centerGradId})`}
           strokeWidth={0.5}
           strokeOpacity={0.2}
           className="nexus-logo-ring"
         />
       )}
 
-      {/* Orbital nodes */}
       {nodes.map((node, i) => (
         <g key={`node-${i}`}>
-          {/* Node glow */}
           <circle
             cx={node.x}
             cy={node.y}
@@ -128,40 +135,36 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
             className={animate ? "nexus-logo-node-glow" : ""}
             style={animate ? { animationDelay: `${node.delay}s` } : undefined}
           />
-          {/* Node core */}
           <circle
             cx={node.x}
             cy={node.y}
             r={nodeR}
             fill={node.color}
-            filter="url(#nexusGlow)"
+            filter={`url(#${glowId})`}
             className={animate ? "nexus-logo-node" : ""}
             style={animate ? { animationDelay: `${node.delay}s` } : undefined}
           />
         </g>
       ))}
 
-      {/* Center hub - pulse effect */}
       {animate && (
         <circle
           cx={cx}
           cy={cy}
           r={centerR * 1.8}
-          fill="url(#pulseGrad)"
+          fill={`url(#${pulseGradId})`}
           className="nexus-logo-pulse"
         />
       )}
 
-      {/* Center hub - core */}
       <circle
         cx={cx}
         cy={cy}
         r={centerR}
-        fill="url(#centerGrad)"
-        filter="url(#nexusGlow)"
+        fill={`url(#${centerGradId})`}
+        filter={`url(#${glowId})`}
       />
 
-      {/* Center hub - inner highlight */}
       <circle
         cx={cx - centerR * 0.2}
         cy={cy - centerR * 0.2}
@@ -169,46 +172,6 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
         fill="white"
         opacity={0.3}
       />
-
-      <style>{`
-        .nexus-logo-pulse {
-          animation: nexusPulse 2s ease-in-out infinite;
-          transform-origin: center;
-        }
-        .nexus-logo-ring {
-          animation: nexusRing 3s ease-in-out infinite;
-          transform-origin: center;
-        }
-        .nexus-logo-node {
-          animation: nexusNodePulse 2s ease-in-out infinite;
-        }
-        .nexus-logo-node-glow {
-          animation: nexusGlowPulse 2s ease-in-out infinite;
-        }
-        .nexus-logo-line {
-          animation: nexusLinePulse 2s ease-in-out infinite;
-        }
-        @keyframes nexusPulse {
-          0%, 100% { transform: scale(1); opacity: 0.6; }
-          50% { transform: scale(1.3); opacity: 0.2; }
-        }
-        @keyframes nexusRing {
-          0%, 100% { stroke-opacity: 0.2; }
-          50% { stroke-opacity: 0.4; }
-        }
-        @keyframes nexusNodePulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.15); }
-        }
-        @keyframes nexusGlowPulse {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.4; transform: scale(1.2); }
-        }
-        @keyframes nexusLinePulse {
-          0%, 100% { stroke-opacity: 0.4; }
-          50% { stroke-opacity: 0.7; }
-        }
-      `}</style>
     </svg>
   );
 };
@@ -1101,8 +1064,8 @@ const AskNexusDemo = () => {
           <div className="flex items-center gap-3">
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${phase === "thinking"
-                  ? "animate-pulse bg-gradient-to-br from-blue-400/20 to-purple-500/20"
-                  : "bg-gradient-to-br from-blue-500/10 to-purple-600/10"
+                ? "animate-pulse bg-gradient-to-br from-blue-400/20 to-purple-500/20"
+                : "bg-gradient-to-br from-blue-500/10 to-purple-600/10"
                 }`}
             >
               <NexusLogo size="md" animate={phase === "thinking"} />
@@ -1196,8 +1159,8 @@ const AskNexusDemo = () => {
               <div
                 key={i}
                 className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex
-                    ? "w-6 bg-blue-500"
-                    : "w-1.5 bg-neutral-700"
+                  ? "w-6 bg-blue-500"
+                  : "w-1.5 bg-neutral-700"
                   }`}
               />
             ))}
