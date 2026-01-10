@@ -27,7 +27,8 @@ import {
 import { cn } from "@/lib/utils";
 import {
   createBreadcrumbSchema,
-  createWebPageSchema,
+  createContactPageSchema,
+  createContactFAQSchema,
   SEO_CONFIG,
 } from "@/lib/seo";
 
@@ -310,15 +311,16 @@ export default function ContactPage() {
   };
 
   const pageUrl = `${SEO_CONFIG.baseUrl}/contact-us`;
-  const webPageSchema = createWebPageSchema({
-    name: "Contact SquareCampus",
-    description: "Get in touch with SquareCampus. Book a demo, request pricing, or discuss your institution's needs.",
+  const contactPageSchema = createContactPageSchema({
+    name: "Contact SquareCampus | Book a Demo of India's Best School Management System",
+    description: "Contact SquareCampus for a personalized demo of India's leading school management system. Get pricing, migration support, and see how 500+ schools streamline operations.",
     url: pageUrl,
   });
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: "Home", url: SEO_CONFIG.baseUrl },
-    { name: "Contact", url: pageUrl },
+    { name: "Contact Us", url: pageUrl },
   ]);
+  const faqSchema = createContactFAQSchema();
 
   return (
     <>
@@ -646,16 +648,21 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* Structured Data */}
+      {/* Structured Data for SEO */}
       <Script
-        id="webpage-schema"
+        id="contactpage-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
       />
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <FloatingHomeButton href="/" label="Back to home" />

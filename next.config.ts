@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { buildCsp } from "./src/lib/security/csp";
 
 const nextConfig: NextConfig = {
   images: {
@@ -15,6 +16,12 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    const csp = buildCsp({ reportUri: "/api/csp-report" });
+    const cspHeader =
+      process.env.CSP_REPORT_ONLY === "true"
+        ? "Content-Security-Policy-Report-Only"
+        : "Content-Security-Policy";
+
     return [
       {
         source: "/:path*",
@@ -37,11 +44,8 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
+            value:
+              "accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
           },
           {
             key: "Cross-Origin-Opener-Policy",
@@ -52,21 +56,17 @@ const nextConfig: NextConfig = {
             value: "same-site",
           },
           {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' https:",
-              "style-src 'self' 'unsafe-inline' https:",
-              "img-src 'self' data: blob: https://cdn.squarecampus.in https:",
-              "font-src 'self' https://cdn.squarecampus.in https: data:",
-              "media-src 'self' https://cdn.squarecampus.in https:",
-              "connect-src 'self' https://cdn.squarecampus.in https:",
-              "frame-ancestors 'none'",
-              "frame-src 'self' https:",
-              "form-action 'self'",
-              "base-uri 'self'",
-              "object-src 'none'",
-            ].join("; "),
+            key: cspHeader,
+            value: csp,
+          },
+        ],
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate",
           },
         ],
       },
