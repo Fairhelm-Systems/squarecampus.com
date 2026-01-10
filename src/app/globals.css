@@ -514,3 +514,18 @@ body::-webkit-scrollbar {
 html {
   scroll-behavior: smooth;
 }
+
+/* NEXUS LOGO */
+@media (prefers-reduced-motion: no-preference) {
+  .nexus-logo-pulse { animation: nexusPulse 3s ease-in-out infinite; transform-origin: center; }
+  .nexus-logo-ring { animation: nexusRing 4s ease-in-out infinite; transform-origin: center; }
+  .nexus-logo-node { animation: nexusNodePulse 3s ease-in-out infinite; transform-origin: center; }
+  .nexus-logo-node-glow { animation: nexusGlowPulse 3s ease-in-out infinite; transform-origin: center; }
+  .nexus-logo-line { animation: nexusLinePulse 3s ease-in-out infinite; }
+}
+
+@keyframes nexusPulse { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.3);opacity:.2} }
+@keyframes nexusRing { 0%,100%{stroke-opacity:.2} 50%{stroke-opacity:.4} }
+@keyframes nexusNodePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+@keyframes nexusGlowPulse { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.4;transform:scale(1.2)} }
+@keyframes nexusLinePulse { 0%,100%{stroke-opacity:.4} 50%{stroke-opacity:.7} }
