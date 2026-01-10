@@ -429,7 +429,7 @@ export function Features() {
                   <div className="relative">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 p-2 shadow-lg shadow-emerald-500/20">
                       <Image
-                        src="https://cdn.squarecampus.in/application_files/logo-light.png"
+                        src="https://cdn.mdtechspire.com/application_files/logo/squarecampus.png"
                         alt="SquareCampus"
                         width={32}
                         height={32}

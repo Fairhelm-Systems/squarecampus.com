@@ -188,7 +188,7 @@ export default function SchoolManagementSystemPage() {
                   />
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {[
+                  {[
                     { label: "Time to launch", value: "Guided rollout" },
                     { label: "Modules included", value: "Unified platform" },
                     { label: "Support", value: "Human + product" },
@@ -709,7 +709,7 @@ export default function SchoolManagementSystemPage() {
                 "@id": `${pageUrl}#webpage`,
                 primaryImageOfPage: {
                   "@type": "ImageObject",
-                  url: "https://cdn.squarecampus.in/application_files/logo-light.png",
+                  url: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
                 },
                 mainEntity: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
               },
