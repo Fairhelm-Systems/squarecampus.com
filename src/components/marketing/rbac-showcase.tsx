@@ -197,13 +197,13 @@ export function RBACShowcase() {
               >
                 <div
                   className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${isSelected
-                      ? "border-white/30 bg-gradient-to-r from-neutral-900 to-neutral-950 shadow-xl"
-                      : "border-white/10 bg-neutral-900/50 hover:border-white/20"
+                    ? "border-white/30 bg-linear-to-r from-neutral-900 to-neutral-950 shadow-xl"
+                    : "border-white/10 bg-neutral-900/50 hover:border-white/20"
                     }`}
                 >
                   {/* Level indicator */}
                   <div
-                    className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b"
+                    className="absolute left-0 top-0 h-full w-1 bg-linear-to-b"
                     style={
                       {
                         background: `linear-gradient(to bottom, var(--tw-gradient-stops))`,
@@ -217,7 +217,7 @@ export function RBACShowcase() {
                     <div className="flex items-center gap-4">
                       {/* Icon */}
                       <div
-                        className={`rounded-xl border border-white/10 bg-gradient-to-br ${level.color} p-3`}
+                        className={`rounded-xl border border-white/10 bg-linear-to-br ${level.color} p-3`}
                       >
                         <Icon className="h-6 w-6 text-white" />
                       </div>
@@ -261,7 +261,7 @@ export function RBACShowcase() {
                       <div className="grid gap-2 sm:grid-cols-2">
                         {level.examples.map((example, i) => (
                           <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
-                            <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
                             <span>{example}</span>
                           </div>
                         ))}
@@ -275,7 +275,7 @@ export function RBACShowcase() {
         </div>
 
         {/* Permission matrix */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-neutral-900/80 to-neutral-950">
           <div className="border-b border-white/10 bg-neutral-900/50 p-6">
             <h3 className="mb-2 text-xl font-bold text-white">Permission Matrix Example</h3>
             <p className="text-sm text-neutral-400">
@@ -388,7 +388,7 @@ export function RBACShowcase() {
           viewport={{ once: true }}
           className="mt-12 text-center"
         >
-          <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-xl shadow-emerald-500/10">
+          <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-emerald-500/20 bg-linear-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-xl shadow-emerald-500/10">
             <Sparkles className="h-8 w-8 text-emerald-400" />
             <div>
               <h3 className="mb-2 text-xl font-bold text-white">Custom Roles & Permissions</h3>
