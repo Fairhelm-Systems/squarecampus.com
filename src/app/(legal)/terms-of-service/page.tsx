@@ -11,8 +11,17 @@ export default function TermsOfServicePage() {
       <p className="text-sm font-medium text-muted-foreground">
         Effective Date: 27 November 2025
         <br />
-        Last Updated: 27 November 2025
+        Last Updated: 15 January 2026
       </p>
+
+      {/* Update Notice Banner */}
+      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+        <p className="text-sm font-medium text-amber-200">
+          Important Update: These Terms have been amended to include enhanced security provisions
+          (Section 3), Indemnification (Section 17), Security Incident Response (Section 18), and
+          Competitor Access Prohibition (Section 19). Please review these sections carefully.
+        </p>
+      </div>
 
       <nav
         aria-label="Table of contents"
@@ -44,6 +53,9 @@ export default function TermsOfServicePage() {
             { label: "Limitation of Liability", href: "#liability" },
             { label: "Changes to the Terms", href: "#changes" },
             { label: "Governing Law and Jurisdiction", href: "#governing-law" },
+            { label: "Indemnification", href: "#indemnification" },
+            { label: "Security Incident Response", href: "#security-incident" },
+            { label: "Competitor Access Prohibition", href: "#competitor-access" },
             { label: "Contact Information", href: "#contact" },
           ].map((item) => (
             <a
@@ -60,21 +72,21 @@ export default function TermsOfServicePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Contracting Entity" id="company-entity">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
-            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            SquareCampus is a trademark and product brand of MDTechSpire. All services are
+            provided by MDTechSpire, unless otherwise stated in a written agreement or order
             form.
           </p>
-          <p>References to "SquareCampus" in these Terms mean MDTechSpire LLP.</p>
+          <p>References to "SquareCampus" in these Terms mean MDTechSpire.</p>
           <p>
-            These Terms form a binding agreement between MDTechSpire LLP and the Institution or
+            These Terms form a binding agreement between MDTechSpire and the Institution or
             individual User accessing the Service. If you are accepting these Terms on behalf of an
             Institution, you confirm that you have the authority to bind that Institution.
           </p>
           <ul className="list-disc space-y-2 pl-5">
-            <li>The Institution is the entity subscribing to SquareCampus (“Institution”); and</li>
+            <li>The Institution is the entity subscribing to SquareCampus ("Institution"); and</li>
             <li>
-              Individuals who access the Service under that Institution’s account are considered
-              “Users.”
+              Individuals who access the Service under that Institution's account are considered
+              "Users."
             </li>
           </ul>
         </LegalSection>
@@ -91,7 +103,9 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
+        {/* Enhanced Section 3 */}
         <LegalSection title="3. Account Registration and Security" id="account-security">
+          <p className="font-medium text-white">3.1 General Requirements</p>
           <p>Institutions and Users agree to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Provide accurate and complete registration information;</li>
@@ -106,8 +120,57 @@ export default function TermsOfServicePage() {
               Promptly notify SquareCampus of unauthorised access, misuse, or security incidents.
             </li>
           </ul>
-          <p className="text-sm text-muted-foreground">
+
+          <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+            <p className="font-medium text-red-200">3.2 Credential Sharing Prohibition</p>
+            <p className="mt-2 text-sm">
+              Institutions and Users expressly agree that login credentials, API keys, access tokens,
+              and any other authentication mechanisms are strictly confidential and may not be shared
+              with:
+            </p>
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
+              <li>
+                Any individual or entity outside the Institution's authorised personnel roster;
+              </li>
+              <li>
+                Competitors, as defined in Section 19 of these Terms;
+              </li>
+              <li>
+                Third-party consultants, vendors, or service providers without SquareCampus's prior
+                written consent;
+              </li>
+              <li>
+                Any person or entity for purposes of competitive intelligence, reverse engineering,
+                or product evaluation.
+              </li>
+            </ul>
+          </div>
+
+          <p className="mt-6 font-medium text-white">3.3 Liability for Credential Misuse</p>
+          <p>
+            The Institution shall be fully liable for any and all activities conducted through
+            credentials issued to the Institution, regardless of whether such activities were
+            authorised. This includes, without limitation:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>Data access, export, or manipulation;</li>
+            <li>Feature usage and API calls;</li>
+            <li>System configuration changes;</li>
+            <li>Any violations of these Terms committed using Institution credentials.</li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">3.4 Audit Rights</p>
+          <p>
+            SquareCampus reserves the right to audit credential usage patterns and may require
+            Institutions to provide documentation regarding credential distribution and access
+            controls upon reasonable notice. Failure to comply with audit requests may result in
+            immediate suspension of service.
+          </p>
+
+          <p className="mt-4 text-sm text-muted-foreground">
             Institutions are responsible for all activity within their organisation account.
+            Violations of this Section may result in immediate termination and legal action as
+            described in Section 19.
           </p>
         </LegalSection>
 
@@ -215,7 +278,7 @@ export default function TermsOfServicePage() {
 
         <LegalSection title="11. Term, Suspension, and Termination" id="termination">
           <p>
-            These Terms remain effective until the Institution’s subscription ends or the Agreement
+            These Terms remain effective until the Institution's subscription ends or the Agreement
             is terminated.
           </p>
           <p>SquareCampus may suspend or terminate if:</p>
@@ -243,7 +306,7 @@ export default function TermsOfServicePage() {
         </LegalSection>
 
         <LegalSection title="13. Disclaimers" id="disclaimers">
-          <p>The Service is provided “as is” and “as available.”</p>
+          <p>The Service is provided "as is" and "as available."</p>
           <p>
             To the fullest extent permitted by law, SquareCampus disclaims express, implied,
             statutory, and other warranties, including merchantability and fitness for a particular
@@ -265,7 +328,7 @@ export default function TermsOfServicePage() {
 
         <LegalSection title="15. Changes to the Terms" id="changes">
           <p>
-            We may update these Terms from time to time. The “Last Updated” date at the top will
+            We may update these Terms from time to time. The "Last Updated" date at the top will
             change, and we may provide additional notice.
           </p>
           <p>Your continued use after changes means you accept the revised Terms.</p>
@@ -279,12 +342,218 @@ export default function TermsOfServicePage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="17. Contact Information" id="contact">
+        {/* New Section 17 */}
+        <LegalSection title="17. Indemnification" id="indemnification">
+          <p className="font-medium text-white">17.1 Institution Indemnification</p>
+          <p>
+            The Institution shall defend, indemnify, and hold harmless SquareCampus, MDTechSpire,
+            and their respective officers, directors, employees, and agents from and against any and
+            all claims, damages, losses, liabilities, costs, and expenses (including reasonable
+            attorneys' fees) arising from or related to:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              The Institution's breach of these Terms, including but not limited to the credential
+              sharing prohibitions in Section 3 and competitor access prohibitions in Section 19;
+            </li>
+            <li>
+              The Institution's violation of applicable laws or regulations;
+            </li>
+            <li>
+              Any third-party claims arising from the Institution's use of the Service;
+            </li>
+            <li>
+              The Institution's failure to maintain adequate security over credentials and access
+              controls;
+            </li>
+            <li>
+              Any unauthorised access facilitated by the Institution's personnel, whether
+              intentional or negligent.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">17.2 SquareCampus Indemnification</p>
+          <p>
+            SquareCampus shall defend, indemnify, and hold harmless the Institution from claims
+            alleging that the Service infringes valid intellectual property rights, provided the
+            Institution:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>Promptly notifies SquareCampus of such claims;</li>
+            <li>Provides reasonable cooperation in the defence;</li>
+            <li>Allows SquareCampus sole control of the defence and settlement.</li>
+          </ul>
+        </LegalSection>
+
+        {/* New Section 18 */}
+        <LegalSection title="18. Security Incident Response" id="security-incident">
+          <p className="font-medium text-white">18.1 Institution Response Obligations</p>
+          <p>
+            Upon discovering or being notified of any security incident involving the Service,
+            including but not limited to credential compromise, unauthorised access, or suspected
+            competitor infiltration, the Institution shall:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Immediately notify SquareCampus at{" "}
+              <a href="mailto:security@squarecampus.com" className="text-white">
+                security@squarecampus.com
+              </a>
+            </li>
+            <li>
+              Preserve all relevant logs, communications, and evidence;
+            </li>
+            <li>
+              Cooperate fully with SquareCampus's investigation;
+            </li>
+            <li>
+              Implement any remedial measures requested by SquareCampus;
+            </li>
+            <li>
+              Provide written incident reports within 48 hours of discovery.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">18.2 SquareCampus Response</p>
+          <p>
+            SquareCampus shall respond to confirmed security incidents in accordance with our
+            Security Policy and may:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>Immediately suspend or revoke compromised credentials;</li>
+            <li>Implement additional security controls;</li>
+            <li>Require credential rotation across affected accounts;</li>
+            <li>Pursue legal remedies as appropriate.</li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">18.3 Evidence Preservation</p>
+          <p>
+            Both parties agree to preserve all evidence related to security incidents for a minimum
+            of seven (7) years or as required by applicable law, whichever is longer. This includes
+            access logs, communications, and any documentation related to the incident.
+          </p>
+        </LegalSection>
+
+        {/* New Section 19 */}
+        <LegalSection title="19. Competitor Access Prohibition" id="competitor-access">
+          <div className="mb-6 rounded-lg border border-red-500/50 bg-red-500/10 p-4">
+            <p className="text-sm font-medium text-red-200">
+              CRITICAL: This section establishes absolute prohibitions on competitor access.
+              Violations will result in immediate termination and legal action. See our{" "}
+              <a href="/competitor-notice" className="underline">
+                Competitor Notice
+              </a>{" "}
+              for detailed enforcement policies.
+            </p>
+          </div>
+
+          <p className="font-medium text-white">19.1 Definitions</p>
+          <p>For purposes of this Section, "Competitor" means:</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Any entity that develops, markets, sells, or distributes software or services that
+              compete with SquareCampus, including but not limited to school management systems,
+              student information systems, learning management systems, or educational
+              administration platforms;
+            </li>
+            <li>
+              Any entity that has announced intent to enter such markets;
+            </li>
+            <li>
+              Any employee, contractor, agent, or representative of such entities;
+            </li>
+            <li>
+              Any entity conducting competitive intelligence or product evaluation on behalf of a
+              competing entity.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">19.2 Absolute Prohibition</p>
+          <p>
+            The Institution expressly agrees that it shall not, under any circumstances:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Provide, share, or make available any credentials, access tokens, or authentication
+              mechanisms to any Competitor;
+            </li>
+            <li>
+              Permit any Competitor to access the Service through the Institution's account;
+            </li>
+            <li>
+              Share screenshots, recordings, documentation, or any visual or textual representation
+              of the Service with Competitors;
+            </li>
+            <li>
+              Describe Service features, functionality, pricing, or implementation details to
+              Competitors;
+            </li>
+            <li>
+              Assist Competitors in any manner in understanding, replicating, or competing with the
+              Service.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">19.3 Mandatory Disclosure</p>
+          <p>
+            The Institution shall immediately notify SquareCampus if:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Any Competitor requests access to or information about the Service;
+            </li>
+            <li>
+              The Institution becomes aware of any current or former employee sharing credentials or
+              information with Competitors;
+            </li>
+            <li>
+              The Institution is evaluating competing products and such evaluation may involve
+              comparative analysis with SquareCampus.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">19.4 Enhanced Liquidated Damages</p>
+          <p>
+            In addition to all other remedies available at law or equity, the Institution
+            acknowledges that violations of this Section cause substantial harm to SquareCampus that
+            is difficult to quantify. Accordingly, the Institution agrees to pay liquidated damages
+            as follows:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <strong>Credential Sharing with Competitor:</strong> ₹50,00,000 (Fifty Lakh Indian
+              Rupees) per incident;
+            </li>
+            <li>
+              <strong>Permitting Competitor Access:</strong> ₹75,00,000 (Seventy-Five Lakh Indian
+              Rupees) per incident;
+            </li>
+            <li>
+              <strong>Sharing Documentation or Screenshots:</strong> ₹25,00,000 (Twenty-Five Lakh
+              Indian Rupees) per incident;
+            </li>
+            <li>
+              <strong>Failure to Report Known Violations:</strong> ₹10,00,000 (Ten Lakh Indian
+              Rupees) per incident.
+            </li>
+          </ul>
+          <p className="mt-4 text-sm text-muted-foreground">
+            These amounts represent the parties' reasonable estimate of actual damages and are not
+            intended as a penalty. SquareCampus reserves the right to pursue actual damages where
+            they exceed these amounts.
+          </p>
+        </LegalSection>
+
+        <LegalSection title="20. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>MDTechSpire LLP</strong>
+            <strong>MDTechSpire</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
+            <br />
+            Security: <a href="mailto:security@squarecampus.com">security@squarecampus.com</a>
+            <br />
+            Legal: <a href="mailto:legal@squarecampus.com">legal@squarecampus.com</a>
             <br />
             Website:{" "}
             <a href="https://squarecampus.com" target="_blank" rel="noopener noreferrer">

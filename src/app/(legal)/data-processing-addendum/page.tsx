@@ -11,8 +11,17 @@ export default function DataProcessingAddendumPage() {
       <p className="text-sm font-medium text-muted-foreground">
         Effective Date: 27 November 2025
         <br />
-        Last Updated: 27 November 2025
+        Last Updated: 15 January 2026
       </p>
+
+      {/* Update Notice Banner */}
+      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+        <p className="text-sm font-medium text-amber-200">
+          Important Update: Section 6 (Controller Obligations) has been expanded to include enhanced
+          access control requirements, credential security obligations, and incident response duties.
+          Please review carefully.
+        </p>
+      </div>
 
       <nav
         aria-label="Table of contents"
@@ -56,22 +65,22 @@ export default function DataProcessingAddendumPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
-            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            SquareCampus is a trademark and product brand of MDTechSpire. All services are
+            provided by MDTechSpire, unless otherwise stated in a written agreement or order
             form.
           </p>
-          <p>References to "SquareCampus" in this DPA mean MDTechSpire LLP.</p>
+          <p>References to "SquareCampus" in this DPA mean MDTechSpire.</p>
           <p>
-            This Data Processing Addendum (“DPA”) forms part of the agreement between MDTechSpire
+            This Data Processing Addendum ("DPA") forms part of the agreement between MDTechSpire
             LLP and the Institution when referenced in an order form or contract.
           </p>
         </LegalSection>
 
         <LegalSection title="2. Subject Matter and Duration" id="subject-duration">
           <p>
-            This DPA governs SquareCampus’s processing of personal data on behalf of the Institution
+            This DPA governs SquareCampus's processing of personal data on behalf of the Institution
             while providing the SquareCampus Service. The duration of this DPA matches the
-            Institution’s subscription or the underlying agreement, unless otherwise required by
+            Institution's subscription or the underlying agreement, unless otherwise required by
             law.
           </p>
         </LegalSection>
@@ -79,14 +88,14 @@ export default function DataProcessingAddendumPage() {
         <LegalSection title="3. Roles of the Parties" id="roles">
           <p>
             The Institution determines the purposes and means of processing personal data and acts
-            as the Controller; MDTechSpire LLP processes personal data solely on behalf of the
+            as the Controller; MDTechSpire processes personal data solely on behalf of the
             Institution as the Processor.
           </p>
         </LegalSection>
 
         <LegalSection title="4. Categories of Data and Data Subjects" id="categories">
           <p>
-            The data processed depends on the Institution’s configuration and usage and may include:
+            The data processed depends on the Institution's configuration and usage and may include:
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Student data (names, contact details, academic records, attendance, photos);</li>
@@ -118,7 +127,9 @@ export default function DataProcessingAddendumPage() {
           </ul>
         </LegalSection>
 
+        {/* Expanded Section 6 */}
         <LegalSection title="6. Controller Obligations" id="controller-obligations">
+          <p className="font-medium text-white">6.1 General Obligations</p>
           <p>The Institution shall:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Ensure it has rights, consents, and legal bases for supplying personal data;</li>
@@ -130,6 +141,109 @@ export default function DataProcessingAddendumPage() {
               Not instruct SquareCampus to process data in a manner that violates applicable law.
             </li>
           </ul>
+
+          <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
+            <p className="font-medium text-amber-200">6.2 Access Control Requirements</p>
+            <p className="mt-3 text-sm">
+              The Institution shall implement and maintain robust access controls including:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
+              <li>
+                <strong>Role-Based Access:</strong> Implement role-based access controls ensuring
+                users can only access data necessary for their legitimate job functions.
+              </li>
+              <li>
+                <strong>Access Reviews:</strong> Conduct periodic reviews (at minimum quarterly) of
+                user access privileges and promptly revoke access for terminated or transferred
+                personnel.
+              </li>
+              <li>
+                <strong>Audit Logging:</strong> Maintain internal records of who has been granted
+                access to the Service and the business justification for such access.
+              </li>
+              <li>
+                <strong>Segregation of Duties:</strong> Implement appropriate segregation of duties
+                to prevent any single individual from having excessive access to sensitive data or
+                administrative functions.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+            <p className="font-medium text-red-200">6.3 Credential Security</p>
+            <p className="mt-3 text-sm">
+              The Institution shall ensure the security of all credentials including:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
+              <li>
+                <strong>Unique Credentials:</strong> Ensuring each authorised user has unique login
+                credentials that are not shared with any other person.
+              </li>
+              <li>
+                <strong>Secure Storage:</strong> Storing credentials securely and not in plain text,
+                shared documents, or unsecured locations.
+              </li>
+              <li>
+                <strong>Credential Rotation:</strong> Implementing credential rotation policies and
+                immediately rotating credentials upon any suspected compromise.
+              </li>
+              <li>
+                <strong>Prohibition on Sharing:</strong> Enforcing strict prohibitions on credential
+                sharing with any person or entity outside the Institution's authorised personnel,
+                including but not limited to competitors, consultants, and vendors.
+              </li>
+              <li>
+                <strong>Third-Party Access:</strong> Not providing credentials or access to any
+                third party without SquareCampus's prior written consent, particularly to entities
+                that compete with SquareCampus.
+              </li>
+            </ul>
+          </div>
+
+          <p className="mt-6 font-medium text-white">6.4 Incident Response Duties</p>
+          <p>
+            The Institution shall promptly notify SquareCampus of any security incident including:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>Any known or suspected credential compromise or unauthorised access;</li>
+            <li>Any attempt by competitors to gain access to the Institution's account;</li>
+            <li>Any data breach affecting data processed through the Service;</li>
+            <li>Any regulatory inquiry or legal process related to data processed by SquareCampus;</li>
+            <li>
+              Any employee termination where there is reason to believe credentials may have been
+              compromised or shared inappropriately.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">6.5 Cooperation with Security Measures</p>
+          <p>The Institution agrees to:</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Cooperate with SquareCampus's security audits and investigations when requested;
+            </li>
+            <li>Implement any security recommendations provided by SquareCampus;</li>
+            <li>
+              Provide documentation regarding access controls and credential management upon
+              reasonable request;
+            </li>
+            <li>
+              Accept temporary service suspension if SquareCampus identifies security concerns
+              requiring immediate remediation.
+            </li>
+          </ul>
+
+          <p className="mt-4 text-sm text-muted-foreground">
+            Violations of these Controller Obligations may constitute a material breach of the Terms
+            of Service. See the{" "}
+            <a href="/terms-of-service#account-security" className="text-white underline">
+              Terms of Service Section 3
+            </a>{" "}
+            and{" "}
+            <a href="/competitor-notice" className="text-white underline">
+              Competitor Notice
+            </a>{" "}
+            for additional information on security requirements and enforcement.
+          </p>
         </LegalSection>
 
         <LegalSection title="7. Security Measures" id="security-measures">
@@ -168,7 +282,7 @@ export default function DataProcessingAddendumPage() {
           </p>
           <p>
             SquareCampus will assist the Institution in fulfilling requests such as access,
-            correction, or deletion, subject to technical feasibility and the Institution’s
+            correction, or deletion, subject to technical feasibility and the Institution's
             instructions.
           </p>
         </LegalSection>
@@ -178,7 +292,7 @@ export default function DataProcessingAddendumPage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>Notify the Institution without undue delay after becoming aware of the breach;</li>
             <li>
-              Share information reasonably available to support the Institution’s regulatory or
+              Share information reasonably available to support the Institution's regulatory or
               notification obligations.
             </li>
           </ul>

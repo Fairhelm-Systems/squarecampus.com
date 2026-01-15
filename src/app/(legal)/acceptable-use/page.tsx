@@ -11,8 +11,17 @@ export default function AcceptableUsePage() {
       <p className="text-sm font-medium text-muted-foreground">
         Effective Date: 27 November 2025
         <br />
-        Last Updated: 27 November 2025
+        Last Updated: 15 January 2026
       </p>
+
+      {/* Update Notice Banner */}
+      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+        <p className="text-sm font-medium text-amber-200">
+          Important Update: Section 4 (Prohibited Conduct) has been significantly expanded to
+          include detailed prohibitions on competitive intelligence, credential sharing, and
+          unauthorized access. Please review carefully.
+        </p>
+      </div>
 
       <nav
         aria-label="Table of contents"
@@ -48,11 +57,11 @@ export default function AcceptableUsePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
-            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            SquareCampus is a trademark and product brand of MDTechSpire. All services are
+            provided by MDTechSpire, unless otherwise stated in a written agreement or order
             form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechSpire LLP.</p>
+          <p>References to "SquareCampus" in this Policy mean MDTechSpire.</p>
           <p>
             These guidelines apply to everyone who accesses SquareCampus, including institutions,
             staff, teachers, parents, and students.
@@ -90,9 +99,11 @@ export default function AcceptableUsePage() {
           </ul>
         </LegalSection>
 
+        {/* Expanded Section 4 */}
         <LegalSection title="4. Prohibited Conduct" id="prohibited-conduct">
+          <p className="font-medium text-white">4.1 General Prohibitions</p>
           <p>You must not use the Service to:</p>
-          <ul className="list-disc pl-5">
+          <ul className="list-disc space-y-2 pl-5">
             <li>Store or share unlawful, obscene, defamatory, harassing, or infringing content.</li>
             <li>
               Reverse engineer, attack, overload, or otherwise interfere with the platform or its
@@ -114,6 +125,119 @@ export default function AcceptableUsePage() {
               or automate decisions without institutional approval.
             </li>
           </ul>
+
+          <div className="mt-8 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+            <p className="font-medium text-red-200">
+              4.2 Competitive Intelligence and Industrial Espionage
+            </p>
+            <p className="mt-3 text-sm">
+              The following activities are strictly prohibited and constitute grounds for immediate
+              termination and legal action:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
+              <li>
+                <strong>Accessing Service for Competitive Analysis:</strong> Using any account to
+                evaluate, benchmark, or analyse the Service for the purpose of developing,
+                improving, or marketing competing products or services.
+              </li>
+              <li>
+                <strong>Feature Documentation:</strong> Systematically documenting, cataloging, or
+                recording Service features, user interfaces, workflows, or functionality for
+                competitive purposes.
+              </li>
+              <li>
+                <strong>Price Intelligence:</strong> Accessing the Service to gather pricing
+                information, discount structures, or commercial terms for competitive advantage.
+              </li>
+              <li>
+                <strong>Technical Intelligence:</strong> Attempting to determine, reverse engineer,
+                or document the technical architecture, algorithms, data structures, or
+                implementation details of the Service.
+              </li>
+              <li>
+                <strong>User Experience Research:</strong> Conducting unauthorised user experience
+                research, usability testing, or interface analysis for competitive purposes.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
+            <p className="font-medium text-amber-200">4.3 Credential and Access Violations</p>
+            <p className="mt-3 text-sm">The following credential-related activities are prohibited:</p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
+              <li>
+                <strong>Credential Sharing:</strong> Sharing login credentials, API keys, access
+                tokens, or any authentication mechanism with any person not explicitly authorised by
+                the Institution's administrator.
+              </li>
+              <li>
+                <strong>Credential Transfer:</strong> Transferring, selling, or providing
+                credentials to third parties, including but not limited to competitors, consultants,
+                or vendors without SquareCampus's prior written consent.
+              </li>
+              <li>
+                <strong>Multi-party Access:</strong> Allowing multiple individuals to access the
+                Service using a single set of credentials.
+              </li>
+              <li>
+                <strong>Credential Retention:</strong> Retaining access credentials after
+                termination of employment, contract, or authorisation.
+              </li>
+              <li>
+                <strong>Access Provision to Competitors:</strong> Providing any form of access,
+                direct or indirect, to individuals or entities that compete with SquareCampus or are
+                employed by, contracted to, or affiliated with competing entities.
+              </li>
+            </ul>
+          </div>
+
+          <p className="mt-6 font-medium text-white">4.4 Specific Prohibited Actions</p>
+          <p>Without limiting the foregoing, the following specific actions are prohibited:</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              Taking screenshots, recordings, or other visual captures of the Service for
+              distribution to competitors.
+            </li>
+            <li>
+              Exporting data, reports, or any output from the Service for competitive analysis or to
+              assist competing entities.
+            </li>
+            <li>
+              Discussing, describing, or otherwise communicating Service features, pricing, or
+              capabilities to competitors or their representatives.
+            </li>
+            <li>
+              Participating in "demo sharing" arrangements where access is provided to parties
+              outside the authorised Institution.
+            </li>
+            <li>
+              Using anonymising technologies (VPNs, proxies, Tor) to obscure the identity or
+              affiliation of users accessing the Service.
+            </li>
+          </ul>
+
+          <p className="mt-6 font-medium text-white">4.5 Enforcement</p>
+          <p>
+            Violations of this Section 4 may result in:
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>Immediate suspension or termination of access without refund;</li>
+            <li>Pursuit of civil remedies including injunctive relief and damages;</li>
+            <li>Referral to law enforcement authorities where criminal conduct is suspected;</li>
+            <li>Notification to industry associations and regulatory bodies;</li>
+            <li>Public disclosure of enforcement actions where permitted by law.</li>
+          </ul>
+          <p className="mt-4 text-sm text-muted-foreground">
+            For detailed information on legal consequences and enforcement procedures, see our{" "}
+            <a href="/competitor-notice" className="text-white underline">
+              Competitor Notice
+            </a>{" "}
+            and{" "}
+            <a href="/terms-of-service#competitor-access" className="text-white underline">
+              Terms of Service Section 19
+            </a>
+            .
+          </p>
         </LegalSection>
 
         <LegalSection title="5. Security, Enforcement, and Reporting" id="security-enforcement">

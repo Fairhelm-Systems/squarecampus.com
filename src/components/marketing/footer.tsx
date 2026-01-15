@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Heart, Linkedin } from "@/components/icons";
-import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
+import { Logo } from "./logo";
 
 type FooterLink = {
   title: string;
@@ -44,7 +44,7 @@ export function Footer() {
     { title: "Ecosystem", href: "/ecosystem" },
     { title: "Why SquareCampus", href: "/why-different" },
     { title: "School Management System", href: "/school-management-system" },
-    { title: "FAQs", href: "/#faq" },
+    { title: "FAQs", href: "/faq" },
   ];
 
   const companyLinks: FooterLink[] = [
@@ -60,6 +60,7 @@ export function Footer() {
     { title: "Terms of Service", href: "/terms-of-service" },
     { title: "Data Processing Addendum", href: "/data-processing-addendum" },
     { title: "Acceptable Use", href: "/acceptable-use" },
+    { title: "Competitor Notice", href: "/competitor-notice" },
   ];
 
   const supportLinks: FooterLink[] = [
@@ -94,9 +95,8 @@ export function Footer() {
           </div>
 
           <p className="text-sm leading-relaxed text-neutral-400">
-            SquareCampus is the operating system for schools and colleges,
-            bringing admissions, academics, finance, and communication into one
-            dependable control center.
+            SquareCampus is the operating system for schools and colleges, bringing admissions,
+            academics, finance, and communication into one dependable control center.
           </p>
 
           {/* Signal badges */}
@@ -144,15 +144,12 @@ export function Footer() {
               <span className="text-[0.6rem] font-medium uppercase tracking-[0.25em] text-neutral-600">
                 Made with
               </span>
-              <Heart
-                className="h-3.5 w-3.5 text-red-500"
-                aria-hidden="true"
-              />
+              <Heart className="h-3.5 w-3.5 text-red-500" aria-hidden="true" />
               <span className="text-neutral-300">in India</span>
             </div>
             <p className="text-[0.7rem] leading-relaxed text-neutral-600">
-              SquareCampus is a trademark of MDTechspire LLP. ©{" "}
-              {new Date().getFullYear()} SquareCampus. All rights reserved.
+              SquareCampus is a trademark of MDTechSpire. © {new Date().getFullYear()} SquareCampus.
+              All rights reserved.
             </p>
           </div>
         </div>

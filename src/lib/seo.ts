@@ -358,7 +358,7 @@ export function createSoftwareApplicationSchema(config?: {
     operatingSystem: config?.operatingSystem ?? "Web",
     offers: {
       "@type": "Offer",
-      // Avoid hard pricing here if you do “book a call” style pricing.
+      // Avoid hard pricing here if you do "book a call" style pricing.
       price: "0",
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
@@ -366,5 +366,19 @@ export function createSoftwareApplicationSchema(config?: {
     publisher: {
       "@id": `${SEO_CONFIG.baseUrl}/#organization`,
     },
+  };
+}
+
+export function createFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
