@@ -55,13 +55,13 @@ export default function PrivacyPolicyPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Data Controller" id="company-controller">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire LLP. All services are
-            provided by MDTechSpire LLP, unless otherwise stated in a written agreement or order
+            SquareCampus is a trademark and product brand of MDTechSpire. All services are
+            provided by MDTechSpire, unless otherwise stated in a written agreement or order
             form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechSpire LLP.</p>
+          <p>References to "SquareCampus" in this Policy mean MDTechSpire.</p>
           <p>
-            For the purposes of applicable data protection law, MDTechSpire LLP acts as the Data
+            For the purposes of applicable data protection law, MDTechSpire acts as the Data
             Controller for its own business operations and the SquareCampus website. When
             processing personal data on behalf of an Institution within the Service, MDTechSpire
             LLP acts as a Data Processor as described in the Data Processing Addendum.
@@ -226,7 +226,7 @@ export default function PrivacyPolicyPage() {
         <LegalSection title="12. Contact Us" id="contact">
           <p>If you have questions or requests, contact:</p>
           <p>
-            <strong>MDTechSpire LLP</strong>
+            <strong>MDTechSpire</strong>
             <br />
             Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
             <br />

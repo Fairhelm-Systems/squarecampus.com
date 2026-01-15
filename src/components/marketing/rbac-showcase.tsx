@@ -1,10 +1,9 @@
 "use client";
 
-import { motion } from "@/lib/motion";
-import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
 import { Check, Crown, Edit, Eye, Lock, Shield, Sparkles, Trash2, Users, X } from "@/icons";
-
+import { motion } from "@/lib/motion";
 
 const hierarchy = [
   {
@@ -176,11 +175,10 @@ export function RBACShowcase() {
             <Shield className="h-3 w-3 text-emerald-400" />
             Multi-Level RBAC
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Granular Access Control
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Granular Access Control</h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            5-tier role hierarchy with module-level permissions. Give each user exactly the access they need—nothing more, nothing less.
+            5-tier role hierarchy with module-level permissions. Give each user exactly the access
+            they need—nothing more, nothing less.
           </p>
         </motion.div>
 
@@ -199,21 +197,28 @@ export function RBACShowcase() {
               >
                 <div
                   className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${isSelected
-                    ? "border-white/30 bg-gradient-to-r from-neutral-900 to-neutral-950 shadow-xl"
-                    : "border-white/10 bg-neutral-900/50 hover:border-white/20"
+                      ? "border-white/30 bg-gradient-to-r from-neutral-900 to-neutral-950 shadow-xl"
+                      : "border-white/10 bg-neutral-900/50 hover:border-white/20"
                     }`}
                 >
                   {/* Level indicator */}
-                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b" style={{
-                    background: `linear-gradient(to bottom, var(--tw-gradient-stops))`,
-                    '--tw-gradient-from': level.color.split(' ')[0].replace('from-', ''),
-                    '--tw-gradient-to': level.color.split(' ')[2],
-                  } as any} />
+                  <div
+                    className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b"
+                    style={
+                      {
+                        background: `linear-gradient(to bottom, var(--tw-gradient-stops))`,
+                        "--tw-gradient-from": level.color.split(" ")[0].replace("from-", ""),
+                        "--tw-gradient-to": level.color.split(" ")[2],
+                      } as any
+                    }
+                  />
 
                   <div className="flex flex-col gap-4 p-6 pl-8 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-center gap-4">
                       {/* Icon */}
-                      <div className={`rounded-xl border border-white/10 bg-gradient-to-br ${level.color} p-3`}>
+                      <div
+                        className={`rounded-xl border border-white/10 bg-gradient-to-br ${level.color} p-3`}
+                      >
                         <Icon className="h-6 w-6 text-white" />
                       </div>
 
@@ -283,20 +288,28 @@ export function RBACShowcase() {
               <thead>
                 <tr className="border-b border-white/10 bg-neutral-900/50">
                   <th className="p-4 text-left text-sm font-semibold text-neutral-400">Module</th>
-                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">Org Admin</th>
-                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">School Admin</th>
-                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">Campus Admin</th>
-                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">Teacher</th>
+                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">
+                    Org Admin
+                  </th>
+                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">
+                    School Admin
+                  </th>
+                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">
+                    Campus Admin
+                  </th>
+                  <th className="p-4 text-center text-sm font-semibold text-neutral-400">
+                    Teacher
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {permissionMatrix.map((row, index) => (
+                {permissionMatrix.map((row, _) => (
                   <tr
                     key={row.module}
                     className="permission-row border-b border-white/5 transition-colors hover:bg-neutral-900/30"
                   >
                     <td className="p-4 font-medium text-white">{row.module}</td>
-                    {['orgAdmin', 'schoolAdmin', 'campusAdmin', 'teacher'].map((role) => {
+                    {["orgAdmin", "schoolAdmin", "campusAdmin", "teacher"].map((role) => {
                       const perms = row[role as keyof typeof row] as any;
                       return (
                         <td key={role} className="p-4">
@@ -378,12 +391,11 @@ export function RBACShowcase() {
           <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-xl shadow-emerald-500/10">
             <Sparkles className="h-8 w-8 text-emerald-400" />
             <div>
-              <h3 className="mb-2 text-xl font-bold text-white">
-                Custom Roles & Permissions
-              </h3>
+              <h3 className="mb-2 text-xl font-bold text-white">Custom Roles & Permissions</h3>
               <p className="text-sm text-neutral-300">
-                Not enough? Create custom roles with granular module-level and action-level permissions.
-                Define your own access control rules to match your institution's unique structure.
+                Not enough? Create custom roles with granular module-level and action-level
+                permissions. Define your own access control rules to match your institution's unique
+                structure.
               </p>
             </div>
           </div>

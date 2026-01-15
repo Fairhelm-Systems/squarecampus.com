@@ -107,8 +107,8 @@ export function Hero() {
           className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl"
         >
           <Balancer>
-            {headlineText.split(" ").map((word, index) => (
-              <span className="js-word inline-block" key={index}>
+            {headlineText.split(" ").map((word) => (
+              <span className="js-word inline-block" key={`h-${word}`}>
                 {word}&nbsp;
               </span>
             ))}
@@ -120,8 +120,8 @@ export function Hero() {
           ref={subheadingRef}
           className="mt-5 max-w-xl text-base leading-relaxed text-neutral-300 sm:mt-6 sm:text-lg md:text-xl"
         >
-          {subheadlineText.split(" ").map((word, index) => (
-            <span className="js-word inline-block" key={index}>
+          {subheadlineText.split(" ").map((word) => (
+            <span className="js-word inline-block" key={`s-${word}`}>
               {word}&nbsp;
             </span>
           ))}
