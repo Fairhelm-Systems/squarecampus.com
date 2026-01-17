@@ -528,6 +528,21 @@ export const X = (props: IconProps) => (
   </svg>
 );
 
+// X (Twitter) logo
+export const XTwitter = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" role="img" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+export const Instagram = (props: IconProps) => (
+  <svg {...baseAttrs} {...props}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
 export const Mail = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <rect width="20" height="16" x="2" y="4" rx="2" />
@@ -591,5 +606,20 @@ export const HardDrive = (props: IconProps) => (
     <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
     <line x1="6" x2="6.01" y1="16" y2="16" />
     <line x1="10" x2="10.01" y1="16" y2="16" />
+  </svg>
+);
+
+export const Key = (props: IconProps) => (
+  <svg {...baseAttrs} {...props}>
+    <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" />
+    <path d="m21 2-9.6 9.6" />
+    <circle cx="7.5" cy="15.5" r="5.5" />
+  </svg>
+);
+
+export const Copy = (props: IconProps) => (
+  <svg {...baseAttrs} {...props}>
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
   </svg>
 );

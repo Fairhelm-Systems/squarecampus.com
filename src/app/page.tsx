@@ -7,13 +7,14 @@ import { Features } from "@/components/marketing/features";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Footer } from "@/components/marketing/footer";
 import { Hero } from "@/components/marketing/hero";
+import { LanguageSupport } from "@/components/marketing/language-support";
 import { Navbar } from "@/components/marketing/navbar";
+import Nexus from "@/components/marketing/nexus";
 import { Operations } from "@/components/marketing/operations";
+import { ParallaxScene } from "@/components/marketing/parallax-scene";
 import { SchoolOsClarity } from "@/components/marketing/school-os-clarity";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhyDifferent } from "@/components/marketing/why-different";
-import { LanguageSupport } from "@/components/marketing/language-support";
-import Nexus from "@/components/marketing/nexus";
 
 export const metadata: Metadata = {
   title: "SquareCampus | School OS & School Management System in India",
@@ -36,16 +37,20 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className={"bg-black text-white"}>
+    <main className="overflow-x-hidden bg-black text-white">
       <Navbar />
       <Hero />
       <SchoolOsClarity />
+      {/* <ParallaxScene variant="network" height="h-24 md:h-40 lg:h-56" /> */}
       <Operations />
       <Features />
+      {/* <ParallaxScene variant="shapes" height="h-24 md:h-40 lg:h-56" /> */}
       <LanguageSupport />
       <Nexus />
+      {/* <ParallaxScene variant="particles" height="h-24 md:h-40 lg:h-56" /> */}
       <WhyDifferent />
       <CTA />
+      {/* <ParallaxScene variant="cosmic" height="h-24 md:h-40 lg:h-56" /> */}
       <EcosystemSection />
       <TrustBanner />
       <FAQ />

@@ -21,7 +21,7 @@ type EcosystemItem = {
   title: string;
   description: string;
   tag: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   glowColor: string;
 };
 

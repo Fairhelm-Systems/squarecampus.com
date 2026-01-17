@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,6 @@ import {
   GraduationCap,
   Layers,
   Users,
-  ArrowRight,
   Zap,
   Shield,
   Activity,
@@ -72,16 +71,32 @@ function prefersReducedMotion() {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 }
 
-// === Floating Particles ===
-function FloatingParticles({ count = 40 }: { count?: number }) {
+function isMobileDevice() {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 768 || window.matchMedia?.("(pointer: coarse)")?.matches;
+}
+
+// === Floating Particles (desktop only, reduced count for performance) ===
+function FloatingParticles({ count = 20 }: { count?: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const particleIds = useMemo(() =>
+    Array.from({ length: count }, (_, i) => `particle-${i}-${Math.random().toString(36).slice(2, 7)}`),
+    [count]
+  );
 
   useEffect(() => {
-    if (!containerRef.current || prefersReducedMotion()) return;
+    setIsMobile(isMobileDevice());
+  }, []);
+
+  useEffect(() => {
+    // Skip on mobile or reduced motion
+    if (isMobile || !containerRef.current || prefersReducedMotion()) return;
     const particles = particlesRef.current.filter(Boolean);
 
-    particles.forEach((particle, i) => {
+    particles.forEach((particle) => {
       const startX = Math.random() * 100;
       const startY = Math.random() * 100;
       const size = Math.random() * 2 + 1;
@@ -117,15 +132,20 @@ function FloatingParticles({ count = 40 }: { count?: number }) {
     });
 
     return () => {
-      particles.forEach((p) => gsap.killTweensOf(p));
+      particles.forEach((p) => {
+        gsap.killTweensOf(p);
+      });
     };
-  }, []);
+  }, [isMobile]);
+
+  // Don't render particles on mobile
+  if (isMobile) return null;
 
   return (
     <div ref={containerRef} className="pointer-events-none absolute inset-0 overflow-hidden">
-      {Array.from({ length: count }).map((_, i) => (
+      {particleIds.map((id, i) => (
         <div
-          key={i}
+          key={id}
           ref={(el) => {
             if (el) particlesRef.current[i] = el;
           }}
@@ -137,16 +157,21 @@ function FloatingParticles({ count = 40 }: { count?: number }) {
   );
 }
 
-// === Animated Grid Background with Ripple ===
+// === Animated Grid Background with Ripple (simplified on mobile) ===
 function AnimatedGridWithRipple() {
   const gridRef = useRef<HTMLDivElement>(null);
   const rippleContainerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    setIsMobile(isMobileDevice());
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion() || isMobile) return;
 
     const ctx = gsap.context(() => {
-      // Grid movement
+      // Grid movement (desktop only)
       if (gridRef.current) {
         gsap.to(gridRef.current, {
           backgroundPosition: "60px 60px",
@@ -156,17 +181,14 @@ function AnimatedGridWithRipple() {
         });
       }
 
-      // Ripple circles animation
+      // Ripple circles animation (desktop only, reduced to 4 circles)
       const circles = rippleContainerRef.current?.querySelectorAll(".ripple-circle");
       if (circles) {
         circles.forEach((circle, i) => {
-          const delay = i * 1.5;
+          const delay = i * 2;
           gsap.fromTo(
             circle,
-            {
-              scale: 0.3,
-              opacity: 0,
-            },
+            { scale: 0.3, opacity: 0 },
             {
               scale: 2.5,
               opacity: 0,
@@ -176,8 +198,8 @@ function AnimatedGridWithRipple() {
               ease: "power1.out",
               keyframes: [
                 { scale: 0.3, opacity: 0 },
-                { scale: 0.8, opacity: 0.25, duration: 2 },
-                { scale: 1.5, opacity: 0.1, duration: 4 },
+                { scale: 0.8, opacity: 0.2, duration: 2 },
+                { scale: 1.5, opacity: 0.08, duration: 4 },
                 { scale: 2.5, opacity: 0, duration: 6 },
               ],
             }
@@ -187,11 +209,14 @@ function AnimatedGridWithRipple() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
+
+  // Reduced ripple count for mobile
+  const rippleCount = isMobile ? 0 : 4;
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Grid */}
+      {/* Grid - static on mobile */}
       <div
         ref={gridRef}
         className="absolute inset-0"
@@ -202,24 +227,28 @@ function AnimatedGridWithRipple() {
         }}
       />
 
-      {/* Ripple circles emanating from center */}
-      <div
-        ref={rippleContainerRef}
-        className="absolute inset-0 flex items-center justify-center"
-      >
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="ripple-circle absolute rounded-full border border-white/[0.06]"
-            style={{
-              width: 300 + i * 150,
-              height: 300 + i * 150,
-            }}
-          />
-        ))}
+      {/* Ripple circles (desktop only) */}
+      {rippleCount > 0 && (
+        <div
+          ref={rippleContainerRef}
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          {[0, 1, 2, 3].slice(0, rippleCount).map((size) => (
+            <div
+              key={`ripple-size-${size}`}
+              className="ripple-circle absolute rounded-full border border-white/6"
+              style={{
+                width: 300 + size * 200,
+                height: 300 + size * 200,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-        {/* Central glow */}
-        <div className="absolute h-48 w-48 rounded-full bg-gradient-radial from-emerald-500/10 via-sky-500/5 to-transparent blur-2xl" />
+      {/* Central glow */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="h-48 w-48 rounded-full bg-gradient-radial from-emerald-500/10 via-sky-500/5 to-transparent blur-2xl" />
       </div>
 
       {/* Radial mask to fade edges */}
@@ -279,7 +308,9 @@ function AnimatedBorder({ isVisible, color = "emerald" }: { isVisible: boolean; 
     <svg
       className="pointer-events-none absolute inset-0 h-full w-full"
       style={{ borderRadius: "1.5rem" }}
+      aria-hidden="true"
     >
+      <title>Animated border</title>
       <rect
         ref={glowRef}
         x="0"
@@ -320,11 +351,9 @@ function AnimatedBorder({ isVisible, color = "emerald" }: { isVisible: boolean; 
 // === Persona Card ===
 function PersonaCard({
   item,
-  index,
   cardRef,
 }: {
   item: (typeof whoItsFor)[number];
-  index: number;
   cardRef: (el: HTMLDivElement | null) => void;
 }) {
   const Icon = item.icon;
@@ -430,239 +459,219 @@ export function SchoolOsClarity() {
   const [osCardVisible, setOsCardVisible] = useState(false);
 
   const reduced = useMemo(() => prefersReducedMotion(), []);
-  const mousePos = useRef({ x: 0, y: 0 });
 
-  // Mouse tracking for parallax
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    mousePos.current = {
-      x: (e.clientX - rect.left) / rect.width - 0.5,
-      y: (e.clientY - rect.top) / rect.height - 0.5,
-    };
-  }, []);
-
-  useEffect(() => {
-    if (reduced) return;
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove, reduced]);
-
-  // Main animation orchestration
+  // Main animation orchestration with scroll-scrub
   useLayoutEffect(() => {
     if (reduced) return;
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // === AMBIENT GLOW PARALLAX ===
-      const glows = glowRefs.current.filter(Boolean);
-      if (glows.length) {
-        gsap.to(glows[0], {
-          scale: 1.4,
-          opacity: 0.2,
-          duration: 10,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
+      const mobile = isMobileDevice();
 
-        gsap.to(glows[1], {
-          scale: 1.3,
-          opacity: 0.15,
-          duration: 12,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: 2,
-        });
-
-        gsap.to(glows[2], {
-          scale: 1.2,
-          opacity: 0.1,
-          duration: 8,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: 1,
-        });
-
-        // Mouse parallax on glows
-        gsap.ticker.add(() => {
+      // === AMBIENT GLOW ANIMATIONS (desktop only) ===
+      if (!mobile) {
+        const glows = glowRefs.current.filter(Boolean);
+        if (glows.length) {
+          // Simple CSS-based glow pulsing instead of GSAP ticker
           glows.forEach((glow, i) => {
-            const multiplier = (i + 1) * 40;
             gsap.to(glow, {
-              x: mousePos.current.x * multiplier * (i % 2 === 0 ? 1 : -1),
-              y: mousePos.current.y * multiplier,
-              duration: 1.5 + i * 0.3,
-              ease: "power2.out",
+              scale: 1.2 + i * 0.1,
+              opacity: 0.15 - i * 0.03,
+              duration: 8 + i * 2,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: i * 1.5,
             });
           });
-        });
+        }
       }
 
-      // === HEADER ANIMATIONS ===
+      // === HEADER ANIMATIONS WITH SCRUB ===
       if (titleRef.current) {
         const words = titleRef.current.querySelectorAll("[data-word]");
-        gsap.set(words, {
-          opacity: 0,
-          y: 50,
-          rotateX: -20,
-          transformPerspective: 1000,
-        });
 
-        gsap.to(words, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.9,
-          stagger: 0.08,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 85%",
-            once: true,
-          },
-        });
+        if (mobile) {
+          // Mobile: simpler fade-in without 3D transforms
+          gsap.fromTo(
+            words,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.03,
+              ease: "none",
+              scrollTrigger: {
+                trigger: titleRef.current,
+                start: "top 90%",
+                end: "top 50%",
+                scrub: 0.5,
+              },
+            }
+          );
+        } else {
+          // Desktop: full 3D animation with scrub
+          gsap.fromTo(
+            words,
+            {
+              opacity: 0,
+              y: 50,
+              rotateX: -20,
+              transformPerspective: 1000,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+              stagger: 0.05,
+              ease: "none",
+              scrollTrigger: {
+                trigger: titleRef.current,
+                start: "top 85%",
+                end: "top 50%",
+                scrub: 0.8,
+              },
+            }
+          );
+        }
       }
 
       if (subtitleRef.current) {
         gsap.fromTo(
           subtitleRef.current,
-          { opacity: 0, y: 24, filter: "blur(8px)" },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 1,
-            ease: "power3.out",
+            ease: "none",
             scrollTrigger: {
               trigger: subtitleRef.current,
-              start: "top 88%",
-              once: true,
+              start: "top 90%",
+              end: "top 55%",
+              scrub: 0.5,
             },
           }
         );
       }
 
-      // === COMPARISON CARDS ===
+      // === COMPARISON CARDS WITH SCRUB ===
       if (compareRef.current && legacyCardRef.current && osCardRef.current) {
-        gsap.set([legacyCardRef.current, osCardRef.current], {
-          transformPerspective: 1200,
-          transformStyle: "preserve-3d",
-        });
+        if (!mobile) {
+          gsap.set([legacyCardRef.current, osCardRef.current], {
+            transformPerspective: 1200,
+            transformStyle: "preserve-3d",
+          });
+        }
 
-        const compareTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: compareRef.current,
-            start: "top 75%",
-            once: true,
-            onEnter: () => setOsCardVisible(true),
+        // Legacy card animation
+        gsap.fromTo(
+          legacyCardRef.current,
+          {
+            x: mobile ? 0 : -60,
+            opacity: 0,
+            rotateY: mobile ? 0 : -10,
+            scale: 0.95,
           },
-        });
+          {
+            x: 0,
+            opacity: 1,
+            rotateY: 0,
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: compareRef.current,
+              start: "top 85%",
+              end: "top 50%",
+              scrub: 0.6,
+            },
+          }
+        );
 
-        compareTl
-          .fromTo(
-            legacyCardRef.current,
-            {
-              x: -80,
-              opacity: 0,
-              rotateY: -15,
-              scale: 0.95,
+        // OS card animation (slightly delayed via start position)
+        gsap.fromTo(
+          osCardRef.current,
+          {
+            x: mobile ? 0 : 60,
+            opacity: 0,
+            rotateY: mobile ? 0 : 10,
+            scale: 0.95,
+          },
+          {
+            x: 0,
+            opacity: 1,
+            rotateY: 0,
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: compareRef.current,
+              start: "top 80%",
+              end: "top 45%",
+              scrub: 0.6,
+              onEnter: () => setOsCardVisible(true),
             },
-            {
-              x: 0,
-              opacity: 1,
-              rotateY: 0,
-              scale: 1,
-              duration: 1,
-              ease: "expo.out",
-            }
-          )
-          .fromTo(
-            osCardRef.current,
-            {
-              x: 80,
-              opacity: 0,
-              rotateY: 15,
-              scale: 0.95,
-            },
-            {
-              x: 0,
-              opacity: 1,
-              rotateY: 0,
-              scale: 1,
-              duration: 1,
-              ease: "expo.out",
-            },
-            "-=0.7"
-          );
+          }
+        );
 
-        // Animate bullet points
+        // Animate bullet points with scrub
         const legacyBullets = legacyCardRef.current.querySelectorAll("[data-bullet]");
         const osBullets = osCardRef.current.querySelectorAll("[data-bullet]");
 
-        gsap.set([...legacyBullets, ...osBullets], { opacity: 0, x: -15 });
-
-        compareTl.to(
+        gsap.fromTo(
           legacyBullets,
+          { opacity: 0, x: -10 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.4,
-            stagger: 0.1,
-            ease: "power2.out",
-          },
-          "-=0.5"
+            stagger: 0.05,
+            ease: "none",
+            scrollTrigger: {
+              trigger: compareRef.current,
+              start: "top 70%",
+              end: "top 40%",
+              scrub: 0.5,
+            },
+          }
         );
 
-        compareTl.to(
+        gsap.fromTo(
           osBullets,
+          { opacity: 0, x: -10 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.4,
-            stagger: 0.1,
-            ease: "power2.out",
-          },
-          "-=0.4"
+            stagger: 0.05,
+            ease: "none",
+            scrollTrigger: {
+              trigger: compareRef.current,
+              start: "top 65%",
+              end: "top 35%",
+              scrub: 0.5,
+            },
+          }
         );
       }
 
-      // === DASHBOARD SHOWCASE ===
-      if (dashboardRef.current) {
+      // === DASHBOARD SHOWCASE (desktop only, already hidden via CSS on mobile) ===
+      if (dashboardRef.current && !mobile) {
         gsap.fromTo(
           dashboardRef.current,
-          {
-            opacity: 0,
-            y: 60,
-            scale: 0.95,
-          },
+          { opacity: 0, y: 40, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 1.2,
-            ease: "expo.out",
+            ease: "none",
             scrollTrigger: {
               trigger: dashboardRef.current,
-              start: "top 80%",
-              once: true,
+              start: "top 85%",
+              end: "top 50%",
+              scrub: 0.8,
             },
           }
         );
-
-        // Subtle floating animation
-        gsap.to(dashboardRef.current, {
-          y: -8,
-          duration: 4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 1,
-        });
       }
 
-      // === PERSONA CARDS ===
+      // === PERSONA CARDS WITH SCRUB ===
       if (personasWrapRef.current) {
         const cards = personaRefs.current.filter(Boolean) as HTMLDivElement[];
 
@@ -670,76 +679,84 @@ export function SchoolOsClarity() {
           cards,
           {
             opacity: 0,
-            y: 60,
-            rotateX: -10,
-            transformPerspective: 1000,
+            y: mobile ? 30 : 50,
+            rotateX: mobile ? 0 : -8,
+            transformPerspective: mobile ? undefined : 1000,
           },
           {
             opacity: 1,
             y: 0,
             rotateX: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "expo.out",
+            stagger: 0.1,
+            ease: "none",
             scrollTrigger: {
               trigger: personasWrapRef.current,
-              start: "top 80%",
-              once: true,
-            },
-            onComplete: () => {
-              cards.forEach((card) => {
-                const bullets = card.querySelectorAll("[data-bullet]");
-                gsap.fromTo(
-                  bullets,
-                  { opacity: 0, x: -10 },
-                  {
-                    opacity: 1,
-                    x: 0,
-                    duration: 0.3,
-                    stagger: 0.08,
-                    ease: "power2.out",
-                  }
-                );
-              });
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 0.6,
             },
           }
         );
 
-        // Magnetic hover effect (desktop only)
-        const mm = gsap.matchMedia();
-        mm.add("(hover: hover) and (pointer: fine)", () => {
-          cards.forEach((card) => {
-            const xTo = gsap.quickTo(card, "x", { duration: 0.4, ease: "power3.out" });
-            const yTo = gsap.quickTo(card, "y", { duration: 0.4, ease: "power3.out" });
-            const rotYTo = gsap.quickTo(card, "rotateY", { duration: 0.4, ease: "power3.out" });
-            const rotXTo = gsap.quickTo(card, "rotateX", { duration: 0.4, ease: "power3.out" });
-
-            const onMove = (e: PointerEvent) => {
-              const rect = card.getBoundingClientRect();
-              const px = (e.clientX - rect.left) / rect.width - 0.5;
-              const py = (e.clientY - rect.top) / rect.height - 0.5;
-
-              xTo(px * 12);
-              yTo(py * 12);
-              rotYTo(px * 10);
-              rotXTo(-py * 10);
-            };
-
-            const onLeave = () => {
-              xTo(0);
-              yTo(0);
-              rotYTo(0);
-              rotXTo(0);
-            };
-
-            card.addEventListener("pointermove", onMove);
-            card.addEventListener("pointerleave", onLeave);
-          });
+        // Bullet points in persona cards
+        cards.forEach((card) => {
+          const bullets = card.querySelectorAll("[data-bullet]");
+          gsap.fromTo(
+            bullets,
+            { opacity: 0, x: -8 },
+            {
+              opacity: 1,
+              x: 0,
+              stagger: 0.03,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                end: "top 50%",
+                scrub: 0.4,
+              },
+            }
+          );
         });
+
+        // Magnetic hover effect (desktop only)
+        if (!mobile) {
+          const mm = gsap.matchMedia();
+          mm.add("(hover: hover) and (pointer: fine)", () => {
+            cards.forEach((card) => {
+              const xTo = gsap.quickTo(card, "x", { duration: 0.4, ease: "power3.out" });
+              const yTo = gsap.quickTo(card, "y", { duration: 0.4, ease: "power3.out" });
+              const rotYTo = gsap.quickTo(card, "rotateY", { duration: 0.4, ease: "power3.out" });
+              const rotXTo = gsap.quickTo(card, "rotateX", { duration: 0.4, ease: "power3.out" });
+
+              const onMove = (e: PointerEvent) => {
+                const rect = card.getBoundingClientRect();
+                const px = (e.clientX - rect.left) / rect.width - 0.5;
+                const py = (e.clientY - rect.top) / rect.height - 0.5;
+
+                xTo(px * 10);
+                yTo(py * 10);
+                rotYTo(px * 8);
+                rotXTo(-py * 8);
+              };
+
+              const onLeave = () => {
+                xTo(0);
+                yTo(0);
+                rotYTo(0);
+                rotXTo(0);
+              };
+
+              card.addEventListener("pointermove", onMove);
+              card.addEventListener("pointerleave", onLeave);
+            });
+          });
+        }
       }
     }, sectionRef);
 
     return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduced]);
 
   const titleWords = "A School OS is not just a school management system".split(" ");
@@ -788,8 +805,8 @@ export function SchoolOsClarity() {
             className="mt-4 text-3xl font-semibold text-white sm:text-4xl md:text-5xl"
             style={{ perspective: "1000px" }}
           >
-            {titleWords.map((word, i) => (
-              <span key={i} data-word className="mr-[0.25em] inline-block last:mr-0">
+            {titleWords.map((word) => (
+              <span key={word} data-word className="mr-[0.25em] inline-block last:mr-0">
                 {word}
               </span>
             ))}
@@ -827,8 +844,8 @@ export function SchoolOsClarity() {
               </div>
 
               <ul className="mt-6 space-y-4">
-                {legacyPoints.map((point, i) => (
-                  <li key={i} data-bullet className="flex items-start gap-4">
+                {legacyPoints.map((point) => (
+                  <li key={point.text} data-bullet className="flex items-start gap-4">
                     <div className="rounded-lg border border-white/5 bg-white/5 p-2">
                       <point.icon className="h-4 w-4 text-neutral-500" />
                     </div>
@@ -864,8 +881,8 @@ export function SchoolOsClarity() {
               </div>
 
               <ul className="mt-6 space-y-4">
-                {osPoints.map((point, i) => (
-                  <li key={i} data-bullet className="flex items-start gap-4">
+                {osPoints.map((point) => (
+                  <li key={point.text} data-bullet className="flex items-start gap-4">
                     <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-2">
                       <point.icon className="h-4 w-4 text-emerald-400" />
                     </div>
@@ -938,7 +955,6 @@ export function SchoolOsClarity() {
               <PersonaCard
                 key={item.title}
                 item={item}
-                index={idx}
                 cardRef={(el) => {
                   personaRefs.current[idx] = el;
                 }}

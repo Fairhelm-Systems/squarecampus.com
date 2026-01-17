@@ -14,7 +14,7 @@ type Feature = {
 type Category = {
   id: string;
   name: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   gradient: string;
   features: Feature[];
 };

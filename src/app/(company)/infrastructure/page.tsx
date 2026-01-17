@@ -9,11 +9,6 @@ import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  createBreadcrumbSchema,
-  createWebPageSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
-import {
   AlertTriangle,
   ArrowUpRight,
   BarChart3,
@@ -31,6 +26,7 @@ import {
   X,
   Zap,
 } from "@/icons";
+import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -78,7 +74,11 @@ const comparisonData = [
     ourAnswer: {
       status: "excellent",
       title: "Automatic Multi-AZ Failover",
-      details: ["3 separate facilities in Mumbai", "RTO: 4 hours | RPO: 15 minutes", "Tested quarterly"],
+      details: [
+        "3 separate facilities in Mumbai",
+        "RTO: 4 hours | RPO: 15 minutes",
+        "Tested quarterly",
+      ],
     },
     theirAnswer: {
       status: "poor",
@@ -94,7 +94,11 @@ const comparisonData = [
     ourAnswer: {
       status: "excellent",
       title: "Bank-Grade (ISO 27001)",
-      details: ["Biometric access, 24/7 armed security", "CCTV, motion sensors, mantrap entry", "Audited by third parties (Amazon facilities)"],
+      details: [
+        "Biometric access, 24/7 armed security",
+        "CCTV, motion sensors, mantrap entry",
+        "Audited by third parties (Amazon facilities)",
+      ],
     },
     theirAnswer: {
       status: "questionable",
@@ -110,7 +114,10 @@ const comparisonData = [
     ourAnswer: {
       status: "excellent",
       title: "ISO 27001, SOC 2, PCI DSS",
-      details: ["Amazon Web Services facility certifications", "Application-level compliance added"],
+      details: [
+        "Amazon Web Services facility certifications",
+        "Application-level compliance added",
+      ],
       proof: "Download compliance reports",
     },
     theirAnswer: {
@@ -127,7 +134,11 @@ const comparisonData = [
     ourAnswer: {
       status: "excellent",
       title: "Instant Scaling",
-      details: ["Auto-scale to millions of users", "No hardware ordering, no waiting", "Same Mumbai location"],
+      details: [
+        "Auto-scale to millions of users",
+        "No hardware ordering, no waiting",
+        "Same Mumbai location",
+      ],
     },
     theirAnswer: {
       status: "poor",
@@ -143,13 +154,21 @@ const comparisonData = [
     ourAnswer: {
       status: "excellent",
       title: "Fully Transparent",
-      details: ["Monthly infrastructure reports", "CloudTrail logs available", "Third-party audits published"],
+      details: [
+        "Monthly infrastructure reports",
+        "CloudTrail logs available",
+        "Third-party audits published",
+      ],
       proof: "See this page — we hide nothing",
     },
     theirAnswer: {
       status: "poor",
       title: "Vague Claims",
-      details: ["No audit reports", "No facility visits", 'Can\'t prove "own servers" aren\'t foreign VPS'],
+      details: [
+        "No audit reports",
+        "No facility visits",
+        "Can't prove \"own servers\" aren't foreign VPS",
+      ],
       callout: "Ask them: Prove it.",
     },
   },
@@ -166,7 +185,8 @@ const infrastructureCapabilities = [
       { label: "If one fails", value: "Others take over", detail: "Seamless" },
       { label: "Recovery Time", value: "Under 30 seconds", detail: "Automatic" },
     ],
-    description: "Your data is stored in 3 separate facilities in Mumbai. If one has issues, the others keep everything running smoothly.",
+    description:
+      "Your data is stored in 3 separate facilities in Mumbai. If one has issues, the others keep everything running smoothly.",
   },
   {
     icon: Database,
@@ -177,7 +197,8 @@ const infrastructureCapabilities = [
       { label: "Copies", value: "Multiple", detail: "Across facilities" },
       { label: "Data Safety", value: "99.999999999%", detail: "Industry-leading" },
     ],
-    description: "We keep multiple copies of your data and back up every 15 minutes. If anything goes wrong, we can restore to any point in the last 35 days.",
+    description:
+      "We keep multiple copies of your data and back up every 15 minutes. If anything goes wrong, we can restore to any point in the last 35 days.",
   },
   {
     icon: Shield,
@@ -188,7 +209,8 @@ const infrastructureCapabilities = [
       { label: "Encryption Keys", value: "You control them", detail: "Not us" },
       { label: "Activity Logs", value: "Complete history", detail: "Every action" },
     ],
-    description: "All data is encrypted using the same standards banks use. Even we cannot read your raw data — only you hold the keys.",
+    description:
+      "All data is encrypted using the same standards banks use. Even we cannot read your raw data — only you hold the keys.",
   },
   {
     icon: Lock,
@@ -199,7 +221,8 @@ const infrastructureCapabilities = [
       { label: "Backups", value: "Also in Mumbai", detail: "Same region" },
       { label: "Legal Compliance", value: "Indian laws", detail: "Full compliance" },
     ],
-    description: "Your data physically stays in Mumbai. Our systems are configured to block any transfer outside India — it's not just policy, it's technically enforced.",
+    description:
+      "Your data physically stays in Mumbai. Our systems are configured to block any transfer outside India — it's not just policy, it's technically enforced.",
   },
   {
     icon: Network,
@@ -210,7 +233,8 @@ const infrastructureCapabilities = [
       { label: "Monitoring", value: "24/7", detail: "Real-time alerts" },
       { label: "Access", value: "Private network", detail: "Not publicly exposed" },
     ],
-    description: "Multiple security layers protect against hackers and attacks. Our servers are never directly exposed to the internet.",
+    description:
+      "Multiple security layers protect against hackers and attacks. Our servers are never directly exposed to the internet.",
   },
 ];
 
@@ -220,31 +244,50 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
     question: "Why Amazon Web Services instead of Indian cloud providers?",
     answer: (
       <>
-        <p className="mb-3">We evaluated Indian cloud providers extensively. <span className="font-semibold text-[#FF9900]">Amazon Web Services</span> Mumbai region won on:</p>
+        <p className="mb-3">
+          We evaluated Indian cloud providers extensively.{" "}
+          <span className="font-semibold text-[#FF9900]">Amazon Web Services</span> Mumbai region
+          won on:
+        </p>
         <ul className="mb-3 space-y-1.5 pl-4">
           <li className="flex items-start gap-2">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-            <span><strong className="text-white">Uptime:</strong> 99.99% vs 99% typical</span>
+            <span>
+              <strong className="text-white">Uptime:</strong> 99.99% vs 99% typical
+            </span>
           </li>
           <li className="flex items-start gap-2">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-            <span><strong className="text-white">Services:</strong> Mature managed database, auto-scaling</span>
+            <span>
+              <strong className="text-white">Services:</strong> Mature managed database,
+              auto-scaling
+            </span>
           </li>
           <li className="flex items-start gap-2">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-            <span><strong className="text-white">Cost:</strong> More economical at scale</span>
+            <span>
+              <strong className="text-white">Cost:</strong> More economical at scale
+            </span>
           </li>
           <li className="flex items-start gap-2">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-            <span><strong className="text-white">Compliance:</strong> More certifications (ISO, SOC, PCI)</span>
+            <span>
+              <strong className="text-white">Compliance:</strong> More certifications (ISO, SOC,
+              PCI)
+            </span>
           </li>
           <li className="flex items-start gap-2">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-            <span><strong className="text-white">Redundancy:</strong> 3 availability zones vs 1-2 typical</span>
+            <span>
+              <strong className="text-white">Redundancy:</strong> 3 availability zones vs 1-2
+              typical
+            </span>
           </li>
         </ul>
         <p className="rounded-lg border border-cyan-500/20 bg-cyan-500/5 p-3 text-sm">
-          <strong className="text-cyan-400">Key point:</strong> Data location matters, not who owns the hardware. <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai region provides enterprise reliability + India residency.
+          <strong className="text-cyan-400">Key point:</strong> Data location matters, not who owns
+          the hardware. <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai region
+          provides enterprise reliability + India residency.
         </p>
       </>
     ),
@@ -256,28 +299,55 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
         <p className="mb-3">No, for multiple reasons:</p>
         <ol className="mb-3 space-y-1.5 pl-4">
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">1</span>
-            <span><strong className="text-white">Encryption:</strong> Data encrypted with keys WE control (not Amazon)</span>
+            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">
+              1
+            </span>
+            <span>
+              <strong className="text-white">Encryption:</strong> Data encrypted with keys WE
+              control (not Amazon)
+            </span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">2</span>
-            <span><strong className="text-white">Jurisdiction:</strong> Data in India subject to Indian law only</span>
+            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">
+              2
+            </span>
+            <span>
+              <strong className="text-white">Jurisdiction:</strong> Data in India subject to Indian
+              law only
+            </span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">3</span>
-            <span><strong className="text-white">Legal process:</strong> AWS has mechanisms to challenge foreign requests</span>
+            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">
+              3
+            </span>
+            <span>
+              <strong className="text-white">Legal process:</strong> AWS has mechanisms to challenge
+              foreign requests
+            </span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">4</span>
-            <span><strong className="text-white">Notification:</strong> We&apos;d be notified of any access requests</span>
+            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">
+              4
+            </span>
+            <span>
+              <strong className="text-white">Notification:</strong> We&apos;d be notified of any
+              access requests
+            </span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">5</span>
-            <span><strong className="text-white">No precedent:</strong> US Cloud Act applies to US-stored data</span>
+            <span className="shrink-0 rounded bg-emerald-500/20 px-1.5 py-0.5 text-xs font-semibold text-emerald-400">
+              5
+            </span>
+            <span>
+              <strong className="text-white">No precedent:</strong> US Cloud Act applies to
+              US-stored data
+            </span>
           </li>
         </ol>
         <p className="text-sm text-neutral-400">
-          Your data is more protected on <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai region than on many &quot;Indian own servers&quot; that actually use foreign VPS providers.
+          Your data is more protected on <span className="text-[#FF9900]">Amazon Web Services</span>{" "}
+          Mumbai region than on many &quot;Indian own servers&quot; that actually use foreign VPS
+          providers.
         </p>
       </>
     ),
@@ -287,29 +357,39 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
     answer: (
       <>
         <p className="mb-3">
-          <strong className="text-white">Cannot happen.</strong> Our policies block resource creation outside ap-south-1.
+          <strong className="text-white">Cannot happen.</strong> Our policies block resource
+          creation outside ap-south-1.
         </p>
         <p className="mb-3">Even if Amazon opens 10 new regions, our data cannot move without:</p>
         <ol className="mb-3 space-y-1.5 pl-4">
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">1</span>
+            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">
+              1
+            </span>
             <span>Manually changing policies (requires multiple approvals)</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">2</span>
+            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">
+              2
+            </span>
             <span>Disabling Service Control Policies</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">3</span>
+            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">
+              3
+            </span>
             <span>Overriding monitoring alerts</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">4</span>
+            <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-xs font-semibold text-amber-400">
+              4
+            </span>
             <span>Would immediately trigger security incidents</span>
           </li>
         </ol>
         <p className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3 text-sm">
-          <strong className="text-emerald-400">Technically impossible</strong> for data to accidentally leave Mumbai.
+          <strong className="text-emerald-400">Technically impossible</strong> for data to
+          accidentally leave Mumbai.
         </p>
       </>
     ),
@@ -368,7 +448,9 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
             </ul>
           </div>
         </div>
-        <p className="mt-3 text-sm italic text-neutral-500">We&apos;re transparent because we have nothing to hide.</p>
+        <p className="mt-3 text-sm italic text-neutral-500">
+          We&apos;re transparent because we have nothing to hide.
+        </p>
       </>
     ),
   },
@@ -377,7 +459,8 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
     answer: (
       <>
         <p className="mb-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3">
-          <strong className="text-emerald-400">Short answer:</strong> Automatic failover to other Mumbai zones (30 sec)
+          <strong className="text-emerald-400">Short answer:</strong> Automatic failover to other
+          Mumbai zones (30 sec)
         </p>
         <p className="mb-2 text-sm font-semibold text-white">Detailed:</p>
         <ul className="mb-3 space-y-1.5 pl-4 text-sm">
@@ -399,7 +482,9 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
           </li>
         </ul>
         <p className="text-sm text-neutral-400">
-          <strong className="text-white">Historical:</strong> In 5+ years of <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai region operations, no region-wide outage has occurred. Individual zone failures are handled automatically.
+          <strong className="text-white">Historical:</strong> In 5+ years of{" "}
+          <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai region operations, no
+          region-wide outage has occurred. Individual zone failures are handled automatically.
         </p>
       </>
     ),
@@ -409,11 +494,14 @@ const faqData: Array<{ question: string; answer: React.ReactNode }> = [
     answer: (
       <>
         <p className="mb-3">
-          Usually <strong className="text-emerald-400">CHEAPER</strong> when you account for total cost:
+          Usually <strong className="text-emerald-400">CHEAPER</strong> when you account for total
+          cost:
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-4">
-            <p className="mb-2 text-sm font-semibold text-red-400">&quot;Own Servers&quot; Hidden Costs</p>
+            <p className="mb-2 text-sm font-semibold text-red-400">
+              &quot;Own Servers&quot; Hidden Costs
+            </p>
             <ul className="space-y-1 text-sm">
               <li className="flex items-start gap-2">
                 <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-400" />
@@ -475,36 +563,46 @@ const competitorQuestions = [
     question: "What is your contractual uptime SLA?",
     difficulty: "easy",
     whyItMatters: "Separates real infrastructure from hobby projects.",
-    expectedAnswer: '"We maintain high uptime" (no number), "We haven\'t had issues" (no guarantee)',
+    expectedAnswer:
+      '"We maintain high uptime" (no number), "We haven\'t had issues" (no guarantee)',
     ourAnswer: "99.99% Amazon Web Services SLA + 99.97% actual measured performance",
   },
   {
     question: "Where exactly are your servers physically located?",
     difficulty: "medium",
-    whyItMatters: '"India" is vague. Mumbai? Bangalore? Or actually Singapore datacenter with VPN endpoint in India?',
-    expectedAnswer: '"Secure facility in India" (no specifics), "We can\'t disclose for security" (red flag)',
-    ourAnswer: "Amazon Web Services Mumbai Region (ap-south-1) - 3 availability zones, publicly documented",
+    whyItMatters:
+      '"India" is vague. Mumbai? Bangalore? Or actually Singapore datacenter with VPN endpoint in India?',
+    expectedAnswer:
+      '"Secure facility in India" (no specifics), "We can\'t disclose for security" (red flag)',
+    ourAnswer:
+      "Amazon Web Services Mumbai Region (ap-south-1) - 3 availability zones, publicly documented",
   },
   {
     question: "Can you share your ISO 27001 certificate?",
     difficulty: "hard",
-    whyItMatters: "ISO 27001 is minimum standard for handling sensitive data. If they don't have it, their \"secure\" is undefined.",
-    expectedAnswer: '"We\'re working on certification" (= we don\'t have it), "Our facility is ISO certified" (not them)',
-    ourAnswer: "Amazon Web Services facilities: ISO 27001, SOC 2 Type II, PCI DSS Level 1. Plus independent application audit.",
+    whyItMatters:
+      'ISO 27001 is minimum standard for handling sensitive data. If they don\'t have it, their "secure" is undefined.',
+    expectedAnswer:
+      '"We\'re working on certification" (= we don\'t have it), "Our facility is ISO certified" (not them)',
+    ourAnswer:
+      "Amazon Web Services facilities: ISO 27001, SOC 2 Type II, PCI DSS Level 1. Plus independent application audit.",
   },
   {
     question: "What happens if your data center loses power?",
     difficulty: "hard",
     whyItMatters: 'Tests if they have real disaster recovery or just "we have backups."',
-    expectedAnswer: '"We have generators" (single point of failure), "That\'s never happened" (no testing)',
-    ourAnswer: "Automatic failover to other Mumbai availability zone (30 seconds). 3 separate facilities. Tested quarterly.",
+    expectedAnswer:
+      '"We have generators" (single point of failure), "That\'s never happened" (no testing)',
+    ourAnswer:
+      "Automatic failover to other Mumbai availability zone (30 seconds). 3 separate facilities. Tested quarterly.",
   },
   {
     question: "Prove your data never leaves India.",
     difficulty: "expert",
     whyItMatters: 'Anyone can claim "India hosting." Can they prove it continuously?',
     expectedAnswer: '"We promise" (not proof), Silence or offense at being questioned',
-    ourAnswer: "Monthly audit reports (public), CloudTrail logs, Third-party verification, IAM policies blocking non-Mumbai resources",
+    ourAnswer:
+      "Monthly audit reports (public), CloudTrail logs, Third-party verification, IAM policies blocking non-Mumbai resources",
   },
 ];
 
@@ -636,25 +734,23 @@ export default function InfrastructurePage() {
 
   return (
     <>
-      <Script
-        id="infrastructure-structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <Script id="infrastructure-structured-data" type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </Script>
 
       <main className="relative min-h-screen bg-neutral-950 text-white">
         <FloatingHomeButton href="/" />
 
         {/* Animated grid background */}
         <div className="pointer-events-none fixed inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-size-[50px_50px]" />
         </div>
 
         {/* Background gradients */}
         <div className="pointer-events-none fixed inset-0">
-          <div className="absolute left-0 top-0 h-[800px] w-[800px] rounded-full bg-cyan-500/[0.03] blur-[150px]" />
-          <div className="absolute right-0 top-1/3 h-[600px] w-[600px] rounded-full bg-purple-500/[0.03] blur-[150px]" />
-          <div className="absolute bottom-0 left-1/3 h-[500px] w-[500px] rounded-full bg-emerald-500/[0.03] blur-[150px]" />
+          <div className="absolute left-0 top-0 h-[800px] w-[800px] rounded-full bg-cyan-500/3 blur-[150px]" />
+          <div className="absolute right-0 top-1/3 h-[600px] w-[600px] rounded-full bg-purple-500/3 blur-[150px]" />
+          <div className="absolute bottom-0 left-1/3 h-[500px] w-[500px] rounded-full bg-emerald-500/3 blur-[150px]" />
         </div>
 
         <div className="relative z-10">
@@ -672,7 +768,7 @@ export default function InfrastructurePage() {
               {/* Title */}
               <h1 className="js-hero-animate text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
                 Built on{" "}
-                <span className="js-neon-pulse bg-gradient-to-r from-[#FF9900] via-[#FFAC31] to-[#FF9900] bg-clip-text text-transparent">
+                <span className="js-neon-pulse bg-linear-to-r from-[#FF9900] via-[#FFAC31] to-[#FF9900] bg-clip-text text-transparent">
                   Amazon Web Services
                 </span>
                 <br />
@@ -681,9 +777,12 @@ export default function InfrastructurePage() {
 
               {/* Subtitle */}
               <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                Why we chose enterprise cloud over &quot;own servers&quot; — and why you should care about
-                the difference. Every claim on this page is{" "}
-                <span className="font-semibold text-white">verifiable, audited, and transparent</span>.
+                Why we chose enterprise cloud over &quot;own servers&quot; — and why you should care
+                about the difference. Every claim on this page is{" "}
+                <span className="font-semibold text-white">
+                  verifiable, audited, and transparent
+                </span>
+                .
               </p>
 
               {/* Status cards */}
@@ -715,11 +814,34 @@ export default function InfrastructurePage() {
                   },
                 ].map((card) => {
                   const Icon = card.icon;
-                  const colorClasses: Record<string, { border: string; bg: string; text: string; glow: string }> = {
-                    emerald: { border: "border-emerald-500/30", bg: "bg-emerald-500/10", text: "text-emerald-400", glow: "shadow-emerald-500/20" },
-                    cyan: { border: "border-cyan-500/30", bg: "bg-cyan-500/10", text: "text-cyan-400", glow: "shadow-cyan-500/20" },
-                    purple: { border: "border-purple-500/30", bg: "bg-purple-500/10", text: "text-purple-400", glow: "shadow-purple-500/20" },
-                    blue: { border: "border-blue-500/30", bg: "bg-blue-500/10", text: "text-blue-400", glow: "shadow-blue-500/20" },
+                  const colorClasses: Record<
+                    string,
+                    { border: string; bg: string; text: string; glow: string }
+                  > = {
+                    emerald: {
+                      border: "border-emerald-500/30",
+                      bg: "bg-emerald-500/10",
+                      text: "text-emerald-400",
+                      glow: "shadow-emerald-500/20",
+                    },
+                    cyan: {
+                      border: "border-cyan-500/30",
+                      bg: "bg-cyan-500/10",
+                      text: "text-cyan-400",
+                      glow: "shadow-cyan-500/20",
+                    },
+                    purple: {
+                      border: "border-purple-500/30",
+                      bg: "bg-purple-500/10",
+                      text: "text-purple-400",
+                      glow: "shadow-purple-500/20",
+                    },
+                    blue: {
+                      border: "border-blue-500/30",
+                      bg: "bg-blue-500/10",
+                      text: "text-blue-400",
+                      glow: "shadow-blue-500/20",
+                    },
                   };
                   const colors = colorClasses[card.color];
                   return (
@@ -755,7 +877,7 @@ export default function InfrastructurePage() {
                 </a>
                 <Link
                   href="/security"
-                  className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-6 py-2.5 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/2 px-6 py-2.5 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/5"
                 >
                   Security Posture
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -766,23 +888,26 @@ export default function InfrastructurePage() {
 
           {/* The Direct Question */}
           <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <Card className="overflow-hidden border-white/[0.08] bg-gradient-to-br from-neutral-900/80 to-neutral-950">
+            <Card className="overflow-hidden border-white/8 bg-linear-to-br from-neutral-900/80 to-neutral-950">
               <CardContent className="p-8 md:p-12">
                 <h2 className="text-2xl font-bold text-white md:text-3xl lg:text-4xl">
                   Why AWS Mumbai? Why Not &quot;Own Servers&quot;?
                 </h2>
                 <div className="mt-6 space-y-4 text-neutral-300">
                   <p className="text-lg">
-                    We get asked this. Competitors emphasize &quot;own servers in India&quot; as if it&apos;s
-                    superior. Let&apos;s be direct about why that&apos;s <span className="text-red-400">marketing</span>,
-                    not engineering.
+                    We get asked this. Competitors emphasize &quot;own servers in India&quot; as if
+                    it&apos;s superior. Let&apos;s be direct about why that&apos;s{" "}
+                    <span className="text-red-400">marketing</span>, not engineering.
                   </p>
                   <p>
-                    We chose <span className="font-semibold text-[#FF9900]">Amazon Web Services</span> Mumbai region (ap-south-1) after rigorous evaluation because{" "}
+                    We chose{" "}
+                    <span className="font-semibold text-[#FF9900]">Amazon Web Services</span> Mumbai
+                    region (ap-south-1) after rigorous evaluation because{" "}
                     <span className="font-semibold text-white">
                       data residency isn&apos;t compromised by who makes the servers
                     </span>{" "}
-                    — it&apos;s determined by <span className="font-semibold text-cyan-400">where they physically sit</span>.
+                    — it&apos;s determined by{" "}
+                    <span className="font-semibold text-cyan-400">where they physically sit</span>.
                   </p>
                 </div>
               </CardContent>
@@ -790,7 +915,11 @@ export default function InfrastructurePage() {
           </section>
 
           {/* Comparison Matrix */}
-          <section id="comparison" ref={comparisonRef} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <section
+            id="comparison"
+            ref={comparisonRef}
+            className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+          >
             <div className="mb-12 space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-1.5">
                 <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -799,13 +928,12 @@ export default function InfrastructurePage() {
                 </span>
               </div>
               <h2 className="text-3xl font-bold text-white md:text-4xl">
-                The Real Difference:{" "}
-                <span className="text-[#FF9900]">Amazon Web Services</span> vs{" "}
+                The Real Difference: <span className="text-[#FF9900]">Amazon Web Services</span> vs{" "}
                 <span className="text-red-400">&quot;Own Servers&quot;</span>
               </h2>
               <p className="max-w-3xl text-neutral-400">
-                Side-by-side comparison of enterprise cloud vs typical &quot;own servers&quot; claims.
-                Click any row to see details.
+                Side-by-side comparison of enterprise cloud vs typical &quot;own servers&quot;
+                claims. Click any row to see details.
               </p>
             </div>
 
@@ -813,15 +941,17 @@ export default function InfrastructurePage() {
               {comparisonData.map((row, index) => (
                 <div
                   key={row.category}
-                  className="js-comparison-row overflow-hidden rounded-xl border border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15]"
+                  className="js-comparison-row overflow-hidden rounded-xl border border-white/8 bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/15"
                 >
                   <button
                     type="button"
-                    onClick={() => setExpandedComparison(expandedComparison === index ? null : index)}
+                    onClick={() =>
+                      setExpandedComparison(expandedComparison === index ? null : index)
+                    }
                     className="flex w-full items-center justify-between p-4 text-left md:p-5"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="rounded-lg bg-white/[0.05] px-3 py-1 text-xs font-medium uppercase tracking-wider text-neutral-400">
+                      <span className="rounded-lg bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wider text-neutral-400">
                         {row.category}
                       </span>
                       <div>
@@ -841,7 +971,12 @@ export default function InfrastructurePage() {
                           ) : (
                             <AlertTriangle className="h-4 w-4 text-amber-400" />
                           )}
-                          <span className={cn("text-sm", row.theirAnswer.status === "poor" ? "text-red-400" : "text-amber-400")}>
+                          <span
+                            className={cn(
+                              "text-sm",
+                              row.theirAnswer.status === "poor" ? "text-red-400" : "text-amber-400"
+                            )}
+                          >
                             {row.theirAnswer.title}
                           </span>
                         </div>
@@ -856,18 +991,26 @@ export default function InfrastructurePage() {
                   </button>
 
                   {expandedComparison === index && (
-                    <div className="border-t border-white/[0.06] bg-neutral-950/50 p-4 md:p-6">
+                    <div className="border-t border-white/6 bg-neutral-950/50 p-4 md:p-6">
                       <div className="grid gap-6 md:grid-cols-2">
                         {/* Our Answer */}
                         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
                           <div className="mb-3 flex items-center gap-2">
                             <Check className="h-5 w-5 text-emerald-400" />
-                            <span className="font-semibold text-emerald-400">SquareCampus (<span className="text-[#FF9900]">Amazon Web Services</span> Mumbai)</span>
+                            <span className="font-semibold text-emerald-400">
+                              SquareCampus (
+                              <span className="text-[#FF9900]">Amazon Web Services</span> Mumbai)
+                            </span>
                           </div>
-                          <p className="mb-3 text-lg font-semibold text-white">{row.ourAnswer.title}</p>
+                          <p className="mb-3 text-lg font-semibold text-white">
+                            {row.ourAnswer.title}
+                          </p>
                           <ul className="space-y-2">
                             {row.ourAnswer.details.map((detail, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                              <li
+                                key={i}
+                                className="flex items-start gap-2 text-sm text-neutral-300"
+                              >
                                 <Check className="mt-0.5 h-3 w-3 shrink-0 text-emerald-400" />
                                 {detail}
                               </li>
@@ -896,16 +1039,23 @@ export default function InfrastructurePage() {
                             <span
                               className={cn(
                                 "font-semibold",
-                                row.theirAnswer.status === "poor" ? "text-red-400" : "text-amber-400"
+                                row.theirAnswer.status === "poor"
+                                  ? "text-red-400"
+                                  : "text-amber-400"
                               )}
                             >
                               &quot;Own Servers&quot; (Competitor Claims)
                             </span>
                           </div>
-                          <p className="mb-3 text-lg font-semibold text-white">{row.theirAnswer.title}</p>
+                          <p className="mb-3 text-lg font-semibold text-white">
+                            {row.theirAnswer.title}
+                          </p>
                           <ul className="space-y-2">
                             {row.theirAnswer.details.map((detail, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                              <li
+                                key={i}
+                                className="flex items-start gap-2 text-sm text-neutral-300"
+                              >
                                 <X className="mt-0.5 h-3 w-3 shrink-0 text-red-400" />
                                 {detail}
                               </li>
@@ -913,7 +1063,9 @@ export default function InfrastructurePage() {
                           </ul>
                           {row.theirAnswer.callout && (
                             <div className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 p-2">
-                              <p className="text-xs font-medium text-red-300">{row.theirAnswer.callout}</p>
+                              <p className="text-xs font-medium text-red-300">
+                                {row.theirAnswer.callout}
+                              </p>
                             </div>
                           )}
                         </div>
@@ -925,9 +1077,11 @@ export default function InfrastructurePage() {
             </div>
 
             {/* Own Servers Reality Check */}
-            <Card className="mt-8 overflow-hidden border-red-500/30 bg-gradient-to-br from-red-950/20 to-neutral-950">
+            <Card className="mt-8 overflow-hidden border-red-500/30 bg-linear-to-br from-red-950/20 to-neutral-950">
               <CardContent className="p-6 md:p-8">
-                <h3 className="mb-4 text-xl font-bold text-red-400">The &quot;Own Servers&quot; Reality Check</h3>
+                <h3 className="mb-4 text-xl font-bold text-red-400">
+                  The &quot;Own Servers&quot; Reality Check
+                </h3>
                 <p className="mb-4 text-neutral-300">
                   Most vendors claiming &quot;own servers in India&quot; actually mean:
                 </p>
@@ -950,9 +1104,12 @@ export default function InfrastructurePage() {
                   </li>
                 </ul>
                 <p className="text-sm font-medium text-white">
-                  If they can&apos;t answer basic infrastructure questions → They don&apos;t have enterprise &quot;own servers.&quot;
+                  If they can&apos;t answer basic infrastructure questions → They don&apos;t have
+                  enterprise &quot;own servers.&quot;
                   <br />
-                  <span className="text-red-400">They have consumer-grade hosting with marketing spin.</span>
+                  <span className="text-red-400">
+                    They have consumer-grade hosting with marketing spin.
+                  </span>
                 </p>
               </CardContent>
             </Card>
@@ -969,7 +1126,8 @@ export default function InfrastructurePage() {
               </div>
               <h2 className="text-3xl font-bold text-white md:text-4xl">What This Means For You</h2>
               <p className="max-w-3xl text-neutral-400">
-                Enterprise-grade infrastructure with verifiable guarantees. Not marketing claims — engineering reality.
+                Enterprise-grade infrastructure with verifiable guarantees. Not marketing claims —
+                engineering reality.
               </p>
             </div>
 
@@ -981,7 +1139,7 @@ export default function InfrastructurePage() {
                   <Card
                     key={spec.title}
                     className={cn(
-                      "js-spec-card cursor-pointer overflow-hidden border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/30",
+                      "js-spec-card cursor-pointer overflow-hidden border-white/8 bg-neutral-900/50 backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/30",
                       isExpanded && "border-cyan-500/30 md:col-span-2 lg:col-span-1"
                     )}
                     onClick={() => setExpandedSpec(isExpanded ? null : index)}
@@ -1007,9 +1165,7 @@ export default function InfrastructurePage() {
                           <div key={i} className="flex items-center justify-between text-sm">
                             <span className="text-neutral-400">{item.label}</span>
                             <div className="flex items-center gap-2">
-                              <span className="font-medium text-white">
-                                {item.value}
-                              </span>
+                              <span className="font-medium text-white">{item.value}</span>
                               {item.detail && (
                                 <span className="text-xs text-neutral-500">({item.detail})</span>
                               )}
@@ -1019,7 +1175,7 @@ export default function InfrastructurePage() {
                       </div>
 
                       {isExpanded && (
-                        <p className="mt-4 border-t border-white/[0.06] pt-4 text-sm text-neutral-400">
+                        <p className="mt-4 border-t border-white/6 pt-4 text-sm text-neutral-400">
                           {spec.description}
                         </p>
                       )}
@@ -1028,7 +1184,6 @@ export default function InfrastructurePage() {
                 );
               })}
             </div>
-
           </section>
 
           {/* Live Status */}
@@ -1046,7 +1201,7 @@ export default function InfrastructurePage() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* API Status */}
-              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-linear-to-br from-emerald-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1064,7 +1219,7 @@ export default function InfrastructurePage() {
               </Card>
 
               {/* Database Status */}
-              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-linear-to-br from-emerald-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1082,7 +1237,7 @@ export default function InfrastructurePage() {
               </Card>
 
               {/* Uptime */}
-              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-emerald-500/20 bg-linear-to-br from-emerald-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1100,7 +1255,7 @@ export default function InfrastructurePage() {
               </Card>
 
               {/* Geo Verification */}
-              <Card className="js-status-card overflow-hidden border-cyan-500/20 bg-gradient-to-br from-cyan-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-cyan-500/20 bg-linear-to-br from-cyan-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1118,7 +1273,7 @@ export default function InfrastructurePage() {
               </Card>
 
               {/* Availability Zones */}
-              <Card className="js-status-card overflow-hidden border-blue-500/20 bg-gradient-to-br from-blue-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-blue-500/20 bg-linear-to-br from-blue-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1130,13 +1285,15 @@ export default function InfrastructurePage() {
                       <span className="text-xs font-medium text-blue-400">All Active</span>
                     </span>
                   </div>
-                  <p className="text-2xl font-bold text-white">{statusData.availabilityZones.active}/{statusData.availabilityZones.total}</p>
+                  <p className="text-2xl font-bold text-white">
+                    {statusData.availabilityZones.active}/{statusData.availabilityZones.total}
+                  </p>
                   <p className="text-xs text-neutral-500">Mumbai zones operational</p>
                 </CardContent>
               </Card>
 
               {/* Security Status */}
-              <Card className="js-status-card overflow-hidden border-purple-500/20 bg-gradient-to-br from-purple-950/20 to-neutral-950">
+              <Card className="js-status-card overflow-hidden border-purple-500/20 bg-linear-to-br from-purple-950/20 to-neutral-950">
                 <CardContent className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -1176,7 +1333,7 @@ export default function InfrastructurePage() {
               {competitorQuestions.map((q, index) => (
                 <Card
                   key={index}
-                  className="overflow-hidden border-white/[0.08] bg-neutral-900/50 transition-all duration-300 hover:border-red-500/30"
+                  className="overflow-hidden border-white/8 bg-neutral-900/50 transition-all duration-300 hover:border-red-500/30"
                 >
                   <CardContent className="p-5 md:p-6">
                     <div className="mb-4 flex items-start justify-between gap-4">
@@ -1193,11 +1350,15 @@ export default function InfrastructurePage() {
 
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-3">
-                        <p className="mb-2 text-xs font-medium uppercase text-red-400">Expected Answer</p>
+                        <p className="mb-2 text-xs font-medium uppercase text-red-400">
+                          Expected Answer
+                        </p>
                         <p className="text-sm text-neutral-300">{q.expectedAnswer}</p>
                       </div>
                       <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3">
-                        <p className="mb-2 text-xs font-medium uppercase text-emerald-400">Our Answer</p>
+                        <p className="mb-2 text-xs font-medium uppercase text-emerald-400">
+                          Our Answer
+                        </p>
                         <p className="text-sm text-neutral-300">{q.ourAnswer}</p>
                       </div>
                     </div>
@@ -1217,7 +1378,7 @@ export default function InfrastructurePage() {
               {faqData.map((faq, index) => (
                 <Card
                   key={index}
-                  className="overflow-hidden border-white/[0.08] bg-neutral-900/50 transition-all duration-300 hover:border-white/[0.15]"
+                  className="overflow-hidden border-white/8 bg-neutral-900/50 transition-all duration-300 hover:border-white/15"
                 >
                   <button
                     type="button"
@@ -1233,7 +1394,7 @@ export default function InfrastructurePage() {
                     />
                   </button>
                   {expandedFaq === index && (
-                    <div className="border-t border-white/[0.06] px-5 pb-5">
+                    <div className="border-t border-white/6 px-5 pb-5">
                       <div className="pt-4 text-sm leading-relaxed text-neutral-300">
                         {faq.answer}
                       </div>
@@ -1246,7 +1407,7 @@ export default function InfrastructurePage() {
 
           {/* CTA Section */}
           <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <Card className="overflow-hidden border-cyan-500/20 bg-gradient-to-r from-cyan-950/30 via-neutral-900/80 to-purple-950/30">
+            <Card className="overflow-hidden border-cyan-500/20 bg-linear-to-r from-cyan-950/30 via-neutral-900/80 to-purple-950/30">
               <CardContent className="relative p-8 text-center md:p-12">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,240,255,0.1),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(168,85,247,0.1),transparent_50%)]" />
                 <div className="relative">
@@ -1254,26 +1415,26 @@ export default function InfrastructurePage() {
                     Verify Everything We&apos;ve Claimed
                   </h2>
                   <p className="mx-auto mt-3 max-w-xl text-neutral-400">
-                    We don&apos;t just talk about transparency. We prove it. Request verification materials
-                    or book a technical deep-dive.
+                    We don&apos;t just talk about transparency. We prove it. Request verification
+                    materials or book a technical deep-dive.
                   </p>
 
                   <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                    <Card className="border-white/[0.08] bg-white/[0.02]">
+                    <Card className="border-white/8 bg-white/2">
                       <CardContent className="p-4 text-center">
                         <Download className="mx-auto mb-2 h-6 w-6 text-cyan-400" />
                         <p className="font-medium text-white">Infrastructure Report</p>
                         <p className="mt-1 text-xs text-neutral-400">Monthly detailed breakdown</p>
                       </CardContent>
                     </Card>
-                    <Card className="border-white/[0.08] bg-white/[0.02]">
+                    <Card className="border-white/8 bg-white/2">
                       <CardContent className="p-4 text-center">
                         <Shield className="mx-auto mb-2 h-6 w-6 text-purple-400" />
                         <p className="font-medium text-white">Compliance Package</p>
                         <p className="mt-1 text-xs text-neutral-400">ISO, SOC 2, audit reports</p>
                       </CardContent>
                     </Card>
-                    <Card className="border-white/[0.08] bg-white/[0.02]">
+                    <Card className="border-white/8 bg-white/2">
                       <CardContent className="p-4 text-center">
                         <ExternalLink className="mx-auto mb-2 h-6 w-6 text-emerald-400" />
                         <p className="font-medium text-white">Technical Deep-Dive</p>
@@ -1286,7 +1447,7 @@ export default function InfrastructurePage() {
                     <BookCallCta context="infrastructure-cta" />
                     <Link
                       href="/security"
-                      className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+                      className="group inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/2 px-5 py-2 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/5"
                     >
                       View Security Posture
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -1298,7 +1459,7 @@ export default function InfrastructurePage() {
           </section>
 
           {/* Summary Footer */}
-          <section className="border-t border-white/[0.06] bg-neutral-900/30">
+          <section className="border-t border-white/6 bg-neutral-900/30">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
               <div className="grid gap-8 md:grid-cols-3">
                 <div>
