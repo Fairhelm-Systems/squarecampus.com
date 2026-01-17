@@ -32,7 +32,7 @@ gsap.registerPlugin(ScrollTrigger);
 type FAQCategory = {
   id: string;
   name: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
 };
 
@@ -465,7 +465,7 @@ export default function FAQPage() {
                       : "border-white/[0.08] bg-white/[0.02] text-neutral-400 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white"
                   )}
                 >
-                  <Icon className={cn("h-4 w-4", isActive && colors.text)} />
+                  <Icon className={cn("h-4 w-4", isActive ? colors.text : "")} />
                   {category.name}
                 </button>
               );
