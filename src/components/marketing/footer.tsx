@@ -51,6 +51,7 @@ export function Footer() {
     { title: "About", href: "/about" },
     { title: "Security", href: "/security" },
     { title: "Infrastructure", href: "/infrastructure" },
+    { title: "PGP Key", href: "/pgp" },
     { title: "Blog", href: "/blog" },
     { title: "Careers", href: "/careers" },
     { title: "Press", href: "/press" },
