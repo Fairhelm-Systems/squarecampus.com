@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
             For the purposes of applicable data protection law, MDTechSpire acts as the Data
             Controller for its own business operations and the SquareCampus website. When
             processing personal data on behalf of an Institution within the Service, MDTechSpire
-            LLP acts as a Data Processor as described in the Data Processing Addendum.
+            acts as a Data Processor as described in the Data Processing Addendum.
           </p>
           <p>
             SquareCampus service data is hosted and processed in India. We do not transfer or store

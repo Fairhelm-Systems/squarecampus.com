@@ -72,7 +72,7 @@ export default function DataProcessingAddendumPage() {
           <p>References to "SquareCampus" in this DPA mean MDTechSpire.</p>
           <p>
             This Data Processing Addendum ("DPA") forms part of the agreement between MDTechSpire
-            LLP and the Institution when referenced in an order form or contract.
+            and the Institution when referenced in an order form or contract.
           </p>
         </LegalSection>
 
