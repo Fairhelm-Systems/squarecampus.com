@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "@/lib/motion";
+import gsap from "gsap";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { BookOpen, GraduationCap, Home } from "@/icons";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { LinkButton } from "@/components/marketing/link-button";
+import { BookOpen, GraduationCap, Home } from "@/icons";
+import { motion } from "@/lib/motion";
 
 export default function NotFound() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,18 +35,6 @@ export default function NotFound() {
         repeat: -1,
       });
 
-      // Shimmer on 404 text
-      gsap.fromTo(
-        ".shimmer",
-        { x: "-100%" },
-        {
-          x: "100%",
-          duration: 2,
-          ease: "power2.inOut",
-          repeat: -1,
-          repeatDelay: 1,
-        }
-      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -86,10 +74,9 @@ export default function NotFound() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "backOut" }}
-            className="relative overflow-hidden bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-[120px] font-bold leading-none tracking-tight text-transparent md:text-[180px]"
+            className="text-shimmer-404 relative text-[120px] font-bold leading-none tracking-tight md:text-[180px]"
           >
             404
-            <div className="shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </motion.h1>
           <div className="grad-cap absolute -right-8 -top-8 md:-right-12 md:-top-12">
             <GraduationCap className="h-12 w-12 text-sky-400 md:h-16 md:w-16" />
@@ -107,9 +94,10 @@ export default function NotFound() {
             Oops! Class Dismissed on This Page
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-neutral-300 md:text-xl">
-            Looks like this page skipped class today. But while you're here, did you know SquareCampus powers
-            <span className="font-semibold text-white"> complete school operations</span>-from admissions to
-            graduation, in one unified platform?
+            Looks like this page skipped class today. But while you're here, did you know
+            SquareCampus powers
+            <span className="font-semibold text-white"> complete school operations</span>-from
+            admissions to graduation, in one unified platform?
           </p>
         </motion.div>
 
@@ -166,11 +154,7 @@ export default function NotFound() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-6 flex flex-wrap items-center justify-center gap-4"
         >
-          <BookCallCta
-            context="features-hero"
-            label="Book a Demo"
-            variant="primary"
-          />
+          <BookCallCta context="features-hero" label="Book a Demo" variant="primary" />
           <LinkButton
             href={"/"}
             variant={"dark"}
@@ -229,7 +213,12 @@ export default function NotFound() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="text-white"
+          aria-labelledby="not-found-decorative-title"
+          role="img"
         >
+          <title id="not-found-decorative-title">
+            Decorative illustration of a school building
+          </title>
           {/* School building silhouette */}
           <rect x="200" y="150" width="400" height="250" fill="currentColor" opacity="0.1" />
           <polygon points="200,150 400,50 600,150" fill="currentColor" opacity="0.15" />
