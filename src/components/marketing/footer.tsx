@@ -45,6 +45,7 @@ function FooterColumn({ title, links }: FooterColumnProps) {
 export function Footer() {
   // Reorganized: Platform features
   const platformLinks: FooterLink[] = [
+    { title: "Home", href: "/" },
     { title: "Features", href: "/features" },
     { title: "Ecosystem", href: "/ecosystem" },
     { title: "Why SquareCampus", href: "/why-different" },
