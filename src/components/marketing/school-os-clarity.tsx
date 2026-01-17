@@ -19,6 +19,316 @@ import { FeatureVisual } from "./feature-visual";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// === WebGL Background ===
+const vertexShader = `
+  attribute vec2 a_position;
+  void main() {
+    gl_Position = vec4(a_position, 0.0, 1.0);
+  }
+`;
+
+const fragmentShader = `
+  precision mediump float;
+
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  uniform float u_scroll;
+  uniform float u_isMobile;
+
+  // Hash function for pseudo-random
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
+  // Smooth noise
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+
+    float a = hash(i);
+    float b = hash(i + vec2(1.0, 0.0));
+    float c = hash(i + vec2(0.0, 1.0));
+    float d = hash(i + vec2(1.0, 1.0));
+
+    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+  }
+
+  // Grid pattern
+  float grid(vec2 uv, float size) {
+    vec2 grid = abs(fract(uv * size) - 0.5);
+    float line = min(grid.x, grid.y);
+    return smoothstep(0.0, 0.02, line);
+  }
+
+  // Ripple effect
+  float ripple(vec2 uv, vec2 center, float time, float index) {
+    float d = length(uv - center);
+    float wave = sin(d * 8.0 - time * 0.5 - index * 1.5) * 0.5 + 0.5;
+    float fade = smoothstep(0.8, 0.0, d);
+    return wave * fade * 0.15;
+  }
+
+  // Particle field
+  float particles(vec2 uv, float time) {
+    float p = 0.0;
+    for (int i = 0; i < 12; i++) {
+      float fi = float(i);
+      vec2 pos = vec2(
+        hash(vec2(fi, 0.0)),
+        hash(vec2(0.0, fi))
+      );
+      pos += vec2(
+        sin(time * 0.1 + fi) * 0.2,
+        cos(time * 0.15 + fi * 1.3) * 0.15
+      );
+      float d = length(uv - pos);
+      float brightness = smoothstep(0.02, 0.0, d) * (0.3 + 0.2 * sin(time + fi));
+      p += brightness;
+    }
+    return p;
+  }
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    vec2 centered = uv * 2.0 - 1.0;
+    centered.x *= u_resolution.x / u_resolution.y;
+
+    float t = u_time * 0.3;
+    vec3 color = vec3(0.0);
+
+    // Animated grid (desktop only, reduced on mobile)
+    if (u_isMobile < 0.5) {
+      vec2 gridUv = uv + vec2(t * 0.02, t * 0.01);
+      float g = 1.0 - grid(gridUv, 15.0);
+      color += vec3(1.0) * g * 0.025;
+    }
+
+    // Ripple circles from center
+    vec2 center = vec2(0.0);
+    float rippleEffect = 0.0;
+    rippleEffect += ripple(centered, center, t, 0.0);
+    rippleEffect += ripple(centered, center, t, 1.0);
+    rippleEffect += ripple(centered, center, t, 2.0);
+    if (u_isMobile < 0.5) {
+      rippleEffect += ripple(centered, center, t, 3.0);
+    }
+    color += vec3(0.4, 0.9, 0.7) * rippleEffect * 0.3;
+
+    // Floating particles (desktop only)
+    if (u_isMobile < 0.5) {
+      float p = particles(uv, t);
+      color += vec3(1.0) * p * 0.6;
+    }
+
+    // Glow orbs
+    // Blue orb (left)
+    vec2 orb1Pos = vec2(-0.6, 0.3) + vec2(sin(t * 0.2) * 0.1, cos(t * 0.15) * 0.1);
+    float orb1 = smoothstep(0.8, 0.0, length(centered - orb1Pos));
+    color += vec3(0.2, 0.4, 1.0) * orb1 * 0.12;
+
+    // Emerald orb (right)
+    vec2 orb2Pos = vec2(0.7, -0.2) + vec2(cos(t * 0.18) * 0.1, sin(t * 0.22) * 0.1);
+    float orb2 = smoothstep(0.8, 0.0, length(centered - orb2Pos));
+    color += vec3(0.1, 0.8, 0.5) * orb2 * 0.12;
+
+    // Purple orb (bottom center)
+    vec2 orb3Pos = vec2(0.0, -0.5) + vec2(sin(t * 0.25) * 0.08, cos(t * 0.2) * 0.08);
+    float orb3 = smoothstep(0.6, 0.0, length(centered - orb3Pos));
+    color += vec3(0.5, 0.2, 0.8) * orb3 * 0.08;
+
+    // Central emerald glow
+    float centralGlow = smoothstep(0.5, 0.0, length(centered));
+    color += vec3(0.2, 0.8, 0.6) * centralGlow * 0.06;
+
+    // Radial fade to edges
+    float vignette = smoothstep(1.2, 0.3, length(centered));
+    color *= vignette;
+
+    // Add subtle noise
+    float n = noise(uv * 200.0 + t) * 0.015;
+    color += n;
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+function useWebGLSupport() {
+  const [supported, setSupported] = useState<boolean | null>(null);
+  useEffect(() => {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      setSupported(!!gl);
+    } catch {
+      setSupported(false);
+    }
+  }, []);
+  return supported;
+}
+
+function compileShaderProgram(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error("Shader error:", gl.getShaderInfoLog(shader));
+    gl.deleteShader(shader);
+    return null;
+  }
+  return shader;
+}
+
+function createShaderProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader): WebGLProgram | null {
+  const program = gl.createProgram();
+  if (!program) return null;
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error("Program error:", gl.getProgramInfoLog(program));
+    gl.deleteProgram(program);
+    return null;
+  }
+  return program;
+}
+
+function WebGLBackground({ isMobile }: { isMobile: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>(0);
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl", { alpha: false, antialias: false });
+    if (!gl) return;
+
+    const vs = compileShaderProgram(gl, gl.VERTEX_SHADER, vertexShader);
+    const fs = compileShaderProgram(gl, gl.FRAGMENT_SHADER, fragmentShader);
+    if (!vs || !fs) return;
+
+    const program = createShaderProgram(gl, vs, fs);
+    if (!program) return;
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+    ]), gl.STATIC_DRAW);
+
+    const positionLoc = gl.getAttribLocation(program, "a_position");
+    const resolutionLoc = gl.getUniformLocation(program, "u_resolution");
+    const timeLoc = gl.getUniformLocation(program, "u_time");
+    const scrollLoc = gl.getUniformLocation(program, "u_scroll");
+    const isMobileLoc = gl.getUniformLocation(program, "u_isMobile");
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio, 1.5); // Lower DPR for this heavier shader
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Track scroll position
+    const handleScroll = () => {
+      if (canvas.parentElement) {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        scrollRef.current = -rect.top / window.innerHeight;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const startTime = performance.now();
+
+    const render = () => {
+      const time = prefersReduced ? 0 : (performance.now() - startTime) / 1000;
+
+      gl.clearColor(0.039, 0.039, 0.039, 1); // neutral-950
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      gl.useProgram(program);
+      gl.enableVertexAttribArray(positionLoc);
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+      gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+      gl.uniform1f(timeLoc, time);
+      gl.uniform1f(scrollLoc, scrollRef.current);
+      gl.uniform1f(isMobileLoc, isMobile ? 1.0 : 0.0);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      animationRef.current = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", handleScroll);
+      gl.deleteProgram(program);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
+      gl.deleteBuffer(positionBuffer);
+    };
+  }, [isMobile]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0 h-full w-full"
+    />
+  );
+}
+
+// Static fallback for no-WebGL devices
+function StaticBackground() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Grid */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+      {/* Glow orbs */}
+      <div className="absolute -left-32 top-1/4 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[180px]" />
+      <div className="absolute -right-32 top-1/2 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[180px]" />
+      <div className="absolute bottom-1/4 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-purple-500/5 blur-[150px]" />
+      {/* Central glow */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="h-48 w-48 rounded-full bg-gradient-radial from-emerald-500/10 via-sky-500/5 to-transparent blur-2xl" />
+      </div>
+      {/* Radial fade */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(10,10,10,0.8) 70%, rgb(10,10,10) 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
+// Unified background component
+function SectionBackground({ isMobile }: { isMobile: boolean }) {
+  const webglSupported = useWebGLSupport();
+
+  if (webglSupported === null) return null;
+  if (webglSupported) return <WebGLBackground isMobile={isMobile} />;
+  return <StaticBackground />;
+}
+
 // === Data ===
 const whoItsFor = [
   {
@@ -74,193 +384,6 @@ function prefersReducedMotion() {
 function isMobileDevice() {
   if (typeof window === "undefined") return false;
   return window.innerWidth < 768 || window.matchMedia?.("(pointer: coarse)")?.matches;
-}
-
-// === Floating Particles (desktop only, reduced count for performance) ===
-function FloatingParticles({ count = 20 }: { count?: number }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement[]>([]);
-  const [isMobile, setIsMobile] = useState(false);
-
-  const particleIds = useMemo(() =>
-    Array.from({ length: count }, (_, i) => `particle-${i}-${Math.random().toString(36).slice(2, 7)}`),
-    [count]
-  );
-
-  useEffect(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
-
-  useEffect(() => {
-    // Skip on mobile or reduced motion
-    if (isMobile || !containerRef.current || prefersReducedMotion()) return;
-    const particles = particlesRef.current.filter(Boolean);
-
-    particles.forEach((particle) => {
-      const startX = Math.random() * 100;
-      const startY = Math.random() * 100;
-      const size = Math.random() * 2 + 1;
-      const duration = Math.random() * 25 + 20;
-      const delay = Math.random() * -20;
-
-      gsap.set(particle, {
-        left: `${startX}%`,
-        top: `${startY}%`,
-        width: size,
-        height: size,
-        opacity: Math.random() * 0.4 + 0.1,
-      });
-
-      gsap.to(particle, {
-        y: `random(-120, 120)`,
-        x: `random(-60, 60)`,
-        duration,
-        delay,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(particle, {
-        opacity: `random(0.1, 0.5)`,
-        duration: Math.random() * 3 + 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: Math.random() * 2,
-      });
-    });
-
-    return () => {
-      particles.forEach((p) => {
-        gsap.killTweensOf(p);
-      });
-    };
-  }, [isMobile]);
-
-  // Don't render particles on mobile
-  if (isMobile) return null;
-
-  return (
-    <div ref={containerRef} className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particleIds.map((id, i) => (
-        <div
-          key={id}
-          ref={(el) => {
-            if (el) particlesRef.current[i] = el;
-          }}
-          className="absolute rounded-full bg-white/70"
-          style={{ filter: "blur(0.5px)" }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// === Animated Grid Background with Ripple (simplified on mobile) ===
-function AnimatedGridWithRipple() {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const rippleContainerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
-
-  useEffect(() => {
-    if (prefersReducedMotion() || isMobile) return;
-
-    const ctx = gsap.context(() => {
-      // Grid movement (desktop only)
-      if (gridRef.current) {
-        gsap.to(gridRef.current, {
-          backgroundPosition: "60px 60px",
-          duration: 20,
-          repeat: -1,
-          ease: "none",
-        });
-      }
-
-      // Ripple circles animation (desktop only, reduced to 4 circles)
-      const circles = rippleContainerRef.current?.querySelectorAll(".ripple-circle");
-      if (circles) {
-        circles.forEach((circle, i) => {
-          const delay = i * 2;
-          gsap.fromTo(
-            circle,
-            { scale: 0.3, opacity: 0 },
-            {
-              scale: 2.5,
-              opacity: 0,
-              duration: 12,
-              delay,
-              repeat: -1,
-              ease: "power1.out",
-              keyframes: [
-                { scale: 0.3, opacity: 0 },
-                { scale: 0.8, opacity: 0.2, duration: 2 },
-                { scale: 1.5, opacity: 0.08, duration: 4 },
-                { scale: 2.5, opacity: 0, duration: 6 },
-              ],
-            }
-          );
-        });
-      }
-    });
-
-    return () => ctx.revert();
-  }, [isMobile]);
-
-  // Reduced ripple count for mobile
-  const rippleCount = isMobile ? 0 : 4;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Grid - static on mobile */}
-      <div
-        ref={gridRef}
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Ripple circles (desktop only) */}
-      {rippleCount > 0 && (
-        <div
-          ref={rippleContainerRef}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          {[0, 1, 2, 3].slice(0, rippleCount).map((size) => (
-            <div
-              key={`ripple-size-${size}`}
-              className="ripple-circle absolute rounded-full border border-white/6"
-              style={{
-                width: 300 + size * 200,
-                height: 300 + size * 200,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Central glow */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="h-48 w-48 rounded-full bg-gradient-radial from-emerald-500/10 via-sky-500/5 to-transparent blur-2xl" />
-      </div>
-
-      {/* Radial mask to fade edges */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(10,10,10,0.8) 70%, rgb(10,10,10) 100%)",
-        }}
-      />
-    </div>
-  );
 }
 
 // === Animated Border SVG ===
@@ -453,12 +576,17 @@ export function SchoolOsClarity() {
   const dashboardRef = useRef<HTMLDivElement | null>(null);
   const personasWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const glowRefs = useRef<HTMLDivElement[]>([]);
   const personaRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const [osCardVisible, setOsCardVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const reduced = useMemo(() => prefersReducedMotion(), []);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   // Main animation orchestration with scroll-scrub
   useLayoutEffect(() => {
@@ -467,25 +595,6 @@ export function SchoolOsClarity() {
 
     const ctx = gsap.context(() => {
       const mobile = isMobileDevice();
-
-      // === AMBIENT GLOW ANIMATIONS (desktop only) ===
-      if (!mobile) {
-        const glows = glowRefs.current.filter(Boolean);
-        if (glows.length) {
-          // Simple CSS-based glow pulsing instead of GSAP ticker
-          glows.forEach((glow, i) => {
-            gsap.to(glow, {
-              scale: 1.2 + i * 0.1,
-              opacity: 0.15 - i * 0.03,
-              duration: 8 + i * 2,
-              ease: "sine.inOut",
-              yoyo: true,
-              repeat: -1,
-              delay: i * 1.5,
-            });
-          });
-        }
-      }
 
       // === HEADER ANIMATIONS WITH SCRUB ===
       if (titleRef.current) {
@@ -767,31 +876,8 @@ export function SchoolOsClarity() {
       data-section="school-os-clarity"
       className="relative overflow-hidden bg-neutral-950 px-4 py-20 md:px-8 md:py-32"
     >
-      {/* Background effects */}
-      {!reduced && <FloatingParticles count={50} />}
-      <AnimatedGridWithRipple />
-
-      {/* Animated glow orbs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          ref={(el) => {
-            if (el) glowRefs.current[0] = el;
-          }}
-          className="absolute -left-32 top-1/4 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[180px]"
-        />
-        <div
-          ref={(el) => {
-            if (el) glowRefs.current[1] = el;
-          }}
-          className="absolute -right-32 top-1/2 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[180px]"
-        />
-        <div
-          ref={(el) => {
-            if (el) glowRefs.current[2] = el;
-          }}
-          className="absolute bottom-1/4 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-purple-500/5 blur-[150px]"
-        />
-      </div>
+      {/* WebGL Background (grid, particles, ripples, glows - all GPU-rendered) */}
+      {!reduced && <SectionBackground isMobile={isMobile} />}
 
       <div className="relative mx-auto flex max-w-6xl flex-col gap-16 md:gap-24">
         {/* Header */}
