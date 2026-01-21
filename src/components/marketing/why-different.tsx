@@ -48,13 +48,22 @@ function AnimatedGrid() {
 }
 
 // Floating orbs component
-function FloatingOrbs() {
+function FloatingOrbs({ paused = false }: { paused?: boolean }) {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {/* Large ambient orbs */}
-      <div className="absolute left-1/4 top-1/4 h-[500px] w-[500px] animate-pulse rounded-full bg-purple-500/[0.08] blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 h-[500px] w-[500px] animate-pulse rounded-full bg-blue-500/[0.08] blur-[120px]" style={{ animationDelay: "1s" }} />
-      <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-emerald-500/[0.05] blur-[100px]" style={{ animationDelay: "2s" }} />
+      <div
+        className="absolute left-1/4 top-1/4 h-[500px] w-[500px] animate-pulse rounded-full bg-purple-500/[0.08] blur-[120px]"
+        style={{ animationPlayState: paused ? "paused" : "running" }}
+      />
+      <div
+        className="absolute bottom-1/4 right-1/4 h-[500px] w-[500px] animate-pulse rounded-full bg-blue-500/[0.08] blur-[120px]"
+        style={{ animationDelay: "1s", animationPlayState: paused ? "paused" : "running" }}
+      />
+      <div
+        className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-emerald-500/[0.05] blur-[100px]"
+        style={{ animationDelay: "2s", animationPlayState: paused ? "paused" : "running" }}
+      />
 
       {/* Small floating particles */}
       {[...Array(15)].map((_, i) => (
@@ -66,6 +75,7 @@ function FloatingOrbs() {
             top: `${10 + Math.random() * 80}%`,
             animation: `float-subtle ${6 + Math.random() * 8}s ease-in-out infinite`,
             animationDelay: `${Math.random() * 4}s`,
+            animationPlayState: paused ? "paused" : "running",
           }}
         />
       ))}
@@ -91,6 +101,7 @@ export function WhyDifferent() {
   const gridRef = useRef<HTMLDivElement | null>(null);
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isInView, setIsInView] = useState(true);
 
   // GSAP scroll animations
   useEffect(() => {
@@ -161,6 +172,23 @@ export function WhyDifferent() {
     }, sectionRef);
 
     return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsInView(entry.isIntersecting);
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const painPoints = [
@@ -277,7 +305,7 @@ export function WhyDifferent() {
       className="relative overflow-hidden border-t border-white/[0.06] bg-neutral-950 px-4 py-20 md:px-8 md:py-28"
     >
       <AnimatedGrid />
-      <FloatingOrbs />
+      <FloatingOrbs paused={!isInView} />
 
       <div className="relative mx-auto max-w-6xl">
         {/* Header */}

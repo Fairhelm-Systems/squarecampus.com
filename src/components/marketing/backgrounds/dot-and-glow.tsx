@@ -498,15 +498,36 @@ const Circles = () => {
 };
 
 export function BackgroundLines({ className }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(entry.isIntersecting);
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className={cn(
         "pointer-events-none absolute inset-0 overflow-hidden",
         className
       )}
     >
-      <Circles />
-      <ShootingStars starColor="#7c3aed" trailColor="#38bdf8" />
+      {isVisible && <Circles />}
+      {isVisible && <ShootingStars starColor="#7c3aed" trailColor="#38bdf8" />}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(59,130,246,0.08),transparent_45%)]" />
     </div>
   );

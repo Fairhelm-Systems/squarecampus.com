@@ -12,8 +12,8 @@ import { Navbar } from "@/components/marketing/navbar";
 import Nexus from "@/components/marketing/nexus";
 import { Operations } from "@/components/marketing/operations";
 import { ParallaxScene } from "@/components/marketing/parallax-scene";
-import { SchoolOsClarity } from "@/components/marketing/school-os-clarity";
 import { TrustBanner } from "@/components/marketing/trust-banner";
+import { WhatIfWall } from "@/components/marketing/what-if-wall";
 import { WhyDifferent } from "@/components/marketing/why-different";
 
 export const metadata: Metadata = {
@@ -40,17 +40,13 @@ export default function Home() {
     <main className="overflow-x-hidden bg-black text-white">
       <Navbar />
       <Hero />
-      <SchoolOsClarity />
-      {/* <ParallaxScene variant="network" height="h-24 md:h-40 lg:h-56" /> */}
+      <WhatIfWall />
       <Operations />
       <Features />
-      {/* <ParallaxScene variant="shapes" height="h-24 md:h-40 lg:h-56" /> */}
       <LanguageSupport />
       <Nexus />
-      {/* <ParallaxScene variant="particles" height="h-24 md:h-40 lg:h-56" /> */}
       <WhyDifferent />
       <CTA />
-      {/* <ParallaxScene variant="cosmic" height="h-24 md:h-40 lg:h-56" /> */}
       <EcosystemSection />
       <TrustBanner />
       <FAQ />
