@@ -155,6 +155,7 @@ export function Operations() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+  const [isInView, setIsInView] = useState(true);
 
   // Check for mobile/tablet/touch devices
   useEffect(() => {
@@ -202,12 +203,13 @@ export function Operations() {
       }
 
       const cards = cardsRef.current.filter(Boolean) as HTMLElement[];
+      const sheenTweens: gsap.core.Tween[] = [];
 
       // Sheen animation on all cards
       cards.forEach((card, i) => {
         const sheen = card?.querySelector("[data-sheen]");
         if (sheen) {
-          gsap.to(sheen, {
+          const tween = gsap.to(sheen, {
             x: "250%",
             duration: 3,
             ease: "power1.inOut",
@@ -215,6 +217,8 @@ export function Operations() {
             repeatDelay: 8,
             delay: i * 1.2,
           });
+          tween.pause();
+          sheenTweens.push(tween);
         }
       });
 
@@ -509,10 +513,39 @@ export function Operations() {
           }
         );
       }
+
+      if (sectionRef.current && sheenTweens.length) {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          onEnter: () => sheenTweens.forEach((tween) => tween.resume()),
+          onEnterBack: () => sheenTweens.forEach((tween) => tween.resume()),
+          onLeave: () => sheenTweens.forEach((tween) => tween.pause()),
+          onLeaveBack: () => sheenTweens.forEach((tween) => tween.pause()),
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, [isMobile, isTablet]);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsInView(entry.isIntersecting);
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -523,20 +556,22 @@ export function Operations() {
     >
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">
-        <DottedGlowBackground
-          className="pointer-events-none opacity-60"
-          gap={18}
-          radius={1.4}
-          color="rgba(148, 163, 184, 0.16)"
-          darkColor="rgba(148, 163, 184, 0.2)"
-          glowColor="rgba(56, 189, 248, 0.45)"
-          darkGlowColor="rgba(56, 189, 248, 0.6)"
-          opacity={0.45}
-          backgroundOpacity={0.1}
-          speedMin={0.22}
-          speedMax={0.85}
-          speedScale={0.65}
-        />
+        {isInView && (
+          <DottedGlowBackground
+            className="pointer-events-none opacity-60"
+            gap={18}
+            radius={1.4}
+            color="rgba(148, 163, 184, 0.16)"
+            darkColor="rgba(148, 163, 184, 0.2)"
+            glowColor="rgba(56, 189, 248, 0.45)"
+            darkGlowColor="rgba(56, 189, 248, 0.6)"
+            opacity={0.45}
+            backgroundOpacity={0.1}
+            speedMin={0.22}
+            speedMax={0.85}
+            speedScale={0.65}
+          />
+        )}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.06),transparent_32%),radial-gradient(circle_at_40%_80%,rgba(59,130,246,0.05),transparent_28%)]" />
       </div>
 
