@@ -377,18 +377,17 @@ export default function AboutPage() {
                 </div>
 
                 <h1 className="js-hero-animate max-w-4xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[52px]">
-                  Building the operational backbone Indian education deserves.
+                  Schools are the most important institutions in society.
                   <span className="block bg-gradient-to-r from-blue-400 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
-                    Calm, connected, and accountable.
+                    Their software should respect that.
                   </span>
                 </h1>
 
                 <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                  Every school in India fights the same chaos: scattered systems, manual
-                  reconciliations, and fragile processes. SquareCampus gives you a single nervous
-                  system to run admissions, academics, finance, and compliance with clarity and
-                  trust. Our team has built systems that process 100M+ records per day with strict
-                  efficiency, and we bring that same operational discipline to education.
+                  Yet most schools still run on software built for the 1990s. Simple tasks like fee
+                  collection or publishing results turn into multi-week ordeals of spreadsheets,
+                  calls, and stress. SquareCampus exists to replace that with a School Operating
+                  System that flows with how schools actually work.
                 </p>
 
                 <div className="js-hero-animate flex flex-wrap gap-3">
@@ -657,18 +656,41 @@ export default function AboutPage() {
           <section ref={missionRef} className="space-y-12 py-12">
             <div className="space-y-6">
               <h2 className="js-mission-animate text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-                Education in India is broken
+                Schools are the most important institutions in society.
                 <br />
-                at the operational level.
+                They deserve better software.
               </h2>
               <div className="js-mission-animate max-w-3xl space-y-6 text-lg leading-relaxed text-neutral-300">
                 <p>
-                  Schools lose weeks to admission chaos. Teachers drown in attendance sheets.
-                  Finance teams reconcile fees in Excel. Every department runs on WhatsApp and
-                  memory.
+                  Yet they run on software built for the 1990s. Tools that treat education like
+                  data entry, not like the complex, human, transformative work it is.
                 </p>
+                <p>
+                  A simple task—like collecting fees or publishing results—becomes a multi-week
+                  ordeal of spreadsheets, calls, and stress. That isn&apos;t just inefficient. It&apos;s
+                  disrespectful to the work schools do.
+                </p>
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
+                    We built SquareCampus because schools deserve
+                  </p>
+                  <ul className="mt-4 space-y-3 text-base text-neutral-200">
+                    {[
+                      "Software that flows like thought, not clicks like paperwork",
+                      "Systems that anticipate needs, not wait for tickets",
+                      "Automation that gives time back to teaching, not admin",
+                      "Data that tells stories, not just sits in rows",
+                      "Technology that delights users, not frustrates them",
+                    ].map((item) => (
+                      <li key={item} className="flex gap-3">
+                        <span className="text-emerald-400">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <p className="text-xl font-semibold text-white">
-                  This isn&apos;t an education problem. It&apos;s an infrastructure problem.
+                  This is not school management software. This is a School Operating System.
                 </p>
               </div>
             </div>
