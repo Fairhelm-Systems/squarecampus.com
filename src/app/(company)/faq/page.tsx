@@ -3,17 +3,10 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  createBreadcrumbSchema,
-  createFAQPageSchema,
-  createWebPageSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
 import {
   ArrowUpRight,
   ChevronDown,
@@ -370,38 +363,8 @@ export default function FAQPage() {
     return () => ctx.revert();
   }, []);
 
-  // Structured data for SEO
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      createWebPageSchema({
-        name: "Frequently Asked Questions | SquareCampus",
-        description:
-          "Find answers to common questions about SquareCampus school management system, including features, pricing, security, and implementation.",
-        url: `${SEO_CONFIG.baseUrl}/faq`,
-      }),
-      createBreadcrumbSchema([
-        { name: "Home", url: SEO_CONFIG.baseUrl },
-        { name: "FAQ", url: `${SEO_CONFIG.baseUrl}/faq` },
-      ]),
-      createFAQPageSchema(
-        faqs.map((faq) => ({
-          question: faq.question,
-          answer: faq.answer,
-        }))
-      ),
-    ],
-  };
-
   return (
-    <>
-      <Script
-        id="faq-structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      <main className="relative min-h-screen bg-neutral-950 text-white">
+    <main className="relative min-h-screen bg-neutral-950 text-white">
         <FloatingParticles />
         <FloatingHomeButton href="/" />
 
@@ -636,7 +599,6 @@ export default function FAQPage() {
           </section>
         </div>
       </main>
-    </>
   );
 }
 

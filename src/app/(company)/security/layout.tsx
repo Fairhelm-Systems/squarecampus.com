@@ -1,9 +1,68 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import type { ReactNode } from "react";
-import { createPageMetadata } from "@/lib/seo";
+import { createBreadcrumbSchema, createPageMetadata, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 
 // Security page - critical for enterprise trust and procurement decisions
 // Target: Security-conscious decision makers, IT heads, compliance officers
+
+// Security FAQs for structured data (matches page.tsx securityFaqs)
+const securityFaqs = [
+  {
+    question: "Where is data hosted?",
+    answer:
+      "SquareCampus is hosted in India by default, with data residency in India and no cross-border transfers unless explicitly requested.",
+  },
+  {
+    question: "How is data encrypted?",
+    answer:
+      "We use TLS 1.3 for data in transit and AES-256 for data at rest, including encrypted backups and regular key rotation.",
+  },
+  {
+    question: "Who can access data?",
+    answer:
+      "Access is role-based and least-privileged. Only authorized staff with MFA can reach administrative systems, and all access is logged.",
+  },
+  {
+    question: "What happens if a device is lost?",
+    answer:
+      "Company-managed devices can be locked or wiped remotely, and access tokens are revoked to prevent further access.",
+  },
+  {
+    question: "Do you support vendor security questionnaires?",
+    answer:
+      "Yes. We provide questionnaire support and can share security documentation and summaries on request.",
+  },
+];
+
+// Server-side structured data for security page
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    createWebPageSchema({
+      name: "Security & Compliance | SquareCampus",
+      description:
+        "Bank-grade security for your school data. SquareCampus offers encryption, India data residency, RBAC, audit trails, and compliance-ready infrastructure.",
+      url: `${SEO_CONFIG.baseUrl}/security`,
+    }),
+    createBreadcrumbSchema([
+      { name: "Home", url: SEO_CONFIG.baseUrl },
+      { name: "Security", url: `${SEO_CONFIG.baseUrl}/security` },
+    ]),
+    {
+      "@type": "FAQPage",
+      "@id": `${SEO_CONFIG.baseUrl}/security#faqpage`,
+      mainEntity: securityFaqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ],
+};
 
 export const metadata: Metadata = createPageMetadata({
   title: "Security & Compliance | SquareCampus School Management System India",
@@ -110,5 +169,15 @@ type SecurityLayoutProps = {
 };
 
 export default function SecurityLayout({ children }: SecurityLayoutProps) {
-  return <>{children}</>;
+  return (
+    <>
+      <Script
+        id="security-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -92,6 +92,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
 
+    // Support & contact
+    {
+      path: "/faq",
+      lastModified: LASTMOD.company,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      path: "/contact-us",
+      lastModified: LASTMOD.company,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+
     // Company / PR
     {
       path: "/careers",

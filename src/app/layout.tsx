@@ -159,6 +159,33 @@ export default function RootLayout({
                   publisher: { "@id": "https://squarecampus.com/#org" },
                   inLanguage: "en",
                 },
+                {
+                  "@type": "LocalBusiness",
+                  "@id": "https://squarecampus.com/#localbusiness",
+                  name: "SquareCampus",
+                  description:
+                    "School management system provider offering comprehensive ERP solutions for schools, colleges, and educational institutions across India.",
+                  url: "https://squarecampus.com",
+                  logo: "https://squarecampus.com/logo.png",
+                  email: "contact@squarecampus.com",
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Mumbai",
+                    addressRegion: "Maharashtra",
+                    addressCountry: "IN",
+                  },
+                  areaServed: {
+                    "@type": "Country",
+                    name: "India",
+                  },
+                  priceRange: "₹₹",
+                  openingHoursSpecification: {
+                    "@type": "OpeningHoursSpecification",
+                    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    opens: "09:00",
+                    closes: "18:00",
+                  },
+                },
               ],
             }),
           }}
