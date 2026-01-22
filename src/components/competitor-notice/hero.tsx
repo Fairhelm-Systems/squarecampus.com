@@ -4,18 +4,19 @@ import { AlertTriangle, Clock, FileText, Shield } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const documentMeta = {
-  effectiveDate: "January 15, 2026",
-  version: "1.0",
-  documentId: "COMP-NOTICE-2025-001",
-  jurisdiction: "Karnataka, India",
-  governingLaw: "Indian IT Act 2000, IPC 1860",
+  effectiveDate: "January 22, 2026",
+  version: "1.1",
+  documentId: "COMP-NOTICE-2026-001",
+  jurisdiction: "India (Karnataka for courts where applicable)",
+  governingLaw:
+    "Indian law, including the Information Technology Act, 2000 and other applicable statutes",
 };
 
 const quickConsequences = [
-  { label: "Civil Damages", value: "₹25L-₹1Cr+" },
-  { label: "Criminal Prosecution", value: "Up to 7 years" },
-  { label: "Public Disclosure", value: "Company named" },
-  { label: "Regulatory Action", value: "Industry sanctions" },
+  { label: "Civil Remedies", value: "Injunctions + Compensation" },
+  { label: "Criminal Complaints", value: "Where Applicable" },
+  { label: "Regulatory Notices", value: "If Required by Law" },
+  { label: "Customer Protection", value: "Security Notifications" },
 ];
 
 export function Hero() {
@@ -43,12 +44,16 @@ export function Hero() {
             <div className="space-y-4">
               <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Notice to Competitors:{" "}
-                <span className="text-red-400">Legal Consequences of Unauthorized Access</span>
+                <span className="text-red-400">
+                  Unauthorized Access and Misuse Are Prohibited
+                </span>
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
-                MDTechSpire maintains zero tolerance for competitive espionage, credential
-                solicitation, or unauthorized access to SquareCampus. This notice establishes actual
-                knowledge and legal consequences.
+                MDTechSpire (trading as SquareCampus) issues this public legal notice to competitors
+                and their agents. Any unauthorized access, credential solicitation, misuse of
+                non-public information, or circumvention of access controls is prohibited. We
+                reserve the right to pursue civil, criminal, and regulatory remedies as permitted by
+                Indian law.
               </p>
             </div>
 
@@ -116,7 +121,9 @@ export function Hero() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Violation Consequences</h2>
-                  <p className="text-xs text-neutral-400">Immediate action on detection</p>
+                  <p className="text-xs text-neutral-400">
+                    Actions may include civil, criminal, and regulatory routes
+                  </p>
                 </div>
               </div>
 
@@ -136,9 +143,9 @@ export function Hero() {
 
               <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-950/20 p-4">
                 <p className="text-xs leading-relaxed text-amber-200/90">
-                  <strong className="text-amber-300">Warning:</strong> Unauthorized access attempts
-                  will be prosecuted to the fullest extent of the law. All access is logged and
-                  monitored.
+                  <strong className="text-amber-300">Warning:</strong> Unauthorized access or
+                  misuse may lead to legal action. Access and security events are logged in the
+                  ordinary course of business for protection and compliance.
                 </p>
               </div>
             </div>

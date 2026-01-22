@@ -16,6 +16,7 @@ export function ScrollToTop() {
 
   // Scroll to top on route changes
   useEffect(() => {
+    if (!pathname) return;
     // Skip on first render (initial page load handles its own scroll)
     if (isFirstRender.current) {
       isFirstRender.current = false;

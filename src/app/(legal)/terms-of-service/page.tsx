@@ -438,12 +438,13 @@ export default function TermsOfServicePage() {
         <LegalSection title="19. Competitor Access Prohibition" id="competitor-access">
           <div className="mb-6 rounded-lg border border-red-500/50 bg-red-500/10 p-4">
             <p className="text-sm font-medium text-red-200">
-              CRITICAL: This section establishes absolute prohibitions on competitor access.
-              Violations will result in immediate termination and legal action. See our{" "}
+              CRITICAL: This section establishes strict prohibitions on competitor access.
+              Violations may result in suspension or termination and legal action as appropriate.
+              See our{" "}
               <a href="/competitor-notice" className="underline">
                 Competitor Notice
               </a>{" "}
-              for detailed enforcement policies.
+              for additional context and public notice.
             </p>
           </div>
 

@@ -66,13 +66,13 @@ export function ShareActions() {
   const handleEmailCounsel = () => {
     const subject = encodeURIComponent("SquareCampus Competitor Notice - Legal Review Required");
     const body = encodeURIComponent(
-      `Please review the following legal notice from SquareCampus regarding competitor access policies:\n\n${window.location.href}\n\nDocument ID: COMP-NOTICE-2025-001\nEffective Date: January 15, 2026`
+      `Please review the following legal notice from SquareCampus regarding competitor access policies:\n\n${window.location.href}\n\nDocument ID: COMP-NOTICE-2026-001\nEffective Date: January 22, 2026`
     );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
   const generateCitation = () => {
-    const citation = `MDTechSpire. "Notice to Competitors: Legal Consequences of Unauthorized Access." SquareCampus, Document ID: COMP-NOTICE-2025-001, Version 1.0, January 15, 2026. ${window.location.href}`;
+    const citation = `MDTechSpire. "Notice to Competitors: Unauthorized Access and Misuse Are Prohibited." SquareCampus, Document ID: COMP-NOTICE-2026-001, Version 1.1, January 22, 2026. ${window.location.href}`;
     navigator.clipboard.writeText(citation);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -119,6 +119,7 @@ export function ShareActions() {
               const Icon = action.icon;
               return (
                 <button
+                  type="button"
                   key={action.id}
                   onClick={action.onClick}
                   className={cn(

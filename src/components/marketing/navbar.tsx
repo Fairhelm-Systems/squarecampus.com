@@ -2,7 +2,7 @@
 
 import gsap from "gsap";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, ChevronRight } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { BookCallCta, LoginCta } from "./ctas";
@@ -167,7 +167,7 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const backdropRef = useRef<HTMLDivElement | null>(null);
+  const backdropRef = useRef<HTMLButtonElement | null>(null);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -254,8 +254,10 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
   return (
     <>
       {/* Backdrop */}
-      <div
+      <button
+        type="button"
         ref={backdropRef}
+        aria-label="Close navigation"
         className="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm lg:hidden"
         onClick={() => setOpen(false)}
       />

@@ -38,7 +38,10 @@ const trackCta = (intent: CtaIntent, context: string) => {
   };
 
   // Fire into common analytics buckets if they exist; fail silently to avoid UX hits.
-  const w = window as any;
+  const w = window as Window & {
+    dataLayer?: unknown[] & { push?: (payload: unknown) => void };
+    analytics?: { track?: (event: string, payload: unknown) => void };
+  };
   w?.dataLayer?.push?.(payload);
   w?.analytics?.track?.("CTA Clicked", payload);
 };

@@ -349,6 +349,8 @@ export function FeatureExplorer() {
 
   useEffect(() => {
     if (!featureRef.current) return;
+    const featureName = activeFeature.name;
+    featureRef.current.dataset.feature = featureName;
 
     gsap.fromTo(
       featureRef.current,
@@ -440,12 +442,14 @@ export function FeatureExplorer() {
             <div className="flex flex-wrap gap-2">
               {activeCategory.features.map((feature, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => setActiveFeature(feature)}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${activeFeature.name === feature.name
-                    ? "border-blue-500/50 bg-blue-500/10 text-blue-400"
-                    : "border-white/10 bg-white/5 text-neutral-400 hover:border-white/20 hover:text-neutral-200"
-                    }`}
+                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+                    activeFeature.name === feature.name
+                      ? "border-blue-500/50 bg-blue-500/10 text-blue-400"
+                      : "border-white/10 bg-white/5 text-neutral-400 hover:border-white/20 hover:text-neutral-200"
+                  }`}
                 >
                   {feature.name}
                 </button>

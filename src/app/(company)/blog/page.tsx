@@ -1,6 +1,4 @@
 "use client";
-
-import type { Metadata } from "next";
 import Link from "next/link";
 import { motion } from "@/lib/motion";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";

@@ -11,7 +11,6 @@ import { LanguageSupport } from "@/components/marketing/language-support";
 import { Navbar } from "@/components/marketing/navbar";
 import Nexus from "@/components/marketing/nexus";
 import { Operations } from "@/components/marketing/operations";
-import { ParallaxScene } from "@/components/marketing/parallax-scene";
 import { TrustBanner } from "@/components/marketing/trust-banner";
 import { WhatIfWall } from "@/components/marketing/what-if-wall";
 import { WhyDifferent } from "@/components/marketing/why-different";

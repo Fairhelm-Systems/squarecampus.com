@@ -96,7 +96,7 @@ export function Hero() {
     const ctx = gsap.context(() => {
       // Headline word-by-word reveal
       const words = titleRef.current?.querySelectorAll("[data-word]");
-      if (words && words.length) {
+      if (words?.length) {
         introTl.fromTo(
           words,
           { opacity: 0, y: 24, rotateX: isMobileOrTablet ? 0 : -12 },
@@ -116,7 +116,7 @@ export function Hero() {
           subheadRef.current,
           { opacity: 0, y: 16, filter: isMobileOrTablet ? "none" : "blur(6px)" },
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6 },
-          words && words.length ? "-=0.25" : 0
+          words?.length ? "-=0.25" : 0
         );
       }
 
@@ -216,10 +216,14 @@ export function Hero() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            tweens.forEach((tween) => tween.resume());
+            tweens.forEach((tween) => {
+              tween.resume();
+            });
             enableMouse();
           } else {
-            tweens.forEach((tween) => tween.pause());
+            tweens.forEach((tween) => {
+              tween.pause();
+            });
             disableMouse();
           }
         });

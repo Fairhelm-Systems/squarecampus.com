@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback, useId } from "react";
+import { useEffect, useRef, useState, useId } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -1025,7 +1025,7 @@ const AskNexusDemo = () => {
       clearInterval(typeInterval);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [currentIndex, isInView, currentData.question]);
+  }, [isInView, currentData.question]);
 
   // ScrollTrigger to start animation when in view
   useEffect(() => {

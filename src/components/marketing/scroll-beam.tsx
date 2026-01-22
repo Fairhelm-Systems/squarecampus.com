@@ -35,6 +35,7 @@ export function ScrollBeam({
   const pathname = usePathname();
 
   useEffect(() => {
+    if (!pathname) return;
     if (!barRef.current) return;
 
     const bar = barRef.current;

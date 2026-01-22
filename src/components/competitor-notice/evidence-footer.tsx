@@ -6,13 +6,14 @@ import { Clock, FileText, Globe, Shield } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const documentMetadata = {
-  documentId: "COMP-NOTICE-2025-001",
-  version: "1.0",
-  effectiveDate: "January 15, 2026",
-  lastUpdated: "January 15, 2026",
-  nextReview: "January 15, 2027",
-  jurisdiction: "Karnataka, India",
-  governingLaw: "Indian Contract Act 1872, IT Act 2000, IPC 1860, DPDP Act 2023",
+  documentId: "COMP-NOTICE-2026-001",
+  version: "1.1",
+  effectiveDate: "January 22, 2026",
+  lastUpdated: "January 22, 2026",
+  nextReview: "January 22, 2027",
+  jurisdiction: "India (Karnataka for courts where applicable)",
+  governingLaw:
+    "Information Technology Act, 2000; Digital Personal Data Protection Act, 2023; applicable IP statutes; and the penal code in force (IPC 1860/BNS 2023).",
   legalEntity: "MDTechSpire",
 };
 
@@ -85,7 +86,7 @@ export function EvidenceFooter() {
 
           <div className="mt-6 rounded-lg border border-neutral-800 bg-neutral-900/50 p-4">
             <div className="mb-2 text-xs font-medium uppercase tracking-wide text-neutral-500">
-              Governing Law
+              Relevant Indian Law (Non-Exhaustive)
             </div>
             <p className="text-sm text-neutral-300">{documentMetadata.governingLaw}</p>
           </div>
@@ -169,10 +170,14 @@ export function EvidenceFooter() {
         {/* Legal Disclaimers */}
         <div className="space-y-4 text-xs text-neutral-500">
           <div>
-            <strong className="text-neutral-400">Binding Notice:</strong> This document constitutes
-            actual legal notice to all parties. By accessing this page or attempting to access
-            SquareCampus through any means, you acknowledge receipt and understanding of this
-            notice.
+            <strong className="text-neutral-400">Public Notice:</strong> This page is intended to
+            provide actual notice to competitors and their agents. It does not create a contract or
+            grant any rights without explicit written agreement.
+          </div>
+          <div>
+            <strong className="text-neutral-400">Reservation of Rights:</strong> MDTechSpire
+            expressly reserves all legal and equitable rights and remedies. No delay or omission is
+            a waiver.
           </div>
           <div>
             <strong className="text-neutral-400">No Legal Advice:</strong> This notice does not
@@ -181,7 +186,8 @@ export function EvidenceFooter() {
           </div>
           <div>
             <strong className="text-neutral-400">Jurisdiction:</strong> This notice is governed by
-            Indian law. Courts of Bengaluru, Karnataka have exclusive jurisdiction over disputes.
+            Indian law. Subject to mandatory requirements, courts in Bengaluru, Karnataka, India
+            have jurisdiction.
           </div>
           <div>
             <strong className="text-neutral-400">Amendments:</strong> MDTechSpire may update

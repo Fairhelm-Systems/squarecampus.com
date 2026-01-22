@@ -224,8 +224,8 @@ export default function AcceptableUsePage() {
             <li>Immediate suspension or termination of access without refund;</li>
             <li>Pursuit of civil remedies including injunctive relief and damages;</li>
             <li>Referral to law enforcement authorities where criminal conduct is suspected;</li>
-            <li>Notification to industry associations and regulatory bodies;</li>
-            <li>Public disclosure of enforcement actions where permitted by law.</li>
+            <li>Notification to industry associations and regulatory bodies where appropriate;</li>
+            <li>Notifications to affected parties where legally required.</li>
           </ul>
           <p className="mt-4 text-sm text-muted-foreground">
             For detailed information on legal consequences and enforcement procedures, see our{" "}

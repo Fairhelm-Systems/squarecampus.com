@@ -355,6 +355,7 @@ function FeatureAccordionItem({ category, features }: { category: string; featur
   return (
     <div className="border-b border-white/[0.06] last:border-b-0">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-white/[0.02]"
       >

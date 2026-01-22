@@ -497,7 +497,7 @@ function DepartmentColumnGraph({ bars }: { bars: { name: string; value: number; 
 
       {/* Bars */}
       <div className="relative flex items-end justify-around h-full px-2 pb-5 pt-1">
-        {bars.map((bar, idx) => {
+        {bars.map((bar, _idx) => {
           const colors = colorMap[bar.color];
           const barHeight = (bar.value / 100) * 80;
 

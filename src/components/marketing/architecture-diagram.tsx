@@ -63,15 +63,6 @@ const architectureLayers = [
   },
 ];
 
-const dataFlow = [
-  { from: "User Request", to: "Load Balancer", color: "sky" },
-  { from: "Load Balancer", to: "API Gateway", color: "purple" },
-  { from: "API Gateway", to: "Application Servers", color: "emerald" },
-  { from: "Application Servers", to: "Database Cluster", color: "amber" },
-  { from: "Database Cluster", to: "Application Servers", color: "amber" },
-  { from: "Application Servers", to: "Cache Layer", color: "cyan" },
-];
-
 export function ArchitectureDiagram() {
   const containerRef = useRef<HTMLDivElement>(null);
 

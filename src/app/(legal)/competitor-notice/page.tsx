@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import {
   BulletList,
-  DataTable,
   EvidenceFooter,
   ExampleBox,
   ExpandableSection,
@@ -19,23 +18,25 @@ import {
 } from "@/components/competitor-notice";
 import "@/styles/competitor-notice-print.css";
 
+const linkClassName = "text-teal-300 hover:underline";
+
 export const metadata: Metadata = {
   title: "Notice to Competitors | SquareCampus",
   description:
-    "Legal notice regarding unauthorized access to SquareCampus. MDTechSpire maintains zero tolerance for competitive espionage, credential solicitation, or unauthorized access.",
+    "Public legal notice regarding unauthorized access or misuse of SquareCampus. This notice is intended to provide actual notice and preserve remedies under Indian law.",
   keywords: [
     "competitor notice",
     "legal notice",
     "unauthorized access",
     "SquareCampus",
     "MDTechSpire",
-    "competitive espionage",
+    "cybersecurity",
     "IP protection",
   ],
   openGraph: {
     title: "Notice to Competitors | SquareCampus",
     description:
-      "Legal notice regarding unauthorized access to SquareCampus. Zero tolerance policy for competitive espionage.",
+      "Public legal notice regarding unauthorized access or misuse of SquareCampus.",
     type: "website",
     url: "https://squarecampus.com/competitor-notice",
   },
@@ -65,401 +66,369 @@ export default function CompetitorNoticePage() {
           <div className="grid grid-cols-1 gap-12 xl:grid-cols-[1fr_280px]">
             {/* Main Content */}
             <div className="space-y-12">
-              {/* Section 1: Zero Tolerance Policy */}
               <NoticeSection
-                id="zero-tolerance"
+                id="notice-purpose"
                 number={1}
-                title="Zero Tolerance Policy"
+                title="Purpose and Scope of Notice"
                 severity="critical"
               >
                 <Paragraph>
-                  MDTechSpire (trading as SquareCampus) maintains a{" "}
-                  <Strong>zero-tolerance policy</Strong> for any form of unauthorized access,
-                  competitive espionage, or improper solicitation of access to our proprietary
-                  platform.
+                  MDTechSpire (trading as SquareCampus) issues this public legal notice to
+                  competitors, their employees, contractors, agents, and anyone seeking access to
+                  SquareCampus. Unauthorized access, credential solicitation, or misuse of
+                  non-public information is prohibited.
+                </Paragraph>
+                <Paragraph>
+                  This notice is informational and intended to provide actual notice. It does not
+                  create a contract, grant access rights, or modify any existing agreement.
                 </Paragraph>
 
-                <SubHeading>Absolutely Prohibited Activities:</SubHeading>
+                <SubHeading>Who this applies to</SubHeading>
                 <BulletList
-                  type="x"
+                  type="default"
                   items={[
-                    "Soliciting customer credentials or access to SquareCampus",
-                    "Requesting product demonstrations under false pretenses",
-                    'Conducting "reference calls" for competitive intelligence purposes',
-                    "Attempting to reverse engineer or analyze our platform",
-                    "Obtaining architectural, technical, or proprietary business information",
-                    "Accessing the platform through any unauthorized means",
-                    "Using information obtained through unauthorized access",
+                    "Competitors and prospective competitors",
+                    "Sales, marketing, product, and research teams",
+                    "Third-party consultants, contractors, and agents",
+                    "Anyone attempting to obtain non-public SquareCampus information",
                   ]}
                 />
-
-                <SubHeading>Our Response:</SubHeading>
-                <Paragraph>
-                  Every violation results in immediate, aggressive legal action across civil,
-                  criminal, and regulatory channels simultaneously. We commit significant resources
-                  to identifying, documenting, and prosecuting violators.
-                </Paragraph>
-
-                <InfoBox variant="green">
-                  <SubHeading>Fair Competition Statement</SubHeading>
-                  <Paragraph>
-                    We strongly support fair, ethical competition in the educational technology
-                    market. Legitimate competitive activities include:
-                  </Paragraph>
-                  <BulletList
-                    type="check"
-                    items={[
-                      "Marketing your own products based on their merits",
-                      "Requesting authorized demonstrations of SquareCampus through proper channels",
-                      "Publicly available information from our website and marketing materials",
-                      "Customer testimonials obtained without soliciting confidential information",
-                      "Independent feature comparisons based on authorized access",
-                    ]}
-                  />
-                  <Paragraph>
-                    We will never pursue legal action against competitors engaged in ethical
-                    business practices. This notice targets only those who attempt to gain unfair
-                    advantage through improper means.
-                  </Paragraph>
-                </InfoBox>
               </NoticeSection>
 
-              {/* Section 2: Definition of Prohibited Activities */}
               <NoticeSection
-                id="prohibited-activities"
+                id="prohibited-conduct"
                 number={2}
-                title="Definition of Prohibited Activities"
+                title="Prohibited Conduct"
                 severity="critical"
               >
                 <Paragraph>
-                  The following activities constitute violations triggering full legal consequences:
+                  The following activities are prohibited. Conducting or directing these activities
+                  may expose individuals and organizations to legal action.
                 </Paragraph>
 
                 <ExpandableSection title="A. Credential Solicitation" defaultExpanded>
                   <Paragraph>
-                    Requesting, encouraging, or accepting SquareCampus login credentials from:
+                    Requesting, encouraging, or accepting SquareCampus credentials, access tokens,
+                    or administrative permissions from any person.
                   </Paragraph>
                   <BulletList
-                    type="default"
+                    type="x"
                     items={[
-                      "Current or former customers",
-                      "Employees or contractors of institutions using SquareCampus",
-                      "Third-party service providers with access",
-                      "Any person with authorized access",
+                      "Asking customers to share logins, screenshots, or exports",
+                      "Requesting administrative or support access under false pretenses",
+                      "Using a customer account to inspect non-public features",
                     ]}
                   />
                   <div className="mt-4 space-y-2">
                     <p className="text-sm font-semibold text-neutral-300">Examples:</p>
                     <ExampleBox type="violation">
-                      &quot;Can you show me how your system works?&quot; [asking customer for demo]
+                      "Can you share your login so we can compare features?"
                     </ExampleBox>
                     <ExampleBox type="violation">
-                      &quot;We&apos;re doing market research, can we see your dashboard?&quot;
-                      [false pretense]
-                    </ExampleBox>
-                    <ExampleBox type="violation">
-                      &quot;I&apos;m evaluating solutions, can you give me a tour?&quot; [without
-                      proper authorization]
+                      "Send us screenshots of your SquareCampus dashboard."
                     </ExampleBox>
                   </div>
                 </ExpandableSection>
 
-                <ExpandableSection title="B. False Pretense Access">
+                <ExpandableSection title="B. Misrepresentation or Impersonation">
                   <Paragraph>
-                    Misrepresenting identity, purpose, or affiliation to gain access:
+                    Misrepresenting identity, affiliation, or purpose to obtain access or
+                    information.
                   </Paragraph>
                   <BulletList
                     type="x"
                     items={[
-                      "Posing as prospective customer while being competitor",
-                      'Claiming "academic research" to access proprietary features',
-                      "Using shell companies to hide true identity",
-                      "Hiring third parties to access on your behalf",
+                      "Posing as a school, parent, or partner to obtain a demo",
+                      "Using a shell company or alias to hide competitive intent",
+                      "Having third parties request access on your behalf",
                     ]}
                   />
-                  <div className="mt-4 space-y-2">
-                    <p className="text-sm font-semibold text-neutral-300">Examples:</p>
-                    <ExampleBox type="violation">
-                      Creating account under fake school name
-                    </ExampleBox>
-                    <ExampleBox type="violation">
-                      &quot;I&apos;m writing a research paper on school systems&quot; [when building
-                      competing product]
-                    </ExampleBox>
-                    <ExampleBox type="violation">
-                      Hiring consultant to &quot;evaluate solutions&quot; and report back
-                    </ExampleBox>
-                  </div>
                 </ExpandableSection>
 
-                <ExpandableSection title="C. Reference Call Abuse">
+                <ExpandableSection title="C. Scraping, Probing, or Automated Access">
                   <Paragraph>
-                    Conducting customer calls that solicit competitive intelligence:
+                    Using automated tools or scripts to discover, extract, or infer non-public
+                    data.
                   </Paragraph>
                   <BulletList
                     type="x"
                     items={[
-                      "Asking detailed technical implementation questions",
-                      "Requesting demonstrations or screenshots",
-                      "Inquiring about pricing, contracts, or terms",
-                      "Discussing SquareCampus weaknesses or limitations for competitive advantage",
+                      "Scraping pages, APIs, or assets beyond public content",
+                      "Enumerating endpoints, probing for vulnerabilities, or brute-forcing",
+                      "Bypassing access controls or rate limits",
                     ]}
                   />
-                  <div className="mt-4 space-y-2">
-                    <p className="text-sm font-semibold text-neutral-300">Examples:</p>
-                    <ExampleBox type="violation">
-                      &quot;How does SquareCampus handle attendance compared to [competitor]?&quot;
-                    </ExampleBox>
-                    <ExampleBox type="violation">
-                      &quot;Can you show me the reporting interface?&quot;
-                    </ExampleBox>
-                    <ExampleBox type="violation">
-                      &quot;What made you choose SquareCampus over [competitor]?&quot;
-                    </ExampleBox>
-                  </div>
                 </ExpandableSection>
 
-                <ExpandableSection title="D. Reverse Engineering">
+                <ExpandableSection title="D. Reverse Engineering Beyond Lawful Limits">
                   <Paragraph>
-                    Analyzing, decompiling, or extracting technical information:
+                    Attempting to decompile, reverse engineer, or analyze SquareCampus in ways not
+                    permitted by law or by an explicit written agreement.
                   </Paragraph>
                   <BulletList
                     type="x"
                     items={[
-                      "Network traffic analysis",
-                      "API endpoint discovery",
-                      "Database schema inference",
-                      "UI/UX pattern extraction",
+                      "Decompiling client software or analyzing proprietary code",
+                      "Inferring database schemas or internal architecture inference",
+                      "Reconstructing non-public workflows from network traffic",
                     ]}
                   />
                 </ExpandableSection>
 
-                <ExpandableSection title="E. Information Solicitation">
-                  <Paragraph>Requesting confidential business information:</Paragraph>
+                <ExpandableSection title="E. Induced Disclosure or Breach of Confidence">
+                  <Paragraph>
+                    Inducing employees, customers, or vendors to disclose confidential or
+                    proprietary information.
+                  </Paragraph>
                   <BulletList
                     type="x"
                     items={[
-                      "Pricing and contract terms",
-                      "Implementation timelines and costs",
-                      "Customer lists or institutional names",
-                      "Product roadmap or future features",
-                      "Architecture or technical stack details",
+                      "Offering incentives for non-public details",
+                      "Requesting contract, pricing, or roadmap details",
+                      "Soliciting customer lists or implementation specifics",
                     ]}
                   />
                 </ExpandableSection>
 
-                <ExpandableSection title="F. Social Engineering">
-                  <Paragraph>Manipulating individuals to disclose information:</Paragraph>
+                <ExpandableSection title="F. Social Engineering and Impersonation">
+                  <Paragraph>
+                    Manipulating or pressuring people to bypass normal authorization processes.
+                  </Paragraph>
                   <BulletList
                     type="x"
                     items={[
-                      "Befriending employees to gain insights",
-                      "Recruiting former employees for competitive intelligence",
-                      "Offering incentives for confidential information",
-                      "Building relationships to access proprietary data",
+                      "Pretending to be support or compliance personnel",
+                      "Creating urgency to extract information",
+                      "Using social media or events to elicit confidential details",
                     ]}
                   />
                 </ExpandableSection>
               </NoticeSection>
 
-              {/* Section 3: Legal Consequences Summary */}
               <NoticeSection
-                id="legal-consequences"
+                id="permitted-conduct"
                 number={3}
-                title="Legal Consequences Summary"
+                title="Permitted Competitive Conduct"
+                severity="info"
+              >
+                <InfoBox variant="green">
+                  <SubHeading>Fair Competition is Welcome</SubHeading>
+                  <Paragraph>
+                    We support legitimate and ethical competition. The following activities are
+                    generally acceptable:
+                  </Paragraph>
+                  <BulletList
+                    type="check"
+                    items={[
+                      "Publicly available information from squarecampus.com",
+                      "Independent marketing comparisons based on public materials",
+                      "RFP responses or procurement processes conducted transparently",
+                      "Authorized demos or evaluations through our official channels",
+                      "Independent analysis that does not involve unauthorized access",
+                    ]}
+                  />
+                </InfoBox>
+                <Paragraph>
+                  If you are unsure whether a planned activity is acceptable, contact us at{" "}
+                  <a className={linkClassName} href="mailto:legal@squarecampus.com">
+                    legal@squarecampus.com
+                  </a>
+                  .
+                </Paragraph>
+              </NoticeSection>
+
+              <NoticeSection
+                id="legal-basis"
+                number={4}
+                title="Legal Basis (India)"
                 severity="critical"
               >
                 <Paragraph>
-                  Violations trigger immediate action across ALL the following channels:
+                  This notice is grounded in Indian law. The references below are non-exhaustive and
+                  apply as amended from time to time.
                 </Paragraph>
 
-                <DataTable
-                  headers={["Consequence Type", "Timeline", "Typical Outcome"]}
-                  rows={[
-                    ["Civil Litigation", "Within 48 hours", "Injunction + Damages ₹25L-₹1Cr+"],
-                    [
-                      "Criminal Complaint",
-                      "Within 24 hours",
-                      "Investigation + Potential imprisonment",
-                    ],
-                    [
-                      "Regulatory Notification",
-                      "Within 72 hours",
-                      "Industry sanctions + Public record",
-                    ],
-                    ["Public Disclosure", "Within 7 days", "Press release naming violator"],
-                    ["Customer Notification", "Immediate", "Warning to your customers"],
-                    [
-                      "Investor Notification",
-                      "Within 14 days",
-                      "Disclosure of unethical practices",
-                    ],
-                  ]}
-                />
-
-                <SubHeading>We Will:</SubHeading>
-                <BulletList
-                  type="check"
-                  items={[
-                    "File civil lawsuits for trade secret misappropriation, unfair competition, tortious interference",
-                    "File criminal complaints under IT Act Sections 43, 66, 66B and IPC Sections 405, 420, 425",
-                    "Seek immediate ex-parte injunctive relief to halt access and require destruction of materials",
-                    "Report violations to NASSCOM, IAMAI, and relevant industry bodies",
-                    "Issue press releases identifying your company and detailing violations",
-                    "Notify your investors, board members, and key customers",
-                    "Pursue individual liability against employees and officers involved",
-                    "Seek maximum statutory damages plus actual damages and attorneys' fees",
-                    "Request criminal prosecution with imprisonment and fines",
-                    "Pursue contempt proceedings for non-compliance with court orders",
-                  ]}
-                />
-
-                <SubHeading>We Have:</SubHeading>
-                <BulletList
-                  type="check"
-                  items={[
-                    "Dedicated legal counsel specializing in cybercrime and IP protection",
-                    "Relationships with cybercrime cells and law enforcement",
-                    "Documented evidence collection and preservation procedures",
-                    "Prior successful prosecutions of violators",
-                    "Significant resources allocated to enforcement",
-                    "Executive commitment to making public examples",
-                  ]}
-                />
-              </NoticeSection>
-
-              {/* Section 4: Civil Remedies & Damages */}
-              <NoticeSection
-                id="civil-remedies"
-                number={4}
-                title="Civil Remedies & Damages"
-                severity="high"
-              >
-                <SubHeading>A. Liquidated Damages</SubHeading>
-                <Paragraph>
-                  Contractual damages our customers owe us for facilitating competitor access:
-                </Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Base Penalty: ₹25,00,000 per incident",
-                    "Daily Penalty: ₹1,00,000 per day violation continues",
-                    "Data Exposure: ₹5,00,000 per 1,000 student records accessed",
-                    "Trade Secret: ₹10,00,000 per proprietary element disclosed",
-                    "Multiple Competitor: All penalties apply separately per competitor",
-                  ]}
-                />
+                <SubHeading>Key statutes and authorities</SubHeading>
+                <ul className="my-4 space-y-2 text-neutral-300">
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/15442?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Information Technology Act, 2000 (as amended)
+                      </a>
+                      : Sections 43, 66, 66B, 66C, and 66D address unauthorized access, computer
+                      related offences, receipt of stolen computer resources, identity theft, and
+                      cheating by personation using computer resources.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/22037?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Digital Personal Data Protection Act, 2023
+                      </a>
+                      : establishes obligations for handling personal data and creates the Data
+                      Protection Board of India.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/12850?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Indian Penal Code, 1860
+                      </a>
+                      {" "}
+                      and{" "}
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/21420?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Bharatiya Nyaya Sanhita, 2023
+                      </a>
+                      : the penal code in force at the time of conduct may apply to cheating,
+                      criminal breach of trust, mischief, and related offences.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/1367?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Copyright Act, 1957
+                      </a>
+                      {" "}
+                      /{" "}
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/1993?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Trade Marks Act, 1999
+                      </a>
+                      {" "}
+                      /{" "}
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/1392?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Patents Act, 1970
+                      </a>
+                      : protect SquareCampus intellectual property where applicable.
+                    </span>
+                  </li>
+                </ul>
 
                 <InfoBox variant="blue">
-                  <Strong>Example Calculation:</Strong>
-                  <br />
-                  Competitor accesses system with 5,000 student records for 3 days:
-                  <br />• Base: ₹25,00,000
-                  <br />• Daily: ₹3,00,000 (₹1L × 3)
-                  <br />• Data: ₹25,00,000 (₹5L × 5 units)
-                  <br />
-                  <Strong>Total: ₹53,00,000</Strong>
+                  <Paragraph>
+                    India does not have a standalone trade secrets statute. Confidential
+                    information is protected through contracts and breach of confidence principles
+                    under Indian law.
+                  </Paragraph>
                 </InfoBox>
+              </NoticeSection>
 
-                <SubHeading>B. Actual Damages</SubHeading>
-                <Paragraph>Beyond liquidated damages, we pursue:</Paragraph>
+              <NoticeSection
+                id="potential-remedies"
+                number={5}
+                title="Potential Remedies"
+                severity="high"
+              >
+                <Paragraph>
+                  Where violations occur, we may pursue remedies available under law, subject to
+                  facts and legal process.
+                </Paragraph>
+                <SubHeading>Civil Remedies</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    "Lost competitive advantage (calculated from customer acquisition costs)",
-                    "Development investment disclosed (engineering hours × market rates)",
-                    "Trade secret value (market differentiation × revenue impact)",
-                    "Cost of forensic investigation and remediation",
-                    "Reputation damage and business interruption",
-                    "Future business opportunities lost",
+                    "Injunctive relief to stop access or use",
+                    "Compensation and damages determined by a court",
+                    "Account of profits and delivery up of infringing materials",
+                    "Orders for preservation of evidence and forensic examination",
+                    "Recovery of costs where permitted by law",
                   ]}
                 />
 
-                <SubHeading>C. Injunctive Relief</SubHeading>
-                <Paragraph>Court orders we will seek:</Paragraph>
+                <SubHeading>Criminal and Regulatory Routes</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    "Immediate cease and desist of all access and use",
-                    "Destruction of all materials obtained (with sworn certification)",
-                    "Forensic audit of your systems to verify destruction",
-                    "Prohibition on contacting SquareCampus customers",
-                    "Prohibition on using any information obtained",
-                    "Ongoing monitoring and compliance reporting",
-                  ]}
-                />
-
-                <SubHeading>D. Attorneys&apos; Fees and Costs</SubHeading>
-                <Paragraph>You pay our legal costs:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Attorneys' fees (typically ₹5L-₹20L for prosecution)",
-                    "Expert witness fees (forensic analysts, technical experts)",
-                    "Court costs and filing fees",
-                    "Investigation and evidence collection costs",
-                    "Ongoing enforcement and monitoring costs",
-                  ]}
-                />
-
-                <SubHeading>E. Punitive Damages</SubHeading>
-                <Paragraph>If willful and malicious conduct proven:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "2x-5x actual damages as punishment",
-                    "Additional amounts to deter future violations",
-                    "Enhanced damages for repeat offenders",
+                    "Criminal complaints under applicable provisions of the IT Act",
+                    "Notifications to regulators or authorities where legally required",
+                    "Customer and partner notifications for security and compliance",
                   ]}
                 />
               </NoticeSection>
 
-              {/* Section 5: Criminal Prosecution */}
               <NoticeSection
-                id="criminal-prosecution"
-                number={5}
-                title="Criminal Prosecution"
+                id="criminal-exposure"
+                number={6}
+                title="Criminal Law Exposure (Where Applicable)"
                 severity="critical"
               >
                 <WarningBox title="Criminal Liability Warning" severity="critical">
                   <Paragraph>
-                    Unauthorized access attempts constitute criminal offenses under Indian law. We
-                    file criminal complaints and cooperate with law enforcement to prosecute
-                    violators.
+                    Unauthorized access and related conduct may constitute criminal offences. We
+                    may file complaints and cooperate with law enforcement where appropriate.
                   </Paragraph>
                 </WarningBox>
 
-                <SubHeading>A. IT Act 2000 Violations</SubHeading>
+                <SubHeading>Information Technology Act, 2000</SubHeading>
 
-                <ExpandableSection title="Section 43: Unauthorized Access to Computer Systems">
+                <ExpandableSection title="Section 66: Computer Related Offences">
                   <BulletList
                     type="default"
                     items={[
-                      "Offense: Accessing computer resource without permission",
-                      "Penalty: Damages up to ₹1 Crore",
-                      "Our Action: File complaint with Cyber Crime Cell within 24 hours",
+                      "Applies when acts in Section 43 are done dishonestly or fraudulently",
+                      "Punishable with imprisonment and/or fine as prescribed by law",
+                      "May cover unauthorized access using stolen or induced credentials",
                     ]}
                   />
                 </ExpandableSection>
 
-                <ExpandableSection title="Section 66: Computer Related Offenses">
+                <ExpandableSection title="Section 66B: Receiving Stolen Computer Resource">
                   <BulletList
                     type="default"
                     items={[
-                      "Offense: Dishonestly or fraudulently using computer resources",
-                      "Penalty: Imprisonment up to 3 years + fine up to ₹5 Lakh",
-                      "Our Action: Pursue maximum penalties with evidence of dishonest intent",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Section 66B: Dishonestly Receiving Stolen Computer Resource">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Offense: Receiving or retaining information knowing it was obtained through unauthorized access",
-                      "Penalty: Imprisonment up to 3 years + fine up to ₹1 Lakh",
-                      "Our Action: Target both accessor and recipient of information",
+                      "Receiving or retaining data obtained through unauthorized access",
+                      "Punishable with imprisonment and/or fine as prescribed by law",
+                      "Applies to both accessor and downstream recipients",
                     ]}
                   />
                 </ExpandableSection>
@@ -468,401 +437,195 @@ export default function CompetitorNoticePage() {
                   <BulletList
                     type="default"
                     items={[
-                      "Offense: Fraudulently using electronic identity",
-                      "Penalty: Imprisonment up to 3 years + fine up to ₹1 Lakh",
-                      "Our Action: Prosecute false account creation or identity misrepresentation",
+                      "Fraudulent use of another person's electronic identity",
+                      "Punishable with imprisonment and/or fine as prescribed by law",
+                      "Applies to impersonation and fake account creation",
                     ]}
                   />
                 </ExpandableSection>
 
-                <SubHeading>B. Indian Penal Code 1860 Violations</SubHeading>
-
-                <ExpandableSection title="Section 405: Criminal Breach of Trust">
+                <ExpandableSection title="Section 66D: Cheating by Personation">
                   <BulletList
                     type="default"
                     items={[
-                      "Offense: Person in position of trust misappropriating property",
-                      "Penalty: Imprisonment up to 3 years + fine",
-                      "Applies to: Customers who breach trust by sharing access",
+                      "Cheating by personation using computer resources",
+                      "Punishable with imprisonment and/or fine as prescribed by law",
+                      "Applies to misrepresentation to gain access or data",
                     ]}
                   />
                 </ExpandableSection>
 
-                <ExpandableSection title="Section 420: Cheating and Dishonestly Inducing Delivery">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Offense: Deceiving person to deliver property or consent",
-                      "Penalty: Imprisonment up to 7 years + fine",
-                      "Applies to: False pretense access, social engineering",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Section 425: Mischief">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Offense: Causing damage or harm to property",
-                      "Penalty: Imprisonment + fine",
-                      "Applies to: Causing damage to business through unauthorized access",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>C. Individual Criminal Liability</SubHeading>
-                <Paragraph>Criminal prosecution targets:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Individual employees who accessed system",
-                    "Managers who directed unauthorized access",
-                    "Executives who approved competitive intelligence gathering",
-                    "Company owners who benefited from information obtained",
-                  ]}
-                />
-
-                <WarningBox title="Your employer cannot protect you from:" severity="warning">
-                  <BulletList
-                    type="x"
-                    items={[
-                      "Criminal investigation and arrest",
-                      "Criminal trial and conviction",
-                      "Imprisonment and criminal fines",
-                      "Criminal record affecting future employment",
-                      "Professional license implications",
-                      "Immigration/visa consequences (if applicable)",
-                    ]}
-                  />
-                </WarningBox>
+                <SubHeading>Penal Code in Force</SubHeading>
+                <Paragraph>
+                  The penal code in force at the time of conduct (currently the Bharatiya Nyaya
+                  Sanhita, 2023, which replaces the Indian Penal Code, 1860 and has an enforcement
+                  date of July 1, 2024 as per India Code) may apply to offences such as cheating,
+                  criminal breach of trust, and mischief, depending on facts.
+                </Paragraph>
               </NoticeSection>
 
-              {/* Section 6: Regulatory Complaints */}
               <NoticeSection
-                id="regulatory-complaints"
-                number={6}
-                title="Regulatory Complaints"
-                severity="high"
-              >
-                <Paragraph>We file complaints with industry bodies and regulators to:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Create public record of unethical conduct",
-                    "Trigger industry sanctions and blacklisting",
-                    "Damage your reputation with customers and investors",
-                    "Demonstrate pattern of bad behavior",
-                  ]}
-                />
-
-                <SubHeading>A. Industry Association Complaints</SubHeading>
-
-                <ExpandableSection title="NASSCOM (National Association of Software and Service Companies)">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Complaint Type: Unethical business practices, IP violation",
-                      "Impact: Public censure, membership suspension/termination",
-                      "Database: Complaint becomes part of permanent record",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="IAMAI (Internet and Mobile Association of India)">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Complaint Type: Cyber misconduct, unfair competition",
-                      "Impact: Industry-wide notification, reputation damage",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. Government and Regulatory Notifications</SubHeading>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Ministry of Education: Warning to schools about your company",
-                    "Ministry of Electronics and IT (MeitY): Report of cyber misconduct",
-                    "Data Protection Authorities: Investigation under DPDP Act 2023",
-                  ]}
-                />
-
-                <SubHeading>C. Impact on Your Business</SubHeading>
-                <Paragraph>Regulatory complaints create:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Permanent public records of misconduct",
-                    "Difficulty winning enterprise customers (who conduct background checks)",
-                    "Problems with vendor due diligence processes",
-                    "Challenges raising capital (investors check regulatory filings)",
-                    "Partnership restrictions (partners avoid tainted companies)",
-                    "Government tender disqualification",
-                  ]}
-                />
-              </NoticeSection>
-
-              {/* Section 7: Reputational Consequences */}
-              <NoticeSection
-                id="reputational-consequences"
+                id="regulatory-notifications"
                 number={7}
-                title="Reputational Consequences"
+                title="Regulatory and Industry Notifications"
                 severity="high"
               >
                 <Paragraph>
-                  We believe in radical transparency about violations. When we catch you, we tell
-                  everyone.
+                  Where required by law or necessary to protect customers, we may notify regulators
+                  and relevant organizations.
                 </Paragraph>
 
-                <SubHeading>A. Public Disclosure</SubHeading>
-                <Paragraph>Within 7 days of confirmed violation, we publish:</Paragraph>
+                <SubHeading>Government and Regulatory Authorities</SubHeading>
+                <ul className="my-4 space-y-2 text-neutral-300">
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.indiacode.nic.in/handle/123456789/22037?view_type=browse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Data Protection Board of India (DPDP Act 2023)
+                      </a>{" "}
+                      notifications may be made as applicable to personal data incidents.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.meity.gov.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Ministry of Electronics and Information Technology (MeitY)
+                      </a>
+                      {" "}
+                      and other competent authorities, where legally required.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://www.cert-in.org.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        CERT-In
+                      </a>
+                      {" "}
+                      notifications may be made for qualifying cyber incidents.
+                    </span>
+                  </li>
+                </ul>
 
-                <ExpandableSection title="Press Release">
-                  <Paragraph>
-                    Distributed to tech media, education publications, business press:
-                  </Paragraph>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Your company name and individuals involved",
-                      "Detailed description of violation",
-                      "Legal actions taken",
-                      "Impact on SquareCampus and customers",
-                      "Warning to others about your practices",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Social Media Campaign">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "LinkedIn posts tagging your company and executives",
-                      "Twitter threads detailing the violation",
-                      "Industry forum posts and discussions",
-                      "Community warnings in EdTech groups",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. Customer Notification</SubHeading>
-                <Paragraph>We inform ALL SquareCampus customers:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Your company name and what you attempted",
-                    "Warning not to trust you with their data or access",
-                    "Advice to audit their own security if you contacted them",
-                    "Encouragement to share warning with peer institutions",
-                  ]}
-                />
-
-                <SubHeading>C. Investor and Partner Notification</SubHeading>
-                <Paragraph>We research and contact:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Your venture capital investors",
-                    "Angel investors and board members",
-                    "Strategic partners and resellers",
-                    "Banking and financial relationships",
-                  ]}
-                />
-
-                <SubHeading>D. SEO and Online Reputation</SubHeading>
-                <Paragraph>Our publications appear when:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Potential customers Google your company name",
-                    "Investors do due diligence searches",
-                    "Employees research your company culture",
-                    "Partners evaluate your trustworthiness",
-                  ]}
-                />
-
-                <InfoBox variant="teal">
-                  <Strong>Waiver of Defamation Claims:</Strong> By attempting unauthorized access,
-                  you waive any defamation, privacy, or reputational damage claims arising from our
-                  truthful disclosure of your violation and its consequences.
-                </InfoBox>
+                <SubHeading>Industry Bodies (Discretionary)</SubHeading>
+                <ul className="my-4 space-y-2 text-neutral-300">
+                  <li className="flex items-start gap-2">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-500"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      <a
+                        className={linkClassName}
+                        href="https://nasscom.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        NASSCOM
+                      </a>
+                      {" "}
+                      and{" "}
+                      <a
+                        className={linkClassName}
+                        href="https://www.iamai.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        IAMAI
+                      </a>
+                      {" "}
+                      may be notified where their codes of conduct apply; any action is at their
+                      discretion.
+                    </span>
+                  </li>
+                </ul>
               </NoticeSection>
 
-              {/* Section 8: Evidence Preservation */}
               <NoticeSection
                 id="evidence-preservation"
                 number={8}
-                title="Evidence Preservation"
+                title="Evidence Preservation and Monitoring"
                 severity="info"
               >
                 <Paragraph>
-                  Everything you do leaves a trail. We collect, preserve, and weaponize it.
+                  We collect and preserve security logs in the ordinary course of business to
+                  protect our platform and customers and to comply with legal obligations.
                 </Paragraph>
 
-                <SubHeading>A. What We Log</SubHeading>
-
-                <ExpandableSection title="Access Attempts">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "IP addresses (source and geolocation)",
-                      "Device fingerprints (browser, OS, hardware signatures)",
-                      "Timestamps (precise to millisecond)",
-                      "Session durations and activity patterns",
-                      "Pages accessed and features used",
-                      "Data queries and exports",
-                      "API calls and parameters",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Communications">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Emails soliciting access or information",
-                      "Phone calls (recorded with consent/notice)",
-                      "Chat transcripts and support tickets",
-                      "Social media interactions",
-                      "Conference/meeting recordings",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. Evidence You Leave</SubHeading>
-                <Paragraph>Even if you think you covered your tracks:</Paragraph>
+                <SubHeading>Examples of data retained</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    "Browser fingerprints (unique even with VPN)",
-                    "Typing patterns and behavioral biometrics",
-                    "LinkedIn views and social media stalking",
-                    "Email read receipts and link tracking",
-                    "Phone numbers and call metadata",
-                    "IP addresses (VPNs still leave signatures)",
+                    "Access timestamps, IP addresses, and session identifiers",
+                    "Authentication and authorization events",
+                    "API activity, rate limiting, and anomaly detections",
+                    "Security alerts, incident response records, and support communications",
                   ]}
                 />
 
-                <SubHeading>C. Evidence Retention</SubHeading>
-                <Paragraph>We retain evidence:</Paragraph>
+                <SubHeading>Retention and integrity</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    "Indefinitely for confirmed violations",
-                    "Minimum 7 years for suspicious activity",
-                    "Full chain of custody documentation",
-                    "Multiple backup locations",
-                    "Encrypted and access-controlled",
-                    "Ready for immediate production in court",
+                    "Retention periods depend on legal requirements and business needs",
+                    "Logs may be preserved under legal hold when incidents are suspected",
+                    "Chain-of-custody practices may be used for evidentiary purposes",
                   ]}
                 />
-
-                <WarningBox title="You Cannot Hide" severity="warning">
-                  <Paragraph>Common mistakes that don&apos;t work:</Paragraph>
-                  <BulletList
-                    type="x"
-                    items={[
-                      "Using VPN (we track behavioral patterns)",
-                      "Fake email addresses (we trace back)",
-                      "Burner phones (call metadata, voice analysis)",
-                      "Incognito mode (doesn't hide server-side logs)",
-                      "Having others access on your behalf (conspiracy charges)",
-                      "Waiting until statute expires (ongoing offense while you retain info)",
-                    ]}
-                  />
-                </WarningBox>
               </NoticeSection>
 
-              {/* Section 9: Individual Liability */}
               <NoticeSection
-                id="individual-liability"
+                id="individual-responsibility"
                 number={9}
-                title="Individual Liability"
-                severity="critical"
+                title="Individual Responsibility"
+                severity="high"
               >
-                <WarningBox title="Personal Consequences" severity="critical">
-                  Your employer cannot protect you. You face personal consequences.
+                <WarningBox title="Personal Exposure" severity="warning">
+                  <Paragraph>
+                    Individuals who participate in unauthorized access or misuse may face personal
+                    civil or criminal exposure. Corporate affiliation does not immunize individuals
+                    from legal process.
+                  </Paragraph>
                 </WarningBox>
 
-                <SubHeading>A. Who Is Personally Liable</SubHeading>
-
+                <SubHeading>Roles that commonly create exposure</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    'Sales Representatives: Who solicited customer access or conducted "reference calls"',
-                    "Marketing Personnel: Who directed competitive intelligence gathering",
-                    "Product Managers: Who requested competitive feature analysis",
-                    "Executives and Leadership: Who approved unethical practices",
-                    "Consultants and Contractors: Who accessed on behalf of competitor",
+                    "Sales representatives soliciting access or screenshots",
+                    "Marketing or research staff directing deceptive inquiries",
+                    "Product teams requesting reverse engineering or scraping",
+                    "Executives approving or benefiting from unauthorized access",
+                    "Consultants or contractors acting on behalf of a competitor",
                   ]}
                 />
-
-                <SubHeading>B. Personal Legal Consequences</SubHeading>
-
-                <ExpandableSection title="Civil Liability">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Joint and several liability with your employer",
-                      "Personal financial judgments that survive bankruptcy",
-                      "Wage garnishment and asset seizure",
-                      "Affect personal credit rating",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Criminal Liability">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Personal arrest and criminal charges",
-                      "Individual imprisonment (up to 7 years)",
-                      "Personal criminal fines",
-                      "Criminal record affecting future employment",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>C. No Corporate Shield</SubHeading>
-                <Paragraph>
-                  Your employer&apos;s indemnification doesn&apos;t protect you from:
-                </Paragraph>
-                <BulletList
-                  type="x"
-                  items={[
-                    "Criminal prosecution (company can't go to jail for you)",
-                    "Professional license discipline",
-                    "Personal reputation damage",
-                    "Ethics investigations",
-                    "Employment consequences",
-                  ]}
-                />
-
-                <SubHeading>D. Think About Your Future</SubHeading>
-                <Paragraph>
-                  Before you follow orders to access SquareCampus, ask yourself:
-                </Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Is this worth risking my freedom?",
-                    "Do I want a criminal record?",
-                    "Will my employer really protect me?",
-                    "What happens to my family if I go to jail?",
-                    "Can I afford the legal fees to defend myself?",
-                    "Is my career worth ruining for this?",
-                  ]}
-                />
-
-                <InfoBox variant="green">
-                  <Strong>The answer is NO.</Strong> Instead of participating, consider our
-                  Whistleblower Program (Section 12) for rewards up to ₹5,00,000 and protection from
-                  retaliation.
-                </InfoBox>
               </NoticeSection>
 
-              {/* Section 10: Proper Evaluation Channels */}
               <NoticeSection
                 id="proper-evaluation"
                 number={10}
@@ -870,278 +633,138 @@ export default function CompetitorNoticePage() {
                 severity="info"
               >
                 <InfoBox variant="green">
-                  <Strong>WE SUPPORT FAIR COMPETITION</Strong>
-                  <br />
-                  If you want to legitimately evaluate SquareCampus, we welcome it. Here&apos;s how:
+                  <Strong>We support fair and transparent evaluation.</Strong>
                 </InfoBox>
 
-                <SubHeading>A. Authorized Evaluation Process</SubHeading>
+                <SubHeading>Step 1: Honest Contact</SubHeading>
+                <BulletList
+                  type="default"
+                  items={[
+                    "Email: sales@squarecampus.com",
+                    'Subject: "Competitor Evaluation Request"',
+                    "Disclose your company name and competing products",
+                    "Describe the scope and purpose of the evaluation",
+                  ]}
+                />
 
-                <ExpandableSection title="Step 1: Honest Contact" defaultExpanded>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Email: sales@squarecampus.com",
-                      'Subject: "Competitor Evaluation Request"',
-                      "Disclose: Your company name and competing products",
-                      "Purpose of evaluation (feature comparison, market research, etc.)",
-                      "Specific information needs",
-                      "Intended use of information",
-                    ]}
-                  />
-                </ExpandableSection>
+                <SubHeading>Step 2: NDA (if appropriate)</SubHeading>
+                <BulletList
+                  type="default"
+                  items={[
+                    "We may require a mutual NDA before sharing non-public information",
+                    "Scope, duration, and permitted use will be clearly documented",
+                  ]}
+                />
 
-                <ExpandableSection title="Step 2: NDA Execution">
-                  <Paragraph>We will provide:</Paragraph>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Standard mutual NDA",
-                      "Competitor-specific restrictions",
-                      "Clear scope of what may/may not be disclosed",
-                      "Duration and survival terms",
-                    ]}
-                  />
-                </ExpandableSection>
+                <SubHeading>Step 3: Controlled Demonstration</SubHeading>
+                <BulletList
+                  type="default"
+                  items={[
+                    "A time-limited demo environment (no customer data)",
+                    "Access supervised by a SquareCampus representative",
+                    "Documented limitations on use and disclosure",
+                  ]}
+                />
 
-                <ExpandableSection title="Step 3: Limited Demonstration">
-                  <Paragraph>We may provide:</Paragraph>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Controlled demo environment (not customer data)",
-                      "Specific features you wish to evaluate",
-                      "Sales representative present during demonstration",
-                      "Time-limited access",
-                      "Documented limitations on use",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. What We Refuse</SubHeading>
-                <Paragraph>We will NOT provide:</Paragraph>
+                <SubHeading>What we will not provide</SubHeading>
                 <BulletList
                   type="x"
                   items={[
                     "Access to customer production environments",
-                    "Customer contact information or facilitated reference calls",
-                    "Source code or architecture diagrams",
-                    "Database schemas or API documentation beyond public",
-                    "Unrestricted or unsupervised access",
-                    "Information that constitutes trade secrets",
+                    "Customer contact lists or confidential pricing",
+                    "Source code, internal architecture diagrams, or private APIs",
+                    "Unsupervised or indefinite access",
                   ]}
                 />
-
-                <SubHeading>C. If You&apos;re Unsure</SubHeading>
-                <Paragraph>Questions about what&apos;s acceptable? Contact:</Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Email: legal@squarecampus.com",
-                    'Subject: "Competitive Intelligence Ethics Inquiry"',
-                    "We'll respond within 24 business hours",
-                    "Better to ask than assume and face consequences",
-                  ]}
-                />
-
-                <InfoBox variant="teal">
-                  <Strong>We prefer education over enforcement.</Strong> But if you violate after
-                  being warned, consequences are severe.
-                </InfoBox>
               </NoticeSection>
 
-              {/* Section 11: Cease and Desist Requirements */}
               <NoticeSection
-                id="cease-desist"
+                id="voluntary-disclosure"
                 number={11}
-                title="Cease and Desist Requirements"
+                title="Voluntary Disclosure and Mitigation"
                 severity="high"
               >
                 <Paragraph>
-                  If you&apos;ve already violated, immediate action may reduce (but not eliminate)
-                  consequences.
+                  If you believe you have engaged in prohibited conduct, prompt disclosure may be
+                  considered in any resolution. This does not waive any rights or remedies.
                 </Paragraph>
 
-                <SubHeading>A. If You&apos;ve Already Accessed</SubHeading>
-                <Paragraph>
-                  <Strong>Within 48 Hours, You Must:</Strong>
-                </Paragraph>
-
-                <ExpandableSection title="1. Cease All Use Immediately" defaultExpanded>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Stop accessing SquareCampus through any means",
-                      "Discontinue any analysis or reverse engineering",
-                      "Stop using any information obtained",
-                      "Terminate any ongoing access or monitoring",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="2. Destroy All Materials">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Delete all screenshots and screen recordings",
-                      "Destroy all notes, analysis, and documentation",
-                      "Purge all emails and communications containing information",
-                      "Erase all copies from all systems and backups",
-                      "Certify destruction in writing under oath",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="3. Notify Us in Writing">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Email: legal@squarecampus.com",
-                      'Subject: "Voluntary Disclosure - Unauthorized Access"',
-                      "Include: Your company name and role",
-                      "Dates and methods of access",
-                      "What information was accessed",
-                      "How information was used",
-                      "Who else has access to information",
-                      "Proof of destruction",
-                      "Sworn statement of completeness",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. What Does NOT Reduce Consequences</SubHeading>
-                <Paragraph>The following do NOT help:</Paragraph>
-                <BulletList
-                  type="x"
-                  items={[
-                    "\"We didn't know it was wrong\" (you're reading this notice)",
-                    '"The customer volunteered the access" (still unauthorized)',
-                    '"We were just doing research" (false pretense)',
-                    '"Everyone in the industry does it" (not a defense)',
-                    '"We didn\'t use the information" (access itself is violation)',
-                    '"We\'ll delete it now" (damage already done)',
-                  ]}
-                />
-
-                <WarningBox title="Time Is Critical" severity="warning">
-                  <Paragraph>Every day you delay:</Paragraph>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Increases damages and consequences",
-                      "Reduces our willingness to negotiate",
-                      "Allows information to spread further",
-                      "Makes verification more difficult",
-                      "Demonstrates bad faith and lack of remorse",
-                    ]}
-                  />
-                  <Paragraph>
-                    <Strong>Act immediately if you&apos;ve violated.</Strong>
-                  </Paragraph>
-                </WarningBox>
-              </NoticeSection>
-
-              {/* Section 12: Whistleblower Protection Program */}
-              <NoticeSection
-                id="whistleblower"
-                number={12}
-                title="Whistleblower Protection Program"
-                severity="info"
-              >
-                <InfoBox variant="green">
-                  <Strong>WHISTLEBLOWER PROTECTION & REWARDS</Strong>
-                  <br />
-                  We protect and reward individuals who report unethical competitive practices.
-                </InfoBox>
-
-                <SubHeading>A. Who Should Report</SubHeading>
-
-                <ExpandableSection title="Employees of Competitors" defaultExpanded>
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Sales reps asked to solicit access",
-                      "Marketing staff directed to gather intelligence improperly",
-                      "Product managers told to analyze stolen information",
-                      "Executives aware of unethical practices",
-                      "Anyone uncomfortable with company's methods",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <ExpandableSection title="Third Parties">
-                  <BulletList
-                    type="default"
-                    items={[
-                      "Consultants hired to access on behalf of competitors",
-                      "Former employees with knowledge of violations",
-                      "Industry insiders aware of misconduct",
-                      "Customers approached by competitors improperly",
-                    ]}
-                  />
-                </ExpandableSection>
-
-                <SubHeading>B. How to Report</SubHeading>
+                <SubHeading>Recommended steps</SubHeading>
                 <BulletList
                   type="default"
                   items={[
-                    "Email (Encrypted Available): whistleblower@squarecampus.com",
-                    "PGP key available at squarecampus.com/pgp",
-                    "Anonymous: Use ProtonMail or similar if preferred",
-                    "Secure Web Form: squarecampus.com/report-violation",
-                  ]}
-                />
-
-                <SubHeading>C. Reward Program</SubHeading>
-                <DataTable
-                  headers={["Tier", "Criteria", "Reward Amount"]}
-                  rows={[
-                    ["Tier 1", "Leads to cease and desist compliance", "₹50,000"],
-                    ["Tier 2", "Leads to settlement or documented violation", "₹2,00,000"],
-                    [
-                      "Tier 3",
-                      "Leads to successful litigation or criminal prosecution",
-                      "₹5,00,000",
-                    ],
-                  ]}
-                />
-
-                <SubHeading>D. Confidentiality Protection</SubHeading>
-                <Paragraph>
-                  <Strong>We Guarantee:</Strong>
-                </Paragraph>
-                <BulletList
-                  type="check"
-                  items={[
-                    "Your identity remains confidential",
-                    "Information provided not disclosed without consent",
-                    "Secure communication channels",
-                    "No public disclosure linking you to report",
-                    "Legal protection from retaliation (where applicable)",
-                  ]}
-                />
-
-                <SubHeading>E. Anti-Retaliation Protection</SubHeading>
-                <Paragraph>
-                  <Strong>If Your Employer Retaliates, We Will:</Strong>
-                </Paragraph>
-                <BulletList
-                  type="default"
-                  items={[
-                    "Document retaliation for your legal action",
-                    "Provide evidence for your wrongful termination case",
-                    "Connect you with employment attorneys",
-                    "Serve as witness to your good faith report",
-                    "Publicize retaliatory actions (with your consent)",
+                    "Cease any further access or use immediately",
+                    "Preserve relevant evidence and avoid further dissemination",
+                    "Notify us at legal@squarecampus.com with a factual description",
                   ]}
                 />
 
                 <InfoBox variant="teal">
-                  <Strong>Make the Right Choice:</Strong> You don&apos;t owe loyalty to unethical
-                  practices. Protecting customers and fair competition is right. Financial rewards
-                  offset employment risk. You can report anonymously. We support you throughout the
-                  process.
+                  <Paragraph>
+                    Voluntary disclosure does not guarantee leniency. We evaluate responses based
+                    on facts, scope, and legal obligations.
+                  </Paragraph>
                 </InfoBox>
+              </NoticeSection>
+
+              <NoticeSection
+                id="confidential-reporting"
+                number={12}
+                title="Confidential Reporting"
+                severity="info"
+              >
+                <Paragraph>
+                  If you have information about unethical competitive practices, you may report it
+                  confidentially.
+                </Paragraph>
+                <BulletList
+                  type="default"
+                  items={[
+                    "Email: whistleblower@squarecampus.com",
+                    "Encrypted communications supported (PGP key at squarecampus.com/pgp)",
+                    "Anonymous tips are accepted; include verifiable details",
+                  ]}
+                />
+                <Paragraph>
+                  We handle reports discreetly and to the extent permitted by law. Any rewards are
+                  discretionary and subject to legal constraints.
+                </Paragraph>
+              </NoticeSection>
+
+              <NoticeSection
+                id="no-waiver"
+                number={13}
+                title="No Waiver; Reservation of Rights"
+                severity="info"
+              >
+                <Paragraph>
+                  MDTechSpire reserves all rights and remedies. Any delay or failure to enforce a
+                  right is not a waiver of that right or any other.
+                </Paragraph>
+              </NoticeSection>
+
+              <NoticeSection
+                id="governing-law"
+                number={14}
+                title="Governing Law and Jurisdiction"
+                severity="info"
+              >
+                <Paragraph>
+                  This notice is governed by Indian law. Subject to mandatory requirements, courts
+                  in Bengaluru, Karnataka, India have jurisdiction.
+                </Paragraph>
+              </NoticeSection>
+
+              <NoticeSection
+                id="no-legal-advice"
+                number={15}
+                title="Informational Notice; No Legal Advice"
+                severity="info"
+              >
+                <Paragraph>
+                  This notice is informational and does not constitute legal advice. For legal
+                  advice regarding your specific situation, consult qualified counsel.
+                </Paragraph>
               </NoticeSection>
             </div>
 

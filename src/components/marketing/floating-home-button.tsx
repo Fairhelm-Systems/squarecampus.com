@@ -115,7 +115,7 @@ export function FloatingHomeButton(props: FloatingHomeButtonProps) {
               )}
             >
               <Link
-                href={href!}
+                href={href ?? "/"}
                 aria-label="Go to home"
                 className="inline-flex items-center justify-center border-r border-neutral-700/70 px-3 py-2 transition hover:bg-white/10"
               >

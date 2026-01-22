@@ -98,7 +98,9 @@ export const MacbookScroll = ({
       className="flex group flex-col items-center py-0 md:py-20 justify-start flex-shrink-0 transform md:scale-100 scale-[0.45] sm:scale-[0.7] -mt-20 sm:-mt-10 md:-mt-0 max-w-2xl mx-auto"
     >
       {/* Lid */}
-      <Lid src={src} children={children} lidRef={lidRef} screenRef={screenRef} />
+      <Lid src={src} lidRef={lidRef} screenRef={screenRef}>
+        {children}
+      </Lid>
       {/* Base area */}
       <div className="h-[22rem] w-[32rem] bg-[#272729] rounded-2xl overflow-hidden relative -z-10">
         {/* above keyboard bar */}

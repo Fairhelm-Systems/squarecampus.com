@@ -218,6 +218,7 @@ export function ExpandableSection({
   return (
     <div className="my-4 rounded-lg border border-neutral-800 bg-neutral-900/50">
       <button
+        type="button"
         onClick={() => setIsExpanded(!isExpanded)}
         className="flex w-full items-center justify-between p-4 text-left"
         aria-expanded={isExpanded}

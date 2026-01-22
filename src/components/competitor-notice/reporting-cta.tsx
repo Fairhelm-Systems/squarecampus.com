@@ -9,7 +9,7 @@ const ctaCards = [
     icon: AlertTriangle,
     title: "Report a Violation",
     description:
-      "If you've witnessed a competitor attempting to access SquareCampus, report immediately.",
+      "Report suspected unauthorized access, credential solicitation, or misuse.",
     email: "security@squarecampus.com",
     buttonText: "Report Violation",
     variant: "danger" as const,
@@ -27,9 +27,9 @@ const ctaCards = [
   {
     id: "whistleblower",
     icon: Shield,
-    title: "Whistleblower Program",
+    title: "Confidential Reporting",
     description:
-      "Confidentially report unethical practices for rewards up to ₹5,00,000.",
+      "Confidentially report misconduct. Rewards may be offered at our discretion and subject to law.",
     email: "whistleblower@squarecampus.com",
     buttonText: "Report Anonymously",
     variant: "success" as const,

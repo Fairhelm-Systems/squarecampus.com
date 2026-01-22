@@ -264,6 +264,7 @@ const WebGLCircles = ({ isMobile }: { isMobile: boolean }) => {
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
 
+      // biome-ignore lint/correctness/useHookAtTopLevel: WebGL useProgram is not a React hook.
       gl.useProgram(program);
 
       gl.enableVertexAttribArray(positionLocation);

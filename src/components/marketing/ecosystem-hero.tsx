@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BookCallCta } from "./ctas";
-import { BookOpen, Component, Network } from "@/icons";
+import { BookOpen, Network } from "@/icons";
 import { LinkButton } from "./link-button";
 
 export function EcosystemHero() {
@@ -178,7 +178,7 @@ export function EcosystemHero() {
                 { label: "Students", angle: 180, ring: 1 },
                 { label: "API", angle: 240, ring: 1 },
                 { label: "Insights", angle: 300, ring: 1 },
-              ].map((node, index) => {
+              ].map((node, _index) => {
                 const radius = 140;
                 const x = Math.cos((node.angle * Math.PI) / 180) * radius;
                 const y = Math.sin((node.angle * Math.PI) / 180) * radius;
