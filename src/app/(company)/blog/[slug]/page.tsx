@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import type { BlogSection } from "@/content/blog/posts";
 import { blogPostBySlug, blogPosts } from "@/content/blog/posts";
 import { cn } from "@/lib/utils";
@@ -39,8 +40,10 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   return (
-    <main className="min-h-[100dvh] bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10">
-      <article className="mx-auto flex w-full max-w-4xl flex-col gap-12">
+    <>
+      <FloatingHomeButton href="/" />
+      <main className="min-h-[100dvh] bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10">
+        <article className="mx-auto flex w-full max-w-4xl flex-col gap-12">
         <header className="space-y-6">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-neutral-500">
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
@@ -96,13 +99,14 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-neutral-400">
-          <Link href="/blog" className="text-sky-400 hover:text-sky-300">
-            Back to blog
-          </Link>
-          <span>SquareCampus | Building calm systems for schools</span>
-        </div>
-      </article>
-    </main>
+            <Link href="/blog" className="text-sky-400 hover:text-sky-300">
+              Back to blog
+            </Link>
+            <span>SquareCampus | Building calm systems for schools</span>
+          </div>
+        </article>
+      </main>
+    </>
   );
 }
 
