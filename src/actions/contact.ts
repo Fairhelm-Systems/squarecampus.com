@@ -508,11 +508,11 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
                   Received at ${(() => {
                     try {
                       return (
-                        new Date().toLocaleString("en-US", {
+                        `${new Date().toLocaleString("en-US", {
                           timeZone: "Asia/Kolkata",
                           dateStyle: "full",
                           timeStyle: "short",
-                        }) + " IST"
+                        })} IST`
                       );
                     } catch (error) {
                       console.warn("[contact] Date formatting error:", error);
@@ -530,7 +530,7 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
       </html>
     `;
 
-    let emailResult;
+    let emailResult: { error?: unknown };
     try {
       emailResult = await resend.emails.send({
         from: "contact@squarecampus.com",

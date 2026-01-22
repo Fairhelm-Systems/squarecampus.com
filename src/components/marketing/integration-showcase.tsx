@@ -174,18 +174,18 @@ console.log(students.data);`}
 
             <div className="mt-4 flex items-center gap-4">
               <a
-                href="#"
+                href="/contact-us"
                 className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 transition-colors hover:text-sky-300"
               >
                 <Code className="h-4 w-4" />
-                View API Documentation
+                Request API Documentation
               </a>
               <a
-                href="#"
+                href="/contact-us"
                 className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 transition-colors hover:text-sky-300"
               >
                 <Webhook className="h-4 w-4" />
-                Webhook Reference
+                Request Webhook Reference
               </a>
             </div>
           </div>

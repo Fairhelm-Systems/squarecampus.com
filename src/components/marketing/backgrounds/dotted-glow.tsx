@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type DottedGlowBackgroundProps = {
   className?: string;
@@ -44,7 +44,7 @@ export const DottedGlowBackground = ({
   const [resolvedColor, setResolvedColor] = useState<string>(color);
   const [resolvedGlowColor, setResolvedGlowColor] = useState<string>(glowColor);
 
-  const resolveCssVariable = (el: Element, variableName?: string): string | null => {
+  const resolveCssVariable = useCallback((el: Element, variableName?: string): string | null => {
     if (!variableName) return null;
     const normalized = variableName.startsWith("--") ? variableName : `--${variableName}`;
     const fromEl = getComputedStyle(el).getPropertyValue(normalized).trim();
@@ -52,14 +52,14 @@ export const DottedGlowBackground = ({
     const root = document.documentElement;
     const fromRoot = getComputedStyle(root).getPropertyValue(normalized).trim();
     return fromRoot || null;
-  };
+  }, []);
 
-  const detectDarkMode = (): boolean => {
+  const detectDarkMode = useCallback((): boolean => {
     const root = document.documentElement;
     if (root.classList.contains("dark")) return true;
     if (root.classList.contains("light")) return false;
     return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
-  };
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current ?? document.documentElement;
@@ -108,6 +108,8 @@ export const DottedGlowBackground = ({
     colorDarkVar,
     glowColorLightVar,
     glowColorDarkVar,
+    detectDarkMode,
+    resolveCssVariable,
   ]);
 
   useEffect(() => {

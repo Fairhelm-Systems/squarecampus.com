@@ -9,7 +9,6 @@ import type React from "react";
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-import { Logo } from "@/components/marketing/logo";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -18,7 +17,6 @@ import {
   Mail,
   MapPin,
   MessageSquare,
-  Phone,
   Shield,
   Sparkles,
   Users,

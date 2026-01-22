@@ -25,6 +25,14 @@ export type ContactFormData = {
   website?: string;
 };
 
+type GridPatternProps = React.SVGProps<SVGSVGElement> & {
+  width: number;
+  height: number;
+  x?: number | string;
+  y?: number | string;
+  squares?: Array<[number, number]>;
+};
+
 const contactHighlights = [
   "Response windows shared after inquiry",
   "Strategic onboarding for every campus",
@@ -500,7 +508,7 @@ export const Grid = ({
   pattern,
   size,
 }: {
-  pattern?: number[][];
+  pattern?: Array<[number, number]>;
   size?: number;
 }) => {
   const seed = useId();
@@ -519,10 +527,13 @@ export const Grid = ({
     pattern ??
     (() => {
       const rand = seededRandom(seed);
-      return Array.from({ length: 5 }, () => [
-        Math.floor(rand() * 4) + 7,
-        Math.floor(rand() * 6) + 1,
-      ]);
+      return Array.from(
+        { length: 5 },
+        (): [number, number] => [
+          Math.floor(rand() * 4) + 7,
+          Math.floor(rand() * 6) + 1,
+        ]
+      );
     })();
   return (
     <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
@@ -540,7 +551,7 @@ export const Grid = ({
   );
 };
 
-export function GridPattern({ width, height, x, y, squares, ...props }: any) {
+export function GridPattern({ width, height, x, y, squares, ...props }: GridPatternProps) {
   const patternId = useId();
 
   return (
@@ -565,7 +576,7 @@ export function GridPattern({ width, height, x, y, squares, ...props }: any) {
       />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([sx, sy]: any, idx: number) => (
+          {squares.map(([sx, sy], idx) => (
             <rect
               strokeWidth="0"
               key={`${sx}-${sy}-${idx}`}

@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/content/blog/posts";
 
 /**
  * SquareCampus Sitemap
  * -------------------
  * Think of this file as our guest list for Googlebot.
- * We don’t invite everyone to the party — only the pages that matter.
+ * We don't invite everyone to the party — only the pages that matter.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const SITE_URL = "https://squarecampus.com" as const;
@@ -84,11 +85,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
 
-    // Content hub (index only; individual posts should be added once they exist)
+    // Content hub
     {
       path: "/blog",
       lastModified: LASTMOD.blogIndex,
       changeFrequency: "daily",
+      priority: 0.7,
+    },
+
+    // Individual blog posts (dynamically added)
+    ...blogPosts.map((post) => ({
+      path: `/blog/${post.slug}` as const,
+      lastModified: new Date(post.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+
+    // Support & contact
+    {
+      path: "/faq",
+      lastModified: LASTMOD.company,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      path: "/contact-us",
+      lastModified: LASTMOD.company,
+      changeFrequency: "monthly",
       priority: 0.7,
     },
 

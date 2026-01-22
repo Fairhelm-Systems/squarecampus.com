@@ -86,8 +86,9 @@ export function LinkButton({
    */
 
   if (href) {
+    const anchorProps = props as ComponentProps<"a">;
     return (
-      <Link href={href} className={containerClass} {...(props as any)}>
+      <Link href={href} className={containerClass} {...anchorProps}>
         <span className="absolute inset-0 overflow-hidden rounded-full">
           <span className={glowClass} />
         </span>
@@ -99,8 +100,9 @@ export function LinkButton({
     );
   }
 
+  const buttonProps = props as ComponentProps<"button">;
   return (
-    <button className={containerClass} {...(props as any)}>
+    <button className={containerClass} {...buttonProps}>
       <span className="absolute inset-0 overflow-hidden rounded-full">
         <span className={glowClass} />
       </span>

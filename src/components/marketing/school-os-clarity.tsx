@@ -252,6 +252,7 @@ function WebGLBackground({ isMobile }: { isMobile: boolean }) {
       gl.clearColor(0.039, 0.039, 0.039, 1); // neutral-950
       gl.clear(gl.COLOR_BUFFER_BIT);
 
+      // biome-ignore lint/correctness/useHookAtTopLevel: WebGL useProgram is not a React hook.
       gl.useProgram(program);
       gl.enableVertexAttribArray(positionLoc);
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -542,7 +543,7 @@ function PersonaCard({
         </div>
 
         <ul className="mt-5 space-y-3">
-          {item.points.map((point, pointIdx) => (
+          {item.points.map((point, _pointIdx) => (
             <li
               key={point}
               data-bullet

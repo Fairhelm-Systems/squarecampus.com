@@ -30,7 +30,7 @@ const mapTransition = (transition?: MotionProps["transition"]) => {
     ease: transition.ease ?? "power2.out",
     repeat: transition.repeat ?? 0,
     repeatDelay: transition.repeatDelay ?? 0,
-    yoyo: transition.repeat ? true : false,
+    yoyo: !!transition.repeat,
   };
 };
 
@@ -46,7 +46,10 @@ const sanitizeVars = (vars?: Record<string, unknown>) => {
 };
 
 const createMotionComponent = (tag: string) => {
-  const Component = ({ ...props }: MotionProps & Record<string, unknown>, ref: any) => {
+  const Component = (
+    { ...props }: MotionProps & Record<string, unknown>,
+    ref: React.Ref<HTMLElement | SVGElement>
+  ) => {
     const {
       initial,
       animate,
@@ -125,7 +128,7 @@ export const motion = new Proxy(
   {
     get: (_, tag: string) => createMotionComponent(tag),
   }
-) as Record<string, React.FC<any>>;
+) as Record<string, React.FC<MotionProps & Record<string, unknown>>>;
 
 export const AnimatePresence = ({
   children,

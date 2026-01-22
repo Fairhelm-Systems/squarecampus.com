@@ -1,4 +1,5 @@
 import { getCalApi } from "@calcom/embed-react";
+import type { BookerLayouts } from "@calcom/embed-core/dist/src/types";
 import { useEffect } from "react";
 
 interface CalEmbedOptions {
@@ -9,7 +10,7 @@ interface CalEmbedOptions {
     };
   };
   hideEventTypeDetails?: boolean;
-  layout?: "month_view" | "week_view" | "day_view" | any;
+  layout?: BookerLayouts;
 }
 
 export const useCalEmbed = (options: CalEmbedOptions) => {

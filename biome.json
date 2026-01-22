@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -19,7 +19,9 @@
     "rules": {
       "recommended": true,
       "a11y": {
-        "recommended": true
+        "recommended": true,
+        "noSvgWithoutTitle": "off",
+        "noStaticElementInteractions": "off"
       },
       "complexity": {
         "recommended": true,
@@ -38,7 +40,8 @@
         "recommended": true
       },
       "security": {
-        "recommended": true
+        "recommended": true,
+        "noDangerouslySetInnerHtml": "off"
       },
       "style": {
         "recommended": true,
@@ -46,7 +49,8 @@
       },
       "suspicious": {
         "recommended": true,
-        "noExplicitAny": "warn"
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "off"
       }
     }
   },

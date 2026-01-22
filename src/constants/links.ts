@@ -5,4 +5,4 @@ export const CONSTANTS = {
   CALCOM_HIDE_EVENT_TYPE_DETAILS: false,
   CALCOM_LAYOUT: "month_view",
   CALCOM_LINK: "squarecampus-admin-tdkynm/15min",
-};
+} as const;

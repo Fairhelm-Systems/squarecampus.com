@@ -4,8 +4,8 @@ import type React from "react";
 import { useEffect, useRef } from "react";
 
 type RippleCSSVars = React.CSSProperties & {
-  ["--ripple-x"]?: string;
-  ["--ripple-y"]?: string;
+  "--ripple-x"?: string;
+  "--ripple-y"?: string;
 };
 
 export const BackgroundRippleEffect = () => {

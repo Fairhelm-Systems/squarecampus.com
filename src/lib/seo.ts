@@ -382,3 +382,102 @@ export function createFAQPageSchema(faqs: Array<{ question: string; answer: stri
     })),
   };
 }
+
+/**
+ * JSON-LD: LocalBusiness schema for local SEO signals.
+ * Helps establish physical presence and local search visibility.
+ */
+export function createLocalBusinessSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${SEO_CONFIG.baseUrl}/#localbusiness`,
+    name: "SquareCampus",
+    description:
+      "School management system provider offering comprehensive ERP solutions for schools, colleges, and educational institutions across India.",
+    url: SEO_CONFIG.baseUrl,
+    logo: SEO_CONFIG.logo,
+    image: SEO_CONFIG.ogImage.default,
+    telephone: "+91-contact", // Placeholder - update when available
+    email: "contact@squarecampus.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Mumbai",
+      addressLocality: "Mumbai",
+      addressRegion: "Maharashtra",
+      postalCode: "400001",
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "19.0760",
+      longitude: "72.8777",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+    priceRange: "₹₹",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+    sameAs: SEO_CONFIG.sameAs.length ? SEO_CONFIG.sameAs : undefined,
+  };
+}
+
+/**
+ * JSON-LD: Organization with hiring signals for careers page.
+ * Helps indicate the company is actively hiring.
+ */
+export function createHiringOrganizationSchema(config?: { hasOpenPositions?: boolean }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SEO_CONFIG.baseUrl}/#hiring-org`,
+    name: "SquareCampus",
+    url: SEO_CONFIG.baseUrl,
+    logo: SEO_CONFIG.logo,
+    description:
+      "SquareCampus builds the operating system for modern schools and colleges in India. Join us to shape the future of education technology.",
+    foundingDate: "2023",
+    foundingLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Mumbai",
+        addressCountry: "IN",
+      },
+    },
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      minValue: 10,
+      maxValue: 50,
+    },
+    knowsAbout: [
+      "School Management Systems",
+      "Education Technology",
+      "ERP Software",
+      "SaaS Development",
+    ],
+    slogan: "The Operating System for Every School",
+    ...(config?.hasOpenPositions && {
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Career Opportunities",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Career Opportunities at SquareCampus",
+              description: "Join our team building the future of school management in India",
+            },
+          },
+        ],
+      },
+    }),
+  };
+}

@@ -297,7 +297,6 @@ export function Operations() {
         // Individual card animations - dramatic spotlight effect
         cards.forEach((card, index) => {
           const isFirstCard = index === 0;
-          const isLastCard = index === cards.length - 1;
 
           // Card enters: scale up, brighten, full opacity (skip first card - it starts centered)
           if (!isFirstCard) {
@@ -428,7 +427,6 @@ export function Operations() {
           // Card glow peaks at center (scrubbed for reverse scroll)
           const cardGlow = card.querySelector("[data-card-glow]");
           if (cardGlow) {
-            const accentColor = card.getAttribute("data-accent") || "rgba(255,255,255,0.2)";
             gsap.fromTo(
               cardGlow,
               { opacity: 0 },
@@ -519,10 +517,26 @@ export function Operations() {
           trigger: sectionRef.current,
           start: "top 80%",
           end: "bottom 20%",
-          onEnter: () => sheenTweens.forEach((tween) => tween.resume()),
-          onEnterBack: () => sheenTweens.forEach((tween) => tween.resume()),
-          onLeave: () => sheenTweens.forEach((tween) => tween.pause()),
-          onLeaveBack: () => sheenTweens.forEach((tween) => tween.pause()),
+          onEnter: () => {
+            sheenTweens.forEach((tween) => {
+              tween.resume();
+            });
+          },
+          onEnterBack: () => {
+            sheenTweens.forEach((tween) => {
+              tween.resume();
+            });
+          },
+          onLeave: () => {
+            sheenTweens.forEach((tween) => {
+              tween.pause();
+            });
+          },
+          onLeaveBack: () => {
+            sheenTweens.forEach((tween) => {
+              tween.pause();
+            });
+          },
         });
       }
     }, sectionRef);

@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { Check, Crown, Edit, Eye, Lock, Shield, Sparkles, Trash2, Users, X } from "@/icons";
 import { motion } from "@/lib/motion";
 
@@ -103,6 +104,18 @@ const permissionMatrix = [
     teacher: { view: false, create: false, edit: false, delete: false },
   },
 ];
+
+const roleKeys = ["orgAdmin", "schoolAdmin", "campusAdmin", "teacher"] as const;
+type RoleKey = (typeof roleKeys)[number];
+type PermissionSet = {
+  view: boolean;
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+};
+type PermissionRow = {
+  module: string;
+} & Record<RoleKey, PermissionSet>;
 
 export function RBACShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -206,10 +219,10 @@ export function RBACShowcase() {
                     className="absolute left-0 top-0 h-full w-1 bg-linear-to-b"
                     style={
                       {
-                        background: `linear-gradient(to bottom, var(--tw-gradient-stops))`,
+                        background: "linear-gradient(to bottom, var(--tw-gradient-stops))",
                         "--tw-gradient-from": level.color.split(" ")[0].replace("from-", ""),
                         "--tw-gradient-to": level.color.split(" ")[2],
-                      } as any
+                      } as CSSProperties
                     }
                   />
 
@@ -303,14 +316,14 @@ export function RBACShowcase() {
                 </tr>
               </thead>
               <tbody>
-                {permissionMatrix.map((row, _) => (
+                {permissionMatrix.map((row) => (
                   <tr
                     key={row.module}
                     className="permission-row border-b border-white/5 transition-colors hover:bg-neutral-900/30"
                   >
                     <td className="p-4 font-medium text-white">{row.module}</td>
-                    {["orgAdmin", "schoolAdmin", "campusAdmin", "teacher"].map((role) => {
-                      const perms = row[role as keyof typeof row] as any;
+                    {roleKeys.map((role) => {
+                      const perms = (row as PermissionRow)[role];
                       return (
                         <td key={role} className="p-4">
                           <div className="flex justify-center gap-2">
