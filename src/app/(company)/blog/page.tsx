@@ -4,31 +4,10 @@ import { motion } from "@/lib/motion";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen } from "@/icons";
-
-type BlogPost = {
-  slug: string;
-  title: string;
-  summary: string;
-  date: string;
-  tag?: string;
-};
-
-// When the operation expands, just drop new posts into this array
-// or wire it up to a CMS / MDX loader.
-const posts: BlogPost[] = [
-  // Example for later:
-  // {
-  //   slug: "launching-squarecampus",
-  //   title: "Launching SquareCampus",
-  //   summary:
-  //     "Why we built an operating system for modern schools and colleges.",
-  //   date: "2025-12-01",
-  //   tag: "Product",
-  // },
-];
+import { blogPosts } from "@/content/blog/posts";
 
 export default function BlogPage() {
-  const hasPosts = posts.length > 0;
+  const hasPosts = blogPosts.length > 0;
 
   return (
     <>
@@ -72,7 +51,7 @@ export default function BlogPage() {
               className="space-y-4"
             >
               <div className="grid gap-6 md:grid-cols-2">
-                {posts.map((post, index) => (
+                {blogPosts.map((post, index) => (
                   <motion.div
                     key={post.slug}
                     initial={{ opacity: 0, y: 20 }}
@@ -91,6 +70,9 @@ export default function BlogPage() {
                         <div className="space-y-2">
                           <h2 className="text-lg font-semibold text-white">{post.title}</h2>
                           <p className="text-sm leading-relaxed text-neutral-300">{post.summary}</p>
+                          <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">
+                            {post.readingTime}
+                          </p>
                         </div>
                         <div className="mt-auto pt-3">
                           <Link

@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "cdn.mdtechspire.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
   async headers() {
