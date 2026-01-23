@@ -5,6 +5,7 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { BrowserWarning } from "@/components/browser-warning";
+import { CustomCursor } from "@/components/CustomCursor";
 import { DevtoolsGuard } from "@/components/devtools-guard";
 import { ScrollBeam } from "@/components/marketing/scroll-beam";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -192,6 +193,7 @@ export default function RootLayout({
         />
         {children}
         <Toaster position="top-right" richColors />
+        <CustomCursor />
       </body>
     </html>
   );

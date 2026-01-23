@@ -6,12 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import {
   AppWindow,
   ArrowUpRight,
+  ChevronDown,
   Layers,
   Network,
   ShieldCheck,
   Smartphone,
   Sparkles,
 } from "@/components/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -199,6 +201,8 @@ export function EcosystemSection() {
     graphNodes[0] ?? null
   );
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [isModulesExpanded, setIsModulesExpanded] = useState(false);
+  const { isMobile } = useDeviceCapabilities();
 
   // GSAP scroll animations
   useEffect(() => {
@@ -348,10 +352,10 @@ export function EcosystemSection() {
     <section
       id="ecosystem"
       ref={sectionRef}
-      className="relative mx-auto w-full max-w-6xl overflow-hidden px-4 py-16 sm:px-6 sm:py-20 lg:px-10"
+      className="relative mx-auto w-full max-w-6xl overflow-hidden px-4 py-10 sm:px-6 sm:py-20 lg:px-10"
     >
-      {/* Background effects */}
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background effects - hidden on mobile */}
+      <div className="pointer-events-none absolute inset-0 hidden md:block">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.06),transparent_60%)]" />
         <div
           className="absolute inset-0 opacity-[0.02]"
@@ -362,12 +366,12 @@ export function EcosystemSection() {
         />
       </div>
 
-      <FloatingParticles />
+      {!isMobile && <FloatingParticles />}
 
       {/* Heading */}
       <div
         ref={headingRef}
-        className="relative z-10 mb-12 flex flex-col items-center gap-4 text-center"
+        className="relative z-10 mb-4 flex flex-col items-center gap-2 text-center md:mb-12 md:gap-4"
       >
         <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
           <Network className="h-4 w-4 text-sky-400" />
@@ -384,14 +388,19 @@ export function EcosystemSection() {
         </h2>
 
         <p className="max-w-2xl text-sm leading-relaxed text-neutral-400 md:text-base">
-          SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected
-          ecosystem for leadership, staff, parents, and students, with
-          integrations that keep data flowing without duplication.
+          <span className="md:hidden">
+            A connected ecosystem for leadership, staff, parents, and students.
+          </span>
+          <span className="hidden md:inline">
+            SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected
+            ecosystem for leadership, staff, parents, and students, with
+            integrations that keep data flowing without duplication.
+          </span>
         </p>
       </div>
 
-      {/* Top row: map + why it matters */}
-      <div className="relative z-10 mb-12 grid gap-6 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      {/* Top row: map + why it matters - hidden entirely on mobile for max compression */}
+      <div className="relative z-10 mb-6 hidden gap-6 md:mb-12 md:grid md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         {/* Map */}
         <div
           ref={mapRef}
@@ -602,9 +611,12 @@ export function EcosystemSection() {
       {/* Ecosystem modules grid */}
       <div
         ref={cardsRef}
-        className="relative z-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+        className="relative z-10 grid gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3"
       >
-        {ecosystemItems.map((item, idx) => {
+        {(isMobile && !isModulesExpanded
+          ? ecosystemItems.slice(0, 2)
+          : ecosystemItems
+        ).map((item, idx) => {
           const Icon = item.icon;
           const isHovered = hoveredCardIndex === idx;
           return (
@@ -662,8 +674,34 @@ export function EcosystemSection() {
         })}
       </div>
 
+      {/* Expand button for mobile */}
+      {isMobile && (
+        <button
+          type="button"
+          onClick={() => setIsModulesExpanded(!isModulesExpanded)}
+          className={cn(
+            "relative z-10 mx-auto mt-4 flex items-center gap-2 rounded-full",
+            "border border-white/[0.08] bg-neutral-900/50 px-4 py-2",
+            "text-xs font-medium text-neutral-300",
+            "transition-all duration-300 hover:border-white/15 hover:bg-neutral-900/70"
+          )}
+        >
+          <span>
+            {isModulesExpanded
+              ? "Show less"
+              : `View all ${ecosystemItems.length} modules`}
+          </span>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-transform duration-300",
+              isModulesExpanded && "rotate-180"
+            )}
+          />
+        </button>
+      )}
+
       {/* Hierarchy / RBAC */}
-      <EcosystemHierarchy />
+      <EcosystemHierarchy isMobile={isMobile} />
 
       <style jsx>{`
         @keyframes eco-shimmer {
@@ -682,9 +720,36 @@ export function EcosystemSection() {
   );
 }
 
-function EcosystemHierarchy() {
+function EcosystemHierarchy({ isMobile }: { isMobile: boolean }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const itemsRef = useRef<HTMLDivElement | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const hierarchyItems = [
+    {
+      title: "Organisation",
+      desc: "Central billing, reporting, security policies, and oversight across every school and campus.",
+    },
+    {
+      title: "School",
+      desc: "Brand-level controls and templates applied across all campuses under the same school group.",
+    },
+    {
+      title: "Campus",
+      desc: "Local operations: academics, finance, transport, communication, and facilities in each location.",
+    },
+    {
+      title: "Departments",
+      desc: "Academic departments and offices with scoped access to the data they need.",
+    },
+    {
+      title: "Roles & distributed RBAC",
+      desc: "Fine-grained permissions for organisation admins, school admins, campus admins, department heads, teachers, finance, transport, parents, and students.",
+    },
+  ];
+
+  const displayedItems =
+    isMobile && !isExpanded ? hierarchyItems.slice(0, 1) : hierarchyItems;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -733,41 +798,52 @@ function EcosystemHierarchy() {
   return (
     <div
       ref={ref}
-      className="relative z-10 mx-auto mt-16 w-full max-w-5xl overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-6 backdrop-blur-sm sm:p-8"
+      className="relative z-10 mx-auto mt-4 w-full max-w-5xl overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-4 backdrop-blur-sm sm:p-6 md:mt-16 md:p-8"
     >
-      <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl" />
+      {!isMobile && (
+        <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl" />
+      )}
 
       <p className="mb-2 text-[0.65rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
         Hierarchy · RBAC
       </p>
-      <h3 className="mb-6 text-xl font-semibold tracking-tight text-white md:text-2xl">
+      <h3 className="mb-4 text-lg font-semibold tracking-tight text-white md:mb-6 md:text-2xl">
         A structure that mirrors real institutions
       </h3>
 
-      <div ref={itemsRef} className="relative space-y-4 pl-6">
+      <div ref={itemsRef} className="relative space-y-3 pl-6 md:space-y-4">
         <div className="absolute left-[11px] top-2 h-[calc(100%-16px)] w-[2px] bg-gradient-to-b from-blue-500/40 via-sky-400/30 to-purple-500/40" />
 
-        <HierarchyItem
-          title="Organisation"
-          desc="Central billing, reporting, security policies, and oversight across every school and campus."
-        />
-        <HierarchyItem
-          title="School"
-          desc="Brand-level controls and templates applied across all campuses under the same school group."
-        />
-        <HierarchyItem
-          title="Campus"
-          desc="Local operations: academics, finance, transport, communication, and facilities in each location."
-        />
-        <HierarchyItem
-          title="Departments"
-          desc="Academic departments and offices with scoped access to the data they need."
-        />
-        <HierarchyItem
-          title="Roles & distributed RBAC"
-          desc="Fine-grained permissions for organisation admins, school admins, campus admins, department heads, teachers, finance, transport, parents, and students."
-        />
+        {displayedItems.map((item) => (
+          <HierarchyItem key={item.title} title={item.title} desc={item.desc} />
+        ))}
       </div>
+
+      {/* Expand button for mobile */}
+      {isMobile && (
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={cn(
+            "mt-4 flex w-full items-center justify-center gap-2 rounded-xl",
+            "border border-white/[0.08] bg-white/[0.02] py-2",
+            "text-xs font-medium text-neutral-400",
+            "transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04]"
+          )}
+        >
+          <span>
+            {isExpanded
+              ? "Show less"
+              : `View all ${hierarchyItems.length} levels`}
+          </span>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-transform duration-300",
+              isExpanded && "rotate-180"
+            )}
+          />
+        </button>
+      )}
     </div>
   );
 }

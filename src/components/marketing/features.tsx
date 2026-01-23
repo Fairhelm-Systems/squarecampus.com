@@ -10,6 +10,7 @@ import {
   Shield,
   Workflow,
 } from "@/components/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,10 +20,11 @@ export function Features() {
   const headingRef = useRef<HTMLDivElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
 
+  const { isMobile, shouldReduceEffects } = useDeviceCapabilities();
+
   useEffect(() => {
     if (!sectionRef.current) return;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
+    if (shouldReduceEffects) return;
 
     const ctx = gsap.context(() => {
       // Heading animation
@@ -83,7 +85,7 @@ export function Features() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [shouldReduceEffects]);
 
   return (
     <section
@@ -93,23 +95,29 @@ export function Features() {
       className="relative overflow-hidden bg-neutral-950 px-4 py-24 md:px-8"
       aria-label="Core features of SquareCampus"
     >
-      {/* Background effects */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.06),transparent_50%)]" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
+      {/* Background effects - Hidden on mobile for performance */}
+      {!isMobile && (
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.06),transparent_50%)]" />
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+        </div>
+      )}
 
-      {/* Floating orbs */}
-      <div className="pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-blue-500/10 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-[120px]" />
+      {/* Floating orbs - Hidden on mobile for performance */}
+      {!isMobile && (
+        <>
+          <div className="pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-blue-500/10 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-[120px]" />
+        </>
+      )}
 
       {/* Header */}
       <div ref={headingRef} className="relative mx-auto mb-16 max-w-6xl space-y-4 text-center">

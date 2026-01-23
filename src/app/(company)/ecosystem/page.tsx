@@ -42,77 +42,157 @@ import { cn } from "@/lib/utils";
 gsap.registerPlugin(ScrollTrigger);
 
 const modules = [
+  // Foundation Modules
+  {
+    icon: BookOpen,
+    name: "Learning (LMS)",
+    description: "Online courses, assignments, quizzes, video lessons, and live classes",
+    color: "blue",
+    category: "Foundation",
+  },
   {
     icon: GraduationCap,
     name: "Admissions",
     description: "Online applications, merit lists, entrance exams, and enrollment workflow",
-    color: "blue",
+    color: "emerald",
+    category: "Foundation",
   },
   {
     icon: DollarSign,
     name: "Finance & Fees",
     description: "Fee collection, payment gateways, receipts, reports, and financial analytics",
-    color: "emerald",
+    color: "purple",
+    category: "Foundation",
   },
   {
     icon: BarChart3,
     name: "Academics",
     description: "Timetables, attendance, exams, grading, report cards, and performance tracking",
-    color: "purple",
-  },
-  {
-    icon: Briefcase,
-    name: "Employee Management",
-    description: "HR records, payroll, attendance, leave, appraisals, and compliance",
     color: "cyan",
-  },
-  {
-    icon: BookOpen,
-    name: "Learning (LMS)",
-    description: "Online courses, assignments, quizzes, video lessons, and learning paths",
-    color: "blue",
+    category: "Foundation",
   },
   {
     icon: MessageSquare,
     name: "Communication",
     description: "SMS, email, app notifications, WhatsApp, parent portal, and chat",
-    color: "emerald",
+    color: "blue",
+    category: "Foundation",
   },
+  // Operations Suite
   {
     icon: Bus,
     name: "Transport",
     description: "Route planning, GPS tracking, driver management, and transport fees",
-    color: "purple",
+    color: "emerald",
+    category: "Operations",
   },
   {
     icon: Home,
     name: "Hostel",
     description: "Room allocation, mess billing, gate passes, and hostel attendance",
-    color: "cyan",
+    color: "purple",
+    category: "Operations",
   },
   {
     icon: BookOpen,
     name: "Library",
     description: "Book cataloging, issue/return, fines, digital library, and analytics",
-    color: "blue",
+    color: "cyan",
+    category: "Operations",
   },
   {
-    icon: Calendar,
-    name: "Events & Clubs",
-    description: "Event management, club activities, competitions, and participation tracking",
+    icon: Briefcase,
+    name: "HR & Payroll",
+    description: "Staff records, payroll, attendance, leave, appraisals, and compliance",
+    color: "blue",
+    category: "Operations",
+  },
+  // Extended Academic
+  {
+    icon: Target,
+    name: "Training & Placement",
+    description: "Company registration, job postings, interview scheduling, and analytics",
     color: "emerald",
+    category: "Extended",
   },
   {
     icon: FileText,
-    name: "Inventory",
-    description: "Asset tracking, stock management, vendors, and purchase orders",
+    name: "Examination",
+    description: "Hall allocation, invigilator roster, result processing, and transcripts",
     color: "purple",
+    category: "Extended",
+  },
+  {
+    icon: Zap,
+    name: "Research & Development",
+    description: "Grant tracking, publications, lab booking, and PhD scholar management",
+    color: "cyan",
+    category: "Extended",
+  },
+  {
+    icon: Users,
+    name: "Alumni",
+    description: "Alumni directory, events, donations, mentorship, and engagement tracking",
+    color: "blue",
+    category: "Extended",
+  },
+  // Operational Excellence
+  {
+    icon: DollarSign,
+    name: "Canteen",
+    description: "Menu planning, pre-ordering, student balance, and vendor management",
+    color: "emerald",
+    category: "Excellence",
+  },
+  {
+    icon: Shield,
+    name: "Health Center",
+    description: "Health records, appointments, prescriptions, and vaccination tracking",
+    color: "purple",
+    category: "Excellence",
+  },
+  {
+    icon: Target,
+    name: "Sports & Recreation",
+    description: "Facility booking, tournaments, equipment inventory, and coach management",
+    color: "cyan",
+    category: "Excellence",
+  },
+  {
+    icon: Calendar,
+    name: "Events",
+    description: "Event proposals, venue booking, registration, and budget tracking",
+    color: "blue",
+    category: "Excellence",
   },
   {
     icon: Database,
-    name: "Reports & Analytics",
-    description: "Custom reports, dashboards, exports, and data visualization",
+    name: "Inventory",
+    description: "Asset cataloging, stock management, maintenance, and depreciation tracking",
+    color: "emerald",
+    category: "Excellence",
+  },
+  {
+    icon: FileText,
+    name: "Procurement",
+    description: "Vendor registration, purchase requisition, invoicing, and contracts",
+    color: "purple",
+    category: "Excellence",
+  },
+  // Governance
+  {
+    icon: Shield,
+    name: "Accreditation",
+    description: "NAAC/NBA tracking, compliance checklists, and self-assessment reports",
     color: "cyan",
+    category: "Governance",
+  },
+  {
+    icon: Eye,
+    name: "Grievance & Feedback",
+    description: "Grievance portal, SLA tracking, anonymous feedback, and surveys",
+    color: "blue",
+    category: "Governance",
   },
 ];
 
@@ -419,7 +499,7 @@ export default function EcosystemPage() {
                 <div className="grid w-full gap-4 md:grid-cols-3">
                   {[
                     {
-                      title: "12 Core Modules",
+                      title: "21 Core Modules",
                       description: "Admissions to alumni, every workflow covered",
                       icon: <Database className="h-4 w-4" />,
                       color: "blue",
@@ -623,7 +703,7 @@ export default function EcosystemPage() {
           {/* Modules Grid */}
           <section ref={modulesRef} className="space-y-8">
             <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-neutral-50">12 Modules. One Platform.</h2>
+              <h2 className="text-lg font-semibold text-neutral-50">21 Modules. One Platform.</h2>
               <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
                 Every module shares the same database, identity, and source of truth. Fewer handoffs,
                 fewer sync issues, and clearer accountability.

@@ -3,7 +3,9 @@
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { Check, Crown, Edit, Eye, Lock, Shield, Sparkles, Trash2, Users, X } from "@/icons";
+import { Check, ChevronDown, Crown, Edit, Eye, Lock, Shield, Sparkles, Trash2, Users, X } from "@/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
+import { cn } from "@/lib/utils";
 import { motion } from "@/lib/motion";
 
 const hierarchy = [
@@ -120,6 +122,9 @@ type PermissionRow = {
 export function RBACShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedLevel, setSelectedLevel] = useState(hierarchy[0]);
+  const [isHierarchyExpanded, setIsHierarchyExpanded] = useState(false);
+  const [isMatrixExpanded, setIsMatrixExpanded] = useState(false);
+  const { isMobile } = useDeviceCapabilities();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -175,29 +180,32 @@ export function RBACShowcase() {
     <section
       id="rbac"
       ref={containerRef}
-      className="relative border-b border-white/5 bg-neutral-950 px-4 py-20 md:px-8 md:py-28"
+      className="relative border-b border-white/5 bg-neutral-950 px-4 py-10 md:px-8 md:py-28"
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16 text-center"
+          className="mb-6 text-center md:mb-16"
         >
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-neutral-400">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-neutral-400 md:mb-4">
             <Shield className="h-3 w-3 text-emerald-400" />
             Multi-Level RBAC
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Granular Access Control</h2>
-          <p className="mx-auto max-w-2xl text-neutral-300">
+          <h2 className="mb-2 text-2xl font-bold md:mb-4 md:text-5xl">Granular Access Control</h2>
+          <p className="mx-auto max-w-2xl text-sm text-neutral-300 md:text-base">
             5-tier role hierarchy with module-level permissions. Give each user exactly the access
             they need—nothing more, nothing less.
           </p>
         </motion.div>
 
         {/* Hierarchy visualization */}
-        <div className="mb-16 space-y-4">
-          {hierarchy.map((level, index) => {
+        <div className="mb-6 space-y-3 md:mb-16 md:space-y-4">
+          {(isMobile && !isHierarchyExpanded
+            ? hierarchy.slice(0, 2)
+            : hierarchy
+          ).map((level, index) => {
             const Icon = level.icon;
             const isSelected = selectedLevel.level === level.level;
 
@@ -226,29 +234,29 @@ export function RBACShowcase() {
                     }
                   />
 
-                  <div className="flex flex-col gap-4 p-6 pl-8 md:flex-row md:items-center md:justify-between">
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col gap-3 p-4 pl-6 md:flex-row md:items-center md:justify-between md:gap-4 md:p-6 md:pl-8">
+                    <div className="flex items-center gap-3 md:gap-4">
                       {/* Icon */}
                       <div
-                        className={`rounded-xl border border-white/10 bg-linear-to-br ${level.color} p-3`}
+                        className={`rounded-lg border border-white/10 bg-linear-to-br ${level.color} p-2 md:rounded-xl md:p-3`}
                       >
-                        <Icon className="h-6 w-6 text-white" />
+                        <Icon className="h-5 w-5 text-white md:h-6 md:w-6" />
                       </div>
 
                       {/* Content */}
                       <div>
-                        <div className="mb-1 flex items-center gap-2">
-                          <h3 className="text-xl font-bold text-white">{level.level} Level</h3>
-                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs font-medium text-neutral-300">
+                        <div className="mb-0.5 flex items-center gap-2 md:mb-1">
+                          <h3 className="text-base font-bold text-white md:text-xl">{level.level}</h3>
+                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.65rem] font-medium text-neutral-300 md:text-xs">
                             Tier {index + 1}
                           </span>
                         </div>
-                        <p className="text-sm text-neutral-400">{level.permissions}</p>
+                        <p className="text-xs text-neutral-400 md:text-sm">{level.permissions}</p>
                       </div>
                     </div>
 
-                    {/* Roles */}
-                    <div className="flex flex-wrap gap-2">
+                    {/* Roles - hidden on mobile */}
+                    <div className="hidden flex-wrap gap-2 md:flex">
                       {level.roles.map((role) => (
                         <div
                           key={role}
@@ -266,15 +274,15 @@ export function RBACShowcase() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="border-t border-white/10 bg-neutral-900/50 p-6"
+                      className="border-t border-white/10 bg-neutral-900/50 p-4 md:p-6"
                     >
-                      <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-neutral-400">
+                      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-400 md:mb-3 md:text-sm">
                         Typical Permissions
                       </h4>
-                      <div className="grid gap-2 sm:grid-cols-2">
+                      <div className="grid gap-1.5 sm:grid-cols-2 md:gap-2">
                         {level.examples.map((example, i) => (
-                          <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
-                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                          <div key={i} className="flex items-start gap-2 text-xs text-neutral-300 md:text-sm">
+                            <Check className="mt-0.5 h-3 w-3 shrink-0 text-emerald-400 md:h-4 md:w-4" />
                             <span>{example}</span>
                           </div>
                         ))}
@@ -285,8 +293,60 @@ export function RBACShowcase() {
               </motion.div>
             );
           })}
+
+          {/* Expand button for mobile hierarchy */}
+          {isMobile && (
+            <button
+              type="button"
+              onClick={() => setIsHierarchyExpanded(!isHierarchyExpanded)}
+              className={cn(
+                "flex w-full items-center justify-center gap-2 rounded-xl",
+                "border border-white/10 bg-neutral-900/50 py-3",
+                "text-xs font-medium text-neutral-400",
+                "transition-all duration-300 hover:border-white/20 hover:bg-neutral-900/70"
+              )}
+            >
+              <span>
+                {isHierarchyExpanded
+                  ? "Show less"
+                  : `View all ${hierarchy.length} levels`}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 transition-transform duration-300",
+                  isHierarchyExpanded && "rotate-180"
+                )}
+              />
+            </button>
+          )}
         </div>
 
+        {/* Permission matrix - collapsible on mobile */}
+        {isMobile && !isMatrixExpanded ? (
+          <button
+            type="button"
+            onClick={() => setIsMatrixExpanded(true)}
+            className={cn(
+              "flex w-full items-center justify-between rounded-2xl",
+              "border border-white/10 bg-neutral-900/50 p-4",
+              "transition-all duration-300 hover:border-white/20 hover:bg-neutral-900/70"
+            )}
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                <Shield className="h-5 w-5 text-emerald-400" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-white">Permission Matrix</p>
+                <p className="text-xs text-neutral-400">
+                  Tap to view role-based permissions
+                </p>
+              </div>
+            </div>
+            <ChevronDown className="h-5 w-5 text-neutral-400" />
+          </button>
+        ) : (
+          <>
         {/* Permission matrix */}
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-neutral-900/80 to-neutral-950">
           <div className="border-b border-white/10 bg-neutral-900/50 p-6">
@@ -394,12 +454,12 @@ export function RBACShowcase() {
           </div>
         </div>
 
-        {/* Bottom highlight */}
+        {/* Bottom highlight - hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-6 hidden text-center md:mt-12 md:block"
         >
           <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-emerald-500/20 bg-linear-to-br from-emerald-950/30 via-neutral-900/80 to-neutral-950/90 p-8 shadow-xl shadow-emerald-500/10">
             <Sparkles className="h-8 w-8 text-emerald-400" />
@@ -413,6 +473,8 @@ export function RBACShowcase() {
             </div>
           </div>
         </motion.div>
+          </>
+        )}
       </div>
     </section>
   );

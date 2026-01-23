@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, MessageSquare } from "@/components/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -75,10 +76,12 @@ const FAQs = [
 
 export function FAQ() {
   const [open, setOpen] = useState<string | null>(null);
+  const [isFaqExpanded, setIsFaqExpanded] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const { isMobile } = useDeviceCapabilities();
 
   // GSAP scroll animations
   useEffect(() => {
@@ -198,8 +201,47 @@ export function FAQ() {
           ))}
         </div>
 
-        {/* FAQ List */}
-        <div ref={listRef} className="space-y-3">
+        {/* FAQ List - Collapsible on mobile */}
+        {isMobile && (
+          <button
+            type="button"
+            onClick={() => setIsFaqExpanded(!isFaqExpanded)}
+            className={cn(
+              "flex w-full items-center justify-between rounded-xl p-4",
+              "border border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm",
+              "transition-all duration-300",
+              "hover:border-white/15 hover:bg-neutral-900/70"
+            )}
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03]">
+                <MessageSquare className="h-4 w-4 text-blue-400" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-white">
+                  View all {FAQs.length} questions
+                </p>
+                <p className="text-xs text-neutral-400">
+                  Tap to {isFaqExpanded ? "collapse" : "expand"}
+                </p>
+              </div>
+            </div>
+            <ChevronDown
+              className={cn(
+                "h-5 w-5 text-neutral-400 transition-transform duration-300",
+                isFaqExpanded && "rotate-180"
+              )}
+            />
+          </button>
+        )}
+
+        <div
+          ref={listRef}
+          className={cn(
+            "space-y-3 transition-all duration-300",
+            isMobile && !isFaqExpanded && "hidden"
+          )}
+        >
           {FAQs.map((faq, index) => (
             <FAQItem
               key={index}

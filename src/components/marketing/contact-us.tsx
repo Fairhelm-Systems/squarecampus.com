@@ -11,7 +11,8 @@ import { MacbookScroll } from "./macbook";
 import { toast } from "sonner";
 import { MaskedDots } from "./backgrounds/masked-dots";
 import { Logo } from "./logo";
-import { ArrowUpRight, ArrowRight } from "../icons";
+import { ArrowUpRight, ArrowRight, ChevronDown } from "../icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,6 +45,8 @@ export function ContactUs() {
   const leftPaneRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isFormExpanded, setIsFormExpanded] = useState(false);
+  const { isMobile } = useDeviceCapabilities();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -295,14 +298,47 @@ export function ContactUs() {
           </div>
         </div>
 
-        {/* Right pane: form */}
-        <form
-          ref={formRef}
-          id="contact-form"
-          onSubmit={handleSubmit}
-          className="relative mx-auto flex w-full max-w-2xl flex-col gap-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-5 backdrop-blur-sm sm:p-8 md:p-10"
-        >
-          <Grid size={20} />
+        {/* Right pane: form - Collapsible on mobile */}
+        <div className="relative flex flex-col lg:h-full">
+          {/* Mobile: Collapsible header */}
+          {isMobile && (
+            <button
+              type="button"
+              onClick={() => setIsFormExpanded(!isFormExpanded)}
+              className="mb-3 flex w-full items-center justify-between rounded-xl border border-white/[0.08] bg-neutral-900/50 p-4 text-left backdrop-blur-sm lg:hidden"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <IconMailFilled className="h-5 w-5 text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">Contact Form</p>
+                  <p className="text-xs text-neutral-400">Fill out to book a demo</p>
+                </div>
+              </div>
+              <ChevronDown
+                className={cn(
+                  "h-5 w-5 text-white/50 transition-transform duration-200",
+                  isFormExpanded && "rotate-180"
+                )}
+              />
+            </button>
+          )}
+
+          {/* Form - Always visible on desktop, collapsible on mobile */}
+          <div
+            className={cn(
+              "transition-all duration-300 ease-in-out lg:block lg:h-full lg:flex-1",
+              isMobile && !isFormExpanded ? "hidden" : "block"
+            )}
+          >
+            <form
+              ref={formRef}
+              id="contact-form"
+              onSubmit={handleSubmit}
+              className="relative mx-auto flex h-full w-full max-w-2xl flex-col gap-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-5 backdrop-blur-sm sm:p-8 md:p-10"
+            >
+              <Grid size={20} />
 
           {/* Honeypot field */}
           <div className="absolute -left-[9999px]" aria-hidden="true">
@@ -458,7 +494,9 @@ export function ContactUs() {
           <p className="mt-1 text-center text-[0.65rem] text-neutral-500">
             We usually respond within one business day for new campus inquiries.
           </p>
-        </form>
+            </form>
+          </div>
+        </div>
       </div>
 
       {/* MacBook showcase */}

@@ -4,7 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
-import { Languages, X, Globe, Check } from "../icons";
+import { Languages, X, Globe, Check, ChevronDown } from "../icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -239,6 +240,8 @@ export const LanguageSupport = () => {
 
   const [active, setActive] = useState<LanguageMeta | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { isMobile } = useDeviceCapabilities();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLDivElement | null>(null);
@@ -376,10 +379,10 @@ export const LanguageSupport = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative mx-auto mt-28 max-w-6xl overflow-hidden px-6 py-16 text-neutral-200"
+      className="relative mx-auto mt-16 max-w-6xl overflow-hidden px-4 py-10 text-neutral-200 md:mt-28 md:px-6 md:py-16"
     >
-      {/* Background effects */}
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background effects - hidden on mobile */}
+      <div className="pointer-events-none absolute inset-0 hidden md:block">
         {/* Radial gradient backdrop */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08),transparent_70%)]" />
 
@@ -393,8 +396,8 @@ export const LanguageSupport = () => {
         />
       </div>
 
-      <FloatingParticles />
-      <AnimatedGlobe />
+      {!isMobile && <FloatingParticles />}
+      {!isMobile && <AnimatedGlobe />}
 
       {/* Heading section */}
       <div
@@ -425,9 +428,9 @@ export const LanguageSupport = () => {
       {/* Language grid */}
       <div
         ref={gridRef}
-        className="relative z-10 mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+        className="relative z-10 mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:mt-14 md:grid-cols-4 lg:grid-cols-5"
       >
-        {languages.map((lang, index) => (
+        {(isMobile && !isExpanded ? languages.slice(0, 4) : languages).map((lang, index) => (
           <button
             key={lang.code}
             type="button"
@@ -493,10 +496,32 @@ export const LanguageSupport = () => {
         ))}
       </div>
 
+      {/* Expand/collapse button for mobile */}
+      {isMobile && (
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={cn(
+            "relative z-10 mx-auto mt-4 flex items-center gap-2 rounded-full px-4 py-2",
+            "border border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm",
+            "text-sm text-neutral-300 transition-all duration-300",
+            "hover:border-white/15 hover:bg-neutral-900/70"
+          )}
+        >
+          <span>{isExpanded ? "Show less" : `View all ${languages.length} languages`}</span>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-transform duration-300",
+              isExpanded && "rotate-180"
+            )}
+          />
+        </button>
+      )}
+
       {/* Info card */}
       <div
         ref={infoCardRef}
-        className="relative z-10 mx-auto mt-16 max-w-2xl overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-8 backdrop-blur-sm"
+        className="relative z-10 mx-auto mt-8 max-w-2xl overflow-hidden rounded-2xl border border-white/[0.08] bg-neutral-900/50 p-5 backdrop-blur-sm md:mt-16 md:p-8"
       >
         {/* Card background effects */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5" />

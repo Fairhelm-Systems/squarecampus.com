@@ -156,6 +156,7 @@ export function Operations() {
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [isInView, setIsInView] = useState(true);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   // Check for mobile/tablet/touch devices
   useEffect(() => {
@@ -174,6 +175,23 @@ export function Operations() {
     window.addEventListener("resize", checkDevice);
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
+
+  // Track active slide on mobile carousel scroll
+  useEffect(() => {
+    if (!isMobile || !trackRef.current) return;
+
+    const track = trackRef.current;
+    const handleScroll = () => {
+      const scrollLeft = track.scrollLeft;
+      const cardWidth = track.firstElementChild?.clientWidth ?? 300;
+      const gap = 16; // gap-4 = 16px
+      const index = Math.round(scrollLeft / (cardWidth + gap));
+      setActiveSlideIndex(Math.min(index, operationAreas.length - 1));
+    };
+
+    track.addEventListener("scroll", handleScroll, { passive: true });
+    return () => track.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   // GSAP ScrollTrigger horizontal scroll
   useEffect(() => {
@@ -568,8 +586,8 @@ export function Operations() {
       data-section="operations"
       className="relative overflow-x-clip bg-neutral-950"
     >
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background - hidden on mobile for performance */}
+      <div className="pointer-events-none absolute inset-0 hidden md:block">
         {isInView && (
           <DottedGlowBackground
             className="pointer-events-none opacity-60"
@@ -590,8 +608,8 @@ export function Operations() {
       </div>
 
       {/* Heading */}
-      <div className="relative px-4 pb-12 pt-10 md:px-8 md:pb-16 md:pt-14">
-        <div ref={headingRef} className="mx-auto max-w-6xl space-y-4 text-center">
+      <div className="relative px-4 pb-8 pt-8 md:px-8 md:pb-16 md:pt-14">
+        <div ref={headingRef} className="mx-auto max-w-6xl space-y-3 text-center md:space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.5em] text-white/60">
             Why SquareCampus
           </p>
@@ -617,9 +635,9 @@ export function Operations() {
           }
         `}
       >
-        {/* Strong edge gradients for drama - hide on tablet since we have native scroll */}
-        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent ${isMobile || isTablet ? "hidden" : "hidden lg:block"}`} />
-        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-48 bg-gradient-to-l from-neutral-950 via-neutral-950/90 to-transparent ${isMobile || isTablet ? "hidden" : "hidden lg:block"}`} />
+        {/* Edge gradients - desktop gets dramatic, mobile gets subtle hint */}
+        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`} />
+        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`} />
 
         {/* Track */}
         <div
@@ -627,13 +645,13 @@ export function Operations() {
           className={`
             flex
             ${isMobile
-              ? "flex-col items-center gap-6 px-4 py-6"
+              ? "snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 scrollbar-hide"
               : isTablet
                 ? "snap-x snap-mandatory gap-6 overflow-x-auto px-6 py-8 scrollbar-hide"
                 : "items-center gap-8 py-0"
             }
           `}
-          style={isTablet ? {
+          style={(isMobile || isTablet) ? {
             scrollSnapType: "x mandatory",
             WebkitOverflowScrolling: "touch",
           } : undefined}
@@ -652,7 +670,7 @@ export function Operations() {
                   border border-white/[0.08] bg-neutral-900/80
                   backdrop-blur-sm transition-colors duration-700 hover:border-white/15
                   ${isMobile
-                    ? "w-full max-w-lg"
+                    ? "h-auto min-h-[320px] w-[85vw] max-w-[340px] snap-center"
                     : isTablet
                       ? "h-[70vh] max-h-[600px] w-[80vw] max-w-[700px] snap-center"
                       : "h-[75vh] max-h-[700px] w-[70vw] max-w-[900px]"
@@ -718,7 +736,7 @@ export function Operations() {
                   className={`
                     relative flex h-full
                     ${isMobile
-                      ? "flex-col p-6"
+                      ? "flex-col p-4"
                       : isTablet
                         ? "flex-col p-6"
                         : area.isProofCard
@@ -734,11 +752,11 @@ export function Operations() {
                       <div
                         className={`
                           relative z-10 flex flex-col
-                          ${isMobile ? "p-6" : "w-1/2 p-10 lg:p-14"}
+                          ${isMobile ? "p-4" : "w-1/2 p-10 lg:p-14"}
                         `}
                       >
                         {/* Badge */}
-                        <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5">
+                        <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 md:mb-6 md:px-4 md:py-1.5">
                           <span className="relative flex h-2 w-2">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75" />
                             <span className="relative inline-flex h-2 w-2 rounded-full bg-purple-500" />
@@ -768,7 +786,7 @@ export function Operations() {
                         {/* Stats - compact vertical cards */}
                         <div
                           className={`
-                            mt-auto grid gap-2 pt-6
+                            mt-auto grid gap-2 pt-4 md:pt-6
                             ${isMobile ? "grid-cols-2" : "grid-cols-4"}
                           `}
                         >
@@ -1016,7 +1034,7 @@ export function Operations() {
                         </div>
 
                         {/* Title and description */}
-                        <div className={`space-y-4 ${isMobile ? "mt-6" : "mt-8 lg:mt-10"}`}>
+                        <div className={`space-y-3 md:space-y-4 ${isMobile ? "mt-4" : "mt-8 lg:mt-10"}`}>
                           <h3
                             className={`
                               font-semibold uppercase tracking-[0.1em] text-white
@@ -1038,8 +1056,8 @@ export function Operations() {
                         {/* Bullets */}
                         <ul
                           className={`
-                            mt-auto space-y-2
-                            ${isMobile ? "pt-6" : "pt-8"}
+                            mt-auto space-y-1.5 md:space-y-2
+                            ${isMobile ? "pt-4" : "pt-8"}
                           `}
                         >
                           {area.bullets.map((bullet) => (
@@ -1047,11 +1065,11 @@ export function Operations() {
                               key={bullet}
                               data-bullet
                               className={`
-                                group/bullet flex items-center gap-3 rounded-xl
+                                group/bullet flex items-center gap-2 rounded-xl md:gap-3
                                 border border-white/[0.04] bg-white/[0.02]
                                 backdrop-blur-sm transition-all duration-300
                                 hover:border-white/10 hover:bg-white/[0.05]
-                                ${isMobile ? "px-3 py-2.5" : "px-4 py-3"}
+                                ${isMobile ? "px-2.5 py-2" : "px-4 py-3"}
                               `}
                               style={{
                                 boxShadow: `inset 0 1px 0 rgba(255,255,255,0.03)`,
@@ -1143,6 +1161,44 @@ export function Operations() {
           })}
 
         </div>
+
+        {/* Mobile carousel indicators */}
+        {isMobile && (
+          <div className="mt-4 flex flex-col items-center gap-3">
+            {/* Dot indicators */}
+            <div className="flex items-center gap-2">
+              {operationAreas.map((area, index) => (
+                <button
+                  key={area.title}
+                  type="button"
+                  aria-label={`Go to ${area.title}`}
+                  onClick={() => {
+                    const track = trackRef.current;
+                    if (!track) return;
+                    const card = track.children[index] as HTMLElement;
+                    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                  }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeSlideIndex === index
+                      ? "w-6"
+                      : "w-2 bg-white/20 hover:bg-white/40"
+                  }`}
+                  style={activeSlideIndex === index ? {
+                    backgroundColor: area.accentColor,
+                    boxShadow: `0 0 8px ${area.accentColor}60`,
+                  } : undefined}
+                />
+              ))}
+            </div>
+            {/* Swipe hint - only show on first slide */}
+            {activeSlideIndex === 0 && (
+              <p className="flex items-center gap-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-neutral-500">
+                <span>Swipe to explore</span>
+                <span className="animate-pulse">→</span>
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
     </section>

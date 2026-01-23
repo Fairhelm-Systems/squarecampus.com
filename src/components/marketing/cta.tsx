@@ -197,10 +197,13 @@ export function CTA() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden px-4 py-16 sm:px-6 sm:py-20 md:py-28 lg:px-8"
+      className="relative w-full overflow-hidden px-4 py-12 sm:px-6 sm:py-20 md:py-28 lg:px-8"
     >
-      <EnhancedBackground />
-      <FloatingParticles />
+      {/* Background and particles hidden on mobile for performance */}
+      <div className="hidden md:block">
+        <EnhancedBackground />
+        <FloatingParticles />
+      </div>
 
       <div className="relative mx-auto flex max-w-7xl items-center justify-center">
         <AnimatedLine position="left" />
@@ -210,7 +213,7 @@ export function CTA() {
           className="relative z-10 mx-auto w-full max-w-3xl text-center"
         >
           {/* Badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm md:mb-8">
             <Sparkles className="h-4 w-4 text-blue-400" />
             <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
               Your School OS awaits
@@ -245,7 +248,7 @@ export function CTA() {
           </p>
 
           {/* Signal badges */}
-          <div className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mx-auto mt-5 flex flex-wrap items-center justify-center gap-3 md:mt-8">
             {ctaSignals.map((signal) => (
               <div
                 key={signal.label}
@@ -268,7 +271,7 @@ export function CTA() {
           </div>
 
           {/* Highlights list */}
-          <div className="mx-auto mt-10 max-w-lg">
+          <div className="mx-auto mt-6 max-w-lg md:mt-10">
             <ul className="space-y-3 text-left">
               {ctaHighlights.map((highlight, index) => (
                 <li
@@ -287,7 +290,7 @@ export function CTA() {
           </div>
 
           {/* CTA Button */}
-          <div className="mt-10">
+          <div className="mt-6 md:mt-10">
             <Link
               href="/contact-us"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px]"
