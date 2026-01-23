@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, Instagram, Linkedin, Mail, MapPin, XTwitter } from "@/components/icons";
+import { useState } from "react";
+import { ChevronDown, Heart, Instagram, Linkedin, Mail, MapPin, XTwitter } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
@@ -14,35 +15,67 @@ type FooterLink = {
 type FooterColumnProps = {
   title: string;
   links: FooterLink[];
+  isOpen?: boolean;
+  onToggle?: () => void;
 };
 
-function FooterColumn({ title, links }: FooterColumnProps) {
+function FooterColumn({ title, links, isOpen, onToggle }: FooterColumnProps) {
   return (
-    <div className="flex flex-col space-y-5">
-      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-white/80">
-        {title}
-      </p>
-      <ul className="space-y-3.5 text-sm">
-        {links.map((link) => (
-          <li key={link.title}>
-            <Link
-              className="group inline-flex items-center gap-1.5 text-neutral-400 transition-all duration-300 hover:text-white"
-              href={link.href}
-              {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
-            >
-              <span className="relative">
-                {link.title}
-                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full" />
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col">
+      {/* Mobile: clickable header */}
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex items-center justify-between py-3 text-left lg:cursor-default lg:py-0"
+        aria-expanded={isOpen}
+      >
+        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-white/80">
+          {title}
+        </p>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 text-white/50 transition-transform duration-200 lg:hidden",
+            isOpen && "rotate-180"
+          )}
+        />
+      </button>
+
+      {/* Links - collapsible on mobile */}
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-300 ease-in-out lg:mt-5 lg:max-h-none lg:opacity-100",
+          isOpen ? "mt-3 max-h-96 opacity-100" : "max-h-0 opacity-0 lg:opacity-100"
+        )}
+      >
+        <ul className="space-y-3.5 pb-4 text-sm lg:pb-0">
+          {links.map((link) => (
+            <li key={link.title}>
+              <Link
+                className="group inline-flex items-center gap-1.5 text-neutral-400 transition-all duration-300 hover:text-white"
+                href={link.href}
+                {...(link.external && { target: "_blank", rel: "noopener noreferrer" })}
+              >
+                <span className="relative">
+                  {link.title}
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
 export function Footer() {
+  // Track which sections are open on mobile (accordion-style, one at a time)
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
   // Reorganized: Platform features
   const platformLinks: FooterLink[] = [
     { title: "Home", href: "/" },
@@ -104,8 +137,8 @@ export function Footer() {
 
   return (
     <footer className="relative w-full overflow-hidden border-t border-white/[0.08] bg-neutral-950">
-      {/* Background effects - Enhanced */}
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background effects - Hidden on mobile for performance */}
+      <div className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <div className="absolute inset-x-0 bottom-[-20%] mx-auto h-[500px] w-[60rem] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(99,102,241,0.08),_transparent_70%)] opacity-70" />
         <div className="absolute left-0 top-0 h-[400px] w-[400px] rounded-full bg-blue-600/[0.03] blur-[120px]" />
@@ -121,29 +154,29 @@ export function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-24">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-10 lg:py-24">
         {/* Top Section - Brand + CTA */}
-        <div className="mb-16 flex flex-col gap-10 border-b border-white/[0.06] pb-16 lg:flex-row lg:items-start lg:justify-between">
+        <div className="mb-8 flex flex-col gap-6 border-b border-white/[0.06] pb-8 lg:mb-16 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:pb-16">
           {/* Brand Block */}
-          <div className="max-w-md space-y-6">
+          <div className="max-w-md space-y-4 lg:space-y-6">
             <Logo />
-            <p className="text-base leading-relaxed text-neutral-400">
+            <p className="text-sm leading-relaxed text-neutral-400 lg:text-base">
               The operating system for schools and colleges—bringing admissions, academics,
               finance, and communication into one dependable control center.
             </p>
 
-            {/* Signal badges - Redesigned */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            {/* Signal badges - More compact on mobile */}
+            <div className="flex flex-wrap gap-2 pt-1 lg:gap-3 lg:pt-2">
               {footerSignals.map((signal) => (
                 <div
                   key={signal.label}
-                  className="group relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  className="group relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/[0.02] px-2.5 py-1.5 transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04] lg:px-4 lg:py-2.5"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className={cn("text-lg font-bold", signal.color)}>
+                  <div className="flex items-center gap-2 lg:gap-3">
+                    <span className={cn("text-sm font-bold lg:text-lg", signal.color)}>
                       {signal.value}
                     </span>
-                    <span className="text-[0.65rem] font-medium uppercase tracking-[0.15em] text-neutral-500">
+                    <span className="text-[0.55rem] font-medium uppercase tracking-[0.1em] text-neutral-500 lg:text-[0.65rem] lg:tracking-[0.15em]">
                       {signal.label}
                     </span>
                   </div>
@@ -152,16 +185,16 @@ export function Footer() {
             </div>
           </div>
 
-          {/* CTA Block */}
-          <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent p-6 lg:max-w-sm">
-            <h3 className="text-lg font-semibold text-white">Ready to get started?</h3>
-            <p className="text-sm text-neutral-400">
+          {/* CTA Block - Simplified on mobile */}
+          <div className="flex flex-col gap-3 rounded-xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent p-4 lg:max-w-sm lg:gap-4 lg:rounded-2xl lg:p-6">
+            <h3 className="text-base font-semibold text-white lg:text-lg">Ready to get started?</h3>
+            <p className="hidden text-sm text-neutral-400 sm:block">
               Book a personalized demo and see how SquareCampus can transform your institution.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-wrap gap-2 pt-1 lg:gap-3 lg:pt-2">
               <Link
                 href="/contact-us"
-                className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-black transition-all duration-300 hover:bg-neutral-200"
+                className="inline-flex items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition-all duration-300 hover:bg-neutral-200 lg:px-5 lg:py-2.5"
               >
                 Book a Demo
               </Link>
@@ -169,7 +202,7 @@ export function Footer() {
                 href="https://app.squarecampus.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg border border-white/[0.15] bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/30 hover:bg-white/[0.08]"
+                className="inline-flex items-center justify-center rounded-lg border border-white/[0.15] bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-white/30 hover:bg-white/[0.08] lg:px-5 lg:py-2.5"
               >
                 Sign In
               </Link>
@@ -177,19 +210,39 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Middle Section - Navigation Grid */}
-        <div className="mb-16 grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
-          <FooterColumn title="Platform" links={platformLinks} />
-          <FooterColumn title="Company" links={companyLinks} />
-          <FooterColumn title="Security & Trust" links={securityLinks} />
-          <FooterColumn title="Legal" links={legalLinks} />
+        {/* Middle Section - Navigation Grid (Collapsible on mobile) */}
+        <div className="mb-8 divide-y divide-white/[0.06] lg:mb-16 lg:grid lg:grid-cols-5 lg:gap-x-8 lg:gap-y-0 lg:divide-y-0">
+          <FooterColumn
+            title="Platform"
+            links={platformLinks}
+            isOpen={openSection === "platform"}
+            onToggle={() => toggleSection("platform")}
+          />
+          <FooterColumn
+            title="Company"
+            links={companyLinks}
+            isOpen={openSection === "company"}
+            onToggle={() => toggleSection("company")}
+          />
+          <FooterColumn
+            title="Security & Trust"
+            links={securityLinks}
+            isOpen={openSection === "security"}
+            onToggle={() => toggleSection("security")}
+          />
+          <FooterColumn
+            title="Legal"
+            links={legalLinks}
+            isOpen={openSection === "legal"}
+            onToggle={() => toggleSection("legal")}
+          />
 
-          {/* Contact Column - Special styling */}
-          <div className="col-span-2 flex flex-col space-y-5 sm:col-span-3 lg:col-span-1">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-white/80">
+          {/* Contact Column - Always visible but compact on mobile */}
+          <div className="flex flex-col pt-3 lg:pt-0">
+            <p className="py-3 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-white/80 lg:mb-5 lg:py-0">
               Contact
             </p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-3 pb-2 lg:space-y-3.5 lg:pb-0">
               <li>
                 <a
                   href="mailto:contact@squarecampus.com"
@@ -215,7 +268,7 @@ export function Footer() {
             </ul>
 
             {/* Social Links */}
-            <div className="flex items-center gap-3 pt-3">
+            <div className="flex items-center gap-3 pt-4 lg:pt-3">
               {socialLinks.map((social) => (
                 <Link
                   key={social.name}
@@ -233,23 +286,23 @@ export function Footer() {
         </div>
 
         {/* Bottom Section - Copyright */}
-        <div className="flex flex-col items-center justify-between gap-6 border-t border-white/[0.06] pt-10 md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-6 md:flex-row lg:gap-6 lg:pt-10">
           <div className="flex items-center gap-3">
-            <span className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-neutral-500">
+            <span className="text-[0.65rem] font-medium uppercase tracking-[0.15em] text-neutral-500 lg:text-[0.7rem] lg:tracking-[0.2em]">
               Made with
             </span>
-            <Heart className="h-4 w-4 text-red-500" aria-hidden="true" />
-            <span className="text-sm font-medium text-neutral-300">in India</span>
+            <Heart className="h-3.5 w-3.5 text-red-500 lg:h-4 lg:w-4" aria-hidden="true" />
+            <span className="text-xs font-medium text-neutral-300 lg:text-sm">in India</span>
           </div>
 
-          <p className="text-center text-[0.75rem] leading-relaxed text-neutral-500 md:text-right">
+          <p className="text-center text-[0.7rem] leading-relaxed text-neutral-500 md:text-right lg:text-[0.75rem]">
             SquareCampus is a trademark of MDTechSpire. © {new Date().getFullYear()} SquareCampus. All rights reserved.
           </p>
         </div>
       </div>
 
-      {/* Watermark wordmark - Enhanced */}
-      <div className="relative overflow-hidden pb-8">
+      {/* Watermark wordmark - Hidden on mobile, smaller on tablet */}
+      <div className="relative hidden overflow-hidden pb-8 sm:block">
         <p className="pointer-events-none relative z-0 select-none text-center font-black uppercase text-transparent">
           <span
             className={cn(

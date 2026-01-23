@@ -13,6 +13,7 @@ import {
   Shield,
   Sparkles,
 } from "@/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,6 +83,7 @@ export function TrustBanner() {
   const cardsRef = useRef<HTMLDivElement | null>(null);
   const assuranceRef = useRef<HTMLDivElement | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { isMobile } = useDeviceCapabilities();
 
   // GSAP scroll animations
   useEffect(() => {
@@ -156,22 +158,30 @@ export function TrustBanner() {
       ref={sectionRef}
       className="relative mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-10"
     >
-      {/* Background effects */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-x-8 top-10 mx-auto h-72 max-w-4xl rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)] blur-3xl" />
-      </div>
-
-      <div className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-950/50 via-neutral-950 to-neutral-950 p-8 shadow-2xl shadow-blue-500/10 md:p-12">
-        <FloatingParticles />
-
-        {/* Animated gradient shimmer */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
-          <div className="absolute -inset-full animate-trust-shimmer bg-gradient-to-r from-transparent via-blue-400/[0.07] to-transparent" />
+      {/* Background effects - hidden on mobile */}
+      {!isMobile && (
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-x-8 top-10 mx-auto h-72 max-w-4xl rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)] blur-3xl" />
         </div>
+      )}
 
-        {/* Glow orbs */}
-        <div className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full bg-blue-500/15 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 -right-16 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-950/50 via-neutral-950 to-neutral-950 p-6 shadow-2xl shadow-blue-500/10 md:p-12">
+        {!isMobile && <FloatingParticles />}
+
+        {/* Animated gradient shimmer - hidden on mobile */}
+        {!isMobile && (
+          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
+            <div className="absolute -inset-full animate-trust-shimmer bg-gradient-to-r from-transparent via-blue-400/[0.07] to-transparent" />
+          </div>
+        )}
+
+        {/* Glow orbs - hidden on mobile */}
+        {!isMobile && (
+          <>
+            <div className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full bg-blue-500/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -right-16 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
+          </>
+        )}
 
         <div className="relative space-y-8">
           {/* Header */}
@@ -271,9 +281,12 @@ export function TrustBanner() {
             {/* Assurance card */}
             <div
               ref={assuranceRef}
-              className="relative overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-neutral-900/60 to-neutral-950 p-6"
+              className="relative overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-neutral-900/60 to-neutral-950 p-5 md:p-6"
             >
-              <div className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-emerald-500/15 blur-3xl" />
+              {/* Glow - hidden on mobile */}
+              {!isMobile && (
+                <div className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-emerald-500/15 blur-3xl" />
+              )}
 
               <div className="relative flex items-start justify-between gap-4">
                 <div className="space-y-4">

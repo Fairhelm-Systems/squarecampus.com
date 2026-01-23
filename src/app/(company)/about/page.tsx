@@ -8,13 +8,14 @@ import { useEffect, useRef } from "react";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
+import { Activity, ArrowUpRight, Shield, Sparkles, Target } from "@/icons";
 import {
   createAboutPageSchema,
   createBreadcrumbSchema,
   createWebPageSchema,
   SEO_CONFIG,
 } from "@/lib/seo";
-import { Activity, ArrowUpRight, Shield, Sparkles, Target } from "@/icons";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -163,8 +164,8 @@ function FloatingParticles() {
           key={i}
           className="absolute h-1 w-1 rounded-full bg-white/20"
           style={{
-            left: `${10 + (i * 7) % 80}%`,
-            top: `${15 + (i * 11) % 70}%`,
+            left: `${10 + ((i * 7) % 80)}%`,
+            top: `${15 + ((i * 11) % 70)}%`,
             animation: `float-particle ${8 + (i % 4) * 2}s ease-in-out infinite`,
             animationDelay: `${i * 0.5}s`,
           }}
@@ -190,11 +191,13 @@ export default function AboutPage() {
   const valuesRef = useRef<HTMLElement>(null);
   const pillarsRef = useRef<HTMLElement>(null);
   const ctaRef = useRef<HTMLElement>(null);
+  const { isMobile, isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
+
+  const showHeavyEffects = !isMobile && !isLowEnd;
 
   useEffect(() => {
     if (!pageRef.current) return;
-    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
+    if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
       // Hero animations
@@ -312,7 +315,7 @@ export default function AboutPage() {
     }, pageRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <>
@@ -327,7 +330,7 @@ export default function AboutPage() {
               createWebPageSchema({
                 name: "About SquareCampus",
                 description:
-                  "Learn about the team and mission behind SquareCampus, the operating system for Indian educational institutions.",
+                  "Learn about the team and mission behind SquareCampus, the campus operating system for Indian schools and colleges.",
                 url: `${SEO_CONFIG.baseUrl}/about`,
               }),
               createBreadcrumbSchema([
@@ -336,7 +339,8 @@ export default function AboutPage() {
               ]),
               createAboutPageSchema({
                 name: "About SquareCampus",
-                description: "Building the operational backbone Indian education deserves.",
+                description:
+                  "Building the operational backbone Indian schools and colleges deserve.",
                 url: `${SEO_CONFIG.baseUrl}/about`,
               }),
             ],
@@ -347,15 +351,17 @@ export default function AboutPage() {
         ref={pageRef}
         className="relative overflow-hidden bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10"
       >
-        {/* Background effects */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-6 top-4 h-64 w-64 rounded-full bg-blue-500/[0.08] blur-3xl" />
-          <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-emerald-500/[0.08] blur-[110px]" />
-          <div className="absolute bottom-1/4 left-1/3 h-80 w-80 rounded-full bg-purple-500/[0.05] blur-[120px]" />
-          <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-        </div>
+        {/* Background effects - hidden on mobile/low-end for performance */}
+        {showHeavyEffects && (
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-6 top-4 h-64 w-64 rounded-full bg-blue-500/[0.08] blur-3xl" />
+            <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-emerald-500/[0.08] blur-[110px]" />
+            <div className="absolute bottom-1/4 left-1/3 h-80 w-80 rounded-full bg-purple-500/[0.05] blur-[120px]" />
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+          </div>
+        )}
 
-        <FloatingParticles />
+        {showHeavyEffects && <FloatingParticles />}
 
         <div className="relative mx-auto flex max-w-6xl flex-col gap-20">
           {/* Hero */}
@@ -377,17 +383,17 @@ export default function AboutPage() {
                 </div>
 
                 <h1 className="js-hero-animate max-w-4xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[52px]">
-                  Schools are the most important institutions in society.
+                  Educational institutions shape the future.
                   <span className="block bg-gradient-to-r from-blue-400 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
                     Their software should respect that.
                   </span>
                 </h1>
 
                 <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                  Yet most schools still run on software built for the 1990s. Simple tasks like fee
-                  collection or publishing results turn into multi-week ordeals of spreadsheets,
-                  calls, and stress. SquareCampus exists to replace that with a School Operating
-                  System that flows with how schools actually work.
+                  Yet most schools and colleges still run on software built for the 1990s. Simple
+                  tasks like fee collection or publishing results turn into multi-week ordeals of
+                  spreadsheets, calls, and stress. SquareCampus exists to replace that with a
+                  Campus Operating System that flows with how institutions actually work.
                 </p>
 
                 <div className="js-hero-animate flex flex-wrap gap-3">
@@ -499,7 +505,9 @@ export default function AboutPage() {
                               <div className="text-base font-semibold leading-tight text-white">
                                 {stat.value}
                               </div>
-                              <p className="text-xs leading-relaxed text-neutral-400">{stat.note}</p>
+                              <p className="text-xs leading-relaxed text-neutral-400">
+                                {stat.note}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -653,46 +661,30 @@ export default function AboutPage() {
           </section>
 
           {/* Mission */}
-          <section ref={missionRef} className="space-y-12 py-12">
+          <section ref={missionRef} className="space-y-10">
             <div className="space-y-6">
-              <h2 className="js-mission-animate text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-                Schools are the most important institutions in society.
-                <br />
-                They deserve better software.
-              </h2>
-              <div className="js-mission-animate max-w-3xl space-y-6 text-lg leading-relaxed text-neutral-300">
-                <p>
-                  Yet they run on software built for the 1990s. Tools that treat education like
-                  data entry, not like the complex, human, transformative work it is.
+              <div className="rounded-2xl border border-white/8 bg-white/2 p-6">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
+                  We built SquareCampus because educational institutions deserve
                 </p>
-                <p>
-                  A simple task—like collecting fees or publishing results—becomes a multi-week
-                  ordeal of spreadsheets, calls, and stress. That isn&apos;t just inefficient. It&apos;s
-                  disrespectful to the work schools do.
-                </p>
-                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
-                    We built SquareCampus because schools deserve
-                  </p>
-                  <ul className="mt-4 space-y-3 text-base text-neutral-200">
-                    {[
-                      "Software that flows like thought, not clicks like paperwork",
-                      "Systems that anticipate needs, not wait for tickets",
-                      "Automation that gives time back to teaching, not admin",
-                      "Data that tells stories, not just sits in rows",
-                      "Technology that delights users, not frustrates them",
-                    ].map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span className="text-emerald-400">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <p className="text-xl font-semibold text-white">
-                  This is not school management software. This is a School Operating System.
-                </p>
+                <ul className="mt-4 space-y-3 text-base text-neutral-200">
+                  {[
+                    "Software that flows like thought, not clicks like paperwork",
+                    "Systems that anticipate needs, not wait for tickets",
+                    "Automation that gives time back to teaching, not admin",
+                    "Data that tells stories, not just sits in rows",
+                    "Technology that delights users, not frustrates them",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="text-emerald-400">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+              <p className="text-xl font-semibold text-white">
+                This is not school management software. This is a Campus Operating System.
+              </p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-2">
@@ -703,7 +695,7 @@ export default function AboutPage() {
                   <h3 className="text-xl font-semibold text-white">What we reject</h3>
                   <ul className="space-y-3 text-base text-neutral-300">
                     {[
-                      "Predatory sales calls to struggling schools",
+                      "Predatory sales calls to struggling institutions",
                       "Recycled video content sold as 'transformation'",
                       "Software that works in demos, fails in reality",
                       "Burning out staff to hit growth targets",
@@ -731,7 +723,7 @@ export default function AboutPage() {
                     {[
                       "Infrastructure that runs admission to alumni",
                       "Systems that work during fee season, not just pilots",
-                      "Software built for Indian school reality",
+                      "Software built for Indian institutional reality",
                       "A sustainable business that respects its team",
                     ].map((item, idx) => (
                       <li
@@ -756,18 +748,18 @@ export default function AboutPage() {
 
               <div className="relative">
                 <p className="text-xl leading-relaxed text-neutral-200 transition-colors duration-300 group-hover:text-neutral-100 md:text-2xl">
-                  <span className="text-blue-300">&ldquo;</span>Indian schools don't need another
-                  shiny dashboard, they need software that understands the messy, beautiful chaos
-                  of running real institutions in this country. Multiple branches operating like
-                  semi-autonomous worlds. Fee structures that look more like tax codes than
-                  invoices. Limited resources spread dangerously thin. Constant compliance pressure
-                  from every direction.
+                  <span className="text-blue-300">&ldquo;</span>Indian schools and colleges don't
+                  need another shiny dashboard, they need software that understands the messy,
+                  beautiful chaos of running real institutions in this country. Multiple branches
+                  operating like semi-autonomous worlds. Fee structures that look more like tax
+                  codes than invoices. Limited resources spread dangerously thin. Constant
+                  compliance pressure from every direction.
                   <br />
                   <br />
                   <span className="font-semibold text-white transition-all duration-300 group-hover:text-blue-50">
                     SquareCampus is built for that reality. It absorbs the complexity, tames the
-                    operational madness, and gives schools a single, dependable system so they can
-                    stop firefighting and start focusing on what actually matters: education.
+                    operational madness, and gives institutions a single, dependable system so they
+                    can stop firefighting and start focusing on what actually matters: education.
                   </span>
                   <span className="text-blue-300">&rdquo;</span>
                 </p>
@@ -822,7 +814,9 @@ export default function AboutPage() {
                       >
                         {value.title}
                       </p>
-                      <p className="text-xs leading-relaxed text-neutral-400">{value.description}</p>
+                      <p className="text-xs leading-relaxed text-neutral-400">
+                        {value.description}
+                      </p>
                     </CardContent>
                   </Card>
                 );
@@ -905,7 +899,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-3">
               <BookCallCta context="about-closing" className="justify-center sm:w-auto" />
               <Link
-                href="/#features"
+                href="/features"
                 className="group inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
               >
                 Explore features

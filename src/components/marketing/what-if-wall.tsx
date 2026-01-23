@@ -1573,7 +1573,7 @@ export function WhatIfWall() {
       ref={sectionRef}
       data-section="what-if-wall"
       className={cn(
-        "relative overflow-hidden bg-neutral-950 px-4 py-24 md:px-8 md:py-32",
+        "relative overflow-hidden bg-neutral-950 px-4 py-12 md:px-8 md:py-32",
         !isInView && "whatif-paused"
       )}
       style={
@@ -1593,13 +1593,13 @@ export function WhatIfWall() {
         }}
       />
 
-      {/* Floating particles container */}
+      {/* Floating particles container - hidden on mobile */}
       {particles && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">{particles}</div>
+        <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block">{particles}</div>
       )}
 
-      {/* Background glows - GPU accelerated with will-change */}
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background glows - GPU accelerated with will-change (hidden on mobile) */}
+      <div className="pointer-events-none absolute inset-0 hidden md:block">
         <div
           className="whatif-glow absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-40 blur-[180px]"
           style={{
@@ -1633,7 +1633,7 @@ export function WhatIfWall() {
         />
       )}
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-12">
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-8 md:gap-12">
         {/* Header - refined copy */}
         <div ref={headingRef} className="text-center">
           <p
@@ -1730,10 +1730,10 @@ export function WhatIfWall() {
           onMouseMove={handleCardMouseMove}
           onMouseLeave={handleCardMouseLeave}
           className={cn(
-            "relative rounded-[2rem] border border-white/[0.08] backdrop-blur-xl",
-            "bg-gradient-to-br from-white/[0.04] via-white/[0.02] to-transparent",
+            "relative rounded-4xl border border-white/8 backdrop-blur-xl",
+            "bg-linear-to-br from-white/4 via-white/2 to-transparent",
             "shadow-[0_8px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)]",
-            "px-6 py-10 md:px-12 md:py-12"
+            "px-5 py-6 md:px-12 md:py-12"
           )}
           style={{
             transformStyle: "preserve-3d",
@@ -1742,7 +1742,7 @@ export function WhatIfWall() {
         >
           {/* Inner glow border */}
           <div
-            className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-25 transition-opacity duration-700"
+            className="pointer-events-none absolute inset-0 rounded-4xl opacity-25 transition-opacity duration-700"
             style={{
               background: `linear-gradient(135deg, var(--accent-from) 0%, transparent 50%, var(--accent-to) 100%)`,
               mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
@@ -1753,7 +1753,7 @@ export function WhatIfWall() {
 
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             {/* Left content */}
-            <div className="space-y-8">
+            <div className="space-y-5 md:space-y-8">
               {/* Category badge */}
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-[0.7rem] font-medium uppercase tracking-[0.35em] text-white/60">
@@ -1789,7 +1789,7 @@ export function WhatIfWall() {
               </div>
 
               {/* What if list */}
-              <ul className="space-y-3">
+              <ul className="space-y-0.5 md:space-y-3">
                 {categories[0].lines.map((line, idx) => (
                   <li
                     key={line}
@@ -1799,12 +1799,12 @@ export function WhatIfWall() {
                     onMouseEnter={() => setHoveredItem(idx)}
                     onMouseLeave={() => setHoveredItem(null)}
                     className={cn(
-                      "whatif-content group relative -mx-4 flex items-start gap-4 rounded-xl px-4 py-3 transition-colors duration-300",
-                      "hover:bg-white/[0.03]"
+                      "whatif-content group relative -mx-4 flex items-start gap-3 rounded-xl px-4 py-1 transition-colors duration-300 md:gap-4 md:py-3",
+                      "hover:bg-white/3"
                     )}
                   >
                     {/* Animated bullet */}
-                    <span className="relative mt-2.5 flex h-2.5 w-2.5 shrink-0 items-center justify-center md:mt-3">
+                    <span className="relative mt-1.5 flex h-2.5 w-2.5 shrink-0 items-center justify-center md:mt-3">
                       <span
                         className={cn(
                           "absolute h-full w-full rounded-full transition-all duration-300",
@@ -1817,7 +1817,7 @@ export function WhatIfWall() {
                         style={{ backgroundColor: "var(--accent-from)" }}
                       />
                     </span>
-                    <span className="text-base leading-relaxed text-neutral-200 md:text-lg">
+                    <span className="text-sm leading-snug text-neutral-200 md:text-lg md:leading-relaxed">
                       <span
                         className="font-medium transition-colors duration-300"
                         style={{ color: "var(--accent-from)" }}
@@ -1854,8 +1854,8 @@ export function WhatIfWall() {
               )}
             </div>
 
-            {/* Right illustration - category-specific */}
-            <div className="relative flex items-center justify-center">
+            {/* Right illustration - category-specific (hidden on mobile) */}
+            <div className="relative hidden items-center justify-center lg:flex">
               <div
                 ref={illustrationRef}
                 className="relative h-64 w-64 md:h-72 md:w-72 lg:h-80 lg:w-80"
@@ -1885,8 +1885,8 @@ export function WhatIfWall() {
           </div>
         </article>
 
-        {/* Bottom hint */}
-        <p className="text-center text-xs text-neutral-500">
+        {/* Bottom hint - hidden on mobile */}
+        <p className="hidden text-center text-xs text-neutral-500 md:block">
           Press{" "}
           <kbd className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[0.65rem]">
             ←

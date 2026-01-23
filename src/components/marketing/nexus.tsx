@@ -11,6 +11,7 @@ import {
   Users,
   Zap,
 } from "@/components/icons";
+import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -1570,6 +1571,7 @@ const capabilities = [
 
 export default function Nexus() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { isMobile, shouldReduceEffects } = useDeviceCapabilities();
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -1577,7 +1579,7 @@ export default function Nexus() {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || shouldReduceEffects) return;
 
     const ctx = gsap.context(() => {
       // Hero entrance animation
@@ -1668,7 +1670,7 @@ export default function Nexus() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [shouldReduceEffects]);
 
   return (
     <section
@@ -1676,9 +1678,9 @@ export default function Nexus() {
       id="nexus"
       className="relative overflow-hidden bg-black py-24 md:py-32"
     >
-      {/* Background elements */}
-      <FloatingParticles />
-      <div className="pointer-events-none absolute inset-0">
+      {/* Background elements - Hidden on mobile/low-end for performance */}
+      {!isMobile && <FloatingParticles />}
+      <div className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 h-[400px] w-[600px] translate-x-1/4 translate-y-1/4 rounded-full bg-purple-500/10 blur-[100px]" />
       </div>
@@ -1725,21 +1727,23 @@ export default function Nexus() {
         </div>
 
         {/* ============================================================ */}
-        {/* NEURAL NETWORK VISUALIZATION */}
+        {/* NEURAL NETWORK VISUALIZATION - Hidden on mobile for performance */}
         {/* ============================================================ */}
-        <div className="neural-section mb-16 md:mb-20">
-          <div className="section-title mb-6 text-center">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-purple-400">
-              Deep Pattern Recognition
-            </h3>
-            <p className="text-2xl font-bold text-white md:text-3xl">
-              AI that sees what spreadsheets miss
-            </p>
+        {!isMobile && (
+          <div className="neural-section mb-16 md:mb-20">
+            <div className="section-title mb-6 text-center">
+              <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-purple-400">
+                Deep Pattern Recognition
+              </h3>
+              <p className="text-2xl font-bold text-white md:text-3xl">
+                AI that sees what spreadsheets miss
+              </p>
+            </div>
+            <div className="neural-parallax mx-auto max-w-2xl">
+              <NeuralNetworkViz className="h-auto w-full" />
+            </div>
           </div>
-          <div className="neural-parallax mx-auto max-w-2xl">
-            <NeuralNetworkViz className="h-auto w-full" />
-          </div>
-        </div>
+        )}
 
         {/* ============================================================ */}
         {/* CAPABILITY CARDS */}
@@ -1785,21 +1789,23 @@ export default function Nexus() {
         </div>
 
         {/* ============================================================ */}
-        {/* PATTERN EMERGENCE */}
+        {/* PATTERN EMERGENCE - Hidden on mobile for performance (60 dots) */}
         {/* ============================================================ */}
-        <div className="mb-24 md:mb-32">
-          <div className="section-title mb-8 text-center">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-amber-400">
-              Pattern Discovery
-            </h3>
-            <p className="text-2xl font-bold text-white md:text-3xl">
-              From chaos to clarity in seconds
-            </p>
+        {!isMobile && (
+          <div className="mb-24 md:mb-32">
+            <div className="section-title mb-8 text-center">
+              <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-amber-400">
+                Pattern Discovery
+              </h3>
+              <p className="text-2xl font-bold text-white md:text-3xl">
+                From chaos to clarity in seconds
+              </p>
+            </div>
+            <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+              <PatternEmergence />
+            </div>
           </div>
-          <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
-            <PatternEmergence />
-          </div>
-        </div>
+        )}
 
         {/* ============================================================ */}
         {/* ROOT CAUSE SYNTHESIS */}

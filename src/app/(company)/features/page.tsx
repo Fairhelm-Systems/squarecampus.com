@@ -8,22 +8,30 @@ import { useEffect, useRef, useState } from "react";
 import { BookCallCta } from "@/components/marketing/ctas";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import {
+  Activity,
+  AlertTriangle,
   ArrowRight,
   BookOpen,
   Briefcase,
   Bus,
+  Calendar,
   Check,
   ChevronDown,
+  CreditCard,
   Database,
   DollarSign,
   Eye,
+  FileCheck,
   GraduationCap,
+  Heart,
   Home,
   Lock,
   MessageSquare,
   Puzzle,
   Shield,
+  ShieldCheck,
   Sparkles,
+  TrendingUp,
   Users,
   Zap,
 } from "@/components/icons";
@@ -68,23 +76,35 @@ const outcomeSignals = [
 ];
 
 const categoryOverview = [
-  { id: "admissions", name: "Admissions", icon: Users, color: "blue", tagline: "Inquiry to enrollment" },
-  { id: "finance", name: "Finance", icon: DollarSign, color: "emerald", tagline: "Fees, collections, audits" },
-  { id: "academics", name: "Academics", icon: GraduationCap, color: "purple", tagline: "Timetables, exams, grades" },
-  { id: "communication", name: "Communication", icon: MessageSquare, color: "amber", tagline: "All channels unified" },
-  { id: "transport", name: "Transport", icon: Bus, color: "sky", tagline: "Routes, GPS, billing" },
-  { id: "hostel", name: "Hostel", icon: Home, color: "rose", tagline: "Rooms, mess, security" },
-  { id: "library", name: "Library", icon: BookOpen, color: "indigo", tagline: "Catalog, issue, returns" },
-  { id: "hr", name: "HR & Payroll", icon: Briefcase, color: "teal", tagline: "Staff, attendance, salary" },
+  { id: "foundation", name: "Foundation", icon: Puzzle, color: "blue", tagline: "5 core modules", count: 5 },
+  { id: "operations", name: "Operations", icon: Bus, color: "emerald", tagline: "4 service modules", count: 4 },
+  { id: "extended-academic", name: "Extended Academic", icon: GraduationCap, color: "purple", tagline: "4 advanced modules", count: 4 },
+  { id: "operational-excellence", name: "Operational Excellence", icon: Activity, color: "amber", tagline: "6 facility modules", count: 6 },
+  { id: "governance", name: "Governance", icon: ShieldCheck, color: "teal", tagline: "2 compliance modules", count: 2 },
 ];
 
-const coreModules = [
+const foundationModules = [
+  {
+    id: "lms",
+    title: "Learning Management System",
+    subtitle: "Course content, assignments, virtual classrooms",
+    icon: BookOpen,
+    color: "blue",
+    description: "Complete digital learning infrastructure. Course creation, video streaming, assignments, quizzes, and live classes integrated with your academic calendar.",
+    highlights: [
+      "Course and module organization with video streaming",
+      "Assignment submission and grading workflow",
+      "Quiz builder with auto-grading",
+      "Live class integration with recording library",
+    ],
+    outcome: "Teachers deliver content digitally. Students learn at their pace with progress tracking.",
+  },
   {
     id: "admissions",
     title: "Admissions & Enrollment",
     subtitle: "From first inquiry to confirmed seat",
     icon: Users,
-    color: "blue",
+    color: "emerald",
     description: "Replace spreadsheets and email threads with a single tracked workflow. Applications, documents, entrance exams, merit lists, and offer letters - all in one flow.",
     highlights: [
       "Online applications with document uploads",
@@ -99,7 +119,7 @@ const coreModules = [
     title: "Finance & Fees",
     subtitle: "Collections, concessions, compliance",
     icon: DollarSign,
-    color: "emerald",
+    color: "purple",
     description: "Model complex fee structures by program, class, or campus. Collect across payment modes with auto-receipts. Generate audit-ready reports from live data.",
     highlights: [
       "Fee structures with installments and concessions",
@@ -114,7 +134,7 @@ const coreModules = [
     title: "Academic Management",
     subtitle: "Timetables, attendance, assessments",
     icon: GraduationCap,
-    color: "purple",
+    color: "amber",
     description: "Build conflict-free timetables. Capture attendance with multiple inputs. Run exams, record marks, and publish report cards in one continuous flow.",
     highlights: [
       "Conflict-free timetable generation",
@@ -129,7 +149,7 @@ const coreModules = [
     title: "Communication Hub",
     subtitle: "Every channel, one inbox",
     icon: MessageSquare,
-    color: "amber",
+    color: "sky",
     description: "Send announcements through approved channels with delivery proof. Give parents one place for attendance, homework, fees, and updates.",
     highlights: [
       "Multi-channel: SMS, email, app, WhatsApp",
@@ -172,6 +192,99 @@ const operationsModules = [
   },
 ];
 
+const extendedAcademicModules = [
+  {
+    id: "placement",
+    title: "Training & Placement",
+    icon: TrendingUp,
+    color: "blue",
+    features: ["Company registration", "Job postings", "Interview scheduling", "Placement analytics"],
+  },
+  {
+    id: "examination",
+    title: "Examination",
+    icon: FileCheck,
+    color: "emerald",
+    features: ["Hall allocation", "Invigilator roster", "Answer sheet tracking", "Result processing"],
+  },
+  {
+    id: "research",
+    title: "Research & Development",
+    icon: Sparkles,
+    color: "purple",
+    features: ["Grant tracking", "Publication management", "Lab booking", "PhD scholar management"],
+  },
+  {
+    id: "alumni",
+    title: "Alumni Management",
+    icon: Users,
+    color: "amber",
+    features: ["Alumni directory", "Event management", "Donation campaigns", "Mentorship programs"],
+  },
+];
+
+const operationalExcellenceModules = [
+  {
+    id: "canteen",
+    title: "Canteen & Cafeteria",
+    icon: CreditCard,
+    color: "sky",
+    features: ["Menu planning", "Pre-ordering", "Student balance", "Vendor management"],
+  },
+  {
+    id: "health",
+    title: "Health Center",
+    icon: Heart,
+    color: "rose",
+    features: ["Health records", "Appointment scheduling", "Prescription management", "Vaccination tracking"],
+  },
+  {
+    id: "sports",
+    title: "Sports & Recreation",
+    icon: Activity,
+    color: "indigo",
+    features: ["Facility booking", "Tournament management", "Equipment inventory", "Coach management"],
+  },
+  {
+    id: "events",
+    title: "Events Management",
+    icon: Calendar,
+    color: "teal",
+    features: ["Event proposals", "Venue booking", "Registration", "Budget tracking"],
+  },
+  {
+    id: "inventory",
+    title: "Inventory Management",
+    icon: Database,
+    color: "blue",
+    features: ["Asset cataloging", "Stock management", "Reorder automation", "Depreciation tracking"],
+  },
+  {
+    id: "procurement",
+    title: "Procurement & Vendors",
+    icon: CreditCard,
+    color: "emerald",
+    features: ["Vendor registration", "Purchase requisition", "Invoice matching", "Contract management"],
+  },
+];
+
+const governanceModules = [
+  {
+    id: "accreditation",
+    title: "Accreditation & Compliance",
+    icon: ShieldCheck,
+    color: "purple",
+    features: ["NAAC/NBA tracking", "Document repository", "Self-assessment reports", "Gap analysis"],
+  },
+  {
+    id: "grievance",
+    title: "Grievance & Feedback",
+    icon: AlertTriangle,
+    color: "amber",
+    features: ["Grievance portal", "SLA tracking", "Anonymous feedback", "Satisfaction surveys"],
+  },
+];
+
 const platformBackbone = [
   {
     title: "Unified data model",
@@ -200,6 +313,20 @@ const platformBackbone = [
 ];
 
 const featureAccordion = [
+  // Foundation Modules
+  {
+    category: "LMS (Learning Management)",
+    features: [
+      "Course creation and management",
+      "Module and lesson organization",
+      "Video content upload and streaming",
+      "Assignment creation and submission",
+      "Quiz and assessment builder",
+      "Live class integration (BigBlueButton)",
+      "Student progress tracking",
+      "Plagiarism detection integration",
+    ],
+  },
   {
     category: "Admissions & Enrollment",
     features: [
@@ -240,7 +367,7 @@ const featureAccordion = [
     ],
   },
   {
-    category: "Communication",
+    category: "Communication Hub",
     features: [
       "SMS, email, and app notifications",
       "WhatsApp integration",
@@ -252,6 +379,7 @@ const featureAccordion = [
       "Emergency broadcast",
     ],
   },
+  // Operations Modules
   {
     category: "Transport Management",
     features: [
@@ -302,6 +430,165 @@ const featureAccordion = [
       "Payslip generation",
       "Appraisal workflows",
       "Department-wise reporting",
+    ],
+  },
+  // Extended Academic Modules
+  {
+    category: "Training & Placement",
+    features: [
+      "Company registration and verification",
+      "Job posting and approval workflow",
+      "Student eligibility criteria engine",
+      "Resume builder and review",
+      "Interview scheduling (virtual/on-campus)",
+      "Offer letter management",
+      "Placement statistics and analytics",
+      "Internship management",
+    ],
+  },
+  {
+    category: "Examination Management",
+    features: [
+      "Hall allocation with seating arrangements",
+      "Invigilator duty roster automation",
+      "Hall ticket generation with QR codes",
+      "Answer sheet barcode system",
+      "Revaluation and challenge requests",
+      "Result processing and declaration",
+      "Transcript generation (official sealed)",
+      "Online examination with proctoring",
+    ],
+  },
+  {
+    category: "Research & Development",
+    features: [
+      "Research project proposal submission",
+      "Grant application tracking",
+      "Funding source management",
+      "Laboratory booking system",
+      "Publication tracking (journals, conferences)",
+      "Patent application workflow",
+      "PhD scholar management",
+      "Research output analytics",
+    ],
+  },
+  {
+    category: "Alumni Management",
+    features: [
+      "Alumni registration and verification",
+      "Alumni directory (privacy-controlled)",
+      "Alumni events management",
+      "Donation and fundraising campaigns",
+      "Alumni mentorship programs",
+      "Job referral network",
+      "Achievement tracking and recognition",
+      "Alumni engagement analytics",
+    ],
+  },
+  // Operational Excellence Modules
+  {
+    category: "Canteen & Cafeteria",
+    features: [
+      "Menu planning and scheduling",
+      "Meal pricing and student balance",
+      "Pre-ordering system",
+      "Dietary preferences and restrictions",
+      "Canteen billing integration",
+      "Vendor management",
+      "Food safety compliance",
+      "Usage analytics and popular items",
+    ],
+  },
+  {
+    category: "Health Center",
+    features: [
+      "Student health records (EMR)",
+      "Medical history and allergies",
+      "Doctor appointment scheduling",
+      "Prescription management",
+      "Pharmacy inventory",
+      "Health checkup campaigns",
+      "Vaccination tracking",
+      "Medical certificate generation",
+    ],
+  },
+  {
+    category: "Sports & Recreation",
+    features: [
+      "Sports facilities booking",
+      "Tournament management",
+      "Team registration and rosters",
+      "Match scheduling and score tracking",
+      "Sports equipment inventory",
+      "Coach and trainer management",
+      "Sports scholarships tracking",
+      "Inter-college competition management",
+    ],
+  },
+  {
+    category: "Events Management",
+    features: [
+      "Event proposal and approval",
+      "Budget planning and tracking",
+      "Venue booking (internal/external)",
+      "Event registration (participants)",
+      "Ticket sales (if paid events)",
+      "Logistics and equipment tracking",
+      "Post-event feedback",
+      "Recurring events (fests, convocations)",
+    ],
+  },
+  {
+    category: "Inventory Management",
+    features: [
+      "Asset cataloging (IT, furniture, equipment)",
+      "Asset tracking with barcodes/RFID",
+      "Stock management (consumables)",
+      "Reorder level automation",
+      "Asset allocation to departments",
+      "Asset maintenance scheduling",
+      "Depreciation tracking",
+      "Usage analytics by department",
+    ],
+  },
+  {
+    category: "Procurement & Vendors",
+    features: [
+      "Vendor registration and verification",
+      "Vendor rating and performance",
+      "Purchase requisition workflow",
+      "Multi-level approval system",
+      "Quotation comparison",
+      "Purchase order generation",
+      "Invoice matching (3-way)",
+      "Contract and AMC management",
+    ],
+  },
+  // Governance Modules
+  {
+    category: "Accreditation & Compliance",
+    features: [
+      "NAAC/NBA criteria tracking",
+      "Document repository (policies, circulars)",
+      "Compliance checklist automation",
+      "Self-assessment reports (SAR)",
+      "Peer team visit coordination",
+      "Gap analysis and action plans",
+      "Accreditation score prediction",
+      "Regulatory filing deadlines",
+    ],
+  },
+  {
+    category: "Grievance & Feedback",
+    features: [
+      "Grievance submission portal",
+      "Grievance categorization and routing",
+      "SLA-based resolution tracking",
+      "Anonymous feedback option",
+      "Multi-level escalation",
+      "Feedback forms (course, faculty, facility)",
+      "Sentiment analysis on feedback",
+      "Student satisfaction surveys",
     ],
   },
 ];
@@ -585,13 +872,13 @@ export default function FeaturesPage() {
         <section ref={categoryRef} id="categories" className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 text-center">
-              <h2 className="mb-3 text-2xl font-bold md:text-3xl">8 modules. One connected platform.</h2>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">21 modules. One connected platform.</h2>
               <p className="mx-auto max-w-xl text-sm text-neutral-400">
                 Every module shares the same data backbone. What you enter once flows everywhere it's needed.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {categoryOverview.map((cat) => {
                 const colors = accentColors[cat.color];
                 const Icon = cat.icon;
@@ -606,6 +893,9 @@ export default function FeaturesPage() {
                     </div>
                     <p className="text-xs font-semibold text-neutral-200">{cat.name}</p>
                     <p className="mt-0.5 text-[0.6rem] text-neutral-500">{cat.tagline}</p>
+                    <div className={cn("mx-auto mt-2 inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.6rem] font-bold", colors.bg, colors.text)}>
+                      {cat.count}
+                    </div>
                   </div>
                 );
               })}
@@ -619,18 +909,18 @@ export default function FeaturesPage() {
         <section ref={coreRef} className="relative px-4 py-16 md:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-purple-200">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-200">
                 <Puzzle className="h-4 w-4" />
-                Core Modules
+                Foundation Modules
               </div>
-              <h2 className="mb-3 text-2xl font-bold md:text-3xl">The foundation of daily operations</h2>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">The backbone of campus operations</h2>
               <p className="mx-auto max-w-xl text-sm text-neutral-400">
-                These four modules handle 80% of daily workflows. Built to work together, not just coexist.
+                These five modules handle 80% of daily workflows. Built to work together, not just coexist.
               </p>
             </div>
 
             <div className="space-y-6">
-              {coreModules.map((module, idx) => {
+              {foundationModules.map((module, idx) => {
                 const colors = accentColors[module.color];
                 const Icon = module.icon;
                 const isEven = idx % 2 === 0;
@@ -649,7 +939,9 @@ export default function FeaturesPage() {
                           module.color === "blue" ? "rgba(96,165,250,0.7)" :
                           module.color === "emerald" ? "rgba(52,211,153,0.7)" :
                           module.color === "purple" ? "rgba(168,85,247,0.7)" :
-                          "rgba(251,191,36,0.7)"
+                          module.color === "amber" ? "rgba(251,191,36,0.7)" :
+                          module.color === "sky" ? "rgba(56,189,248,0.7)" :
+                          "rgba(96,165,250,0.7)"
                         }, transparent)`,
                       }}
                     />
@@ -730,6 +1022,153 @@ export default function FeaturesPage() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {operationsModules.map((module) => {
+                const colors = accentColors[module.color];
+                const Icon = module.icon;
+                return (
+                  <div
+                    key={module.id}
+                    className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  >
+                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div className="relative">
+                      <div className="mb-4 flex items-center gap-3">
+                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-white">{module.title}</h3>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {module.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
+                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* EXTENDED ACADEMIC MODULES */}
+        {/* ================================================================ */}
+        <section className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-purple-200">
+                <GraduationCap className="h-4 w-4" />
+                Extended Academic
+              </div>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">For colleges & universities</h2>
+              <p className="mx-auto max-w-xl text-sm text-neutral-400">
+                Advanced modules for training, placements, research, and alumni engagement.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {extendedAcademicModules.map((module) => {
+                const colors = accentColors[module.color];
+                const Icon = module.icon;
+                return (
+                  <div
+                    key={module.id}
+                    className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  >
+                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div className="relative">
+                      <div className="mb-4 flex items-center gap-3">
+                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-white">{module.title}</h3>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {module.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
+                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* OPERATIONAL EXCELLENCE MODULES */}
+        {/* ================================================================ */}
+        <section className="relative px-4 py-16 md:px-8 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-amber-200">
+                <Activity className="h-4 w-4" />
+                Operational Excellence
+              </div>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">Campus facilities & services</h2>
+              <p className="mx-auto max-w-xl text-sm text-neutral-400">
+                Canteen, health, sports, events, inventory, and procurement - all connected.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {operationalExcellenceModules.map((module) => {
+                const colors = accentColors[module.color];
+                const Icon = module.icon;
+                return (
+                  <div
+                    key={module.id}
+                    className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
+                  >
+                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div className="relative">
+                      <div className="mb-4 flex items-center gap-3">
+                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-white">{module.title}</h3>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {module.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
+                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================ */}
+        {/* GOVERNANCE MODULES */}
+        {/* ================================================================ */}
+        <section className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-10 text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-teal-200">
+                <ShieldCheck className="h-4 w-4" />
+                Governance & Compliance
+              </div>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">Regulatory readiness</h2>
+              <p className="mx-auto max-w-xl text-sm text-neutral-400">
+                Stay accreditation-ready with built-in compliance tracking and stakeholder feedback.
+              </p>
+            </div>
+
+            <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
+              {governanceModules.map((module) => {
                 const colors = accentColors[module.color];
                 const Icon = module.icon;
                 return (
