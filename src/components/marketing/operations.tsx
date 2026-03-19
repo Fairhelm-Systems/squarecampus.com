@@ -31,120 +31,119 @@ const operationAreas: Array<{
   isProofCard?: boolean;
   stats?: Array<{ label: string; value: string }>;
 }> = [
-    {
-      title: "Admissions to alumni",
-      description:
-        "Collect applications, shortlist, enroll, and keep alumni connected in one operating flow.",
-      bullets: [
-        "Smart forms, merit lists, and waitlists",
-        "Fee plans and document collection tied to admissions",
-        "Alumni records that stay linked to student history",
-      ],
-      icon: GraduationCap,
-      gradient: "from-blue-500/30 via-cyan-500/15 to-blue-900/25",
-      accentColor: "rgb(59, 130, 246)",
-      accentColorLight: "rgba(59, 130, 246, 0.15)",
-      metric: { label: "Outcome", value: "Faster enrollments" },
-      visual: { type: "flow" },
-    },
-    {
-      title: "Academics & assessments",
-      description:
-        "Timetables, lesson plans, assessments, and grading stay in sync for every class.",
-      bullets: [
-        "Curriculum mapping and subject allocation",
-        "Digital gradebooks with moderation controls",
-        "Attendance that flows into reports instantly",
-      ],
-      icon: BookOpen,
-      gradient: "from-purple-500/30 via-violet-500/15 to-purple-900/25",
-      accentColor: "rgb(168, 85, 247)",
-      accentColorLight: "rgba(168, 85, 247, 0.15)",
-      metric: { label: "Outcome", value: "Less admin churn" },
-      visual: { type: "grid" },
-    },
-    {
-      title: "Finance & compliance",
-      description:
-        "Transparent finances with reconciliations and audit-ready records for every branch.",
-      bullets: [
-        "Fee schedules, waivers, and dues tracking",
-        "Ledger exports with payment partner sync",
-        "Audit trails and approvals baked into workflows",
-      ],
-      icon: Rupee,
-      gradient: "from-emerald-500/30 via-green-500/15 to-emerald-900/25",
-      accentColor: "rgb(16, 185, 129)",
-      accentColorLight: "rgba(16, 185, 129, 0.15)",
-      metric: { label: "Outcome", value: "Predictable collections" },
-      visual: { type: "chart" },
-    },
-    {
-      title: "Communication that lands",
-      description:
-        "Announcements, feedback, and support routed to the right people with proof of delivery.",
-      bullets: [
-        "Role-aware messaging via email, SMS, and in-app",
-        "Two-way teacher-parent conversations",
-        "Consent and read-receipt tracking",
-      ],
-      icon: MessageSquare,
-      gradient: "from-amber-500/30 via-orange-500/15 to-amber-900/25",
-      accentColor: "rgb(245, 158, 11)",
-      accentColorLight: "rgba(245, 158, 11, 0.15)",
-      metric: { label: "Outcome", value: "Clearer reach" },
-      visual: { type: "network" },
-    },
-    {
-      title: "People, assets & services",
-      description:
-        "Staff rosters, transport, library, and inventory stay coordinated so campuses run on time.",
-      bullets: [
-        "Route, hostel, and library circulation controls",
-        "Asset issuance with return reminders",
-        "Service tickets to keep facilities reliable",
-      ],
-      icon: Users,
-      gradient: "from-rose-500/30 via-pink-500/15 to-rose-900/25",
-      accentColor: "rgb(244, 63, 94)",
-      accentColorLight: "rgba(244, 63, 94, 0.15)",
-      metric: { label: "Outcome", value: "Fewer breakdowns" },
-      visual: { type: "stack" },
-    },
-    {
-      title: "Data you can act on",
-      description: "Live dashboards and alerts so leadership sees gaps early and fixes them fast.",
-      bullets: [
-        "Engagement and performance pulse by branch",
-        "Exception alerts for dues, absenteeism, and SLAs",
-        "Exports for board reviews and regulators",
-      ],
-      icon: BarChart3,
-      gradient: "from-sky-500/30 via-blue-500/15 to-sky-900/25",
-      accentColor: "rgb(14, 165, 233)",
-      accentColorLight: "rgba(14, 165, 233, 0.15)",
-      metric: { label: "Outcome", value: "Faster decisions" },
-      visual: { type: "pulse" },
-    },
-    {
-      title: "Built for campuses of every size",
-      description:
-        "Multi-branch institutions, independent schools, and colleges run daily operations on SquareCampus with the same reliability: enterprise-grade security, clear workflows, and responsive support.",
-      bullets: [],
-      icon: BarChart3, // Not used for proof card
-      gradient: "from-blue-500/15 via-purple-500/10 to-emerald-500/15",
-      accentColor: "rgb(139, 92, 246)",
-      accentColorLight: "rgba(139, 92, 246, 0.15)",
-      visual: { type: "proof" },
-      isProofCard: true,
-      stats: [
-        { label: "Time saved", value: "Hours back" },
-        { label: "Errors cut", value: "Fewer fixes" },
-        { label: "Go-live", value: "Guided setup" },
-        { label: "Parents", value: "Clear updates" },
-      ],
-    },
-  ];
+  {
+    title: "Admissions to alumni",
+    description:
+      "Collect applications, shortlist, enroll, and keep alumni connected in one operating flow.",
+    bullets: [
+      "Smart forms, merit lists, and waitlists",
+      "Fee plans and document collection tied to admissions",
+      "Alumni records that stay linked to student history",
+    ],
+    icon: GraduationCap,
+    gradient: "from-blue-500/30 via-cyan-500/15 to-blue-900/25",
+    accentColor: "rgb(59, 130, 246)",
+    accentColorLight: "rgba(59, 130, 246, 0.15)",
+    metric: { label: "Outcome", value: "Faster enrollments" },
+    visual: { type: "flow" },
+  },
+  {
+    title: "Academics & assessments",
+    description: "Timetables, lesson plans, assessments, and grading stay in sync for every class.",
+    bullets: [
+      "Curriculum mapping and subject allocation",
+      "Digital gradebooks with moderation controls",
+      "Attendance that flows into reports instantly",
+    ],
+    icon: BookOpen,
+    gradient: "from-purple-500/30 via-violet-500/15 to-purple-900/25",
+    accentColor: "rgb(168, 85, 247)",
+    accentColorLight: "rgba(168, 85, 247, 0.15)",
+    metric: { label: "Outcome", value: "Less admin churn" },
+    visual: { type: "grid" },
+  },
+  {
+    title: "Finance & compliance",
+    description:
+      "Transparent finances with reconciliations and audit-ready records for every branch.",
+    bullets: [
+      "Fee schedules, waivers, and dues tracking",
+      "Ledger exports with payment partner sync",
+      "Audit trails and approvals baked into workflows",
+    ],
+    icon: Rupee,
+    gradient: "from-emerald-500/30 via-green-500/15 to-emerald-900/25",
+    accentColor: "rgb(16, 185, 129)",
+    accentColorLight: "rgba(16, 185, 129, 0.15)",
+    metric: { label: "Outcome", value: "Predictable collections" },
+    visual: { type: "chart" },
+  },
+  {
+    title: "Communication that lands",
+    description:
+      "Announcements, feedback, and support routed to the right people with proof of delivery.",
+    bullets: [
+      "Role-aware messaging via email, SMS, and in-app",
+      "Two-way teacher-parent conversations",
+      "Consent and read-receipt tracking",
+    ],
+    icon: MessageSquare,
+    gradient: "from-amber-500/30 via-orange-500/15 to-amber-900/25",
+    accentColor: "rgb(245, 158, 11)",
+    accentColorLight: "rgba(245, 158, 11, 0.15)",
+    metric: { label: "Outcome", value: "Clearer reach" },
+    visual: { type: "network" },
+  },
+  {
+    title: "People, assets & services",
+    description:
+      "Staff rosters, transport, library, and inventory stay coordinated so campuses run on time.",
+    bullets: [
+      "Route, hostel, and library circulation controls",
+      "Asset issuance with return reminders",
+      "Service tickets to keep facilities reliable",
+    ],
+    icon: Users,
+    gradient: "from-rose-500/30 via-pink-500/15 to-rose-900/25",
+    accentColor: "rgb(244, 63, 94)",
+    accentColorLight: "rgba(244, 63, 94, 0.15)",
+    metric: { label: "Outcome", value: "Fewer breakdowns" },
+    visual: { type: "stack" },
+  },
+  {
+    title: "Data you can act on",
+    description: "Live dashboards and alerts so leadership sees gaps early and fixes them fast.",
+    bullets: [
+      "Engagement and performance pulse by branch",
+      "Exception alerts for dues, absenteeism, and SLAs",
+      "Exports for board reviews and regulators",
+    ],
+    icon: BarChart3,
+    gradient: "from-sky-500/30 via-blue-500/15 to-sky-900/25",
+    accentColor: "rgb(14, 165, 233)",
+    accentColorLight: "rgba(14, 165, 233, 0.15)",
+    metric: { label: "Outcome", value: "Faster decisions" },
+    visual: { type: "pulse" },
+  },
+  {
+    title: "Built for campuses of every size",
+    description:
+      "Multi-branch institutions, independent schools, and colleges run daily operations on SquareCampus with the same reliability: enterprise-grade security, clear workflows, and responsive support.",
+    bullets: [],
+    icon: BarChart3, // Not used for proof card
+    gradient: "from-blue-500/15 via-purple-500/10 to-emerald-500/15",
+    accentColor: "rgb(139, 92, 246)",
+    accentColorLight: "rgba(139, 92, 246, 0.15)",
+    visual: { type: "proof" },
+    isProofCard: true,
+    stats: [
+      { label: "Time saved", value: "Hours back" },
+      { label: "Errors cut", value: "Fewer fixes" },
+      { label: "Go-live", value: "Guided setup" },
+      { label: "Parents", value: "Clear updates" },
+    ],
+  },
+];
 
 export function Operations() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -629,32 +628,42 @@ export function Operations() {
         ref={triggerRef}
         className={`
           relative
-          ${isTablet
-            ? "" // Tablet: no special container styling, let it flow normally
-            : "lg:flex lg:min-h-screen lg:items-center"
+          ${
+            isTablet
+              ? "" // Tablet: no special container styling, let it flow normally
+              : "lg:flex lg:min-h-screen lg:items-center"
           }
         `}
       >
         {/* Edge gradients - desktop gets dramatic, mobile gets subtle hint */}
-        <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`} />
-        <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`} />
+        <div
+          className={`pointer-events-none absolute inset-y-0 left-0 z-10 bg-gradient-to-r from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`}
+        />
+        <div
+          className={`pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-neutral-950 to-transparent ${isMobile ? "w-8" : isTablet ? "hidden" : "hidden lg:block lg:w-48 lg:via-neutral-950/90"}`}
+        />
 
         {/* Track */}
         <div
           ref={trackRef}
           className={`
             flex
-            ${isMobile
-              ? "snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 scrollbar-hide"
-              : isTablet
-                ? "snap-x snap-mandatory gap-6 overflow-x-auto px-6 py-8 scrollbar-hide"
-                : "items-center gap-8 py-0"
+            ${
+              isMobile
+                ? "snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 scrollbar-hide"
+                : isTablet
+                  ? "snap-x snap-mandatory gap-6 overflow-x-auto px-6 py-8 scrollbar-hide"
+                  : "items-center gap-8 py-0"
             }
           `}
-          style={(isMobile || isTablet) ? {
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
-          } : undefined}
+          style={
+            isMobile || isTablet
+              ? {
+                  scrollSnapType: "x mandatory",
+                  WebkitOverflowScrolling: "touch",
+                }
+              : undefined
+          }
         >
           {operationAreas.map((area, index) => {
             const Icon = area.icon;
@@ -669,11 +678,12 @@ export function Operations() {
                   group relative flex shrink-0 flex-col overflow-hidden rounded-[2rem]
                   border border-white/[0.08] bg-neutral-900/80
                   backdrop-blur-sm transition-colors duration-700 hover:border-white/15
-                  ${isMobile
-                    ? "h-auto min-h-[320px] w-[85vw] max-w-[340px] snap-center"
-                    : isTablet
-                      ? "h-[70vh] max-h-[600px] w-[80vw] max-w-[700px] snap-center"
-                      : "h-[75vh] max-h-[700px] w-[70vw] max-w-[900px]"
+                  ${
+                    isMobile
+                      ? "h-auto min-h-[320px] w-[85vw] max-w-[340px] snap-center"
+                      : isTablet
+                        ? "h-[70vh] max-h-[600px] w-[80vw] max-w-[700px] snap-center"
+                        : "h-[75vh] max-h-[700px] w-[70vw] max-w-[900px]"
                   }
                 `}
                 style={{
@@ -685,9 +695,7 @@ export function Operations() {
                 }}
               >
                 {/* Gradient background */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${area.gradient}`}
-                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${area.gradient}`} />
 
                 {/* Noise texture overlay */}
                 <div
@@ -735,13 +743,14 @@ export function Operations() {
                   data-card-content
                   className={`
                     relative flex h-full
-                    ${isMobile
-                      ? "flex-col p-4"
-                      : isTablet
-                        ? "flex-col p-6"
-                        : area.isProofCard
-                          ? "flex-col p-10 lg:p-14"
-                          : "flex-row p-0"
+                    ${
+                      isMobile
+                        ? "flex-col p-4"
+                        : isTablet
+                          ? "flex-col p-6"
+                          : area.isProofCard
+                            ? "flex-col p-10 lg:p-14"
+                            : "flex-row p-0"
                     }
                   `}
                 >
@@ -793,10 +802,30 @@ export function Operations() {
                           {area.stats?.map((stat, statIndex) => {
                             const statIcons = ["⏱", "✓", "🚀", "💬"];
                             const statColors = [
-                              { border: "border-blue-500/20", bg: "bg-blue-500/5", glow: "rgba(59,130,246,0.2)", text: "text-blue-400" },
-                              { border: "border-emerald-500/20", bg: "bg-emerald-500/5", glow: "rgba(16,185,129,0.2)", text: "text-emerald-400" },
-                              { border: "border-amber-500/20", bg: "bg-amber-500/5", glow: "rgba(245,158,11,0.2)", text: "text-amber-400" },
-                              { border: "border-pink-500/20", bg: "bg-pink-500/5", glow: "rgba(236,72,153,0.2)", text: "text-pink-400" },
+                              {
+                                border: "border-blue-500/20",
+                                bg: "bg-blue-500/5",
+                                glow: "rgba(59,130,246,0.2)",
+                                text: "text-blue-400",
+                              },
+                              {
+                                border: "border-emerald-500/20",
+                                bg: "bg-emerald-500/5",
+                                glow: "rgba(16,185,129,0.2)",
+                                text: "text-emerald-400",
+                              },
+                              {
+                                border: "border-amber-500/20",
+                                bg: "bg-amber-500/5",
+                                glow: "rgba(245,158,11,0.2)",
+                                text: "text-amber-400",
+                              },
+                              {
+                                border: "border-pink-500/20",
+                                bg: "bg-pink-500/5",
+                                glow: "rgba(236,72,153,0.2)",
+                                text: "text-pink-400",
+                              },
                             ];
                             const color = statColors[statIndex] || statColors[0];
 
@@ -817,7 +846,9 @@ export function Operations() {
                                 >
                                   {statIcons[statIndex]}
                                 </span>
-                                <p className={`mt-2 text-[9px] font-semibold uppercase tracking-[0.15em] ${color.text}`}>
+                                <p
+                                  className={`mt-2 text-[9px] font-semibold uppercase tracking-[0.15em] ${color.text}`}
+                                >
                                   {stat.label}
                                 </p>
                                 <p className="mt-0.5 text-xs font-semibold text-white">
@@ -849,7 +880,12 @@ export function Operations() {
                             {/* Grid overlay */}
                             <svg className="absolute inset-0 h-full w-full opacity-10">
                               <defs>
-                                <pattern id="proof-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <pattern
+                                  id="proof-grid"
+                                  width="30"
+                                  height="30"
+                                  patternUnits="userSpaceOnUse"
+                                >
                                   <circle cx="15" cy="15" r="1" fill="white" />
                                 </pattern>
                               </defs>
@@ -860,39 +896,76 @@ export function Operations() {
                             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 400 400">
                               {/* Outer ring */}
                               <ellipse
-                                cx="200" cy="200" rx="180" ry="80"
-                                fill="none" stroke="url(#orbit-gradient-1)" strokeWidth="1"
+                                cx="200"
+                                cy="200"
+                                rx="180"
+                                ry="80"
+                                fill="none"
+                                stroke="url(#orbit-gradient-1)"
+                                strokeWidth="1"
                                 className="animate-spin-slow"
                                 style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}
                               />
                               {/* Middle ring */}
                               <ellipse
-                                cx="200" cy="200" rx="140" ry="60"
-                                fill="none" stroke="url(#orbit-gradient-2)" strokeWidth="1"
+                                cx="200"
+                                cy="200"
+                                rx="140"
+                                ry="60"
+                                fill="none"
+                                stroke="url(#orbit-gradient-2)"
+                                strokeWidth="1"
                                 className="animate-spin-slow"
-                                style={{ transformOrigin: "200px 200px", animationDuration: "25s", animationDirection: "reverse" }}
+                                style={{
+                                  transformOrigin: "200px 200px",
+                                  animationDuration: "25s",
+                                  animationDirection: "reverse",
+                                }}
                               />
                               {/* Inner ring */}
                               <ellipse
-                                cx="200" cy="200" rx="100" ry="40"
-                                fill="none" stroke="url(#orbit-gradient-3)" strokeWidth="1"
+                                cx="200"
+                                cy="200"
+                                rx="100"
+                                ry="40"
+                                fill="none"
+                                stroke="url(#orbit-gradient-3)"
+                                strokeWidth="1"
                                 className="animate-spin-slow"
                                 style={{ transformOrigin: "200px 200px", animationDuration: "20s" }}
                               />
 
                               {/* Gradients */}
                               <defs>
-                                <linearGradient id="orbit-gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient
+                                  id="orbit-gradient-1"
+                                  x1="0%"
+                                  y1="0%"
+                                  x2="100%"
+                                  y2="0%"
+                                >
                                   <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
                                   <stop offset="50%" stopColor="rgba(139, 92, 246, 0.5)" />
                                   <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
                                 </linearGradient>
-                                <linearGradient id="orbit-gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient
+                                  id="orbit-gradient-2"
+                                  x1="0%"
+                                  y1="0%"
+                                  x2="100%"
+                                  y2="0%"
+                                >
                                   <stop offset="0%" stopColor="rgba(59, 130, 246, 0)" />
                                   <stop offset="50%" stopColor="rgba(59, 130, 246, 0.4)" />
                                   <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
                                 </linearGradient>
-                                <linearGradient id="orbit-gradient-3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient
+                                  id="orbit-gradient-3"
+                                  x1="0%"
+                                  y1="0%"
+                                  x2="100%"
+                                  y2="0%"
+                                >
                                   <stop offset="0%" stopColor="rgba(16, 185, 129, 0)" />
                                   <stop offset="50%" stopColor="rgba(16, 185, 129, 0.4)" />
                                   <stop offset="100%" stopColor="rgba(16, 185, 129, 0)" />
@@ -900,42 +973,119 @@ export function Operations() {
                               </defs>
 
                               {/* Orbiting nodes */}
-                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}>
+                              <g
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}
+                              >
                                 <circle cx="380" cy="200" r="8" fill="rgba(139, 92, 246, 0.8)">
-                                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" />
+                                  <animate
+                                    attributeName="r"
+                                    values="8;10;8"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                  />
                                 </circle>
-                                <circle cx="380" cy="200" r="16" fill="none" stroke="rgba(139, 92, 246, 0.3)" strokeWidth="1">
-                                  <animate attributeName="r" values="16;24;16" dur="2s" repeatCount="indefinite" />
-                                  <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
+                                <circle
+                                  cx="380"
+                                  cy="200"
+                                  r="16"
+                                  fill="none"
+                                  stroke="rgba(139, 92, 246, 0.3)"
+                                  strokeWidth="1"
+                                >
+                                  <animate
+                                    attributeName="r"
+                                    values="16;24;16"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                  />
+                                  <animate
+                                    attributeName="opacity"
+                                    values="0.3;0;0.3"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                  />
                                 </circle>
                               </g>
 
-                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}>
+                              <g
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "30s" }}
+                              >
                                 <circle cx="20" cy="200" r="6" fill="rgba(139, 92, 246, 0.6)">
-                                  <animate attributeName="r" values="6;8;6" dur="2.5s" repeatCount="indefinite" />
+                                  <animate
+                                    attributeName="r"
+                                    values="6;8;6"
+                                    dur="2.5s"
+                                    repeatCount="indefinite"
+                                  />
                                 </circle>
                               </g>
 
-                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "25s", animationDirection: "reverse" }}>
+                              <g
+                                className="animate-spin-slow"
+                                style={{
+                                  transformOrigin: "200px 200px",
+                                  animationDuration: "25s",
+                                  animationDirection: "reverse",
+                                }}
+                              >
                                 <circle cx="340" cy="200" r="7" fill="rgba(59, 130, 246, 0.8)">
-                                  <animate attributeName="r" values="7;9;7" dur="1.8s" repeatCount="indefinite" />
+                                  <animate
+                                    attributeName="r"
+                                    values="7;9;7"
+                                    dur="1.8s"
+                                    repeatCount="indefinite"
+                                  />
                                 </circle>
                                 <circle cx="60" cy="200" r="5" fill="rgba(59, 130, 246, 0.5)" />
                               </g>
 
-                              <g className="animate-spin-slow" style={{ transformOrigin: "200px 200px", animationDuration: "20s" }}>
+                              <g
+                                className="animate-spin-slow"
+                                style={{ transformOrigin: "200px 200px", animationDuration: "20s" }}
+                              >
                                 <circle cx="300" cy="200" r="6" fill="rgba(16, 185, 129, 0.8)">
-                                  <animate attributeName="r" values="6;8;6" dur="2.2s" repeatCount="indefinite" />
+                                  <animate
+                                    attributeName="r"
+                                    values="6;8;6"
+                                    dur="2.2s"
+                                    repeatCount="indefinite"
+                                  />
                                 </circle>
                                 <circle cx="100" cy="200" r="4" fill="rgba(16, 185, 129, 0.5)" />
                               </g>
 
                               {/* Center core */}
                               <circle cx="200" cy="200" r="35" fill="url(#core-gradient)" />
-                              <circle cx="200" cy="200" r="35" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-                              <circle cx="200" cy="200" r="45" fill="none" stroke="rgba(139, 92, 246, 0.2)" strokeWidth="1">
-                                <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
-                                <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" />
+                              <circle
+                                cx="200"
+                                cy="200"
+                                r="35"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.2)"
+                                strokeWidth="1"
+                              />
+                              <circle
+                                cx="200"
+                                cy="200"
+                                r="45"
+                                fill="none"
+                                stroke="rgba(139, 92, 246, 0.2)"
+                                strokeWidth="1"
+                              >
+                                <animate
+                                  attributeName="r"
+                                  values="45;55;45"
+                                  dur="3s"
+                                  repeatCount="indefinite"
+                                />
+                                <animate
+                                  attributeName="opacity"
+                                  values="0.2;0;0.2"
+                                  dur="3s"
+                                  repeatCount="indefinite"
+                                />
                               </circle>
 
                               {/* Core gradient */}
@@ -948,7 +1098,15 @@ export function Operations() {
                               </defs>
 
                               {/* Center icon placeholder */}
-                              <text x="200" y="208" textAnchor="middle" fill="white" fontSize="24" fontWeight="bold" opacity="0.9">
+                              <text
+                                x="200"
+                                y="208"
+                                textAnchor="middle"
+                                fill="white"
+                                fontSize="24"
+                                fontWeight="bold"
+                                opacity="0.9"
+                              >
                                 SC
                               </text>
                             </svg>
@@ -971,12 +1129,46 @@ export function Operations() {
                           {/* Connection lines */}
                           <div className="pointer-events-none absolute inset-0">
                             <svg className="h-full w-full opacity-20">
-                              <line x1="10%" y1="20%" x2="40%" y2="40%" stroke="url(#line-gradient)" strokeWidth="1" />
-                              <line x1="90%" y1="30%" x2="60%" y2="45%" stroke="url(#line-gradient)" strokeWidth="1" />
-                              <line x1="20%" y1="80%" x2="45%" y2="55%" stroke="url(#line-gradient)" strokeWidth="1" />
-                              <line x1="85%" y1="75%" x2="58%" y2="52%" stroke="url(#line-gradient)" strokeWidth="1" />
+                              <line
+                                x1="10%"
+                                y1="20%"
+                                x2="40%"
+                                y2="40%"
+                                stroke="url(#line-gradient)"
+                                strokeWidth="1"
+                              />
+                              <line
+                                x1="90%"
+                                y1="30%"
+                                x2="60%"
+                                y2="45%"
+                                stroke="url(#line-gradient)"
+                                strokeWidth="1"
+                              />
+                              <line
+                                x1="20%"
+                                y1="80%"
+                                x2="45%"
+                                y2="55%"
+                                stroke="url(#line-gradient)"
+                                strokeWidth="1"
+                              />
+                              <line
+                                x1="85%"
+                                y1="75%"
+                                x2="58%"
+                                y2="52%"
+                                stroke="url(#line-gradient)"
+                                strokeWidth="1"
+                              />
                               <defs>
-                                <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient
+                                  id="line-gradient"
+                                  x1="0%"
+                                  y1="0%"
+                                  x2="100%"
+                                  y2="0%"
+                                >
                                   <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
                                   <stop offset="50%" stopColor="rgba(139, 92, 246, 0.6)" />
                                   <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
@@ -1023,10 +1215,14 @@ export function Operations() {
                                 ${isMobile ? "px-4 py-2" : "px-6 py-4"}
                               `}
                             >
-                              <p className={`uppercase tracking-wider text-white/40 ${isMobile ? "text-[0.6rem]" : "text-xs"}`}>
+                              <p
+                                className={`uppercase tracking-wider text-white/40 ${isMobile ? "text-[0.6rem]" : "text-xs"}`}
+                              >
                                 {area.metric.label}
                               </p>
-                              <p className={`font-semibold text-nowrap text-white ${isMobile ? "text-base" : "text-xl lg:text-2xl"}`}>
+                              <p
+                                className={`font-semibold text-nowrap text-white ${isMobile ? "text-base" : "text-xl lg:text-2xl"}`}
+                              >
                                 {area.metric.value}
                               </p>
                             </div>
@@ -1034,7 +1230,9 @@ export function Operations() {
                         </div>
 
                         {/* Title and description */}
-                        <div className={`space-y-3 md:space-y-4 ${isMobile ? "mt-4" : "mt-8 lg:mt-10"}`}>
+                        <div
+                          className={`space-y-3 md:space-y-4 ${isMobile ? "mt-4" : "mt-8 lg:mt-10"}`}
+                        >
                           <h3
                             className={`
                               font-semibold uppercase tracking-[0.1em] text-white
@@ -1159,7 +1357,6 @@ export function Operations() {
               </article>
             );
           })}
-
         </div>
 
         {/* Mobile carousel indicators */}
@@ -1176,17 +1373,23 @@ export function Operations() {
                     const track = trackRef.current;
                     if (!track) return;
                     const card = track.children[index] as HTMLElement;
-                    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                    card?.scrollIntoView({
+                      behavior: "smooth",
+                      inline: "center",
+                      block: "nearest",
+                    });
                   }}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    activeSlideIndex === index
-                      ? "w-6"
-                      : "w-2 bg-white/20 hover:bg-white/40"
+                    activeSlideIndex === index ? "w-6" : "w-2 bg-white/20 hover:bg-white/40"
                   }`}
-                  style={activeSlideIndex === index ? {
-                    backgroundColor: area.accentColor,
-                    boxShadow: `0 0 8px ${area.accentColor}60`,
-                  } : undefined}
+                  style={
+                    activeSlideIndex === index
+                      ? {
+                          backgroundColor: area.accentColor,
+                          boxShadow: `0 0 8px ${area.accentColor}60`,
+                        }
+                      : undefined
+                  }
                 />
               ))}
             </div>
@@ -1200,7 +1403,6 @@ export function Operations() {
           </div>
         )}
       </div>
-
     </section>
   );
 }
@@ -1269,13 +1471,7 @@ const CardVisual = ({
                   strokeWidth="2"
                   opacity="0.6"
                 />
-                <circle
-                  cx={node.cx}
-                  cy={node.cy}
-                  r={node.r - 4}
-                  fill={accentColor}
-                  opacity="0.3"
-                />
+                <circle cx={node.cx} cy={node.cy} r={node.r - 4} fill={accentColor} opacity="0.3" />
               </g>
             ))}
           </svg>
@@ -1353,7 +1549,15 @@ const CardVisual = ({
 
             {/* Pie chart */}
             <g className="chart-pie-cycle">
-              <circle cx="100" cy="100" r="46" fill="none" stroke={accentColor} strokeWidth="14" opacity="0.2" />
+              <circle
+                cx="100"
+                cy="100"
+                r="46"
+                fill="none"
+                stroke={accentColor}
+                strokeWidth="14"
+                opacity="0.2"
+              />
               <path
                 d="M 100 54 A 46 46 0 0 1 146 100 L 100 100 Z"
                 fill={accentColor}
@@ -1405,7 +1609,15 @@ const CardVisual = ({
           <svg viewBox="0 0 200 200" className="h-full w-full">
             {/* Central hub */}
             <circle cx="100" cy="100" r="20" fill={accentColor} opacity="0.3" />
-            <circle cx="100" cy="100" r="14" fill="none" stroke={accentColor} strokeWidth="2" opacity="0.6" />
+            <circle
+              cx="100"
+              cy="100"
+              r="14"
+              fill="none"
+              stroke={accentColor}
+              strokeWidth="2"
+              opacity="0.6"
+            />
             {/* Connections */}
             {[0, 60, 120, 180, 240, 300].map((angle, i) => {
               const rad = (angle * Math.PI) / 180;
@@ -1475,11 +1687,7 @@ const CardVisual = ({
           <svg viewBox="0 0 200 200" className="h-full w-full">
             {/* Stacked cards */}
             {[0, 1, 2, 3].map((i) => (
-              <g
-                key={i}
-                className="animate-float"
-                style={{ animationDelay: `${i * 0.2}s` }}
-              >
+              <g key={i} className="animate-float" style={{ animationDelay: `${i * 0.2}s` }}>
                 <rect
                   x={40 + i * 8}
                   y={60 + i * 25}
@@ -1514,8 +1722,23 @@ const CardVisual = ({
               </g>
             ))}
             {/* Floating icons */}
-            <circle cx="160" cy="50" r="8" fill={accentColor} opacity="0.3" className="animate-float" />
-            <circle cx="35" cy="150" r="6" fill={accentColor} opacity="0.2" className="animate-float" style={{ animationDelay: "0.5s" }} />
+            <circle
+              cx="160"
+              cy="50"
+              r="8"
+              fill={accentColor}
+              opacity="0.3"
+              className="animate-float"
+            />
+            <circle
+              cx="35"
+              cy="150"
+              r="6"
+              fill={accentColor}
+              opacity="0.2"
+              className="animate-float"
+              style={{ animationDelay: "0.5s" }}
+            />
           </svg>
         </div>
       );
@@ -1570,7 +1793,16 @@ const CardVisual = ({
             <rect x="90" y="130" width="20" height="15" rx="2" fill={accentColor} opacity="0.3" />
             <rect x="75" y="145" width="50" height="6" rx="3" fill={accentColor} opacity="0.2" />
             {/* Alert rings */}
-            <circle cx="160" cy="45" r="12" fill="none" stroke={accentColor} strokeWidth="1" opacity="0.3" className="animate-ping-slow" />
+            <circle
+              cx="160"
+              cy="45"
+              r="12"
+              fill="none"
+              stroke={accentColor}
+              strokeWidth="1"
+              opacity="0.3"
+              className="animate-ping-slow"
+            />
             <circle cx="160" cy="45" r="6" fill={accentColor} opacity="0.5" />
           </svg>
         </div>

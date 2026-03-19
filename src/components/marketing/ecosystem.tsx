@@ -197,9 +197,7 @@ export function EcosystemSection() {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const whyRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
-  const [activeNode, setActiveNode] = useState<GraphNode | null>(
-    graphNodes[0] ?? null
-  );
+  const [activeNode, setActiveNode] = useState<GraphNode | null>(graphNodes[0] ?? null);
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
   const [isModulesExpanded, setIsModulesExpanded] = useState(false);
   const { isMobile } = useDeviceCapabilities();
@@ -295,9 +293,7 @@ export function EcosystemSection() {
     if (!mapRef.current) return;
     const ctx = gsap.context(() => {
       const glow = mapRef.current?.querySelector<HTMLElement>(".js-core-glow");
-      const ring = mapRef.current?.querySelector<HTMLElement>(
-        ".js-ecosystem-ring"
-      );
+      const ring = mapRef.current?.querySelector<HTMLElement>(".js-ecosystem-ring");
       const routes = gsap.utils.toArray<SVGPathElement>(".js-ecosystem-route");
       const nodes = gsap.utils.toArray<HTMLElement>(".js-ecosystem-node");
 
@@ -392,9 +388,9 @@ export function EcosystemSection() {
             A connected ecosystem for leadership, staff, parents, and students.
           </span>
           <span className="hidden md:inline">
-            SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected
-            ecosystem for leadership, staff, parents, and students, with
-            integrations that keep data flowing without duplication.
+            SquareCampus isn&apos;t another bundled ERP. It&apos;s a connected ecosystem for
+            leadership, staff, parents, and students, with integrations that keep data flowing
+            without duplication.
           </span>
         </p>
       </div>
@@ -421,14 +417,7 @@ export function EcosystemSection() {
               viewBox="0 0 100 100"
               aria-hidden="true"
             >
-              <circle
-                cx="50"
-                cy="50"
-                r="42"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.6"
-              />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" strokeWidth="0.6" />
               <circle
                 cx="50"
                 cy="50"
@@ -482,9 +471,7 @@ export function EcosystemSection() {
                 <span className="text-[0.65rem] font-medium uppercase tracking-[0.35em] text-neutral-500">
                   Core OS
                 </span>
-                <span className="text-sm font-semibold text-white">
-                  SquareCampus
-                </span>
+                <span className="text-sm font-semibold text-white">SquareCampus</span>
               </div>
             </div>
 
@@ -509,17 +496,13 @@ export function EcosystemSection() {
                     top: node.y,
                     transform: "translate(-50%, -50%) translateZ(18px)",
                     boxShadow:
-                      activeNode?.id === node.id
-                        ? `0 0 20px ${node.glowColor}`
-                        : undefined,
+                      activeNode?.id === node.id ? `0 0 20px ${node.glowColor}` : undefined,
                   }}
                 >
                   <span className="block text-[0.55rem] font-medium uppercase tracking-[0.2em] text-neutral-500">
                     {node.tag}
                   </span>
-                  <span className="block text-[0.7rem] font-semibold text-white">
-                    {node.label}
-                  </span>
+                  <span className="block text-[0.7rem] font-semibold text-white">{node.label}</span>
                 </button>
               ))}
             </div>
@@ -539,9 +522,7 @@ export function EcosystemSection() {
                 <span className="block text-[0.55rem] font-medium uppercase tracking-[0.2em] text-neutral-500">
                   {item.label}
                 </span>
-                <span className="block text-[0.7rem] font-semibold text-white">
-                  {item.value}
-                </span>
+                <span className="block text-[0.7rem] font-semibold text-white">{item.value}</span>
               </div>
             ))}
           </div>
@@ -555,8 +536,7 @@ export function EcosystemSection() {
               {activeNode?.label ?? "Hover a node"}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-neutral-400">
-              {activeNode?.detail ??
-                "Hover any node to see how that part connects to the core."}
+              {activeNode?.detail ?? "Hover any node to see how that part connects to the core."}
             </p>
           </div>
         </div>
@@ -577,8 +557,8 @@ export function EcosystemSection() {
               </p>
             </div>
             <p className="text-base font-semibold leading-relaxed text-white sm:text-lg">
-              One ecosystem means fewer tools, fewer logins, and fewer places
-              for data to go missing.
+              One ecosystem means fewer tools, fewer logins, and fewer places for data to go
+              missing.
             </p>
           </div>
 
@@ -613,65 +593,60 @@ export function EcosystemSection() {
         ref={cardsRef}
         className="relative z-10 grid gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3"
       >
-        {(isMobile && !isModulesExpanded
-          ? ecosystemItems.slice(0, 2)
-          : ecosystemItems
-        ).map((item, idx) => {
-          const Icon = item.icon;
-          const isHovered = hoveredCardIndex === idx;
-          return (
-            <div
-              key={item.title}
-              onMouseEnter={() => setHoveredCardIndex(idx)}
-              onMouseLeave={() => setHoveredCardIndex(null)}
-              className={cn(
-                "js-ecosystem-card group relative overflow-hidden rounded-2xl",
-                "border border-white/[0.08] bg-neutral-900/50 p-5 backdrop-blur-sm",
-                "transition-all duration-500",
-                "hover:border-white/15 hover:bg-neutral-900/70"
-              )}
-              style={{
-                transform: isHovered
-                  ? "translateY(-4px) scale(1.01)"
-                  : "translateY(0) scale(1)",
-              }}
-            >
-              {/* Hover glow */}
+        {(isMobile && !isModulesExpanded ? ecosystemItems.slice(0, 2) : ecosystemItems).map(
+          (item, idx) => {
+            const Icon = item.icon;
+            const isHovered = hoveredCardIndex === idx;
+            return (
               <div
-                className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full blur-2xl transition-all duration-500"
+                key={item.title}
+                onMouseEnter={() => setHoveredCardIndex(idx)}
+                onMouseLeave={() => setHoveredCardIndex(null)}
+                className={cn(
+                  "js-ecosystem-card group relative overflow-hidden rounded-2xl",
+                  "border border-white/[0.08] bg-neutral-900/50 p-5 backdrop-blur-sm",
+                  "transition-all duration-500",
+                  "hover:border-white/15 hover:bg-neutral-900/70"
+                )}
                 style={{
-                  backgroundColor: item.glowColor,
-                  opacity: isHovered ? 0.4 : 0,
+                  transform: isHovered ? "translateY(-4px) scale(1.01)" : "translateY(0) scale(1)",
                 }}
-              />
+              >
+                {/* Hover glow */}
+                <div
+                  className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full blur-2xl transition-all duration-500"
+                  style={{
+                    backgroundColor: item.glowColor,
+                    opacity: isHovered ? 0.4 : 0,
+                  }}
+                />
 
-              {/* Shimmer */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="absolute -inset-full animate-eco-shimmer bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
-              </div>
-
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03]">
-                      <Icon className="h-4 w-4 text-neutral-300" />
-                    </div>
-                    <span className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-neutral-500">
-                      {item.label}
-                    </span>
-                  </span>
-                  <span className="rounded-full border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 text-[0.55rem] font-medium uppercase tracking-[0.2em] text-neutral-400">
-                    {item.tag}
-                  </span>
+                {/* Shimmer */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                  <div className="absolute -inset-full animate-eco-shimmer bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
                 </div>
-                <p className="text-sm font-semibold text-white">{item.title}</p>
-                <p className="text-xs leading-relaxed text-neutral-400">
-                  {item.description}
-                </p>
+
+                <div className="relative z-10 space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03]">
+                        <Icon className="h-4 w-4 text-neutral-300" />
+                      </div>
+                      <span className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-neutral-500">
+                        {item.label}
+                      </span>
+                    </span>
+                    <span className="rounded-full border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 text-[0.55rem] font-medium uppercase tracking-[0.2em] text-neutral-400">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold text-white">{item.title}</p>
+                  <p className="text-xs leading-relaxed text-neutral-400">{item.description}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
       </div>
 
       {/* Expand button for mobile */}
@@ -687,9 +662,7 @@ export function EcosystemSection() {
           )}
         >
           <span>
-            {isModulesExpanded
-              ? "Show less"
-              : `View all ${ecosystemItems.length} modules`}
+            {isModulesExpanded ? "Show less" : `View all ${ecosystemItems.length} modules`}
           </span>
           <ChevronDown
             className={cn(
@@ -748,8 +721,7 @@ function EcosystemHierarchy({ isMobile }: { isMobile: boolean }) {
     },
   ];
 
-  const displayedItems =
-    isMobile && !isExpanded ? hierarchyItems.slice(0, 1) : hierarchyItems;
+  const displayedItems = isMobile && !isExpanded ? hierarchyItems.slice(0, 1) : hierarchyItems;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -831,16 +803,9 @@ function EcosystemHierarchy({ isMobile }: { isMobile: boolean }) {
             "transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04]"
           )}
         >
-          <span>
-            {isExpanded
-              ? "Show less"
-              : `View all ${hierarchyItems.length} levels`}
-          </span>
+          <span>{isExpanded ? "Show less" : `View all ${hierarchyItems.length} levels`}</span>
           <ChevronDown
-            className={cn(
-              "h-4 w-4 transition-transform duration-300",
-              isExpanded && "rotate-180"
-            )}
+            className={cn("h-4 w-4 transition-transform duration-300", isExpanded && "rotate-180")}
           />
         </button>
       )}

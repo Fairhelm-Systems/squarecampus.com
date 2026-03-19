@@ -3,13 +3,7 @@
 import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  Activity,
-  Bus,
-  DollarSign,
-  TrendingUp,
-  Users,
-} from "@/components/icons";
+import { Activity, Bus, DollarSign, TrendingUp, Users } from "@/components/icons";
 
 type LiveMetric = {
   label: string;
@@ -34,26 +28,126 @@ const initialMetrics: LiveMetric[] = [
 ];
 
 const logEntries: LogEntry[] = [
-  { id: "1", time: "08:47:32", category: "attendance", message: "Grade 10-A attendance marked complete (42/44 present)" },
-  { id: "2", time: "08:46:15", category: "finance", message: "Payment received: ₹12,500 via UPI from Parent #4521" },
-  { id: "3", time: "08:45:03", category: "transport", message: "Route 7 departed from depot on schedule" },
-  { id: "4", time: "08:44:28", category: "alert", message: "Lab AC maintenance scheduled for 2:00 PM today" },
-  { id: "5", time: "08:43:51", category: "attendance", message: "Grade 9-B: 2 students marked late arrival" },
-  { id: "6", time: "08:42:17", category: "system", message: "Auto-reminder batch sent to 24 pending fee accounts" },
-  { id: "7", time: "08:41:44", category: "transport", message: "All 18 buses checked in and GPS active" },
-  { id: "8", time: "08:40:22", category: "attendance", message: "Staff attendance sync completed (156/160 present)" },
-  { id: "9", time: "08:39:08", category: "finance", message: "Fee receipt #4521 generated and sent via WhatsApp" },
-  { id: "10", time: "08:38:33", category: "system", message: "PTM reminder scheduled for Grade 8 parents" },
-  { id: "11", time: "08:37:15", category: "attendance", message: "Grade 9-A attendance marked complete (38/40 present)" },
-  { id: "12", time: "08:36:02", category: "finance", message: "Payment received: ₹8,200 via Card from Parent #3892" },
-  { id: "13", time: "08:35:18", category: "transport", message: "Route 12 ETA updated: arriving 3 mins early" },
-  { id: "14", time: "08:34:45", category: "system", message: "Daily backup completed successfully" },
-  { id: "15", time: "08:33:22", category: "attendance", message: "Grade 8-C attendance marked complete (39/41 present)" },
-  { id: "16", time: "08:32:11", category: "alert", message: "Low toner alert: Admin block printer needs attention" },
-  { id: "17", time: "08:31:05", category: "finance", message: "Bulk fee receipt generation completed (142 receipts)" },
-  { id: "18", time: "08:30:48", category: "transport", message: "Route 3 picked up last student, en route to campus" },
-  { id: "19", time: "08:29:33", category: "system", message: "Parent app sync completed: 2,847 active sessions" },
-  { id: "20", time: "08:28:17", category: "attendance", message: "Biometric sync: 12 new entries from Gate 2" },
+  {
+    id: "1",
+    time: "08:47:32",
+    category: "attendance",
+    message: "Grade 10-A attendance marked complete (42/44 present)",
+  },
+  {
+    id: "2",
+    time: "08:46:15",
+    category: "finance",
+    message: "Payment received: ₹12,500 via UPI from Parent #4521",
+  },
+  {
+    id: "3",
+    time: "08:45:03",
+    category: "transport",
+    message: "Route 7 departed from depot on schedule",
+  },
+  {
+    id: "4",
+    time: "08:44:28",
+    category: "alert",
+    message: "Lab AC maintenance scheduled for 2:00 PM today",
+  },
+  {
+    id: "5",
+    time: "08:43:51",
+    category: "attendance",
+    message: "Grade 9-B: 2 students marked late arrival",
+  },
+  {
+    id: "6",
+    time: "08:42:17",
+    category: "system",
+    message: "Auto-reminder batch sent to 24 pending fee accounts",
+  },
+  {
+    id: "7",
+    time: "08:41:44",
+    category: "transport",
+    message: "All 18 buses checked in and GPS active",
+  },
+  {
+    id: "8",
+    time: "08:40:22",
+    category: "attendance",
+    message: "Staff attendance sync completed (156/160 present)",
+  },
+  {
+    id: "9",
+    time: "08:39:08",
+    category: "finance",
+    message: "Fee receipt #4521 generated and sent via WhatsApp",
+  },
+  {
+    id: "10",
+    time: "08:38:33",
+    category: "system",
+    message: "PTM reminder scheduled for Grade 8 parents",
+  },
+  {
+    id: "11",
+    time: "08:37:15",
+    category: "attendance",
+    message: "Grade 9-A attendance marked complete (38/40 present)",
+  },
+  {
+    id: "12",
+    time: "08:36:02",
+    category: "finance",
+    message: "Payment received: ₹8,200 via Card from Parent #3892",
+  },
+  {
+    id: "13",
+    time: "08:35:18",
+    category: "transport",
+    message: "Route 12 ETA updated: arriving 3 mins early",
+  },
+  {
+    id: "14",
+    time: "08:34:45",
+    category: "system",
+    message: "Daily backup completed successfully",
+  },
+  {
+    id: "15",
+    time: "08:33:22",
+    category: "attendance",
+    message: "Grade 8-C attendance marked complete (39/41 present)",
+  },
+  {
+    id: "16",
+    time: "08:32:11",
+    category: "alert",
+    message: "Low toner alert: Admin block printer needs attention",
+  },
+  {
+    id: "17",
+    time: "08:31:05",
+    category: "finance",
+    message: "Bulk fee receipt generation completed (142 receipts)",
+  },
+  {
+    id: "18",
+    time: "08:30:48",
+    category: "transport",
+    message: "Route 3 picked up last student, en route to campus",
+  },
+  {
+    id: "19",
+    time: "08:29:33",
+    category: "system",
+    message: "Parent app sync completed: 2,847 active sessions",
+  },
+  {
+    id: "20",
+    time: "08:28:17",
+    category: "attendance",
+    message: "Biometric sync: 12 new entries from Gate 2",
+  },
 ];
 
 const departmentBars = [
@@ -93,15 +187,25 @@ export const FeatureVisual = () => {
       setMetrics((prev) =>
         prev.map((m) => ({
           ...m,
-          value: m.label === "Alerts"
-            ? Math.max(0, m.value + (Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0))
-            : Math.min(100, Math.max(0, m.value + (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.7 ? 1 : 0))),
+          value:
+            m.label === "Alerts"
+              ? Math.max(0, m.value + (Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0))
+              : Math.min(
+                  100,
+                  Math.max(
+                    0,
+                    m.value + (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.7 ? 1 : 0)
+                  )
+                ),
         }))
       );
       setBars((prev) =>
         prev.map((b) => ({
           ...b,
-          value: Math.min(100, Math.max(80, b.value + (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.6 ? 1 : 0))),
+          value: Math.min(
+            100,
+            Math.max(80, b.value + (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.6 ? 1 : 0))
+          ),
         }))
       );
     }, 3000);
@@ -256,7 +360,9 @@ export const FeatureVisual = () => {
                       <span
                         className={cn(
                           "h-1.5 w-1.5 rounded-full",
-                          cls.status === "complete" ? "bg-emerald-400" : "bg-amber-400 animate-pulse"
+                          cls.status === "complete"
+                            ? "bg-emerald-400"
+                            : "bg-amber-400 animate-pulse"
                         )}
                       />
                     </div>
@@ -355,9 +461,7 @@ function MetricCard({ metric }: { metric: LiveMetric }) {
         colorMap[metric.color]
       )}
     >
-      <p className="text-[0.6rem] uppercase tracking-[0.25em] text-neutral-400">
-        {metric.label}
-      </p>
+      <p className="text-[0.6rem] uppercase tracking-[0.25em] text-neutral-400">{metric.label}</p>
       <div className="mt-1 flex items-baseline gap-1">
         <span className={cn("text-xl font-bold sm:text-2xl", textColor[metric.color])}>
           {metric.value}
@@ -371,7 +475,11 @@ function MetricCard({ metric }: { metric: LiveMetric }) {
   );
 }
 
-function DepartmentColumnGraph({ bars }: { bars: { name: string; value: number; color: string }[] }) {
+function DepartmentColumnGraph({
+  bars,
+}: {
+  bars: { name: string; value: number; color: string }[];
+}) {
   const graphRef = useRef<HTMLDivElement>(null);
 
   const colorMap: Record<string, { from: string; to: string; glow: string; particle: string }> = {
@@ -502,7 +610,10 @@ function DepartmentColumnGraph({ bars }: { bars: { name: string; value: number; 
           const barHeight = (bar.value / 100) * 80;
 
           return (
-            <div key={bar.name} className="relative flex flex-col items-center flex-1 h-full justify-end">
+            <div
+              key={bar.name}
+              className="relative flex flex-col items-center flex-1 h-full justify-end"
+            >
               {/* Floating particles */}
               <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-none">
                 {[0, 1].map((i) => (
@@ -564,7 +675,8 @@ function DepartmentColumnGraph({ bars }: { bars: { name: string; value: number; 
                 <div
                   className="js-shimmer absolute inset-0"
                   style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+                    background:
+                      "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
                     backgroundSize: "200% 100%",
                   }}
                 />
@@ -616,9 +728,7 @@ function LogRow({ log }: { log: LogEntry }) {
 
   return (
     <div className="flex items-start gap-2 rounded-lg bg-white/5 px-2.5 py-2">
-      <span className="font-mono text-[0.6rem] text-neutral-500 shrink-0 pt-0.5">
-        {log.time}
-      </span>
+      <span className="font-mono text-[0.6rem] text-neutral-500 shrink-0 pt-0.5">{log.time}</span>
       <span
         className={cn(
           "shrink-0 rounded px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wider",

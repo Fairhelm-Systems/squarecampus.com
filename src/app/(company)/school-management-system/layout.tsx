@@ -160,10 +160,6 @@ export const metadata: Metadata = createPageMetadata({
     "India's leading school management system. One platform for admissions, fees, academics, attendance & communication. Trusted by 500+ schools.",
 });
 
-export default function SchoolManagementSystemLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SchoolManagementSystemLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

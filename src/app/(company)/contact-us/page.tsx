@@ -6,7 +6,7 @@ import { IconMailFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import Script from "next/script";
 import type React from "react";
-import { useEffect, useId, useRef, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { toast } from "sonner";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import {
@@ -99,9 +99,24 @@ const responseCommitments = [
 ];
 
 const accentColors: Record<string, { border: string; bg: string; text: string; glow: string }> = {
-  blue: { border: "border-blue-500/30", bg: "bg-blue-500/10", text: "text-blue-400", glow: "bg-blue-500/20" },
-  emerald: { border: "border-emerald-500/30", bg: "bg-emerald-500/10", text: "text-emerald-400", glow: "bg-emerald-500/20" },
-  purple: { border: "border-purple-500/30", bg: "bg-purple-500/10", text: "text-purple-400", glow: "bg-purple-500/20" },
+  blue: {
+    border: "border-blue-500/30",
+    bg: "bg-blue-500/10",
+    text: "text-blue-400",
+    glow: "bg-blue-500/20",
+  },
+  emerald: {
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    glow: "bg-emerald-500/20",
+  },
+  purple: {
+    border: "border-purple-500/30",
+    bg: "bg-purple-500/10",
+    text: "text-purple-400",
+    glow: "bg-purple-500/20",
+  },
 };
 
 function FloatingParticles() {
@@ -115,8 +130,8 @@ function FloatingParticles() {
             i % 3 === 0 ? "bg-blue-400/25" : i % 3 === 1 ? "bg-emerald-400/25" : "bg-purple-400/25"
           )}
           style={{
-            left: `${8 + (i * 7) % 84}%`,
-            top: `${10 + (i * 11) % 80}%`,
+            left: `${8 + ((i * 7) % 84)}%`,
+            top: `${10 + ((i * 11) % 80)}%`,
             animation: `float-contact ${8 + (i % 4) * 2}s ease-in-out infinite`,
             animationDelay: `${i * 0.5}s`,
           }}
@@ -132,7 +147,14 @@ function FloatingParticles() {
   );
 }
 
-function GridPattern({ width, height, x, y, squares, ...props }: {
+function GridPattern({
+  width,
+  height,
+  x,
+  y,
+  squares,
+  ...props
+}: {
   width: number;
   height: number;
   x: string;
@@ -215,7 +237,7 @@ export default function ContactPage() {
   const heroRef = useRef<HTMLElement>(null);
   const methodsRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -225,6 +247,7 @@ export default function ContactPage() {
     message: "",
     website: "",
   });
+  const mountedRef = useRef(true);
 
   useEffect(() => {
     if (!pageRef.current) return;
@@ -247,7 +270,11 @@ export default function ContactPage() {
           methodsRef.current.querySelectorAll(".js-method-card"),
           { autoAlpha: 0, y: 20 },
           {
-            autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power2.out",
             scrollTrigger: { trigger: methodsRef.current, start: "top 85%" },
           }
         );
@@ -259,7 +286,10 @@ export default function ContactPage() {
           formRef.current,
           { autoAlpha: 0, x: 30 },
           {
-            autoAlpha: 1, x: 0, duration: 0.6, ease: "power2.out",
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.6,
+            ease: "power2.out",
             scrollTrigger: { trigger: formRef.current, start: "top 85%" },
           }
         );
@@ -269,21 +299,29 @@ export default function ContactPage() {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    startTransition(async () => {
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
+    setIsSubmitting(true);
 
-        const result = await response.json();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-        if (result.success) {
-          toast.success(result.message);
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message);
+        if (mountedRef.current) {
           setFormData({
             name: "",
             email: "",
@@ -293,14 +331,18 @@ export default function ContactPage() {
             message: "",
             website: "",
           });
-        } else {
-          toast.error(result.message);
         }
-      } catch (error) {
-        console.error("Form submission error:", error);
-        toast.error("Failed to submit form. Please try again.");
+      } else {
+        toast.error(result.message);
       }
-    });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast.error("Failed to submit form. Please try again.");
+    } finally {
+      if (mountedRef.current) {
+        setIsSubmitting(false);
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -311,7 +353,8 @@ export default function ContactPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/contact-us`;
   const contactPageSchema = createContactPageSchema({
     name: "Contact SquareCampus | Book a Demo of India's Best School Management System",
-    description: "Contact SquareCampus for a personalized demo of India's leading school management system. Get pricing, migration support, and see how 500+ schools streamline operations.",
+    description:
+      "Contact SquareCampus for a personalized demo of India's leading school management system. Get pricing, migration support, and see how 500+ schools streamline operations.",
     url: pageUrl,
   });
   const breadcrumbSchema = createBreadcrumbSchema([
@@ -322,7 +365,10 @@ export default function ContactPage() {
 
   return (
     <>
-      <div ref={pageRef} className="relative min-h-screen overflow-hidden bg-neutral-950 text-white">
+      <div
+        ref={pageRef}
+        className="relative min-h-screen overflow-hidden bg-neutral-950 text-white"
+      >
         {/* Background effects */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-10 top-20 h-80 w-80 rounded-full bg-blue-500/[0.06] blur-[120px]" />
@@ -350,8 +396,8 @@ export default function ContactPage() {
               </h1>
 
               <p className="js-hero-animate mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                Tell us about your institution - campuses, goals, and timeline. Get a tailored rollout plan,
-                migration approach, and pricing designed for your setup.
+                Tell us about your institution - campuses, goals, and timeline. Get a tailored
+                rollout plan, migration approach, and pricing designed for your setup.
               </p>
             </div>
 
@@ -390,11 +436,20 @@ export default function ContactPage() {
                       href={method.href}
                       className="js-method-card group flex gap-4 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                     >
-                      <div className={cn("flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ring-1 transition-all duration-300 group-hover:scale-105", colors.bg, colors.text, colors.border)}>
+                      <div
+                        className={cn(
+                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ring-1 transition-all duration-300 group-hover:scale-105",
+                          colors.bg,
+                          colors.text,
+                          colors.border
+                        )}
+                      >
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{method.title}</p>
+                        <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+                          {method.title}
+                        </p>
                         <p className="text-sm font-semibold text-white">{method.value}</p>
                         <p className="text-xs text-neutral-400">{method.description}</p>
                       </div>
@@ -406,10 +461,15 @@ export default function ContactPage() {
 
               {/* Response commitments */}
               <div className="js-method-card rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500">Our commitment</p>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                  Our commitment
+                </p>
                 <div className="space-y-2">
                   {responseCommitments.map((commitment) => (
-                    <div key={commitment} className="flex items-center gap-2 text-sm text-neutral-300">
+                    <div
+                      key={commitment}
+                      className="flex items-center gap-2 text-sm text-neutral-300"
+                    >
                       <Check className="h-4 w-4 shrink-0 text-emerald-400" />
                       <span>{commitment}</span>
                     </div>
@@ -424,9 +484,13 @@ export default function ContactPage() {
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Headquarters</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                      Headquarters
+                    </p>
                     <p className="mt-1 text-sm text-neutral-300">Mumbai, India</p>
-                    <p className="text-xs text-neutral-500">Data hosted in India (AWS Mumbai / Azure India)</p>
+                    <p className="text-xs text-neutral-500">
+                      Data hosted in India (AWS Mumbai / Azure India)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -448,7 +512,7 @@ export default function ContactPage() {
                   <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
                 <Link
-                  href="/why-different"
+                  href="/why-squarecampus"
                   className="group inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-2 text-xs font-medium text-neutral-300 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
                 >
                   Why School OS
@@ -470,7 +534,9 @@ export default function ContactPage() {
               <div className="relative mb-2 flex items-center justify-between">
                 <div>
                   <h2 className="text-lg font-semibold text-white">Send us a message</h2>
-                  <p className="text-xs text-neutral-400">We'll get back to you within one business day</p>
+                  <p className="text-xs text-neutral-400">
+                    We'll get back to you within one business day
+                  </p>
                 </div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10">
                   <IconMailFilled className="h-5 w-5 text-blue-400" />
@@ -492,7 +558,10 @@ export default function ContactPage() {
               </div>
 
               <div className="relative space-y-2">
-                <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="name">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="name"
+                >
                   Full name *
                 </label>
                 <input
@@ -502,14 +571,17 @@ export default function ContactPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  disabled={isPending}
+                  disabled={isSubmitting}
                   placeholder="What should we call you?"
                   className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
 
               <div className="relative space-y-2">
-                <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="email">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="email"
+                >
                   Email *
                 </label>
                 <input
@@ -519,14 +591,17 @@ export default function ContactPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  disabled={isPending}
+                  disabled={isSubmitting}
                   placeholder="email@yourschool.com"
                   className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
 
               <div className="relative space-y-2">
-                <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="institution">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="institution"
+                >
                   Institution *
                 </label>
                 <input
@@ -536,7 +611,7 @@ export default function ContactPage() {
                   required
                   value={formData.institution}
                   onChange={handleChange}
-                  disabled={isPending}
+                  disabled={isSubmitting}
                   placeholder="Your school or college"
                   className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                 />
@@ -544,7 +619,10 @@ export default function ContactPage() {
 
               <div className="relative grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="role">
+                  <label
+                    className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                    htmlFor="role"
+                  >
                     Role
                   </label>
                   <input
@@ -553,13 +631,16 @@ export default function ContactPage() {
                     type="text"
                     value={formData.role}
                     onChange={handleChange}
-                    disabled={isPending}
+                    disabled={isSubmitting}
                     placeholder="Administrator, Dean..."
                     className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="students">
+                  <label
+                    className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                    htmlFor="students"
+                  >
                     Students
                   </label>
                   <input
@@ -568,7 +649,7 @@ export default function ContactPage() {
                     type="text"
                     value={formData.students}
                     onChange={handleChange}
-                    disabled={isPending}
+                    disabled={isSubmitting}
                     placeholder="e.g., 1,200 across 2 branches"
                     className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                   />
@@ -576,7 +657,10 @@ export default function ContactPage() {
               </div>
 
               <div className="relative space-y-2">
-                <label className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500" htmlFor="message">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="message"
+                >
                   Message
                 </label>
                 <textarea
@@ -585,7 +669,7 @@ export default function ContactPage() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  disabled={isPending}
+                  disabled={isSubmitting}
                   placeholder="Tell us about your goals, current tools, and timeline"
                   className="w-full resize-none rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                 />
@@ -593,13 +677,13 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={isSubmitting}
                 className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl p-[1px] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-50" />
                 <span className="relative flex w-full items-center justify-center gap-2 rounded-[11px] bg-neutral-950 py-4 text-sm font-medium uppercase tracking-[0.25em] text-white transition-colors duration-300 group-hover:bg-neutral-900">
-                  {isPending ? (
+                  {isSubmitting ? (
                     "Sending..."
                   ) : (
                     <>

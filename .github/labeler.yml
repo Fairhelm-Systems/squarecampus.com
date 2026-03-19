@@ -1,0 +1,72 @@
+type:design-refresh:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/page.tsx"
+          - "src/app/globals.css"
+          - "src/app/(company)/**/*.tsx"
+          - "src/components/site/**/*"
+          - "public/images/**/*"
+
+area:homepage:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/page.tsx"
+          - "src/components/site/mockups.tsx"
+          - "src/components/site/nexus-integrations-visual.tsx"
+
+area:platform-pages:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/(company)/platform/**/*"
+          - "src/app/(company)/rollout/**/*"
+          - "src/app/(company)/why-squarecampus/**/*"
+          - "src/app/(company)/ecosystem/**/*"
+          - "src/app/(company)/security/**/*"
+          - "src/app/(company)/demo/**/*"
+          - "src/app/(company)/features/**/*"
+          - "src/app/(company)/about/**/*"
+          - "src/app/(company)/contact-us/**/*"
+
+area:navigation-footer:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/layout.tsx"
+          - "src/app/(company)/layout.tsx"
+          - "src/components/site/site-header.tsx"
+          - "src/components/site/site-footer.tsx"
+          - "src/components/site/brand-logo.tsx"
+
+area:theme-motion:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/globals.css"
+          - "src/components/site/reveal.tsx"
+          - "src/components/site/theme-*.tsx"
+          - "src/components/site/mockups.tsx"
+          - "src/components/site/nexus-integrations-visual.tsx"
+          - "src/hooks/useReducedMotion.ts"
+
+area:content-seo:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/content/site-content.ts"
+          - "src/content/blog/**/*"
+          - "src/app/sitemap.ts"
+          - "src/lib/seo.ts"
+          - "src/app/(company)/blog/**/*"
+
+area:assets:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "public/images/**/*"
+
+area:forms-api:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/actions/contact.ts"
+          - "src/app/api/**/*"
+
+area:legal-pages:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/(legal)/**/*"

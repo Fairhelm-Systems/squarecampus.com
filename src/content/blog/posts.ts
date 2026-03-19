@@ -48,8 +48,7 @@ export const blogPosts: BlogPost[] = [
     readingTime: "6 min read",
     hero: {
       eyebrow: "Founder note",
-      lede:
-        "Schools deserve software that feels predictable, respectful, and accountable. SquareCampus is our response to the chaos schools were forced to manage every day. This is the story of why we built it, what we believe, and how we think about the future of school operations.",
+      lede: "Schools deserve software that feels predictable, respectful, and accountable. SquareCampus is our response to the chaos schools were forced to manage every day. This is the story of why we built it, what we believe, and how we think about the future of school operations.",
     },
     image: {
       src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&h=675&fit=crop",
@@ -122,7 +121,8 @@ export const blogPosts: BlogPost[] = [
         image: {
           src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop",
           alt: "Person overwhelmed with paperwork and documents.",
-          caption: "Schools should not have to choose between doing their job and fighting their software.",
+          caption:
+            "Schools should not have to choose between doing their job and fighting their software.",
           orientation: "right",
         },
       },
@@ -180,13 +180,11 @@ export const blogPosts: BlogPost[] = [
     ],
     cta: {
       heading: "See how the system fits your campus",
-      body:
-        "If you want a calm, audit-friendly operating system built for Indian schools, we would like to show you how SquareCampus maps to your workflows. Book a 30-minute demo and see the difference a unified system makes.",
+      body: "If you want a calm, audit-friendly operating system built for Indian schools, we would like to show you how SquareCampus maps to your workflows. Book a 30-minute demo and see the difference a unified system makes.",
       href: "/contact-us",
       label: "Book a guided demo",
     },
   },
 ];
 
-export const blogPostBySlug = (slug: string) =>
-  blogPosts.find((post) => post.slug === slug);
+export const blogPostBySlug = (slug: string) => blogPosts.find((post) => post.slug === slug);

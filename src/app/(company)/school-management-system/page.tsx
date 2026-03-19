@@ -126,9 +126,8 @@ export default function SchoolManagementSystemPage() {
                   A school management system should be the operating manual of your campus—not a
                   stack of disconnected tools. Sometimes labeled as school ERP software, but
                   SquareCampus is a School OS built for India—defining, running, and auditing daily
-                  operations in one place: admissions,
-                  attendance, fees, exams, communication, transport, and compliance stay connected
-                  so nothing slips.
+                  operations in one place: admissions, attendance, fees, exams, communication,
+                  transport, and compliance stay connected so nothing slips.
                 </p>
                 <p>
                   Unified operations. Compliance built in. Enterprise-grade security and audit
@@ -201,7 +200,9 @@ export default function SchoolManagementSystemPage() {
                         <p className="text-[11px] uppercase tracking-[0.2em] text-neutral-400 group-hover:text-neutral-200">
                           {item.label}
                         </p>
-                        <p className="text-base font-semibold text-white sm:text-lg">{item.value}</p>
+                        <p className="text-base font-semibold text-white sm:text-lg">
+                          {item.value}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -218,8 +219,8 @@ export default function SchoolManagementSystemPage() {
                 What is a School Management System?
               </h2>
               <p className="text-base leading-relaxed text-neutral-300 sm:text-lg">
-                It is the operating core that coordinates academics, finance, and communication.
-                In India, you might also hear it called school ERP software or school management
+                It is the operating core that coordinates academics, finance, and communication. In
+                India, you might also hear it called school ERP software or school management
                 software. A true school management system connects attendance with fees, ties
                 assessments to promotion decisions, and keeps parents and staff aligned without
                 duplicate data entry. SquareCampus treats this definition as engineering spec, not
@@ -304,33 +305,27 @@ export default function SchoolManagementSystemPage() {
               {[
                 {
                   title: "Admissions to Enrolment",
-                  body:
-                    "Inquiry → application → document verification → fee collection → section allocation. Parents see status live; admins get SLA alerts.",
+                  body: "Inquiry → application → document verification → fee collection → section allocation. Parents see status live; admins get SLA alerts.",
                 },
                 {
                   title: "Attendance to Fees",
-                  body:
-                    "Daily attendance updates fee rules, transport billing, and alerts to guardians. Exceptions are logged with reasons and approvers.",
+                  body: "Daily attendance updates fee rules, transport billing, and alerts to guardians. Exceptions are logged with reasons and approvers.",
                 },
                 {
                   title: "Exams to Promotions",
-                  body:
-                    "Schedule exams, capture marks, publish results, and roll promotions with auditability. Grade templates match CBSE/ICSE norms.",
+                  body: "Schedule exams, capture marks, publish results, and roll promotions with auditability. Grade templates match CBSE/ICSE norms.",
                 },
                 {
                   title: "Approvals to Audit Trails",
-                  body:
-                    "Leave, concessions, refunds, procurements, and gate passes run through RBAC-backed workflows with time-stamped approvals.",
+                  body: "Leave, concessions, refunds, procurements, and gate passes run through RBAC-backed workflows with time-stamped approvals.",
                 },
                 {
                   title: "Communication to Resolution",
-                  body:
-                    "Role-aware messaging to parents, staff, and students with templates, delivery status, and escalation paths.",
+                  body: "Role-aware messaging to parents, staff, and students with templates, delivery status, and escalation paths.",
                 },
                 {
                   title: "Transport to Compliance",
-                  body:
-                    "Vehicle, route, and driver management with attendance sync, GPS hooks, and safety checks documented for audits.",
+                  body: "Vehicle, route, and driver management with attendance sync, GPS hooks, and safety checks documented for audits.",
                 },
               ].map((item) => (
                 <Card
@@ -507,8 +502,8 @@ export default function SchoolManagementSystemPage() {
             <CardContent className="relative space-y-4 p-6">
               <h2 className="text-3xl font-semibold text-white">Operational Compliance Support</h2>
               <p className="text-sm text-neutral-300 sm:text-base">
-                Support complex fee plans, CBSE/ICSE norms, and multi-branch autonomy with audit-ready
-                workflows and data governance that match Indian compliance expectations.
+                Support complex fee plans, CBSE/ICSE norms, and multi-branch autonomy with
+                audit-ready workflows and data governance that match Indian compliance expectations.
               </p>
               <div className="grid gap-4 md:grid-cols-2">
                 <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
@@ -566,7 +561,7 @@ export default function SchoolManagementSystemPage() {
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <BookCallCta context="sms-compare" variant="primary" />
                   <Link
-                    href="/why-different"
+                    href="/why-squarecampus"
                     className="inline-flex items-center text-sm font-semibold text-emerald-200 underline-offset-4 hover:text-white hover:underline"
                   >
                     Read the full breakdown
@@ -606,7 +601,8 @@ export default function SchoolManagementSystemPage() {
                     </p>
                     <div className="mt-3 space-y-2">
                       <p className="text-white">
-                        <span className="font-semibold text-emerald-300">SquareCampus</span>: {row.us}
+                        <span className="font-semibold text-emerald-300">SquareCampus</span>:{" "}
+                        {row.us}
                       </p>
                       <p className="text-neutral-300">
                         <span className="font-semibold text-red-300">Legacy ERPs</span>: {row.them}
@@ -658,8 +654,8 @@ export default function SchoolManagementSystemPage() {
                 Ready to run every campus day from one operating system?
               </h2>
               <p className="text-sm text-neutral-200 sm:text-base">
-                Book a call, see your workflows mapped, and launch with a timeline that respects
-                the academic calendar.
+                Book a call, see your workflows mapped, and launch with a timeline that respects the
+                academic calendar.
               </p>
               <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <Link

@@ -57,11 +57,10 @@ export default function AcceptableUsePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire. All services are
-            provided by MDTechSpire, unless otherwise stated in a written agreement or order
-            form.
+            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
+            by MDTechspire, unless otherwise stated in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechSpire.</p>
+          <p>References to "SquareCampus" in this Policy mean MDTechspire.</p>
           <p>
             These guidelines apply to everyone who accesses SquareCampus, including institutions,
             staff, teachers, parents, and students.
@@ -163,7 +162,9 @@ export default function AcceptableUsePage() {
 
           <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
             <p className="font-medium text-amber-200">4.3 Credential and Access Violations</p>
-            <p className="mt-3 text-sm">The following credential-related activities are prohibited:</p>
+            <p className="mt-3 text-sm">
+              The following credential-related activities are prohibited:
+            </p>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
               <li>
                 <strong>Credential Sharing:</strong> Sharing login credentials, API keys, access
@@ -217,9 +218,7 @@ export default function AcceptableUsePage() {
           </ul>
 
           <p className="mt-6 font-medium text-white">4.5 Enforcement</p>
-          <p>
-            Violations of this Section 4 may result in:
-          </p>
+          <p>Violations of this Section 4 may result in:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Immediate suspension or termination of access without refund;</li>
             <li>Pursuit of civil remedies including injunctive relief and damages;</li>

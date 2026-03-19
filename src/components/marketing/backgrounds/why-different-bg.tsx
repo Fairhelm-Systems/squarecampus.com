@@ -60,7 +60,7 @@ export function WhyDifferentBackground() {
             linear-gradient(to right, white 1px, transparent 1px),
             linear-gradient(to bottom, white 1px, transparent 1px)
           `,
-          backgroundSize: '60px 60px',
+          backgroundSize: "60px 60px",
         }}
       />
     </div>
@@ -113,7 +113,9 @@ export function AnimatedCounter({
       viewport={{ once: true }}
       onViewportEnter={() => setHasStarted(true)}
     >
-      {prefix}{count}{suffix}
+      {prefix}
+      {count}
+      {suffix}
     </motion.span>
   );
 }

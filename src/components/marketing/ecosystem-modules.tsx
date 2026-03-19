@@ -3,8 +3,21 @@
 import { motion } from "@/lib/motion";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { BarChart3, BookOpen, Briefcase, Bus, Calendar, Database, DollarSign, FileText, GraduationCap, Home, MessageSquare, ShieldCheck, Sparkles } from "@/icons";
-
+import {
+  BarChart3,
+  BookOpen,
+  Briefcase,
+  Bus,
+  Calendar,
+  Database,
+  DollarSign,
+  FileText,
+  GraduationCap,
+  Home,
+  MessageSquare,
+  ShieldCheck,
+  Sparkles,
+} from "@/icons";
 
 const modules = [
   {
@@ -163,12 +176,10 @@ export function EcosystemModules() {
             <Database className="h-3 w-3" />
             Complete Platform
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            12 Modules. One Platform.
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">12 Modules. One Platform.</h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
-            Every module shares the same database, identity, and source of truth.
-            Fewer handoffs, fewer sync issues, and clearer accountability.
+            Every module shares the same database, identity, and source of truth. Fewer handoffs,
+            fewer sync issues, and clearer accountability.
           </p>
         </motion.div>
 

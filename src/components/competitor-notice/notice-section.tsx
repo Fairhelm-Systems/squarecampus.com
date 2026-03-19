@@ -1,13 +1,7 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
-import {
-  AlertTriangle,
-  Check,
-  X,
-  ChevronDown,
-  ChevronUp,
-} from "@/components/icons";
+import { AlertTriangle, Check, X, ChevronDown, ChevronUp } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 export type Severity = "critical" | "high" | "medium" | "info";
@@ -51,13 +45,7 @@ type NoticeSectionProps = {
   children: ReactNode;
 };
 
-export function NoticeSection({
-  id,
-  number,
-  title,
-  severity,
-  children,
-}: NoticeSectionProps) {
+export function NoticeSection({ id, number, title, severity, children }: NoticeSectionProps) {
   const config = severityConfig[severity];
 
   return (
@@ -72,9 +60,7 @@ export function NoticeSection({
         <span className="font-mono text-sm font-bold text-neutral-500">
           {number.toString().padStart(2, "0")}
         </span>
-        <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl">
-          {title}
-        </h2>
+        <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl">{title}</h2>
         <span
           className={cn(
             "rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide",
@@ -107,9 +93,7 @@ export function WarningBox({
     <div
       className={cn(
         "my-6 rounded-lg border-l-4 p-4 sm:p-6",
-        isCritical
-          ? "border-l-red-500 bg-red-950/30"
-          : "border-l-amber-500 bg-amber-950/30"
+        isCritical ? "border-l-red-500 bg-red-950/30" : "border-l-amber-500 bg-amber-950/30"
       )}
     >
       <div className="flex gap-3">
@@ -174,28 +158,15 @@ export function ExampleBox({ children, type }: ExampleBoxProps) {
     <div
       className={cn(
         "my-3 flex items-start gap-2 rounded-lg border p-3 sm:p-4",
-        isViolation
-          ? "border-red-500/20 bg-red-950/20"
-          : "border-emerald-500/20 bg-emerald-950/20"
+        isViolation ? "border-red-500/20 bg-red-950/20" : "border-emerald-500/20 bg-emerald-950/20"
       )}
     >
       {isViolation ? (
-        <X
-          className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-400"
-          aria-hidden="true"
-        />
+        <X className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-400" aria-hidden="true" />
       ) : (
-        <Check
-          className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400"
-          aria-hidden="true"
-        />
+        <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden="true" />
       )}
-      <div
-        className={cn(
-          "text-sm",
-          isViolation ? "text-red-200/90" : "text-emerald-200/90"
-        )}
-      >
+      <div className={cn("text-sm", isViolation ? "text-red-200/90" : "text-emerald-200/90")}>
         {children}
       </div>
     </div>
@@ -227,15 +198,10 @@ export function ExpandableSection({
         {isExpanded ? (
           <ChevronUp className="h-4 w-4 text-neutral-400" aria-hidden="true" />
         ) : (
-          <ChevronDown
-            className="h-4 w-4 text-neutral-400"
-            aria-hidden="true"
-          />
+          <ChevronDown className="h-4 w-4 text-neutral-400" aria-hidden="true" />
         )}
       </button>
-      {isExpanded && (
-        <div className="border-t border-neutral-800 p-4">{children}</div>
-      )}
+      {isExpanded && <div className="border-t border-neutral-800 p-4">{children}</div>}
     </div>
   );
 }
@@ -251,16 +217,10 @@ export function BulletList({ items, type = "default" }: BulletListProps) {
       {items.map((item, index) => (
         <li key={index} className="flex items-start gap-2 text-neutral-300">
           {type === "check" && (
-            <Check
-              className="mt-1 h-4 w-4 flex-shrink-0 text-emerald-400"
-              aria-hidden="true"
-            />
+            <Check className="mt-1 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden="true" />
           )}
           {type === "x" && (
-            <X
-              className="mt-1 h-4 w-4 flex-shrink-0 text-red-400"
-              aria-hidden="true"
-            />
+            <X className="mt-1 h-4 w-4 flex-shrink-0 text-red-400" aria-hidden="true" />
           )}
           {type === "default" && (
             <span
@@ -287,10 +247,7 @@ export function DataTable({ headers, rows }: DataTableProps) {
         <thead>
           <tr className="border-b border-neutral-700 bg-neutral-800/50">
             {headers.map((header, index) => (
-              <th
-                key={index}
-                className="px-4 py-3 text-left font-semibold text-neutral-200"
-              >
+              <th key={index} className="px-4 py-3 text-left font-semibold text-neutral-200">
                 {header}
               </th>
             ))}
@@ -298,10 +255,7 @@ export function DataTable({ headers, rows }: DataTableProps) {
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className="border-b border-neutral-800 hover:bg-neutral-800/30"
-            >
+            <tr key={rowIndex} className="border-b border-neutral-800 hover:bg-neutral-800/30">
               {row.map((cell, cellIndex) => (
                 <td key={cellIndex} className="px-4 py-3 text-neutral-300">
                   {cell}
@@ -316,11 +270,7 @@ export function DataTable({ headers, rows }: DataTableProps) {
 }
 
 export function Paragraph({ children }: { children: ReactNode }) {
-  return (
-    <p className="my-4 text-sm leading-relaxed text-neutral-300 sm:text-base">
-      {children}
-    </p>
-  );
+  return <p className="my-4 text-sm leading-relaxed text-neutral-300 sm:text-base">{children}</p>;
 }
 
 export function Strong({ children }: { children: ReactNode }) {
@@ -328,9 +278,5 @@ export function Strong({ children }: { children: ReactNode }) {
 }
 
 export function SubHeading({ children }: { children: ReactNode }) {
-  return (
-    <h3 className="mb-3 mt-8 text-lg font-bold text-white sm:text-xl">
-      {children}
-    </h3>
-  );
+  return <h3 className="mb-3 mt-8 text-lg font-bold text-white sm:text-xl">{children}</h3>;
 }

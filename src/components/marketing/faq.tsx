@@ -181,8 +181,8 @@ export function FAQ() {
           </h2>
 
           <p className="max-w-xl text-sm leading-relaxed text-neutral-400 sm:text-base">
-            Everything you need to know about adopting SquareCampus, and why
-            campuses of every size call it their operating system.
+            Everything you need to know about adopting SquareCampus, and why campuses of every size
+            call it their operating system.
           </p>
         </div>
 
@@ -218,9 +218,7 @@ export function FAQ() {
                 <MessageSquare className="h-4 w-4 text-blue-400" />
               </div>
               <div className="text-left">
-                <p className="text-sm font-semibold text-white">
-                  View all {FAQs.length} questions
-                </p>
+                <p className="text-sm font-semibold text-white">View all {FAQs.length} questions</p>
                 <p className="text-xs text-neutral-400">
                   Tap to {isFaqExpanded ? "collapse" : "expand"}
                 </p>
@@ -263,12 +261,9 @@ export function FAQ() {
           <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
             Need a faster answer?
           </p>
-          <h3 className="mt-3 text-xl font-semibold text-white">
-            Talk to a human
-          </h3>
+          <h3 className="mt-3 text-xl font-semibold text-white">Talk to a human</h3>
           <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-            Get a tailored walkthrough, migration plan, and security notes in
-            one call.
+            Get a tailored walkthrough, migration plan, and security notes in one call.
           </p>
 
           <div className="mt-4 space-y-2">
@@ -276,9 +271,7 @@ export function FAQ() {
               href="mailto:support@squarecampus.com"
               className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
             >
-              <span className="text-sm text-neutral-200">
-                support@squarecampus.com
-              </span>
+              <span className="text-sm text-neutral-200">support@squarecampus.com</span>
               <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
                 Quick reply
               </span>
@@ -324,15 +317,8 @@ export function FAQ() {
               },
             ].map((item, idx) => (
               <li key={idx} className="flex items-start gap-3">
-                <span
-                  className={cn(
-                    "mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full",
-                    item.color
-                  )}
-                />
-                <span className="text-sm leading-relaxed text-neutral-300">
-                  {item.text}
-                </span>
+                <span className={cn("mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full", item.color)} />
+                <span className="text-sm leading-relaxed text-neutral-300">{item.text}</span>
               </li>
             ))}
           </ul>
@@ -391,9 +377,7 @@ const FAQItem = ({
           </div>
 
           <div className="flex-1">
-            <h3 className="text-sm font-semibold text-white sm:text-base">
-              {question}
-            </h3>
+            <h3 className="text-sm font-semibold text-white sm:text-base">{question}</h3>
 
             <div
               ref={contentRef}
@@ -403,9 +387,7 @@ const FAQItem = ({
               )}
             >
               <div className="overflow-hidden">
-                <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">
-                  {answer}
-                </p>
+                <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">{answer}</p>
               </div>
             </div>
           </div>

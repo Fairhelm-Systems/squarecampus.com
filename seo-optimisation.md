@@ -200,7 +200,7 @@ Each spoke:
 
 ---
 
-## 7. WHY-DIFFERENT PAGE (POSITIONING WITHOUT CANNIBALIZATION)
+## 7. why-squarecampus PAGE (POSITIONING WITHOUT CANNIBALIZATION)
 
 ### Purpose
 Persuasion, not discovery.

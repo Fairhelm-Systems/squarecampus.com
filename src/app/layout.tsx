@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
-import { BrowserWarning } from "@/components/browser-warning";
-import { CustomCursor } from "@/components/CustomCursor";
-import { DevtoolsGuard } from "@/components/devtools-guard";
-import { ScrollBeam } from "@/components/marketing/scroll-beam";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { ThemeScript } from "@/components/site/theme-script";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
   display: "swap",
-  fallback: ["system-ui", "Segoe UI", "Arial", "sans-serif"],
-  adjustFontFallback: true,
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const monoFont = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
   display: "swap",
-  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
-  adjustFontFallback: true,
+  weight: ["400", "500"],
+});
+
+const displayFont = Sora({
+  variable: "--font-sora",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | SquareCampus",
   },
   description:
-    "SquareCampus is the School OS for India—admissions, academics, fees, transport, communication, compliance, and analytics connected in one school management system.",
+    "SquareCampus is the School OS for India, connecting admissions, academics, finance, communication, compliance, and operations in one institutional backbone.",
   keywords: [
     "school management system",
     "school management system India",
@@ -59,7 +61,7 @@ export const metadata: Metadata = {
     url: "https://squarecampus.com/",
     title: "SquareCampus | School OS & School Management System in India",
     description:
-      "Run every campus day on rails with unified admissions, academics, fees, transport, communication, and compliance.",
+      "SquareCampus is the School OS for institutions that need admissions, academics, finance, communication, and operations to stay in sync.",
     siteName: "SquareCampus",
     locale: "en_IN",
     images: [
@@ -67,7 +69,7 @@ export const metadata: Metadata = {
         url: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
         width: 1200,
         height: 630,
-        alt: "SquareCampus - The Operating System for Every School",
+        alt: "SquareCampus - School OS for India",
       },
     ],
   },
@@ -75,7 +77,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SquareCampus | School OS & School Management System in India",
     description:
-      "School management system for India: admissions, academics, fees, transport, and communication in one School OS.",
+      "SquareCampus keeps admissions, academics, finance, communication, and operations in sync for institutions in India.",
     images: ["https://cdn.mdtechspire.com/application_files/logo/squarecampus.png"],
   },
   robots: {
@@ -94,18 +96,19 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={"dark scrollbar-auto scroll-smooth"}>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning data-theme="light">
       <head>
+        <ThemeScript />
         <link rel="preconnect" href="https://cdn.mdtechspire.com" />
         <link rel="dns-prefetch" href="https://cdn.mdtechspire.com" />
         <link rel="preconnect" href="https://app.squarecampus.com" />
         <link rel="dns-prefetch" href="https://app.squarecampus.com" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased select-none`}>
+      <body
+        suppressHydrationWarning
+        className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} antialiased`}
+      >
         <ScrollToTop />
-        <DevtoolsGuard />
-        <BrowserWarning />
-        <ScrollBeam />
         <Script
           id="structured-data"
           type="application/ld+json"
@@ -165,7 +168,7 @@ export default function RootLayout({
                   "@id": "https://squarecampus.com/#localbusiness",
                   name: "SquareCampus",
                   description:
-                    "School management system provider offering comprehensive ERP solutions for schools, colleges, and educational institutions across India.",
+                    "School OS provider offering operational infrastructure for schools, colleges, and educational institutions across India.",
                   url: "https://squarecampus.com",
                   logo: "https://squarecampus.com/logo.png",
                   email: "contact@squarecampus.com",
@@ -193,7 +196,6 @@ export default function RootLayout({
         />
         {children}
         <Toaster position="top-right" richColors />
-        <CustomCursor />
       </body>
     </html>
   );

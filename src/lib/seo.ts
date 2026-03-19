@@ -248,7 +248,8 @@ export function createContactPageSchema(config: {
       name: "SquareCampus",
       url: SEO_CONFIG.baseUrl,
       logo: SEO_CONFIG.logo,
-      description: "India's leading School OS - unified school management system for admissions, academics, fees, transport, and communication.",
+      description:
+        "India's leading School OS - unified school management system for admissions, academics, fees, transport, and communication.",
       email: "contact@squarecampus.com",
       contactPoint: [
         {
@@ -290,27 +291,33 @@ export function createContactFAQSchema() {
   const faqs = [
     {
       question: "How can I book a demo of SquareCampus?",
-      answer: "You can book a free demo by filling out the contact form on our website or emailing contact@squarecampus.com. We typically respond within one business day and schedule demos at your convenience.",
+      answer:
+        "You can book a free demo by filling out the contact form on our website or emailing contact@squarecampus.com. We typically respond within one business day and schedule demos at your convenience.",
     },
     {
       question: "What is the pricing for SquareCampus school management system?",
-      answer: "SquareCampus pricing is tailored based on your institution size, number of students, and required modules. Contact us for a personalized quote. We offer flexible plans for schools of all sizes.",
+      answer:
+        "SquareCampus pricing is tailored based on your institution size, number of students, and required modules. Contact us for a personalized quote. We offer flexible plans for schools of all sizes.",
     },
     {
       question: "How long does it take to implement SquareCampus?",
-      answer: "Implementation typically takes 2-4 weeks depending on your institution size and data migration needs. Our dedicated success team guides you through the entire process.",
+      answer:
+        "Implementation typically takes 2-4 weeks depending on your institution size and data migration needs. Our dedicated success team guides you through the entire process.",
     },
     {
       question: "Can SquareCampus migrate data from our existing school ERP?",
-      answer: "Yes, we provide full migration support from any existing school management system including Fedena, Entab, Campus Care, and others. Our team handles data migration to ensure zero data loss.",
+      answer:
+        "Yes, we provide full migration support from any existing school management system including Fedena, Entab, Campus Care, and others. Our team handles data migration to ensure zero data loss.",
     },
     {
       question: "Is SquareCampus suitable for multi-branch schools?",
-      answer: "Absolutely. SquareCampus is designed for single schools as well as multi-branch school chains. You get centralized management with branch-level controls and consolidated reporting.",
+      answer:
+        "Absolutely. SquareCampus is designed for single schools as well as multi-branch school chains. You get centralized management with branch-level controls and consolidated reporting.",
     },
     {
       question: "What support do you provide after implementation?",
-      answer: "We provide dedicated customer support via email with response within one business day. Each institution gets a dedicated success partner, and we offer training for your staff.",
+      answer:
+        "We provide dedicated customer support via email with response within one business day. Each institution gets a dedicated success partner, and we offer training for your staff.",
     },
   ];
 

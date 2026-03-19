@@ -50,11 +50,10 @@ export default function AIPolicyPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire. All services are
-            provided by MDTechSpire, unless otherwise stated in a written agreement or order
-            form.
+            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
+            by MDTechspire, unless otherwise stated in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechSpire.</p>
+          <p>References to "SquareCampus" in this Policy mean MDTechspire.</p>
           <p>
             This AI Policy explains how SquareCampus uses artificial intelligence to assist
             institutions with workflows, insights, and user experience. AI is an assistive layer and
@@ -89,7 +88,10 @@ export default function AIPolicyPage() {
             of the SquareCampus platform.
           </p>
           <ul className="list-disc space-y-2 pl-5">
-            <li>We do not use customer data to train general-purpose AI models without explicit written authorisation.</li>
+            <li>
+              We do not use customer data to train general-purpose AI models without explicit
+              written authorisation.
+            </li>
             <li>We do not sell or share customer data for third-party AI training.</li>
           </ul>
         </LegalSection>

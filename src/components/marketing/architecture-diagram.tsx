@@ -3,7 +3,19 @@
 import { motion } from "@/lib/motion";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Activity, ArrowRight, Cloud, Database, Globe, Layers, Lock, Server, Shield, Smartphone, Zap } from "@/icons";
+import {
+  Activity,
+  ArrowRight,
+  Cloud,
+  Database,
+  Globe,
+  Layers,
+  Lock,
+  Server,
+  Shield,
+  Smartphone,
+  Zap,
+} from "@/icons";
 
 const architectureLayers = [
   {
@@ -54,12 +66,7 @@ const architectureLayers = [
     name: "Security Layer",
     icon: Shield,
     color: "from-rose-500 to-pink-500",
-    components: [
-      "Multi-level RBAC",
-      "Encryption at Rest",
-      "SSL/TLS in Transit",
-      "Audit Logging",
-    ],
+    components: ["Multi-level RBAC", "Encryption at Rest", "SSL/TLS in Transit", "Audit Logging"],
   },
 ];
 
@@ -143,9 +150,7 @@ export function ArchitectureDiagram() {
             <Layers className="h-3 w-3" />
             System Architecture
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Built for Scale & Security
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Built for Scale & Security</h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
             Cloud-native architecture designed for high availability, scalability, and security.
             From small schools to multi-campus institutions.
@@ -173,11 +178,15 @@ export function ArchitectureDiagram() {
                   whileHover={{ scale: 1.02 }}
                 >
                   {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${layer.color} opacity-0 transition-opacity duration-300 group-hover:opacity-10`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-r ${layer.color} opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
+                  />
 
                   <div className="relative p-6">
                     <div className="mb-4 flex items-center gap-4">
-                      <div className={`rounded-xl border border-white/10 bg-gradient-to-br ${layer.color} p-3`}>
+                      <div
+                        className={`rounded-xl border border-white/10 bg-gradient-to-br ${layer.color} p-3`}
+                      >
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
@@ -221,7 +230,8 @@ export function ArchitectureDiagram() {
             {
               icon: Cloud,
               title: "Auto-Scaling",
-              description: "Automatically scales to handle peak loads during enrollment and results",
+              description:
+                "Automatically scales to handle peak loads during enrollment and results",
               color: "from-sky-500 to-blue-500",
             },
             {
@@ -259,16 +269,18 @@ export function ArchitectureDiagram() {
                 transition={{ delay: index * 0.1 }}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-6 transition-all duration-300 hover:border-white/20 hover:shadow-xl"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 transition-opacity duration-300 group-hover:opacity-10`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
+                />
 
                 <div className="relative">
-                  <div className={`mb-4 inline-flex rounded-lg border border-white/10 bg-gradient-to-br ${feature.color} p-3`}>
+                  <div
+                    className={`mb-4 inline-flex rounded-lg border border-white/10 bg-gradient-to-br ${feature.color} p-3`}
+                  >
                     <Icon className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="mb-2 text-lg font-bold text-white">{feature.title}</h3>
-                  <p className="text-sm leading-relaxed text-neutral-400">
-                    {feature.description}
-                  </p>
+                  <p className="text-sm leading-relaxed text-neutral-400">{feature.description}</p>
                 </div>
               </motion.div>
             );
@@ -285,9 +297,7 @@ export function ArchitectureDiagram() {
           <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-gradient-to-br from-neutral-900/80 to-neutral-950 p-8">
             <Server className="h-8 w-8 text-sky-400" />
             <div>
-              <h3 className="mb-2 text-xl font-bold text-white">
-                Modern Tech Stack
-              </h3>
+              <h3 className="mb-2 text-xl font-bold text-white">Modern Tech Stack</h3>
               <p className="mb-4 text-sm text-neutral-400">
                 Built with proven, enterprise-grade technologies
               </p>

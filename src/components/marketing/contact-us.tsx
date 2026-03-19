@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IconMailFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import type React from "react";
-import { useEffect, useId, useRef, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { MacbookScroll } from "./macbook";
 import { toast } from "sonner";
@@ -44,9 +44,10 @@ export function ContactUs() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const leftPaneRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFormExpanded, setIsFormExpanded] = useState(false);
   const { isMobile } = useDeviceCapabilities();
+  const mountedRef = useRef(true);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -100,23 +101,31 @@ export function ContactUs() {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    startTransition(async () => {
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+    setIsSubmitting(true);
 
-        const result = await response.json();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        if (result.success) {
-          toast.success(result.message);
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message);
+        if (mountedRef.current) {
           setFormData({
             name: "",
             email: "",
@@ -126,19 +135,21 @@ export function ContactUs() {
             message: "",
             website: "",
           });
-        } else {
-          toast.error(result.message);
         }
-      } catch (error) {
-        console.error("Form submission error:", error);
-        toast.error("Failed to submit form. Please try again.");
+      } else {
+        toast.error(result.message);
       }
-    });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast.error("Failed to submit form. Please try again.");
+    } finally {
+      if (mountedRef.current) {
+        setIsSubmitting(false);
+      }
+    }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -179,9 +190,8 @@ export function ContactUs() {
               with us
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-neutral-400 sm:text-base">
-              Tell us about your campuses, goals, and timelines, and get a
-              tailored rollout plan, migration approach, and pricing designed
-              for your branches.
+              Tell us about your campuses, goals, and timelines, and get a tailored rollout plan,
+              migration approach, and pricing designed for your branches.
             </p>
           </div>
 
@@ -262,9 +272,7 @@ export function ContactUs() {
                 <p className="text-[0.55rem] font-medium uppercase tracking-[0.25em] text-neutral-500">
                   {item.label}
                 </p>
-                <p className="text-base font-semibold text-white sm:text-lg">
-                  {item.value}
-                </p>
+                <p className="text-base font-semibold text-white sm:text-lg">{item.value}</p>
                 <p className="text-[0.65rem] text-neutral-400">{item.sub}</p>
               </div>
             ))}
@@ -277,21 +285,15 @@ export function ContactUs() {
             </p>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-                <p className="text-sm font-semibold text-white">
-                  Campus blueprint
-                </p>
+                <p className="text-sm font-semibold text-white">Campus blueprint</p>
                 <p className="text-[0.65rem] leading-relaxed text-neutral-400">
-                  Map admissions, academics, finance, and communication in one
-                  working session.
+                  Map admissions, academics, finance, and communication in one working session.
                 </p>
               </div>
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-                <p className="text-sm font-semibold text-white">
-                  Migration clinic
-                </p>
+                <p className="text-sm font-semibold text-white">Migration clinic</p>
                 <p className="text-[0.65rem] leading-relaxed text-neutral-400">
-                  We migrate your active term data and set guardrails for
-                  go-live across branches.
+                  We migrate your active term data and set guardrails for go-live across branches.
                 </p>
               </div>
             </div>
@@ -340,160 +342,160 @@ export function ContactUs() {
             >
               <Grid size={20} />
 
-          {/* Honeypot field */}
-          <div className="absolute -left-[9999px]" aria-hidden="true">
-            <label htmlFor="website">Website</label>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              value={formData.website}
-              onChange={handleChange}
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
+              {/* Honeypot field */}
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
 
-          <div className="space-y-2">
-            <label
-              className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-              htmlFor="name"
-            >
-              Full name
-            </label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              disabled={isPending}
-              placeholder="What should we call you?"
-              className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
+              <div className="space-y-2">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="name"
+                >
+                  Full name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="What should we call you?"
+                  className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                />
+              </div>
 
-          <div className="space-y-2">
-            <label
-              className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              disabled={isPending}
-              placeholder="email@yourschool.com"
-              className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
+              <div className="space-y-2">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="email@yourschool.com"
+                  className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                />
+              </div>
 
-          <div className="space-y-2">
-            <label
-              className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-              htmlFor="institution"
-            >
-              Institution
-            </label>
-            <input
-              id="institution"
-              name="institution"
-              type="text"
-              required
-              value={formData.institution}
-              onChange={handleChange}
-              disabled={isPending}
-              placeholder="Your school or college"
-              className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
+              <div className="space-y-2">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="institution"
+                >
+                  Institution
+                </label>
+                <input
+                  id="institution"
+                  name="institution"
+                  type="text"
+                  required
+                  value={formData.institution}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="Your school or college"
+                  className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                />
+              </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <label
-                className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-                htmlFor="role"
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <label
+                    className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                    htmlFor="role"
+                  >
+                    Role
+                  </label>
+                  <input
+                    id="role"
+                    name="role"
+                    type="text"
+                    value={formData.role}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    placeholder="Administrator, Dean..."
+                    className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                    htmlFor="students"
+                  >
+                    Students
+                  </label>
+                  <input
+                    id="students"
+                    name="students"
+                    type="text"
+                    value={formData.students}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    placeholder="e.g., 1,200 across 2 branches"
+                    className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
+                  htmlFor="message"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  value={formData.message}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                  placeholder="Tell us about your goals, current stack, and timeline"
+                  className="w-full resize-none rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl p-[1px] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Role
-              </label>
-              <input
-                id="role"
-                name="role"
-                type="text"
-                value={formData.role}
-                onChange={handleChange}
-                disabled={isPending}
-                placeholder="Administrator, Dean..."
-                className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
-            <div className="space-y-2">
-              <label
-                className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-                htmlFor="students"
-              >
-                Students
-              </label>
-              <input
-                id="students"
-                name="students"
-                type="text"
-                value={formData.students}
-                onChange={handleChange}
-                disabled={isPending}
-                placeholder="e.g., 1,200 across 2 branches"
-                className="w-full rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
-          </div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-50" />
+                <span className="relative flex w-full items-center justify-center gap-2 rounded-[11px] bg-neutral-950 py-4 text-sm font-medium uppercase tracking-[0.25em] text-white transition-colors duration-300 group-hover:bg-neutral-900">
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send message
+                      <ArrowRight className="h-4 w-4" />
+                    </>
+                  )}
+                </span>
+              </button>
 
-          <div className="space-y-2">
-            <label
-              className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500"
-              htmlFor="message"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows={6}
-              value={formData.message}
-              onChange={handleChange}
-              disabled={isPending}
-              placeholder="Tell us about your goals, current stack, and timeline"
-              className="w-full resize-none rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-300 focus:border-white/20 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-white/10 disabled:cursor-not-allowed disabled:opacity-50"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isPending}
-            className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl p-[1px] disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-50" />
-            <span className="relative flex w-full items-center justify-center gap-2 rounded-[11px] bg-neutral-950 py-4 text-sm font-medium uppercase tracking-[0.25em] text-white transition-colors duration-300 group-hover:bg-neutral-900">
-              {isPending ? (
-                "Sending..."
-              ) : (
-                <>
-                  Send message
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
-            </span>
-          </button>
-
-          <p className="mt-1 text-center text-[0.65rem] text-neutral-500">
-            We usually respond within one business day for new campus inquiries.
-          </p>
+              <p className="mt-1 text-center text-[0.65rem] text-neutral-500">
+                We usually respond within one business day for new campus inquiries.
+              </p>
             </form>
           </div>
         </div>
@@ -527,12 +529,7 @@ export const FeatureIconContainer = ({
         className
       )}
     >
-      <div
-        className={cn(
-          "relative z-20 h-full w-full rounded-[10px] bg-neutral-800",
-          className
-        )}
-      >
+      <div className={cn("relative z-20 h-full w-full rounded-[10px] bg-neutral-800", className)}>
         {children}
       </div>
       <div className="absolute inset-x-0 bottom-0 z-30 mx-auto h-4 w-full rounded-full bg-neutral-600 opacity-50 blur-lg" />
@@ -542,13 +539,7 @@ export const FeatureIconContainer = ({
   );
 };
 
-export const Grid = ({
-  pattern,
-  size,
-}: {
-  pattern?: Array<[number, number]>;
-  size?: number;
-}) => {
+export const Grid = ({ pattern, size }: { pattern?: Array<[number, number]>; size?: number }) => {
   const seed = useId();
   const seededRandom = (seedValue: string) => {
     let hash = 0;
@@ -565,13 +556,10 @@ export const Grid = ({
     pattern ??
     (() => {
       const rand = seededRandom(seed);
-      return Array.from(
-        { length: 5 },
-        (): [number, number] => [
-          Math.floor(rand() * 4) + 7,
-          Math.floor(rand() * 6) + 1,
-        ]
-      );
+      return Array.from({ length: 5 }, (): [number, number] => [
+        Math.floor(rand() * 4) + 7,
+        Math.floor(rand() * 6) + 1,
+      ]);
     })();
   return (
     <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
@@ -606,12 +594,7 @@ export function GridPattern({ width, height, x, y, squares, ...props }: GridPatt
           <path d={`M.5 ${height}V.5H${width}`} fill="none" />
         </pattern>
       </defs>
-      <rect
-        width="100%"
-        height="100%"
-        strokeWidth={0}
-        fill={`url(#${patternId})`}
-      />
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
           {squares.map(([sx, sy], idx) => (

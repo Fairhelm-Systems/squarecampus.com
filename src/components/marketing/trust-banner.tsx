@@ -5,14 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  ArrowUpRight,
-  Eye,
-  FileCheck,
-  Lock,
-  Shield,
-  Sparkles,
-} from "@/icons";
+import { ArrowUpRight, Eye, FileCheck, Lock, Shield, Sparkles } from "@/icons";
 import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -205,9 +198,8 @@ export function TrustBanner() {
               </h2>
 
               <p className="max-w-2xl text-sm leading-relaxed text-neutral-400 md:text-base">
-                Enterprise-grade controls for student data, payments, and daily
-                operations—built with transparent processes, verifiable
-                encryption, and always-on monitoring.
+                Enterprise-grade controls for student data, payments, and daily operations—built
+                with transparent processes, verifiable encryption, and always-on monitoring.
               </p>
             </div>
 
@@ -266,9 +258,7 @@ export function TrustBanner() {
                       <div className="inline-flex items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 p-2.5 text-blue-300 transition-all duration-300 group-hover:border-blue-400/40 group-hover:bg-blue-500/20 group-hover:scale-110">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <h3 className="text-sm font-semibold text-white">
-                        {feature.title}
-                      </h3>
+                      <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
                       <p className="text-xs leading-relaxed text-neutral-400">
                         {feature.description}
                       </p>
@@ -298,8 +288,8 @@ export function TrustBanner() {
                   </div>
 
                   <p className="text-sm leading-relaxed text-neutral-200">
-                    Annual VAPT, anomaly detection, and defined breach-notify
-                    timelines backed by clear processes.
+                    Annual VAPT, anomaly detection, and defined breach-notify timelines backed by
+                    clear processes.
                   </p>
 
                   <ul className="space-y-2.5">
@@ -308,10 +298,7 @@ export function TrustBanner() {
                       "Human + automated monitoring for privileged access",
                       "Transparent audit logs available to admins",
                     ].map((item, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center gap-2 text-xs text-neutral-400"
-                      >
+                      <li key={idx} className="flex items-center gap-2 text-xs text-neutral-400">
                         <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
                         {item}
                       </li>
