@@ -49,12 +49,12 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
 
@@ -104,7 +104,7 @@ function TableRow({
   row,
   index,
   isOpen,
-  onToggle
+  onToggle,
 }: {
   row: ComparisonRow;
   index: number;
@@ -123,10 +123,11 @@ function TableRow({
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative grid grid-cols-3 gap-4 p-4 transition-colors duration-200 md:p-6 ${row.examples
+      className={`relative grid grid-cols-3 gap-4 p-4 transition-colors duration-200 md:p-6 ${
+        row.examples
           ? "cursor-pointer border-l-2 border-transparent hover:bg-rose-500/5 hover:border-l-rose-500/50"
           : "hover:bg-white/[0.02]"
-        } ${isOpen ? "bg-rose-500/5 border-l-rose-500/60" : ""}`}
+      } ${isOpen ? "bg-rose-500/5 border-l-rose-500/60" : ""}`}
       onClick={handleClick}
     >
       <div className="space-y-1 text-sm text-neutral-300 md:text-base">
@@ -139,10 +140,11 @@ function TableRow({
       </div>
       <div className="flex items-center justify-center">
         <span
-          className={`rounded-full border px-3 py-1 text-center text-lg font-semibold md:text-2xl ${row.themBad
-            ? "border-rose-500/30 bg-rose-500/10 text-rose-300"
-            : "border-neutral-700/60 bg-neutral-900/60 text-neutral-300"
-            }`}
+          className={`rounded-full border px-3 py-1 text-center text-lg font-semibold md:text-2xl ${
+            row.themBad
+              ? "border-rose-500/30 bg-rose-500/10 text-rose-300"
+              : "border-neutral-700/60 bg-neutral-900/60 text-neutral-300"
+          }`}
         >
           {themValue}
         </span>

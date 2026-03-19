@@ -365,240 +365,237 @@ export default function FAQPage() {
 
   return (
     <main className="relative min-h-screen bg-neutral-950 text-white">
-        <FloatingParticles />
-        <FloatingHomeButton href="/" />
+      <FloatingParticles />
+      <FloatingHomeButton href="/" />
 
-        {/* Background gradients */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-blue-500/[0.03] blur-[120px]" />
-          <div className="absolute right-1/4 top-1/3 h-[500px] w-[500px] rounded-full bg-purple-500/[0.03] blur-[120px]" />
-          <div className="absolute bottom-1/4 left-1/3 h-[400px] w-[400px] rounded-full bg-cyan-500/[0.03] blur-[120px]" />
-        </div>
+      {/* Background gradients */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-blue-500/[0.03] blur-[120px]" />
+        <div className="absolute right-1/4 top-1/3 h-[500px] w-[500px] rounded-full bg-purple-500/[0.03] blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/3 h-[400px] w-[400px] rounded-full bg-cyan-500/[0.03] blur-[120px]" />
+      </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-          {/* Hero Section */}
-          <section ref={heroRef} className="mb-12 space-y-6 md:mb-16">
-            <div className="js-hero-animate inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
-              <MessageSquare className="h-4 w-4 text-blue-400" />
-              <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
-                Help Center
-              </span>
-            </div>
-
-            <h1 className="js-hero-animate text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              Frequently Asked{" "}
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                Questions
-              </span>
-            </h1>
-
-            <p className="js-hero-animate max-w-2xl text-lg leading-relaxed text-neutral-300">
-              Everything you need to know about adopting SquareCampus. Can't find the answer
-              you're looking for? Our team is always happy to help.
-            </p>
-
-            {/* Search bar */}
-            <div className="js-hero-animate relative max-w-xl">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500" />
-              <input
-                type="text"
-                placeholder="Search questions..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white placeholder-neutral-500 backdrop-blur-sm transition-all duration-300 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-              />
-            </div>
-          </section>
-
-          {/* Category filters */}
-          <section ref={categoriesRef} className="mb-8 flex flex-wrap gap-2 md:mb-12">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              const isActive = activeCategory === category.id;
-              const colors = accentColors[category.color];
-              return (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setActiveCategory(category.id)}
-                  className={cn(
-                    "group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300",
-                    isActive
-                      ? cn(colors.border, colors.bg, colors.text)
-                      : "border-white/[0.08] bg-white/[0.02] text-neutral-400 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white"
-                  )}
-                >
-                  <Icon className={cn("h-4 w-4", isActive ? colors.text : "")} />
-                  {category.name}
-                </button>
-              );
-            })}
-          </section>
-
-          {/* Main content grid */}
-          <div className="grid gap-8 lg:grid-cols-[1fr,320px]">
-            {/* FAQ List */}
-            <section ref={faqListRef} className="space-y-3">
-              {filteredFaqs.length === 0 ? (
-                <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-8 text-center">
-                  <HelpCircle className="mx-auto h-12 w-12 text-neutral-600" />
-                  <h3 className="mt-4 text-lg font-semibold text-white">No questions found</h3>
-                  <p className="mt-2 text-sm text-neutral-400">
-                    Try adjusting your search or filter to find what you're looking for.
-                  </p>
-                </div>
-              ) : (
-                filteredFaqs.map((faq) => (
-                  <FAQAccordion
-                    key={faq.question}
-                    question={faq.question}
-                    answer={faq.answer}
-                    category={faq.category}
-                    isOpen={openQuestion === faq.question}
-                    onToggle={() =>
-                      setOpenQuestion(openQuestion === faq.question ? null : faq.question)
-                    }
-                  />
-                ))
-              )}
-
-              {filteredFaqs.length > 0 && (
-                <p className="pt-4 text-center text-sm text-neutral-500">
-                  Showing {filteredFaqs.length} of {faqs.length} questions
-                </p>
-              )}
-            </section>
-
-            {/* Sidebar */}
-            <aside ref={sidebarRef} className="space-y-4">
-              {/* Contact card */}
-              <Card className="overflow-hidden border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm">
-                <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
-                <CardContent className="relative p-6">
-                  <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
-                    Need more help?
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold text-white">Talk to our team</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-                    Get a tailored walkthrough, migration plan, and answers to your specific
-                    questions.
-                  </p>
-
-                  <div className="mt-4 space-y-2">
-                    <a
-                      href="mailto:support@squarecampus.com"
-                      className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
-                    >
-                      <span className="text-sm text-neutral-200">support@squarecampus.com</span>
-                      <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
-                        Email
-                      </span>
-                    </a>
-                    <Link
-                      href="/contact-us"
-                      className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
-                    >
-                      <span className="text-sm text-neutral-200">Book a demo</span>
-                      <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
-                        Schedule
-                      </span>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick links card */}
-              <Card className="overflow-hidden border-white/[0.08] bg-gradient-to-br from-blue-500/[0.08] via-neutral-900/50 to-purple-500/[0.08] backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-blue-400" />
-                    <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
-                      Popular Resources
-                    </p>
-                  </div>
-
-                  <ul className="mt-4 space-y-3">
-                    {[
-                      { label: "Security & Compliance", href: "/security", color: "text-purple-400" },
-                      { label: "Platform Ecosystem", href: "/ecosystem", color: "text-emerald-400" },
-                      { label: "Why SquareCampus", href: "/why-different", color: "text-blue-400" },
-                      { label: "About Us", href: "/about", color: "text-cyan-400" },
-                    ].map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="group flex items-center justify-between text-sm text-neutral-300 transition-colors hover:text-white"
-                        >
-                          <span>{link.label}</span>
-                          <ArrowUpRight
-                            className={cn(
-                              "h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
-                              link.color
-                            )}
-                          />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Stats card */}
-              <Card className="border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
-                    Why institutions trust us
-                  </p>
-                  <div className="mt-4 grid grid-cols-2 gap-4">
-                    {[
-                      { value: "99.9%", label: "Uptime SLA" },
-                      { value: "24hr", label: "Support Response" },
-                      { value: "2-4wk", label: "Avg. Go-Live" },
-                      { value: "100%", label: "Data Ownership" },
-                    ].map((stat) => (
-                      <div key={stat.label}>
-                        <p className="text-xl font-bold text-white">{stat.value}</p>
-                        <p className="text-[0.65rem] uppercase tracking-wider text-neutral-500">
-                          {stat.label}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </aside>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+        {/* Hero Section */}
+        <section ref={heroRef} className="mb-12 space-y-6 md:mb-16">
+          <div className="js-hero-animate inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
+            <MessageSquare className="h-4 w-4 text-blue-400" />
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-400">
+              Help Center
+            </span>
           </div>
 
-          {/* Closing CTA */}
-          <section className="mt-16 md:mt-24">
-            <Card className="overflow-hidden border-white/[0.08] bg-gradient-to-r from-blue-500/[0.08] via-purple-500/[0.08] to-cyan-500/[0.08]">
-              <CardContent className="relative p-8 text-center md:p-12">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(168,85,247,0.1),transparent_50%)]" />
-                <div className="relative">
-                  <h2 className="text-2xl font-bold text-white md:text-3xl">
-                    Still have questions?
-                  </h2>
-                  <p className="mx-auto mt-3 max-w-xl text-neutral-400">
-                    Our team is ready to help you understand how SquareCampus fits your
-                    institution's needs. Book a personalized demo and get all your questions
-                    answered.
-                  </p>
-                  <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                    <BookCallCta context="faq-cta" />
-                    <Link
-                      href="/contact-us"
-                      className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-                    >
-                      Contact Us
-                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </div>
+          <h1 className="js-hero-animate text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+            Frequently Asked{" "}
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Questions
+            </span>
+          </h1>
+
+          <p className="js-hero-animate max-w-2xl text-lg leading-relaxed text-neutral-300">
+            Everything you need to know about adopting SquareCampus. Can't find the answer you're
+            looking for? Our team is always happy to help.
+          </p>
+
+          {/* Search bar */}
+          <div className="js-hero-animate relative max-w-xl">
+            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500" />
+            <input
+              type="text"
+              placeholder="Search questions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white placeholder-neutral-500 backdrop-blur-sm transition-all duration-300 focus:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+          </div>
+        </section>
+
+        {/* Category filters */}
+        <section ref={categoriesRef} className="mb-8 flex flex-wrap gap-2 md:mb-12">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            const isActive = activeCategory === category.id;
+            const colors = accentColors[category.color];
+            return (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => setActiveCategory(category.id)}
+                className={cn(
+                  "group flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300",
+                  isActive
+                    ? cn(colors.border, colors.bg, colors.text)
+                    : "border-white/[0.08] bg-white/[0.02] text-neutral-400 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white"
+                )}
+              >
+                <Icon className={cn("h-4 w-4", isActive ? colors.text : "")} />
+                {category.name}
+              </button>
+            );
+          })}
+        </section>
+
+        {/* Main content grid */}
+        <div className="grid gap-8 lg:grid-cols-[1fr,320px]">
+          {/* FAQ List */}
+          <section ref={faqListRef} className="space-y-3">
+            {filteredFaqs.length === 0 ? (
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-8 text-center">
+                <HelpCircle className="mx-auto h-12 w-12 text-neutral-600" />
+                <h3 className="mt-4 text-lg font-semibold text-white">No questions found</h3>
+                <p className="mt-2 text-sm text-neutral-400">
+                  Try adjusting your search or filter to find what you're looking for.
+                </p>
+              </div>
+            ) : (
+              filteredFaqs.map((faq) => (
+                <FAQAccordion
+                  key={faq.question}
+                  question={faq.question}
+                  answer={faq.answer}
+                  category={faq.category}
+                  isOpen={openQuestion === faq.question}
+                  onToggle={() =>
+                    setOpenQuestion(openQuestion === faq.question ? null : faq.question)
+                  }
+                />
+              ))
+            )}
+
+            {filteredFaqs.length > 0 && (
+              <p className="pt-4 text-center text-sm text-neutral-500">
+                Showing {filteredFaqs.length} of {faqs.length} questions
+              </p>
+            )}
+          </section>
+
+          {/* Sidebar */}
+          <aside ref={sidebarRef} className="space-y-4">
+            {/* Contact card */}
+            <Card className="overflow-hidden border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
+              <CardContent className="relative p-6">
+                <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
+                  Need more help?
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-white">Talk to our team</h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                  Get a tailored walkthrough, migration plan, and answers to your specific
+                  questions.
+                </p>
+
+                <div className="mt-4 space-y-2">
+                  <a
+                    href="mailto:support@squarecampus.com"
+                    className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
+                  >
+                    <span className="text-sm text-neutral-200">support@squarecampus.com</span>
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
+                      Email
+                    </span>
+                  </a>
+                  <Link
+                    href="/contact-us"
+                    className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05]"
+                  >
+                    <span className="text-sm text-neutral-200">Book a demo</span>
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-blue-400">
+                      Schedule
+                    </span>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
-          </section>
+
+            {/* Quick links card */}
+            <Card className="overflow-hidden border-white/[0.08] bg-gradient-to-br from-blue-500/[0.08] via-neutral-900/50 to-purple-500/[0.08] backdrop-blur-sm">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-blue-400" />
+                  <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
+                    Popular Resources
+                  </p>
+                </div>
+
+                <ul className="mt-4 space-y-3">
+                  {[
+                    { label: "Security & Compliance", href: "/security", color: "text-purple-400" },
+                    { label: "Platform Ecosystem", href: "/ecosystem", color: "text-emerald-400" },
+                    { label: "Why SquareCampus", href: "/why-squarecampus", color: "text-blue-400" },
+                    { label: "About Us", href: "/about", color: "text-cyan-400" },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="group flex items-center justify-between text-sm text-neutral-300 transition-colors hover:text-white"
+                      >
+                        <span>{link.label}</span>
+                        <ArrowUpRight
+                          className={cn(
+                            "h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+                            link.color
+                          )}
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stats card */}
+            <Card className="border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm">
+              <CardContent className="p-6">
+                <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-neutral-500">
+                  Why institutions trust us
+                </p>
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  {[
+                    { value: "99.9%", label: "Uptime SLA" },
+                    { value: "24hr", label: "Support Response" },
+                    { value: "2-4wk", label: "Avg. Go-Live" },
+                    { value: "100%", label: "Data Ownership" },
+                  ].map((stat) => (
+                    <div key={stat.label}>
+                      <p className="text-xl font-bold text-white">{stat.value}</p>
+                      <p className="text-[0.65rem] uppercase tracking-wider text-neutral-500">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </aside>
         </div>
-      </main>
+
+        {/* Closing CTA */}
+        <section className="mt-16 md:mt-24">
+          <Card className="overflow-hidden border-white/[0.08] bg-gradient-to-r from-blue-500/[0.08] via-purple-500/[0.08] to-cyan-500/[0.08]">
+            <CardContent className="relative p-8 text-center md:p-12">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(168,85,247,0.1),transparent_50%)]" />
+              <div className="relative">
+                <h2 className="text-2xl font-bold text-white md:text-3xl">Still have questions?</h2>
+                <p className="mx-auto mt-3 max-w-xl text-neutral-400">
+                  Our team is ready to help you understand how SquareCampus fits your institution's
+                  needs. Book a personalized demo and get all your questions answered.
+                </p>
+                <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <BookCallCta context="faq-cta" />
+                  <Link
+                    href="/contact-us"
+                    className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
+                  >
+                    Contact Us
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      </div>
+    </main>
   );
 }
 

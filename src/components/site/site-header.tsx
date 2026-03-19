@@ -1,0 +1,118 @@
+"use client";
+
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { primaryNavigation, siteCtas } from "@/content/site-content";
+import { cn } from "@/lib/utils";
+import { BrandLogo } from "./brand-logo";
+import { ButtonLink } from "./button-link";
+import { ThemeToggle } from "./theme-toggle";
+
+export function SiteHeader() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  return (
+    <header className="sticky top-0 z-40 px-4 pt-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          "mx-auto max-w-6xl rounded-[1.75rem] px-4 py-3 transition-all duration-300 sm:px-5",
+          scrolled
+            ? "bg-[color:var(--surface-strong)]/90 shadow-[0_24px_60px_rgba(8,15,30,0.08)] backdrop-blur-xl dark:shadow-[0_28px_72px_rgba(0,0,0,0.38)]"
+            : "bg-transparent"
+        )}
+      >
+        <div className="flex items-center justify-between gap-4">
+          <BrandLogo />
+
+          <nav className="hidden items-center gap-1 rounded-full bg-[color:var(--surface-strong)]/88 p-1 shadow-[0_10px_28px_rgba(8,15,30,0.06)] backdrop-blur-lg dark:shadow-[0_18px_38px_rgba(0,0,0,0.26)] lg:flex">
+            {primaryNavigation.map((item) => {
+              const active = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "rounded-full px-4 py-2 text-sm transition-colors",
+                    active
+                      ? "bg-[color:var(--surface-muted)] text-[color:var(--foreground)]"
+                      : "text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="hidden items-center gap-2 lg:flex">
+            <ThemeToggle />
+            <ButtonLink href={siteCtas.demoHref} label="Book Demo" />
+          </div>
+
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle className="px-2.5" />
+            <button
+              type="button"
+              aria-label={open ? "Close navigation" : "Open navigation"}
+              onClick={() => setOpen((value) => !value)}
+              className="inline-flex size-10 items-center justify-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] text-[color:var(--foreground)]"
+            >
+              {open ? <X className="size-4.5" /> : <Menu className="size-4.5" />}
+            </button>
+          </div>
+        </div>
+
+        {open ? (
+          <div className="mt-4 rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-4 lg:hidden">
+            <nav className="grid gap-2">
+              {primaryNavigation.map((item) => {
+                const active = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-2xl px-4 py-3 text-sm transition-colors",
+                      active
+                        ? "bg-[color:var(--surface-muted)] text-[color:var(--foreground)]"
+                        : "text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface)] hover:text-[color:var(--foreground)]"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="mt-4 grid gap-2">
+              <ButtonLink href={siteCtas.demoHref} label="Book Demo" className="justify-center" />
+              <ButtonLink
+                href={siteCtas.loginHref}
+                label="Sign In"
+                external
+                variant="secondary"
+                className="justify-center"
+              />
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </header>
+  );
+}

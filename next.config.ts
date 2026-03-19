@@ -20,6 +20,35 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/features",
+        destination: "/platform",
+        permanent: true,
+      },
+      {
+        source: "/product",
+        destination: "/platform",
+        permanent: true,
+      },
+      {
+        source: "/how-it-works",
+        destination: "/rollout",
+        permanent: true,
+      },
+      {
+        source: "/contact-us",
+        destination: "/demo",
+        permanent: true,
+      },
+      {
+        source: "/why-different",
+        destination: "/why-squarecampus",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const csp = buildCsp({ reportUri: "/api/csp-report" });
     const cspHeader =

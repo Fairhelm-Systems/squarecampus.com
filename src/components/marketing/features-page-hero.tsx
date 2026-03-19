@@ -93,11 +93,7 @@ export function FeaturesPageHero() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <BookCallCta
-              context="features-hero"
-              label="Book a Demo"
-              variant="primary"
-            />
+            <BookCallCta context="features-hero" label="Book a Demo" variant="primary" />
             <LinkButton
               href={"#feature-explorer"}
               variant={"dark"}

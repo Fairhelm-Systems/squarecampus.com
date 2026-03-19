@@ -152,7 +152,11 @@ const fragmentShaderSource = `
 `;
 
 // Compile shader helper
-function compileShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
+function compileShader(
+  gl: WebGLRenderingContext,
+  type: number,
+  source: string
+): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
 
@@ -169,7 +173,11 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string):
 }
 
 // Create program helper
-function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader): WebGLProgram | null {
+function createProgram(
+  gl: WebGLRenderingContext,
+  vertexShader: WebGLShader,
+  fragmentShader: WebGLShader
+): WebGLProgram | null {
   const program = gl.createProgram();
   if (!program) return null;
 
@@ -199,7 +207,7 @@ const WebGLCircles = ({ isMobile }: { isMobile: boolean }) => {
     const gl = canvas.getContext("webgl", {
       alpha: true,
       premultipliedAlpha: false,
-      antialias: true
+      antialias: true,
     });
     if (!gl) return;
 
@@ -215,14 +223,11 @@ const WebGLCircles = ({ isMobile }: { isMobile: boolean }) => {
     // Set up geometry (full-screen quad)
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1,
-       1, -1,
-      -1,  1,
-      -1,  1,
-       1, -1,
-       1,  1,
-    ]), gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW
+    );
 
     // Get attribute/uniform locations
     const positionLocation = gl.getAttribLocation(program, "a_position");
@@ -314,7 +319,8 @@ const StaticNeonCircles = () => {
       <div
         className="absolute h-48 w-48 rounded-full md:h-80 md:w-80"
         style={{
-          background: "radial-gradient(circle, rgba(99,102,241,0.5) 0%, rgba(139,92,246,0.25) 40%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(99,102,241,0.5) 0%, rgba(139,92,246,0.25) 40%, transparent 70%)",
           boxShadow: "0 0 80px rgba(99,102,241,0.4), 0 0 120px rgba(139,92,246,0.2)",
         }}
       />
@@ -323,7 +329,8 @@ const StaticNeonCircles = () => {
       <div
         className="absolute h-64 w-64 rounded-full md:h-96 md:w-96"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.4) 0%, rgba(99,102,241,0.2) 50%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(59,130,246,0.4) 0%, rgba(99,102,241,0.2) 50%, transparent 70%)",
           boxShadow: "0 0 100px rgba(59,130,246,0.3), 0 0 150px rgba(99,102,241,0.15)",
         }}
       />
@@ -332,7 +339,8 @@ const StaticNeonCircles = () => {
       <div
         className="absolute h-80 w-80 rounded-full md:h-[28rem] md:w-[28rem]"
         style={{
-          background: "radial-gradient(circle, rgba(34,211,238,0.3) 0%, rgba(59,130,246,0.15) 50%, transparent 75%)",
+          background:
+            "radial-gradient(circle, rgba(34,211,238,0.3) 0%, rgba(59,130,246,0.15) 50%, transparent 75%)",
           boxShadow: "0 0 120px rgba(34,211,238,0.25), 0 0 180px rgba(59,130,246,0.1)",
         }}
       />
@@ -409,10 +417,8 @@ const ShootingStars: React.FC<ShootingStarsProps> = ({
     const moveStar = () => {
       setStar((prev) => {
         if (!prev) return null;
-        const newX =
-          prev.x + prev.speed * Math.cos((prev.angle * Math.PI) / 180);
-        const newY =
-          prev.y + prev.speed * Math.sin((prev.angle * Math.PI) / 180);
+        const newX = prev.x + prev.speed * Math.cos((prev.angle * Math.PI) / 180);
+        const newY = prev.y + prev.speed * Math.sin((prev.angle * Math.PI) / 180);
         const newDistance = prev.distance + prev.speed;
         const newScale = 1 + newDistance / 120;
 
@@ -444,10 +450,7 @@ const ShootingStars: React.FC<ShootingStarsProps> = ({
   if (isMobileOrTablet) return null;
 
   return (
-    <svg
-      className={cn("absolute inset-0 h-full w-full", className)}
-      aria-hidden="true"
-    >
+    <svg className={cn("absolute inset-0 h-full w-full", className)} aria-hidden="true">
       <title>Shooting stars background animation</title>
       {star && (
         <rect
@@ -461,18 +464,9 @@ const ShootingStars: React.FC<ShootingStarsProps> = ({
         />
       )}
       <defs>
-        <linearGradient
-          id="hero-star-gradient"
-          x1="0%"
-          y1="0%"
-          x2="100%"
-          y2="100%"
-        >
+        <linearGradient id="hero-star-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />
-          <stop
-            offset="100%"
-            style={{ stopColor: starColor, stopOpacity: 1 }}
-          />
+          <stop offset="100%" style={{ stopColor: starColor, stopOpacity: 1 }} />
         </linearGradient>
       </defs>
     </svg>
@@ -522,10 +516,7 @@ export function BackgroundLines({ className }: { className?: string }) {
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "pointer-events-none absolute inset-0 overflow-hidden",
-        className
-      )}
+      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
       {isVisible && <Circles />}
       {isVisible && <ShootingStars starColor="#7c3aed" trailColor="#38bdf8" />}

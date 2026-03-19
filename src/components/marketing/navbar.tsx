@@ -21,7 +21,7 @@ interface NavbarProps {
 const NAV_ITEMS: NavItem[] = [
   { name: "Platform", link: "/#operations" },
   { name: "Features", link: "/#features" },
-  { name: "Why Us", link: "/#why-different" },
+  { name: "Why Us", link: "/#why-squarecampus" },
   { name: "Ecosystem", link: "/#ecosystem" },
   { name: "FAQ", link: "/#faq" },
   { name: "Contact", link: "/contact-us" },
@@ -48,10 +48,7 @@ export const Navbar = () => {
   }, [visible]);
 
   return (
-    <div
-      ref={ref}
-      className="fixed inset-x-0 top-0 z-50 flex justify-center px-4"
-    >
+    <div ref={ref} className="fixed inset-x-0 top-0 z-50 flex justify-center px-4">
       <DesktopNav visible={visible} navItems={NAV_ITEMS} />
       <MobileNav visible={visible} navItems={NAV_ITEMS} />
     </div>
@@ -149,7 +146,8 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
           variant="secondary"
           className={cn(
             "items-center gap-1.5 text-[13px]",
-            visible && "opacity-0 pointer-events-none w-0 overflow-hidden transition-all duration-300"
+            visible &&
+              "opacity-0 pointer-events-none w-0 overflow-hidden transition-all duration-300"
           )}
         />
 
@@ -188,9 +186,7 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
     gsap.to(navRef.current, {
       backgroundColor: visible || open ? "rgba(10, 10, 10, 0.9)" : "rgba(0, 0, 0, 0)",
       borderColor: visible || open ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0)",
-      boxShadow: visible || open
-        ? "0 4px 30px rgba(0, 0, 0, 0.5)"
-        : "none",
+      boxShadow: visible || open ? "0 4px 30px rgba(0, 0, 0, 0.5)" : "none",
       backdropFilter: visible || open ? "blur(20px)" : "blur(0px)",
       duration: 0.3,
       ease: "power2.out",
@@ -311,9 +307,7 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
                 )}
               >
                 <span>{item.name}</span>
-                <ChevronRight
-                  className="h-4 w-4 text-neutral-600 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-neutral-400"
-                />
+                <ChevronRight className="h-4 w-4 text-neutral-600 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-neutral-400" />
               </Link>
             ))}
           </div>

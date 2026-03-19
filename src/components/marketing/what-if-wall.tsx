@@ -1595,7 +1595,9 @@ export function WhatIfWall() {
 
       {/* Floating particles container - hidden on mobile */}
       {particles && (
-        <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block">{particles}</div>
+        <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block">
+          {particles}
+        </div>
       )}
 
       {/* Background glows - GPU accelerated with will-change (hidden on mobile) */}

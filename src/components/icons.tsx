@@ -28,7 +28,7 @@ export const AlertCircle = (props: IconProps) => (
     <line x1="12" x2="12" y1="8" y2="12" />
     <line x1="12" x2="12.01" y1="16" y2="16" />
   </svg>
-)
+);
 
 export const AlertTriangle = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -135,7 +135,6 @@ export const Bus = (props: IconProps) => (
   </svg>
 );
 
-
 export const Calendar = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M8 2v4" />
@@ -166,7 +165,7 @@ export const Check = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M20 6 9 17l-5-5" />
   </svg>
-)
+);
 
 export const CheckCircle2 = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -185,13 +184,13 @@ export const ChevronLeft = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="m15 18-6-6 6-6" />
   </svg>
-)
+);
 
 export const ChevronRight = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="m9 18 6-6-6-6" />
   </svg>
-)
+);
 
 export const ChevronUp = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -223,7 +222,7 @@ export const Cloud = (props: IconProps) => (
     <path d="M7 10v4h4" />
     <path d="m7 14 1.535-1.605a5 5 0 0 1 8 1.5" />
   </svg>
-)
+);
 
 export const Code = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -231,7 +230,7 @@ export const Code = (props: IconProps) => (
     <path d="M7 11v4a2 2 0 0 0 2 2h4" />
     <rect width="8" height="8" x="13" y="13" rx="2" />
   </svg>
-)
+);
 
 export const Component = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -240,14 +239,14 @@ export const Component = (props: IconProps) => (
     <path d="M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z" />
     <path d="M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" />
   </svg>
-)
+);
 
 export const CreditCard = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <rect width="20" height="14" x="2" y="5" rx="2" />
     <line x1="2" x2="22" y1="10" y2="10" />
   </svg>
-)
+);
 
 export const Crown = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -260,7 +259,7 @@ export const Crown = (props: IconProps) => (
     <circle cx="20" cy="7" r="2" />
     <circle cx="4" cy="7" r="2" />
   </svg>
-)
+);
 
 export const Database = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -270,7 +269,7 @@ export const Database = (props: IconProps) => (
     <path d="M21 12L18 17H22L19 22" />
     <path d="M3 12A9 3 0 0 0 14.59 14.87" />
   </svg>
-)
+);
 
 export const DollarSign = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -284,14 +283,14 @@ export const Edit = (props: IconProps) => (
     <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
     <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
   </svg>
-)
+);
 
 export const Eye = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
     <circle cx="12" cy="12" r="3" />
   </svg>
-)
+);
 
 export const FileCheck = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -299,7 +298,7 @@ export const FileCheck = (props: IconProps) => (
     <path d="M14 2v5a1 1 0 0 0 1 1h5" />
     <path d="m9 15 2 2 4-4" />
   </svg>
-)
+);
 
 export const FileText = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -309,7 +308,7 @@ export const FileText = (props: IconProps) => (
     <path d="M16 13H8" />
     <path d="M16 17H8" />
   </svg>
-)
+);
 
 export const Globe = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -318,7 +317,7 @@ export const Globe = (props: IconProps) => (
     <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05" />
     <circle cx="12" cy="12" r="10" />
   </svg>
-)
+);
 
 export const GraduationCap = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -373,7 +372,7 @@ export const Lock = (props: IconProps) => (
     <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
   </svg>
-)
+);
 
 export const LogIn = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -411,7 +410,7 @@ export const Puzzle = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
     <path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" />
   </svg>
-)
+);
 
 export const Radio = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -431,7 +430,7 @@ export const Rupee = (props: IconProps) => (
     <path d="M6 13h3" />
     <path d="M9 13c6.667 0 6.667-10 0-10" />
   </svg>
-)
+);
 
 export const Server = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -440,7 +439,7 @@ export const Server = (props: IconProps) => (
     <line x1="6" x2="6.01" y1="6" y2="6" />
     <line x1="6" x2="6.01" y1="18" y2="18" />
   </svg>
-)
+);
 
 export const Shield = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>
@@ -477,7 +476,7 @@ export const Target = (props: IconProps) => (
     <circle cx="12" cy="12" r="6" />
     <circle cx="12" cy="12" r="2" />
   </svg>
-)
+);
 
 export const TrendingUp = (props: IconProps) => (
   <svg {...baseAttrs} {...props}>

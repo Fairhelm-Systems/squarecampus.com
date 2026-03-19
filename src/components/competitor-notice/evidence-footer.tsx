@@ -14,7 +14,7 @@ const documentMetadata = {
   jurisdiction: "India (Karnataka for courts where applicable)",
   governingLaw:
     "Information Technology Act, 2000; Digital Personal Data Protection Act, 2023; applicable IP statutes; and the penal code in force (IPC 1860/BNS 2023).",
-  legalEntity: "MDTechSpire",
+  legalEntity: "MDTechspire",
 };
 
 const relatedDocuments = [
@@ -175,7 +175,7 @@ export function EvidenceFooter() {
             grant any rights without explicit written agreement.
           </div>
           <div>
-            <strong className="text-neutral-400">Reservation of Rights:</strong> MDTechSpire
+            <strong className="text-neutral-400">Reservation of Rights:</strong> MDTechspire
             expressly reserves all legal and equitable rights and remedies. No delay or omission is
             a waiver.
           </div>
@@ -190,9 +190,9 @@ export function EvidenceFooter() {
             have jurisdiction.
           </div>
           <div>
-            <strong className="text-neutral-400">Amendments:</strong> MDTechSpire may update
-            this notice without prior notification. Check the &quot;Last Updated&quot; date for
-            current version.
+            <strong className="text-neutral-400">Amendments:</strong> MDTechspire may update this
+            notice without prior notification. Check the &quot;Last Updated&quot; date for current
+            version.
           </div>
           <div>
             <strong className="text-neutral-400">Severability:</strong> If any provision is deemed
@@ -203,10 +203,10 @@ export function EvidenceFooter() {
         {/* Copyright */}
         <div className="mt-12 border-t border-neutral-800 pt-8 text-center">
           <p className="text-xs text-neutral-500">
-            &copy; {new Date().getFullYear()} MDTechSpire. All rights reserved.
+            &copy; {new Date().getFullYear()} MDTechspire. All rights reserved.
           </p>
           <p className="mt-1 text-xs text-neutral-600">
-            SquareCampus is a trademark of MDTechSpire.
+            SquareCampus is a trademark of MDTechspire.
           </p>
           <p className="mt-2 text-xs text-neutral-600">
             This notice may be distributed freely to inform competitors of legal obligations.

@@ -9,7 +9,7 @@ export const metadata: Metadata = createPageMetadata({
   title: "Why SquareCampus | Best School Management System vs Traditional ERPs",
   description:
     "See why 500+ schools chose SquareCampus over traditional school ERPs. Unified platform vs fragmented tools, transparent pricing, modern UX, and features that actually work. Compare now.",
-  path: "/why-different",
+  path: "/why-squarecampus",
   keywords: [
     // Comparison intent
     "school ERP comparison",

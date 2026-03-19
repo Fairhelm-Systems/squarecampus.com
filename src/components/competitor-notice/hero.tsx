@@ -44,12 +44,10 @@ export function Hero() {
             <div className="space-y-4">
               <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Notice to Competitors:{" "}
-                <span className="text-red-400">
-                  Unauthorized Access and Misuse Are Prohibited
-                </span>
+                <span className="text-red-400">Unauthorized Access and Misuse Are Prohibited</span>
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
-                MDTechSpire (trading as SquareCampus) issues this public legal notice to competitors
+                MDTechspire (trading as SquareCampus) issues this public legal notice to competitors
                 and their agents. Any unauthorized access, credential solicitation, misuse of
                 non-public information, or circumvention of access controls is prohibited. We
                 reserve the right to pursue civil, criminal, and regulatory remedies as permitted by
@@ -143,9 +141,9 @@ export function Hero() {
 
               <div className="mt-6 rounded-lg border border-amber-500/20 bg-amber-950/20 p-4">
                 <p className="text-xs leading-relaxed text-amber-200/90">
-                  <strong className="text-amber-300">Warning:</strong> Unauthorized access or
-                  misuse may lead to legal action. Access and security events are logged in the
-                  ordinary course of business for protection and compliance.
+                  <strong className="text-amber-300">Warning:</strong> Unauthorized access or misuse
+                  may lead to legal action. Access and security events are logged in the ordinary
+                  course of business for protection and compliance.
                 </p>
               </div>
             </div>

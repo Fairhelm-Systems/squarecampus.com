@@ -117,9 +117,7 @@ export function TableOfContents() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = tocSections.map((section) =>
-        document.getElementById(section.id)
-      );
+      const sections = tocSections.map((section) => document.getElementById(section.id));
 
       // Find active section
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -144,8 +142,7 @@ export function TableOfContents() {
     const element = document.getElementById(id);
     if (element) {
       const offset = 100;
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: elementPosition - offset,
         behavior: "smooth",
@@ -234,9 +231,7 @@ export function TableOfContentsSidebar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = tocSections.map((section) =>
-        document.getElementById(section.id)
-      );
+      const sections = tocSections.map((section) => document.getElementById(section.id));
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -260,8 +255,7 @@ export function TableOfContentsSidebar() {
     const element = document.getElementById(id);
     if (element) {
       const offset = 100;
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: elementPosition - offset,
         behavior: "smooth",
@@ -270,10 +264,7 @@ export function TableOfContentsSidebar() {
   };
 
   return (
-    <nav
-      aria-label="Table of contents"
-      className="sticky top-8 hidden xl:block print:hidden"
-    >
+    <nav aria-label="Table of contents" className="sticky top-8 hidden xl:block print:hidden">
       <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-4">
         <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-neutral-500">
           On this page

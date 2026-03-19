@@ -3,7 +3,18 @@
 import { motion, AnimatePresence } from "@/lib/motion";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
-import { BookOpen, Briefcase, Bus, Check, DollarSign, GraduationCap, Home, MessageSquare, Sparkles, Users } from "@/icons";
+import {
+  BookOpen,
+  Briefcase,
+  Bus,
+  Check,
+  DollarSign,
+  GraduationCap,
+  Home,
+  MessageSquare,
+  Sparkles,
+  Users,
+} from "@/icons";
 
 type Feature = {
   name: string;
@@ -80,8 +91,7 @@ const categories: Category[] = [
       },
       {
         name: "Payment Collection",
-        description:
-          "Collect fees across modes with auto-receipts and clean reconciliation hooks.",
+        description: "Collect fees across modes with auto-receipts and clean reconciliation hooks.",
         highlights: [
           "Replaces: manual receipts and fragmented gateways",
           "Operational shift: one collection ledger for all channels",
@@ -131,8 +141,7 @@ const categories: Category[] = [
       },
       {
         name: "Exam & Assessment",
-        description:
-          "Run exams, record marks, and publish report cards in one continuous flow.",
+        description: "Run exams, record marks, and publish report cards in one continuous flow.",
         highlights: [
           "Replaces: disconnected exam tools and spreadsheets",
           "Operational shift: marks flow into grading automatically",
@@ -161,8 +170,7 @@ const categories: Category[] = [
       },
       {
         name: "Parent Portal & App",
-        description:
-          "Give families one place for attendance, homework, fees, and school updates.",
+        description: "Give families one place for attendance, homework, fees, and school updates.",
         highlights: [
           "Replaces: scattered portals and notice boards",
           "Operational shift: parents self-serve without office calls",
@@ -172,8 +180,7 @@ const categories: Category[] = [
       },
       {
         name: "Notice Board & Events",
-        description:
-          "Publish announcements, events, and calendars in one verified stream.",
+        description: "Publish announcements, events, and calendars in one verified stream.",
         highlights: [
           "Replaces: paper circulars and manual follow-ups",
           "Operational shift: scheduled notices with ownership",
@@ -360,7 +367,10 @@ export function FeatureExplorer() {
   }, [activeFeature]);
 
   return (
-    <section id="feature-explorer" className="relative border-b border-white/5 bg-neutral-950 px-4 py-20 md:px-8 md:py-28">
+    <section
+      id="feature-explorer"
+      className="relative border-b border-white/5 bg-neutral-950 px-4 py-20 md:px-8 md:py-28"
+    >
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -372,9 +382,7 @@ export function FeatureExplorer() {
             <Sparkles className="h-3 w-3" />
             Feature Explorer
           </div>
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Explore by Category
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Explore by Category</h2>
           <p className="mx-auto max-w-2xl text-neutral-300">
             Dive deep into each module. Click a category to explore features built for calm,
             predictable operations under load.
@@ -388,7 +396,9 @@ export function FeatureExplorer() {
                 key={role.label}
                 type="button"
                 onClick={() => {
-                  const nextCategory = categories.find((category) => category.id === role.categoryId);
+                  const nextCategory = categories.find(
+                    (category) => category.id === role.categoryId
+                  );
                   if (!nextCategory) return;
                   setActiveCategory(nextCategory);
                   setActiveFeature(nextCategory.features[0]);
@@ -415,19 +425,23 @@ export function FeatureExplorer() {
                     setActiveFeature(category.features[0]);
                   }}
                   whileHover={{ x: 4 }}
-                  className={`group relative w-full overflow-hidden rounded-xl border p-4 text-left transition-all ${isActive
-                    ? "border-white/20 bg-gradient-to-br from-neutral-900 to-neutral-950 shadow-lg"
-                    : "border-white/10 bg-neutral-900/50 hover:border-white/15"
-                    }`}
+                  className={`group relative w-full overflow-hidden rounded-xl border p-4 text-left transition-all ${
+                    isActive
+                      ? "border-white/20 bg-gradient-to-br from-neutral-900 to-neutral-950 shadow-lg"
+                      : "border-white/10 bg-neutral-900/50 hover:border-white/15"
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`rounded-lg border border-white/10 p-2 ${isActive ? "bg-white/10" : "bg-white/5"
-                        }`}
+                      className={`rounded-lg border border-white/10 p-2 ${
+                        isActive ? "bg-white/10" : "bg-white/5"
+                      }`}
                     >
                       <Icon className={`h-5 w-5 ${isActive ? "text-white" : "text-neutral-400"}`} />
                     </div>
-                    <span className={`text-sm font-medium ${isActive ? "text-white" : "text-neutral-300"}`}>
+                    <span
+                      className={`text-sm font-medium ${isActive ? "text-white" : "text-neutral-300"}`}
+                    >
                       {category.name}
                     </span>
                   </div>

@@ -35,9 +35,9 @@ export default function BlogPage() {
                 Stories from the SquareCampus team
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-300">
-                Updates, timelines, and behind-the-scenes notes on how we're building an
-                operating system for schools and colleges. Product releases, implementation
-                insights, and ideas from the field.
+                Updates, timelines, and behind-the-scenes notes on how we're building an operating
+                system for schools and colleges. Product releases, implementation insights, and
+                ideas from the field.
               </p>
             </div>
           </motion.section>
@@ -106,9 +106,8 @@ export default function BlogPage() {
                     No posts yet, we're busy shipping.
                   </p>
                   <p className="text-sm leading-relaxed text-neutral-300">
-                    We'll publish product updates, implementation stories, and practical
-                    playbooks here soon. Until then, follow us on LinkedIn for updates and new
-                    releases.
+                    We'll publish product updates, implementation stories, and practical playbooks
+                    here soon. Until then, follow us on LinkedIn for updates and new releases.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-2 text-xs">
                     <Link

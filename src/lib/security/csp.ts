@@ -13,6 +13,7 @@ function formatDirectives(directives: Record<string, string[]>): string {
 }
 
 export function buildCsp(options: CspOptions = {}): string {
+  const isDev = process.env.NODE_ENV !== "production";
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
     "base-uri": ["'self'"],
@@ -20,7 +21,12 @@ export function buildCsp(options: CspOptions = {}): string {
     "form-action": ["'self'"],
     "frame-ancestors": ["'none'"],
     "upgrade-insecure-requests": [],
-    "script-src": ["'self'", "'unsafe-inline'", ...CALCOM_DOMAINS],
+    "script-src": [
+      "'self'",
+      "'unsafe-inline'",
+      ...(isDev ? ["'unsafe-eval'"] : []),
+      ...CALCOM_DOMAINS,
+    ],
     "style-src": ["'self'", "'unsafe-inline'"],
     "img-src": ["'self'", "data:", "blob:", ...CDN_DOMAINS, ...IMAGE_DOMAINS],
     "font-src": ["'self'", "data:", ...CDN_DOMAINS],

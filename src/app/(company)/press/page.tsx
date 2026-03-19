@@ -181,9 +181,8 @@ export default function PressPage() {
                     No press releases published yet.
                   </p>
                   <p className="text-sm leading-relaxed text-neutral-300">
-                    We'll share announcements and coverage here as we grow. For official
-                    quotes, background, or data points, reach out and we'll respond with what
-                    you need.
+                    We'll share announcements and coverage here as we grow. For official quotes,
+                    background, or data points, reach out and we'll respond with what you need.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-2">
                     <Link

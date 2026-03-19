@@ -167,7 +167,11 @@ function useWebGLSupport() {
   return supported;
 }
 
-function compileShaderProgram(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
+function compileShaderProgram(
+  gl: WebGLRenderingContext,
+  type: number,
+  source: string
+): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
   gl.shaderSource(shader, source);
@@ -180,7 +184,11 @@ function compileShaderProgram(gl: WebGLRenderingContext, type: number, source: s
   return shader;
 }
 
-function createShaderProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader): WebGLProgram | null {
+function createShaderProgram(
+  gl: WebGLRenderingContext,
+  vs: WebGLShader,
+  fs: WebGLShader
+): WebGLProgram | null {
   const program = gl.createProgram();
   if (!program) return null;
   gl.attachShader(program, vs);
@@ -215,9 +223,11 @@ function WebGLBackground({ isMobile }: { isMobile: boolean }) {
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
-    ]), gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW
+    );
 
     const positionLoc = gl.getAttribLocation(program, "a_position");
     const resolutionLoc = gl.getUniformLocation(program, "u_resolution");
@@ -280,12 +290,7 @@ function WebGLBackground({ isMobile }: { isMobile: boolean }) {
     };
   }, [isMobile]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    />
-  );
+  return <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 h-full w-full" />;
 }
 
 // Static fallback for no-WebGL devices
@@ -544,11 +549,7 @@ function PersonaCard({
 
         <ul className="mt-5 space-y-3">
           {item.points.map((point, _pointIdx) => (
-            <li
-              key={point}
-              data-bullet
-              className="flex items-start gap-3 text-sm text-neutral-300"
-            >
+            <li key={point} data-bullet className="flex items-start gap-3 text-sm text-neutral-300">
               <span
                 className={cn(
                   "mt-2 h-1.5 w-1.5 shrink-0 rounded-full transition-transform duration-300",
@@ -1013,7 +1014,9 @@ export function SchoolOsClarity() {
                 <div className="h-2.5 w-2.5 rounded-full bg-emerald-400/60" />
               </div>
               <div className="ml-4 flex-1 rounded-md bg-white/5 px-3 py-1">
-                <span className="text-[0.65rem] text-neutral-500">app.squarecampus.com/dashboard</span>
+                <span className="text-[0.65rem] text-neutral-500">
+                  app.squarecampus.com/dashboard
+                </span>
               </div>
             </div>
 

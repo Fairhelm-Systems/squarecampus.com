@@ -168,8 +168,8 @@ export default function CareersPage() {
                     We're not hiring for specific roles right now.
                   </p>
                   <p className="text-sm leading-relaxed text-neutral-300">
-                    We'll publish roles here as we expand the team. If you strongly believe you
-                    can help shape SquareCampus, you can still reach out with a short note and your
+                    We'll publish roles here as we expand the team. If you strongly believe you can
+                    help shape SquareCampus, you can still reach out with a short note and your
                     profile.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-2">

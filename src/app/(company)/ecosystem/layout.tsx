@@ -133,10 +133,6 @@ export const metadata: Metadata = createPageMetadata({
     "Complete ecosystem: Admin console, mobile apps, payment integrations, communication tools. All connected in one platform.",
 });
 
-export default function EcosystemLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function EcosystemLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

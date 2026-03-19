@@ -53,16 +53,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Conversion + differentiation pages
     {
-      path: "/why-different",
+      path: "/why-squarecampus",
       lastModified: LASTMOD.core,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      path: "/features",
+      path: "/platform",
       lastModified: LASTMOD.core,
       changeFrequency: "weekly",
-      priority: 0.85,
+      priority: 0.88,
+    },
+    {
+      path: "/rollout",
+      lastModified: LASTMOD.core,
+      changeFrequency: "weekly",
+      priority: 0.82,
     },
     {
       path: "/ecosystem",
@@ -109,7 +115,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
-      path: "/contact-us",
+      path: "/demo",
       lastModified: LASTMOD.company,
       changeFrequency: "monthly",
       priority: 0.7,
