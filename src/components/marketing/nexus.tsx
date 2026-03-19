@@ -2,15 +2,7 @@
 
 import { useEffect, useRef, useState, useId } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BarChart3,
-  Clock,
-  Target,
-  TrendingUp,
-  Users,
-  Zap,
-} from "@/components/icons";
+import { ArrowRight, BarChart3, Clock, Target, TrendingUp, Users, Zap } from "@/components/icons";
 import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -298,9 +290,7 @@ const NeuralNetworkViz = ({ className = "" }: { className?: string }) => {
   useEffect(() => {
     if (!svgRef.current) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
@@ -351,13 +341,13 @@ const NeuralNetworkViz = ({ className = "" }: { className?: string }) => {
         const path: NeuralNode[] = [];
 
         // Start from specific input node
-        const inputNode = nodes.find(n => n.id === `node-0-${startNodeIndex}`);
+        const inputNode = nodes.find((n) => n.id === `node-0-${startNodeIndex}`);
         if (!inputNode) return;
         path.push(inputNode);
 
         // For each subsequent layer, pick a random connected node
         for (let layer = 1; layer < layers.length; layer++) {
-          const layerNodes = nodes.filter(n => n.layer === layer);
+          const layerNodes = nodes.filter((n) => n.layer === layer);
           const nextNode = layerNodes[Math.floor(Math.random() * layerNodes.length)];
           path.push(nextNode);
         }
@@ -489,13 +479,7 @@ const NeuralNetworkViz = ({ className = "" }: { className?: string }) => {
             cx={node.x}
             cy={node.y}
             r={node.layer === 0 || node.layer === 3 ? 10 : 8}
-            fill={
-              node.layer === 0
-                ? "#3b82f6"
-                : node.layer === 3
-                  ? "#10b981"
-                  : "#8b5cf6"
-            }
+            fill={node.layer === 0 ? "#3b82f6" : node.layer === 3 ? "#10b981" : "#8b5cf6"}
             filter="url(#glow)"
           />
           <circle
@@ -503,13 +487,7 @@ const NeuralNetworkViz = ({ className = "" }: { className?: string }) => {
             cy={node.y}
             r={node.layer === 0 || node.layer === 3 ? 14 : 12}
             fill="none"
-            stroke={
-              node.layer === 0
-                ? "#3b82f6"
-                : node.layer === 3
-                  ? "#10b981"
-                  : "#8b5cf6"
-            }
+            stroke={node.layer === 0 ? "#3b82f6" : node.layer === 3 ? "#10b981" : "#8b5cf6"}
             strokeWidth="1"
             opacity="0.3"
           />
@@ -568,9 +546,7 @@ const PatternEmergence = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
@@ -706,9 +682,7 @@ const PatternEmergence = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex items-center gap-3 rounded-full border border-blue-500/30 bg-black/80 px-6 py-3 backdrop-blur-sm">
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-            <span className="text-sm font-medium text-blue-400">
-              Nexus analyzing patterns...
-            </span>
+            <span className="text-sm font-medium text-blue-400">Nexus analyzing patterns...</span>
           </div>
         </div>
       )}
@@ -737,9 +711,7 @@ const SpeedComparison = () => {
   useEffect(() => {
     if (!containerRef.current || hasAnimatedRef.current) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -810,9 +782,7 @@ const SpeedComparison = () => {
       {/* Traditional */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-neutral-400">
-            Traditional Reports
-          </span>
+          <span className="text-sm font-medium text-neutral-400">Traditional Reports</span>
           <span className="font-mono text-2xl font-bold text-red-400">
             {traditionalTime}
             <span className="text-sm text-neutral-500"> min</span>
@@ -845,9 +815,7 @@ const SpeedComparison = () => {
       {/* Nexus */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-neutral-400">
-            Nexus Intelligence
-          </span>
+          <span className="text-sm font-medium text-neutral-400">Nexus Intelligence</span>
           <span className="font-mono text-2xl font-bold text-emerald-400">
             {nexusTime}
             <span className="text-sm text-neutral-500"> sec</span>
@@ -976,9 +944,7 @@ const AskNexusDemo = () => {
   useEffect(() => {
     if (!isInView) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
       setDisplayedQuestion(currentData.question);
@@ -1064,10 +1030,11 @@ const AskNexusDemo = () => {
 
           <div className="flex items-center gap-3">
             <div
-              className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${phase === "thinking"
-                ? "animate-pulse bg-gradient-to-br from-blue-400/20 to-purple-500/20"
-                : "bg-gradient-to-br from-blue-500/10 to-purple-600/10"
-                }`}
+              className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
+                phase === "thinking"
+                  ? "animate-pulse bg-gradient-to-br from-blue-400/20 to-purple-500/20"
+                  : "bg-gradient-to-br from-blue-500/10 to-purple-600/10"
+              }`}
             >
               <NexusLogo size="md" animate={phase === "thinking"} />
             </div>
@@ -1080,14 +1047,21 @@ const AskNexusDemo = () => {
                 )}
               </span>
             </div>
-            {phase === "typing" && (
-              <div className="h-5 w-0.5 animate-pulse bg-blue-400" />
-            )}
+            {phase === "typing" && <div className="h-5 w-0.5 animate-pulse bg-blue-400" />}
             {phase === "thinking" && (
               <div className="flex items-center gap-1">
-                <div className="h-2 w-2 animate-bounce rounded-full bg-blue-400" style={{ animationDelay: "0ms" }} />
-                <div className="h-2 w-2 animate-bounce rounded-full bg-purple-400" style={{ animationDelay: "150ms" }} />
-                <div className="h-2 w-2 animate-bounce rounded-full bg-emerald-400" style={{ animationDelay: "300ms" }} />
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-blue-400"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-purple-400"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="h-2 w-2 animate-bounce rounded-full bg-emerald-400"
+                  style={{ animationDelay: "300ms" }}
+                />
               </div>
             )}
           </div>
@@ -1096,8 +1070,9 @@ const AskNexusDemo = () => {
 
       {/* Response area */}
       <div
-        className={`overflow-hidden transition-all duration-500 ${phase === "result" ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`overflow-hidden transition-all duration-500 ${
+          phase === "result" ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-6">
           {/* Summary */}
@@ -1106,12 +1081,8 @@ const AskNexusDemo = () => {
               <Target className="h-4 w-4 text-emerald-400" />
             </div>
             <div>
-              <p className="text-xl font-semibold text-white">
-                {currentData.summary}
-              </p>
-              <p className="mt-1 text-sm text-neutral-400">
-                {currentData.context}
-              </p>
+              <p className="text-xl font-semibold text-white">{currentData.summary}</p>
+              <p className="mt-1 text-sm text-neutral-400">{currentData.context}</p>
             </div>
           </div>
 
@@ -1119,9 +1090,7 @@ const AskNexusDemo = () => {
           <div className="mb-6 space-y-3">
             {currentData.details.map((item, i) => (
               <div key={`${currentIndex}-${i}`} className="flex items-center gap-4">
-                <span className="w-40 shrink-0 text-sm text-neutral-400">
-                  {item.label}
-                </span>
+                <span className="w-40 shrink-0 text-sm text-neutral-400">{item.label}</span>
                 <div className="h-6 flex-1 overflow-hidden rounded-full bg-neutral-800">
                   <div
                     className="h-full rounded-full transition-all duration-700 ease-out"
@@ -1137,7 +1106,8 @@ const AskNexusDemo = () => {
                   className="w-12 text-right font-mono text-sm font-semibold"
                   style={{ color: item.color }}
                 >
-                  {item.value}{item.max === 100 ? "%" : ""}
+                  {item.value}
+                  {item.max === 100 ? "%" : ""}
                 </span>
               </div>
             ))}
@@ -1149,9 +1119,7 @@ const AskNexusDemo = () => {
               <Zap className="h-4 w-4" />
               Nexus Recommendation
             </div>
-            <p className="mt-2 text-sm text-neutral-300">
-              {currentData.recommendation}
-            </p>
+            <p className="mt-2 text-sm text-neutral-300">{currentData.recommendation}</p>
           </div>
 
           {/* Progress indicator */}
@@ -1159,10 +1127,9 @@ const AskNexusDemo = () => {
             {sampleQueries.map((_, i) => (
               <div
                 key={i}
-                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex
-                  ? "w-6 bg-blue-500"
-                  : "w-1.5 bg-neutral-700"
-                  }`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === currentIndex ? "w-6 bg-blue-500" : "w-1.5 bg-neutral-700"
+                }`}
               />
             ))}
           </div>
@@ -1210,9 +1177,7 @@ const RootCauseSynthesis = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -1289,13 +1254,8 @@ const RootCauseSynthesis = () => {
                   <Icon className="h-5 w-5" style={{ color: source.color }} />
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-neutral-400">
-                    {source.label}
-                  </div>
-                  <div
-                    className="text-lg font-bold"
-                    style={{ color: source.color }}
-                  >
+                  <div className="text-sm font-medium text-neutral-400">{source.label}</div>
+                  <div className="text-lg font-bold" style={{ color: source.color }}>
                     {source.value}
                   </div>
                 </div>
@@ -1322,9 +1282,7 @@ const RootCauseSynthesis = () => {
           <div className="mb-1 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-400">
             Root Cause Identified
           </div>
-          <div className="mb-2 text-xl font-bold text-white">
-            {rootCause.title}
-          </div>
+          <div className="mb-2 text-xl font-bold text-white">{rootCause.title}</div>
           <div className="mb-3 text-sm text-neutral-400">{rootCause.detail}</div>
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-sm font-semibold text-emerald-400">
             <span className="font-mono">{rootCause.confidence}%</span>
@@ -1495,13 +1453,7 @@ const PredictiveTimeline = () => {
 
           {/* Gradient definitions */}
           <defs>
-            <linearGradient
-              id="confidenceBand"
-              x1="0%"
-              y1="0%"
-              x2="0%"
-              y2="100%"
-            >
+            <linearGradient id="confidenceBand" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
               <stop offset="100%" stopColor="#10b981" stopOpacity="0.05" />
             </linearGradient>
@@ -1518,7 +1470,10 @@ const PredictiveTimeline = () => {
         <div className="flex items-center gap-2">
           <div
             className="h-0.5 w-6 rounded-full bg-emerald-500"
-            style={{ background: "repeating-linear-gradient(90deg, #10b981, #10b981 4px, transparent 4px, transparent 8px)" }}
+            style={{
+              background:
+                "repeating-linear-gradient(90deg, #10b981, #10b981 4px, transparent 4px, transparent 8px)",
+            }}
           />
           <span className="text-neutral-400">AI prediction</span>
         </div>
@@ -1576,9 +1531,7 @@ export default function Nexus() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || shouldReduceEffects) return;
 
     const ctx = gsap.context(() => {
@@ -1703,9 +1656,8 @@ export default function Nexus() {
           </h2>
 
           <p className="nexus-subtitle mx-auto max-w-3xl text-lg leading-relaxed text-neutral-400 md:text-xl">
-            Nexus transforms your scattered data into instant, actionable
-            insights. Ask questions in plain language. Get answers in
-            milliseconds. See problems before they happen.
+            Nexus transforms your scattered data into instant, actionable insights. Ask questions in
+            plain language. Get answers in milliseconds. See problems before they happen.
           </p>
         </div>
 
@@ -1766,12 +1718,8 @@ export default function Nexus() {
                   <cap.icon className="h-6 w-6 text-white" />
                 </div>
 
-                <h4 className="mb-2 text-lg font-semibold text-white">
-                  {cap.title}
-                </h4>
-                <p className="mb-4 text-sm leading-relaxed text-neutral-400">
-                  {cap.description}
-                </p>
+                <h4 className="mb-2 text-lg font-semibold text-white">{cap.title}</h4>
+                <p className="mb-4 text-sm leading-relaxed text-neutral-400">{cap.description}</p>
 
                 <div className="flex items-baseline gap-2">
                   <span
@@ -1779,9 +1727,7 @@ export default function Nexus() {
                   >
                     {cap.metric}
                   </span>
-                  <span className="text-xs text-neutral-500">
-                    {cap.metricLabel}
-                  </span>
+                  <span className="text-xs text-neutral-500">{cap.metricLabel}</span>
                 </div>
               </div>
             </div>
@@ -1832,9 +1778,7 @@ export default function Nexus() {
             <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
               Predictive Analytics
             </h3>
-            <p className="text-2xl font-bold text-white md:text-3xl">
-              See ahead, act now
-            </p>
+            <p className="text-2xl font-bold text-white md:text-3xl">See ahead, act now</p>
           </div>
           <div className="mx-auto max-w-3xl rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
             <PredictiveTimeline />
@@ -1884,8 +1828,8 @@ export default function Nexus() {
               Ready to see Nexus in action?
             </h3>
             <p className="mx-auto mb-8 max-w-xl text-neutral-400">
-              Book a demo and watch Nexus analyze your institution's data in
-              real-time. See insights you've been missing.
+              Book a demo and watch Nexus analyze your institution's data in real-time. See insights
+              you've been missing.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

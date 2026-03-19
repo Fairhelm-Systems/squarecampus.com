@@ -96,17 +96,13 @@ export function EcosystemHero() {
             </h1>
 
             <p className="mb-8 text-lg text-neutral-300 md:text-xl">
-              SquareCampus isn't just software—it's a complete ecosystem. Admin console, teacher tools,
-              mobile apps, integrations, and shared data flows connected through a single source of truth.
-              That backbone stays stable when campuses are stretched.
+              SquareCampus isn't just software—it's a complete ecosystem. Admin console, teacher
+              tools, mobile apps, integrations, and shared data flows connected through a single
+              source of truth. That backbone stays stable when campuses are stretched.
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <BookCallCta
-                context="features-hero"
-                label="See It Yourself"
-                variant="primary"
-              />
+              <BookCallCta context="features-hero" label="See It Yourself" variant="primary" />
               <LinkButton
                 href={"/about"}
                 variant={"dark"}
@@ -138,7 +134,9 @@ export function EcosystemHero() {
                   className="text-center"
                 >
                   <div className="mb-1 text-3xl font-bold text-white">{stat.value}</div>
-                  <div className="text-xs uppercase tracking-wider text-neutral-400">{stat.label}</div>
+                  <div className="text-xs uppercase tracking-wider text-neutral-400">
+                    {stat.label}
+                  </div>
                 </motion.div>
               ))}
             </div>

@@ -102,10 +102,8 @@ export const LanguageSupport = () => {
       glowColor: "rgba(59, 130, 246, 0.5)",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "Welcome to SquareCampus.",
-      notificationEnglish:
-        "Good morning! Here's to a great school day ahead.",
-      notificationNative:
-        "Good morning! Here's to a great school day ahead.",
+      notificationEnglish: "Good morning! Here's to a great school day ahead.",
+      notificationNative: "Good morning! Here's to a great school day ahead.",
     },
     {
       code: "HI",
@@ -117,8 +115,7 @@ export const LanguageSupport = () => {
       fontClass: "font-devanagari",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus में आपका स्वागत है।",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 सुप्रभात! आपके दिन की शानदार शुरुआत हो।",
     },
     {
@@ -131,8 +128,7 @@ export const LanguageSupport = () => {
       fontClass: "font-kannada",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus ಗೆ ನಿಮಗೆ ಸ್ವಾಗತ.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 ಶುಭೋದಯ! ನಿಮ್ಮ ದಿನ ಅದ್ಭುತವಾಗಲಿ.",
     },
     {
@@ -145,10 +141,8 @@ export const LanguageSupport = () => {
       fontClass: "font-tamil",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus-க்கு வரவேற்கிறோம்.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
-      notificationNative:
-        "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 காலை வணக்கம்! உங்கள் நாள் அருமையாக அமையட்டும்.",
     },
     {
       code: "TE",
@@ -160,8 +154,7 @@ export const LanguageSupport = () => {
       fontClass: "font-telugu",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus కు స్వాగతం.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 శుభోదయం! మీ రోజు అద్భుతంగా సాగాలి.",
     },
     {
@@ -174,8 +167,7 @@ export const LanguageSupport = () => {
       fontClass: "font-devanagari",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus मध्ये आपले स्वागत आहे.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 शुभ प्रभात! तुमचा दिवस छान जावो.",
     },
     {
@@ -188,10 +180,8 @@ export const LanguageSupport = () => {
       fontClass: "font-gujarati",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus માં આપનું સ્વાગત છે.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
-      notificationNative:
-        "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 સુપ્રભાત! તમારો દિવસ સારો રીતે પસાર થાય.",
     },
     {
       code: "ML",
@@ -203,10 +193,8 @@ export const LanguageSupport = () => {
       fontClass: "font-malayalam",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus-ലേക്ക് സ്വാഗതം.",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
-      notificationNative:
-        "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
+      notificationNative: "🔔 സുപ്രഭാതം! നിങ്ങളുടെ ദിവസം മനോഹരമാവട്ടെ.",
     },
     {
       code: "BN",
@@ -218,8 +206,7 @@ export const LanguageSupport = () => {
       fontClass: "font-bengali",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus-এ আপনাকে স্বাগতম।",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 সুপ্রভাত! আপনার দিনটি ভালো কাটুক।",
     },
     {
@@ -232,8 +219,7 @@ export const LanguageSupport = () => {
       fontClass: "font-gurmukhi",
       greetingEnglish: "Welcome to SquareCampus.",
       greetingNative: "SquareCampus ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ।",
-      notificationEnglish:
-        "Notification: Good morning! May your day begin beautifully.",
+      notificationEnglish: "Notification: Good morning! May your day begin beautifully.",
       notificationNative: "🔔 ਸ਼ੁਭ ਸਵੇਰ! ਤੁਹਾਡਾ ਦਿਨ ਚੰਗਾ ਲੰਘੇ।",
     },
   ];
@@ -327,10 +313,7 @@ export const LanguageSupport = () => {
     };
 
     const handleClick = (event: MouseEvent) => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(event.target as Node)
-      ) {
+      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         setActive(null);
       }
     };
@@ -348,11 +331,7 @@ export const LanguageSupport = () => {
     if (!active) return;
 
     if (modalRef.current)
-      gsap.fromTo(
-        modalRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.2 }
-      );
+      gsap.fromTo(modalRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
     if (panelRef.current) {
       gsap.fromTo(
         panelRef.current,
@@ -400,10 +379,7 @@ export const LanguageSupport = () => {
       {!isMobile && <AnimatedGlobe />}
 
       {/* Heading section */}
-      <div
-        ref={headingRef}
-        className="relative z-10 mx-auto max-w-4xl space-y-4 text-center"
-      >
+      <div ref={headingRef} className="relative z-10 mx-auto max-w-4xl space-y-4 text-center">
         <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
           <Globe className="h-4 w-4 text-blue-400" />
           <p className="text-xs font-medium uppercase tracking-[0.3em] text-neutral-400">
@@ -419,9 +395,9 @@ export const LanguageSupport = () => {
         </h2>
 
         <p className="mx-auto max-w-2xl text-sm leading-relaxed text-neutral-400 md:text-base">
-          SquareCampus ships with support for India&apos;s major languages so
-          administrators, teachers, parents, and students can use the platform
-          comfortably in the language they prefer.
+          SquareCampus ships with support for India&apos;s major languages so administrators,
+          teachers, parents, and students can use the platform comfortably in the language they
+          prefer.
         </p>
       </div>
 
@@ -445,8 +421,7 @@ export const LanguageSupport = () => {
               "focus-visible:ring-2 focus-visible:ring-neutral-200"
             )}
             style={{
-              transform:
-                hoveredIndex === index ? "translateY(-4px)" : "translateY(0)",
+              transform: hoveredIndex === index ? "translateY(-4px)" : "translateY(0)",
             }}
           >
             {/* Hover glow effect */}
@@ -510,10 +485,7 @@ export const LanguageSupport = () => {
         >
           <span>{isExpanded ? "Show less" : `View all ${languages.length} languages`}</span>
           <ChevronDown
-            className={cn(
-              "h-4 w-4 transition-transform duration-300",
-              isExpanded && "rotate-180"
-            )}
+            className={cn("h-4 w-4 transition-transform duration-300", isExpanded && "rotate-180")}
           />
         </button>
       )}
@@ -538,8 +510,8 @@ export const LanguageSupport = () => {
               Parent-friendly. Teacher-friendly. Admin-friendly.
             </h3>
             <p className="text-sm leading-relaxed text-neutral-400">
-              Interfaces adapt to the chosen language, while reports and exports
-              can still be generated in English for auditors and regulators.
+              Interfaces adapt to the chosen language, while reports and exports can still be
+              generated in English for auditors and regulators.
             </p>
           </div>
 
@@ -560,15 +532,9 @@ export const LanguageSupport = () => {
 
       {/* Modal */}
       {active && (
-        <div
-          ref={modalRef}
-          className="fixed inset-0 z-50 flex items-center justify-center px-4"
-        >
+        <div ref={modalRef} className="fixed inset-0 z-50 flex items-center justify-center px-4">
           {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-md"
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-md" aria-hidden="true" />
 
           {/* Glow effect behind modal */}
           <div
@@ -612,15 +578,10 @@ export const LanguageSupport = () => {
                     id="language-greeting-title"
                     className="mt-1 flex items-center gap-2 text-base font-semibold text-white"
                   >
-                    <span
-                      lang={active.locale}
-                      className={active.fontClass}
-                    >
+                    <span lang={active.locale} className={active.fontClass}>
                       {active.nativeName}
                     </span>
-                    <span className="text-sm text-neutral-500">
-                      ({active.englishName})
-                    </span>
+                    <span className="text-sm text-neutral-500">({active.englishName})</span>
                     <span
                       className={cn(
                         "ml-1 inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-[0.55rem] font-medium uppercase tracking-wider",
@@ -650,19 +611,13 @@ export const LanguageSupport = () => {
                 >
                   <p
                     lang={active.locale}
-                    className={cn(
-                      "text-sm font-medium text-white",
-                      active.fontClass
-                    )}
+                    className={cn("text-sm font-medium text-white", active.fontClass)}
                   >
                     {active.greetingNative ?? active.greetingEnglish}
                   </p>
-                  {active.greetingNative &&
-                    active.greetingNative !== active.greetingEnglish && (
-                      <p className="mt-1.5 text-xs text-neutral-500">
-                        {active.greetingEnglish}
-                      </p>
-                    )}
+                  {active.greetingNative && active.greetingNative !== active.greetingEnglish && (
+                    <p className="mt-1.5 text-xs text-neutral-500">{active.greetingEnglish}</p>
+                  )}
                 </div>
 
                 {/* Notification preview */}
@@ -692,12 +647,9 @@ export const LanguageSupport = () => {
               {/* Footer text */}
               <p className="mt-5 text-[0.75rem] leading-relaxed text-neutral-500">
                 SquareCampus adapts key experiences into{" "}
-                <span className="font-medium text-neutral-300">
-                  {active.englishName}
-                </span>
-                : parent apps, notifications, attendance updates, fee
-                reminders—while admins can continue working in English if they
-                prefer.
+                <span className="font-medium text-neutral-300">{active.englishName}</span>: parent
+                apps, notifications, attendance updates, fee reminders—while admins can continue
+                working in English if they prefer.
               </p>
             </div>
           </div>

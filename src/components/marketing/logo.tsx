@@ -24,9 +24,7 @@ export const Logo = ({ className }: { className?: string }) => {
           className="transition-transform duration-200 group-hover:scale-105"
         />
       </div>
-      <span className="text-lg font-semibold tracking-tight text-white">
-        SquareCampus
-      </span>
+      <span className="text-lg font-semibold tracking-tight text-white">SquareCampus</span>
     </Link>
   );
 };

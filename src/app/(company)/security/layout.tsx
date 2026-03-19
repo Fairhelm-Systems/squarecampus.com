@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import type { ReactNode } from "react";
-import { createBreadcrumbSchema, createPageMetadata, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
+import {
+  createBreadcrumbSchema,
+  createPageMetadata,
+  createWebPageSchema,
+  SEO_CONFIG,
+} from "@/lib/seo";
 
 // Security page - critical for enterprise trust and procurement decisions
 // Target: Security-conscious decision makers, IT heads, compliance officers

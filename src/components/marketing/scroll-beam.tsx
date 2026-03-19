@@ -41,7 +41,11 @@ export function ScrollBeam({
     const bar = barRef.current;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const getMaxScroll = () =>
-      Math.max(1, ScrollTrigger.maxScroll(window) || document.documentElement.scrollHeight - window.innerHeight);
+      Math.max(
+        1,
+        ScrollTrigger.maxScroll(window) ||
+          document.documentElement.scrollHeight - window.innerHeight
+      );
 
     const setScale = gsap.quickTo(bar, "scaleX", {
       duration: prefersReducedMotion ? 0 : scrub,

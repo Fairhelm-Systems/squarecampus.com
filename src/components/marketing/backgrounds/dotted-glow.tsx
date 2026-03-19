@@ -183,10 +183,7 @@ export const DottedGlowBackground = ({
           Math.max(width, height) * 0.7
         );
         grad.addColorStop(0, "rgba(0,0,0,0)");
-        grad.addColorStop(
-          1,
-          `rgba(0,0,0,${Math.min(Math.max(backgroundOpacity, 0), 1)})`
-        );
+        grad.addColorStop(1, `rgba(0,0,0,${Math.min(Math.max(backgroundOpacity, 0), 1)})`);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
       }

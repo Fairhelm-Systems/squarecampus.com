@@ -4,12 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  Activity,
-  Radio,
-  Shield,
-  Workflow,
-} from "@/components/icons";
+import { Activity, Radio, Shield, Workflow } from "@/components/icons";
 import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
 import { cn } from "@/lib/utils";
 
@@ -103,8 +98,7 @@ export function Features() {
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
               backgroundSize: "40px 40px",
             }}
           />
@@ -162,7 +156,9 @@ export function Features() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                 </span>
-                <span className="text-[0.65rem] font-medium uppercase tracking-wider text-emerald-400">Live</span>
+                <span className="text-[0.65rem] font-medium uppercase tracking-wider text-emerald-400">
+                  Live
+                </span>
               </div>
             </div>
 
@@ -189,7 +185,9 @@ export function Features() {
                       >
                         {m.value}
                       </p>
-                      <p className="mt-1 text-[0.6rem] uppercase tracking-wider text-white/40">{m.label}</p>
+                      <p className="mt-1 text-[0.6rem] uppercase tracking-wider text-white/40">
+                        {m.label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -213,7 +211,9 @@ export function Features() {
                           style={{ width: `${cls.value}%` }}
                         />
                       </div>
-                      <span className="w-10 text-right text-[0.65rem] text-white/50">{cls.value}%</span>
+                      <span className="w-10 text-right text-[0.65rem] text-white/50">
+                        {cls.value}%
+                      </span>
                       {cls.alert && (
                         <span className="relative flex h-2 w-2">
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
@@ -227,7 +227,9 @@ export function Features() {
                 {/* Alert */}
                 <div className="mt-4 flex items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
                   <span className="text-lg">⚠️</span>
-                  <p className="flex-1 text-[0.7rem] text-amber-200/80">3 students need attention in Class 10-B</p>
+                  <p className="flex-1 text-[0.7rem] text-amber-200/80">
+                    3 students need attention in Class 10-B
+                  </p>
                   <span className="cursor-pointer text-[0.6rem] uppercase tracking-wider text-amber-300 transition-colors hover:text-amber-200">
                     Review →
                   </span>
@@ -282,7 +284,11 @@ export function Features() {
                     <span
                       className={cn(
                         "mt-1.5 text-[0.55rem] uppercase tracking-wider",
-                        s.current ? "text-purple-300" : s.active ? "text-purple-300/60" : "text-white/30"
+                        s.current
+                          ? "text-purple-300"
+                          : s.active
+                            ? "text-purple-300/60"
+                            : "text-white/30"
                       )}
                     >
                       {s.label}
@@ -367,9 +373,13 @@ export function Features() {
               <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4">
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-bold text-white">99.97%</span>
-                  <span className="text-[0.65rem] uppercase tracking-wider text-emerald-300/60">Uptime</span>
+                  <span className="text-[0.65rem] uppercase tracking-wider text-emerald-300/60">
+                    Uptime
+                  </span>
                 </div>
-                <p className="mt-1 text-[0.65rem] text-emerald-300/50">Last 90 days • 0 critical incidents</p>
+                <p className="mt-1 text-[0.65rem] text-emerald-300/50">
+                  Last 90 days • 0 critical incidents
+                </p>
               </div>
             </div>
 
@@ -400,7 +410,10 @@ export function Features() {
                 {Array.from({ length: 20 }).map((_, i) => (
                   <div
                     key={i}
-                    className={cn("h-6 flex-1 rounded-sm transition-colors", i === 8 ? "bg-amber-400/50" : "bg-emerald-400/40")}
+                    className={cn(
+                      "h-6 flex-1 rounded-sm transition-colors",
+                      i === 8 ? "bg-amber-400/50" : "bg-emerald-400/40"
+                    )}
                   />
                 ))}
               </div>
@@ -408,7 +421,7 @@ export function Features() {
           </div>
         </article>
 
-        {/* Why Different Card - Comparison */}
+        {/* Why SquareCampus Card - Comparison */}
         <article className="bento-card group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-neutral-900/50 backdrop-blur-sm lg:col-span-5 lg:row-span-1">
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-rose-500/5 via-transparent to-emerald-500/5" />
 
@@ -416,7 +429,9 @@ export function Features() {
             <div className="grid flex-1 grid-cols-2 gap-3">
               {/* The Trap */}
               <div className="flex flex-col rounded-xl border border-rose-500/20 bg-rose-500/5 p-3">
-                <p className="mb-2 text-[0.6rem] uppercase tracking-wider text-rose-400/70">The Trap</p>
+                <p className="mb-2 text-[0.6rem] uppercase tracking-wider text-rose-400/70">
+                  The Trap
+                </p>
                 <div className="flex flex-1 flex-wrap content-start gap-1">
                   {["ERP", "LMS", "Fee", "SMS", "Mail", "HR", "Bus"].map((tool) => (
                     <span
@@ -432,7 +447,9 @@ export function Features() {
 
               {/* The OS */}
               <div className="flex flex-col rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-                <p className="mb-2 text-[0.6rem] uppercase tracking-wider text-emerald-400/70">The OS</p>
+                <p className="mb-2 text-[0.6rem] uppercase tracking-wider text-emerald-400/70">
+                  The OS
+                </p>
                 <div className="flex flex-1 items-center justify-center">
                   <div className="relative">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 p-2 shadow-lg shadow-emerald-500/20">
@@ -447,16 +464,20 @@ export function Features() {
                     <div className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-neutral-900 bg-emerald-400" />
                   </div>
                 </div>
-                <p className="mt-2 text-[0.55rem] text-emerald-300/50">1 platform, infinite clarity</p>
+                <p className="mt-2 text-[0.55rem] text-emerald-300/50">
+                  1 platform, infinite clarity
+                </p>
               </div>
             </div>
 
             <a
-              href="#why-different"
+              href="#why-squarecampus"
               className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] py-2.5 text-[0.65rem] uppercase tracking-wider text-white/60 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
             >
               See why schools switch
-              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                →
+              </span>
             </a>
           </div>
         </article>
@@ -476,18 +497,23 @@ export function Features() {
                 {i > 0 && <div className="hidden h-12 w-px bg-white/10 lg:block" />}
                 <div className={cn("flex items-center gap-4", i > 0 && "lg:pl-8")}>
                   <div
-                    className={cn("flex h-12 w-12 items-center justify-center rounded-xl text-2xl", {
-                      "bg-blue-500/10": stat.color === "blue",
-                      "bg-purple-500/10": stat.color === "purple",
-                      "bg-emerald-500/10": stat.color === "emerald",
-                      "bg-amber-500/10": stat.color === "amber",
-                    })}
+                    className={cn(
+                      "flex h-12 w-12 items-center justify-center rounded-xl text-2xl",
+                      {
+                        "bg-blue-500/10": stat.color === "blue",
+                        "bg-purple-500/10": stat.color === "purple",
+                        "bg-emerald-500/10": stat.color === "emerald",
+                        "bg-amber-500/10": stat.color === "amber",
+                      }
+                    )}
                   >
                     {stat.icon}
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-white">{stat.value}</p>
-                    <p className="text-[0.65rem] uppercase tracking-wider text-white/40">{stat.label}</p>
+                    <p className="text-[0.65rem] uppercase tracking-wider text-white/40">
+                      {stat.label}
+                    </p>
                   </div>
                 </div>
               </div>

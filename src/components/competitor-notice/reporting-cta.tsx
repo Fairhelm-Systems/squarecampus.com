@@ -8,8 +8,7 @@ const ctaCards = [
     id: "report-violation",
     icon: AlertTriangle,
     title: "Report a Violation",
-    description:
-      "Report suspected unauthorized access, credential solicitation, or misuse.",
+    description: "Report suspected unauthorized access, credential solicitation, or misuse.",
     email: "security@squarecampus.com",
     buttonText: "Report Violation",
     variant: "danger" as const,
@@ -18,8 +17,7 @@ const ctaCards = [
     id: "legal-inquiries",
     icon: Mail,
     title: "Legal Inquiries",
-    description:
-      "For authorized evaluation or legal questions regarding this notice.",
+    description: "For authorized evaluation or legal questions regarding this notice.",
     email: "legal@squarecampus.com",
     buttonText: "Contact Legal",
     variant: "default" as const,
@@ -40,20 +38,17 @@ const variantStyles = {
   danger: {
     card: "border-red-500/30 bg-gradient-to-br from-red-950/40 to-neutral-900/60",
     icon: "bg-red-500/20 text-red-400",
-    button:
-      "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500/50",
+    button: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500/50",
   },
   default: {
     card: "border-neutral-700 bg-neutral-900/60",
     icon: "bg-neutral-700 text-neutral-300",
-    button:
-      "bg-neutral-700 text-white hover:bg-neutral-600 focus:ring-neutral-500/50",
+    button: "bg-neutral-700 text-white hover:bg-neutral-600 focus:ring-neutral-500/50",
   },
   success: {
     card: "border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 to-neutral-900/60",
     icon: "bg-emerald-500/20 text-emerald-400",
-    button:
-      "bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-500/50",
+    button: "bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-500/50",
   },
 };
 
@@ -62,9 +57,7 @@ export function ReportingCTA() {
     <section className="bg-neutral-950 py-16 sm:py-24 print:hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">
-            Take Action
-          </h2>
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">Take Action</h2>
           <p className="mt-3 text-neutral-400">
             Help us maintain fair competition and protect SquareCampus
           </p>
@@ -78,11 +71,7 @@ export function ReportingCTA() {
             return (
               <div
                 key={card.id}
-                className={cn(
-                  "rounded-2xl border p-6 sm:p-8",
-                  "flex flex-col",
-                  styles.card
-                )}
+                className={cn("rounded-2xl border p-6 sm:p-8", "flex flex-col", styles.card)}
               >
                 <div
                   className={cn(
@@ -93,12 +82,8 @@ export function ReportingCTA() {
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
 
-                <h3 className="mb-2 text-lg font-semibold text-white">
-                  {card.title}
-                </h3>
-                <p className="mb-6 flex-grow text-sm text-neutral-400">
-                  {card.description}
-                </p>
+                <h3 className="mb-2 text-lg font-semibold text-white">{card.title}</h3>
+                <p className="mb-6 flex-grow text-sm text-neutral-400">{card.description}</p>
 
                 <div className="space-y-3">
                   <p className="text-xs text-neutral-500">Contact:</p>
@@ -128,11 +113,9 @@ export function ReportingCTA() {
         {/* Additional Info */}
         <div className="mt-12 rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 text-center">
           <p className="text-sm text-neutral-400">
-            <strong className="text-neutral-300">PGP Encryption Available:</strong>{" "}
-            For secure communication, our PGP public key is available at{" "}
-            <span className="font-mono text-teal-400">
-              squarecampus.com/pgp
-            </span>
+            <strong className="text-neutral-300">PGP Encryption Available:</strong> For secure
+            communication, our PGP public key is available at{" "}
+            <span className="font-mono text-teal-400">squarecampus.com/pgp</span>
           </p>
         </div>
       </div>

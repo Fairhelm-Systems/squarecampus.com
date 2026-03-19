@@ -35,8 +35,7 @@ export function CustomCursor() {
     if (prefersReducedMotion) return;
 
     // Check if it's a touch device
-    const isTouchDevice =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) return;
 
     const cursor = cursorRef.current;
@@ -128,13 +127,24 @@ export function CustomCursor() {
         }
       } else if (target.tagName === "SELECT") {
         setHoverText("SELECT • CHOOSE • ");
-      } else if (target.tagName === "IMG" || target.closest("picture") || target.dataset.cursorImage) {
+      } else if (
+        target.tagName === "IMG" ||
+        target.closest("picture") ||
+        target.dataset.cursorImage
+      ) {
         setHoverText("VIEW • EXPLORE • ");
-      } else if (target.closest("[data-cursor-card]") || target.classList.contains("card") || target.closest(".card")) {
+      } else if (
+        target.closest("[data-cursor-card]") ||
+        target.classList.contains("card") ||
+        target.closest(".card")
+      ) {
         setHoverText("DISCOVER • MORE • ");
       } else if (target.tagName === "A" || target.closest("a")) {
         const href = (target as HTMLAnchorElement).href || target.closest("a")?.href || "";
-        const isExternal = href && !href.includes(window.location.hostname) && (href.startsWith("http") || href.startsWith("mailto:"));
+        const isExternal =
+          href &&
+          !href.includes(window.location.hostname) &&
+          (href.startsWith("http") || href.startsWith("mailto:"));
         if (href.startsWith("mailto:")) {
           setHoverText("SEND • EMAIL • ");
         } else if (isExternal) {
@@ -142,7 +152,11 @@ export function CustomCursor() {
         } else {
           setHoverText("CLICK • EXPLORE • ");
         }
-      } else if (target.tagName === "BUTTON" || target.closest("button") || target.getAttribute("role") === "button") {
+      } else if (
+        target.tagName === "BUTTON" ||
+        target.closest("button") ||
+        target.getAttribute("role") === "button"
+      ) {
         const buttonText = target.textContent?.toLowerCase() || "";
         if (buttonText.includes("submit") || buttonText.includes("send")) {
           setHoverText("SEND • GO • ");
@@ -302,8 +316,7 @@ export function CustomCursor() {
         className="pointer-events-none fixed left-0 top-0 z-9998 hidden h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
         style={{
           opacity: isVisible ? 0.5 : 0,
-          background:
-            "radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%)",
           transition: "opacity 0.4s ease",
         }}
         aria-hidden="true"
@@ -354,7 +367,9 @@ export function CustomCursor() {
               }}
             >
               <textPath href="#textCircle" startOffset="0%">
-                {hoverText}{hoverText}{hoverText}
+                {hoverText}
+                {hoverText}
+                {hoverText}
               </textPath>
             </text>
             {/* Main text on top */}
@@ -369,7 +384,9 @@ export function CustomCursor() {
               }}
             >
               <textPath href="#textCircle" startOffset="0%">
-                {hoverText}{hoverText}{hoverText}
+                {hoverText}
+                {hoverText}
+                {hoverText}
               </textPath>
             </text>
             <animateTransform

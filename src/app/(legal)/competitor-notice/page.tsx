@@ -29,14 +29,13 @@ export const metadata: Metadata = {
     "legal notice",
     "unauthorized access",
     "SquareCampus",
-    "MDTechSpire",
+    "MDTechspire",
     "cybersecurity",
     "IP protection",
   ],
   openGraph: {
     title: "Notice to Competitors | SquareCampus",
-    description:
-      "Public legal notice regarding unauthorized access or misuse of SquareCampus.",
+    description: "Public legal notice regarding unauthorized access or misuse of SquareCampus.",
     type: "website",
     url: "https://squarecampus.com/competitor-notice",
   },
@@ -73,7 +72,7 @@ export default function CompetitorNoticePage() {
                 severity="critical"
               >
                 <Paragraph>
-                  MDTechSpire (trading as SquareCampus) issues this public legal notice to
+                  MDTechspire (trading as SquareCampus) issues this public legal notice to
                   competitors, their employees, contractors, agents, and anyone seeking access to
                   SquareCampus. Unauthorized access, credential solicitation, or misuse of
                   non-public information is prohibited.
@@ -147,8 +146,7 @@ export default function CompetitorNoticePage() {
 
                 <ExpandableSection title="C. Scraping, Probing, or Automated Access">
                   <Paragraph>
-                    Using automated tools or scripts to discover, extract, or infer non-public
-                    data.
+                    Using automated tools or scripts to discover, extract, or infer non-public data.
                   </Paragraph>
                   <BulletList
                     type="x"
@@ -300,8 +298,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         Indian Penal Code, 1860
-                      </a>
-                      {" "}
+                      </a>{" "}
                       and{" "}
                       <a
                         className={linkClassName}
@@ -328,8 +325,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         Copyright Act, 1957
-                      </a>
-                      {" "}
+                      </a>{" "}
                       /{" "}
                       <a
                         className={linkClassName}
@@ -338,8 +334,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         Trade Marks Act, 1999
-                      </a>
-                      {" "}
+                      </a>{" "}
                       /{" "}
                       <a
                         className={linkClassName}
@@ -356,9 +351,9 @@ export default function CompetitorNoticePage() {
 
                 <InfoBox variant="blue">
                   <Paragraph>
-                    India does not have a standalone trade secrets statute. Confidential
-                    information is protected through contracts and breach of confidence principles
-                    under Indian law.
+                    India does not have a standalone trade secrets statute. Confidential information
+                    is protected through contracts and breach of confidence principles under Indian
+                    law.
                   </Paragraph>
                 </InfoBox>
               </NoticeSection>
@@ -404,8 +399,8 @@ export default function CompetitorNoticePage() {
               >
                 <WarningBox title="Criminal Liability Warning" severity="critical">
                   <Paragraph>
-                    Unauthorized access and related conduct may constitute criminal offences. We
-                    may file complaints and cooperate with law enforcement where appropriate.
+                    Unauthorized access and related conduct may constitute criminal offences. We may
+                    file complaints and cooperate with law enforcement where appropriate.
                   </Paragraph>
                 </WarningBox>
 
@@ -507,8 +502,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         Ministry of Electronics and Information Technology (MeitY)
-                      </a>
-                      {" "}
+                      </a>{" "}
                       and other competent authorities, where legally required.
                     </span>
                   </li>
@@ -525,8 +519,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         CERT-In
-                      </a>
-                      {" "}
+                      </a>{" "}
                       notifications may be made for qualifying cyber incidents.
                     </span>
                   </li>
@@ -547,8 +540,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         NASSCOM
-                      </a>
-                      {" "}
+                      </a>{" "}
                       and{" "}
                       <a
                         className={linkClassName}
@@ -557,8 +549,7 @@ export default function CompetitorNoticePage() {
                         rel="noopener noreferrer"
                       >
                         IAMAI
-                      </a>
-                      {" "}
+                      </a>{" "}
                       may be notified where their codes of conduct apply; any action is at their
                       discretion.
                     </span>
@@ -701,8 +692,8 @@ export default function CompetitorNoticePage() {
 
                 <InfoBox variant="teal">
                   <Paragraph>
-                    Voluntary disclosure does not guarantee leniency. We evaluate responses based
-                    on facts, scope, and legal obligations.
+                    Voluntary disclosure does not guarantee leniency. We evaluate responses based on
+                    facts, scope, and legal obligations.
                   </Paragraph>
                 </InfoBox>
               </NoticeSection>
@@ -738,7 +729,7 @@ export default function CompetitorNoticePage() {
                 severity="info"
               >
                 <Paragraph>
-                  MDTechSpire reserves all rights and remedies. Any delay or failure to enforce a
+                  MDTechspire reserves all rights and remedies. Any delay or failure to enforce a
                   right is not a waiver of that right or any other.
                 </Paragraph>
               </NoticeSection>

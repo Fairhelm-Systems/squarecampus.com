@@ -55,16 +55,15 @@ export default function PrivacyPolicyPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Data Controller" id="company-controller">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire. All services are
-            provided by MDTechSpire, unless otherwise stated in a written agreement or order
-            form.
+            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
+            by MDTechspire, unless otherwise stated in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechSpire.</p>
+          <p>References to "SquareCampus" in this Policy mean MDTechspire.</p>
           <p>
-            For the purposes of applicable data protection law, MDTechSpire acts as the Data
-            Controller for its own business operations and the SquareCampus website. When
-            processing personal data on behalf of an Institution within the Service, MDTechSpire
-            acts as a Data Processor as described in the Data Processing Addendum.
+            For the purposes of applicable data protection law, MDTechspire acts as the Data
+            Controller for its own business operations and the SquareCampus website. When processing
+            personal data on behalf of an Institution within the Service, MDTechspire acts as a Data
+            Processor as described in the Data Processing Addendum.
           </p>
           <p>
             SquareCampus service data is hosted and processed in India. We do not transfer or store
@@ -226,7 +225,7 @@ export default function PrivacyPolicyPage() {
         <LegalSection title="12. Contact Us" id="contact">
           <p>If you have questions or requests, contact:</p>
           <p>
-            <strong>MDTechSpire</strong>
+            <strong>MDTechspire</strong>
             <br />
             Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
             <br />

@@ -27,20 +27,8 @@ function AnimatedGrid() {
     <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.03]">
       <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <pattern
-            id="why-grid"
-            x="0"
-            y="0"
-            width="60"
-            height="60"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 60 0 L 0 0 0 60"
-              fill="none"
-              stroke="white"
-              strokeWidth="0.5"
-            />
+          <pattern id="why-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#why-grid)" />
@@ -131,8 +119,7 @@ const painPoints = [
     problem:
       "Quarter-long rollouts with repeated data imports and training resets. Time lost and momentum broken.",
     problemShort: "Quarter-long rollouts and redo cycles.",
-    solution:
-      "Guided rollout with data migration and training included. Onboarding without chaos.",
+    solution: "Guided rollout with data migration and training included. Onboarding without chaos.",
     solutionShort: "Guided rollout with migration + training.",
     gradient: "from-emerald-500/20 via-green-500/10",
     iconColor: "text-emerald-400",
@@ -170,8 +157,7 @@ const painPoints = [
     problem:
       "Long loads and timeouts on results day. Basic lists should not feel like data migrations.",
     problemShort: "Slow on critical days.",
-    solution:
-      "Fast loads built for peak days: admissions, results, and fee deadlines.",
+    solution: "Fast loads built for peak days: admissions, results, and fee deadlines.",
     solutionShort: "Fast loads for peak days.",
     gradient: "from-sky-500/20 via-cyan-500/10",
     iconColor: "text-sky-400",
@@ -183,8 +169,7 @@ const painPoints = [
     problem:
       "Support ping-pongs between sales, partners, and product. Context gets lost, time gets wasted.",
     problemShort: "Ticket ping-pong.",
-    solution:
-      "In-house, context-aware support from kickoff to go-live. Same team, faster answers.",
+    solution: "In-house, context-aware support from kickoff to go-live. Same team, faster answers.",
     solutionShort: "In-house, context-aware support.",
     gradient: "from-teal-500/20 via-emerald-500/10",
     iconColor: "text-teal-300",
@@ -193,11 +178,9 @@ const painPoints = [
   {
     icon: BarChart3,
     title: "Live Visibility, Not Exports",
-    problem:
-      "Reports are nightly exports. Leadership sees yesterday and decisions get delayed.",
+    problem: "Reports are nightly exports. Leadership sees yesterday and decisions get delayed.",
     problemShort: "Exports instead of live insights.",
-    solution:
-      "Live dashboards with drill-downs to the exact record. Decisions stay current.",
+    solution: "Live dashboards with drill-downs to the exact record. Decisions stay current.",
     solutionShort: "Live dashboards with drill-downs.",
     gradient: "from-indigo-500/20 via-sky-500/10",
     iconColor: "text-indigo-300",
@@ -498,7 +481,7 @@ export function WhyDifferent() {
   return (
     <section
       ref={sectionRef}
-      id="why-different"
+      id="why-squarecampus"
       className="relative overflow-hidden border-t border-white/[0.06] bg-neutral-950 px-4 py-12 md:px-8 md:py-28"
     >
       {/* Background effects - Hidden on mobile for performance */}
@@ -548,10 +531,7 @@ export function WhyDifferent() {
           </div>
         ) : (
           /* Desktop: Original grid with hover effects */
-          <div
-            ref={gridRef}
-            className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          >
+          <div ref={gridRef} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {painPoints.map((point, index) => (
               <DesktopCard
                 key={point.title}
@@ -567,7 +547,7 @@ export function WhyDifferent() {
         {/* CTA */}
         <div ref={ctaRef} className="mt-10 text-center lg:mt-16">
           <Link
-            href="/why-different"
+            href="/why-squarecampus"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full p-[1px]"
           >
             {/* Animated gradient border - simplified on mobile */}

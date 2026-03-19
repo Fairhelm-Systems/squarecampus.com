@@ -74,10 +74,7 @@ function AnimatedLine({ position }: { position: "left" | "right" }) {
     return () => ctx.revert();
   }, []);
 
-  const path =
-    position === "left"
-      ? "M1 0V180L70 250V450"
-      : "M70 0V180L1 250V450";
+  const path = position === "left" ? "M1 0V180L70 250V450" : "M70 0V180L1 250V450";
 
   return (
     <svg
@@ -92,12 +89,7 @@ function AnimatedLine({ position }: { position: "left" | "right" }) {
       viewBox="0 0 71 450"
       fill="none"
     >
-      <path
-        ref={pathRef}
-        d={path}
-        stroke="url(#cta-gradient)"
-        strokeWidth="1"
-      />
+      <path ref={pathRef} d={path} stroke="url(#cta-gradient)" strokeWidth="1" />
       <defs>
         <linearGradient
           id="cta-gradient"
@@ -208,10 +200,7 @@ export function CTA() {
       <div className="relative mx-auto flex max-w-7xl items-center justify-center">
         <AnimatedLine position="left" />
 
-        <div
-          ref={contentRef}
-          className="relative z-10 mx-auto w-full max-w-3xl text-center"
-        >
+        <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-3xl text-center">
           {/* Badge */}
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm md:mb-8">
             <Sparkles className="h-4 w-4 text-blue-400" />
@@ -243,8 +232,8 @@ export function CTA() {
 
           {/* Description */}
           <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-neutral-400 sm:text-base md:text-lg">
-            SquareCampus is the single operating system for modern schools and
-            colleges, digitizing every workflow from admissions to alumni.
+            SquareCampus is the single operating system for modern schools and colleges, digitizing
+            every workflow from admissions to alumni.
           </p>
 
           {/* Signal badges */}
@@ -281,9 +270,7 @@ export function CTA() {
                   <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20">
                     <Check className="h-3 w-3 text-blue-400" />
                   </div>
-                  <span className="text-sm leading-relaxed text-neutral-300">
-                    {highlight}
-                  </span>
+                  <span className="text-sm leading-relaxed text-neutral-300">{highlight}</span>
                 </li>
               ))}
             </ul>

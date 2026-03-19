@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Heart, Instagram, Linkedin, Mail, MapPin, XTwitter } from "@/components/icons";
+import {
+  ChevronDown,
+  Heart,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  XTwitter,
+} from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
@@ -81,7 +89,7 @@ export function Footer() {
     { title: "Home", href: "/" },
     { title: "Features", href: "/features" },
     { title: "Ecosystem", href: "/ecosystem" },
-    { title: "Why SquareCampus", href: "/why-different" },
+    { title: "Why SquareCampus", href: "/why-squarecampus" },
     { title: "School Management System", href: "/school-management-system" },
     { title: "FAQs", href: "/faq" },
   ];
@@ -120,7 +128,8 @@ export function Footer() {
   const socialLinks = [
     {
       name: "LinkedIn",
-      href: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://www.linkedin.com/company/square-campus",
+      href:
+        process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://www.linkedin.com/company/square-campus",
       icon: Linkedin,
     },
     {
@@ -148,7 +157,7 @@ export function Footer() {
           className="absolute inset-0 opacity-[0.015]"
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundSize: "60px 60px",
           }}
         />
       </div>
@@ -161,8 +170,8 @@ export function Footer() {
           <div className="max-w-md space-y-4 lg:space-y-6">
             <Logo />
             <p className="text-sm leading-relaxed text-neutral-400 lg:text-base">
-              The operating system for schools and colleges—bringing admissions, academics,
-              finance, and communication into one dependable control center.
+              The operating system for schools and colleges—bringing admissions, academics, finance,
+              and communication into one dependable control center.
             </p>
 
             {/* Signal badges - More compact on mobile */}
@@ -296,7 +305,8 @@ export function Footer() {
           </div>
 
           <p className="text-center text-[0.7rem] leading-relaxed text-neutral-500 md:text-right lg:text-[0.75rem]">
-            SquareCampus is a trademark of MDTechSpire. © {new Date().getFullYear()} SquareCampus. All rights reserved.
+            SquareCampus is a trademark of MDTechspire. © {new Date().getFullYear()} SquareCampus.
+            All rights reserved.
           </p>
         </div>
       </div>

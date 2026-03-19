@@ -5,21 +5,8 @@ import Script from "next/script";
 import { useState } from "react";
 import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  createBreadcrumbSchema,
-  createWebPageSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
-import {
-  ArrowUpRight,
-  Check,
-  Copy,
-  Download,
-  Key,
-  Lock,
-  Mail,
-  Shield,
-} from "@/icons";
+import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
+import { ArrowUpRight, Check, Copy, Download, Key, Lock, Mail, Shield } from "@/icons";
 import { cn } from "@/lib/utils";
 
 // PGP Key information
@@ -101,7 +88,8 @@ const useCases = [
   {
     icon: Shield,
     title: "Security Vulnerability Reports",
-    description: "Report security issues privately and securely. We take responsible disclosure seriously.",
+    description:
+      "Report security issues privately and securely. We take responsible disclosure seriously.",
     color: "emerald",
   },
   {
@@ -113,7 +101,8 @@ const useCases = [
   {
     icon: Mail,
     title: "Verify Our Messages",
-    description: "Confirm that emails claiming to be from SquareCampus security team are authentic.",
+    description:
+      "Confirm that emails claiming to be from SquareCampus security team are authentic.",
     color: "purple",
   },
 ];
@@ -240,16 +229,38 @@ export default function PGPPage() {
               <div className="grid gap-4 pt-4 grid-cols-2 lg:grid-cols-4">
                 {[
                   { label: "Email", value: pgpKeyData.email, color: "emerald", truncate: true },
-                  { label: "Algorithm", value: pgpKeyData.algorithm, color: "blue", truncate: false },
+                  {
+                    label: "Algorithm",
+                    value: pgpKeyData.algorithm,
+                    color: "blue",
+                    truncate: false,
+                  },
                   { label: "Created", value: pgpKeyData.created, color: "purple", truncate: false },
                   { label: "Expires", value: pgpKeyData.expires, color: "amber", truncate: false },
                 ].map((item) => {
-                  const colorClasses: Record<string, { border: string; bg: string; text: string }> = {
-                    emerald: { border: "border-emerald-500/30", bg: "bg-emerald-500/10", text: "text-emerald-400" },
-                    blue: { border: "border-blue-500/30", bg: "bg-blue-500/10", text: "text-blue-400" },
-                    purple: { border: "border-purple-500/30", bg: "bg-purple-500/10", text: "text-purple-400" },
-                    amber: { border: "border-amber-500/30", bg: "bg-amber-500/10", text: "text-amber-400" },
-                  };
+                  const colorClasses: Record<string, { border: string; bg: string; text: string }> =
+                    {
+                      emerald: {
+                        border: "border-emerald-500/30",
+                        bg: "bg-emerald-500/10",
+                        text: "text-emerald-400",
+                      },
+                      blue: {
+                        border: "border-blue-500/30",
+                        bg: "bg-blue-500/10",
+                        text: "text-blue-400",
+                      },
+                      purple: {
+                        border: "border-purple-500/30",
+                        bg: "bg-purple-500/10",
+                        text: "text-purple-400",
+                      },
+                      amber: {
+                        border: "border-amber-500/30",
+                        bg: "bg-amber-500/10",
+                        text: "text-amber-400",
+                      },
+                    };
                   const colors = colorClasses[item.color];
                   return (
                     <div
@@ -312,9 +323,21 @@ export default function PGPPage() {
               {useCases.map((useCase) => {
                 const Icon = useCase.icon;
                 const colorClasses: Record<string, { border: string; bg: string; text: string }> = {
-                  emerald: { border: "border-emerald-500/20", bg: "bg-emerald-500/10", text: "text-emerald-400" },
-                  blue: { border: "border-blue-500/20", bg: "bg-blue-500/10", text: "text-blue-400" },
-                  purple: { border: "border-purple-500/20", bg: "bg-purple-500/10", text: "text-purple-400" },
+                  emerald: {
+                    border: "border-emerald-500/20",
+                    bg: "bg-emerald-500/10",
+                    text: "text-emerald-400",
+                  },
+                  blue: {
+                    border: "border-blue-500/20",
+                    bg: "bg-blue-500/10",
+                    text: "text-blue-400",
+                  },
+                  purple: {
+                    border: "border-purple-500/20",
+                    bg: "bg-purple-500/10",
+                    text: "text-purple-400",
+                  },
                 };
                 const colors = colorClasses[useCase.color];
                 return (
@@ -325,7 +348,13 @@ export default function PGPPage() {
                     )}
                   >
                     <CardContent className="p-5">
-                      <div className={cn("mb-3 inline-flex rounded-lg border p-2", colors.border, colors.bg)}>
+                      <div
+                        className={cn(
+                          "mb-3 inline-flex rounded-lg border p-2",
+                          colors.border,
+                          colors.bg
+                        )}
+                      >
                         <Icon className={cn("h-5 w-5", colors.text)} />
                       </div>
                       <h3 className="mb-2 font-semibold text-white">{useCase.title}</h3>
@@ -432,19 +461,35 @@ export default function PGPPage() {
                 <ul className="space-y-2 text-sm text-neutral-300">
                   <li className="flex items-start gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                    <span>Always verify the fingerprint through a separate channel before trusting this key.</span>
+                    <span>
+                      Always verify the fingerprint through a separate channel before trusting this
+                      key.
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                    <span>We will never ask for passwords, tokens, or sensitive credentials via email.</span>
+                    <span>
+                      We will never ask for passwords, tokens, or sensitive credentials via email.
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                    <span>For security vulnerabilities, email <a href="mailto:security@squarecampus.com" className="text-amber-400 hover:underline">security@squarecampus.com</a> with your encrypted report.</span>
+                    <span>
+                      For security vulnerabilities, email{" "}
+                      <a
+                        href="mailto:security@squarecampus.com"
+                        className="text-amber-400 hover:underline"
+                      >
+                        security@squarecampus.com
+                      </a>{" "}
+                      with your encrypted report.
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                    <span>This key is rotated periodically. Check this page for the latest version.</span>
+                    <span>
+                      This key is rotated periodically. Check this page for the latest version.
+                    </span>
                   </li>
                 </ul>
               </CardContent>

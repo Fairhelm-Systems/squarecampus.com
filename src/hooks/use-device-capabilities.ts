@@ -56,7 +56,8 @@ export function useDeviceCapabilities(): DeviceCapabilities {
     // Check for low-end device
     const checkLowEnd = () => {
       const lowMemory = nav.deviceMemory !== undefined && nav.deviceMemory < 4;
-      const lowCores = navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4;
+      const lowCores =
+        navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4;
       return lowMemory || lowCores;
     };
 

@@ -141,10 +141,6 @@ export const metadata: Metadata = createPageMetadata({
     "50+ integrated features for school management. Admissions, fees, attendance, exams, transport, parent communication. All in one platform.",
 });
 
-export default function FeaturesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function FeaturesLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

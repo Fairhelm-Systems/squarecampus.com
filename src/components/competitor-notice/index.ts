@@ -1,5 +1,10 @@
 export { Hero } from "./hero";
-export { TableOfContents, TableOfContentsSidebar, tocSections, type TocSection } from "./table-of-contents";
+export {
+  TableOfContents,
+  TableOfContentsSidebar,
+  tocSections,
+  type TocSection,
+} from "./table-of-contents";
 export {
   NoticeSection,
   WarningBox,

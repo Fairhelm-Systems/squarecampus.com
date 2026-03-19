@@ -14,9 +14,7 @@ export default function NotFound() {
   useEffect(() => {
     if (!containerRef.current || hasAnimated.current) return;
 
-    const prefersReduced = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     hasAnimated.current = true;
@@ -151,11 +149,7 @@ export default function NotFound() {
         {/* Navigation buttons - ALWAYS VISIBLE */}
         <div className="mb-6 flex flex-wrap items-center justify-center gap-4">
           <BookCallCta context="not-found" label="Book a Demo" variant="primary" />
-          <LinkButton
-            href="/"
-            variant="dark"
-            className="group inline-flex items-center gap-1.5"
-          >
+          <LinkButton href="/" variant="dark" className="group inline-flex items-center gap-1.5">
             <span>Back to Home</span>
             <Home className="h-4 w-4" />
           </LinkButton>
@@ -171,8 +165,8 @@ export default function NotFound() {
             Platform Ecosystem
           </Link>
           <span className="text-neutral-600">•</span>
-          <Link href="/why-different" className="text-sky-400 underline-offset-4 hover:underline">
-            Why Different
+          <Link href="/why-squarecampus" className="text-sky-400 underline-offset-4 hover:underline">
+            Why SquareCampus
           </Link>
         </div>
 

@@ -36,11 +36,7 @@ import {
   Zap,
 } from "@/components/icons";
 import { cn } from "@/lib/utils";
-import {
-  createBreadcrumbSchema,
-  createWebPageSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
+import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,7 +47,8 @@ gsap.registerPlugin(ScrollTrigger);
 const outcomeSignals = [
   {
     title: "One login, every workflow",
-    description: "Staff, teachers, and parents access everything from a single authenticated session.",
+    description:
+      "Staff, teachers, and parents access everything from a single authenticated session.",
     icon: <Users className="h-5 w-5" />,
     color: "blue",
   },
@@ -76,11 +73,46 @@ const outcomeSignals = [
 ];
 
 const categoryOverview = [
-  { id: "foundation", name: "Foundation", icon: Puzzle, color: "blue", tagline: "5 core modules", count: 5 },
-  { id: "operations", name: "Operations", icon: Bus, color: "emerald", tagline: "4 service modules", count: 4 },
-  { id: "extended-academic", name: "Extended Academic", icon: GraduationCap, color: "purple", tagline: "4 advanced modules", count: 4 },
-  { id: "operational-excellence", name: "Operational Excellence", icon: Activity, color: "amber", tagline: "6 facility modules", count: 6 },
-  { id: "governance", name: "Governance", icon: ShieldCheck, color: "teal", tagline: "2 compliance modules", count: 2 },
+  {
+    id: "foundation",
+    name: "Foundation",
+    icon: Puzzle,
+    color: "blue",
+    tagline: "5 core modules",
+    count: 5,
+  },
+  {
+    id: "operations",
+    name: "Operations",
+    icon: Bus,
+    color: "emerald",
+    tagline: "4 service modules",
+    count: 4,
+  },
+  {
+    id: "extended-academic",
+    name: "Extended Academic",
+    icon: GraduationCap,
+    color: "purple",
+    tagline: "4 advanced modules",
+    count: 4,
+  },
+  {
+    id: "operational-excellence",
+    name: "Operational Excellence",
+    icon: Activity,
+    color: "amber",
+    tagline: "6 facility modules",
+    count: 6,
+  },
+  {
+    id: "governance",
+    name: "Governance",
+    icon: ShieldCheck,
+    color: "teal",
+    tagline: "2 compliance modules",
+    count: 2,
+  },
 ];
 
 const foundationModules = [
@@ -90,14 +122,16 @@ const foundationModules = [
     subtitle: "Course content, assignments, virtual classrooms",
     icon: BookOpen,
     color: "blue",
-    description: "Complete digital learning infrastructure. Course creation, video streaming, assignments, quizzes, and live classes integrated with your academic calendar.",
+    description:
+      "Complete digital learning infrastructure. Course creation, video streaming, assignments, quizzes, and live classes integrated with your academic calendar.",
     highlights: [
       "Course and module organization with video streaming",
       "Assignment submission and grading workflow",
       "Quiz builder with auto-grading",
       "Live class integration with recording library",
     ],
-    outcome: "Teachers deliver content digitally. Students learn at their pace with progress tracking.",
+    outcome:
+      "Teachers deliver content digitally. Students learn at their pace with progress tracking.",
   },
   {
     id: "admissions",
@@ -105,14 +139,16 @@ const foundationModules = [
     subtitle: "From first inquiry to confirmed seat",
     icon: Users,
     color: "emerald",
-    description: "Replace spreadsheets and email threads with a single tracked workflow. Applications, documents, entrance exams, merit lists, and offer letters - all in one flow.",
+    description:
+      "Replace spreadsheets and email threads with a single tracked workflow. Applications, documents, entrance exams, merit lists, and offer letters - all in one flow.",
     highlights: [
       "Online applications with document uploads",
       "Stage-by-stage approvals with ownership",
       "Entrance exam scores flow into selection",
       "Audit trail for every status change",
     ],
-    outcome: "Admissions teams see every applicant's status instantly. No more asking 'where is this file?'",
+    outcome:
+      "Admissions teams see every applicant's status instantly. No more asking 'where is this file?'",
   },
   {
     id: "finance",
@@ -120,7 +156,8 @@ const foundationModules = [
     subtitle: "Collections, concessions, compliance",
     icon: DollarSign,
     color: "purple",
-    description: "Model complex fee structures by program, class, or campus. Collect across payment modes with auto-receipts. Generate audit-ready reports from live data.",
+    description:
+      "Model complex fee structures by program, class, or campus. Collect across payment modes with auto-receipts. Generate audit-ready reports from live data.",
     highlights: [
       "Fee structures with installments and concessions",
       "Multi-mode collection with reconciliation",
@@ -135,7 +172,8 @@ const foundationModules = [
     subtitle: "Timetables, attendance, assessments",
     icon: GraduationCap,
     color: "amber",
-    description: "Build conflict-free timetables. Capture attendance with multiple inputs. Run exams, record marks, and publish report cards in one continuous flow.",
+    description:
+      "Build conflict-free timetables. Capture attendance with multiple inputs. Run exams, record marks, and publish report cards in one continuous flow.",
     highlights: [
       "Conflict-free timetable generation",
       "Real-time attendance with parent alerts",
@@ -150,7 +188,8 @@ const foundationModules = [
     subtitle: "Every channel, one inbox",
     icon: MessageSquare,
     color: "sky",
-    description: "Send announcements through approved channels with delivery proof. Give parents one place for attendance, homework, fees, and updates.",
+    description:
+      "Send announcements through approved channels with delivery proof. Give parents one place for attendance, homework, fees, and updates.",
     highlights: [
       "Multi-channel: SMS, email, app, WhatsApp",
       "Role-aware targeting and broadcast",
@@ -198,14 +237,24 @@ const extendedAcademicModules = [
     title: "Training & Placement",
     icon: TrendingUp,
     color: "blue",
-    features: ["Company registration", "Job postings", "Interview scheduling", "Placement analytics"],
+    features: [
+      "Company registration",
+      "Job postings",
+      "Interview scheduling",
+      "Placement analytics",
+    ],
   },
   {
     id: "examination",
     title: "Examination",
     icon: FileCheck,
     color: "emerald",
-    features: ["Hall allocation", "Invigilator roster", "Answer sheet tracking", "Result processing"],
+    features: [
+      "Hall allocation",
+      "Invigilator roster",
+      "Answer sheet tracking",
+      "Result processing",
+    ],
   },
   {
     id: "research",
@@ -236,14 +285,24 @@ const operationalExcellenceModules = [
     title: "Health Center",
     icon: Heart,
     color: "rose",
-    features: ["Health records", "Appointment scheduling", "Prescription management", "Vaccination tracking"],
+    features: [
+      "Health records",
+      "Appointment scheduling",
+      "Prescription management",
+      "Vaccination tracking",
+    ],
   },
   {
     id: "sports",
     title: "Sports & Recreation",
     icon: Activity,
     color: "indigo",
-    features: ["Facility booking", "Tournament management", "Equipment inventory", "Coach management"],
+    features: [
+      "Facility booking",
+      "Tournament management",
+      "Equipment inventory",
+      "Coach management",
+    ],
   },
   {
     id: "events",
@@ -257,14 +316,24 @@ const operationalExcellenceModules = [
     title: "Inventory Management",
     icon: Database,
     color: "blue",
-    features: ["Asset cataloging", "Stock management", "Reorder automation", "Depreciation tracking"],
+    features: [
+      "Asset cataloging",
+      "Stock management",
+      "Reorder automation",
+      "Depreciation tracking",
+    ],
   },
   {
     id: "procurement",
     title: "Procurement & Vendors",
     icon: CreditCard,
     color: "emerald",
-    features: ["Vendor registration", "Purchase requisition", "Invoice matching", "Contract management"],
+    features: [
+      "Vendor registration",
+      "Purchase requisition",
+      "Invoice matching",
+      "Contract management",
+    ],
   },
 ];
 
@@ -274,7 +343,12 @@ const governanceModules = [
     title: "Accreditation & Compliance",
     icon: ShieldCheck,
     color: "purple",
-    features: ["NAAC/NBA tracking", "Document repository", "Self-assessment reports", "Gap analysis"],
+    features: [
+      "NAAC/NBA tracking",
+      "Document repository",
+      "Self-assessment reports",
+      "Gap analysis",
+    ],
   },
   {
     id: "grievance",
@@ -288,7 +362,8 @@ const governanceModules = [
 const platformBackbone = [
   {
     title: "Unified data model",
-    description: "All modules share one database. A student in admissions is the same record in finance and academics.",
+    description:
+      "All modules share one database. A student in admissions is the same record in finance and academics.",
     icon: <Database className="h-5 w-5" />,
     color: "blue",
   },
@@ -598,14 +673,54 @@ const featureAccordion = [
 // ============================================================================
 
 const accentColors: Record<string, { border: string; bg: string; text: string; glow: string }> = {
-  blue: { border: "border-blue-500/30", bg: "bg-blue-500/10", text: "text-blue-400", glow: "bg-blue-500/20" },
-  emerald: { border: "border-emerald-500/30", bg: "bg-emerald-500/10", text: "text-emerald-400", glow: "bg-emerald-500/20" },
-  purple: { border: "border-purple-500/30", bg: "bg-purple-500/10", text: "text-purple-400", glow: "bg-purple-500/20" },
-  amber: { border: "border-amber-500/30", bg: "bg-amber-500/10", text: "text-amber-400", glow: "bg-amber-500/20" },
-  sky: { border: "border-sky-500/30", bg: "bg-sky-500/10", text: "text-sky-400", glow: "bg-sky-500/20" },
-  rose: { border: "border-rose-500/30", bg: "bg-rose-500/10", text: "text-rose-400", glow: "bg-rose-500/20" },
-  indigo: { border: "border-indigo-500/30", bg: "bg-indigo-500/10", text: "text-indigo-400", glow: "bg-indigo-500/20" },
-  teal: { border: "border-teal-500/30", bg: "bg-teal-500/10", text: "text-teal-400", glow: "bg-teal-500/20" },
+  blue: {
+    border: "border-blue-500/30",
+    bg: "bg-blue-500/10",
+    text: "text-blue-400",
+    glow: "bg-blue-500/20",
+  },
+  emerald: {
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    glow: "bg-emerald-500/20",
+  },
+  purple: {
+    border: "border-purple-500/30",
+    bg: "bg-purple-500/10",
+    text: "text-purple-400",
+    glow: "bg-purple-500/20",
+  },
+  amber: {
+    border: "border-amber-500/30",
+    bg: "bg-amber-500/10",
+    text: "text-amber-400",
+    glow: "bg-amber-500/20",
+  },
+  sky: {
+    border: "border-sky-500/30",
+    bg: "bg-sky-500/10",
+    text: "text-sky-400",
+    glow: "bg-sky-500/20",
+  },
+  rose: {
+    border: "border-rose-500/30",
+    bg: "bg-rose-500/10",
+    text: "text-rose-400",
+    glow: "bg-rose-500/20",
+  },
+  indigo: {
+    border: "border-indigo-500/30",
+    bg: "bg-indigo-500/10",
+    text: "text-indigo-400",
+    glow: "bg-indigo-500/20",
+  },
+  teal: {
+    border: "border-teal-500/30",
+    bg: "bg-teal-500/10",
+    text: "text-teal-400",
+    glow: "bg-teal-500/20",
+  },
 };
 
 function FloatingParticles() {
@@ -616,11 +731,17 @@ function FloatingParticles() {
           key={i}
           className={cn(
             "absolute h-1 w-1 rounded-full",
-            i % 4 === 0 ? "bg-blue-400/30" : i % 4 === 1 ? "bg-emerald-400/30" : i % 4 === 2 ? "bg-purple-400/30" : "bg-amber-400/30"
+            i % 4 === 0
+              ? "bg-blue-400/30"
+              : i % 4 === 1
+                ? "bg-emerald-400/30"
+                : i % 4 === 2
+                  ? "bg-purple-400/30"
+                  : "bg-amber-400/30"
           )}
           style={{
-            left: `${5 + (i * 5) % 90}%`,
-            top: `${8 + (i * 7) % 84}%`,
+            left: `${5 + ((i * 5) % 90)}%`,
+            top: `${8 + ((i * 7) % 84)}%`,
             animation: `float-features ${7 + (i % 5) * 2}s ease-in-out infinite`,
             animationDelay: `${i * 0.3}s`,
           }}
@@ -713,7 +834,12 @@ export default function FeaturesPage() {
           categoryRef.current.querySelectorAll(".js-category-card"),
           { autoAlpha: 0, y: 30, scale: 0.95 },
           {
-            autoAlpha: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.05, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: "power2.out",
             scrollTrigger: { trigger: categoryRef.current, start: "top 80%" },
           }
         );
@@ -725,7 +851,11 @@ export default function FeaturesPage() {
           coreRef.current.querySelectorAll(".js-core-module"),
           { autoAlpha: 0, y: 50 },
           {
-            autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: "power2.out",
             scrollTrigger: { trigger: coreRef.current, start: "top 80%" },
           }
         );
@@ -737,7 +867,11 @@ export default function FeaturesPage() {
           opsRef.current.querySelectorAll(".js-ops-card"),
           { autoAlpha: 0, y: 30 },
           {
-            autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power2.out",
             scrollTrigger: { trigger: opsRef.current, start: "top 80%" },
           }
         );
@@ -749,7 +883,11 @@ export default function FeaturesPage() {
           backboneRef.current.querySelectorAll(".js-backbone-card"),
           { autoAlpha: 0, x: -20 },
           {
-            autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power2.out",
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
             scrollTrigger: { trigger: backboneRef.current, start: "top 80%" },
           }
         );
@@ -761,7 +899,10 @@ export default function FeaturesPage() {
           accordionRef.current,
           { autoAlpha: 0, y: 30 },
           {
-            autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
             scrollTrigger: { trigger: accordionRef.current, start: "top 85%" },
           }
         );
@@ -773,7 +914,10 @@ export default function FeaturesPage() {
           ctaRef.current,
           { autoAlpha: 0, y: 30 },
           {
-            autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out",
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
             scrollTrigger: { trigger: ctaRef.current, start: "top 85%" },
           }
         );
@@ -786,7 +930,8 @@ export default function FeaturesPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/features`;
   const webPageSchema = createWebPageSchema({
     name: "SquareCampus Features",
-    description: "Connected features for school operations: admissions, academics, finance, communication, and enterprise controls in one School OS.",
+    description:
+      "Connected features for school operations: admissions, academics, finance, communication, and enterprise controls in one School OS.",
     url: pageUrl,
   });
   const breadcrumbSchema = createBreadcrumbSchema([
@@ -796,7 +941,10 @@ export default function FeaturesPage() {
 
   return (
     <>
-      <div ref={pageRef} className="relative min-h-screen overflow-hidden bg-neutral-950 text-white">
+      <div
+        ref={pageRef}
+        className="relative min-h-screen overflow-hidden bg-neutral-950 text-white"
+      >
         {/* Background effects */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-10 top-20 h-80 w-80 rounded-full bg-blue-500/[0.06] blur-[120px]" />
@@ -826,8 +974,8 @@ export default function FeaturesPage() {
               </h1>
 
               <p className="js-hero-animate mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                From admissions to graduation, every workflow stays connected. One platform, one data model,
-                one source of truth that holds steady during peak weeks.
+                From admissions to graduation, every workflow stays connected. One platform, one
+                data model, one source of truth that holds steady during peak weeks.
               </p>
 
               <div className="js-hero-animate flex flex-wrap items-center justify-center gap-4">
@@ -851,13 +999,27 @@ export default function FeaturesPage() {
                     key={signal.title}
                     className="js-hero-animate group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div
+                      className={cn(
+                        "absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <div className="relative">
-                      <div className={cn("mb-3 inline-flex items-center justify-center rounded-lg p-2.5 ring-1", colors.bg, colors.text, colors.border)}>
+                      <div
+                        className={cn(
+                          "mb-3 inline-flex items-center justify-center rounded-lg p-2.5 ring-1",
+                          colors.bg,
+                          colors.text,
+                          colors.border
+                        )}
+                      >
                         {signal.icon}
                       </div>
                       <h3 className="mb-1 text-sm font-semibold text-white">{signal.title}</h3>
-                      <p className="text-xs leading-relaxed text-neutral-400">{signal.description}</p>
+                      <p className="text-xs leading-relaxed text-neutral-400">
+                        {signal.description}
+                      </p>
                     </div>
                   </div>
                 );
@@ -869,12 +1031,19 @@ export default function FeaturesPage() {
         {/* ================================================================ */}
         {/* CATEGORY OVERVIEW */}
         {/* ================================================================ */}
-        <section ref={categoryRef} id="categories" className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20">
+        <section
+          ref={categoryRef}
+          id="categories"
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20"
+        >
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 text-center">
-              <h2 className="mb-3 text-2xl font-bold md:text-3xl">21 modules. One connected platform.</h2>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">
+                21 modules. One connected platform.
+              </h2>
               <p className="mx-auto max-w-xl text-sm text-neutral-400">
-                Every module shares the same data backbone. What you enter once flows everywhere it's needed.
+                Every module shares the same data backbone. What you enter once flows everywhere
+                it's needed.
               </p>
             </div>
 
@@ -887,13 +1056,30 @@ export default function FeaturesPage() {
                     key={cat.id}
                     className="js-category-card group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-center backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute inset-x-0 top-0 h-0.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100", colors.bg)} />
-                    <div className={cn("mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110", colors.bg, colors.text)}>
+                    <div
+                      className={cn(
+                        "absolute inset-x-0 top-0 h-0.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                        colors.bg
+                      )}
+                    />
+                    <div
+                      className={cn(
+                        "mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110",
+                        colors.bg,
+                        colors.text
+                      )}
+                    >
                       <Icon className="h-5 w-5" />
                     </div>
                     <p className="text-xs font-semibold text-neutral-200">{cat.name}</p>
                     <p className="mt-0.5 text-[0.6rem] text-neutral-500">{cat.tagline}</p>
-                    <div className={cn("mx-auto mt-2 inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.6rem] font-bold", colors.bg, colors.text)}>
+                    <div
+                      className={cn(
+                        "mx-auto mt-2 inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.6rem] font-bold",
+                        colors.bg,
+                        colors.text
+                      )}
+                    >
                       {cat.count}
                     </div>
                   </div>
@@ -913,9 +1099,12 @@ export default function FeaturesPage() {
                 <Puzzle className="h-4 w-4" />
                 Foundation Modules
               </div>
-              <h2 className="mb-3 text-2xl font-bold md:text-3xl">The backbone of campus operations</h2>
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">
+                The backbone of campus operations
+              </h2>
               <p className="mx-auto max-w-xl text-sm text-neutral-400">
-                These five modules handle 80% of daily workflows. Built to work together, not just coexist.
+                These five modules handle 80% of daily workflows. Built to work together, not just
+                coexist.
               </p>
             </div>
 
@@ -929,27 +1118,53 @@ export default function FeaturesPage() {
                   <div
                     key={module.id}
                     className={cn(
-                      "js-core-module group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.12]",
+                      "js-core-module group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.12]"
                     )}
                   >
-                    <div className={cn("absolute -right-20 -top-20 h-60 w-60 rounded-full blur-[100px] transition-all duration-700 group-hover:scale-150", colors.glow)} />
-                    <div className={cn("absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent to-transparent opacity-60", `via-${module.color}-400/70`)}
+                    <div
+                      className={cn(
+                        "absolute -right-20 -top-20 h-60 w-60 rounded-full blur-[100px] transition-all duration-700 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
+                    <div
+                      className={cn(
+                        "absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent to-transparent opacity-60",
+                        `via-${module.color}-400/70`
+                      )}
                       style={{
                         background: `linear-gradient(90deg, transparent, ${
-                          module.color === "blue" ? "rgba(96,165,250,0.7)" :
-                          module.color === "emerald" ? "rgba(52,211,153,0.7)" :
-                          module.color === "purple" ? "rgba(168,85,247,0.7)" :
-                          module.color === "amber" ? "rgba(251,191,36,0.7)" :
-                          module.color === "sky" ? "rgba(56,189,248,0.7)" :
-                          "rgba(96,165,250,0.7)"
+                          module.color === "blue"
+                            ? "rgba(96,165,250,0.7)"
+                            : module.color === "emerald"
+                              ? "rgba(52,211,153,0.7)"
+                              : module.color === "purple"
+                                ? "rgba(168,85,247,0.7)"
+                                : module.color === "amber"
+                                  ? "rgba(251,191,36,0.7)"
+                                  : module.color === "sky"
+                                    ? "rgba(56,189,248,0.7)"
+                                    : "rgba(96,165,250,0.7)"
                         }, transparent)`,
                       }}
                     />
 
-                    <div className={cn("relative grid gap-6 p-6 md:p-8", isEven ? "lg:grid-cols-[1fr_1.2fr]" : "lg:grid-cols-[1.2fr_1fr]")}>
+                    <div
+                      className={cn(
+                        "relative grid gap-6 p-6 md:p-8",
+                        isEven ? "lg:grid-cols-[1fr_1.2fr]" : "lg:grid-cols-[1.2fr_1fr]"
+                      )}
+                    >
                       <div className={cn("space-y-4", !isEven && "lg:order-2")}>
                         <div className="flex items-center gap-3">
-                          <div className={cn("flex h-11 w-11 items-center justify-center rounded-xl ring-1", colors.bg, colors.text, colors.border)}>
+                          <div
+                            className={cn(
+                              "flex h-11 w-11 items-center justify-center rounded-xl ring-1",
+                              colors.bg,
+                              colors.text,
+                              colors.border
+                            )}
+                          >
                             <Icon className="h-5 w-5" />
                           </div>
                           <div>
@@ -958,11 +1173,14 @@ export default function FeaturesPage() {
                           </div>
                         </div>
 
-                        <p className="text-sm leading-relaxed text-neutral-300">{module.description}</p>
+                        <p className="text-sm leading-relaxed text-neutral-300">
+                          {module.description}
+                        </p>
 
                         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
                           <p className="text-xs leading-relaxed text-neutral-400">
-                            <span className={cn("font-semibold", colors.text)}>Outcome:</span> {module.outcome}
+                            <span className={cn("font-semibold", colors.text)}>Outcome:</span>{" "}
+                            {module.outcome}
                           </p>
                         </div>
                       </div>
@@ -993,12 +1211,14 @@ export default function FeaturesPage() {
           <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 text-center md:flex-row md:justify-between md:text-left">
             <div className="space-y-1">
               <p className="text-lg font-semibold text-white">See how modules connect</p>
-              <p className="text-sm text-neutral-400">Walk through real workflows with your specific use cases.</p>
+              <p className="text-sm text-neutral-400">
+                Walk through real workflows with your specific use cases.
+              </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <BookCallCta context="features-mid" label="Schedule demo" variant="primary" />
               <Link
-                href="/why-different"
+                href="/why-squarecampus"
                 className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
               >
                 Why School OS
@@ -1016,7 +1236,8 @@ export default function FeaturesPage() {
             <div className="mb-10 text-center">
               <h2 className="mb-3 text-2xl font-bold md:text-3xl">Operations suite</h2>
               <p className="mx-auto max-w-xl text-sm text-neutral-400">
-                Transport, hostel, library, and HR - connected to the same student and staff records.
+                Transport, hostel, library, and HR - connected to the same student and staff
+                records.
               </p>
             </div>
 
@@ -1029,18 +1250,35 @@ export default function FeaturesPage() {
                     key={module.id}
                     className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div
+                      className={cn(
+                        "absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <div className="relative">
                       <div className="mb-4 flex items-center gap-3">
-                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                        <div
+                          className={cn(
+                            "flex h-10 w-10 items-center justify-center rounded-lg ring-1",
+                            colors.bg,
+                            colors.text,
+                            colors.border
+                          )}
+                        >
                           <Icon className="h-5 w-5" />
                         </div>
                         <h3 className="text-sm font-semibold text-white">{module.title}</h3>
                       </div>
                       <ul className="space-y-1.5">
                         {module.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
-                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                          <li
+                            key={feature}
+                            className="flex items-center gap-2 text-xs text-neutral-400"
+                          >
+                            <div
+                              className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")}
+                            />
                             {feature}
                           </li>
                         ))}
@@ -1078,18 +1316,35 @@ export default function FeaturesPage() {
                     key={module.id}
                     className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div
+                      className={cn(
+                        "absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <div className="relative">
                       <div className="mb-4 flex items-center gap-3">
-                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                        <div
+                          className={cn(
+                            "flex h-10 w-10 items-center justify-center rounded-lg ring-1",
+                            colors.bg,
+                            colors.text,
+                            colors.border
+                          )}
+                        >
                           <Icon className="h-5 w-5" />
                         </div>
                         <h3 className="text-sm font-semibold text-white">{module.title}</h3>
                       </div>
                       <ul className="space-y-1.5">
                         {module.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
-                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                          <li
+                            key={feature}
+                            className="flex items-center gap-2 text-xs text-neutral-400"
+                          >
+                            <div
+                              className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")}
+                            />
                             {feature}
                           </li>
                         ))}
@@ -1127,18 +1382,35 @@ export default function FeaturesPage() {
                     key={module.id}
                     className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div
+                      className={cn(
+                        "absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <div className="relative">
                       <div className="mb-4 flex items-center gap-3">
-                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                        <div
+                          className={cn(
+                            "flex h-10 w-10 items-center justify-center rounded-lg ring-1",
+                            colors.bg,
+                            colors.text,
+                            colors.border
+                          )}
+                        >
                           <Icon className="h-5 w-5" />
                         </div>
                         <h3 className="text-sm font-semibold text-white">{module.title}</h3>
                       </div>
                       <ul className="space-y-1.5">
                         {module.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
-                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                          <li
+                            key={feature}
+                            className="flex items-center gap-2 text-xs text-neutral-400"
+                          >
+                            <div
+                              className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")}
+                            />
                             {feature}
                           </li>
                         ))}
@@ -1176,18 +1448,35 @@ export default function FeaturesPage() {
                     key={module.id}
                     className="js-ops-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150", colors.glow)} />
+                    <div
+                      className={cn(
+                        "absolute -right-6 -top-6 h-20 w-20 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
+                        colors.glow
+                      )}
+                    />
                     <div className="relative">
                       <div className="mb-4 flex items-center gap-3">
-                        <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg ring-1", colors.bg, colors.text, colors.border)}>
+                        <div
+                          className={cn(
+                            "flex h-10 w-10 items-center justify-center rounded-lg ring-1",
+                            colors.bg,
+                            colors.text,
+                            colors.border
+                          )}
+                        >
                           <Icon className="h-5 w-5" />
                         </div>
                         <h3 className="text-sm font-semibold text-white">{module.title}</h3>
                       </div>
                       <ul className="space-y-1.5">
                         {module.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-xs text-neutral-400">
-                            <div className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")} />
+                          <li
+                            key={feature}
+                            className="flex items-center gap-2 text-xs text-neutral-400"
+                          >
+                            <div
+                              className={cn("h-1 w-1 rounded-full", colors.text, "bg-current")}
+                            />
                             {feature}
                           </li>
                         ))}
@@ -1203,7 +1492,10 @@ export default function FeaturesPage() {
         {/* ================================================================ */}
         {/* PLATFORM BACKBONE */}
         {/* ================================================================ */}
-        <section ref={backboneRef} className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20">
+        <section
+          ref={backboneRef}
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-20"
+        >
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
@@ -1224,7 +1516,14 @@ export default function FeaturesPage() {
                     key={item.title}
                     className="js-backbone-card group flex gap-4 rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
                   >
-                    <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ring-1 transition-all duration-300 group-hover:scale-105", colors.bg, colors.text, colors.border)}>
+                    <div
+                      className={cn(
+                        "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ring-1 transition-all duration-300 group-hover:scale-105",
+                        colors.bg,
+                        colors.text,
+                        colors.border
+                      )}
+                    >
                       {item.icon}
                     </div>
                     <div className="space-y-1">
@@ -1252,7 +1551,11 @@ export default function FeaturesPage() {
 
             <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm">
               {featureAccordion.map((item) => (
-                <FeatureAccordionItem key={item.category} category={item.category} features={item.features} />
+                <FeatureAccordionItem
+                  key={item.category}
+                  category={item.category}
+                  features={item.features}
+                />
               ))}
             </div>
           </div>
@@ -1261,7 +1564,10 @@ export default function FeaturesPage() {
         {/* ================================================================ */}
         {/* CLOSING CTA */}
         {/* ================================================================ */}
-        <section ref={ctaRef} className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-24">
+        <section
+          ref={ctaRef}
+          className="relative border-t border-white/[0.06] px-4 py-16 md:px-8 md:py-24"
+        >
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
               <Check className="h-4 w-4" />
@@ -1273,8 +1579,8 @@ export default function FeaturesPage() {
             </h2>
 
             <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-neutral-300">
-              Walk through real workflows, see how data flows between modules, and understand
-              the migration path from your current setup.
+              Walk through real workflows, see how data flows between modules, and understand the
+              migration path from your current setup.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">

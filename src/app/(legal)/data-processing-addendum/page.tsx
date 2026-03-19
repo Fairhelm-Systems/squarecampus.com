@@ -18,8 +18,8 @@ export default function DataProcessingAddendumPage() {
       <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
         <p className="text-sm font-medium text-amber-200">
           Important Update: Section 6 (Controller Obligations) has been expanded to include enhanced
-          access control requirements, credential security obligations, and incident response duties.
-          Please review carefully.
+          access control requirements, credential security obligations, and incident response
+          duties. Please review carefully.
         </p>
       </div>
 
@@ -65,13 +65,12 @@ export default function DataProcessingAddendumPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire. All services are
-            provided by MDTechSpire, unless otherwise stated in a written agreement or order
-            form.
+            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
+            by MDTechspire, unless otherwise stated in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this DPA mean MDTechSpire.</p>
+          <p>References to "SquareCampus" in this DPA mean MDTechspire.</p>
           <p>
-            This Data Processing Addendum ("DPA") forms part of the agreement between MDTechSpire
+            This Data Processing Addendum ("DPA") forms part of the agreement between MDTechspire
             and the Institution when referenced in an order form or contract.
           </p>
         </LegalSection>
@@ -88,7 +87,7 @@ export default function DataProcessingAddendumPage() {
         <LegalSection title="3. Roles of the Parties" id="roles">
           <p>
             The Institution determines the purposes and means of processing personal data and acts
-            as the Controller; MDTechSpire processes personal data solely on behalf of the
+            as the Controller; MDTechspire processes personal data solely on behalf of the
             Institution as the Processor.
           </p>
         </LegalSection>
@@ -208,7 +207,9 @@ export default function DataProcessingAddendumPage() {
             <li>Any known or suspected credential compromise or unauthorised access;</li>
             <li>Any attempt by competitors to gain access to the Institution's account;</li>
             <li>Any data breach affecting data processed through the Service;</li>
-            <li>Any regulatory inquiry or legal process related to data processed by SquareCampus;</li>
+            <li>
+              Any regulatory inquiry or legal process related to data processed by SquareCampus;
+            </li>
             <li>
               Any employee termination where there is reason to believe credentials may have been
               compromised or shared inappropriately.

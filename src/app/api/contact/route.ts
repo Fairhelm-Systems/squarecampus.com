@@ -67,16 +67,13 @@ const SPAM_KEYWORDS = [
 const MAX_BODY_BYTES = 10 * 1024;
 
 const optionalText = (max: number) =>
-  z.preprocess(
-    (value) => {
-      if (typeof value === "string") {
-        const trimmed = value.trim();
-        return trimmed === "" ? undefined : trimmed;
-      }
-      return value;
-    },
-    z.string().max(max).optional()
-  );
+  z.preprocess((value) => {
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      return trimmed === "" ? undefined : trimmed;
+    }
+    return value;
+  }, z.string().max(max).optional());
 
 const contactSchema = z
   .object({
@@ -95,7 +92,8 @@ function getClientIdentifier(email: string, request: NextRequest): string {
     const cfConnectingIp = request.headers.get("cf-connecting-ip");
     const forwarded = request.headers.get("x-forwarded-for");
     const ip =
-      cfConnectingIp ?? (forwarded ? forwarded.split(",")[0]?.trim() : request.headers.get("x-real-ip"));
+      cfConnectingIp ??
+      (forwarded ? forwarded.split(",")[0]?.trim() : request.headers.get("x-real-ip"));
     return ip ? `${email}:${ip}` : email;
   } catch (error) {
     console.warn("[contact] Failed to get client identifier:", error);
@@ -146,10 +144,7 @@ export async function POST(request: NextRequest) {
     const resend = new Resend(apiKey);
     const contentLength = Number(request.headers.get("content-length") || 0);
     if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
-      return NextResponse.json(
-        { success: false, message: "Payload too large." },
-        { status: 413 }
-      );
+      return NextResponse.json({ success: false, message: "Payload too large." }, { status: 413 });
     }
 
     const rawBody = await request.text();
@@ -160,10 +155,7 @@ export async function POST(request: NextRequest) {
       );
     }
     if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
-      return NextResponse.json(
-        { success: false, message: "Payload too large." },
-        { status: 413 }
-      );
+      return NextResponse.json({ success: false, message: "Payload too large." }, { status: 413 });
     }
 
     let parsedBody: unknown;

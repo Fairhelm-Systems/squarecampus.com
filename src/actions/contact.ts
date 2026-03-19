@@ -97,16 +97,13 @@ const SPAM_KEYWORDS = [
 ];
 
 const optionalText = (max: number) =>
-  z.preprocess(
-    (value) => {
-      if (typeof value === "string") {
-        const trimmed = value.trim();
-        return trimmed === "" ? undefined : trimmed;
-      }
-      return value;
-    },
-    z.string().max(max).optional()
-  );
+  z.preprocess((value) => {
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      return trimmed === "" ? undefined : trimmed;
+    }
+    return value;
+  }, z.string().max(max).optional());
 
 const contactSchema = z
   .object({
@@ -125,7 +122,8 @@ function getClientIdentifier(email: string, headersList: Headers): string {
     const cfConnectingIp = headersList.get("cf-connecting-ip");
     const forwarded = headersList.get("x-forwarded-for");
     const ip =
-      cfConnectingIp ?? (forwarded ? forwarded.split(",")[0]?.trim() : headersList.get("x-real-ip"));
+      cfConnectingIp ??
+      (forwarded ? forwarded.split(",")[0]?.trim() : headersList.get("x-real-ip"));
     return ip ? `${email}:${ip}` : email;
   } catch (error) {
     console.warn("[contact] Failed to get client identifier:", error);
@@ -507,13 +505,11 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Conta
                 <p style="margin-top: 16px;">
                   Received at ${(() => {
                     try {
-                      return (
-                        `${new Date().toLocaleString("en-US", {
-                          timeZone: "Asia/Kolkata",
-                          dateStyle: "full",
-                          timeStyle: "short",
-                        })} IST`
-                      );
+                      return `${new Date().toLocaleString("en-US", {
+                        timeZone: "Asia/Kolkata",
+                        dateStyle: "full",
+                        timeStyle: "short",
+                      })} IST`;
                     } catch (error) {
                       console.warn("[contact] Date formatting error:", error);
                       return new Date().toISOString();

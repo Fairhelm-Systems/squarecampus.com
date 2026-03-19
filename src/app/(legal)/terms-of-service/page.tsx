@@ -72,13 +72,12 @@ export default function TermsOfServicePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Contracting Entity" id="company-entity">
           <p>
-            SquareCampus is a trademark and product brand of MDTechSpire. All services are
-            provided by MDTechSpire, unless otherwise stated in a written agreement or order
-            form.
+            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
+            by MDTechspire, unless otherwise stated in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in these Terms mean MDTechSpire.</p>
+          <p>References to "SquareCampus" in these Terms mean MDTechspire.</p>
           <p>
-            These Terms form a binding agreement between MDTechSpire and the Institution or
+            These Terms form a binding agreement between MDTechspire and the Institution or
             individual User accessing the Service. If you are accepting these Terms on behalf of an
             Institution, you confirm that you have the authority to bind that Institution.
           </p>
@@ -124,17 +123,15 @@ export default function TermsOfServicePage() {
           <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
             <p className="font-medium text-red-200">3.2 Credential Sharing Prohibition</p>
             <p className="mt-2 text-sm">
-              Institutions and Users expressly agree that login credentials, API keys, access tokens,
-              and any other authentication mechanisms are strictly confidential and may not be shared
-              with:
+              Institutions and Users expressly agree that login credentials, API keys, access
+              tokens, and any other authentication mechanisms are strictly confidential and may not
+              be shared with:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
               <li>
                 Any individual or entity outside the Institution's authorised personnel roster;
               </li>
-              <li>
-                Competitors, as defined in Section 19 of these Terms;
-              </li>
+              <li>Competitors, as defined in Section 19 of these Terms;</li>
               <li>
                 Third-party consultants, vendors, or service providers without SquareCampus's prior
                 written consent;
@@ -200,7 +197,9 @@ export default function TermsOfServicePage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>Fees are payable in advance per billing period;</li>
             <li>Add-ons or overages may be billed pro-rata for the remaining period;</li>
-            <li>Fees are non-refundable except where required by law or stated in an order form.</li>
+            <li>
+              Fees are non-refundable except where required by law or stated in an order form.
+            </li>
           </ul>
           <p>Non-payment may result in suspension or termination of Service access.</p>
         </LegalSection>
@@ -346,7 +345,7 @@ export default function TermsOfServicePage() {
         <LegalSection title="17. Indemnification" id="indemnification">
           <p className="font-medium text-white">17.1 Institution Indemnification</p>
           <p>
-            The Institution shall defend, indemnify, and hold harmless SquareCampus, MDTechSpire,
+            The Institution shall defend, indemnify, and hold harmless SquareCampus, MDTechspire,
             and their respective officers, directors, employees, and agents from and against any and
             all claims, damages, losses, liabilities, costs, and expenses (including reasonable
             attorneys' fees) arising from or related to:
@@ -356,12 +355,8 @@ export default function TermsOfServicePage() {
               The Institution's breach of these Terms, including but not limited to the credential
               sharing prohibitions in Section 3 and competitor access prohibitions in Section 19;
             </li>
-            <li>
-              The Institution's violation of applicable laws or regulations;
-            </li>
-            <li>
-              Any third-party claims arising from the Institution's use of the Service;
-            </li>
+            <li>The Institution's violation of applicable laws or regulations;</li>
+            <li>Any third-party claims arising from the Institution's use of the Service;</li>
             <li>
               The Institution's failure to maintain adequate security over credentials and access
               controls;
@@ -400,18 +395,10 @@ export default function TermsOfServicePage() {
                 security@squarecampus.com
               </a>
             </li>
-            <li>
-              Preserve all relevant logs, communications, and evidence;
-            </li>
-            <li>
-              Cooperate fully with SquareCampus's investigation;
-            </li>
-            <li>
-              Implement any remedial measures requested by SquareCampus;
-            </li>
-            <li>
-              Provide written incident reports within 48 hours of discovery.
-            </li>
+            <li>Preserve all relevant logs, communications, and evidence;</li>
+            <li>Cooperate fully with SquareCampus's investigation;</li>
+            <li>Implement any remedial measures requested by SquareCampus;</li>
+            <li>Provide written incident reports within 48 hours of discovery.</li>
           </ul>
 
           <p className="mt-6 font-medium text-white">18.2 SquareCampus Response</p>
@@ -457,12 +444,8 @@ export default function TermsOfServicePage() {
               student information systems, learning management systems, or educational
               administration platforms;
             </li>
-            <li>
-              Any entity that has announced intent to enter such markets;
-            </li>
-            <li>
-              Any employee, contractor, agent, or representative of such entities;
-            </li>
+            <li>Any entity that has announced intent to enter such markets;</li>
+            <li>Any employee, contractor, agent, or representative of such entities;</li>
             <li>
               Any entity conducting competitive intelligence or product evaluation on behalf of a
               competing entity.
@@ -470,17 +453,13 @@ export default function TermsOfServicePage() {
           </ul>
 
           <p className="mt-6 font-medium text-white">19.2 Absolute Prohibition</p>
-          <p>
-            The Institution expressly agrees that it shall not, under any circumstances:
-          </p>
+          <p>The Institution expressly agrees that it shall not, under any circumstances:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
               Provide, share, or make available any credentials, access tokens, or authentication
               mechanisms to any Competitor;
             </li>
-            <li>
-              Permit any Competitor to access the Service through the Institution's account;
-            </li>
+            <li>Permit any Competitor to access the Service through the Institution's account;</li>
             <li>
               Share screenshots, recordings, documentation, or any visual or textual representation
               of the Service with Competitors;
@@ -496,13 +475,9 @@ export default function TermsOfServicePage() {
           </ul>
 
           <p className="mt-6 font-medium text-white">19.3 Mandatory Disclosure</p>
-          <p>
-            The Institution shall immediately notify SquareCampus if:
-          </p>
+          <p>The Institution shall immediately notify SquareCampus if:</p>
           <ul className="list-disc space-y-2 pl-5">
-            <li>
-              Any Competitor requests access to or information about the Service;
-            </li>
+            <li>Any Competitor requests access to or information about the Service;</li>
             <li>
               The Institution becomes aware of any current or former employee sharing credentials or
               information with Competitors;
@@ -548,7 +523,7 @@ export default function TermsOfServicePage() {
         <LegalSection title="20. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>MDTechSpire</strong>
+            <strong>MDTechspire</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />

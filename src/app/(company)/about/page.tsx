@@ -392,8 +392,8 @@ export default function AboutPage() {
                 <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
                   Yet most schools and colleges still run on software built for the 1990s. Simple
                   tasks like fee collection or publishing results turn into multi-week ordeals of
-                  spreadsheets, calls, and stress. SquareCampus exists to replace that with a
-                  Campus Operating System that flows with how institutions actually work.
+                  spreadsheets, calls, and stress. SquareCampus exists to replace that with a Campus
+                  Operating System that flows with how institutions actually work.
                 </p>
 
                 <div className="js-hero-animate flex flex-wrap gap-3">
