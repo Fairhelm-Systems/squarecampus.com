@@ -109,14 +109,24 @@ export function Reveal({
       },
       {
         rootMargin: "0px 0px -10% 0px",
-        threshold: 0.18,
+        threshold: 0.05,
       }
     );
 
     observer.observe(node);
 
-    return () => observer.disconnect();
-  }, [delay, distance, once, prefersReducedMotion, runAnimation, staggerChildren]);
+    const timeout = setTimeout(() => {
+      if (!hasAnimatedRef.current && node) {
+        node.style.opacity = "1";
+        node.style.transform = "none";
+      }
+    }, 4000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeout);
+    };
+  }, [distance, once, prefersReducedMotion, staggerChildren]);
 
   return (
     <div ref={ref} className={className}>
