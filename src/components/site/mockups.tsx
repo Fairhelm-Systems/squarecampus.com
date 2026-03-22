@@ -236,27 +236,29 @@ function FigmaIphoneFrame({
       </div>
       <div className="relative mx-auto aspect-[390/844] w-full">
         <div className="absolute inset-0 overflow-hidden rounded-[2.55rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-5 pt-3">
-            <div className="flex items-center justify-between text-[0.58rem] font-semibold tracking-[0.04em] text-[#0f1725]">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-5 pt-2.5">
+            <div className="flex items-center justify-between text-[0.52rem] font-semibold tracking-[0.04em] text-[#0f1725]">
               <span>9:41</span>
-              <div className="h-7 w-[7.25rem]" aria-hidden="true" />
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-end gap-[2px]">
+              <div className="h-6 w-[6.5rem]" aria-hidden="true" />
+              <div className="flex items-center gap-1">
+                <div className="flex items-end gap-[1.5px]">
                   {[0.45, 0.6, 0.8, 1].map((scale, index) => (
                     <span
                       key={index}
-                      className="block w-[3px] rounded-full bg-[#0f1725]"
-                      style={{ height: `${9 * scale}px`, opacity: 0.42 + index * 0.16 }}
+                      className="block w-[2.5px] rounded-full bg-[#0f1725]"
+                      style={{ height: `${8 * scale}px`, opacity: 0.42 + index * 0.16 }}
                     />
                   ))}
                 </div>
-                <div className="h-2.5 w-4 rounded-[999px] border border-[#0f1725]">
-                  <div className="ml-[1px] mt-[1px] h-[6px] w-[8px] rounded-full bg-[#0f1725]" />
+                <div className="h-2 w-3.5 rounded-[999px] border border-[#0f1725]">
+                  <div className="ml-[0.5px] mt-[0.5px] h-[5px] w-[7px] rounded-full bg-[#0f1725]" />
                 </div>
               </div>
             </div>
           </div>
-          {children}
+          <div className="h-full w-full origin-top-left scale-[0.52]" style={{ width: "192.3%", height: "192.3%" }}>
+            {children}
+          </div>
           <div className="pointer-events-none absolute inset-0 z-5 rounded-[2.55rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
         </div>
         <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
@@ -376,131 +378,93 @@ function HeroLaptopSurface() {
         </div>
       </div>
 
-      {/* Command center + right column */}
-      <div className="mt-2 grid gap-2 md:grid-cols-[1.18fr_0.82fr]">
-        <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
-          <div className="flex items-center justify-between">
-            <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-              Institution command center
-            </p>
-            <LayoutDashboard className="size-4 text-[color:var(--brand)]" />
-          </div>
-          <div className="mt-2 grid gap-2 sm:grid-cols-3">
-            {/* Admissions card */}
-            <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--brand)] bg-[color:var(--surface-strong)] p-2.5">
-              <div className="flex items-center justify-between">
-                <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                  Admissions
-                </p>
-                <GraduationCap className="size-3.5 text-[color:var(--brand)]" />
-              </div>
-              <div className="mt-1.5 flex items-end justify-between">
-                <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
-                  184 live
-                </p>
-                <svg viewBox="0 0 60 24" className="h-5 w-12" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.18" />
-                      <stop offset="100%" stopColor="var(--brand)" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <polygon
-                    points="0,18 10,14 20,16 30,8 40,10 50,4 60,6 60,24 0,24"
-                    fill="url(#spark-fill)"
-                  />
-                  <polyline
-                    points="0,18 10,14 20,16 30,8 40,10 50,4 60,6"
-                    fill="none"
-                    stroke="var(--brand)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-            {/* Collections card */}
-            <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--teal)] bg-[color:var(--surface-strong)] p-2.5">
-              <div className="flex items-center justify-between">
-                <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                  Collections
-                </p>
-                <Banknote className="size-3.5 text-[color:var(--teal)]" />
-              </div>
-              <div className="mt-1.5 flex items-end justify-between">
-                <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
-                  96.4%
-                </p>
-                <ProgressRing percent={96.4} color="var(--teal)" size={20} />
-              </div>
-            </div>
-            {/* Attendance card */}
-            <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--teal)] bg-[color:var(--surface-strong)] p-2.5">
-              <div className="flex items-center justify-between">
-                <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                  Attendance
-                </p>
-                <CheckCircle2 className="size-3.5 text-[color:var(--teal)]" />
-              </div>
-              <div className="mt-1.5 flex items-end justify-between">
-                <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
-                  97.2%
-                </p>
-                <ProgressRing percent={97.2} color="var(--teal)" size={20} />
-              </div>
-            </div>
-          </div>
+      {/* Command center — full width */}
+      <div className="mt-2 rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
+        <div className="flex items-center justify-between">
+          <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+            Institution command center
+          </p>
+          <LayoutDashboard className="size-4 text-[color:var(--brand)]" />
         </div>
-        {/* Right column: campus status + nexus */}
-        <div className="grid gap-2">
-          <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
+        <div className="mt-2 grid gap-2 sm:grid-cols-3">
+          {/* Admissions card */}
+          <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--brand)] bg-[color:var(--surface-strong)] p-2.5">
             <div className="flex items-center justify-between">
-              <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                Multi-campus status
+              <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                Admissions
               </p>
-              <span className="rounded-full bg-[color:var(--surface)] px-2 py-0.5 font-mono text-[0.44rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
-                Live
-              </span>
+              <GraduationCap className="size-3.5 text-[color:var(--brand)]" />
             </div>
-            <div className="mt-2 space-y-1.5">
-              {[
-                ["North Campus", "Stable", "bg-emerald-500"],
-                ["Central Campus", "Fee deadline", "bg-amber-500"],
-                ["South Campus", "Inspection prep", "bg-[color:var(--brand)]"],
-              ].map(([campus, detail, dotColor]) => (
-                <div
-                  key={campus}
-                  className="flex items-center justify-between rounded-lg bg-[color:var(--surface)] px-2.5 py-1.5 text-xs"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <span className={cn("size-1.5 shrink-0 rounded-full", dotColor)} />
-                    {campus}
-                  </span>
-                  <span className="text-[color:var(--muted-foreground)]">{detail}</span>
-                </div>
-              ))}
+            <div className="mt-1.5 flex items-end justify-between">
+              <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
+                184 live
+              </p>
+              <svg viewBox="0 0 60 24" className="h-5 w-12" aria-hidden="true">
+                <defs>
+                  <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.18" />
+                    <stop offset="100%" stopColor="var(--brand)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <polygon
+                  points="0,18 10,14 20,16 30,8 40,10 50,4 60,6 60,24 0,24"
+                  fill="url(#spark-fill)"
+                />
+                <polyline
+                  points="0,18 10,14 20,16 30,8 40,10 50,4 60,6"
+                  fill="none"
+                  stroke="var(--brand)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
           </div>
-          <div className="rounded-[1rem] border border-[color:var(--line)] bg-[linear-gradient(135deg,var(--brand-soft),transparent_72%)] p-3">
-            <div className="flex items-center gap-2 text-xs text-[color:var(--foreground)]">
-              <Radar className="size-3.5 text-[color:var(--brand)]" />
-              <span>Nexus inside SquareCampus</span>
+          {/* Collections card */}
+          <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--teal)] bg-[color:var(--surface-strong)] p-2.5">
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                Collections
+              </p>
+              <Banknote className="size-3.5 text-[color:var(--teal)]" />
             </div>
-            <p className="mt-1.5 text-xs leading-5 text-[color:var(--muted-foreground)]">
-              Detects overdue fee risk, highlights attendance anomalies, and gives operators the
-              next best action.
-            </p>
+            <div className="mt-1.5 flex items-end justify-between">
+              <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
+                96.4%
+              </p>
+              <ProgressRing percent={96.4} color="var(--teal)" size={20} />
+            </div>
+          </div>
+          {/* Attendance card */}
+          <div className="rounded-[1rem] border border-[color:var(--line)] border-l-2 border-l-[color:var(--teal)] bg-[color:var(--surface-strong)] p-2.5">
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[0.44rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                Attendance
+              </p>
+              <CheckCircle2 className="size-3.5 text-[color:var(--teal)]" />
+            </div>
+            <div className="mt-1.5 flex items-end justify-between">
+              <p className="font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
+                97.2%
+              </p>
+              <ProgressRing percent={97.2} color="var(--teal)" size={20} />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Timeline + Chart row */}
-      <div className="mt-2 grid gap-2 md:grid-cols-[1fr_1.2fr]">
+      {/* Campus status inline + Nexus */}
+      <div className="mt-2 grid gap-2 md:grid-cols-[1.35fr_0.65fr]">
         <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
-          <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-            Shared timeline
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+              Shared timeline
+            </p>
+            <span className="rounded-full bg-[color:var(--surface)] px-2 py-0.5 font-mono text-[0.44rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
+              Live
+            </span>
+          </div>
           <div className="mt-2 space-y-1.5 border-l-2 border-[color:var(--line)] pl-2.5">
             {[
               "Admission offer converted and fee plan provisioned.",
@@ -518,6 +482,7 @@ function HeroLaptopSurface() {
             ))}
           </div>
         </div>
+        {/* Right: chart — bars look natural when partially hidden */}
         <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
           <div className="flex items-center justify-between">
             <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
@@ -556,117 +521,140 @@ function HeroLaptopSurface() {
           </div>
         </div>
       </div>
+
+      {/* Nexus strip */}
+      <div className="mt-2 grid gap-2 md:grid-cols-[1.35fr_0.65fr]">
+        <div className="rounded-[1rem] border border-[color:var(--line)] bg-[linear-gradient(135deg,var(--brand-soft),transparent_72%)] p-3">
+          <div className="flex items-center gap-2 text-xs text-[color:var(--foreground)]">
+            <Radar className="size-3.5 text-[color:var(--brand)]" />
+            <span>Nexus inside SquareCampus</span>
+          </div>
+          <p className="mt-1.5 text-xs leading-5 text-[color:var(--muted-foreground)]">
+            Detects overdue fee risk, highlights attendance anomalies, and gives operators the
+            next best action.
+          </p>
+        </div>
+        {/* Right: campus dots — compact, fine if partially clipped */}
+        <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
+          <p className="font-mono text-[0.48rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+            Campus status
+          </p>
+          <div className="mt-2 space-y-1.5">
+            {[
+              ["North", "bg-emerald-500"],
+              ["Central", "bg-amber-500"],
+              ["South", "bg-[color:var(--brand)]"],
+            ].map(([campus, dotColor]) => (
+              <div
+                key={campus}
+                className="flex items-center gap-1.5 text-xs text-[color:var(--muted-foreground)]"
+              >
+                <span className={cn("size-1.5 shrink-0 rounded-full", dotColor)} />
+                {campus}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function ParentPhoneSurface() {
   return (
-    <div className="flex h-full flex-col bg-[#f3f1ed] px-6 pb-20 pt-16 text-[#171717]">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="font-display text-[1.15rem] tracking-[-0.04em]">Anaya S. | Grade 8</p>
-          <p className="mt-1 font-mono text-[0.5rem] uppercase tracking-[0.22em] text-[#767676]">
-            SquareCampus Parent • St. Mira Central
-          </p>
-        </div>
-        <span className="rounded-full bg-white px-3 py-2 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-[#6a6a6a] shadow-[0_8px_18px_rgba(0,0,0,0.06)]">
-          Live today
-        </span>
-      </div>
-
-      <div className="mt-5 rounded-[1.45rem] bg-white p-4 shadow-[0_16px_32px_rgba(0,0,0,0.06)]">
-        <div className="flex items-start gap-3">
-          <div className="rounded-[1rem] bg-[#eef3ff] p-2 text-[#5d79c7]">
-            <Bell className="size-4" />
+    <div className="flex h-full flex-col bg-[#f4f2ee] px-7 pb-10 pt-14 text-[#171717]">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3.5">
+          <div className="flex size-11 items-center justify-center rounded-full bg-[#e8e4de] font-display text-base tracking-tight text-[#4a4a4a]">
+            A
           </div>
           <div>
-            <p className="font-display text-sm tracking-[-0.03em]">Today at a glance</p>
-            <p className="mt-1 text-[0.78rem] leading-5 text-[#6b6b6b]">
-              Bus reached campus, attendance marked, and the April fee reminder is queued in Hindi
-              and English.
+            <p className="font-display text-lg tracking-[-0.03em]">Anaya S.</p>
+            <p className="mt-0.5 text-xs text-[#8a8a8a]">
+              Grade 8 · St. Mira Central
             </p>
           </div>
         </div>
+        <div className="flex size-10 items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+          <Bell className="size-[1.1rem] text-[#6a6a6a]" />
+        </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      {/* Quick status row */}
+      <div className="mt-6 grid grid-cols-4 gap-2.5">
         {(
           [
-            ["Attendance", "Present", CheckCircle2, "#dcfce7", "#22c55e"],
-            ["Fees", "Due Apr 12", Banknote, "#fef3c7", "#d97706"],
-            ["Transport", "Route 03", Bus, "#dbeafe", "#3b82f6"],
-            ["Circulars", "2 unread", Bell, "#f3e8ff", "#a855f7"],
+            ["Attend.", CheckCircle2, "#22c55e", "#dcfce7"],
+            ["Fees", Banknote, "#d97706", "#fef3c7"],
+            ["Bus", Bus, "#3b82f6", "#dbeafe"],
+            ["Alerts", MessageSquareText, "#a855f7", "#f3e8ff"],
           ] as const
-        ).map(([label, detail, Icon, iconBg, iconColor]) => (
-          <div
-            key={label}
-            className="rounded-[1.2rem] bg-white/92 p-3 shadow-[0_14px_28px_rgba(0,0,0,0.05)]"
-          >
-            <div className="flex items-center gap-2">
-              <span
-                className="flex size-5 items-center justify-center rounded-md"
-                style={{ background: iconBg }}
-              >
-                <Icon className="size-3" style={{ color: iconColor }} />
-              </span>
-              <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-[#7a7a7a]">
-                {label}
-              </p>
-            </div>
-            <p className="mt-1.5 text-sm tracking-[-0.02em] text-[#171717]">{detail}</p>
+        ).map(([label, Icon, color, bg]) => (
+          <div key={label} className="flex flex-col items-center gap-2 rounded-2xl bg-white py-3.5 shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
+            <span className="flex size-9 items-center justify-center rounded-xl" style={{ background: bg }}>
+              <Icon className="size-[1.1rem]" style={{ color }} />
+            </span>
+            <p className="text-[0.65rem] font-medium tracking-wide text-[#7a7a7a]">{label}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-5">
+      {/* Today card */}
+      <div className="mt-5 rounded-2xl bg-white p-5 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
         <div className="flex items-center justify-between">
-          <p className="font-display text-[1rem] tracking-[-0.04em]">Parent timeline</p>
-          <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-[#8a8a8a]">
-            One login
-          </p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#b0b0b0]">Today</p>
+          <span className="size-2 rounded-full bg-emerald-400" />
         </div>
-        <div className="mt-3 space-y-2.5">
-          {[
-            ["Receipt generated for April installment and pushed to WhatsApp.", "10:32 AM"],
-            ["Science exhibition circular translated and delivered in preferred language.", "09:15 AM"],
-            ["Attendance exception linked to class teacher update and parent acknowledgment.", "08:47 AM"],
-          ].map(([item, time]) => (
-            <div
-              key={item}
-              className="rounded-[1rem] bg-white/92 px-4 py-3 shadow-[0_14px_28px_rgba(0,0,0,0.05)]"
-            >
-              <p className="text-[0.78rem] leading-5 text-[#5f5f5f]">{item}</p>
-              <p className="mt-1 text-right font-mono text-[0.5rem] text-[#b0b0b0]">{time}</p>
+        <div className="mt-4 space-y-4">
+          {(
+            [
+              [CheckCircle2, "#22c55e", "#dcfce7", "Attendance marked", "Present · 08:12 AM"],
+              [Banknote, "#d97706", "#fef3c7", "Fee reminder sent", "Apr installment · due Apr 12"],
+              [Bus, "#3b82f6", "#dbeafe", "Bus reached campus", "Route 03 · 07:58 AM"],
+            ] as const
+          ).map(([Icon, color, bg, title, subtitle]) => (
+            <div key={title} className="flex items-center gap-3.5">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl" style={{ background: bg }}>
+                <Icon className="size-4" style={{ color }} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-[#2a2a2a]">{title}</p>
+                <p className="mt-0.5 text-xs text-[#9a9a9a]">{subtitle}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="mt-5 rounded-[1.2rem] border border-[#d9d7d3] bg-[rgba(255,255,255,0.68)] p-3">
-        <div className="flex items-center gap-2">
-          <Globe2 className="size-4 text-[#5b887f]" />
-          <p className="text-[0.74rem] leading-5 text-[#5f5f5f]">
-            English / Hindi / Kannada / Tamil available where institutions need it.
-          </p>
+      {/* Circular */}
+      <div className="mt-3 rounded-2xl bg-white p-5 shadow-[0_4px_16px_rgba(0,0,0,0.05)]">
+        <div className="flex items-center gap-3.5">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[#f3e8ff]">
+            <Bell className="size-4" style={{ color: "#a855f7" }} />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-[#2a2a2a]">Science exhibition</p>
+            <p className="mt-0.5 text-xs text-[#9a9a9a]">Circular sent in Hindi · 09:15 AM</p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-auto flex items-center justify-center gap-20 pt-5 text-[0.68rem]">
-        <div className="flex flex-col items-center gap-1 text-[#171717]">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-          Home
-        </div>
-        <div className="flex flex-col items-center gap-1 text-[#b3b3b3]">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-          </svg>
-          Updates
-        </div>
+      {/* Language strip */}
+      <div className="mt-auto flex items-center justify-center gap-2 pt-8">
+        {["EN", "HI", "KN", "TA"].map((lang) => (
+          <span
+            key={lang}
+            className={cn(
+              "rounded-full px-3 py-1.5 text-[0.65rem] font-semibold tracking-wide",
+              lang === "EN"
+                ? "bg-[#2a2a2a] text-white"
+                : "bg-white text-[#9a9a9a] shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
+            )}
+          >
+            {lang}
+          </span>
+        ))}
       </div>
     </div>
   );
