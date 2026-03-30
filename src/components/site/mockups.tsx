@@ -454,7 +454,7 @@ function HeroLaptopSurface() {
         </div>
       </div>
 
-      {/* Campus status inline + Nexus */}
+      {/* Campus status inline + CommandLoom */}
       <div className="mt-2 grid gap-2 md:grid-cols-[1.35fr_0.65fr]">
         <div className="rounded-[1rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-3">
           <div className="flex items-center justify-between">
@@ -522,12 +522,12 @@ function HeroLaptopSurface() {
         </div>
       </div>
 
-      {/* Nexus strip */}
+      {/* CommandLoom strip */}
       <div className="mt-2 grid gap-2 md:grid-cols-[1.35fr_0.65fr]">
         <div className="rounded-[1rem] border border-[color:var(--line)] bg-[linear-gradient(135deg,var(--brand-soft),transparent_72%)] p-3">
           <div className="flex items-center gap-2 text-xs text-[color:var(--foreground)]">
             <Radar className="size-3.5 text-[color:var(--brand)]" />
-            <span>Nexus inside SquareCampus</span>
+            <span>CommandLoom inside SquareCampus</span>
           </div>
           <p className="mt-1.5 text-xs leading-5 text-[color:var(--muted-foreground)]">
             Detects overdue fee risk, highlights attendance anomalies, and gives operators the
@@ -847,7 +847,7 @@ export function HeroMockupCluster() {
       >
         <div className="flex items-center gap-2 text-sm text-[color:var(--foreground)]">
           <Sparkles className="size-4 text-[color:var(--amber)]" />
-          Nexus intelligence layer
+          CommandLoom intelligence layer
         </div>
         <p className="mt-2 text-sm leading-6 text-[color:var(--muted-foreground)]">
           Surfaces cross-workflow anomalies without changing the core operational model.

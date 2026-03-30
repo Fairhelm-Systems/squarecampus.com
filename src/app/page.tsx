@@ -18,7 +18,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ButtonLink } from "@/components/site/button-link";
 import { HeroMockupCluster } from "@/components/site/mockups";
-import { NexusIntegrationsVisual } from "@/components/site/nexus-integrations-visual";
+import { CommandLoomIntegrationsVisual } from "@/components/site/commandloom-integrations-visual";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -173,7 +173,7 @@ export default function Home() {
               <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-[4.6rem]">
                 The School OS that keeps every campus system in sync.
               </h1>
-              <p className="max-w-xl text-lg leading-8 text-[color:var(--muted-foreground)]">
+              <p className="max-w-xl text-lg leading-8 text-muted-foreground">
                 SquareCampus connects admissions, academics, attendance, fees, communication,
                 compliance, and operations in one operating backbone built for the realities of
                 institutions in India.
@@ -195,7 +195,7 @@ export default function Home() {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="surface-panel rounded-[1.35rem] px-4 py-3 text-sm leading-6 text-[color:var(--muted-foreground)]"
+                    className="surface-panel rounded-[1.35rem] px-4 py-3 text-sm leading-6 text-muted-foreground"
                   >
                     {item}
                   </div>
@@ -215,17 +215,17 @@ export default function Home() {
           body="SquareCampus is not just a school management interface. It behaves like the operating layer that keeps departments, people, and records aligned."
         >
           <Reveal className="grid gap-4 xl:grid-cols-[0.94fr_1.06fr]">
-            <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-[54rem] xl:p-8">
+            <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-216 xl:p-8">
               <div className="pointer-events-none absolute inset-x-8 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.12),transparent_70%)]" />
               <div className="relative flex h-full flex-col">
-                <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[color:var(--line)] pb-6">
+                <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--line) pb-6">
                   <div>
                     <p className="section-kicker">Connected workflow spine</p>
                     <h2 className="mt-4 font-display text-3xl tracking-[-0.05em]">
                       Four linked operating moves keep the institution in sync.
                     </h2>
                   </div>
-                  <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
+                  <span className="rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
                     One connected timeline
                   </span>
                 </div>
@@ -234,13 +234,13 @@ export default function Home() {
                   {workflowBlocks.map((item, index) => (
                     <div
                       key={item.title}
-                      className="rounded-[1.55rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-5 shadow-[0_18px_34px_rgba(8,15,30,0.05)]"
+                      className="rounded-[1.55rem] border border-(--line) bg-(--surface) p-5 shadow-[0_18px_34px_rgba(8,15,30,0.05)]"
                     >
                       <div className="flex items-start gap-4">
                         <div
                           className={`flex size-12 shrink-0 items-center justify-center rounded-full border text-sm ${index === 0
-                            ? "border-transparent bg-[color:var(--foreground)] text-[color:var(--background)]"
-                            : "border-[color:var(--line)] bg-[color:var(--surface-strong)] text-[color:var(--muted-foreground)]"
+                            ? "border-transparent bg-foreground text-background"
+                            : "border-(--line) bg-(--surface-strong) text-muted-foreground"
                             }`}
                         >
                           {String(index + 1).padStart(2, "0")}
@@ -253,9 +253,9 @@ export default function Home() {
                                 {item.title}
                               </h3>
                             </div>
-                            <item.icon className="mt-1 size-5 shrink-0 text-[color:var(--brand)]" />
+                            <item.icon className="mt-1 size-5 shrink-0 text-(--brand)" />
                           </div>
-                          <p className="mt-3 max-w-xl text-base leading-7 text-[color:var(--muted-foreground)]">
+                          <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground">
                             {item.body}
                           </p>
                         </div>
@@ -265,15 +265,15 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-5">
+                  <div className="rounded-3xl border border-(--line) bg-(--surface) p-5">
                     <p className="section-kicker">One source of truth</p>
-                    <p className="mt-4 text-[1.08rem] leading-8 text-[color:var(--foreground)]">
+                    <p className="mt-4 text-[1.08rem] leading-8 text-foreground">
                       Admissions, academics, finance, and communication stay on the same record.
                     </p>
                   </div>
-                  <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-5">
+                  <div className="rounded-3xl border border-(--line) bg-(--surface) p-5">
                     <p className="section-kicker">Campus roll-up</p>
-                    <p className="mt-4 text-[1.08rem] leading-8 text-[color:var(--foreground)]">
+                    <p className="mt-4 text-[1.08rem] leading-8 text-foreground">
                       Multi-campus leadership sees the aggregate picture without losing branch-level
                       accountability.
                     </p>
@@ -282,15 +282,15 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-[54rem] xl:p-8">
+            <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-216 xl:p-8">
               <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[linear-gradient(180deg,rgba(88,124,204,0.12),transparent)]" />
               <div className="relative flex h-full flex-col">
                 <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
-                    <Building2 className="size-4 text-[color:var(--brand)]" />
+                  <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                    <Building2 className="size-4 text-(--brand)" />
                     Operating backbone
                   </div>
-                  <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
+                  <span className="rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
                     Live institutional state
                   </span>
                 </div>
@@ -376,7 +376,7 @@ export default function Home() {
                 {patchworkProblems.map((problem) => (
                   <div
                     key={problem}
-                    className="rounded-[1.2rem] bg-[color:var(--surface-muted)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
+                    className="rounded-[1.2rem] bg-(--surface-muted) px-4 py-4 text-sm leading-6 text-muted-foreground"
                   >
                     {problem}
                   </div>
@@ -397,7 +397,7 @@ export default function Home() {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
+                    className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4 text-sm leading-6 text-muted-foreground"
                   >
                     {item}
                   </div>
@@ -429,7 +429,7 @@ export default function Home() {
                 <h2 className="mt-8 max-w-2xl font-display text-4xl tracking-[-0.06em] sm:text-[3.6rem]">
                   {capabilityStories[0].title}
                 </h2>
-                <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
+                <p className="mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
                   {capabilityStories[0].body}
                 </p>
 
@@ -790,21 +790,21 @@ export default function Home() {
 
         <SectionShell
           eyebrow="Embedded intelligence"
-          title="Nexus is the intelligence layer inside the operating system"
-          body="Nexus is positioned as an added advantage on top of SquareCampus, not as a replacement for product substance."
+          title="CommandLoom is the intelligence layer inside the operating system"
+          body="CommandLoom is positioned as an added advantage on top of SquareCampus, not as a replacement for product substance."
         >
           <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
             <div className="grid gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-2 text-sm text-[color:var(--foreground)]">
                   <Radar className="size-4 text-[color:var(--brand)]" />
-                  Nexus inside SquareCampus
+                  CommandLoom inside SquareCampus
                 </div>
                 <h2 className="mt-5 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
                   Ask better questions. Get operating context back.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  Because Nexus works with the same permissions, timelines, and live records, it can
+                  Because CommandLoom works with the same permissions, timelines, and live records, it can
                   surface exceptions, suggest next steps, and support leadership visibility without
                   becoming a separate product narrative.
                 </p>
@@ -833,7 +833,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-              <NexusIntegrationsVisual className="lg:-mr-2" />
+              <CommandLoomIntegrationsVisual className="lg:-mr-2" />
             </div>
           </Reveal>
         </SectionShell>

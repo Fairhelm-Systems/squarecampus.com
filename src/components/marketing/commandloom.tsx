@@ -10,16 +10,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // ============================================================================
-// NEXUS LOGO COMPONENT
+// COMMAND_LOOM LOGO COMPONENT
 // ============================================================================
 
-interface NexusLogoProps {
+interface CommandLoomLogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
   animate?: boolean;
 }
 
-const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoProps) => {
+const CommandLoomLogo = ({ className = "", size = "md", animate = true }: CommandLoomLogoProps) => {
   const uid = useId();
 
   const sizeMap = {
@@ -53,19 +53,19 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
     delay: i * 0.15,
   }));
 
-  const glowId = `nexusGlow-${uid}`;
+  const glowId = `commandloomGlow-${uid}`;
   const centerGradId = `centerGrad-${uid}`;
   const pulseGradId = `pulseGrad-${uid}`;
 
   return (
     <svg
-      className={`nexus-logo ${className}`}
+      className={`commandloom-logo ${className}`}
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Nexus"
+      aria-label="CommandLoom"
       role="img"
     >
       <defs>
@@ -99,7 +99,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
           stroke={`url(#${centerGradId})`}
           strokeWidth={size === "sm" ? 0.5 : 1}
           strokeOpacity={0.4}
-          className={animate ? "nexus-logo-line" : ""}
+          className={animate ? "commandloom-logo-line" : ""}
           style={animate ? { animationDelay: `${node.delay}s` } : undefined}
         />
       ))}
@@ -113,7 +113,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
           stroke={`url(#${centerGradId})`}
           strokeWidth={0.5}
           strokeOpacity={0.2}
-          className="nexus-logo-ring"
+          className="commandloom-logo-ring"
         />
       )}
 
@@ -125,7 +125,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
             r={nodeR * 1.5}
             fill={node.color}
             opacity={0.2}
-            className={animate ? "nexus-logo-node-glow" : ""}
+            className={animate ? "commandloom-logo-node-glow" : ""}
             style={animate ? { animationDelay: `${node.delay}s` } : undefined}
           />
           <circle
@@ -134,7 +134,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
             r={nodeR}
             fill={node.color}
             filter={`url(#${glowId})`}
-            className={animate ? "nexus-logo-node" : ""}
+            className={animate ? "commandloom-logo-node" : ""}
             style={animate ? { animationDelay: `${node.delay}s` } : undefined}
           />
         </g>
@@ -146,7 +146,7 @@ const NexusLogo = ({ className = "", size = "md", animate = true }: NexusLogoPro
           cy={cy}
           r={centerR * 1.8}
           fill={`url(#${pulseGradId})`}
-          className="nexus-logo-pulse"
+          className="commandloom-logo-pulse"
         />
       )}
 
@@ -220,12 +220,12 @@ const FloatingParticles = () => {
             left: `${p.x}%`,
             top: `${p.y}%`,
             opacity: p.opacity,
-            animation: `nexus-float ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            animation: `commandloom-float ${p.duration}s ease-in-out ${p.delay}s infinite`,
           }}
         />
       ))}
       <style jsx>{`
-        @keyframes nexus-float {
+        @keyframes commandloom-float {
           0%,
           100% {
             transform: translate(0, 0) scale(1);
@@ -682,7 +682,7 @@ const PatternEmergence = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex items-center gap-3 rounded-full border border-blue-500/30 bg-black/80 px-6 py-3 backdrop-blur-sm">
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-            <span className="text-sm font-medium text-blue-400">Nexus analyzing patterns...</span>
+            <span className="text-sm font-medium text-blue-400">CommandLoom analyzing patterns...</span>
           </div>
         </div>
       )}
@@ -698,15 +698,15 @@ const SpeedComparison = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimatedRef = useRef(false);
   const [traditionalTime, setTraditionalTime] = useState(0);
-  const [nexusTime, setNexusTime] = useState(0);
+  const [commandloomTime, setCommandLoomTime] = useState(0);
   const [traditionalBarWidth, setTraditionalBarWidth] = useState(0);
-  const [nexusBarWidth, setNexusBarWidth] = useState(0);
+  const [commandloomBarWidth, setCommandLoomBarWidth] = useState(0);
   const [isRacing, setIsRacing] = useState(false);
   const [raceComplete, setRaceComplete] = useState(false);
 
   // Final values - more realistic
   const TRADITIONAL_FINAL = 27; // minutes
-  const NEXUS_FINAL = 1.2; // seconds
+  const COMMAND_LOOM_FINAL = 1.2; // seconds
 
   useEffect(() => {
     if (!containerRef.current || hasAnimatedRef.current) return;
@@ -723,8 +723,8 @@ const SpeedComparison = () => {
           setIsRacing(true);
 
           if (prefersReducedMotion) {
-            setNexusTime(NEXUS_FINAL);
-            setNexusBarWidth(100);
+            setCommandLoomTime(COMMAND_LOOM_FINAL);
+            setCommandLoomBarWidth(100);
             setTraditionalTime(TRADITIONAL_FINAL);
             setTraditionalBarWidth(100);
             setIsRacing(false);
@@ -732,18 +732,18 @@ const SpeedComparison = () => {
             return;
           }
 
-          // Nexus - instant burst
+          // CommandLoom - instant burst
           gsap.to(
             { val: 0, bar: 0 },
             {
-              val: NEXUS_FINAL,
+              val: COMMAND_LOOM_FINAL,
               bar: 100,
               duration: 0.5,
               ease: "power4.out",
               onUpdate: function () {
                 const target = this.targets()[0];
-                setNexusTime(Number(target.val.toFixed(1)));
-                setNexusBarWidth(target.bar);
+                setCommandLoomTime(Number(target.val.toFixed(1)));
+                setCommandLoomBarWidth(target.bar);
               },
             }
           );
@@ -812,12 +812,12 @@ const SpeedComparison = () => {
         </div>
       </div>
 
-      {/* Nexus */}
+      {/* CommandLoom */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-neutral-400">Nexus Intelligence</span>
+          <span className="text-sm font-medium text-neutral-400">CommandLoom Intelligence</span>
           <span className="font-mono text-2xl font-bold text-emerald-400">
-            {nexusTime}
+            {commandloomTime}
             <span className="text-sm text-neutral-500"> sec</span>
           </span>
         </div>
@@ -825,7 +825,7 @@ const SpeedComparison = () => {
           <div
             className="h-full rounded-full bg-gradient-to-r from-emerald-600 via-blue-500 to-purple-500 transition-all duration-100"
             style={{
-              width: `${nexusBarWidth}%`,
+              width: `${commandloomBarWidth}%`,
               boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)",
             }}
           />
@@ -840,7 +840,7 @@ const SpeedComparison = () => {
       {raceComplete && (
         <div className="col-span-full mt-4 flex justify-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400">
-            <NexusLogo size="sm" />
+            <CommandLoomLogo size="sm" />
             1,350x faster than traditional methods
           </div>
         </div>
@@ -850,7 +850,7 @@ const SpeedComparison = () => {
 };
 
 // ============================================================================
-// ASK NEXUS INTERACTIVE DEMO
+// ASK COMMAND_LOOM INTERACTIVE DEMO
 // ============================================================================
 
 const sampleQueries = [
@@ -922,7 +922,7 @@ const sampleQueries = [
   },
 ];
 
-const AskNexusDemo = () => {
+const AskCommandLoomDemo = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedQuestion, setDisplayedQuestion] = useState("");
@@ -1036,13 +1036,13 @@ const AskNexusDemo = () => {
                   : "bg-gradient-to-br from-blue-500/10 to-purple-600/10"
               }`}
             >
-              <NexusLogo size="md" animate={phase === "thinking"} />
+              <CommandLoomLogo size="md" animate={phase === "thinking"} />
             </div>
             <div className="flex-1 min-h-[28px]">
               <span className="text-lg text-white">
                 {displayedQuestion || (
                   <span className="text-neutral-500">
-                    Ask Nexus anything about your institution...
+                    Ask CommandLoom anything about your institution...
                   </span>
                 )}
               </span>
@@ -1117,7 +1117,7 @@ const AskNexusDemo = () => {
           <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
             <div className="flex items-center gap-2 text-sm font-medium text-blue-400">
               <Zap className="h-4 w-4" />
-              Nexus Recommendation
+              CommandLoom Recommendation
             </div>
             <p className="mt-2 text-sm text-neutral-300">{currentData.recommendation}</p>
           </div>
@@ -1521,10 +1521,10 @@ const capabilities = [
 ];
 
 // ============================================================================
-// MAIN NEXUS COMPONENT
+// MAIN COMMAND_LOOM COMPONENT
 // ============================================================================
 
-export default function Nexus() {
+export default function CommandLoom() {
   const sectionRef = useRef<HTMLElement>(null);
   const { isMobile, shouldReduceEffects } = useDeviceCapabilities();
 
@@ -1538,21 +1538,21 @@ export default function Nexus() {
       // Hero entrance animation
       const heroTl = gsap.timeline({
         scrollTrigger: {
-          trigger: ".nexus-hero",
+          trigger: ".commandloom-hero",
           start: "top 85%",
           once: true,
         },
       });
 
       heroTl
-        .from(".nexus-badge", {
+        .from(".commandloom-badge", {
           y: 30,
           opacity: 0,
           duration: 0.6,
           ease: "power3.out",
         })
         .from(
-          ".nexus-title",
+          ".commandloom-title",
           {
             y: 50,
             opacity: 0,
@@ -1562,7 +1562,7 @@ export default function Nexus() {
           "-=0.3"
         )
         .from(
-          ".nexus-subtitle",
+          ".commandloom-subtitle",
           {
             y: 30,
             opacity: 0,
@@ -1628,7 +1628,7 @@ export default function Nexus() {
   return (
     <section
       ref={sectionRef}
-      id="nexus"
+      id="commandloom"
       className="relative overflow-hidden bg-black py-24 md:py-32"
     >
       {/* Background elements - Hidden on mobile/low-end for performance */}
@@ -1642,27 +1642,27 @@ export default function Nexus() {
         {/* ============================================================ */}
         {/* HERO SECTION */}
         {/* ============================================================ */}
-        <div className="nexus-hero mb-20 text-center md:mb-28">
-          <div className="nexus-badge mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
-            <NexusLogo size="sm" />
-            Introducing Nexus
+        <div className="commandloom-hero mb-20 text-center md:mb-28">
+          <div className="commandloom-badge mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+            <CommandLoomLogo size="sm" />
+            Introducing CommandLoom
           </div>
 
-          <h2 className="nexus-title mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+          <h2 className="commandloom-title mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
             Your institution's{" "}
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
               intelligence layer
             </span>
           </h2>
 
-          <p className="nexus-subtitle mx-auto max-w-3xl text-lg leading-relaxed text-neutral-400 md:text-xl">
-            Nexus transforms your scattered data into instant, actionable insights. Ask questions in
+          <p className="commandloom-subtitle mx-auto max-w-3xl text-lg leading-relaxed text-neutral-400 md:text-xl">
+            CommandLoom transforms your scattered data into instant, actionable insights. Ask questions in
             plain language. Get answers in milliseconds. See problems before they happen.
           </p>
         </div>
 
         {/* ============================================================ */}
-        {/* ASK NEXUS DEMO */}
+        {/* ASK COMMAND_LOOM DEMO */}
         {/* ============================================================ */}
         <div className="mb-24 md:mb-32">
           <div className="section-title mb-8 text-center">
@@ -1670,11 +1670,11 @@ export default function Nexus() {
               Natural Language Interface
             </h3>
             <p className="text-2xl font-bold text-white md:text-3xl">
-              Just ask. Nexus understands.
+              Just ask. CommandLoom understands.
             </p>
           </div>
           <div className="mx-auto max-w-3xl">
-            <AskNexusDemo />
+            <AskCommandLoomDemo />
           </div>
         </div>
 
@@ -1820,15 +1820,15 @@ export default function Nexus() {
 
           <div className="relative">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-400">
-              <NexusLogo size="sm" />
+              <CommandLoomLogo size="sm" />
               Available with SquareCampus
             </div>
 
             <h3 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              Ready to see Nexus in action?
+              Ready to see CommandLoom in action?
             </h3>
             <p className="mx-auto mb-8 max-w-xl text-neutral-400">
-              Book a demo and watch Nexus analyze your institution's data in real-time. See insights
+              Book a demo and watch CommandLoom analyze your institution's data in real-time. See insights
               you've been missing.
             </p>
 
@@ -1837,7 +1837,7 @@ export default function Nexus() {
                 href="/contact-us"
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-semibold text-neutral-900 transition-all duration-300 hover:bg-neutral-200"
               >
-                Book a Nexus Demo
+                Book a CommandLoom Demo
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link

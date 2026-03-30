@@ -68,7 +68,7 @@ const signalBars = [
   { label: "Role-aware answer safety", width: "95%" },
 ] as const;
 
-export function NexusIntegrationsVisual({ className }: { className?: string }) {
+export function CommandLoomIntegrationsVisual({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -78,14 +78,14 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
       return;
     }
 
-    const shell = node.querySelector<HTMLElement>("[data-nexus-shell]");
-    const center = node.querySelector<HTMLElement>("[data-nexus-center]");
-    const cards = Array.from(node.querySelectorAll<HTMLElement>("[data-nexus-card]"));
-    const dots = Array.from(node.querySelectorAll<HTMLElement>("[data-nexus-dot]"));
-    const lines = Array.from(node.querySelectorAll<SVGPathElement>("[data-nexus-line]"));
-    const bars = Array.from(node.querySelectorAll<HTMLElement>("[data-nexus-bar-fill]"));
-    const pills = Array.from(node.querySelectorAll<HTMLElement>("[data-nexus-pill]"));
-    const summaries = Array.from(node.querySelectorAll<HTMLElement>("[data-nexus-summary]"));
+    const shell = node.querySelector<HTMLElement>("[data-commandloom-shell]");
+    const center = node.querySelector<HTMLElement>("[data-commandloom-center]");
+    const cards = Array.from(node.querySelectorAll<HTMLElement>("[data-commandloom-card]"));
+    const dots = Array.from(node.querySelectorAll<HTMLElement>("[data-commandloom-dot]"));
+    const lines = Array.from(node.querySelectorAll<SVGPathElement>("[data-commandloom-line]"));
+    const bars = Array.from(node.querySelectorAll<HTMLElement>("[data-commandloom-bar-fill]"));
+    const pills = Array.from(node.querySelectorAll<HTMLElement>("[data-commandloom-pill]"));
+    const summaries = Array.from(node.querySelectorAll<HTMLElement>("[data-commandloom-summary]"));
     const animations: Array<{ pause?: () => void }> = [];
 
     if (!shell || !center) {
@@ -296,13 +296,13 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
   return (
     <div ref={ref} className={cn("relative", className)}>
       <div
-        data-nexus-shell
-        className="surface-panel-strong relative overflow-hidden rounded-[2rem] p-5 md:p-6"
+        data-commandloom-shell
+        className="surface-panel-strong relative overflow-hidden rounded-4xl p-5 md:p-6"
       >
         <div className="pointer-events-none absolute inset-x-[14%] top-8 h-28 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.22),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(88,124,204,0.16),transparent_72%)]" />
 
         <div className="space-y-4">
-          <div className="relative min-h-[34rem] md:min-h-[37rem]">
+          <div className="relative min-h-136 md:min-h-148">
             <svg
               viewBox="0 0 500 480"
               className="pointer-events-none absolute inset-0 h-full w-full"
@@ -312,7 +312,7 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
                 <path
                   key={item.title}
                   d={item.line}
-                  data-nexus-line
+                  data-commandloom-line
                   fill="none"
                   stroke="var(--brand)"
                   strokeWidth="1.5"
@@ -321,43 +321,43 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
               ))}
             </svg>
 
-            <div className="pointer-events-none absolute inset-x-[20%] top-[15%] h-[18rem] rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.1),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(88,124,204,0.12),transparent_74%)]" />
+            <div className="pointer-events-none absolute inset-x-[20%] top-[15%] h-72 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.1),transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(88,124,204,0.12),transparent_74%)]" />
 
             {sourceCards.map((item) => (
               <div
                 key={item.title}
-                data-nexus-card
+                data-commandloom-card
                 className={cn(
-                  "absolute z-10 w-[42%] rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4 shadow-[0_18px_40px_rgba(8,15,30,0.08)] backdrop-blur-md md:w-[11rem]",
+                  "absolute z-10 w-[42%] rounded-[1.3rem] border border-(--line) bg-(--surface) p-4 shadow-[0_18px_40px_rgba(8,15,30,0.08)] backdrop-blur-md md:w-44",
                   item.position,
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <item.icon className="size-4 text-[color:var(--brand)]" />
+                  <item.icon className="size-4 text-(--brand)" />
                   <span
-                    data-nexus-dot
-                    className="mt-0.5 size-2 rounded-full bg-[color:var(--brand)]"
+                    data-commandloom-dot
+                    className="mt-0.5 size-2 rounded-full bg-(--brand)"
                   />
                 </div>
-                <p className="mt-4 font-display text-[1rem] tracking-[-0.03em] text-[color:var(--foreground)]">
+                <p className="mt-4 font-display text-[1rem] tracking-[-0.03em] text-foreground">
                   {item.title}
                 </p>
-                <p className="mt-2 text-[0.72rem] leading-5 text-[color:var(--muted-foreground)]">
+                <p className="mt-2 text-[0.72rem] leading-5 text-muted-foreground">
                   {item.detail}
                 </p>
               </div>
             ))}
 
             <div
-              data-nexus-center
-              className="absolute left-1/2 top-[37%] z-20 w-[76%] max-w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-[1.7rem] border border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] p-5 shadow-[0_26px_70px_rgba(8,15,30,0.14)] backdrop-blur-xl"
+              data-commandloom-center
+              className="absolute left-1/2 top-[37%] z-20 w-[76%] max-w-88 -translate-x-1/2 -translate-y-1/2 rounded-[1.7rem] border border-(--line-strong) bg-(--surface-strong) p-5 shadow-[0_26px_70px_rgba(8,15,30,0.14)] backdrop-blur-xl"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                    Nexus intelligence layer
+                  <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-muted-foreground">
+                    CommandLoom intelligence layer
                   </p>
-                  <h3 className="mt-3 font-display text-2xl tracking-[-0.05em] text-[color:var(--foreground)]">
+                  <h3 className="mt-3 font-display text-2xl tracking-[-0.05em] text-foreground">
                     Connected SquareCampus context
                   </h3>
                 </div>
@@ -367,7 +367,7 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
               </div>
 
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                Nexus reads the same role graph, timeline, fee state, communication trail, and campus
+                CommandLoom reads the same role graph, timeline, fee state, communication trail, and campus
                 visibility that already live inside the School OS.
               </p>
 
@@ -382,7 +382,7 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
                     </div>
                     <div className="h-2 rounded-full bg-(--surface-muted)">
                       <div
-                        data-nexus-bar-fill
+                        data-commandloom-bar-fill
                         className="h-full rounded-full bg-[linear-gradient(90deg,var(--brand),var(--teal))]"
                         style={{ width: bar.width }}
                       />
@@ -399,7 +399,7 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
                 ].map((item) => (
                   <div
                     key={item}
-                    data-nexus-pill
+                    data-commandloom-pill
                     className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground"
                   >
                     {item}
@@ -426,7 +426,7 @@ export function NexusIntegrationsVisual({ className }: { className?: string }) {
             ].map((item) => (
               <div
                 key={item.text}
-                data-nexus-summary
+                data-commandloom-summary
                 className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4"
               >
                 <item.icon className="mb-3 size-4 text-(--brand)" />
