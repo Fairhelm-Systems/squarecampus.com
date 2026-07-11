@@ -1,9 +1,9 @@
 "use client";
 
-import { animate, stagger } from "animejs";
 import type { ReactNode } from "react";
-import { useEffect, useEffectEvent, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { cn } from "@/lib/utils";
 
 interface RevealProps {
   children: ReactNode;
@@ -14,6 +14,11 @@ interface RevealProps {
   staggerChildren?: boolean;
 }
 
+/**
+ * Scroll-triggered entrance. All motion is CSS transitions (see the
+ * `.reveal-*` utilities in globals.css); this component only toggles a
+ * class when the node scrolls into view.
+ */
 export function Reveal({
   children,
   className,
@@ -23,40 +28,7 @@ export function Reveal({
   staggerChildren = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const hasAnimatedRef = useRef(false);
   const prefersReducedMotion = useReducedMotion();
-
-  const runAnimation = useEffectEvent(() => {
-    const node = ref.current;
-    if (!node) {
-      return;
-    }
-
-    animate(node, {
-      opacity: [0, 1],
-      y: [distance, 0],
-      duration: 820,
-      delay,
-      ease: "out(3)",
-    });
-
-    if (!staggerChildren) {
-      return;
-    }
-
-    const targets = node.querySelectorAll("[data-reveal-item]");
-    if (!targets.length) {
-      return;
-    }
-
-    animate(targets, {
-      opacity: [0, 1],
-      y: [16, 0],
-      delay: stagger(80, { start: delay + 60 }),
-      duration: 700,
-      ease: "out(3)",
-    });
-  });
 
   useEffect(() => {
     const node = ref.current;
@@ -65,42 +37,21 @@ export function Reveal({
     }
 
     if (prefersReducedMotion) {
-      node.style.opacity = "1";
-      node.style.transform = "none";
+      node.classList.add("is-revealed");
       return;
-    }
-
-    if (once && hasAnimatedRef.current) {
-      node.style.opacity = "1";
-      node.style.transform = "none";
-      return;
-    }
-
-    node.style.opacity = "0";
-    node.style.transform = `translateY(${distance}px)`;
-
-    if (staggerChildren) {
-      const targets = node.querySelectorAll("[data-reveal-item]");
-      for (const target of targets) {
-        const element = target as HTMLElement;
-        element.style.opacity = "0";
-        element.style.transform = "translateY(16px)";
-      }
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) {
+            if (!once) {
+              node.classList.remove("is-revealed");
+            }
             continue;
           }
 
-          if (once && hasAnimatedRef.current) {
-            continue;
-          }
-
-          hasAnimatedRef.current = true;
-          runAnimation();
+          node.classList.add("is-revealed");
 
           if (once) {
             observer.disconnect();
@@ -115,21 +66,26 @@ export function Reveal({
 
     observer.observe(node);
 
-    const timeout = setTimeout(() => {
-      if (!hasAnimatedRef.current && node) {
-        node.style.opacity = "1";
-        node.style.transform = "none";
-      }
-    }, 4000);
+    // Never leave content hidden if the observer misfires.
+    const timeout = setTimeout(() => node.classList.add("is-revealed"), 4000);
 
     return () => {
       observer.disconnect();
       clearTimeout(timeout);
     };
-  }, [distance, once, prefersReducedMotion, staggerChildren]);
+  }, [once, prefersReducedMotion]);
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={cn("reveal-root", staggerChildren && "reveal-stagger", className)}
+      style={
+        {
+          "--reveal-delay": `${delay}ms`,
+          "--reveal-distance": `${distance}px`,
+        } as React.CSSProperties
+      }
+    >
       {children}
     </div>
   );

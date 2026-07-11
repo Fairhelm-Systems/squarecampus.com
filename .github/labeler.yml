@@ -12,7 +12,7 @@ area:homepage:
       - any-glob-to-any-file:
           - "src/app/page.tsx"
           - "src/components/site/mockups.tsx"
-          - "src/components/site/nexus-integrations-visual.tsx"
+          - "src/components/site/commandloom-integrations-visual.tsx"
 
 area:platform-pages:
   - changed-files:
@@ -43,7 +43,7 @@ area:theme-motion:
           - "src/components/site/reveal.tsx"
           - "src/components/site/theme-*.tsx"
           - "src/components/site/mockups.tsx"
-          - "src/components/site/nexus-integrations-visual.tsx"
+          - "src/components/site/commandloom-integrations-visual.tsx"
           - "src/hooks/useReducedMotion.ts"
 
 area:content-seo:

@@ -1,216 +1,186 @@
-# AWS Amplify Deployment Guide
+# Deployment Guide — S3 + CloudFront (Static Export)
 
-This guide walks you through deploying the SquareCampus marketing website to AWS Amplify.
+## Live infrastructure (deployed 2026-07-11)
 
-## Prerequisites
+| Resource | Value |
+|---|---|
+| S3 bucket | `squarecampus-marketing-site` (ap-south-1, private, OAC-only) |
+| CloudFront distribution | `E3ATKH99UOL8C2` → d1n7nlq2wsu2se.cloudfront.net |
+| Aliases | squarecampus.com, www.squarecampus.com, squarecampus.in, www.squarecampus.in |
+| ACM cert (us-east-1) | 4-SAN cert covering all aliases |
+| CloudFront Function | `squarecampus-router` (host canonicalization + legacy redirects + index rewrite) |
+| Response headers policy | `squarecampus-security-headers` |
+| Route53 | A/AAAA aliases on both zones → the distribution |
 
-- AWS Account with Amplify access
-- GitHub repository connected to AWS Amplify
-- Resend API key (from https://resend.com)
+squarecampus.in and all www hosts 301 to https://squarecampus.com at the edge.
+The old Amplify app was deleted on 2026-07-11.
 
-## Deployment Steps
+### Redeploy
 
-### 1. Initial Setup in AWS Amplify Console
-
-1. **Navigate to AWS Amplify Console**
-   - Go to https://console.aws.amazon.com/amplify
-   - Click "New app" → "Host web app"
-
-2. **Connect Your Repository**
-   - Select "GitHub" as your Git provider
-   - Authorize AWS Amplify to access your GitHub account
-   - Select the repository: `square_campus_marketing`
-   - Select branch: `main`
-
-3. **Configure Build Settings**
-   - AWS Amplify should auto-detect Next.js
-   - The `amplify.yml` file in the root will be automatically used
-   - Build image: Use the default (Amazon Linux 2023)
-
-### 2. Set Environment Variables
-
-In the Amplify Console, go to **App settings** → **Environment variables** and add:
-
-| Variable Name    | Value                          | Notes                           |
-|------------------|--------------------------------|---------------------------------|
-| `RESEND_API_KEY` | `re_your_actual_api_key_here` | Get from https://resend.com     |
-
-**Important**:
-- Click "Save" after adding the variable
-- The variable will be encrypted and available during build time
-
-### 3. Configure Build & Deploy Settings
-
-1. **Build Settings** (already configured in `amplify.yml`)
-   - Package manager: Bun
-   - Build command: `bun run build`
-   - Output directory: `.next`
-
-2. **Advanced Settings** (Optional but Recommended)
-   - **Node.js version**: 20.x (latest LTS)
-   - **Enable performance mode**: ON
-   - **Enable SSR and API routes**: ON (required for server actions)
-
-### 4. Deploy
-
-1. Click **"Save and deploy"**
-2. AWS Amplify will:
-   - Clone your repository
-   - Install Bun
-   - Install dependencies
-   - Build the application
-   - Deploy to CloudFront CDN
-
-**First deployment takes ~5-10 minutes**
-
-### 5. Verify Deployment
-
-Once deployed, you'll get a URL like: `https://main.d1234567890.amplifyapp.com`
-
-1. **Test the website**
-   - Navigate to the URL
-   - Check all pages load correctly
-   - Verify Cal.com embed works
-
-2. **Test the contact form**
-   - Go to `/#contact-us`
-   - Fill out the form
-   - Submit and verify:
-     - Toast notification appears
-     - Email arrives at contact@squarecampus.com
-     - Rate limiting works (try submitting again immediately)
-
-### 6. Custom Domain Setup (Optional)
-
-1. In Amplify Console, go to **App settings** → **Domain management**
-2. Click **"Add domain"**
-3. Enter `squarecampus.com`
-4. Follow the DNS configuration steps:
-   - Add CNAME records to your DNS provider
-   - Wait for SSL certificate provisioning (~15 minutes)
-
-**DNS Records to add:**
-```
-Type: CNAME
-Name: www
-Value: [Amplify provides this]
-
-Type: A/ALIAS
-Name: @
-Value: [Amplify provides this]
+```bash
+bun run build
+aws s3 sync out/ s3://squarecampus-marketing-site --delete \
+  --cache-control "public,max-age=0,must-revalidate" --exclude "_next/*"
+aws s3 sync out/_next/ s3://squarecampus-marketing-site/_next/ --delete \
+  --cache-control "public,max-age=31536000,immutable"
+aws cloudfront create-invalidation --distribution-id E3ATKH99UOL8C2 --paths "/*"
 ```
 
-## Post-Deployment Configuration
+The site builds to a fully static export (`output: "export"` in
+[next.config.ts](next.config.ts)). There is no server, no middleware, and no
+API routes — everything that used to live there is now configured at the edge.
 
-### Update Resend Domain (Recommended)
+## Build
 
-Currently emails are sent from `onboarding@resend.dev`. To use your own domain:
-
-1. **In Resend Dashboard**:
-   - Go to "Domains"
-   - Add `squarecampus.com`
-   - Add the DNS records they provide
-
-2. **Update the code** in `src/actions/contact.ts:323`:
-   ```typescript
-   from: "SquareCampus Contact <noreply@squarecampus.com>",
-   ```
-
-3. **Redeploy** (Amplify will auto-deploy on git push)
-
-### Monitor Email Usage
-
-- Go to Resend Dashboard → Analytics
-- Monitor email send volume
-- Free tier: 3,000 emails/month
-- With spam protection, you should stay well under this
-
-## Continuous Deployment
-
-AWS Amplify is configured for automatic deployments:
-
-1. **Push to GitHub**:
-   ```bash
-   git add .
-   git commit -m "Your changes"
-   git push origin main
-   ```
-
-2. **Amplify automatically**:
-   - Detects the push
-   - Runs the build
-   - Deploys to production
-   - Takes ~3-5 minutes
-
-## Troubleshooting
-
-### Build Fails with "bun: command not found"
-
-**Solution**: Ensure `amplify.yml` includes the Bun installation commands:
-```yaml
-preBuild:
-  commands:
-    - curl -fsSL https://bun.sh/install | bash
-    - export BUN_INSTALL="$HOME/.bun"
-    - export PATH="$BUN_INSTALL/bin:$PATH"
+```bash
+bun install
+bun run build          # emits the static site into ./out
 ```
 
-### Contact Form Not Sending Emails
+Two-domain setup: build once per domain so canonicals match the host.
 
-**Check**:
-1. Environment variable is set: `RESEND_API_KEY`
-2. API key is valid (test in Resend dashboard)
-3. Check Amplify logs: **App settings** → **Monitoring** → **Logs**
-4. Verify server actions are enabled in Amplify settings
+```bash
+# squarecampus.com (default)
+bun run build
 
-### 500 Error on Form Submission
+# squarecampus.in
+NEXT_PUBLIC_SITE_URL=https://squarecampus.in bun run build
+```
 
-**Check Amplify Function Logs**:
-1. Go to **Monitoring** → **Function logs**
-2. Look for errors in the contact form server action
-3. Common issues:
-   - Missing/invalid RESEND_API_KEY
-   - Rate limiting in development (clear browser cache)
+Every page emits hreflang alternates pointing at both domains either way
+(see [src/lib/seo.ts](src/lib/seo.ts)).
 
-### Custom Domain SSL Certificate Stuck
+Optional: set `NEXT_PUBLIC_CONTACT_ENDPOINT` at build time to a form intake
+endpoint (API Gateway + Lambda + SES, Formspree, etc.). Without it, the demo
+form opens a prefilled mail draft to contact@squarecampus.com.
 
-**Solution**:
-- Wait 15-30 minutes for initial certificate provisioning
-- Verify DNS records are correct
-- Check domain verification in Amplify console
+## Upload to S3
 
-## Security Notes
+```bash
+aws s3 sync out/ s3://YOUR_BUCKET --delete \
+  --cache-control "public,max-age=0,must-revalidate" \
+  --exclude "_next/*"
 
-All security features are production-ready:
+# Hashed immutable assets get long cache lifetimes
+aws s3 sync out/_next/ s3://YOUR_BUCKET/_next/ --delete \
+  --cache-control "public,max-age=31536000,immutable"
+```
 
-✅ **Security headers** - Applied via `next.config.ts`
-✅ **Rate limiting** - 3 emails/hour per user
-✅ **Spam protection** - Honeypot + keyword filtering
-✅ **Input sanitization** - All user inputs escaped
-✅ **External link security** - All have `noopener noreferrer`
+Keep the bucket private; grant CloudFront access via Origin Access Control (OAC).
 
-## Cost Estimate
+## CloudFront distribution
 
-- **AWS Amplify**: ~$0-5/month (free tier covers most traffic)
-- **Resend**: Free up to 3,000 emails/month
-- **Total estimated cost**: $0-5/month
+- Origin: the S3 bucket (with OAC, not website endpoint)
+- Default root object: `index.html`
+- Custom error response: 404 → `/404.html` (status 404)
+- Compress objects automatically: on (Brotli + gzip)
+- HTTP/2 + HTTP/3: on
+- Attach the **function** and **response headers policy** below.
 
-## Support
+### CloudFront Function (viewer request): index rewrite + redirects
 
-For issues:
-- AWS Amplify: Check CloudWatch logs in Amplify Console
-- Contact Form: Check Resend logs at https://resend.com/logs
-- General: Review `DEPLOYMENT.md` and `.env.example`
+`trailingSlash: true` means every route is a folder with an `index.html`.
+CloudFront only applies the root object at `/`, so rewrite subpaths, and issue
+the 301s that used to live in `next.config.ts` `redirects()`. The deployed
+version (`squarecampus-router`) additionally 301s any non-canonical host
+(www, squarecampus.in) to https://squarecampus.com:
 
----
+```js
+function handler(event) {
+  var request = event.request;
+  var uri = request.uri;
 
-**Deployment Checklist**:
-- [ ] Repository connected to AWS Amplify
-- [ ] `RESEND_API_KEY` environment variable set
-- [ ] First deployment successful
-- [ ] Contact form tested and working
-- [ ] Custom domain configured (optional)
-- [ ] Resend domain verified (optional)
-- [ ] SSL certificate active
-- [ ] All pages loading correctly
-- [ ] Cal.com embed working
+  var redirects = {
+    "/features": "/platform/",
+    "/product": "/platform/",
+    "/how-it-works": "/rollout/",
+    "/contact-us": "/demo/",
+    "/why-different": "/why-squarecampus/",
+  };
+
+  var path = uri.endsWith("/") ? uri.slice(0, -1) : uri;
+  if (redirects[path]) {
+    return {
+      statusCode: 301,
+      statusDescription: "Moved Permanently",
+      headers: { location: { value: redirects[path] } },
+    };
+  }
+
+  if (uri.endsWith("/")) {
+    request.uri = uri + "index.html";
+  } else if (!uri.includes(".")) {
+    // Canonicalize extensionless paths to the trailing-slash form
+    return {
+      statusCode: 301,
+      statusDescription: "Moved Permanently",
+      headers: { location: { value: uri + "/" } },
+    };
+  }
+
+  return request;
+}
+```
+
+### Response Headers Policy: security headers
+
+These replace the old `headers()` block in next.config.ts:
+
+| Header | Value |
+|---|---|
+| Strict-Transport-Security | `max-age=63072000; includeSubDomains; preload` |
+| X-Frame-Options | `DENY` |
+| X-Content-Type-Options | `nosniff` |
+| Referrer-Policy | `strict-origin-when-cross-origin` |
+| Permissions-Policy | `accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()` |
+| Cross-Origin-Opener-Policy | `same-origin` |
+| Cross-Origin-Resource-Policy | `same-site` |
+| Content-Security-Policy | see below |
+
+Suggested CSP for the static site (Next inlines its bootstrap scripts and the
+theme/JSON-LD snippets, so `'unsafe-inline'` for script/style is required
+unless you move to hash-based policies):
+
+```
+default-src 'self';
+script-src 'self' 'unsafe-inline';
+style-src 'self' 'unsafe-inline';
+img-src 'self' data: https://cdn.mdtechspire.com;
+font-src 'self';
+connect-src 'self' https://YOUR_CONTACT_ENDPOINT_HOST;
+frame-ancestors 'none';
+base-uri 'self';
+form-action 'self' mailto:;
+upgrade-insecure-requests
+```
+
+### WAF (optional, replaces the old middleware URL filter)
+
+The deleted `middleware.ts` blocked suspicious URL patterns (SQLi/XSS probes,
+path traversal). On CloudFront, attach **AWS WAF** with the
+`AWSManagedRulesCommonRuleSet` and `AWSManagedRulesSQLiRuleSet` managed rule
+groups for equivalent (better) coverage.
+
+## Domains
+
+Point both `squarecampus.com` and `squarecampus.in` (plus `www.` variants
+redirecting to apex) at their respective distributions via Route 53 alias
+records, each serving the matching per-domain build. Request ACM certificates
+in `us-east-1` for CloudFront.
+
+## Invalidation on deploy
+
+```bash
+aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
+```
+
+(Hashed `_next/` assets never need invalidation; `/*` covers the HTML.)
+
+## What was removed in the static migration
+
+- `middleware.ts` (URL filtering) → AWS WAF
+- `src/app/api/*` (contact, csp-report, health) → external form endpoint;
+  health checks are CloudFront/S3's concern now
+- `headers()` / `redirects()` in next.config.ts → response headers policy +
+  CloudFront Function above
+- Resend/Upstash/AWS SDK server dependencies → no longer needed at runtime

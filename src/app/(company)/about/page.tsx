@@ -1,60 +1,28 @@
-"use client";
+import { Activity, Compass, Landmark, ShieldCheck, Sparkles, Target } from "lucide-react";
+import { ButtonLink } from "@/components/site/button-link";
+import { Reveal } from "@/components/site/reveal";
+import { SectionShell } from "@/components/site/section-shell";
+import { siteCtas } from "@/content/site-content";
 
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
-import Script from "next/script";
-import { useEffect, useRef } from "react";
-import { BookCallCta } from "@/components/marketing/ctas";
-import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { useDeviceCapabilities } from "@/hooks/use-device-capabilities";
-import { Activity, ArrowUpRight, Shield, Sparkles, Target } from "@/icons";
-import {
-  createAboutPageSchema,
-  createBreadcrumbSchema,
-  createWebPageSchema,
-  SEO_CONFIG,
-} from "@/lib/seo";
-import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
-
-type Value = {
-  title: string;
-  description: string;
-  color: string;
-};
-
-type Pillar = {
-  title: string;
-  caption: string;
-  points: string[];
-  accent: string;
-};
-
-const values: Value[] = [
+const values = [
   {
     title: "Reliability over decoration",
-    description:
-      "SquareCampus is built to quietly run your day, attendance, fees, exams, and approvals, without drama, outages, or surprises.",
-    color: "blue",
+    icon: ShieldCheck,
+    body: "SquareCampus is built to quietly run your day — attendance, fees, exams, and approvals — without drama, outages, or surprises.",
   },
   {
     title: "Real-world operations first",
-    description:
-      "We design for paperwork, habits, audits, and constraints as they exist today, not how a hypothetical perfect campus might work.",
-    color: "emerald",
+    icon: Compass,
+    body: "We design for paperwork, habits, audits, and constraints as they exist today, not how a hypothetical perfect campus might work.",
   },
   {
     title: "Radical clarity for admins",
-    description:
-      "Everyone sees the same source of truth: who is present, what is pending, and what needs action now.",
-    color: "purple",
+    icon: Target,
+    body: "Everyone sees the same source of truth: who is present, what is pending, and what needs action now.",
   },
-];
+] as const;
 
-const pillars: Pillar[] = [
+const pillars = [
   {
     title: "Built for Indian institutions",
     caption: "From standalone schools to multi-city groups.",
@@ -63,7 +31,6 @@ const pillars: Pillar[] = [
       "Handles complex fee setups, terms, and concessions.",
       "Respects your existing processes instead of forcing a reset.",
     ],
-    accent: "blue",
   },
   {
     title: "Digitizing every corner",
@@ -73,843 +40,291 @@ const pillars: Pillar[] = [
       "Turns paper-based approvals into clear, trackable workflows.",
       "Ensures every update is reflected across the system instantly.",
     ],
-    accent: "emerald",
   },
   {
     title: "Data you can act on",
-    caption: "Not just charts, actual decisions.",
+    caption: "Not just charts — actual decisions.",
     points: [
       "Shows what changed, who changed it, and when.",
       "Highlights trends in attendance, performance, and collections.",
       "Keeps insights role-based so everyone sees what matters to them.",
     ],
-    accent: "cyan",
   },
-];
+] as const;
 
-const heroHighlights = [
-  {
-    title: "Single source of truth",
-    description: "Attendance, finance, and academics stay in sync; no swivel-chairing.",
-    icon: <Target className="h-4 w-4" />,
-    color: "blue",
-  },
-  {
-    title: "Operational rigor",
-    description: "Workflows with auditability baked in, not added later.",
-    icon: <Activity className="h-4 w-4" />,
-    color: "emerald",
-  },
-  {
-    title: "Built for India",
-    description: "Data residency, fee complexity, and compliance handled by design.",
-    icon: <Shield className="h-4 w-4" />,
-    color: "purple",
-  },
-];
-
-const heroStats = [
+const operatingPosture = [
   {
     label: "Institutions served",
     value: "Multi-campus ready",
     note: "Branch structures, shared services, and autonomy without chaos.",
-    accent: "blue",
   },
   {
     label: "Time-to-launch",
     value: "Fast, guided",
     note: "Playbooks for rollout, data import support, and parallel dry runs.",
-    accent: "emerald",
   },
   {
     label: "Support",
     value: "Human + product",
     note: "Direct line to ops and engineering; no ticket bots, no runaround.",
-    accent: "cyan",
   },
-];
+] as const;
 
-const accentColors: Record<string, { border: string; bg: string; text: string; glow: string }> = {
-  blue: {
-    border: "border-blue-500/30",
-    bg: "bg-blue-500/10",
-    text: "text-blue-400",
-    glow: "bg-blue-500/20",
+const founders = [
+  {
+    initials: "MG",
+    name: "Mohit Gupta",
+    role: "Founder & CTO",
+    body: "Leads product and platform engineering. Built systems processing 100M+ records daily and brings that reliability mindset to every workflow.",
   },
-  emerald: {
-    border: "border-emerald-500/30",
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
-    glow: "bg-emerald-500/20",
+  {
+    initials: "DK",
+    name: "Dhanraj Kotian",
+    role: "Co-founder & CMO",
+    body: "Works closely with institutions to understand ground reality, ensuring the product stays aligned with actual campus needs and communication flows.",
   },
-  purple: {
-    border: "border-purple-500/30",
-    bg: "bg-purple-500/10",
-    text: "text-purple-400",
-    glow: "bg-purple-500/20",
-  },
-  cyan: {
-    border: "border-cyan-500/30",
-    bg: "bg-cyan-500/10",
-    text: "text-cyan-400",
-    glow: "bg-cyan-500/20",
-  },
-};
+] as const;
 
-function FloatingParticles() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {[...Array(12)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute h-1 w-1 rounded-full bg-white/20"
-          style={{
-            left: `${10 + ((i * 7) % 80)}%`,
-            top: `${15 + ((i * 11) % 70)}%`,
-            animation: `float-particle ${8 + (i % 4) * 2}s ease-in-out infinite`,
-            animationDelay: `${i * 0.5}s`,
-          }}
-        />
-      ))}
-      <style jsx>{`
-        @keyframes float-particle {
-          0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.2; }
-          25% { transform: translateY(-20px) translateX(10px) scale(1.2); opacity: 0.4; }
-          50% { transform: translateY(-10px) translateX(-5px) scale(0.8); opacity: 0.3; }
-          75% { transform: translateY(-25px) translateX(15px) scale(1.1); opacity: 0.35; }
-        }
-      `}</style>
-    </div>
-  );
-}
+const wePractice = [
+  "Infrastructure that runs admission to alumni",
+  "Systems that work during fee season, not just pilots",
+  "Software built for Indian institutional reality",
+  "A sustainable business that respects its team",
+] as const;
+
+const weReject = [
+  "Predatory sales calls to struggling institutions",
+  "Recycled video content sold as 'transformation'",
+  "Software that works in demos, fails in reality",
+  "Burning out staff to hit growth targets",
+] as const;
 
 export default function AboutPage() {
-  const pageRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const storyRef = useRef<HTMLElement>(null);
-  const missionRef = useRef<HTMLElement>(null);
-  const valuesRef = useRef<HTMLElement>(null);
-  const pillarsRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
-  const { isMobile, isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
-
-  const showHeavyEffects = !isMobile && !isLowEnd;
-
-  useEffect(() => {
-    if (!pageRef.current) return;
-    if (prefersReducedMotion) return;
-
-    const ctx = gsap.context(() => {
-      // Hero animations
-      if (heroRef.current) {
-        const heroElements = heroRef.current.querySelectorAll(".js-hero-animate");
-        gsap.fromTo(
-          heroElements,
-          { autoAlpha: 0, y: 30 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: "power3.out",
-          }
-        );
-      }
-
-      // Story section
-      if (storyRef.current) {
-        gsap.fromTo(
-          storyRef.current.querySelectorAll(".js-story-animate"),
-          { autoAlpha: 0, y: 40 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: storyRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Mission section
-      if (missionRef.current) {
-        gsap.fromTo(
-          missionRef.current.querySelectorAll(".js-mission-animate"),
-          { autoAlpha: 0, y: 50, scale: 0.95 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.12,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: missionRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-
-      // Values section
-      if (valuesRef.current) {
-        gsap.fromTo(
-          valuesRef.current.querySelectorAll(".js-value-card"),
-          { autoAlpha: 0, y: 40, rotateX: 10 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: valuesRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Pillars section
-      if (pillarsRef.current) {
-        gsap.fromTo(
-          pillarsRef.current.querySelectorAll(".js-pillar-card"),
-          { autoAlpha: 0, y: 50, scale: 0.9 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.2,
-            ease: "back.out(1.2)",
-            scrollTrigger: {
-              trigger: pillarsRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-
-      // CTA section
-      if (ctaRef.current) {
-        gsap.fromTo(
-          ctaRef.current,
-          { autoAlpha: 0, y: 30 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ctaRef.current,
-              start: "top 85%",
-            },
-          }
-        );
-      }
-    }, pageRef);
-
-    return () => ctx.revert();
-  }, [prefersReducedMotion]);
-
   return (
-    <>
-      <Script
-        id="about-structured-data"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              createWebPageSchema({
-                name: "About SquareCampus",
-                description:
-                  "Learn about the team and mission behind SquareCampus, the campus operating system for Indian schools and colleges.",
-                url: `${SEO_CONFIG.baseUrl}/about`,
-              }),
-              createBreadcrumbSchema([
-                { name: "Home", url: SEO_CONFIG.baseUrl },
-                { name: "About", url: `${SEO_CONFIG.baseUrl}/about` },
-              ]),
-              createAboutPageSchema({
-                name: "About SquareCampus",
-                description:
-                  "Building the operational backbone Indian schools and colleges deserve.",
-                url: `${SEO_CONFIG.baseUrl}/about`,
-              }),
-            ],
-          }),
-        }}
-      />
-      <main
-        ref={pageRef}
-        className="relative overflow-hidden bg-neutral-950 px-4 py-16 sm:px-6 lg:px-10"
+    <main>
+      <SectionShell className="pt-12 sm:pt-16">
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <Reveal className="space-y-6">
+            <p className="section-kicker">About SquareCampus</p>
+            <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
+              Educational institutions shape the future. Their software should respect that.
+            </h1>
+            <p className="max-w-xl text-lg leading-8 text-muted-foreground">
+              Most schools and colleges still run on software built for the 1990s. Simple tasks like
+              fee collection or publishing results turn into multi-week ordeals of spreadsheets,
+              calls, and stress. SquareCampus exists to replace that with a Campus Operating System
+              that flows with how institutions actually work.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink
+                href={siteCtas.platformHref}
+                label="Explore the platform"
+                variant="secondary"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={120} className="grid content-start gap-3">
+            {operatingPosture.map((item) => (
+              <div key={item.label} className="surface-panel rounded-[1.5rem] p-5">
+                <p className="section-kicker">{item.label}</p>
+                <p className="mt-3 font-display text-2xl tracking-[-0.04em]">{item.value}</p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.note}</p>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </SectionShell>
+
+      <SectionShell
+        eyebrow="Our story"
+        title="Built for campuses that can't afford chaos"
+        body="Institutions rarely struggle because people don't work hard. They struggle because data is scattered, processes are inconsistent, and every department runs its own system of record."
       >
-        {/* Background effects - hidden on mobile/low-end for performance */}
-        {showHeavyEffects && (
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-6 top-4 h-64 w-64 rounded-full bg-blue-500/[0.08] blur-3xl" />
-            <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-emerald-500/[0.08] blur-[110px]" />
-            <div className="absolute bottom-1/4 left-1/3 h-80 w-80 rounded-full bg-purple-500/[0.05] blur-[120px]" />
-            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-          </div>
-        )}
-
-        {showHeavyEffects && <FloatingParticles />}
-
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-20">
-          {/* Hero */}
-          <section
-            ref={heroRef}
-            className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 shadow-2xl shadow-blue-500/10 backdrop-blur-sm md:p-10"
-          >
-            <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -left-10 top-12 h-44 w-44 rounded-full bg-blue-500/[0.12] blur-3xl" />
-              <div className="absolute right-4 top-6 h-52 w-52 rounded-full bg-emerald-500/[0.08] blur-3xl" />
-              <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-            </div>
-
-            <div className="relative grid items-start gap-8 lg:grid-cols-[1.7fr_1fr]">
-              <div className="space-y-5">
-                <div className="js-hero-animate inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-200">
-                  <Sparkles className="h-4 w-4" />
-                  About SquareCampus
-                </div>
-
-                <h1 className="js-hero-animate max-w-4xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[52px]">
-                  Educational institutions shape the future.
-                  <span className="block bg-gradient-to-r from-blue-400 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
-                    Their software should respect that.
-                  </span>
-                </h1>
-
-                <p className="js-hero-animate max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
-                  Yet most schools and colleges still run on software built for the 1990s. Simple
-                  tasks like fee collection or publishing results turn into multi-week ordeals of
-                  spreadsheets, calls, and stress. SquareCampus exists to replace that with a Campus
-                  Operating System that flows with how institutions actually work.
-                </p>
-
-                <div className="js-hero-animate flex flex-wrap gap-3">
-                  <BookCallCta context="about-hero" className="justify-center sm:w-auto" />
-                  <Link
-                    href="/features"
-                    className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-                  >
-                    Explore features
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Link>
-                </div>
-
-                <div className="grid w-full gap-4 md:grid-cols-3">
-                  {heroHighlights.map((item) => {
-                    const colors = accentColors[item.color];
-                    return (
-                      <div
-                        key={item.title}
-                        className="js-hero-animate group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]"
-                      >
-                        <div
-                          className={cn(
-                            "absolute -right-6 -top-8 h-16 w-16 rounded-full blur-2xl transition-all duration-500 group-hover:scale-150",
-                            colors.glow
-                          )}
-                        />
-                        <div className="relative flex items-start gap-3">
-                          <div
-                            className={cn(
-                              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1",
-                              colors.bg,
-                              colors.text,
-                              colors.border
-                            )}
-                          >
-                            {item.icon}
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-sm font-semibold text-neutral-50">{item.title}</p>
-                            <p className="text-xs leading-relaxed text-neutral-300">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="js-hero-animate relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/[0.08] via-neutral-950 to-neutral-950 p-6 shadow-lg shadow-emerald-500/10 backdrop-blur-sm">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.12),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.08),transparent_35%)]" />
-                <div className="relative space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-emerald-100 ring-1 ring-emerald-500/30">
-                    <Shield className="h-3.5 w-3.5" />
-                    Operating posture
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-200">
-                    Built for multi-campus complexity, India-first compliance, and a breach
-                    notification commitment backed by transparent audit trails.
-                  </p>
-                  <div className="grid gap-4">
-                    {heroStats.map((stat) => {
-                      const colors = accentColors[stat.accent];
-                      return (
-                        <div
-                          key={stat.label}
-                          className="group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.15]"
-                        >
-                          <div
-                            className={cn(
-                              "absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent to-transparent",
-                              stat.accent === "blue" && "via-blue-400/70",
-                              stat.accent === "emerald" && "via-emerald-400/70",
-                              stat.accent === "cyan" && "via-cyan-400/70"
-                            )}
-                          />
-                          <div
-                            className={cn(
-                              "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                              colors.glow,
-                              "blur-xl"
-                            )}
-                          />
-                          <div className="relative flex flex-col gap-2">
-                            <div className="flex items-center gap-2">
-                              <div
-                                className={cn(
-                                  "flex h-8 w-8 items-center justify-center rounded-lg ring-1 ring-white/10",
-                                  colors.bg
-                                )}
-                              >
-                                {stat.accent === "blue" && (
-                                  <Target className="h-4 w-4 text-blue-100" />
-                                )}
-                                {stat.accent === "emerald" && (
-                                  <Activity className="h-4 w-4 text-emerald-100" />
-                                )}
-                                {stat.accent === "cyan" && (
-                                  <Shield className="h-4 w-4 text-cyan-100" />
-                                )}
-                              </div>
-                              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
-                                {stat.label}
-                              </p>
-                            </div>
-                            <div className="space-y-1">
-                              <div className="text-base font-semibold leading-tight text-white">
-                                {stat.value}
-                              </div>
-                              <p className="text-xs leading-relaxed text-neutral-400">
-                                {stat.note}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-neutral-400">
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-                    Human support, not ticket bots; product teams close the loop.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Story */}
-          <section
-            ref={storyRef}
-            className="grid gap-10 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)] md:items-start"
-          >
-            <Card className="js-story-animate border border-white/[0.08] bg-white/[0.02] shadow-2xl shadow-blue-500/10 backdrop-blur-sm">
-              <CardContent className="space-y-6 p-6 md:p-8">
-                <div className="space-y-2">
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-neutral-500">
-                    Our story
-                  </p>
-                  <h2 className="text-lg font-semibold text-neutral-50">
-                    Built for campuses that can&apos;t afford chaos.
-                  </h2>
-                </div>
-
-                <div className="space-y-4 text-sm leading-relaxed text-neutral-400">
-                  <p>
-                    Institutions rarely struggle because people don&apos;t work hard. They struggle
-                    because data is scattered, processes are inconsistent, and every department runs
-                    its own system of record. Decisions get made on partial context, and the office
-                    ends up firefighting instead of planning.
-                  </p>
-                  <p>
-                    SquareCampus exists to give schools and colleges a single backbone for their
-                    daily operations, where every workflow is connected, auditable, and simple
-                    enough to use every day.
-                  </p>
-                </div>
-
-                <div className="grid gap-3 text-[0.78rem] text-neutral-400 md:grid-cols-3">
-                  {[
-                    {
-                      title: "Less noise",
-                      desc: 'Fewer tools, fewer hand-offs, and fewer "who changed this?" moments.',
-                      color: "blue",
-                    },
-                    {
-                      title: "More traceability",
-                      desc: "Every change leaves a trail: what changed, when, and by whom.",
-                      color: "emerald",
-                    },
-                    {
-                      title: "Calm operations",
-                      desc: "Offices that know what's pending, what's blocked, and what's on track.",
-                      color: "purple",
-                    },
-                  ].map((item) => {
-                    const colors = accentColors[item.color];
-                    return (
-                      <div
-                        key={item.title}
-                        className="js-story-animate group relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 transition-all duration-300 hover:scale-105 hover:border-white/[0.15] hover:bg-white/[0.04]"
-                      >
-                        <div
-                          className={cn(
-                            "absolute -right-4 -top-4 h-16 w-16 rounded-full blur-2xl transition-all duration-300 group-hover:scale-150",
-                            colors.glow
-                          )}
-                        />
-                        <div className="relative">
-                          <p
-                            className={cn(
-                              "text-[0.7rem] font-semibold uppercase tracking-wide",
-                              colors.text
-                            )}
-                          >
-                            {item.title}
-                          </p>
-                          <p className="mt-1 leading-relaxed text-neutral-300">{item.desc}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="js-story-animate space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-neutral-100">The founding team</h3>
-                <p className="text-sm leading-relaxed text-neutral-400">
-                  SquareCampus Private Limited is led by a small, product-first founding team
-                  focused on building something that can sit at the center of your institution for
-                  years, not months.
-                </p>
-              </div>
-
-              <div className="space-y-3 text-sm text-neutral-400">
+        <Reveal className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="surface-panel-strong rounded-[1.8rem] p-7 lg:p-8">
+            <Landmark className="size-5 text-(--brand)" />
+            <h2 className="mt-5 font-display text-3xl tracking-[-0.05em]">
+              One backbone for daily operations.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-muted-foreground">
+              Decisions get made on partial context, and the office ends up firefighting instead of
+              planning. SquareCampus gives schools and colleges a single backbone where every
+              workflow is connected, auditable, and simple enough to use every day.
+            </p>
+            <div className="mt-6 rounded-[1.4rem] border border-(--line) bg-(--surface) p-5">
+              <p className="section-kicker">We built SquareCampus because institutions deserve</p>
+              <ul className="mt-4 grid gap-2.5">
                 {[
-                  {
-                    initials: "MG",
-                    name: "Mohit Gupta, Founder & CTO",
-                    desc: "Leads product and platform engineering. Built systems processing 100M+ records daily and brings that reliability mindset to every workflow.",
-                    color: "blue",
-                  },
-                  {
-                    initials: "DK",
-                    name: "Dhanraj Kotian, Co-founder & CMO",
-                    desc: "Works closely with institutions to understand ground reality, ensuring the product stays aligned with actual campus needs and communication flows.",
-                    color: "emerald",
-                  },
-                ].map((person) => {
-                  const colors = accentColors[person.color];
-                  return (
-                    <div
-                      key={person.initials}
-                      className="group flex items-start gap-3 rounded-lg border border-white/[0.08] bg-white/[0.02] p-4 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-white/[0.15] hover:bg-white/[0.04]"
-                    >
-                      <div
-                        className={cn(
-                          "flex h-10 w-10 items-center justify-center rounded-full text-xs font-semibold ring-2 transition-all duration-300",
-                          colors.bg,
-                          colors.text,
-                          "ring-white/[0.08] group-hover:ring-white/20"
-                        )}
-                      >
-                        {person.initials}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-neutral-100 transition-colors group-hover:text-white">
-                          {person.name}
-                        </p>
-                        <p className="mt-1 text-xs leading-relaxed">{person.desc}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                  "Software that flows like thought, not clicks like paperwork",
+                  "Systems that anticipate needs, not wait for tickets",
+                  "Automation that gives time back to teaching, not admin",
+                  "Data that tells stories, not just sits in rows",
+                  "Technology that delights users, not frustrates them",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                    <Sparkles className="mt-1 size-3.5 shrink-0 text-(--brand)" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="mt-6 font-display text-xl tracking-[-0.03em]">
+              This is not school management software. This is a Campus Operating System.
+            </p>
+          </div>
 
-              <p className="text-xs leading-relaxed text-neutral-500">
-                The shared goal: a platform that doesn&apos;t just look good in demos, but survives
+          <div className="grid content-start gap-4">
+            <div className="surface-panel rounded-[1.6rem] p-6">
+              <p className="section-kicker">The founding team</p>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                SquareCampus Private Limited is led by a small, product-first founding team focused
+                on building something that can sit at the center of your institution for years, not
+                months.
+              </p>
+              <div className="mt-5 grid gap-3">
+                {founders.map((person) => (
+                  <div
+                    key={person.initials}
+                    className="flex items-start gap-4 rounded-[1.3rem] border border-(--line) bg-(--surface) p-4"
+                  >
+                    <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-foreground font-mono text-xs text-background">
+                      {person.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">
+                        {person.name} · {person.role}
+                      </p>
+                      <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
+                        {person.body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-xs leading-5 text-muted-foreground">
+                The shared goal: a platform that doesn&rsquo;t just look good in demos, but survives
                 timetables, fee seasons, inspections, and everything in between.
               </p>
             </div>
-          </section>
 
-          {/* Mission */}
-          <section ref={missionRef} className="space-y-10">
-            <div className="space-y-6">
-              <div className="rounded-2xl border border-white/8 bg-white/2 p-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
-                  We built SquareCampus because educational institutions deserve
-                </p>
-                <ul className="mt-4 space-y-3 text-base text-neutral-200">
-                  {[
-                    "Software that flows like thought, not clicks like paperwork",
-                    "Systems that anticipate needs, not wait for tickets",
-                    "Automation that gives time back to teaching, not admin",
-                    "Data that tells stories, not just sits in rows",
-                    "Technology that delights users, not frustrates them",
-                  ].map((item) => (
-                    <li key={item} className="flex gap-3">
-                      <span className="text-emerald-400">•</span>
-                      <span>{item}</span>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="surface-panel rounded-[1.6rem] p-6">
+                <h3 className="font-display text-lg tracking-[-0.02em]">What we build</h3>
+                <ul className="mt-4 grid gap-2.5">
+                  {wePractice.map((item) => (
+                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                      <span className="text-(--teal)">✓</span>
+                      {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <p className="text-xl font-semibold text-white">
-                This is not school management software. This is a Campus Operating System.
-              </p>
-            </div>
-
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="js-mission-animate group relative overflow-hidden rounded-2xl border border-red-500/20 bg-gradient-to-br from-red-950/20 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-red-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-red-500/40 hover:shadow-red-500/20">
-                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-red-500/15 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-red-400/25" />
-
-                <div className="relative space-y-4">
-                  <h3 className="text-xl font-semibold text-white">What we reject</h3>
-                  <ul className="space-y-3 text-base text-neutral-300">
-                    {[
-                      "Predatory sales calls to struggling institutions",
-                      "Recycled video content sold as 'transformation'",
-                      "Software that works in demos, fails in reality",
-                      "Burning out staff to hit growth targets",
-                    ].map((item, idx) => (
-                      <li
-                        key={idx}
-                        className="flex gap-3 transition-colors duration-300 group-hover:text-neutral-100"
-                      >
-                        <span className="text-red-400 transition-all duration-300 group-hover:scale-110">
-                          ×
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="js-mission-animate group relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 via-neutral-900/80 to-neutral-950/90 p-8 shadow-2xl shadow-emerald-500/5 transition-all duration-500 hover:scale-[1.02] hover:border-emerald-500/40 hover:shadow-emerald-500/20">
-                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-emerald-500/15 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-emerald-400/25" />
-
-                <div className="relative space-y-4">
-                  <h3 className="text-xl font-semibold text-white">What we build</h3>
-                  <ul className="space-y-3 text-base text-neutral-300">
-                    {[
-                      "Infrastructure that runs admission to alumni",
-                      "Systems that work during fee season, not just pilots",
-                      "Software built for Indian institutional reality",
-                      "A sustainable business that respects its team",
-                    ].map((item, idx) => (
-                      <li
-                        key={idx}
-                        className="flex gap-3 transition-colors duration-300 group-hover:text-neutral-100"
-                      >
-                        <span className="text-emerald-400 transition-all duration-300 group-hover:scale-110">
-                          ✓
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="surface-panel rounded-[1.6rem] p-6">
+                <h3 className="font-display text-lg tracking-[-0.02em]">What we reject</h3>
+                <ul className="mt-4 grid gap-2.5">
+                  {weReject.map((item) => (
+                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                      <span className="text-(--destructive)">×</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
+          </div>
+        </Reveal>
+      </SectionShell>
 
-            <div className="js-mission-animate group relative overflow-hidden rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-950/30 via-neutral-900/90 to-neutral-950/90 p-10 shadow-2xl shadow-blue-500/15 transition-all duration-500 hover:scale-[1.01] hover:border-blue-400/40 hover:shadow-blue-400/25">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 via-blue-400/20 to-blue-500/0 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40" />
-              <div className="absolute -left-12 -top-12 h-40 w-40 rounded-full bg-blue-500/15 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-blue-400/25" />
-              <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-cyan-500/15 blur-3xl transition-all duration-700 group-hover:scale-150 group-hover:bg-cyan-400/25" />
+      <SectionShell
+        eyebrow="What we optimise for"
+        title="Less friction for the institution. More trust in the data."
+        body="Every feature, integration, and workflow inside SquareCampus is measured against that single question."
+      >
+        <Reveal staggerChildren className="grid gap-4 md:grid-cols-3">
+          {values.map((value) => (
+            <article
+              key={value.title}
+              data-reveal-item
+              className="surface-panel rounded-[1.6rem] p-6"
+            >
+              <value.icon className="size-5 text-(--brand)" />
+              <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{value.title}</h2>
+              <p className="mt-3 text-base leading-7 text-muted-foreground">{value.body}</p>
+            </article>
+          ))}
+        </Reveal>
+      </SectionShell>
 
-              <div className="relative">
-                <p className="text-xl leading-relaxed text-neutral-200 transition-colors duration-300 group-hover:text-neutral-100 md:text-2xl">
-                  <span className="text-blue-300">&ldquo;</span>Indian schools and colleges don't
-                  need another shiny dashboard, they need software that understands the messy,
-                  beautiful chaos of running real institutions in this country. Multiple branches
-                  operating like semi-autonomous worlds. Fee structures that look more like tax
-                  codes than invoices. Limited resources spread dangerously thin. Constant
-                  compliance pressure from every direction.
-                  <br />
-                  <br />
-                  <span className="font-semibold text-white transition-all duration-300 group-hover:text-blue-50">
-                    SquareCampus is built for that reality. It absorbs the complexity, tames the
-                    operational madness, and gives institutions a single, dependable system so they
-                    can stop firefighting and start focusing on what actually matters: education.
-                  </span>
-                  <span className="text-blue-300">&rdquo;</span>
-                </p>
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-                  <p className="text-sm font-medium text-blue-300/80 transition-colors duration-300 group-hover:text-blue-200">
-                    Mohit Gupta, Founder & CTO
-                  </p>
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-                </div>
-              </div>
-            </div>
-          </section>
+      <SectionShell
+        eyebrow="Institutional fit"
+        title="How SquareCampus fits into your institution"
+        body="SquareCampus doesn't arrive as a rigid template. It adapts to your workflows while giving you the structure you need to scale without losing control."
+      >
+        <Reveal staggerChildren className="grid gap-4 md:grid-cols-3">
+          {pillars.map((pillar) => (
+            <article
+              key={pillar.title}
+              data-reveal-item
+              className="surface-panel rounded-[1.6rem] p-6"
+            >
+              <p className="section-kicker">{pillar.caption}</p>
+              <h2 className="mt-4 font-display text-2xl tracking-[-0.04em]">{pillar.title}</h2>
+              <ul className="mt-4 grid gap-2.5">
+                {pillar.points.map((point) => (
+                  <li key={point} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                    <Activity className="mt-1 size-3.5 shrink-0 text-(--teal)" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </Reveal>
+      </SectionShell>
 
-          {/* Values */}
-          <section ref={valuesRef} className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-neutral-50">What we optimise for</h2>
-              <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
-                Every feature, integration, and workflow inside SquareCampus is measured against a
-                simple question: does this reduce friction for the institution and increase trust in
-                the data?
-              </p>
-            </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              {values.map((value) => {
-                const colors = accentColors[value.color];
-                return (
-                  <Card
-                    key={value.title}
-                    className="js-value-card group relative h-full overflow-hidden border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:border-white/[0.15] hover:shadow-2xl"
-                  >
-                    <div
-                      className={cn(
-                        "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                        colors.glow,
-                        "blur-2xl"
-                      )}
-                    />
-                    <div
-                      className={cn(
-                        "absolute -right-8 -top-8 h-24 w-24 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150",
-                        colors.glow
-                      )}
-                    />
-                    <CardContent className="relative space-y-2 p-5">
-                      <p
-                        className={cn(
-                          "text-sm font-semibold transition-colors",
-                          "text-neutral-100 group-hover:text-white"
-                        )}
-                      >
-                        {value.title}
-                      </p>
-                      <p className="text-xs leading-relaxed text-neutral-400">
-                        {value.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </section>
+      <SectionShell className="pt-0">
+        <Reveal className="surface-panel-strong relative overflow-hidden rounded-[2rem] p-8 lg:p-12">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,rgba(88,124,204,0.12),transparent)]" />
+          <blockquote className="relative mx-auto max-w-3xl">
+            <p className="font-display text-2xl leading-snug tracking-[-0.03em] sm:text-3xl">
+              &ldquo;Indian schools and colleges don&rsquo;t need another shiny dashboard — they
+              need software that understands the messy, beautiful chaos of running real institutions
+              in this country. SquareCampus absorbs that complexity so institutions can stop
+              firefighting and focus on what actually matters: education.&rdquo;
+            </p>
+            <footer className="mt-6 text-sm text-muted-foreground">
+              Mohit Gupta · Founder &amp; CTO
+            </footer>
+          </blockquote>
+        </Reveal>
+      </SectionShell>
 
-          {/* Pillars */}
-          <section ref={pillarsRef} className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-neutral-50">
-                How SquareCampus fits into your institution
-              </h2>
-              <p className="max-w-2xl text-sm leading-relaxed text-neutral-400">
-                SquareCampus doesn&apos;t arrive as a rigid template. It adapts to your workflows
-                while giving you the structure you need to scale without losing control.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {pillars.map((pillar) => {
-                const colors = accentColors[pillar.accent];
-                return (
-                  <Card
-                    key={pillar.title}
-                    className="js-pillar-card group relative h-full overflow-hidden border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:scale-[1.05] hover:border-white/[0.15] hover:shadow-2xl"
-                  >
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/30 to-purple-500/0 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20" />
-                    <div
-                      className={cn(
-                        "absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl transition-all duration-700 group-hover:scale-150",
-                        colors.glow
-                      )}
-                    />
-
-                    <CardContent className="relative flex h-full flex-col gap-3 p-5">
-                      <div className="space-y-1">
-                        <p className="text-sm font-semibold text-neutral-50 transition-colors duration-300 group-hover:text-white">
-                          {pillar.title}
-                        </p>
-                        <p className="text-[0.78rem] text-neutral-400">{pillar.caption}</p>
-                      </div>
-                      <ul className="mt-1 space-y-2 text-[0.8rem] leading-relaxed text-neutral-300">
-                        {pillar.points.map((point) => (
-                          <li key={point} className="flex gap-2">
-                            <span
-                              className={cn(
-                                "mt-[0.3rem] h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300",
-                                colors.text,
-                                "bg-current"
-                              )}
-                            />
-                            <span className="transition-colors duration-300 group-hover:text-neutral-100">
-                              {point}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* Closing CTA */}
-          <section
-            ref={ctaRef}
-            className="mt-4 flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm md:flex-row md:items-center md:justify-between"
-          >
-            <div className="space-y-1">
-              <p className="text-sm font-semibold text-neutral-50">
+      <SectionShell className="pb-22 pt-0">
+        <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+            <div>
+              <p className="section-kicker">Next step</p>
+              <h2 className="mt-4 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
                 Ready to see SquareCampus in action?
-              </p>
-              <p className="text-xs leading-relaxed text-neutral-400 md:max-w-md">
-                Share how your institution operates today, and we&apos;ll walk you through how
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
+                Share how your institution operates today, and we&rsquo;ll walk you through how
                 SquareCampus can simplify, connect, and de-risk your daily workflows.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <BookCallCta context="about-closing" className="justify-center sm:w-auto" />
-              <Link
-                href="/features"
-                className="group inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] px-5 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                Explore features
-              </Link>
+            <div className="grid gap-3">
+              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink
+                href={siteCtas.platformHref}
+                label="Explore the platform"
+                variant="secondary"
+              />
             </div>
-          </section>
-        </div>
-      </main>
-
-      <FloatingHomeButton href="/" label="Back to home" />
-    </>
+          </div>
+        </Reveal>
+      </SectionShell>
+    </main>
   );
 }

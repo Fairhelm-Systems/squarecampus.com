@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/contact-form";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: createAlternates("/demo"),
   title: "Demo",
   description:
     "Book a guided SquareCampus demo and see how the School OS maps to admissions, academics, finance, communication, and institutional operations.",

@@ -1,10 +1,32 @@
+import {
+  ArrowRightLeft,
+  BadgeCheck,
+  Building2,
+  Bus,
+  CalendarClock,
+  FileSpreadsheet,
+  Fingerprint,
+  GraduationCap,
+  MessageSquareShare,
+  ShieldCheck,
+  Wallet,
+} from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import Script from "next/script";
-import { BookCallCta } from "@/components/marketing/ctas";
-import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { SEO_CONFIG, createBreadcrumbSchema, createWebPageSchema } from "@/lib/seo";
+import { ButtonLink } from "@/components/site/button-link";
+import { Reveal } from "@/components/site/reveal";
+import { SectionShell } from "@/components/site/section-shell";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { siteCtas } from "@/content/site-content";
+import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
+
+const securityPackMailto =
+  "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D";
 
 const faqItems = [
   {
@@ -67,7 +89,7 @@ const faqItems = [
     answer:
       "No. Interfaces follow existing workflows, not abstract menus. We deliver role-based onboarding, videos, and live sessions until adoption is steady.",
   },
-];
+] as const;
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -82,15 +104,69 @@ const faqSchema = {
   })),
 };
 
+const workflowModules = [
+  {
+    title: "Admissions to Enrolment",
+    icon: GraduationCap,
+    body: "Inquiry → application → document verification → fee collection → section allocation. Parents see status live; admins get SLA alerts.",
+  },
+  {
+    title: "Attendance to Fees",
+    icon: Wallet,
+    body: "Daily attendance updates fee rules, transport billing, and alerts to guardians. Exceptions are logged with reasons and approvers.",
+  },
+  {
+    title: "Exams to Promotions",
+    icon: BadgeCheck,
+    body: "Schedule exams, capture marks, publish results, and roll promotions with auditability. Grade templates match CBSE/ICSE norms.",
+  },
+  {
+    title: "Approvals to Audit Trails",
+    icon: Fingerprint,
+    body: "Leave, concessions, refunds, procurements, and gate passes run through RBAC-backed workflows with time-stamped approvals.",
+  },
+  {
+    title: "Communication to Resolution",
+    icon: MessageSquareShare,
+    body: "Role-aware messaging to parents, staff, and students with templates, delivery status, and escalation paths.",
+  },
+  {
+    title: "Transport to Compliance",
+    icon: Bus,
+    body: "Vehicle, route, and driver management with attendance sync, GPS hooks, and safety checks documented for audits.",
+  },
+] as const;
+
+const comparisonRows = [
+  {
+    title: "Architecture",
+    us: "Single database, shared workflows, consistent UX.",
+    them: "Multiple products bolted together with custom scripts.",
+  },
+  {
+    title: "Implementation",
+    us: "Guided rollout with parallel run and live training.",
+    them: "Months of customization tickets and delays.",
+  },
+  {
+    title: "Pricing",
+    us: "All modules included; mobile apps included; transparent renewals.",
+    them: "Per-module upsells, per-user fees, hidden mobile costs.",
+  },
+  {
+    title: "Support",
+    us: "Human-first, context-aware support with product and ops in the same room.",
+    them: "Ticket queues with generic replies and slow escalations.",
+  },
+] as const;
+
 export default function SchoolManagementSystemPage() {
   const pageUrl = `${SEO_CONFIG.baseUrl}/school-management-system`;
-  const pageName = "School Management System for Indian Schools";
-  const pageDescription =
-    "SquareCampus is a school management system built for Indian schools-fees, attendance, exams, communication, and compliance in one unified School OS.";
 
   const webPageSchema = createWebPageSchema({
-    name: pageName,
-    description: pageDescription,
+    name: "School Management System for Indian Schools",
+    description:
+      "SquareCampus is a school management system built for Indian schools-fees, attendance, exams, communication, and compliance in one unified School OS.",
     url: pageUrl,
   });
 
@@ -100,578 +176,349 @@ export default function SchoolManagementSystemPage() {
   ]);
 
   return (
-    <>
-      <main className="relative isolate bg-neutral-950 text-white">
-        <section className="relative overflow-hidden border-b border-white/5 bg-gradient-to-b from-neutral-950 via-neutral-900/40 to-neutral-950 px-6 pb-16 pt-28 sm:px-8 lg:px-12">
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-10 top-10 h-60 w-60 rounded-full bg-emerald-500/12 blur-3xl" />
-            <div className="absolute right-0 top-16 h-72 w-72 rounded-full bg-sky-500/12 blur-[140px]" />
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-            <div className="absolute right-[6%] top-[12%] h-[360px] w-[360px] rounded-full border border-emerald-400/10 blur-[1px]" />
-          </div>
-
-          <div className="relative mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row lg:items-start lg:gap-16">
-            <div className="space-y-7">
-              <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200">
-                School Management System
-              </p>
-              <h1 className="max-w-2xl text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-[54px]">
-                School Management System{" "}
-                <span className="block bg-gradient-to-r from-emerald-200 via-sky-200 to-emerald-100 bg-clip-text text-transparent">
-                  built for Indian schools
-                </span>
-              </h1>
-              <div className="max-w-2xl space-y-3 text-base leading-relaxed text-neutral-200 sm:text-lg md:text-xl">
-                <p>
-                  A school management system should be the operating manual of your campus—not a
-                  stack of disconnected tools. Sometimes labeled as school ERP software, but
-                  SquareCampus is a School OS built for India—defining, running, and auditing daily
-                  operations in one place: admissions, attendance, fees, exams, communication,
-                  transport, and compliance stay connected so nothing slips.
-                </p>
-                <p>
-                  Unified operations. Compliance built in. Enterprise-grade security and audit
-                  trails help reduce risk for principals, CIOs, and procurement teams.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-200">
-                {["Guided rollout", "Single source of truth", "Compliance baked in"].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <BookCallCta context="sms-hero" label="Book a call" variant="primary" />
-                <Link
-                  href="/contact-us"
-                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/40 hover:bg-white/10"
+    <main>
+      <SectionShell className="pt-12 sm:pt-16">
+        <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+          <Reveal className="space-y-6">
+            <p className="section-kicker">School management system</p>
+            <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
+              School management system built for Indian schools.
+            </h1>
+            <p className="max-w-xl text-lg leading-8 text-muted-foreground">
+              A school management system should be the operating manual of your campus — not a stack
+              of disconnected tools. Sometimes labeled school ERP software, SquareCampus is a School
+              OS built for India: admissions, attendance, fees, exams, communication, transport, and
+              compliance stay connected so nothing slips.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {["Guided rollout", "Single source of truth", "Compliance baked in"].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
                 >
-                  Contact Us
-                </Link>
-                <Link
-                  href="/ecosystem"
-                  className="text-sm font-semibold text-emerald-200 underline-offset-4 hover:text-white hover:underline"
-                >
-                  See how the workflows connect
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative w-full max-w-xl overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/80 p-5 shadow-[0_40px_120px_rgba(0,0,0,0.6)] backdrop-blur">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/12 via-blue-500/6 to-transparent" />
-              <div className="relative space-y-4">
-                <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.28em] text-emerald-200">
-                  <span>One view, zero chaos</span>
-                  <span className="flex items-center gap-2 text-[10px] text-neutral-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.7)] animate-pulse" />
-                    Live workflow
-                  </span>
-                </div>
-                <p className="text-sm text-neutral-200 sm:text-base">
-                  Admins, teachers, and finance teams share the same source of truth. No swivel
-                  chairing, no manual reconciliations, no “who updated this?” mysteries.
-                </p>
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-900">
-                  <Image
-                    src="/images/marketing/dashboard.png"
-                    alt="SquareCampus school management system dashboard preview for Indian schools"
-                    width={960}
-                    height={540}
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {[
-                    { label: "Time to launch", value: "Guided rollout" },
-                    { label: "Modules included", value: "Unified platform" },
-                    { label: "Support", value: "Human + product" },
-                  ].map((item) => (
-                    <Card
-                      key={item.label}
-                      className="group border-white/10 bg-white/5 text-left transition duration-300 hover:-translate-y-1 hover:border-emerald-400/40"
-                    >
-                      <CardContent className="space-y-1.5 p-3">
-                        <p className="text-[11px] uppercase tracking-[0.2em] text-neutral-400 group-hover:text-neutral-200">
-                          {item.label}
-                        </p>
-                        <p className="text-base font-semibold text-white sm:text-lg">
-                          {item.value}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-12">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="space-y-6">
-              <h2 className="text-3xl font-semibold text-white">
-                What is a School Management System?
-              </h2>
-              <p className="text-base leading-relaxed text-neutral-300 sm:text-lg">
-                It is the operating core that coordinates academics, finance, and communication. In
-                India, you might also hear it called school ERP software or school management
-                software. A true school management system connects attendance with fees, ties
-                assessments to promotion decisions, and keeps parents and staff aligned without
-                duplicate data entry. SquareCampus treats this definition as engineering spec, not
-                marketing copy.
-              </p>
-            </div>
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/70 p-6">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.15),transparent_60%)]" />
-              <div className="relative space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-200">
-                  Operating loop
-                </p>
-                <div className="space-y-3">
-                  {[
-                    "Admissions initiate fee plans and onboarding.",
-                    "Attendance powers compliance and billing.",
-                    "Assessments connect to promotion decisions.",
-                    "Communication follows every workflow step.",
-                  ].map((item, index) => (
-                    <div key={item} className="flex items-start gap-3 text-sm text-neutral-200">
-                      <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-emerald-400/80 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
-                      <p>
-                        <span className="text-emerald-200">Step {index + 1}:</span> {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-neutral-300">
-                  When one workflow moves, the rest follow automatically-no re-entry, no drift.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative grid gap-6 overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-6 lg:grid-cols-3">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
-            <div className="space-y-3">
-              <h3 className="text-2xl font-semibold text-white">
-                Why Schools Need a Unified School Management System
-              </h3>
-              <p className="text-sm text-neutral-300 sm:text-base">
-                Fragmented tools create data drift, parent confusion, and audit risk. A unified OS
-                keeps every update consistent, triggers the right follow-up, and makes compliance a
-                side-effect of normal work-not an afterthought.
-              </p>
-            </div>
-            <div className="space-y-2 text-sm text-neutral-200 sm:text-base">
-              {[
-                "Attendance flows directly into fee rules and reports.",
-                "Communication is tied to context-class, term, fee status, or incident.",
-                "Exams, grading, and promotions stay in sync with academic calendars.",
-                "Transport, hostels, and inventory stay reconciled without extra spreadsheets.",
-                "Every action is logged for admins, auditors, and compliance reviewers.",
-              ].map((item) => (
-                <p key={item} className="flex items-start gap-2">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
                   {item}
-                </p>
+                </span>
               ))}
             </div>
-            <div className="space-y-2 text-sm text-neutral-200 sm:text-base">
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink
+                href={siteCtas.ecosystemHref}
+                label="See how workflows connect"
+                variant="secondary"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal delay={120} className="surface-panel-strong rounded-[2rem] p-5 lg:p-6">
+            <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+              <span>One view, zero chaos</span>
+              <span className="inline-flex items-center gap-2">
+                <span className="size-1.5 animate-pulse rounded-full bg-(--teal)" />
+                Live workflow
+              </span>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Admins, teachers, and finance teams share the same source of truth. No swivel
+              chairing, no manual reconciliations, no &ldquo;who updated this?&rdquo; mysteries.
+            </p>
+            <div className="mt-4 overflow-hidden rounded-[1.4rem] border border-(--line)">
+              <Image
+                src="/images/marketing/dashboard.png"
+                alt="SquareCampus school management system dashboard preview for Indian schools"
+                width={960}
+                height={540}
+                className="h-auto w-full object-cover"
+              />
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-3">
               {[
+                ["Time to launch", "Guided rollout"],
+                ["Modules included", "Unified platform"],
+                ["Support", "Human + product"],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="rounded-[1.2rem] border border-(--line) bg-(--surface) p-3"
+                >
+                  <p className="font-mono text-[0.5rem] uppercase tracking-[0.18em] text-muted-foreground">
+                    {label}
+                  </p>
+                  <p className="mt-1.5 text-sm font-medium text-foreground">{value}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </SectionShell>
+
+      <SectionShell
+        eyebrow="Definition"
+        title="What is a school management system?"
+        body="It is the operating core that coordinates academics, finance, and communication. In India, you might also hear it called school ERP software or school management software. A true school management system connects attendance with fees, ties assessments to promotion decisions, and keeps parents and staff aligned without duplicate data entry. SquareCampus treats this definition as engineering spec, not marketing copy."
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="surface-panel-strong rounded-[1.8rem] p-7">
+            <p className="section-kicker">Operating loop</p>
+            <div className="mt-5 grid gap-3">
+              {[
+                "Admissions initiate fee plans and onboarding.",
+                "Attendance powers compliance and billing.",
+                "Assessments connect to promotion decisions.",
+                "Communication follows every workflow step.",
+              ].map((item, index) => (
+                <div
+                  key={item}
+                  className="flex items-start gap-4 rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-3.5"
+                >
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-foreground font-mono text-[0.65rem] text-background">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-sm leading-6 text-muted-foreground">{item}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-5 rounded-[1.2rem] bg-(--surface-muted) px-4 py-3 text-sm leading-6 text-foreground">
+              When one workflow moves, the rest follow automatically — no re-entry, no drift.
+            </p>
+          </div>
+
+          <div className="surface-panel rounded-[1.8rem] p-7">
+            <h2 className="font-display text-2xl tracking-[-0.04em]">
+              Why schools need a unified system
+            </h2>
+            <p className="mt-3 text-base leading-7 text-muted-foreground">
+              Fragmented tools create data drift, parent confusion, and audit risk. A unified OS
+              keeps every update consistent, triggers the right follow-up, and makes compliance a
+              side-effect of normal work — not an afterthought.
+            </p>
+            <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
+              {[
+                "Attendance flows directly into fee rules and reports.",
+                "Communication is tied to context — class, term, fee status, or incident.",
+                "Exams, grading, and promotions stay in sync with academic calendars.",
+                "Transport, hostels, and inventory stay reconciled without extra spreadsheets.",
                 "Parents see one story: attendance, dues, announcements, and results.",
                 "Staff permissions are scoped by role, location, and workflow step.",
                 "Leadership tracks trends in collections, learning, and risk in one place.",
-                "Support teams get context-rich timelines instead of tickets without history.",
-                "Each module improves the others because they share one data model.",
+                "Every action is logged for admins, auditors, and compliance reviewers.",
               ].map((item) => (
-                <p key={item} className="flex items-start gap-2">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-400/80" />
+                <p
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground"
+                >
+                  <ArrowRightLeft className="mt-1 size-3.5 shrink-0 text-(--brand)" />
                   {item}
                 </p>
               ))}
             </div>
           </div>
+        </Reveal>
+      </SectionShell>
 
-          <div className="space-y-4">
-            <h2 className="text-3xl font-semibold text-white">
-              Modules Inside SquareCampus (Explained as Workflows)
-            </h2>
-            <div className="grid gap-4 md:grid-cols-2">
+      <SectionShell
+        eyebrow="Modules as workflows"
+        title="Modules inside SquareCampus, explained as workflows"
+        body="Feature lists hide the real question: does the work actually connect? Here is how each module behaves in production."
+      >
+        <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {workflowModules.map((item) => (
+            <article
+              key={item.title}
+              data-reveal-item
+              className="surface-panel rounded-[1.6rem] p-6"
+            >
+              <item.icon className="size-5 text-(--brand)" />
+              <h3 className="mt-5 font-display text-xl tracking-[-0.03em]">{item.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.body}</p>
+            </article>
+          ))}
+        </Reveal>
+      </SectionShell>
+
+      <SectionShell
+        eyebrow="India-first"
+        title="Built for Indian schools: fees, compliance, multi-campus"
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-2">
+          <div className="surface-panel rounded-[1.8rem] p-7">
+            <Building2 className="size-5 text-(--brand)" />
+            <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">Operational reality</h3>
+            <ul className="mt-4 grid gap-2.5">
               {[
-                {
-                  title: "Admissions to Enrolment",
-                  body: "Inquiry → application → document verification → fee collection → section allocation. Parents see status live; admins get SLA alerts.",
-                },
-                {
-                  title: "Attendance to Fees",
-                  body: "Daily attendance updates fee rules, transport billing, and alerts to guardians. Exceptions are logged with reasons and approvers.",
-                },
-                {
-                  title: "Exams to Promotions",
-                  body: "Schedule exams, capture marks, publish results, and roll promotions with auditability. Grade templates match CBSE/ICSE norms.",
-                },
-                {
-                  title: "Approvals to Audit Trails",
-                  body: "Leave, concessions, refunds, procurements, and gate passes run through RBAC-backed workflows with time-stamped approvals.",
-                },
-                {
-                  title: "Communication to Resolution",
-                  body: "Role-aware messaging to parents, staff, and students with templates, delivery status, and escalation paths.",
-                },
-                {
-                  title: "Transport to Compliance",
-                  body: "Vehicle, route, and driver management with attendance sync, GPS hooks, and safety checks documented for audits.",
-                },
+                "Handles complex fee plans, concessions, transport slabs, and arrears.",
+                "GST-ready invoicing, receipts, and exports to accounting tools.",
+                "Region-aware attendance rules and academic calendars.",
+                "Data residency and audit logs that match Indian compliance expectations.",
+                "Multi-branch hierarchies with shared services and campus-level autonomy.",
               ].map((item) => (
-                <Card
-                  key={item.title}
-                  className="group relative overflow-hidden border-white/10 bg-neutral-900/70 transition duration-300 hover:-translate-y-1 hover:border-emerald-400/40"
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground"
                 >
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent opacity-0 transition group-hover:opacity-100" />
-                  <CardContent className="space-y-2 p-5">
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-emerald-200/80">
-                      Workflow
-                    </p>
-                    <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                    <p className="text-sm leading-relaxed text-neutral-300">{item.body}</p>
-                  </CardContent>
-                </Card>
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-(--teal)" />
+                  {item}
+                </li>
               ))}
+            </ul>
+          </div>
+          <div className="surface-panel rounded-[1.8rem] p-7">
+            <ShieldCheck className="size-5 text-(--teal)" />
+            <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
+              Security, RBAC &amp; audit trails
+            </h3>
+            <ul className="mt-4 grid gap-2.5">
+              {[
+                "Role-based access with fine-grained scopes by campus, department, and module.",
+                "TLS 1.3 in transit and AES-256 at rest for sensitive records.",
+                "Activity timelines on every record: who changed what, when, and from where.",
+                "SSO-ready with export controls to prevent data leakage.",
+                "Immutable change logs tied to user identity and timestamps.",
+                "Alignment with DPDPA and local education data guidelines.",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground"
+                >
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-(--brand)" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5">
+              <ButtonLink
+                href={securityPackMailto}
+                label="Request Security & Compliance Pack"
+                variant="secondary"
+              />
             </div>
           </div>
+        </Reveal>
+      </SectionShell>
 
-          <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-            <Card className="relative overflow-hidden border-white/10 bg-white/5">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_55%)]" />
-              <CardContent className="relative space-y-3 p-6">
-                <h2 className="text-3xl font-semibold text-white">
-                  Built for Indian Schools (Fees, Compliance, Multi-Campus)
-                </h2>
-                <ul className="space-y-2 text-sm text-neutral-300 sm:text-base">
-                  {[
-                    "Handles complex fee plans, concessions, transport slabs, and arrears.",
-                    "GST-ready invoicing, receipts, and exports to accounting tools.",
-                    "Region-aware attendance rules and academic calendars.",
-                    "Data residency and audit logs that match Indian compliance expectations.",
-                    "Multi-branch hierarchies with shared services and campus-level autonomy.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-white/10 bg-emerald-500/10">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.18),transparent_60%)]" />
-              <CardContent className="relative space-y-3 p-6">
-                <h3 className="text-2xl font-semibold text-white">Security, RBAC & Audit Trails</h3>
-                <ul className="space-y-2 text-sm text-neutral-100 sm:text-base">
-                  {[
-                    "Role-based access with fine-grained scopes by campus, department, and module.",
-                    "Encryption in transit and at rest; backups with tested restores.",
-                    "Activity timelines on every record: who changed what, when, and from where.",
-                    "SSO-ready and export controls to prevent data leakage.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-white/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+      <SectionShell
+        eyebrow="Rollout & pricing"
+        title="A launch that respects the academic calendar"
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-2">
+          <div className="surface-panel rounded-[1.8rem] p-7">
+            <CalendarClock className="size-5 text-(--amber)" />
+            <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
+              Implementation timeline
+            </h3>
+            <ol className="mt-5 grid gap-3 border-l border-(--line) pl-5">
+              {[
+                "Day 0: Scope confirmation, data templates shared, owners assigned.",
+                "Day 3: Data import dry run, key workflows configured, access provisioned.",
+                "Day 7: Parallel run with real data, teacher and admin training.",
+                "Day 10: Go-live with rollback plan, success metrics, and support chat.",
+                "Day 14: Post-launch audit, optimize fee rules, automate recurring tasks.",
+              ].map((item) => (
+                <li key={item} className="relative text-sm leading-6 text-muted-foreground">
+                  <span className="absolute -left-[26px] top-2 size-2 rounded-full bg-(--brand)" />
+                  {item}
+                </li>
+              ))}
+            </ol>
           </div>
-
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <Card className="relative overflow-hidden border-white/10 bg-neutral-900/70">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_60%)]" />
-              <CardContent className="relative space-y-4 p-6">
-                <h3 className="text-2xl font-semibold text-white">
-                  Data Governance & Access Controls
-                </h3>
-                <p className="text-sm text-neutral-300 sm:text-base">
-                  Built for Indian schools. Audited workflows. Traceable outcomes that align with
-                  compliance expectations.
-                </p>
-                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
-                  {[
-                    "Role-based access with fine-grained scopes across campuses, departments, and modules.",
-                    "TLS 1.3 in transit and AES-256 at rest for sensitive records.",
-                    "SSO and identity federation readiness with scoped permission exports.",
-                    "Immutable change logs tied to user identity and timestamps.",
-                    "Admin review dashboards to track access and change trends.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <Link
-                    href={
-                      "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
-                    }
-                    className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-200"
-                  >
-                    Request Security & Compliance Pack
-                  </Link>
-                  <BookCallCta context="sms-governance" label="Book a Demo" variant="dark" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-white/10 bg-white/5">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_60%)]" />
-              <CardContent className="relative space-y-4 p-6">
-                <h3 className="text-2xl font-semibold text-white">Device & Endpoint Assurance</h3>
-                <p className="text-sm text-neutral-300 sm:text-base">
-                  Managed device posture helps ensure only compliant, up-to-date devices connect to
-                  school systems.
-                </p>
-                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
-                  {[
-                    "Remote wipe and lockout controls on corporate devices.",
-                    "Browser and session controls to reduce unsafe access.",
-                    "Device health checks help enforce secure access standards.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="relative overflow-hidden border-white/10 bg-white/5">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_55%)]" />
-              <CardContent className="relative space-y-4 p-6">
-                <h2 className="text-3xl font-semibold text-white">Implementation Timeline</h2>
-                <ul className="relative space-y-3 border-l border-white/10 pl-5 text-sm text-neutral-300 sm:text-base">
-                  {[
-                    "Day 0: Scope confirmation, data templates shared, owners assigned.",
-                    "Day 3: Data import dry run, key workflows configured, access provisioned.",
-                    "Day 7: Parallel run with real data, teacher and admin training.",
-                    "Day 10: Go-live with rollback plan, success metrics, and support chat.",
-                    "Day 14: Post-launch audit, optimize fee rules, automate recurring tasks.",
-                  ].map((item) => (
-                    <li key={item} className="relative pl-2">
-                      <span className="absolute -left-[10px] top-[7px] h-2 w-2 rounded-full bg-sky-300 shadow-[0_0_12px_rgba(56,189,248,0.6)]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-white/10 bg-neutral-900/70">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.16),transparent_60%)]" />
-              <CardContent className="relative space-y-4 p-6">
-                <h2 className="text-3xl font-semibold text-white">Pricing Philosophy</h2>
-                <ul className="space-y-2 text-sm text-neutral-300 sm:text-base">
-                  {[
-                    "One platform, one predictable price-no per-module surprises.",
-                    "Mobile apps included; no hidden “parent app” fees.",
-                    "Based on student + staff headcount, not usage penalties.",
-                    "Implementation and training included, not a separate line item.",
-                    "Transparent renewals with clear storage and integration tiers.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card className="relative overflow-hidden border-white/10 bg-neutral-900/70">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.12),transparent_60%)]" />
-            <CardContent className="relative space-y-4 p-6">
-              <h2 className="text-3xl font-semibold text-white">Operational Compliance Support</h2>
-              <p className="text-sm text-neutral-300 sm:text-base">
-                Support complex fee plans, CBSE/ICSE norms, and multi-branch autonomy with
-                audit-ready workflows and data governance that match Indian compliance expectations.
-              </p>
-              <div className="grid gap-4 md:grid-cols-2">
-                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
-                  {[
-                    "Alignment with DPDPA and local education data guidelines.",
-                    "Audit-ready logs with traceable approvals and exports.",
-                    "Regular internal reviews and penetration testing to maintain risk posture.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
-                  {[
-                    "Data flow diagrams, subprocessors list, and incident response plan summary available on request.",
-                    "Vendor security questionnaire support for procurement teams.",
-                    "Clear data residency posture for Indian institutions.",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href={
-                    "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
-                  }
-                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/30 hover:bg-white/10"
+          <div className="surface-panel rounded-[1.8rem] p-7">
+            <FileSpreadsheet className="size-5 text-(--brand)" />
+            <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">Pricing philosophy</h3>
+            <ul className="mt-5 grid gap-2.5">
+              {[
+                "One platform, one predictable price — no per-module surprises.",
+                "Mobile apps included; no hidden 'parent app' fees.",
+                "Based on student + staff headcount, not usage penalties.",
+                "Implementation and training included, not a separate line item.",
+                "Transparent renewals with clear storage and integration tiers.",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground"
                 >
-                  Request Security & Compliance Pack
-                </Link>
-                <BookCallCta context="sms-compliance" label="Book a Demo" variant="primary" />
-              </div>
-            </CardContent>
-          </Card>
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-(--teal)" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </SectionShell>
 
-          <Card className="relative overflow-hidden border-white/10 bg-white/5">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.12),transparent_55%)]" />
-            <CardContent className="relative space-y-5 p-6">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-semibold text-white">
-                    SquareCampus vs Legacy School ERPs
-                  </h2>
-                  <p className="text-neutral-300">
-                    Choose architecture, not nostalgia. This is the difference between one OS and
-                    stitched-together software.
+      <SectionShell
+        eyebrow="The comparison"
+        title="SquareCampus vs legacy school ERPs"
+        body="Choose architecture, not nostalgia. This is the difference between one OS and stitched-together software."
+      >
+        <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
+          {comparisonRows.map((row) => (
+            <article
+              key={row.title}
+              data-reveal-item
+              className="surface-panel rounded-[1.6rem] p-6"
+            >
+              <p className="section-kicker">{row.title}</p>
+              <div className="mt-4 grid gap-3">
+                <div className="rounded-[1.2rem] border border-(--line) bg-(--surface-strong) px-4 py-3.5">
+                  <p className="text-sm leading-6 text-foreground">
+                    <span className="font-medium text-(--brand)">SquareCampus:</span> {row.us}
                   </p>
                 </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <BookCallCta context="sms-compare" variant="primary" />
-                  <Link
-                    href="/why-squarecampus"
-                    className="inline-flex items-center text-sm font-semibold text-emerald-200 underline-offset-4 hover:text-white hover:underline"
-                  >
-                    Read the full breakdown
-                  </Link>
+                <div className="rounded-[1.2rem] bg-(--surface-muted) px-4 py-3.5">
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    <span className="font-medium">Legacy ERPs:</span> {row.them}
+                  </p>
                 </div>
               </div>
+            </article>
+          ))}
+        </Reveal>
+        <div className="mt-6 text-center">
+          <ButtonLink
+            href="/why-squarecampus"
+            label="Read the full breakdown"
+            variant="secondary"
+          />
+        </div>
+      </SectionShell>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                {[
-                  {
-                    title: "Architecture",
-                    us: "Single database, shared workflows, consistent UX.",
-                    them: "Multiple products bolted together with custom scripts.",
-                  },
-                  {
-                    title: "Implementation",
-                    us: "Guided rollout with parallel run and live training.",
-                    them: "Months of customization tickets and delays.",
-                  },
-                  {
-                    title: "Pricing",
-                    us: "All modules included; mobile apps included; transparent renewals.",
-                    them: "Per-module upsells, per-user fees, hidden mobile costs.",
-                  },
-                  {
-                    title: "Support",
-                    us: "Human-first, context-aware support with product and ops in the same room.",
-                    them: "Ticket queues with generic replies and slow escalations.",
-                  },
-                ].map((row) => (
-                  <div
-                    key={row.title}
-                    className="group rounded-2xl border border-white/10 bg-neutral-900/70 p-4 transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30"
-                  >
-                    <p className="text-sm uppercase tracking-[0.18em] text-neutral-400">
-                      {row.title}
-                    </p>
-                    <div className="mt-3 space-y-2">
-                      <p className="text-white">
-                        <span className="font-semibold text-emerald-300">SquareCampus</span>:{" "}
-                        {row.us}
-                      </p>
-                      <p className="text-neutral-300">
-                        <span className="font-semibold text-red-300">Legacy ERPs</span>: {row.them}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+      <SectionShell eyebrow="FAQs" title="Questions procurement teams ask">
+        <Reveal>
+          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+            {faqItems.map((faq) => (
+              <AccordionItem key={faq.question} value={faq.question}>
+                <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="max-w-3xl text-base leading-7 text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Reveal>
+      </SectionShell>
 
-          <section className="space-y-5">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <h2 className="text-3xl font-semibold text-white">FAQs</h2>
-              <Link
-                href="/about"
-                className="text-sm font-semibold text-emerald-200 underline-offset-4 hover:text-white hover:underline"
-              >
-                Meet the team behind the system
-              </Link>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {faqItems.map((faq) => (
-                <Card
-                  key={faq.question}
-                  className="group border-white/10 bg-neutral-900/70 transition duration-300 hover:-translate-y-1 hover:border-emerald-400/40"
-                >
-                  <CardContent className="space-y-2 p-5">
-                    <h3 className="text-lg font-semibold text-white">{faq.question}</h3>
-                    <p className="text-sm leading-relaxed text-neutral-300 sm:text-base">
-                      {faq.answer}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          <section className="relative overflow-hidden rounded-2xl border border-emerald-400/20 bg-gradient-to-r from-emerald-500/15 via-neutral-900 to-neutral-900 p-6 text-center">
-            <div className="pointer-events-none absolute inset-0">
-              <div className="absolute left-6 top-6 h-32 w-32 rounded-full bg-emerald-500/20 blur-3xl" />
-              <div className="absolute right-10 top-10 h-40 w-40 rounded-full bg-sky-500/20 blur-[90px]" />
-            </div>
-            <div className="relative flex flex-col gap-4">
-              <p className="text-sm uppercase tracking-[0.24em] text-emerald-200">
-                School management system
-              </p>
-              <h2 className="text-3xl font-semibold text-white">
-                Ready to run every campus day from one operating system?
-              </h2>
-              <p className="text-sm text-neutral-200 sm:text-base">
-                Book a call, see your workflows mapped, and launch with a timeline that respects the
-                academic calendar.
-              </p>
-              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <Link
-                  href={
-                    "mailto:security@squarecampus.com?subject=Security%20%26%20Compliance%20Pack%20Request%20-%20%5BSchool%20Name%5D&body=Hello%20SquareCampus%20Security%20Team%2C%0A%0AWe%20would%20like%20to%20request%20your%20Security%20%26%20Compliance%20Pack.%0A%0ASchool%20name%3A%20%5BYour%20School%20Name%5D%0AContact%20name%3A%20%5BYour%20Name%5D%0ARole%3A%20%5BTitle%20%2F%20Department%5D%0AEmail%3A%20%5BWork%20Email%5D%0APhone%3A%20%5BPhone%20Number%5D%0AStudent%20count%3A%20%5BApproximate%5D%0ACampuses%3A%20%5BNumber%20of%20Campuses%5D%0ASpecific%20requirements%3A%20%5BOptional%5D%0A%0AThank%20you%2C%0A%5BYour%20Name%5D"
-                  }
-                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/40 hover:bg-white/10"
-                >
-                  Request Security & Compliance Pack
-                </Link>
-                <BookCallCta context="sms-bottom" label="Book a Demo" variant="primary" />
-              </div>
-            </div>
-          </section>
-        </section>
-      </main>
+      <SectionShell className="pb-22 pt-0">
+        <Reveal className="surface-panel-strong rounded-[2rem] p-8 text-center lg:p-12">
+          <p className="section-kicker">School management system</p>
+          <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl tracking-[-0.05em] sm:text-4xl">
+            Ready to run every campus day from one operating system?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted-foreground">
+            Book a demo, see your workflows mapped, and launch with a timeline that respects the
+            academic calendar.
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+            <ButtonLink
+              href={securityPackMailto}
+              label="Request Security & Compliance Pack"
+              variant="secondary"
+            />
+          </div>
+        </Reveal>
+      </SectionShell>
 
       <Script
         id="sms-structured-data"
@@ -721,8 +568,6 @@ export default function SchoolManagementSystemPage() {
           }),
         }}
       />
-
-      <FloatingHomeButton href="/#home" label="Back to home" />
-    </>
+    </main>
   );
 }

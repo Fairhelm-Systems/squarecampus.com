@@ -1,0 +1,142 @@
+SquareCampus — AI image generation prompts
+===========================================
+One prompt per asset we plan to replace. Each entry lists the file it replaces,
+where it is used, the required format, and the prompt to paste into your image
+model. Keep the exact aspect ratios — the layout depends on them.
+
+Global style notes (append to every prompt if your tool supports a style field):
+"Clean, premium SaaS aesthetic. Soft neutral background tones (warm off-white
+#F6F6F3 in light contexts). Subtle cool-blue accent lighting (#587CCC family).
+No text, no logos, no watermarks, no people's identifiable faces. Crisp edges,
+high resolution, photorealistic product-render quality."
+
+-------------------------------------------------------------------------------
+1. MacBook device frame (replaces public/images/devices/macbook-air-figma.png)
+-------------------------------------------------------------------------------
+Used in: LaptopFrame in src/components/site/mockups.tsx — hero, platform,
+ecosystem, rollout, and security mockups. The screen area must stay EMPTY
+(transparent) because live HTML UI renders behind the cutout.
+Format: PNG with transparent background AND transparent screen cutout,
+aspect ratio 3880:2300, front-facing, minimum 2400px wide.
+
+Prompt:
+"A photorealistic front view of a modern ultra-thin laptop (similar to a
+MacBook Air), perfectly centered and symmetrical, lid open at 100 degrees,
+viewed straight-on at screen height. Silver-grey aluminum body, minimal bezel,
+no keyboard visible beyond the base edge. The screen area is fully transparent
+(cut out) so interface content can be composited behind it. Transparent
+background. Studio product-render lighting with a soft cool-blue rim light.
+No logo on the lid, no reflections that obscure the screen cutout, no text."
+
+-------------------------------------------------------------------------------
+2. Smartphone device frame (replaces public/images/devices/iphone-13-silver-portrait.png)
+-------------------------------------------------------------------------------
+Used in: FigmaIphoneFrame in src/components/site/mockups.tsx — parent/student
+app mockups beside the laptop. Screen must be a transparent cutout; the app UI
+renders behind it. Format: PNG with transparent background and transparent
+screen cutout, portrait, aspect ratio ~390:844 for the visible screen with the
+body extending slightly beyond (the component insets the frame by ~10% on the
+x-axis and ~3.3% on the y-axis), minimum 1200px tall.
+
+Prompt:
+"A photorealistic front view of a modern flagship smartphone in silver/starlight
+finish, portrait orientation, perfectly straight-on. Slim symmetrical bezels,
+rounded corners, small centered notch or punch-hole at top. The entire screen
+area is fully transparent (cut out) so app interface content can be composited
+behind it. Transparent background. Neutral studio product lighting with a faint
+cool-blue edge highlight. No logos, no buttons pressed, no text, no reflections
+covering the screen cutout."
+
+-------------------------------------------------------------------------------
+3. Dashboard screenshot (replaces public/images/marketing/dashboard.png)
+-------------------------------------------------------------------------------
+Used in: /school-management-system hero panel (960x540 slot).
+Format: JPG or PNG, 16:9, at least 1920x1080.
+
+Prompt:
+"A clean, modern school administration dashboard UI on a light warm-grey
+background. Left sidebar with simple line icons, top bar with a search field,
+main area showing: an attendance-by-grade horizontal bar chart in muted blue
+and teal, a fee-collection donut chart (blue/teal/amber segments), a small
+exceptions list with status pills, and a campus roll-up summary row of four
+stat cards. Rounded 16px cards with very soft shadows, generous whitespace,
+IBM Plex-style typography, subtle blue accent color #587CCC. Flat, crisp UI
+design render — not a photo of a monitor. Use placeholder-style gibberish or
+blurred text so no words are legible. No brand names."
+
+-------------------------------------------------------------------------------
+4. Editorial: campus courtyard (replaces public/images/editorial/campus-courtyard.jpg)
+-------------------------------------------------------------------------------
+Used in: Home page "Leadership visibility" panel (roughly 5:3 landscape crop,
+darkened overlay applied on top).
+Format: JPG, landscape, at least 2000px wide.
+
+Prompt:
+"Wide-angle photograph of a modern Indian school campus courtyard in late
+afternoon light. Contemporary architecture with clean lines, warm brick and
+white concrete, students in neat uniforms walking in the mid-distance (faces
+not identifiable), trees and soft shadows. Warm natural color grade with a
+subtle cool-blue tint in the shadows. Professional architectural photography,
+f/8 sharpness, no text or signage legible."
+
+-------------------------------------------------------------------------------
+5. Editorial: school building (replaces public/images/editorial/school-building-delhi.jpg)
+-------------------------------------------------------------------------------
+Used in: Home page "India-first" section (portrait-ish crop ~4:5, dark overlay
+and floating UI cards composited on top — keep the upper-right and lower area
+visually calm).
+Format: JPG, at least 1600px wide.
+
+Prompt:
+"Photograph of a distinguished Indian school building facade — a blend of
+classic institutional architecture and modern renovation, three storeys, warm
+sandstone and white columns, clear blue sky. Shot slightly upward from the
+courtyard, golden-hour light from the left. Calm, prestigious, trustworthy
+mood. Upper-right sky area and lower third relatively uncluttered so UI cards
+can be overlaid. Professional architectural photography, no people in the
+foreground, no legible signage or text."
+
+-------------------------------------------------------------------------------
+6. Editorial: campus architecture (replaces public/images/editorial/campus-architecture.jpg)
+-------------------------------------------------------------------------------
+Used in: reserve/editorial slots.
+Format: JPG, landscape 16:10, at least 2000px wide.
+
+Prompt:
+"Minimalist photograph of modern educational campus architecture in India:
+a covered walkway with rhythmic concrete columns, soft diffused daylight,
+a glimpse of a green quad beyond. Muted, editorial color palette (warm greys,
+soft blue sky). Strong leading lines and negative space suitable for text
+overlay. Architectural digest style, no people, no signage, no text."
+
+-------------------------------------------------------------------------------
+Tips
+----
+- For the two device frames (1 and 2), if your model can't produce transparent
+  screen cutouts reliably, generate the device on a solid #00FF00 screen and
+  background, then key both out in an editor. The screen rectangle must be
+  perfectly straight-on (no perspective) or the composited UI will not align.
+- Keep the same filenames when replacing so no code changes are needed.
+- After replacing, run `bun run build` and eyeball /, /platform, /ecosystem,
+  /rollout, /security, and /school-management-system.
+
+-------------------------------------------------------------------------------
+STATUS UPDATE (2026-07-11)
+-------------------------------------------------------------------------------
+The device-screen suite has been integrated (public/images/screens/*). Two
+delivered screens still carry the old "Nexus" branding and are NOT yet used
+on the site — regenerate them with AEGIS naming and the same layout:
+
+1. public/images/screens/mobile/nexus-daily-brief.png
+   - Shows "Nexus · Principal view" header and an "Ask Nexus" composer.
+   - Regenerate with "AEGIS · Principal view" and "Ask AEGIS". Rename the
+     file to aegis-daily-brief.png. Intended placement: /aegis page hero or
+     the home AEGIS section phone slot.
+
+2. public/images/screens/laptop/institution-command-center.png
+   - Contains a small "NEXUS INSIGHT" card (bottom center-right).
+   - Currently live on the home hero (the label is illegible at render size,
+     so acceptable temporarily). Regenerate with "AEGIS INSIGHT" when convenient.
+
+Unused spare: public/images/screens/mobile/student-day-view.png — good for a
+future academics/LMS section or the school-management-system page.

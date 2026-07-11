@@ -22,6 +22,7 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: close the mobile menu on route change
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -48,7 +49,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm transition-colors",
+                    "whitespace-nowrap rounded-full px-4 py-2 text-sm transition-colors",
                     active
                       ? "bg-[color:var(--surface-muted)] text-[color:var(--foreground)]"
                       : "text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"

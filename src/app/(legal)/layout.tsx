@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
-import { FloatingHomeButton } from "@/components/marketing/floating-home-button";
-import { Footer } from "@/components/marketing/footer";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
 
 export default function LegalLayout({ children }: { children: ReactNode }) {
   return (
-    <>
+    <div className="page-shell">
+      <SiteHeader />
       {children}
-      <FloatingHomeButton href="/" />
-      <Footer />
-    </>
+      <SiteFooter />
+    </div>
   );
 }

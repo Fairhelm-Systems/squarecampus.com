@@ -27,6 +27,29 @@ const initialState: DemoFormState = {
 const inputClassName =
   "h-12 rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--foreground)] outline-none transition-colors placeholder:text-[color:var(--muted-foreground)] focus:border-[color:var(--line-strong)]";
 
+// Static export: the site has no server of its own, so the form posts to an
+// external intake endpoint (API Gateway/Lambda, Formspree, etc.) configured at
+// build time. Without one, it opens a prefilled email draft instead.
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+const CONTACT_EMAIL = "contact@squarecampus.com";
+
+function buildMailtoDraft(state: DemoFormState) {
+  const subject = `Demo request — ${state.institution || state.name}`;
+  const body = [
+    `Name: ${state.name}`,
+    `Email: ${state.email}`,
+    `Institution: ${state.institution}`,
+    state.role && `Role: ${state.role}`,
+    state.students && `Institution size: ${state.students}`,
+    "",
+    state.message,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 export function ContactForm() {
   const [state, setState] = useState(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,10 +64,23 @@ export function ContactForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Honeypot: bots fill the hidden field, humans never see it.
+    if (state.website) {
+      toast.success("Your request has been sent.");
+      setState(initialState);
+      return;
+    }
+
+    if (!CONTACT_ENDPOINT) {
+      window.location.href = buildMailtoDraft(state);
+      toast.success("Opening your email app with the request drafted.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,20 +88,18 @@ export function ContactForm() {
         body: JSON.stringify(state),
       });
 
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        toast.error(result.message ?? "Unable to submit the form right now.");
+      if (!response.ok) {
+        toast.error(`Unable to submit right now. You can email us at ${CONTACT_EMAIL}.`);
         return;
       }
 
-      toast.success(result.message ?? "Your request has been sent.");
+      toast.success("Your request has been sent. We reply within one business day.");
       if (mountedRef.current) {
         setState(initialState);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Unable to submit the form right now.");
+      toast.error(`Unable to submit right now. You can email us at ${CONTACT_EMAIL}.`);
     } finally {
       if (mountedRef.current) {
         setIsSubmitting(false);

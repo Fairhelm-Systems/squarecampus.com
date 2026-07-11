@@ -1,110 +1,27 @@
 import type { NextConfig } from "next";
-import { buildCsp } from "./src/lib/security/csp";
 
+/**
+ * Static export build for CloudFront + S3 hosting.
+ *
+ * Everything that used to live in `headers()` / `redirects()` / middleware
+ * must now be configured at the edge. See DEPLOYMENT.md for the matching
+ * CloudFront Function (redirects + index rewrites) and Response Headers
+ * Policy (CSP, HSTS, and the rest of the security header set).
+ */
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
   images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 80, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    // CloudFront serves the exported files directly; there is no image
+    // optimizer at request time. Source images are pre-sized in /public.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.mdtechspire.com",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
     ],
-  },
-  async redirects() {
-    return [
-      {
-        source: "/features",
-        destination: "/platform",
-        permanent: true,
-      },
-      {
-        source: "/product",
-        destination: "/platform",
-        permanent: true,
-      },
-      {
-        source: "/how-it-works",
-        destination: "/rollout",
-        permanent: true,
-      },
-      {
-        source: "/contact-us",
-        destination: "/demo",
-        permanent: true,
-      },
-      {
-        source: "/why-different",
-        destination: "/why-squarecampus",
-        permanent: true,
-      },
-    ];
-  },
-  async headers() {
-    const csp = buildCsp({ reportUri: "/api/csp-report" });
-    const cspHeader =
-      process.env.CSP_REPORT_ONLY === "true"
-        ? "Content-Security-Policy-Report-Only"
-        : "Content-Security-Policy";
-
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            value:
-              "accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin",
-          },
-          {
-            key: "Cross-Origin-Resource-Policy",
-            value: "same-site",
-          },
-          {
-            key: cspHeader,
-            value: csp,
-          },
-        ],
-      },
-      {
-        source: "/api/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "no-store, no-cache, must-revalidate",
-          },
-        ],
-      },
-    ];
   },
 };
 
