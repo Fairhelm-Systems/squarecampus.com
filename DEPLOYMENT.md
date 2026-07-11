@@ -1,5 +1,31 @@
 # Deployment Guide — S3 + CloudFront (Static Export)
 
+## Live infrastructure (deployed 2026-07-11)
+
+| Resource | Value |
+|---|---|
+| S3 bucket | `squarecampus-marketing-site` (ap-south-1, private, OAC-only) |
+| CloudFront distribution | `E3ATKH99UOL8C2` → d1n7nlq2wsu2se.cloudfront.net |
+| Aliases | squarecampus.com, www.squarecampus.com, squarecampus.in, www.squarecampus.in |
+| ACM cert (us-east-1) | 4-SAN cert covering all aliases |
+| CloudFront Function | `squarecampus-router` (host canonicalization + legacy redirects + index rewrite) |
+| Response headers policy | `squarecampus-security-headers` |
+| Route53 | A/AAAA aliases on both zones → the distribution |
+
+squarecampus.in and all www hosts 301 to https://squarecampus.com at the edge.
+The old Amplify app was deleted on 2026-07-11.
+
+### Redeploy
+
+```bash
+bun run build
+aws s3 sync out/ s3://squarecampus-marketing-site --delete \
+  --cache-control "public,max-age=0,must-revalidate" --exclude "_next/*"
+aws s3 sync out/_next/ s3://squarecampus-marketing-site/_next/ --delete \
+  --cache-control "public,max-age=31536000,immutable"
+aws cloudfront create-invalidation --distribution-id E3ATKH99UOL8C2 --paths "/*"
+```
+
 The site builds to a fully static export (`output: "export"` in
 [next.config.ts](next.config.ts)). There is no server, no middleware, and no
 API routes — everything that used to live there is now configured at the edge.
@@ -55,7 +81,9 @@ Keep the bucket private; grant CloudFront access via Origin Access Control (OAC)
 
 `trailingSlash: true` means every route is a folder with an `index.html`.
 CloudFront only applies the root object at `/`, so rewrite subpaths, and issue
-the 301s that used to live in `next.config.ts` `redirects()`:
+the 301s that used to live in `next.config.ts` `redirects()`. The deployed
+version (`squarecampus-router`) additionally 301s any non-canonical host
+(www, squarecampus.in) to https://squarecampus.com:
 
 ```js
 function handler(event) {
