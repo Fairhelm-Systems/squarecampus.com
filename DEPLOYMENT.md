@@ -18,13 +18,11 @@ The old Amplify app was deleted on 2026-07-11.
 ### Redeploy
 
 ```bash
-bun run build
-aws s3 sync out/ s3://squarecampus-marketing-site --delete \
-  --cache-control "public,max-age=0,must-revalidate" --exclude "_next/*"
-aws s3 sync out/_next/ s3://squarecampus-marketing-site/_next/ --delete \
-  --cache-control "public,max-age=31536000,immutable"
-aws cloudfront create-invalidation --distribution-id E3ATKH99UOL8C2 --paths "/*"
+bun run deploy          # scripts/deploy.sh: build + sync + invalidate + wait
 ```
+
+`SKIP_BUILD=1 bun run deploy` uploads the existing `./out` without rebuilding.
+Override targets with `DEPLOY_BUCKET` / `DEPLOY_DISTRIBUTION_ID` env vars.
 
 The site builds to a fully static export (`output: "export"` in
 [next.config.ts](next.config.ts)). There is no server, no middleware, and no
