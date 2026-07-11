@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
 import { HeroMockupCluster } from "@/components/site/mockups";
-import { CommandLoomIntegrationsVisual } from "@/components/site/commandloom-integrations-visual";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -112,11 +112,7 @@ const indiaFirstPoints = [
   },
 ] as const;
 
-function EditorialGeometryOverlay({
-  variant = "cool",
-}: {
-  variant?: "cool" | "warm";
-}) {
+function EditorialGeometryOverlay({ variant = "cool" }: { variant?: "cool" | "warm" }) {
   const stroke = variant === "warm" ? "rgba(255,255,255,0.22)" : "rgba(147,196,255,0.36)";
   const fill = variant === "warm" ? "rgba(255,255,255,0.1)" : "rgba(100,164,255,0.14)";
   const dot = variant === "warm" ? "rgba(255,255,255,0.62)" : "rgba(130,192,255,0.74)";
@@ -186,7 +182,8 @@ export default function Home() {
                   variant="secondary"
                 />
               </div>
-              <div className="grid gap-3 pt-2 sm:grid-cols-2">
+              {/* Mobile shows only the two sharpest proof points; all four from sm: up. */}
+              <div className="grid gap-3 pt-2 sm:grid-cols-2 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:block">
                 {[
                   "One login, one timeline, one institutional source of truth.",
                   "Built for real school operations, not a generic admin dashboard.",
@@ -238,21 +235,19 @@ export default function Home() {
                     >
                       <div className="flex items-start gap-4">
                         <div
-                          className={`flex size-12 shrink-0 items-center justify-center rounded-full border text-sm ${index === 0
-                            ? "border-transparent bg-foreground text-background"
-                            : "border-(--line) bg-(--surface-strong) text-muted-foreground"
-                            }`}
+                          className={`flex size-12 shrink-0 items-center justify-center rounded-full border text-sm ${
+                            index === 0
+                              ? "border-transparent bg-foreground text-background"
+                              : "border-(--line) bg-(--surface-strong) text-muted-foreground"
+                          }`}
                         >
                           {String(index + 1).padStart(2, "0")}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-4">
-                            <div>
-                              <p className="section-kicker">{item.title}</p>
-                              <h3 className="mt-3 font-display text-2xl tracking-[-0.04em]">
-                                {item.title}
-                              </h3>
-                            </div>
+                            <h3 className="font-display text-2xl tracking-[-0.04em]">
+                              {item.title}
+                            </h3>
                             <item.icon className="mt-1 size-5 shrink-0 text-(--brand)" />
                           </div>
                           <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground">
@@ -301,9 +296,9 @@ export default function Home() {
                     The School OS keeps records, roles, and decisions moving in one direction.
                   </h2>
                   <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
-                    When admissions, fee logic, staff workflows, and parent communication run on
-                    the same operating layer, the institution stops passing context between teams
-                    and tools.
+                    When admissions, fee logic, staff workflows, and parent communication run on the
+                    same operating layer, the institution stops passing context between teams and
+                    tools.
                   </p>
                 </div>
 
@@ -332,7 +327,8 @@ export default function Home() {
 
                   <div className="rounded-[1.7rem] border border-(--line) bg-(--surface-strong) p-6">
                     <p className="section-kicker">Why this structure matters</p>
-                    <div className="mt-5 grid gap-3">
+                    {/* Mobile shows the first two; the full list from sm: up. */}
+                    <div className="mt-5 grid gap-3 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:block">
                       {[
                         "No duplicate student profiles across admissions and academics",
                         "No orphaned parent updates disconnected from fee and attendance state",
@@ -346,9 +342,7 @@ export default function Home() {
                           <p className="font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
                             {String(index + 1).padStart(2, "0")}
                           </p>
-                          <p className="mt-3 text-base leading-7 text-foreground">
-                            {item}
-                          </p>
+                          <p className="mt-3 text-base leading-7 text-foreground">{item}</p>
                         </div>
                       ))}
                     </div>
@@ -359,7 +353,8 @@ export default function Home() {
           </Reveal>
           <div className="w-full text-center">
             <p className="mt-6 text-base text-center leading-8 text-muted-foreground">
-              Shared timeline means parents, staff, and operators stop chasing the latest version of what happened.
+              Shared timeline means parents, staff, and operators stop chasing the latest version of
+              what happened.
             </p>
           </div>
         </SectionShell>
@@ -445,7 +440,9 @@ export default function Home() {
                       <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
                         {label}
                       </p>
-                      <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]">{detail}</p>
+                      <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]">
+                        {detail}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -478,7 +475,7 @@ export default function Home() {
                                 width: `${value}%`,
                                 background: `linear-gradient(90deg, ${color}, color-mix(in oklch, ${color as string}, white 25%))`,
                                 animation: `bar-grow 1.2s ease-out both`,
-                                animationDelay: `${(["Grade 10", "Grade 9", "Grade 8", "Grade 7", "Grade 6"].indexOf(label as string)) * 0.1}s`,
+                                animationDelay: `${["Grade 10", "Grade 9", "Grade 8", "Grade 7", "Grade 6"].indexOf(label as string) * 0.1}s`,
                               }}
                             />
                           </div>
@@ -512,28 +509,47 @@ export default function Home() {
                       <div className="relative">
                         <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90">
                           {/* Background ring */}
-                          <circle cx="80" cy="80" r="62" fill="none" stroke="var(--surface-muted)" strokeWidth="18" />
+                          <circle
+                            cx="80"
+                            cy="80"
+                            r="62"
+                            fill="none"
+                            stroke="var(--surface-muted)"
+                            strokeWidth="18"
+                          />
                           {/* Collected: 72% */}
                           <circle
-                            cx="80" cy="80" r="62" fill="none"
-                            stroke="var(--brand)" strokeWidth="18"
+                            cx="80"
+                            cy="80"
+                            r="62"
+                            fill="none"
+                            stroke="var(--brand)"
+                            strokeWidth="18"
                             strokeDasharray={`${0.72 * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
                             strokeLinecap="round"
                             className="animate-[doughnut-draw_1.4s_ease-out_both]"
                           />
                           {/* Pending: 20% */}
                           <circle
-                            cx="80" cy="80" r="62" fill="none"
-                            stroke="var(--teal)" strokeWidth="18"
-                            strokeDasharray={`${0.20 * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
+                            cx="80"
+                            cy="80"
+                            r="62"
+                            fill="none"
+                            stroke="var(--teal)"
+                            strokeWidth="18"
+                            strokeDasharray={`${0.2 * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
                             strokeDashoffset={`${-0.72 * 2 * Math.PI * 62}`}
                             strokeLinecap="round"
                             className="[animation:doughnut-draw_1.4s_ease-out_0.2s_both]"
                           />
                           {/* Overdue: 8% */}
                           <circle
-                            cx="80" cy="80" r="62" fill="none"
-                            stroke="var(--amber)" strokeWidth="18"
+                            cx="80"
+                            cy="80"
+                            r="62"
+                            fill="none"
+                            stroke="var(--amber)"
+                            strokeWidth="18"
                             strokeDasharray={`${0.08 * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
                             strokeDashoffset={`${-0.92 * 2 * Math.PI * 62}`}
                             strokeLinecap="round"
@@ -557,12 +573,12 @@ export default function Home() {
                         ["Overdue", "8%", "var(--amber)"],
                       ].map(([label, pct, color]) => (
                         <div key={label} className="flex items-center gap-2">
-                          <span
-                            className="size-2 rounded-full"
-                            style={{ background: color }}
-                          />
+                          <span className="size-2 rounded-full" style={{ background: color }} />
                           <span className="text-xs text-[color:var(--muted-foreground)]">
-                            {label} <span className="font-medium text-[color:var(--foreground)]">{pct}</span>
+                            {label}{" "}
+                            <span className="font-medium text-[color:var(--foreground)]">
+                              {pct}
+                            </span>
                           </span>
                         </div>
                       ))}
@@ -571,7 +587,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-4 grid flex-1 items-stretch gap-4">
-                  <div className="relative min-h-[18rem] overflow-hidden rounded-[1.7rem] border border-[color:var(--line)]">
+                  <div className="relative hidden min-h-[18rem] overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] sm:block">
                     <Image
                       src="/images/editorial/campus-courtyard.jpg"
                       alt="Modern campus courtyard"
@@ -704,8 +720,8 @@ export default function Home() {
                   <div className="rounded-[1.45rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-5">
                     <p className="section-kicker">Preferred language</p>
                     <p className="mt-4 text-base leading-7 text-[color:var(--foreground)]">
-                      Parent-facing updates can flex by audience without fragmenting the institutional
-                      record.
+                      Parent-facing updates can flex by audience without fragmenting the
+                      institutional record.
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {["English", "Hindi", "Kannada", "Tamil"].map((item) => (
@@ -727,7 +743,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="relative min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[color:var(--line)]">
+                <div className="relative hidden min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[color:var(--line)] sm:block">
                   <Image
                     src="/images/editorial/school-building-delhi.jpg"
                     alt="Institution building for India-first operations context"
@@ -789,24 +805,24 @@ export default function Home() {
         </SectionShell>
 
         <SectionShell
-          eyebrow="Embedded intelligence"
-          title="CommandLoom is the intelligence layer inside the operating system"
-          body="CommandLoom is positioned as an added advantage on top of SquareCampus, not as a replacement for product substance."
+          eyebrow="Governed intelligence"
+          title="AEGIS is the governed intelligence layer inside the operating system"
+          body="AEGIS — Adaptive Enterprise Governance & Intelligence System — surfaces what needs attention across the institution, inside the same permissions and audit trails as everything else."
         >
           <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
             <div className="grid gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-2 text-sm text-[color:var(--foreground)]">
                   <Radar className="size-4 text-[color:var(--brand)]" />
-                  CommandLoom inside SquareCampus
+                  AEGIS inside SquareCampus
                 </div>
                 <h2 className="mt-5 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
-                  Ask better questions. Get operating context back.
+                  Ask AEGIS. Don&rsquo;t chase reports.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  Because CommandLoom works with the same permissions, timelines, and live records, it can
-                  surface exceptions, suggest next steps, and support leadership visibility without
-                  becoming a separate product narrative.
+                  Because AEGIS works with the same permissions, timelines, and live records, it can
+                  surface exceptions, suggest next steps, and support leadership visibility — with
+                  governance, tenant boundaries, and auditability built in, not bolted on.
                 </p>
                 <div className="mt-6 grid gap-3">
                   {[
@@ -832,8 +848,11 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-6">
+                  <ButtonLink href="/aegis" label="Meet AEGIS" variant="secondary" />
+                </div>
               </div>
-              <CommandLoomIntegrationsVisual className="lg:-mr-2" />
+              <AegisIntelligenceVisual className="lg:-mr-2" />
             </div>
           </Reveal>
         </SectionShell>

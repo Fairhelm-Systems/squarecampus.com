@@ -5,31 +5,32 @@ import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeScript } from "@/components/site/theme-script";
+import { SEO_CONFIG } from "@/lib/seo";
 import "./globals.css";
 
 const bodyFont = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const monoFont = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500"],
+  weight: ["400"],
 });
 
 const displayFont = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://squarecampus.com"),
+  metadataBase: new URL(SEO_CONFIG.baseUrl),
   title: {
     default: "SquareCampus | School OS & School Management System in India",
     template: "%s | SquareCampus",
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     "parent app for schools",
   ],
   alternates: {
-    canonical: "https://squarecampus.com/",
+    canonical: `${SEO_CONFIG.baseUrl}/`,
   },
   openGraph: {
     type: "website",
@@ -96,18 +97,18 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning data-theme="light">
+    <html
+      lang="en"
+      className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} scroll-smooth`}
+      suppressHydrationWarning
+      data-theme="light"
+    >
       <head>
         <ThemeScript />
         <link rel="preconnect" href="https://cdn.mdtechspire.com" />
         <link rel="dns-prefetch" href="https://cdn.mdtechspire.com" />
-        <link rel="preconnect" href="https://app.squarecampus.com" />
-        <link rel="dns-prefetch" href="https://app.squarecampus.com" />
       </head>
-      <body
-        suppressHydrationWarning
-        className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} antialiased`}
-      >
+      <body suppressHydrationWarning className="antialiased">
         <ScrollToTop />
         <Script
           id="structured-data"

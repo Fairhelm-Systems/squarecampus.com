@@ -1,5 +1,8 @@
+export const dynamic = "force-static";
+
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/blog/posts";
+import { SEO_CONFIG } from "@/lib/seo";
 
 /**
  * SquareCampus Sitemap
@@ -8,7 +11,7 @@ import { blogPosts } from "@/content/blog/posts";
  * We don't invite everyone to the party — only the pages that matter.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const SITE_URL = "https://squarecampus.com" as const;
+  const SITE_URL = SEO_CONFIG.baseUrl;
 
   /**
    * The lastmod field should reflect *content* change, not “we deployed again”.
@@ -63,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LASTMOD.core,
       changeFrequency: "weekly",
       priority: 0.88,
+    },
+    {
+      path: "/aegis",
+      lastModified: new Date("2026-07-11T00:00:00.000Z"),
+      changeFrequency: "weekly",
+      priority: 0.85,
     },
     {
       path: "/rollout",

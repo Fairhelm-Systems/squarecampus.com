@@ -168,7 +168,9 @@
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-display);
+    /* --font-display is an inline theme token (compile-time only); reference
+       the runtime variable that next/font defines on <html>. */
+    font-family: var(--font-sora), var(--font-ibm-plex-sans), sans-serif;
   }
 
   .page-shell {
@@ -229,6 +231,345 @@
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--muted-foreground);
+  }
+}
+
+/* Scroll-reveal system: Reveal toggles `.is-revealed`; everything else is CSS. */
+.reveal-root {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance, 20px));
+  transition:
+    opacity 0.82s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.82s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-root.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger [data-reveal-item] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.is-revealed [data-reveal-item] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(1) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 60ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(2) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 140ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(3) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 220ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(4) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 300ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(5) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 380ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(6) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 460ms);
+}
+.reveal-stagger.is-revealed [data-reveal-item]:nth-child(n + 7) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 540ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-root,
+  .reveal-stagger [data-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* AEGIS intelligence visual: hidden until `.is-live`, then cascades in.
+   Elements set their own delay via --d. Lines use pathLength="1". */
+.aegis-visual [data-aegis-rise] {
+  opacity: 0;
+}
+
+.aegis-visual.is-live [data-aegis-rise] {
+  animation: aegis-rise 0.76s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.aegis-visual [data-aegis-line] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.aegis-visual.is-live [data-aegis-line] {
+  --line-length: 1;
+  animation: aegis-line-draw 0.86s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.aegis-visual [data-aegis-dot] {
+  opacity: 0;
+}
+
+.aegis-visual.is-live [data-aegis-dot] {
+  opacity: 1;
+  animation: aegis-pulse 2.6s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+.aegis-visual [data-aegis-bar] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.aegis-visual.is-live [data-aegis-bar] {
+  animation: aegis-bar 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aegis-visual [data-aegis-rise],
+  .aegis-visual [data-aegis-dot] {
+    opacity: 1;
+  }
+
+  .aegis-visual [data-aegis-line] {
+    stroke-dashoffset: 0;
+    opacity: 0.5;
+  }
+
+  .aegis-visual [data-aegis-bar] {
+    transform: none;
+  }
+}
+
+/* AEGIS intelligence visual: line-draw, pulse, and cascade entrances. */
+@keyframes aegis-line-draw {
+  from {
+    stroke-dashoffset: var(--line-length, 600);
+    opacity: 0.1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0.56;
+  }
+}
+
+@keyframes aegis-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.32);
+    opacity: 1;
+  }
+}
+
+@keyframes aegis-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aegis-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* AEGIS governed console: typed query, then answer cards land in sequence. */
+.aegis-console .aegis-console-query {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  border-right: 2px solid transparent;
+}
+
+.aegis-console.is-live .aegis-console-query {
+  animation:
+    console-type 1.4s steps(44, end) 0.3s forwards,
+    console-caret 0.7s step-end 0.3s 3;
+}
+
+.aegis-console [data-console-step] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aegis-console.is-live [data-console-step] {
+  opacity: 1;
+  transform: none;
+  transition-delay: var(--d, 0s);
+}
+
+@keyframes console-type {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+  }
+}
+
+@keyframes console-caret {
+  0%,
+  100% {
+    border-right-color: transparent;
+  }
+  50% {
+    border-right-color: currentColor;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Typing effect needs nowrap; allow wrapping on narrow screens instead. */
+  .aegis-console .aegis-console-query {
+    white-space: normal;
+    max-width: 100%;
+    animation: none;
+    border-right: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aegis-console .aegis-console-query {
+    max-width: 100%;
+    white-space: normal;
+    animation: none !important;
+    border-right: none;
+  }
+
+  .aegis-console [data-console-step] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Device mockup scenes: hidden until `.is-live`, then cascade + gentle float. */
+.scene-root {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.92s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.92s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-root.is-live {
+  opacity: 1;
+  transform: none;
+}
+
+.scene-root [data-scene-item],
+.scene-root [data-scene-accent] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-root.is-live [data-scene-item],
+.scene-root.is-live [data-scene-accent] {
+  opacity: 1;
+  transform: none;
+}
+
+.scene-root.is-live [data-scene-item]:nth-of-type(1) {
+  transition-delay: 80ms;
+}
+.scene-root.is-live [data-scene-item]:nth-of-type(2) {
+  transition-delay: 170ms;
+}
+.scene-root.is-live [data-scene-item]:nth-of-type(3) {
+  transition-delay: 260ms;
+}
+.scene-root.is-live [data-scene-accent] {
+  transition-delay: 320ms;
+}
+
+.scene-float-primary.is-live [data-float="primary"] {
+  animation: scene-float-a 5.4s ease-in-out 1.2s infinite alternate;
+}
+
+.scene-float-secondary.is-live [data-float="secondary"] {
+  animation: scene-float-b 6.2s ease-in-out 1.4s infinite alternate;
+}
+
+@keyframes scene-float-a {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -5px;
+  }
+}
+
+@keyframes scene-float-b {
+  from {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  to {
+    translate: 0 -7px;
+    rotate: -0.8deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-root,
+  .scene-root [data-scene-item],
+  .scene-root [data-scene-accent] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* /hello easter egg: greetings surfacing from the dark. */
+.hello-word {
+  opacity: 0;
+  animation: hello-surface 19.6s ease-in-out infinite;
+}
+
+@keyframes hello-surface {
+  0%,
+  10% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(6px);
+  }
+  3%,
+  7% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
   }
 }
 

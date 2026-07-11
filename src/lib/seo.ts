@@ -3,8 +3,29 @@
 // This file is the “identity kit” we hand to search engines.
 // Not hype. Not vibes. Just clear, consistent signals.
 
+/**
+ * squarecampus.com is the single canonical domain; squarecampus.in 301s to it
+ * at the edge, so no hreflang set is emitted (redirecting alternates would be
+ * an SEO error). NEXT_PUBLIC_SITE_URL stays overridable for previews.
+ */
+export const PRIMARY_DOMAIN = "https://squarecampus.com";
+
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || PRIMARY_DOMAIN;
+
+/**
+ * Canonical for a page. Every page that exports its own metadata must set
+ * this, otherwise it inherits the root layout's canonical ("/") and search
+ * engines read it as a duplicate of the homepage.
+ */
+export function createAlternates(path: string) {
+  const normalized = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
+  return {
+    canonical: `${baseUrl}${normalized}`,
+  };
+}
+
 export const SEO_CONFIG = {
-  baseUrl: "https://squarecampus.com",
+  baseUrl,
   siteName: "SquareCampus",
   // Your category: School OS. Your search reality: “school management system”.
   // Our metadata must hold both truths without sounding confused.
@@ -85,7 +106,8 @@ export function createPageMetadata(config: PageMetadataConfig) {
     noFollow = false,
   } = config;
 
-  const canonicalUrl = `${SEO_CONFIG.baseUrl}${path}`;
+  const normalizedPath = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
+  const canonicalUrl = `${SEO_CONFIG.baseUrl}${normalizedPath}`;
   const imageUrl = ogImage || SEO_CONFIG.ogImage.default;
 
   return {

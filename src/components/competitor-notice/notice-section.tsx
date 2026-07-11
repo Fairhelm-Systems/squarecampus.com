@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
-import { AlertTriangle, Check, X, ChevronDown, ChevronUp } from "@/components/icons";
+import { AlertTriangle, Check, ChevronDown, ChevronUp, X } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 export type Severity = "critical" | "high" | "medium" | "info";
@@ -57,10 +57,10 @@ export function NoticeSection({ id, number, title, severity, children }: NoticeS
       )}
     >
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <span className="font-mono text-sm font-bold text-neutral-500">
+        <span className="font-mono text-sm font-semibold text-neutral-500">
           {number.toString().padStart(2, "0")}
         </span>
-        <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl">{title}</h2>
+        <h2 className="text-xl font-semibold text-white sm:text-2xl md:text-3xl">{title}</h2>
         <span
           className={cn(
             "rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide",
@@ -278,5 +278,5 @@ export function Strong({ children }: { children: ReactNode }) {
 }
 
 export function SubHeading({ children }: { children: ReactNode }) {
-  return <h3 className="mb-3 mt-8 text-lg font-bold text-white sm:text-xl">{children}</h3>;
+  return <h3 className="mb-3 mt-8 text-lg font-semibold text-white sm:text-xl">{children}</h3>;
 }

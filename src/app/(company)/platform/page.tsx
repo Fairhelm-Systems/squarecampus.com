@@ -20,8 +20,10 @@ import { PlatformMockupRow } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
+import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: createAlternates("/platform"),
   title: "Platform",
   description:
     "See how SquareCampus structures admissions, academics, finance, communication, compliance, and institutional operations inside one connected School OS.",
@@ -96,7 +98,7 @@ const operatingClaims = [
   "One login and one source of truth for admissions, academics, finance, and communication.",
   "Institution-aware structure for schools, colleges, and multi-campus organizations.",
   "Multilingual parent-facing usage without turning English-first reporting into a mess.",
-  "CommandLoom layered inside the platform as intelligence, not marketed as a substitute for operational depth.",
+  "AEGIS layered inside the platform as governed intelligence, not marketed as a substitute for operational depth.",
 ] as const;
 
 export default function PlatformPage() {
@@ -149,9 +151,7 @@ export default function PlatformPage() {
             >
               <layer.icon className="size-5 text-(--brand)" />
               <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{layer.title}</h2>
-              <p className="mt-3 text-base leading-7 text-muted-foreground">
-                {layer.body}
-              </p>
+              <p className="mt-3 text-base leading-7 text-muted-foreground">{layer.body}</p>
             </article>
           ))}
         </Reveal>
@@ -171,9 +171,7 @@ export default function PlatformPage() {
             >
               <item.icon className="size-5 text-(--teal)" />
               <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{item.title}</h2>
-              <p className="mt-3 text-base leading-7 text-muted-foreground">
-                {item.body}
-              </p>
+              <p className="mt-3 text-base leading-7 text-muted-foreground">{item.body}</p>
             </article>
           ))}
         </Reveal>
@@ -197,9 +195,7 @@ export default function PlatformPage() {
               >
                 <Icon className="size-5 text-(--amber)" />
                 <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{surface.title}</h2>
-                <p className="mt-3 text-base leading-7 text-muted-foreground">
-                  {surface.body}
-                </p>
+                <p className="mt-3 text-base leading-7 text-muted-foreground">{surface.body}</p>
               </article>
             );
           })}
@@ -210,15 +206,18 @@ export default function PlatformPage() {
         <Reveal className="surface-panel-strong rounded-4xl p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
             <div>
-              <p className="section-kicker">Intelligence layer</p>
+              <p className="section-kicker">Governed intelligence</p>
               <h2 className="mt-4 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
-                CommandLoom is embedded where context already exists.
+                AEGIS is embedded where context already exists.
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-                SquareCampus remains the primary identity. CommandLoom adds operational intelligence on
-                top of the School OS by working with the same timelines, permissions, and records
-                rather than inventing a second system beside them.
+                SquareCampus remains the primary identity. AEGIS adds governed intelligence on top
+                of the School OS by working with the same timelines, permissions, and records rather
+                than inventing a second system beside them.
               </p>
+              <div className="mt-6">
+                <ButtonLink href="/aegis" label="Meet AEGIS" variant="secondary" />
+              </div>
             </div>
             <div className="grid gap-3">
               {[

@@ -45,7 +45,7 @@ export function EvidenceFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Document Authentication */}
         <div className="mb-12 border-b border-neutral-800 pb-12">
-          <h2 className="mb-8 flex items-center gap-3 text-lg font-bold text-white">
+          <h2 className="mb-8 flex items-center gap-3 text-lg font-semibold text-white">
             <Shield className="h-5 w-5 text-neutral-400" aria-hidden="true" />
             Document Authentication
           </h2>
@@ -114,7 +114,7 @@ export function EvidenceFooter() {
 
         {/* Contact Information */}
         <div className="mb-12 border-b border-neutral-800 pb-12">
-          <h2 className="mb-6 text-lg font-bold text-white">Contact Information</h2>
+          <h2 className="mb-6 text-lg font-semibold text-white">Contact Information</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {contactInfo.map((contact) => (
               <div
@@ -150,7 +150,7 @@ export function EvidenceFooter() {
 
         {/* Related Documents */}
         <div className="mb-12 border-b border-neutral-800 pb-12">
-          <h2 className="mb-6 text-lg font-bold text-white">Related Legal Documents</h2>
+          <h2 className="mb-6 text-lg font-semibold text-white">Related Legal Documents</h2>
           <div className="flex flex-wrap gap-3">
             {relatedDocuments.map((doc) => (
               <Link

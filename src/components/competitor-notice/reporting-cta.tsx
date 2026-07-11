@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Shield, Mail } from "@/components/icons";
+import { AlertTriangle, Mail, Shield } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const ctaCards = [
@@ -57,7 +57,7 @@ export function ReportingCTA() {
     <section className="bg-neutral-950 py-16 sm:py-24 print:hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">Take Action</h2>
+          <h2 className="text-2xl font-semibold text-white sm:text-3xl">Take Action</h2>
           <p className="mt-3 text-neutral-400">
             Help us maintain fair competition and protect SquareCampus
           </p>

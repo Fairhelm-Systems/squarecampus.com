@@ -1,4 +1,7 @@
+export const dynamic = "force-static";
+
 import type { MetadataRoute } from "next";
+import { SEO_CONFIG } from "@/lib/seo";
 
 /**
  * SquareCampus Robots
@@ -8,7 +11,7 @@ import type { MetadataRoute } from "next";
  * but keep them out of the back rooms (APIs, internal routes).
  */
 export default function robots(): MetadataRoute.Robots {
-  const SITE_URL = "https://squarecampus.com";
+  const SITE_URL = SEO_CONFIG.baseUrl;
 
   return {
     rules: [
@@ -16,10 +19,14 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          // No bots rummaging through our machinery.
-          "/api/",
           // Utility/dev-only routes should not become “content”.
           "/hello",
+          // Moved routes; CloudFront 301s these, stubs are the fallback.
+          "/features",
+          "/contact-us",
+          "/product",
+          "/how-it-works",
+          "/why-different",
         ],
       },
     ],

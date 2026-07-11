@@ -42,7 +42,7 @@ export function Hero() {
           {/* Left Column - Main Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Notice to Competitors:{" "}
                 <span className="text-red-400">Unauthorized Access and Misuse Are Prohibited</span>
               </h1>
@@ -134,7 +134,7 @@ export function Hero() {
                     <p className="text-xs font-medium uppercase tracking-wide text-red-400/80">
                       {item.label}
                     </p>
-                    <p className="mt-1 text-lg font-bold text-white">{item.value}</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{item.value}</p>
                   </div>
                 ))}
               </div>

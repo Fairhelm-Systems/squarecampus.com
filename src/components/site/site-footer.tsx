@@ -63,8 +63,19 @@ export function SiteFooter() {
                     key={signal.label}
                     className="flex items-center gap-3 rounded-xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3"
                   >
-                    <svg className="size-4 shrink-0 text-[color:var(--brand)]" viewBox="0 0 16 16" fill="none">
-                      <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.2" opacity="0.3" />
+                    <svg
+                      className="size-4 shrink-0 text-[color:var(--brand)]"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        opacity="0.3"
+                      />
                       <circle cx="8" cy="8" r="3" fill="currentColor" />
                     </svg>
                     <div>

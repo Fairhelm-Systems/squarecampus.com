@@ -1,6 +1,7 @@
 export const siteCtas = {
   demoHref: "/demo",
   platformHref: "/platform",
+  aegisHref: "/aegis",
   rolloutHref: "/rollout",
   whyDifferentHref: "/why-squarecampus",
   ecosystemHref: "/ecosystem",
@@ -11,6 +12,7 @@ export const siteCtas = {
 export const primaryNavigation = [
   { href: "/", label: "Home" },
   { href: siteCtas.platformHref, label: "Platform" },
+  { href: siteCtas.aegisHref, label: "AEGIS" },
   { href: siteCtas.rolloutHref, label: "Rollout" },
   { href: siteCtas.whyDifferentHref, label: "Why us?" },
   { href: siteCtas.ecosystemHref, label: "Ecosystem" },
@@ -24,6 +26,7 @@ export const footerGroups = [
     links: [
       { href: "/", label: "Home" },
       { href: siteCtas.platformHref, label: "Platform" },
+      { href: siteCtas.aegisHref, label: "AEGIS Intelligence" },
       { href: siteCtas.rolloutHref, label: "Rollout" },
       { href: siteCtas.whyDifferentHref, label: "Why SquareCampus" },
       { href: siteCtas.ecosystemHref, label: "Ecosystem" },
