@@ -77,12 +77,6 @@ const founders = [
     role: "Founder & CTO",
     body: "Leads product and platform engineering. Built systems processing 100M+ records daily and brings that reliability mindset to every workflow.",
   },
-  {
-    initials: "DK",
-    name: "Dhanraj Kotian",
-    role: "Co-founder & CMO",
-    body: "Works closely with institutions to understand ground reality, ensuring the product stays aligned with actual campus needs and communication flows.",
-  },
 ] as const;
 
 const wePractice = [
@@ -177,11 +171,11 @@ export default function AboutPage() {
 
           <div className="grid content-start gap-4">
             <div className="surface-panel rounded-[1.6rem] p-6">
-              <p className="section-kicker">The founding team</p>
+              <p className="section-kicker">Founder-led</p>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                SquareCampus Private Limited is led by a small, product-first founding team focused
-                on building something that can sit at the center of your institution for years, not
-                months.
+                SquareCampus, a product of Fairhelm Systems OPC, is built by a founder-led,
+                product-first team focused on building something that can sit at the center of your
+                institution for years, not months.
               </p>
               <div className="mt-5 grid gap-3">
                 {founders.map((person) => (

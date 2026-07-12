@@ -72,12 +72,13 @@ export default function TermsOfServicePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Contracting Entity" id="company-entity">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in these Terms mean MDTechspire.</p>
+          <p>References to "SquareCampus" in these Terms mean Fairhelm Systems OPC.</p>
           <p>
-            These Terms form a binding agreement between MDTechspire and the Institution or
+            These Terms form a binding agreement between Fairhelm Systems OPC and the Institution or
             individual User accessing the Service. If you are accepting these Terms on behalf of an
             Institution, you confirm that you have the authority to bind that Institution.
           </p>
@@ -345,10 +346,10 @@ export default function TermsOfServicePage() {
         <LegalSection title="17. Indemnification" id="indemnification">
           <p className="font-medium text-white">17.1 Institution Indemnification</p>
           <p>
-            The Institution shall defend, indemnify, and hold harmless SquareCampus, MDTechspire,
-            and their respective officers, directors, employees, and agents from and against any and
-            all claims, damages, losses, liabilities, costs, and expenses (including reasonable
-            attorneys' fees) arising from or related to:
+            The Institution shall defend, indemnify, and hold harmless SquareCampus, Fairhelm
+            Systems OPC, and their respective officers, directors, employees, and agents from and
+            against any and all claims, damages, losses, liabilities, costs, and expenses (including
+            reasonable attorneys' fees) arising from or related to:
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -523,7 +524,7 @@ export default function TermsOfServicePage() {
         <LegalSection title="20. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>MDTechspire</strong>
+            <strong>Fairhelm Systems OPC</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />

@@ -65,13 +65,14 @@ export default function DataProcessingAddendumPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this DPA mean MDTechspire.</p>
+          <p>References to "SquareCampus" in this DPA mean Fairhelm Systems OPC.</p>
           <p>
-            This Data Processing Addendum ("DPA") forms part of the agreement between MDTechspire
-            and the Institution when referenced in an order form or contract.
+            This Data Processing Addendum ("DPA") forms part of the agreement between Fairhelm
+            Systems OPC and the Institution when referenced in an order form or contract.
           </p>
         </LegalSection>
 
@@ -87,7 +88,7 @@ export default function DataProcessingAddendumPage() {
         <LegalSection title="3. Roles of the Parties" id="roles">
           <p>
             The Institution determines the purposes and means of processing personal data and acts
-            as the Controller; MDTechspire processes personal data solely on behalf of the
+            as the Controller; Fairhelm Systems OPC processes personal data solely on behalf of the
             Institution as the Processor.
           </p>
         </LegalSection>

@@ -168,8 +168,8 @@ export function SiteFooter() {
             <span>For institutions that cannot afford operational drift.</span>
           </div>
           <p>
-            SquareCampus is a trademark of MDTechspire. © {new Date().getFullYear()} SquareCampus.
-            All rights reserved.
+            SquareCampus™ is a trademark of Fairhelm Systems OPC. © {new Date().getFullYear()}{" "}
+            SquareCampus. All rights reserved.
           </p>
         </div>
       </div>

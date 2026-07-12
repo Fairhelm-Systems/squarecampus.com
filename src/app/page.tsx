@@ -292,7 +292,7 @@ export default function Home() {
 
                 <div className="mt-8">
                   <p className="section-kicker">Start with the institution, not the module list</p>
-                  <h2 className="mt-5 max-w-3xl font-display text-3xl tracking-[-0.06em] sm:text-[3.8rem]">
+                  <h2 className="mt-5 max-w-3xl font-display text-2xl tracking-[-0.06em] sm:text-[3.8rem]">
                     The School OS keeps records, roles, and decisions moving in one direction.
                   </h2>
                   <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
@@ -333,7 +333,6 @@ export default function Home() {
                         "No duplicate student profiles across admissions and academics",
                         "No orphaned parent updates disconnected from fee and attendance state",
                         "No branch reporting packs stitched together after the fact",
-                        "No broken audit trail across approvals, edits, and communication",
                       ].map((item, index) => (
                         <div
                           key={item}

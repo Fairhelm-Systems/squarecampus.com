@@ -21,7 +21,7 @@ const companyFacts = [
   },
   {
     title: "Founded",
-    body: "SquareCampus Private Limited is led by Founder & CTO Mohit Gupta and Co-founder & CMO Dhanraj Kotian.",
+    body: "SquareCampus is a product of Fairhelm Systems OPC, founded and led by Mohit Gupta (Founder & CTO).",
   },
   {
     title: "Media contact",
