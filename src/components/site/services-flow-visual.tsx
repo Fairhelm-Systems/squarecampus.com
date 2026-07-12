@@ -76,7 +76,7 @@ export function ServicesFlowVisual({ className }: { className?: string }) {
       <div className="surface-panel-strong relative overflow-hidden rounded-4xl p-4 sm:p-6">
         <div className="pointer-events-none absolute inset-x-[20%] top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.16),transparent_70%)]" />
 
-        <div className="relative aspect-[800/450] w-full">
+        <div className="relative aspect-800/450 w-full">
           {/* Connector lines + traveling data packets */}
           <svg
             viewBox="0 0 800 450"
@@ -204,7 +204,7 @@ export function ServicesFlowVisual({ className }: { className?: string }) {
           <div
             data-aegis-rise
             style={{ "--d": "1100ms" } as React.CSSProperties}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.42rem] uppercase tracking-[0.16em] text-muted-foreground sm:px-4 sm:py-2 sm:text-[0.56rem]"
+            className="absolute bottom-0 translate-x-1/2 whitespace-nowrap rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.42rem] uppercase tracking-[0.16em] text-muted-foreground sm:px-4 sm:py-2 sm:text-[0.56rem]"
           >
             Runs on your servers · our AWS · or your own cloud
           </div>

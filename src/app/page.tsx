@@ -406,11 +406,11 @@ export default function Home() {
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(88,124,204,0.14),transparent)]" />
                 <div className="relative flex h-full flex-col">
                   <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
-                      <ChartNoAxesCombined className="size-4 text-[color:var(--teal)]" />
+                    <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                      <ChartNoAxesCombined className="size-4 text-(--teal)" />
                       Leadership visibility
                     </div>
-                    <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
+                    <span className="rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
                       Live institution view
                     </span>
                   </div>

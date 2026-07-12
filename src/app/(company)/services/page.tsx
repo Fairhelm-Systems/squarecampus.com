@@ -18,11 +18,28 @@ import { ServicesFlowVisual } from "@/components/site/services-flow-visual";
 import { siteCtas } from "@/content/site-content";
 import { createAlternates } from "@/lib/seo";
 
+const ogImage = {
+  url: "https://squarecampus.com/og/services-card.png",
+  width: 1200,
+  height: 630,
+  alt: "SquareCampus services: fragmented school tools flowing through an ETL/ELT engine into one dashboard",
+};
+
 export const metadata: Metadata = {
   title: "Integration, Data & Deployment Services",
   description:
     "SquareCampus services: connect your existing school tools over APIs and WebSockets, ETL/ELT pipelines into one custom dashboard — on your servers or our AWS — plus private and BYOC deployment options.",
   alternates: createAlternates("/services"),
+  openGraph: {
+    title: "Your school's tools, finally talking to each other | SquareCampus",
+    description:
+      "Integrations, ETL/ELT pipelines, and one leadership dashboard — on your servers, our AWS, or your own cloud.",
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [ogImage.url],
+  },
 };
 
 const integrationPoints = [
