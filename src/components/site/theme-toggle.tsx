@@ -1,6 +1,6 @@
 "use client";
 
-import { MonitorCog, MoonStar, SunMedium } from "lucide-react";
+import { MoonStar, SunMedium } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -45,15 +45,24 @@ export function ThemeToggle({ className }: { className?: string }) {
         className
       )}
     >
-      {mounted ? (
-        theme === "dark" ? (
-          <MoonStar className="size-4.5" />
-        ) : (
-          <SunMedium className="size-4.5" />
-        )
-      ) : (
-        <MonitorCog className="size-4.5" />
-      )}
+      <span className="relative flex size-4.5 items-center justify-center">
+        <SunMedium
+          className={cn(
+            "absolute size-4.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            mounted && theme === "dark"
+              ? "rotate-90 scale-0 opacity-0"
+              : "rotate-0 scale-100 opacity-100"
+          )}
+        />
+        <MoonStar
+          className={cn(
+            "absolute size-4.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            mounted && theme === "dark"
+              ? "rotate-0 scale-100 opacity-100"
+              : "-rotate-90 scale-0 opacity-0"
+          )}
+        />
+      </span>
     </button>
   );
 }
