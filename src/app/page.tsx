@@ -554,12 +554,12 @@ export default function Home() {
                               strokeDasharray={`${(0.08 - 0.008) * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
                               strokeDashoffset={`${-0.92 * 2 * Math.PI * 62}`}
                               strokeLinecap="butt"
-                              className="[animation:doughnut-draw_1.4s_ease-out_0.4s_both]"
+                              className="animate-[doughnut-draw_1.4s_ease-out_0.4s_both]"
                             />
                           </svg>
                           <div className="absolute inset-0 flex flex-col items-center justify-center">
                             <span className="font-display text-2xl tracking-[-0.04em] text-[color:var(--foreground)]">
-                              ₹2.4Lakhs
+                              ₹2.4L
                             </span>
                             <span className="mt-0.5 font-mono text-[0.5rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
                               Collected
@@ -590,7 +590,7 @@ export default function Home() {
                   <div className="mt-4 grid flex-1 items-stretch gap-4">
                     <div className="relative hidden min-h-[18rem] overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] sm:block">
                       <Image
-                        src="/images/editorial/campus-courtyard.jpg"
+                        src="/images/editorial/campus-courtyard.webp"
                         alt="Modern campus courtyard"
                         fill
                         sizes="(min-width: 1280px) 35vw, 100vw"
@@ -749,7 +749,7 @@ export default function Home() {
 
                   <div className="relative hidden min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[color:var(--line)] sm:block">
                     <Image
-                      src="/images/editorial/school-building-delhi.jpg"
+                      src="/images/editorial/school-building-delhi.webp"
                       alt="Institution building for India-first operations context"
                       fill
                       sizes="(min-width: 1280px) 28vw, 100vw"

@@ -56,7 +56,7 @@ export default function CompetitorNoticePage() {
         Skip to main content
       </a>
 
-      <main id="main-content" className="min-h-screen bg-neutral-950">
+      <main id="main-content" className="dark min-h-screen bg-neutral-950">
         <Hero />
         <ShareActions />
         <TableOfContents />

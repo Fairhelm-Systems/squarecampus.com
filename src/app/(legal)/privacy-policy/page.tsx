@@ -8,21 +8,15 @@ export default function PrivacyPolicyPage() {
       currentPage="Privacy Policy"
       description="How SquareCampus gathers, safeguards, and shares personal data for schools and colleges."
     >
-      <p className="text-sm font-medium text-muted-foreground">
-        Effective Date: 27 November 2025
-        <br />
-        Last Updated: 27 November 2025
-      </p>
-
       <nav
         aria-label="Table of contents"
-        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        className="rounded-2xl border border-(--line) bg-(--surface-strong) p-5 shadow-[0_20px_60px_rgba(8,15,30,0.08)]"
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
             On this page
           </p>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-700/80 dark:text-emerald-200/70">
             Jump to
           </span>
         </div>
@@ -44,7 +38,7 @@ export default function PrivacyPolicyPage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+              className="rounded-lg border border-transparent bg-(--surface) px-3 py-2 transition hover:border-(--line) hover:text-foreground"
             >
               {item.label}
             </a>
@@ -76,7 +70,7 @@ export default function PrivacyPolicyPage() {
         <LegalSection title="2. Information We Collect" id="information-collected">
           <div className="space-y-4">
             <div>
-              <p className="text-sm font-semibold text-white">2.1 Institution Information</p>
+              <p className="text-sm font-semibold text-foreground">2.1 Institution Information</p>
               <p>We may collect or receive details about the Institution, including:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>Institution name, type, and registered address;</li>
@@ -87,7 +81,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">2.2 User Information</p>
+              <p className="text-sm font-semibold text-foreground">2.2 User Information</p>
               <p>We receive, process, or store data about individual users, such as:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>Names, contact details, roles (student, parent, educator, staff);</li>
@@ -100,7 +94,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">2.3 Technical and Usage Data</p>
+              <p className="text-sm font-semibold text-foreground">2.3 Technical and Usage Data</p>
               <p>Automatic information we collect includes:</p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>IP address, device, and browser metadata;</li>
@@ -111,7 +105,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-white">2.4 Sensitive Data and Minors</p>
+              <p className="text-sm font-semibold text-foreground">2.4 Sensitive Data and Minors</p>
               <p>
                 SquareCampus may process information about minors (students) and data that may be
                 considered sensitive (photographs, health records, disciplinary notes) strictly
@@ -173,7 +167,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             A summary of our security practices is available at{" "}
-            <a href="/security" className="text-white">
+            <a href="/security" className="text-foreground">
               https://squarecampus.com/security
             </a>
             .
@@ -217,8 +211,8 @@ export default function PrivacyPolicyPage() {
 
         <LegalSection title="11. Changes to This Policy" id="changes">
           <p>
-            We may update this Privacy Policy occasionally. Updated versions will appear here with a
-            new “Last Updated” date, and we may provide additional notices when appropriate.
+            We may update this Privacy Policy occasionally. Updated versions will appear on this
+            page, and we may provide additional notices when appropriate.
           </p>
           <p>Continued use after changes means acceptance of the revised policy.</p>
         </LegalSection>

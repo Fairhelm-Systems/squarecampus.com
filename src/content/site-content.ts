@@ -17,7 +17,6 @@ export const primaryNavigation = [
   { href: siteCtas.whyDifferentHref, label: "Why us?" },
   { href: siteCtas.ecosystemHref, label: "Ecosystem" },
   { href: siteCtas.securityHref, label: "Security" },
-  { href: siteCtas.demoHref, label: "Demo" },
 ] as const;
 
 export const footerGroups = [

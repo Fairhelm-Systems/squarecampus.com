@@ -11,7 +11,7 @@ No text, no logos, no watermarks, no people's identifiable faces. Crisp edges,
 high resolution, photorealistic product-render quality."
 
 -------------------------------------------------------------------------------
-1. MacBook device frame (replaces public/images/devices/macbook-air-figma.png)
+1. MacBook device frame (replaces public/images/devices/macbook-air-figma.webp)
 -------------------------------------------------------------------------------
 Used in: LaptopFrame in src/components/site/mockups.tsx — hero, platform,
 ecosystem, rollout, and security mockups. The screen area must stay EMPTY
@@ -29,7 +29,7 @@ background. Studio product-render lighting with a soft cool-blue rim light.
 No logo on the lid, no reflections that obscure the screen cutout, no text."
 
 -------------------------------------------------------------------------------
-2. Smartphone device frame (replaces public/images/devices/iphone-13-silver-portrait.png)
+2. Smartphone device frame (replaces public/images/devices/iphone-13-silver-portrait.webp)
 -------------------------------------------------------------------------------
 Used in: FigmaIphoneFrame in src/components/site/mockups.tsx — parent/student
 app mockups beside the laptop. Screen must be a transparent cutout; the app UI
@@ -48,7 +48,7 @@ cool-blue edge highlight. No logos, no buttons pressed, no text, no reflections
 covering the screen cutout."
 
 -------------------------------------------------------------------------------
-3. Dashboard screenshot (replaces public/images/marketing/dashboard.png)
+3. Dashboard screenshot (replaces public/images/marketing/dashboard.webp)
 -------------------------------------------------------------------------------
 Used in: /school-management-system hero panel (960x540 slot).
 Format: JPG or PNG, 16:9, at least 1920x1080.
@@ -65,7 +65,7 @@ design render — not a photo of a monitor. Use placeholder-style gibberish or
 blurred text so no words are legible. No brand names."
 
 -------------------------------------------------------------------------------
-4. Editorial: campus courtyard (replaces public/images/editorial/campus-courtyard.jpg)
+4. Editorial: campus courtyard (replaces public/images/editorial/campus-courtyard.webp)
 -------------------------------------------------------------------------------
 Used in: Home page "Leadership visibility" panel (roughly 5:3 landscape crop,
 darkened overlay applied on top).
@@ -80,7 +80,7 @@ subtle cool-blue tint in the shadows. Professional architectural photography,
 f/8 sharpness, no text or signage legible."
 
 -------------------------------------------------------------------------------
-5. Editorial: school building (replaces public/images/editorial/school-building-delhi.jpg)
+5. Editorial: school building (replaces public/images/editorial/school-building-delhi.webp)
 -------------------------------------------------------------------------------
 Used in: Home page "India-first" section (portrait-ish crop ~4:5, dark overlay
 and floating UI cards composited on top — keep the upper-right and lower area
@@ -97,7 +97,7 @@ can be overlaid. Professional architectural photography, no people in the
 foreground, no legible signage or text."
 
 -------------------------------------------------------------------------------
-6. Editorial: campus architecture (replaces public/images/editorial/campus-architecture.jpg)
+6. Editorial: campus architecture (replaces public/images/editorial/campus-architecture.webp)
 -------------------------------------------------------------------------------
 Used in: reserve/editorial slots.
 Format: JPG, landscape 16:10, at least 2000px wide.
@@ -127,16 +127,16 @@ The device-screen suite has been integrated (public/images/screens/*). Two
 delivered screens still carry the old "Nexus" branding and are NOT yet used
 on the site — regenerate them with AEGIS naming and the same layout:
 
-1. public/images/screens/mobile/nexus-daily-brief.png
+1. public/images/screens/mobile/nexus-daily-brief.webp
    - Shows "Nexus · Principal view" header and an "Ask Nexus" composer.
    - Regenerate with "AEGIS · Principal view" and "Ask AEGIS". Rename the
      file to aegis-daily-brief.png. Intended placement: /aegis page hero or
      the home AEGIS section phone slot.
 
-2. public/images/screens/laptop/institution-command-center.png
+2. public/images/screens/laptop/institution-command-center.webp
    - Contains a small "NEXUS INSIGHT" card (bottom center-right).
    - Currently live on the home hero (the label is illegible at render size,
      so acceptable temporarily). Regenerate with "AEGIS INSIGHT" when convenient.
 
-Unused spare: public/images/screens/mobile/student-day-view.png — good for a
+Unused spare: public/images/screens/mobile/student-day-view.webp — good for a
 future academics/LMS section or the school-management-system page.

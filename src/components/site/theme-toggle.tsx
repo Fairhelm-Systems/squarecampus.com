@@ -8,6 +8,10 @@ const storageKey = "squarecampus-theme";
 
 type Theme = "light" | "dark";
 
+/**
+ * Icon-only theme toggle, floating at the bottom-right of every page
+ * (mounted once in the root layout).
+ */
 export function ThemeToggle({ className }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
@@ -35,26 +39,21 @@ export function ThemeToggle({ className }: { className?: string }) {
       }
       onClick={() => updateTheme(theme === "dark" ? "light" : "dark")}
       className={cn(
-        "inline-flex h-10 items-center gap-2 rounded-full border px-3 text-sm transition-colors",
-        "border-[color:var(--line)] bg-[color:var(--surface-strong)] text-[color:var(--foreground)]",
-        "hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface)]",
+        "fixed bottom-5 right-5 z-50 flex size-11 items-center justify-center rounded-full border transition-all",
+        "border-[color:var(--line-strong)] bg-[color:var(--surface-strong)] text-[color:var(--foreground)] shadow-[0_14px_36px_rgba(8,15,30,0.16)] backdrop-blur-lg",
+        "hover:scale-105 hover:border-[color:var(--line-strong)] hover:bg-[color:var(--surface)]",
         className
       )}
     >
-      <span className="flex size-6 items-center justify-center rounded-full bg-[color:var(--surface-muted)] text-[color:var(--foreground)]">
-        {mounted ? (
-          theme === "dark" ? (
-            <MoonStar className="size-3.5" />
-          ) : (
-            <SunMedium className="size-3.5" />
-          )
+      {mounted ? (
+        theme === "dark" ? (
+          <MoonStar className="size-4.5" />
         ) : (
-          <MonitorCog className="size-3.5" />
-        )}
-      </span>
-      <span className="font-mono text-[0.68rem] uppercase tracking-[0.22em]">
-        {mounted ? theme : "Theme"}
-      </span>
+          <SunMedium className="size-4.5" />
+        )
+      ) : (
+        <MonitorCog className="size-4.5" />
+      )}
     </button>
   );
 }

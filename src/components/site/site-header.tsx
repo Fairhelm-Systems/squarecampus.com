@@ -8,10 +8,11 @@ import { primaryNavigation, siteCtas } from "@/content/site-content";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "./brand-logo";
 import { ButtonLink } from "./button-link";
-import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  // Static export serves trailing-slash URLs; hrefs are slash-less.
+  const pathname = rawPathname.length > 1 ? rawPathname.replace(/\/+$/, "") : rawPathname;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,12 +63,10 @@ export function SiteHeader() {
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <ThemeToggle />
-            <ButtonLink href={siteCtas.demoHref} label="Book Demo" />
+            <ButtonLink href={siteCtas.demoHref} label="Book Demo" variant="cta" />
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
-            <ThemeToggle className="px-2.5" />
             <button
               type="button"
               aria-label={open ? "Close navigation" : "Open navigation"}
@@ -102,7 +101,12 @@ export function SiteHeader() {
               })}
             </nav>
             <div className="mt-4 grid gap-2">
-              <ButtonLink href={siteCtas.demoHref} label="Book Demo" className="justify-center" />
+              <ButtonLink
+                href={siteCtas.demoHref}
+                label="Book Demo"
+                variant="cta"
+                className="justify-center"
+              />
               <ButtonLink
                 href={siteCtas.loginHref}
                 label="Sign In"
