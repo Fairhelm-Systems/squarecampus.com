@@ -6,6 +6,8 @@ interface SectionShellProps {
   eyebrow?: string;
   title?: string;
   body?: string;
+  /** Hide the body copy on phones (used when the section content is behind a MobileExpand). */
+  compactBody?: boolean;
   align?: "left" | "center";
   children: ReactNode;
   className?: string;
@@ -17,6 +19,7 @@ export function SectionShell({
   eyebrow,
   title,
   body,
+  compactBody = false,
   align = "left",
   children,
   className,
@@ -25,13 +28,13 @@ export function SectionShell({
   return (
     <section
       id={id}
-      className={cn("relative px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24", className)}
+      className={cn("relative px-4 py-9 sm:px-6 sm:py-16 lg:px-8 lg:py-24", className)}
     >
       <div className="mx-auto max-w-6xl">
         {(eyebrow || title || body) && (
           <div
             className={cn(
-              "mb-8 max-w-3xl space-y-4 sm:mb-10 lg:mb-14",
+              "mb-6 max-w-3xl space-y-3 sm:mb-10 sm:space-y-4 lg:mb-14",
               align === "center" && "mx-auto text-center"
             )}
           >
@@ -42,7 +45,12 @@ export function SectionShell({
               </h2>
             ) : null}
             {body ? (
-              <p className="max-w-2xl text-[0.95rem] leading-7 text-[color:var(--muted-foreground)] sm:text-lg">
+              <p
+                className={cn(
+                  "max-w-2xl text-[0.95rem] leading-7 text-[color:var(--muted-foreground)] sm:text-lg",
+                  compactBody && "hidden sm:block"
+                )}
+              >
                 {body}
               </p>
             ) : null}

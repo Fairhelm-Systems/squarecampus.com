@@ -169,9 +169,9 @@ function PhoneFrame({
         {title}
       </div>
       <div className="relative mx-auto aspect-[390/844] w-full">
-        <div className="absolute inset-0 overflow-hidden rounded-[2.55rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
+        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
           <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
-          <div className="pointer-events-none absolute inset-0 z-5 rounded-[2.55rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
+          <div className="pointer-events-none absolute inset-0 z-5 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
         </div>
         <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
           <Image
@@ -198,9 +198,9 @@ export function HeroMockupCluster() {
         priority
       />
       <PhoneFrame
-        title="Parent experience"
-        screenSrc="/images/screens/mobile/parent-fees-receipts.png"
-        screenAlt="SquareCampus parent app showing the annual fee plan, next installment, and receipts"
+        title="Student experience"
+        screenSrc="/images/screens/mobile/student-day-view.png"
+        screenAlt="SquareCampus student app showing the day's timetable, next class, and assignments due soon"
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
       />

@@ -9,6 +9,7 @@ import {
 } from "@/content/site-content";
 import { BrandLogo } from "./brand-logo";
 import { ButtonLink } from "./button-link";
+import { MobileExpand } from "./mobile-expand";
 
 export function SiteFooter() {
   return (
@@ -29,7 +30,7 @@ export function SiteFooter() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="surface-panel-strong relative overflow-hidden rounded-[2rem] px-6 py-10 lg:px-12 lg:py-14">
+        <div className="surface-panel-strong relative hidden overflow-hidden rounded-[2rem] px-6 py-10 sm:block lg:px-12 lg:py-14">
           {/* Decorative background layers */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(83,117,194,0.18),transparent_60%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(83,117,194,0.22),transparent_60%)]" />
@@ -100,10 +101,10 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-10 border-b border-[color:var(--line)] pb-10 lg:grid-cols-[1.1fr_1.5fr]">
+        <div className="mt-6 grid gap-8 border-b border-[color:var(--line)] pb-8 sm:mt-10 sm:gap-10 sm:pb-10 lg:grid-cols-[1.1fr_1.5fr]">
           <div className="space-y-5">
             <BrandLogo subtitle="One login. One timeline. One truth." />
-            <p className="max-w-md text-sm leading-7 text-[color:var(--muted-foreground)]">
+            <p className="hidden max-w-md text-sm leading-7 text-[color:var(--muted-foreground)] sm:block">
               Built for schools, colleges, and multi-campus institutions that need operational
               clarity without sacrificing reliability.
             </p>
@@ -136,27 +137,29 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {footerGroups.map((group) => (
-              <div key={group.title}>
-                <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                  {group.title}
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <MobileExpand label="Explore all pages">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:gap-8 lg:grid-cols-4">
+              {footerGroups.map((group) => (
+                <div key={group.title}>
+                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                    {group.title}
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </MobileExpand>
         </div>
 
         <div className="flex flex-col gap-4 pt-6 text-sm text-[color:var(--muted-foreground)] sm:flex-row sm:items-center sm:justify-between">
