@@ -212,13 +212,13 @@ export default function Home() {
           body="SquareCampus is not just a school management interface. It behaves like the operating layer that keeps departments, people, and records aligned."
         >
           <Reveal className="grid gap-4 xl:grid-cols-[0.94fr_1.06fr]">
-            <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-216 xl:p-8">
+            <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
               <div className="pointer-events-none absolute inset-x-8 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.12),transparent_70%)]" />
               <div className="relative flex h-full flex-col">
-                <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--line) pb-6">
+                <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--line) pb-5">
                   <div>
                     <p className="section-kicker">Connected workflow spine</p>
-                    <h2 className="mt-4 font-display text-3xl tracking-[-0.05em]">
+                    <h2 className="mt-3 max-w-sm font-display text-2xl tracking-[-0.04em]">
                       Four linked operating moves keep the institution in sync.
                     </h2>
                   </div>
@@ -227,15 +227,15 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div className="mt-6 grid gap-3">
+                <div className="mt-5 grid gap-2.5">
                   {workflowBlocks.map((item, index) => (
                     <div
                       key={item.title}
-                      className="rounded-[1.55rem] border border-(--line) bg-(--surface) p-5 shadow-[0_18px_34px_rgba(8,15,30,0.05)]"
+                      className="rounded-[1.3rem] border border-(--line) bg-(--surface) p-4 shadow-[0_18px_34px_rgba(8,15,30,0.05)]"
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-3.5">
                         <div
-                          className={`flex size-12 shrink-0 items-center justify-center rounded-full border text-sm ${
+                          className={`flex size-9 shrink-0 items-center justify-center rounded-full border font-mono text-[0.7rem] ${
                             index === 0
                               ? "border-transparent bg-foreground text-background"
                               : "border-(--line) bg-(--surface-strong) text-muted-foreground"
@@ -244,13 +244,13 @@ export default function Home() {
                           {String(index + 1).padStart(2, "0")}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <div className="flex items-start justify-between gap-4">
-                            <h3 className="font-display text-2xl tracking-[-0.04em]">
+                          <div className="flex items-center justify-between gap-4">
+                            <h3 className="font-display text-lg tracking-[-0.03em]">
                               {item.title}
                             </h3>
-                            <item.icon className="mt-1 size-5 shrink-0 text-(--brand)" />
+                            <item.icon className="size-4.5 shrink-0 text-(--brand)" />
                           </div>
-                          <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground">
+                          <p className="mt-1.5 max-w-xl text-sm leading-6 text-muted-foreground">
                             {item.body}
                           </p>
                         </div>
@@ -258,26 +258,10 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-3xl border border-(--line) bg-(--surface) p-5">
-                    <p className="section-kicker">One source of truth</p>
-                    <p className="mt-4 text-[1.08rem] leading-8 text-foreground">
-                      Admissions, academics, finance, and communication stay on the same record.
-                    </p>
-                  </div>
-                  <div className="rounded-3xl border border-(--line) bg-(--surface) p-5">
-                    <p className="section-kicker">Campus roll-up</p>
-                    <p className="mt-4 text-[1.08rem] leading-8 text-foreground">
-                      Multi-campus leadership sees the aggregate picture without losing branch-level
-                      accountability.
-                    </p>
-                  </div>
-                </div>
               </div>
             </article>
 
-            <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-7 xl:min-h-216 xl:p-8">
+            <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
               <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[linear-gradient(180deg,rgba(88,124,204,0.12),transparent)]" />
               <div className="relative flex h-full flex-col">
                 <div className="flex flex-wrap items-start justify-between gap-4">
@@ -290,26 +274,26 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-6">
                   <p className="section-kicker">Start with the institution, not the module list</p>
-                  <h2 className="mt-5 max-w-3xl font-display text-2xl tracking-[-0.06em] sm:text-[3.8rem]">
+                  <h2 className="mt-3 max-w-xl font-display text-2xl tracking-[-0.04em] sm:text-3xl">
                     The School OS keeps records, roles, and decisions moving in one direction.
                   </h2>
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
+                  <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
                     When admissions, fee logic, staff workflows, and parent communication run on the
                     same operating layer, the institution stops passing context between teams and
                     tools.
                   </p>
                 </div>
 
-                <div className="mt-8 grid flex-1 gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-                  <div className="rounded-[1.7rem] border border-(--line) bg-(--surface-strong) p-6">
+                <div className="mt-6 grid flex-1 gap-3 lg:grid-cols-[1.08fr_0.92fr]">
+                  <div className="rounded-[1.4rem] border border-(--line) bg-(--surface-strong) p-5">
                     <p className="section-kicker">What SquareCampus handles here</p>
-                    <p className="mt-5 text-[1.08rem] leading-8 text-foreground">
+                    <p className="mt-3 text-sm leading-6 text-foreground">
                       Shared student identity, financial state, role-aware approvals, and parent
                       communication all stay usable without rebuilding context every term.
                     </p>
-                    <div className="mt-6 grid gap-3">
+                    <div className="mt-4 grid gap-2.5">
                       {[
                         "Admission changes flow into academics and fee setup on the same record",
                         "Receipts, circulars, attendance, and exceptions stay visible on one timeline",
@@ -317,7 +301,7 @@ export default function Home() {
                       ].map((item) => (
                         <div
                           key={item}
-                          className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4 text-sm leading-7 text-muted-foreground"
+                          className="rounded-[1.1rem] border border-(--line) bg-(--surface) px-3.5 py-3 text-sm leading-6 text-muted-foreground"
                         >
                           {item}
                         </div>
@@ -325,10 +309,10 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="rounded-[1.7rem] border border-(--line) bg-(--surface-strong) p-6">
+                  <div className="rounded-[1.4rem] border border-(--line) bg-(--surface-strong) p-5">
                     <p className="section-kicker">Why this structure matters</p>
                     {/* Mobile shows the first two; the full list from sm: up. */}
-                    <div className="mt-5 grid gap-3 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:block">
+                    <div className="mt-3 grid gap-2.5 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:flex">
                       {[
                         "No duplicate student profiles across admissions and academics",
                         "No orphaned parent updates disconnected from fee and attendance state",
@@ -336,12 +320,12 @@ export default function Home() {
                       ].map((item, index) => (
                         <div
                           key={item}
-                          className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4"
+                          className="flex items-start gap-3 rounded-[1.1rem] border border-(--line) bg-(--surface) px-3.5 py-3"
                         >
-                          <p className="font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                          <p className="font-mono text-[0.58rem] leading-6 text-muted-foreground">
                             {String(index + 1).padStart(2, "0")}
                           </p>
-                          <p className="mt-3 text-base leading-7 text-foreground">{item}</p>
+                          <p className="text-sm leading-6 text-foreground">{item}</p>
                         </div>
                       ))}
                     </div>
