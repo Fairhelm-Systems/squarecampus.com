@@ -42,4 +42,15 @@ echo "==> Waiting for invalidation $INVALIDATION_ID"
 aws cloudfront wait invalidation-completed \
   --distribution-id "$DISTRIBUTION_ID" --id "$INVALIDATION_ID"
 
+echo "==> Pinging IndexNow (Bing/ChatGPT-search index)"
+KEY_FILE=$(ls public/*.txt 2>/dev/null | grep -E 'public/[0-9a-f]{32}\.txt' | head -1 || true)
+if [[ -n "$KEY_FILE" ]]; then
+  KEY=$(basename "$KEY_FILE" .txt)
+  URLS=$(grep -o "<loc>[^<]*</loc>" "$OUT_DIR/sitemap.xml" | sed -E 's|</?loc>||g' | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+  curl -s -X POST "https://api.indexnow.org/indexnow" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    -d "{\"host\":\"squarecampus.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://squarecampus.com/$KEY.txt\",\"urlList\":$URLS}" \
+    -o /dev/null -w "IndexNow: HTTP %{http_code}\n" || true
+fi
+
 echo "==> Deployed: https://squarecampus.com"

@@ -125,7 +125,11 @@ export default function RootLayout({
                   name: "SquareCampus",
                   url: "https://squarecampus.com",
                   logo: "https://squarecampus.com/logo.png",
-                  sameAs: ["https://www.linkedin.com/company/square-campus"],
+                  sameAs: [
+                    "https://www.linkedin.com/company/square-campus",
+                    "https://x.com/squarecampus",
+                    "https://instagram.com/squarecampus",
+                  ],
                   brand: "SquareCampus",
                   areaServed: {
                     "@type": "Country",
