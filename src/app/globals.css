@@ -549,6 +549,46 @@
   }
 }
 
+/* Services flow visual: hub pulse, dashboard bars, packet dots. */
+.svc-flow .svc-hub-pulse {
+  animation: svc-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes svc-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(88, 124, 204, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(88, 124, 204, 0);
+  }
+}
+
+.svc-flow [data-svc-bar] {
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.svc-flow.is-live [data-svc-bar] {
+  animation: aegis-bar 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0.9s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-flow [data-packet] {
+    display: none;
+  }
+
+  .svc-flow .svc-hub-pulse {
+    animation: none;
+  }
+
+  .svc-flow [data-svc-bar] {
+    transform: none;
+    animation: none;
+  }
+}
+
 /* Primary CTA: brand gradient with a shine sweep on hover. */
 .cta-button {
   position: relative;

@@ -30,6 +30,7 @@ export const footerGroups = [
       { href: siteCtas.whyDifferentHref, label: "Why SquareCampus" },
       { href: siteCtas.ecosystemHref, label: "Ecosystem" },
       { href: siteCtas.securityHref, label: "Security" },
+      { href: "/services", label: "Integration & Data Services" },
       { href: "/school-management-system", label: "School Management System" },
     ],
   },

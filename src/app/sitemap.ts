@@ -74,6 +74,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      path: "/services",
+      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      changeFrequency: "weekly",
+      priority: 0.75,
+    },
+    {
       path: "/rollout",
       lastModified: LASTMOD.core,
       changeFrequency: "weekly",

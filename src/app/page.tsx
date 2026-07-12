@@ -371,7 +371,7 @@ export default function Home() {
               </div>
               <div className="surface-panel-strong rounded-[1.8rem] p-7">
                 <p className="section-kicker">SquareCampus difference</p>
-                <h2 className="mt-4 font-display text-3xl tracking-[-0.05em]">
+                <h2 className="mt-4 font-display text-3xl tracking-tighter">
                   A School OS replaces exports, sync gaps, and operational guessing.
                 </h2>
                 <div className="mt-5 grid gap-3">
@@ -541,7 +541,7 @@ export default function Home() {
                               strokeDasharray={`${(0.2 - 0.008) * 2 * Math.PI * 62} ${2 * Math.PI * 62}`}
                               strokeDashoffset={`${-0.72 * 2 * Math.PI * 62}`}
                               strokeLinecap="butt"
-                              className="[animation:doughnut-draw_1.4s_ease-out_0.2s_both]"
+                              className="animate-[doughnut-draw_1.4s_ease-out_0.2s_both]"
                             />
                             {/* Overdue: 8% — warning status */}
                             <circle
@@ -575,11 +575,8 @@ export default function Home() {
                         ].map(([label, pct, color]) => (
                           <div key={label} className="flex items-center gap-2">
                             <span className="size-2 rounded-full" style={{ background: color }} />
-                            <span className="text-xs text-[color:var(--muted-foreground)]">
-                              {label}{" "}
-                              <span className="font-medium text-[color:var(--foreground)]">
-                                {pct}
-                              </span>
+                            <span className="text-xs text-muted-foreground">
+                              {label} <span className="font-medium text-foreground">{pct}</span>
                             </span>
                           </div>
                         ))}
@@ -588,7 +585,7 @@ export default function Home() {
                   </div>
 
                   <div className="mt-4 grid flex-1 items-stretch gap-4">
-                    <div className="relative hidden min-h-[18rem] overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] sm:block">
+                    <div className="relative hidden min-h-72 overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] sm:block">
                       <Image
                         src="/images/editorial/campus-courtyard.webp"
                         alt="Modern campus courtyard"
