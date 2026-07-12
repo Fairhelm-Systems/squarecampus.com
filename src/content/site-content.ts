@@ -31,6 +31,7 @@ export const footerGroups = [
       { href: siteCtas.ecosystemHref, label: "Ecosystem" },
       { href: siteCtas.securityHref, label: "Security" },
       { href: "/services", label: "Integration & Data Services" },
+      { href: "/compare", label: "Compare School ERPs" },
       { href: "/school-management-system", label: "School Management System" },
     ],
   },

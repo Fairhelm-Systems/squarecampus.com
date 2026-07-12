@@ -2,6 +2,7 @@ export const dynamic = "force-static";
 
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/blog/posts";
+import { comparisons } from "@/content/comparisons";
 import { SEO_CONFIG } from "@/lib/seo";
 
 /**
@@ -61,6 +62,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      path: "/compare",
+      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    ...comparisons.map((c) => ({
+      path: `/compare/${c.slug}` as const,
+      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
     {
       path: "/platform",
       lastModified: LASTMOD.core,
