@@ -52,7 +52,7 @@ export const SEO_CONFIG = {
   language: "en-IN",
   openGraphLocale: "en_IN",
   ogImage: {
-    default: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
+    default: "https://squarecampus.com/brand/squarecampus.png",
     width: 1200,
     height: 630,
   },
@@ -64,7 +64,7 @@ export const SEO_CONFIG = {
     "https://instagram.com/squarecampus",
   ],
   // Logo used in structured data.
-  logo: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
+  logo: "https://squarecampus.com/brand/squarecampus.png",
 } as const;
 
 export type PageMetadataConfig = {

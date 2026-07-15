@@ -15,13 +15,6 @@ const nextConfig: NextConfig = {
     // CloudFront serves the exported files directly; there is no image
     // optimizer at request time. Source images are pre-sized in /public.
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.mdtechspire.com",
-        pathname: "/**",
-      },
-    ],
   },
 };
 

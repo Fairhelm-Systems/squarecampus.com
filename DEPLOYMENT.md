@@ -143,7 +143,7 @@ unless you move to hash-based policies):
 default-src 'self';
 script-src 'self' 'unsafe-inline';
 style-src 'self' 'unsafe-inline';
-img-src 'self' data: https://cdn.mdtechspire.com;
+img-src 'self' data:;
 font-src 'self';
 connect-src 'self' https://YOUR_CONTACT_ENDPOINT_HOST;
 frame-ancestors 'none';
