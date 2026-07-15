@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeScript } from "@/components/site/theme-script";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 import { SEO_CONFIG } from "@/lib/seo";
 import "./globals.css";
 
@@ -124,7 +125,11 @@ export default function RootLayout({
                   name: "SquareCampus",
                   url: "https://squarecampus.com",
                   logo: "https://squarecampus.com/logo.png",
-                  sameAs: ["https://www.linkedin.com/company/square-campus"],
+                  sameAs: [
+                    "https://www.linkedin.com/company/square-campus",
+                    "https://x.com/squarecampus",
+                    "https://instagram.com/squarecampus",
+                  ],
                   brand: "SquareCampus",
                   areaServed: {
                     "@type": "Country",
@@ -196,6 +201,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <ThemeToggle />
         <Toaster position="top-right" richColors />
       </body>
     </html>

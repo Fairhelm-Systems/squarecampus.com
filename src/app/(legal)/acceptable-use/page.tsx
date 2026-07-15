@@ -8,30 +8,15 @@ export default function AcceptableUsePage() {
       currentPage="Acceptable Use"
       description="SquareCampus exists to help institutions operate safely while keeping misuse or disruption out of the system."
     >
-      <p className="text-sm font-medium text-muted-foreground">
-        Effective Date: 27 November 2025
-        <br />
-        Last Updated: 15 January 2026
-      </p>
-
-      {/* Update Notice Banner */}
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
-        <p className="text-sm font-medium text-amber-200">
-          Important Update: Section 4 (Prohibited Conduct) has been significantly expanded to
-          include detailed prohibitions on competitive intelligence, credential sharing, and
-          unauthorized access. Please review carefully.
-        </p>
-      </div>
-
       <nav
         aria-label="Table of contents"
-        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        className="rounded-2xl border border-(--line) bg-(--surface-strong) p-5 shadow-[0_20px_60px_rgba(8,15,30,0.08)]"
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
             On this page
           </p>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-700/80 dark:text-emerald-200/70">
             Jump to
           </span>
         </div>
@@ -46,7 +31,7 @@ export default function AcceptableUsePage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+              className="rounded-lg border border-transparent bg-(--surface) px-3 py-2 transition hover:border-(--line) hover:text-foreground"
             >
               {item.label}
             </a>
@@ -57,10 +42,11 @@ export default function AcceptableUsePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechspire.</p>
+          <p>References to "SquareCampus" in this Policy mean Fairhelm Systems OPC.</p>
           <p>
             These guidelines apply to everyone who accesses SquareCampus, including institutions,
             staff, teachers, parents, and students.
@@ -100,7 +86,7 @@ export default function AcceptableUsePage() {
 
         {/* Expanded Section 4 */}
         <LegalSection title="4. Prohibited Conduct" id="prohibited-conduct">
-          <p className="font-medium text-white">4.1 General Prohibitions</p>
+          <p className="font-medium text-foreground">4.1 General Prohibitions</p>
           <p>You must not use the Service to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Store or share unlawful, obscene, defamatory, harassing, or infringing content.</li>
@@ -126,7 +112,7 @@ export default function AcceptableUsePage() {
           </ul>
 
           <div className="mt-8 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
-            <p className="font-medium text-red-200">
+            <p className="font-medium text-red-800 dark:text-red-200">
               4.2 Competitive Intelligence and Industrial Espionage
             </p>
             <p className="mt-3 text-sm">
@@ -161,7 +147,9 @@ export default function AcceptableUsePage() {
           </div>
 
           <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
-            <p className="font-medium text-amber-200">4.3 Credential and Access Violations</p>
+            <p className="font-medium text-amber-800 dark:text-amber-200">
+              4.3 Credential and Access Violations
+            </p>
             <p className="mt-3 text-sm">
               The following credential-related activities are prohibited:
             </p>
@@ -192,7 +180,7 @@ export default function AcceptableUsePage() {
             </ul>
           </div>
 
-          <p className="mt-6 font-medium text-white">4.4 Specific Prohibited Actions</p>
+          <p className="mt-6 font-medium text-foreground">4.4 Specific Prohibited Actions</p>
           <p>Without limiting the foregoing, the following specific actions are prohibited:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -217,7 +205,7 @@ export default function AcceptableUsePage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">4.5 Enforcement</p>
+          <p className="mt-6 font-medium text-foreground">4.5 Enforcement</p>
           <p>Violations of this Section 4 may result in:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Immediate suspension or termination of access without refund;</li>
@@ -228,11 +216,11 @@ export default function AcceptableUsePage() {
           </ul>
           <p className="mt-4 text-sm text-muted-foreground">
             For detailed information on legal consequences and enforcement procedures, see our{" "}
-            <a href="/competitor-notice" className="text-white underline">
+            <a href="/competitor-notice" className="text-foreground underline">
               Competitor Notice
             </a>{" "}
             and{" "}
-            <a href="/terms-of-service#competitor-access" className="text-white underline">
+            <a href="/terms-of-service#competitor-access" className="text-foreground underline">
               Terms of Service Section 19
             </a>
             .
@@ -247,11 +235,11 @@ export default function AcceptableUsePage() {
           </p>
           <p>
             Please report suspected abuse to{" "}
-            <a href="mailto:support@squarecampus.com" className="text-white">
+            <a href="mailto:support@squarecampus.com" className="text-foreground">
               support@squarecampus.com
             </a>{" "}
             and security vulnerabilities to{" "}
-            <a href="mailto:security@squarecampus.com" className="text-white">
+            <a href="mailto:security@squarecampus.com" className="text-foreground">
               security@squarecampus.com
             </a>{" "}
             so we can act swiftly.

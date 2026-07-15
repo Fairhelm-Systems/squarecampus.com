@@ -57,12 +57,11 @@ export const SEO_CONFIG = {
     height: 630,
   },
 
-  // Optional, but powerful when set: links that reinforce brand/entity.
-  // Fill these when ready.
+  // Entity links: help Google/Knowledge Graph connect the brand to profiles.
   sameAs: [
-    // "https://www.linkedin.com/company/squarecampus",
-    // "https://x.com/squarecampus",
-    // "https://www.youtube.com/@squarecampus",
+    "https://www.linkedin.com/company/square-campus",
+    "https://x.com/squarecampus",
+    "https://instagram.com/squarecampus",
   ],
   // Logo used in structured data.
   logo: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",

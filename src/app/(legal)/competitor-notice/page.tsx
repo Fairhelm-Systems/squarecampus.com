@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "legal notice",
     "unauthorized access",
     "SquareCampus",
-    "MDTechspire",
+    "Fairhelm Systems OPC",
     "cybersecurity",
     "IP protection",
   ],
@@ -56,7 +56,7 @@ export default function CompetitorNoticePage() {
         Skip to main content
       </a>
 
-      <main id="main-content" className="min-h-screen bg-neutral-950">
+      <main id="main-content" className="dark min-h-screen bg-neutral-950">
         <Hero />
         <ShareActions />
         <TableOfContents />
@@ -72,7 +72,7 @@ export default function CompetitorNoticePage() {
                 severity="critical"
               >
                 <Paragraph>
-                  MDTechspire (trading as SquareCampus) issues this public legal notice to
+                  Fairhelm Systems OPC (trading as SquareCampus) issues this public legal notice to
                   competitors, their employees, contractors, agents, and anyone seeking access to
                   SquareCampus. Unauthorized access, credential solicitation, or misuse of
                   non-public information is prohibited.
@@ -729,8 +729,8 @@ export default function CompetitorNoticePage() {
                 severity="info"
               >
                 <Paragraph>
-                  MDTechspire reserves all rights and remedies. Any delay or failure to enforce a
-                  right is not a waiver of that right or any other.
+                  Fairhelm Systems OPC reserves all rights and remedies. Any delay or failure to
+                  enforce a right is not a waiver of that right or any other.
                 </Paragraph>
               </NoticeSection>
 

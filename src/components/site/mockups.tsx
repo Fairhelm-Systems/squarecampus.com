@@ -133,7 +133,7 @@ function LaptopFrame({
         </div>
         <div className="pointer-events-none absolute inset-0 z-20">
           <Image
-            src="/images/devices/macbook-air-figma.png"
+            src="/images/devices/macbook-air-figma.webp"
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, 896px"
@@ -169,13 +169,13 @@ function PhoneFrame({
         {title}
       </div>
       <div className="relative mx-auto aspect-[390/844] w-full">
-        <div className="absolute inset-0 overflow-hidden rounded-[2.55rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
+        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
           <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
-          <div className="pointer-events-none absolute inset-0 z-5 rounded-[2.55rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
+          <div className="pointer-events-none absolute inset-0 z-5 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
         </div>
         <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
           <Image
-            src="/images/devices/iphone-13-silver-portrait.png"
+            src="/images/devices/iphone-13-silver-portrait.webp"
             alt=""
             fill
             sizes="272px"
@@ -192,15 +192,15 @@ export function HeroMockupCluster() {
     <AnimatedScene className="mx-auto max-w-[60rem]">
       <LaptopFrame
         title="Admin command center"
-        screenSrc="/images/screens/laptop/institution-command-center.png"
+        screenSrc="/images/screens/laptop/institution-command-center.webp"
         screenAlt="SquareCampus institution command center with multi-campus attendance, fees, and academic health roll-up"
         motionRole="primary"
         priority
       />
       <PhoneFrame
-        title="Parent experience"
-        screenSrc="/images/screens/mobile/parent-fees-receipts.png"
-        screenAlt="SquareCampus parent app showing the annual fee plan, next installment, and receipts"
+        title="Student experience"
+        screenSrc="/images/screens/mobile/student-day-view.webp"
+        screenAlt="SquareCampus student app showing the day's timetable, next class, and assignments due soon"
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
       />
@@ -225,14 +225,14 @@ export function PlatformMockupRow() {
     <AnimatedScene className="mx-auto max-w-[60rem]">
       <LaptopFrame
         title="Platform architecture"
-        screenSrc="/images/screens/laptop/platform-architecture.png"
+        screenSrc="/images/screens/laptop/platform-architecture.webp"
         screenAlt="SquareCampus platform architecture surface with module integration health and shared institutional core"
         motionRole="primary"
         priority
       />
       <PhoneFrame
         title="Teacher workspace"
-        screenSrc="/images/screens/mobile/teacher-attendance.png"
+        screenSrc="/images/screens/mobile/teacher-attendance.webp"
         screenAlt="SquareCampus teacher app marking class attendance with present, absent, and late states"
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
@@ -258,7 +258,7 @@ export function RolloutMockup() {
     <AnimatedScene className="mx-auto max-w-[56rem]" floatSecondary={false}>
       <LaptopFrame
         title="Implementation program"
-        screenSrc="/images/screens/laptop/rollout-control-room.png"
+        screenSrc="/images/screens/laptop/rollout-control-room.webp"
         screenAlt="SquareCampus rollout control room with six-week timeline, migration status, and go-live readiness"
       />
     </AnimatedScene>
@@ -270,13 +270,13 @@ export function EcosystemMockup() {
     <AnimatedScene className="mx-auto max-w-[60rem]">
       <LaptopFrame
         title="Connected ecosystem"
-        screenSrc="/images/screens/laptop/ecosystem-operations.png"
+        screenSrc="/images/screens/laptop/ecosystem-operations.webp"
         screenAlt="SquareCampus ecosystem operations map connecting audiences, shared backbone, and module groups"
         motionRole="primary"
       />
       <PhoneFrame
         title="Transport live status"
-        screenSrc="/images/screens/mobile/transport-live-status.png"
+        screenSrc="/images/screens/mobile/transport-live-status.webp"
         screenAlt="SquareCampus parent app showing live bus route progress with stop-by-stop status"
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
@@ -290,7 +290,7 @@ export function SecurityMockup() {
     <AnimatedScene className="mx-auto max-w-[56rem]" floatSecondary={false}>
       <LaptopFrame
         title="Trust architecture"
-        screenSrc="/images/screens/laptop/security-audit-center.png"
+        screenSrc="/images/screens/laptop/security-audit-center.webp"
         screenAlt="SquareCampus trust and security center with India data residency, encryption posture, and live audit trail"
       />
     </AnimatedScene>

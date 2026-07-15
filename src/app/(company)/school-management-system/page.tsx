@@ -224,7 +224,7 @@ export default function SchoolManagementSystemPage() {
             </p>
             <div className="mt-4 overflow-hidden rounded-[1.4rem] border border-(--line)">
               <Image
-                src="/images/marketing/dashboard.png"
+                src="/images/marketing/dashboard.webp"
                 alt="SquareCampus school management system dashboard preview for Indian schools"
                 width={960}
                 height={540}

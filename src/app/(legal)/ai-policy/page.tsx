@@ -8,21 +8,15 @@ export default function AIPolicyPage() {
       currentPage="AI Policy"
       description="How SquareCampus uses AI responsibly to support schools and institutions."
     >
-      <p className="text-sm font-medium text-muted-foreground">
-        Effective Date: 27 November 2025
-        <br />
-        Last Updated: 27 November 2025
-      </p>
-
       <nav
         aria-label="Table of contents"
-        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        className="rounded-2xl border border-(--line) bg-(--surface-strong) p-5 shadow-[0_20px_60px_rgba(8,15,30,0.08)]"
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
             On this page
           </p>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-700/80 dark:text-emerald-200/70">
             Jump to
           </span>
         </div>
@@ -39,7 +33,7 @@ export default function AIPolicyPage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+              className="rounded-lg border border-transparent bg-(--surface) px-3 py-2 transition hover:border-(--line) hover:text-foreground"
             >
               {item.label}
             </a>
@@ -50,10 +44,11 @@ export default function AIPolicyPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this Policy mean MDTechspire.</p>
+          <p>References to "SquareCampus" in this Policy mean Fairhelm Systems OPC.</p>
           <p>
             This AI Policy explains how SquareCampus uses artificial intelligence to assist
             institutions with workflows, insights, and user experience. AI is an assistive layer and
@@ -119,7 +114,7 @@ export default function AIPolicyPage() {
         <LegalSection title="7. Contact" id="contact">
           <p>
             If you have questions about our AI practices, contact{" "}
-            <a href="mailto:support@squarecampus.com" className="text-white">
+            <a href="mailto:support@squarecampus.com" className="text-foreground">
               support@squarecampus.com
             </a>
             .

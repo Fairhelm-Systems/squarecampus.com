@@ -27,7 +27,7 @@ export function BrandLogo({
         style={{ width: iconSize, height: iconSize }}
       >
         <Image
-          src="/images/marketing/logo-light.png"
+          src="/images/marketing/logo-light.webp"
           alt="SquareCampus"
           fill
           sizes={`${iconSize}px`}

@@ -8,30 +8,15 @@ export default function DataProcessingAddendumPage() {
       currentPage="Data Processing Addendum"
       description="Details about how SquareCampus processes Institution data on behalf of our customers."
     >
-      <p className="text-sm font-medium text-muted-foreground">
-        Effective Date: 27 November 2025
-        <br />
-        Last Updated: 15 January 2026
-      </p>
-
-      {/* Update Notice Banner */}
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
-        <p className="text-sm font-medium text-amber-200">
-          Important Update: Section 6 (Controller Obligations) has been expanded to include enhanced
-          access control requirements, credential security obligations, and incident response
-          duties. Please review carefully.
-        </p>
-      </div>
-
       <nav
         aria-label="Table of contents"
-        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        className="rounded-2xl border border-(--line) bg-(--surface-strong) p-5 shadow-[0_20px_60px_rgba(8,15,30,0.08)]"
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
             On this page
           </p>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-700/80 dark:text-emerald-200/70">
             Jump to
           </span>
         </div>
@@ -54,7 +39,7 @@ export default function DataProcessingAddendumPage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+              className="rounded-lg border border-transparent bg-(--surface) px-3 py-2 transition hover:border-(--line) hover:text-foreground"
             >
               {item.label}
             </a>
@@ -65,13 +50,14 @@ export default function DataProcessingAddendumPage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Scope" id="company-scope">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in this DPA mean MDTechspire.</p>
+          <p>References to "SquareCampus" in this DPA mean Fairhelm Systems OPC.</p>
           <p>
-            This Data Processing Addendum ("DPA") forms part of the agreement between MDTechspire
-            and the Institution when referenced in an order form or contract.
+            This Data Processing Addendum ("DPA") forms part of the agreement between Fairhelm
+            Systems OPC and the Institution when referenced in an order form or contract.
           </p>
         </LegalSection>
 
@@ -87,7 +73,7 @@ export default function DataProcessingAddendumPage() {
         <LegalSection title="3. Roles of the Parties" id="roles">
           <p>
             The Institution determines the purposes and means of processing personal data and acts
-            as the Controller; MDTechspire processes personal data solely on behalf of the
+            as the Controller; Fairhelm Systems OPC processes personal data solely on behalf of the
             Institution as the Processor.
           </p>
         </LegalSection>
@@ -128,7 +114,7 @@ export default function DataProcessingAddendumPage() {
 
         {/* Expanded Section 6 */}
         <LegalSection title="6. Controller Obligations" id="controller-obligations">
-          <p className="font-medium text-white">6.1 General Obligations</p>
+          <p className="font-medium text-foreground">6.1 General Obligations</p>
           <p>The Institution shall:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Ensure it has rights, consents, and legal bases for supplying personal data;</li>
@@ -142,7 +128,9 @@ export default function DataProcessingAddendumPage() {
           </ul>
 
           <div className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
-            <p className="font-medium text-amber-200">6.2 Access Control Requirements</p>
+            <p className="font-medium text-amber-800 dark:text-amber-200">
+              6.2 Access Control Requirements
+            </p>
             <p className="mt-3 text-sm">
               The Institution shall implement and maintain robust access controls including:
             </p>
@@ -169,7 +157,7 @@ export default function DataProcessingAddendumPage() {
           </div>
 
           <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
-            <p className="font-medium text-red-200">6.3 Credential Security</p>
+            <p className="font-medium text-red-800 dark:text-red-200">6.3 Credential Security</p>
             <p className="mt-3 text-sm">
               The Institution shall ensure the security of all credentials including:
             </p>
@@ -199,7 +187,7 @@ export default function DataProcessingAddendumPage() {
             </ul>
           </div>
 
-          <p className="mt-6 font-medium text-white">6.4 Incident Response Duties</p>
+          <p className="mt-6 font-medium text-foreground">6.4 Incident Response Duties</p>
           <p>
             The Institution shall promptly notify SquareCampus of any security incident including:
           </p>
@@ -216,7 +204,7 @@ export default function DataProcessingAddendumPage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">6.5 Cooperation with Security Measures</p>
+          <p className="mt-6 font-medium text-foreground">6.5 Cooperation with Security Measures</p>
           <p>The Institution agrees to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -236,11 +224,11 @@ export default function DataProcessingAddendumPage() {
           <p className="mt-4 text-sm text-muted-foreground">
             Violations of these Controller Obligations may constitute a material breach of the Terms
             of Service. See the{" "}
-            <a href="/terms-of-service#account-security" className="text-white underline">
+            <a href="/terms-of-service#account-security" className="text-foreground underline">
               Terms of Service Section 3
             </a>{" "}
             and{" "}
-            <a href="/competitor-notice" className="text-white underline">
+            <a href="/competitor-notice" className="text-foreground underline">
               Competitor Notice
             </a>{" "}
             for additional information on security requirements and enforcement.

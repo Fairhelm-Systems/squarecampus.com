@@ -549,6 +549,134 @@
   }
 }
 
+/* Services flow visual: hub pulse, dashboard bars, packet dots. */
+.svc-flow .svc-hub-pulse {
+  animation: svc-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes svc-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(88, 124, 204, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(88, 124, 204, 0);
+  }
+}
+
+.svc-flow [data-svc-bar] {
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.svc-flow.is-live [data-svc-bar] {
+  animation: aegis-bar 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0.9s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-flow [data-packet] {
+    display: none;
+  }
+
+  .svc-flow .svc-hub-pulse {
+    animation: none;
+  }
+
+  .svc-flow [data-svc-bar] {
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Primary CTA: brand gradient with a shine sweep on hover. */
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, oklch(0.5 0.13 252), var(--brand) 55%, oklch(0.66 0.12 230));
+  box-shadow:
+    0 10px 26px rgba(62, 100, 180, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.cta-button:hover {
+  box-shadow:
+    0 14px 32px rgba(62, 100, 180, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.cta-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta-button:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-button::after {
+    display: none;
+  }
+}
+
+/* Satellite cards drift gently once the hub is live. */
+.aegis-visual.is-live [data-aegis-drift] {
+  animation:
+    aegis-rise 0.76s cubic-bezier(0.16, 1, 0.3, 1) both,
+    aegis-drift 6.5s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0ms), var(--drift-d, 1.2s);
+}
+
+@keyframes aegis-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -6px;
+  }
+}
+
+/* Legal table-of-contents: links surface with a quick stagger on load. */
+nav[aria-label="Table of contents"] a {
+  opacity: 0;
+  animation: aegis-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+nav[aria-label="Table of contents"] a:nth-child(-n + 4) {
+  animation-delay: 60ms;
+}
+nav[aria-label="Table of contents"] a:nth-child(n + 5):nth-child(-n + 8) {
+  animation-delay: 140ms;
+}
+nav[aria-label="Table of contents"] a:nth-child(n + 9):nth-child(-n + 12) {
+  animation-delay: 220ms;
+}
+nav[aria-label="Table of contents"] a:nth-child(n + 13) {
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aegis-visual.is-live [data-aegis-drift] {
+    animation: none;
+    opacity: 1;
+  }
+
+  nav[aria-label="Table of contents"] a {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* /hello easter egg: greetings surfacing from the dark. */
 .hello-word {
   opacity: 0;

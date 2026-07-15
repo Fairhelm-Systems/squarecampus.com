@@ -8,30 +8,15 @@ export default function TermsOfServicePage() {
       currentPage="Terms of Service"
       description="The rules, rights, and responsibilities that govern your access to SquareCampus."
     >
-      <p className="text-sm font-medium text-muted-foreground">
-        Effective Date: 27 November 2025
-        <br />
-        Last Updated: 15 January 2026
-      </p>
-
-      {/* Update Notice Banner */}
-      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
-        <p className="text-sm font-medium text-amber-200">
-          Important Update: These Terms have been amended to include enhanced security provisions
-          (Section 3), Indemnification (Section 17), Security Incident Response (Section 18), and
-          Competitor Access Prohibition (Section 19). Please review these sections carefully.
-        </p>
-      </div>
-
       <nav
         aria-label="Table of contents"
-        className="rounded-2xl border border-neutral-800/60 bg-neutral-900/60 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        className="rounded-2xl border border-(--line) bg-(--surface-strong) p-5 shadow-[0_20px_60px_rgba(8,15,30,0.08)]"
       >
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
             On this page
           </p>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-200/70">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-emerald-700/80 dark:text-emerald-200/70">
             Jump to
           </span>
         </div>
@@ -61,7 +46,7 @@ export default function TermsOfServicePage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-lg border border-transparent bg-neutral-950/40 px-3 py-2 transition hover:border-white/15 hover:text-white"
+              className="rounded-lg border border-transparent bg-(--surface) px-3 py-2 transition hover:border-(--line) hover:text-foreground"
             >
               {item.label}
             </a>
@@ -72,12 +57,13 @@ export default function TermsOfServicePage() {
       <div className="space-y-10">
         <LegalSection title="1. Company & Contracting Entity" id="company-entity">
           <p>
-            SquareCampus is a trademark and product brand of MDTechspire. All services are provided
-            by MDTechspire, unless otherwise stated in a written agreement or order form.
+            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
+            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
+            in a written agreement or order form.
           </p>
-          <p>References to "SquareCampus" in these Terms mean MDTechspire.</p>
+          <p>References to "SquareCampus" in these Terms mean Fairhelm Systems OPC.</p>
           <p>
-            These Terms form a binding agreement between MDTechspire and the Institution or
+            These Terms form a binding agreement between Fairhelm Systems OPC and the Institution or
             individual User accessing the Service. If you are accepting these Terms on behalf of an
             Institution, you confirm that you have the authority to bind that Institution.
           </p>
@@ -104,7 +90,7 @@ export default function TermsOfServicePage() {
 
         {/* Enhanced Section 3 */}
         <LegalSection title="3. Account Registration and Security" id="account-security">
-          <p className="font-medium text-white">3.1 General Requirements</p>
+          <p className="font-medium text-foreground">3.1 General Requirements</p>
           <p>Institutions and Users agree to:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Provide accurate and complete registration information;</li>
@@ -121,7 +107,9 @@ export default function TermsOfServicePage() {
           </ul>
 
           <div className="mt-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
-            <p className="font-medium text-red-200">3.2 Credential Sharing Prohibition</p>
+            <p className="font-medium text-red-800 dark:text-red-200">
+              3.2 Credential Sharing Prohibition
+            </p>
             <p className="mt-2 text-sm">
               Institutions and Users expressly agree that login credentials, API keys, access
               tokens, and any other authentication mechanisms are strictly confidential and may not
@@ -143,7 +131,7 @@ export default function TermsOfServicePage() {
             </ul>
           </div>
 
-          <p className="mt-6 font-medium text-white">3.3 Liability for Credential Misuse</p>
+          <p className="mt-6 font-medium text-foreground">3.3 Liability for Credential Misuse</p>
           <p>
             The Institution shall be fully liable for any and all activities conducted through
             credentials issued to the Institution, regardless of whether such activities were
@@ -156,7 +144,7 @@ export default function TermsOfServicePage() {
             <li>Any violations of these Terms committed using Institution credentials.</li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">3.4 Audit Rights</p>
+          <p className="mt-6 font-medium text-foreground">3.4 Audit Rights</p>
           <p>
             SquareCampus reserves the right to audit credential usage patterns and may require
             Institutions to provide documentation regarding credential distribution and access
@@ -245,7 +233,7 @@ export default function TermsOfServicePage() {
           <p>
             A summary of our security program, data residency, encryption, and audit practices is
             available at{" "}
-            <a href="/security" className="text-white">
+            <a href="/security" className="text-foreground">
               https://squarecampus.com/security
             </a>
             .
@@ -327,8 +315,8 @@ export default function TermsOfServicePage() {
 
         <LegalSection title="15. Changes to the Terms" id="changes">
           <p>
-            We may update these Terms from time to time. The "Last Updated" date at the top will
-            change, and we may provide additional notice.
+            We may update these Terms from time to time, and we may provide additional notice of
+            material changes.
           </p>
           <p>Your continued use after changes means you accept the revised Terms.</p>
         </LegalSection>
@@ -343,12 +331,12 @@ export default function TermsOfServicePage() {
 
         {/* New Section 17 */}
         <LegalSection title="17. Indemnification" id="indemnification">
-          <p className="font-medium text-white">17.1 Institution Indemnification</p>
+          <p className="font-medium text-foreground">17.1 Institution Indemnification</p>
           <p>
-            The Institution shall defend, indemnify, and hold harmless SquareCampus, MDTechspire,
-            and their respective officers, directors, employees, and agents from and against any and
-            all claims, damages, losses, liabilities, costs, and expenses (including reasonable
-            attorneys' fees) arising from or related to:
+            The Institution shall defend, indemnify, and hold harmless SquareCampus, Fairhelm
+            Systems OPC, and their respective officers, directors, employees, and agents from and
+            against any and all claims, damages, losses, liabilities, costs, and expenses (including
+            reasonable attorneys' fees) arising from or related to:
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -367,7 +355,7 @@ export default function TermsOfServicePage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">17.2 SquareCampus Indemnification</p>
+          <p className="mt-6 font-medium text-foreground">17.2 SquareCampus Indemnification</p>
           <p>
             SquareCampus shall defend, indemnify, and hold harmless the Institution from claims
             alleging that the Service infringes valid intellectual property rights, provided the
@@ -382,7 +370,7 @@ export default function TermsOfServicePage() {
 
         {/* New Section 18 */}
         <LegalSection title="18. Security Incident Response" id="security-incident">
-          <p className="font-medium text-white">18.1 Institution Response Obligations</p>
+          <p className="font-medium text-foreground">18.1 Institution Response Obligations</p>
           <p>
             Upon discovering or being notified of any security incident involving the Service,
             including but not limited to credential compromise, unauthorised access, or suspected
@@ -391,7 +379,7 @@ export default function TermsOfServicePage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>
               Immediately notify SquareCampus at{" "}
-              <a href="mailto:security@squarecampus.com" className="text-white">
+              <a href="mailto:security@squarecampus.com" className="text-foreground">
                 security@squarecampus.com
               </a>
             </li>
@@ -401,7 +389,7 @@ export default function TermsOfServicePage() {
             <li>Provide written incident reports within 48 hours of discovery.</li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">18.2 SquareCampus Response</p>
+          <p className="mt-6 font-medium text-foreground">18.2 SquareCampus Response</p>
           <p>
             SquareCampus shall respond to confirmed security incidents in accordance with our
             Security Policy and may:
@@ -413,7 +401,7 @@ export default function TermsOfServicePage() {
             <li>Pursue legal remedies as appropriate.</li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">18.3 Evidence Preservation</p>
+          <p className="mt-6 font-medium text-foreground">18.3 Evidence Preservation</p>
           <p>
             Both parties agree to preserve all evidence related to security incidents for a minimum
             of seven (7) years or as required by applicable law, whichever is longer. This includes
@@ -424,7 +412,7 @@ export default function TermsOfServicePage() {
         {/* New Section 19 */}
         <LegalSection title="19. Competitor Access Prohibition" id="competitor-access">
           <div className="mb-6 rounded-lg border border-red-500/50 bg-red-500/10 p-4">
-            <p className="text-sm font-medium text-red-200">
+            <p className="text-sm font-medium text-red-800 dark:text-red-200">
               CRITICAL: This section establishes strict prohibitions on competitor access.
               Violations may result in suspension or termination and legal action as appropriate.
               See our{" "}
@@ -435,7 +423,7 @@ export default function TermsOfServicePage() {
             </p>
           </div>
 
-          <p className="font-medium text-white">19.1 Definitions</p>
+          <p className="font-medium text-foreground">19.1 Definitions</p>
           <p>For purposes of this Section, "Competitor" means:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -452,7 +440,7 @@ export default function TermsOfServicePage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">19.2 Absolute Prohibition</p>
+          <p className="mt-6 font-medium text-foreground">19.2 Absolute Prohibition</p>
           <p>The Institution expressly agrees that it shall not, under any circumstances:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -474,7 +462,7 @@ export default function TermsOfServicePage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">19.3 Mandatory Disclosure</p>
+          <p className="mt-6 font-medium text-foreground">19.3 Mandatory Disclosure</p>
           <p>The Institution shall immediately notify SquareCampus if:</p>
           <ul className="list-disc space-y-2 pl-5">
             <li>Any Competitor requests access to or information about the Service;</li>
@@ -488,7 +476,7 @@ export default function TermsOfServicePage() {
             </li>
           </ul>
 
-          <p className="mt-6 font-medium text-white">19.4 Enhanced Liquidated Damages</p>
+          <p className="mt-6 font-medium text-foreground">19.4 Enhanced Liquidated Damages</p>
           <p>
             In addition to all other remedies available at law or equity, the Institution
             acknowledges that violations of this Section cause substantial harm to SquareCampus that
@@ -523,7 +511,7 @@ export default function TermsOfServicePage() {
         <LegalSection title="20. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>MDTechspire</strong>
+            <strong>Fairhelm Systems OPC</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />

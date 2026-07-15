@@ -134,7 +134,13 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
               <div
                 key={item.title}
                 data-aegis-rise
-                style={{ "--d": `${220 + index * 85}ms` } as React.CSSProperties}
+                data-aegis-drift
+                style={
+                  {
+                    "--d": `${220 + index * 85}ms`,
+                    "--drift-d": `${1200 + index * 350}ms`,
+                  } as React.CSSProperties
+                }
                 className={cn(
                   "z-10 rounded-[1.3rem] border border-(--line) bg-(--surface) p-4 shadow-[0_18px_40px_rgba(8,15,30,0.08)] backdrop-blur-md md:absolute md:w-44",
                   item.position
