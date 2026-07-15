@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-repo="${1:-mdtechspire/square_campus.marketing}"
+repo="${1:-fairhelmsystems/square_campus.marketing}"
 
 create_label() {
   local name="$1"

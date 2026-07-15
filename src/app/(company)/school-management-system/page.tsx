@@ -552,7 +552,7 @@ export default function SchoolManagementSystemPage() {
                 "@id": `${pageUrl}#webpage`,
                 primaryImageOfPage: {
                   "@type": "ImageObject",
-                  url: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
+                  url: "https://squarecampus.com/brand/squarecampus.png",
                 },
                 mainEntity: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
               },

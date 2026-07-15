@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "https://cdn.mdtechspire.com/application_files/logo/squarecampus.png",
+        url: "https://squarecampus.com/brand/squarecampus.png",
         width: 1200,
         height: 630,
         alt: "SquareCampus - School OS for India",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     title: "SquareCampus | School OS & School Management System in India",
     description:
       "SquareCampus keeps admissions, academics, finance, communication, and operations in sync for institutions in India.",
-    images: ["https://cdn.mdtechspire.com/application_files/logo/squarecampus.png"],
+    images: ["https://squarecampus.com/brand/squarecampus.png"],
   },
   robots: {
     index: true,
@@ -106,8 +106,6 @@ export default function RootLayout({
     >
       <head>
         <ThemeScript />
-        <link rel="preconnect" href="https://cdn.mdtechspire.com" />
-        <link rel="dns-prefetch" href="https://cdn.mdtechspire.com" />
       </head>
       <body suppressHydrationWarning className="antialiased">
         <ScrollToTop />
