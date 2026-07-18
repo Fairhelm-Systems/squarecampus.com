@@ -13,6 +13,27 @@ export const metadata: Metadata = {
   description:
     "Honest, side-by-side comparisons of SquareCampus with Entab CampusCare, Fedena, Teachmint, and other school ERPs — plus a framework for evaluating any school management system for India.",
   alternates: createAlternates("/compare"),
+  openGraph: {
+    title: "Compare School Management Systems",
+    description:
+      "Honest, side-by-side comparisons of SquareCampus with Entab CampusCare, Fedena, Teachmint, and other school ERPs.",
+    url: "https://squarecampus.com/compare/",
+    siteName: "SquareCampus",
+    type: "website",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://squarecampus.com/og/compare.png",
+        width: 1200,
+        height: 630,
+        alt: "Compare School Management Systems",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["https://squarecampus.com/og/compare.png"],
+  },
 };
 
 const evaluationCriteria = [

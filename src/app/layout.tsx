@@ -52,10 +52,10 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "https://squarecampus.com/og/default.png",
+        url: "https://squarecampus.com/og/home.png",
         width: 1200,
         height: 630,
-        alt: "SquareCampus - School OS for India",
+        alt: "SquareCampus - Run every campus. Govern them as one.",
       },
     ],
   },
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "SquareCampus | Sovereign School OS for Indian School Groups",
     description:
       "SquareCampus keeps admissions, academics, finance, communication, and operations in sync for school groups in India.",
-    images: ["https://squarecampus.com/og/default.png"],
+    images: ["https://squarecampus.com/og/home.png"],
   },
   robots: {
     index: true,

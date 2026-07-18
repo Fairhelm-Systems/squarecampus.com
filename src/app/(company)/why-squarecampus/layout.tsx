@@ -10,6 +10,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Why school groups choose a School OS over stitched ERP modules and point tools: one governed system of record, connected workflows, live visibility, and clear accountability.",
   path: "/why-squarecampus",
+  ogImage: "https://squarecampus.com/og/why-squarecampus.png",
   ogTitle: "Why SquareCampus | School OS vs Traditional ERPs",
   ogDescription:
     "One governed system of record instead of stitched modules and point tools. See the structural difference and decide for your institution.",

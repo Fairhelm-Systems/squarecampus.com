@@ -9,6 +9,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "SquareCampus is a school management system built for Indian schools and school groups: admissions, fees, academics, attendance, transport, exams, and parent communication in one governed system of record. Book a demo.",
   path: "/school-management-system",
+  ogImage: "https://squarecampus.com/og/school-management-system.png",
   ogTitle: "School Management System in India | SquareCampus",
   ogDescription:
     "One governed system of record for admissions, fees, academics, attendance, transport, and parent communication. Built for Indian schools and school groups.",

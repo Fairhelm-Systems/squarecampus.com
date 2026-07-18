@@ -27,6 +27,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "See how SquareCampus structures admissions, academics, finance, communication, compliance, and institutional operations inside one connected School OS.",
   path: "/platform",
+  ogImage: "https://squarecampus.com/og/platform.png",
 });
 
 const backboneLayers = [

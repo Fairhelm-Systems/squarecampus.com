@@ -9,6 +9,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "The SquareCampus ecosystem: admin console, teacher workspace, parent and student apps, payment integrations, SMS, WhatsApp, and biometrics — one platform, all touchpoints.",
   path: "/ecosystem",
+  ogImage: "https://squarecampus.com/og/ecosystem.png",
   ogTitle: "School Ecosystem | SquareCampus Platform",
   ogDescription:
     "Admin console, teacher workspace, parent and student apps, payment gateways, SMS, WhatsApp, biometrics. One platform connecting your entire school.",

@@ -70,6 +70,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "How SquareCampus approaches security for school data: encryption in transit and at rest, role-based access, audit trails, and an India-first hosting posture. Documentation available on request.",
   path: "/security",
+  ogImage: "https://squarecampus.com/og/security.png",
   ogTitle: "Security & Trust | SquareCampus",
   ogDescription:
     "Encryption, role-based access, audit trails, and an India-first hosting posture. Security documentation available through the review process.",

@@ -20,6 +20,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "See how SquareCampus handles onboarding, migration, training, parallel runs, and go-live for schools, colleges, and multi-campus institutions.",
   path: "/rollout",
+  ogImage: "https://squarecampus.com/og/rollout.png",
 });
 
 const rolloutSteps = [

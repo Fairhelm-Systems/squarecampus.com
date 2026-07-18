@@ -21,6 +21,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "How SquareCampus infrastructure is designed: AWS Mumbai (ap-south-1), multi-AZ architecture, encryption in transit and at rest, and an India data-residency posture — with documentation available through the security review process.",
   path: "/infrastructure",
+  ogImage: "https://squarecampus.com/og/infrastructure.png",
 });
 
 const heroSignals = [

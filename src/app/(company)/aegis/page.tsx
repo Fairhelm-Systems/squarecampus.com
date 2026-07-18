@@ -30,6 +30,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "AEGIS (Adaptive Enterprise Governance & Intelligence System) is SquareCampus' governed intelligence layer: role-aware answers, exception detection, and audit-ready decision support for school leaders. Ask AEGIS. Don't chase reports.",
   path: "/aegis",
+  ogImage: "https://squarecampus.com/og/aegis.png",
 });
 
 const roleScenarios = [
