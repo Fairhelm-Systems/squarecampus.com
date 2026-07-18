@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from "next/font/google";
 import type { ReactNode } from "react";
-import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeScript } from "@/components/site/theme-script";
 import { ThemeToggle } from "@/components/site/theme-toggle";
@@ -22,11 +21,14 @@ const monoFont = IBM_Plex_Mono({
   weight: ["400"],
 });
 
+// Every `font-display` element renders at the default 400 (no weight class
+// anywhere sets Sora heavier), so only 400 is loaded — 500/600 were two
+// unused font files on every page.
 const displayFont = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -146,7 +148,6 @@ export default function RootLayout({
         />
         {children}
         <ThemeToggle />
-        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import { ButtonLink } from "./button-link";
 
 type DemoFormState = {
@@ -170,245 +170,250 @@ export function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="demo-name" className={labelClassName}>
-            Your name *
-          </label>
-          <input
-            id="demo-name"
-            name="name"
-            required
-            autoComplete="name"
-            className={inputClassName}
-            placeholder="Full name"
-            value={state.name}
-            onChange={(event) => set("name", event.target.value)}
-          />
+    <>
+      {/* Toaster lives with the form (the only surface that fires toasts), so
+          sonner ships on /demo instead of every page in the root layout. */}
+      <Toaster position="top-right" richColors />
+      <form onSubmit={handleSubmit} className="grid gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="demo-name" className={labelClassName}>
+              Your name *
+            </label>
+            <input
+              id="demo-name"
+              name="name"
+              required
+              autoComplete="name"
+              className={inputClassName}
+              placeholder="Full name"
+              value={state.name}
+              onChange={(event) => set("name", event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="demo-email" className={labelClassName}>
+              Work email *
+            </label>
+            <input
+              id="demo-email"
+              name="email"
+              required
+              type="email"
+              autoComplete="email"
+              className={inputClassName}
+              placeholder="you@institution.edu.in"
+              value={state.email}
+              onChange={(event) => set("email", event.target.value)}
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="demo-email" className={labelClassName}>
-            Work email *
-          </label>
-          <input
-            id="demo-email"
-            name="email"
-            required
-            type="email"
-            autoComplete="email"
-            className={inputClassName}
-            placeholder="you@institution.edu.in"
-            value={state.email}
-            onChange={(event) => set("email", event.target.value)}
-          />
-        </div>
-      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="demo-phone" className={labelClassName}>
-            Phone *
-          </label>
-          <input
-            id="demo-phone"
-            name="phone"
-            required
-            type="tel"
-            autoComplete="tel"
-            className={inputClassName}
-            placeholder="+91"
-            value={state.phone}
-            onChange={(event) => set("phone", event.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="demo-role" className={labelClassName}>
-            Your role *
-          </label>
-          <select
-            id="demo-role"
-            name="role"
-            required
-            autoComplete="organization-title"
-            className={inputClassName}
-            value={state.role}
-            onChange={(event) => set("role", event.target.value)}
-          >
-            <option value="" disabled>
-              Select role
-            </option>
-            {roleOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="demo-phone" className={labelClassName}>
+              Phone *
+            </label>
+            <input
+              id="demo-phone"
+              name="phone"
+              required
+              type="tel"
+              autoComplete="tel"
+              className={inputClassName}
+              placeholder="+91"
+              value={state.phone}
+              onChange={(event) => set("phone", event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="demo-role" className={labelClassName}>
+              Your role *
+            </label>
+            <select
+              id="demo-role"
+              name="role"
+              required
+              autoComplete="organization-title"
+              className={inputClassName}
+              value={state.role}
+              onChange={(event) => set("role", event.target.value)}
+            >
+              <option value="" disabled>
+                Select role
               </option>
-            ))}
-          </select>
+              {roleOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="demo-institution" className={labelClassName}>
-            Institution / group name *
-          </label>
-          <input
-            id="demo-institution"
-            name="institution"
-            required
-            autoComplete="organization"
-            className={inputClassName}
-            placeholder="Institution or group name"
-            value={state.institution}
-            onChange={(event) => set("institution", event.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="demo-campuses" className={labelClassName}>
-            Number of campuses *
-          </label>
-          <select
-            id="demo-campuses"
-            name="campusCount"
-            required
-            className={inputClassName}
-            value={state.campusCount}
-            onChange={(event) => set("campusCount", event.target.value)}
-          >
-            <option value="" disabled>
-              Select
-            </option>
-            {campusCountOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="demo-institution" className={labelClassName}>
+              Institution / group name *
+            </label>
+            <input
+              id="demo-institution"
+              name="institution"
+              required
+              autoComplete="organization"
+              className={inputClassName}
+              placeholder="Institution or group name"
+              value={state.institution}
+              onChange={(event) => set("institution", event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="demo-campuses" className={labelClassName}>
+              Number of campuses *
+            </label>
+            <select
+              id="demo-campuses"
+              name="campusCount"
+              required
+              className={inputClassName}
+              value={state.campusCount}
+              onChange={(event) => set("campusCount", event.target.value)}
+            >
+              <option value="" disabled>
+                Select
               </option>
-            ))}
-          </select>
+              {campusCountOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="demo-current-system" className={labelClassName}>
-            Current system
-          </label>
-          <input
-            id="demo-current-system"
-            name="currentSystem"
-            autoComplete="off"
-            className={inputClassName}
-            placeholder="ERP name, spreadsheets, or mixed"
-            value={state.currentSystem}
-            onChange={(event) => set("currentSystem", event.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="demo-pain" className={labelClassName}>
-            Primary pain point
-          </label>
-          <select
-            id="demo-pain"
-            name="primaryPain"
-            className={inputClassName}
-            value={state.primaryPain}
-            onChange={(event) => set("primaryPain", event.target.value)}
-          >
-            <option value="" disabled>
-              Select
-            </option>
-            {primaryPainOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="demo-current-system" className={labelClassName}>
+              Current system
+            </label>
+            <input
+              id="demo-current-system"
+              name="currentSystem"
+              autoComplete="off"
+              className={inputClassName}
+              placeholder="ERP name, spreadsheets, or mixed"
+              value={state.currentSystem}
+              onChange={(event) => set("currentSystem", event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="demo-pain" className={labelClassName}>
+              Primary pain point
+            </label>
+            <select
+              id="demo-pain"
+              name="primaryPain"
+              className={inputClassName}
+              value={state.primaryPain}
+              onChange={(event) => set("primaryPain", event.target.value)}
+            >
+              <option value="" disabled>
+                Select
               </option>
-            ))}
-          </select>
+              {primaryPainOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
 
-      {/* Honeypot field — visually hidden and skipped by keyboard users. */}
-      <input
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        className="hidden"
-        placeholder="Website"
-        value={state.website}
-        onChange={(event) => set("website", event.target.value)}
-      />
-
-      <div>
-        <label htmlFor="demo-message" className={labelClassName}>
-          Anything else we should know?
-        </label>
-        <textarea
-          id="demo-message"
-          name="message"
-          rows={4}
-          className="w-full rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--foreground)] outline-none transition-colors placeholder:text-[color:var(--muted-foreground)] focus:border-[color:var(--line-strong)]"
-          placeholder="Context on your current stack, timelines, or what the demo should focus on."
-          value={state.message}
-          onChange={(event) => set("message", event.target.value)}
-        />
-      </div>
-
-      <label className="flex items-start gap-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+        {/* Honeypot field — visually hidden and skipped by keyboard users. */}
         <input
-          type="checkbox"
-          name="consent"
-          required
-          checked={state.consent}
-          onChange={(event) => set("consent", event.target.checked)}
-          className="mt-1 size-4 shrink-0 accent-[color:var(--brand)]"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+          placeholder="Website"
+          value={state.website}
+          onChange={(event) => set("website", event.target.value)}
         />
-        <span>
-          I agree that SquareCampus may contact me about this request and process the details above
-          as described in the{" "}
-          <a
-            href="/privacy-policy/"
-            className="underline underline-offset-2 hover:text-[color:var(--foreground)]"
-          >
-            privacy policy
-          </a>
-          . *
-        </span>
-      </label>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p
-          aria-live="polite"
-          className="max-w-md text-sm leading-6 text-[color:var(--muted-foreground)]"
-        >
-          {status === "success"
-            ? "Request received. We reply within one business day."
-            : status === "draft"
-              ? "Email draft opened — send it from your mail app to complete the request."
-              : status === "error"
-                ? `Submission failed. Email us at ${CONTACT_EMAIL} and we will pick it up.`
-                : EMAIL_DRAFT_MODE
-                  ? `Submitting opens a pre-filled email draft to ${CONTACT_EMAIL} in your mail app — nothing is sent until you hit send.`
-                  : "We reply with a guided walkthrough plan and the right stakeholders to bring into the evaluation."}
-        </p>
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--foreground)] px-5 text-sm font-medium text-[color:var(--background)] transition-opacity hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {status === "submitting"
-            ? "Submitting..."
-            : EMAIL_DRAFT_MODE
-              ? "Request Demo via Email"
-              : "Request Demo"}
-        </button>
-      </div>
-      <div className="text-sm text-[color:var(--muted-foreground)]">
-        Need a direct line instead?{" "}
-        <ButtonLink
-          href={`mailto:${CONTACT_EMAIL}`}
-          label="Email the team"
-          variant="ghost"
-          className="min-h-0 border-none px-0 py-0 align-baseline"
-        />
-      </div>
-    </form>
+        <div>
+          <label htmlFor="demo-message" className={labelClassName}>
+            Anything else we should know?
+          </label>
+          <textarea
+            id="demo-message"
+            name="message"
+            rows={4}
+            className="w-full rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--foreground)] outline-none transition-colors placeholder:text-[color:var(--muted-foreground)] focus:border-[color:var(--line-strong)]"
+            placeholder="Context on your current stack, timelines, or what the demo should focus on."
+            value={state.message}
+            onChange={(event) => set("message", event.target.value)}
+          />
+        </div>
+
+        <label className="flex items-start gap-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+          <input
+            type="checkbox"
+            name="consent"
+            required
+            checked={state.consent}
+            onChange={(event) => set("consent", event.target.checked)}
+            className="mt-1 size-4 shrink-0 accent-[color:var(--brand)]"
+          />
+          <span>
+            I agree that SquareCampus may contact me about this request and process the details
+            above as described in the{" "}
+            <a
+              href="/privacy-policy/"
+              className="underline underline-offset-2 hover:text-[color:var(--foreground)]"
+            >
+              privacy policy
+            </a>
+            . *
+          </span>
+        </label>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p
+            aria-live="polite"
+            className="max-w-md text-sm leading-6 text-[color:var(--muted-foreground)]"
+          >
+            {status === "success"
+              ? "Request received. We reply within one business day."
+              : status === "draft"
+                ? "Email draft opened — send it from your mail app to complete the request."
+                : status === "error"
+                  ? `Submission failed. Email us at ${CONTACT_EMAIL} and we will pick it up.`
+                  : EMAIL_DRAFT_MODE
+                    ? `Submitting opens a pre-filled email draft to ${CONTACT_EMAIL} in your mail app — nothing is sent until you hit send.`
+                    : "We reply with a guided walkthrough plan and the right stakeholders to bring into the evaluation."}
+          </p>
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--foreground)] px-5 text-sm font-medium text-[color:var(--background)] transition-opacity hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {status === "submitting"
+              ? "Submitting..."
+              : EMAIL_DRAFT_MODE
+                ? "Request Demo via Email"
+                : "Request Demo"}
+          </button>
+        </div>
+        <div className="text-sm text-[color:var(--muted-foreground)]">
+          Need a direct line instead?{" "}
+          <ButtonLink
+            href={`mailto:${CONTACT_EMAIL}`}
+            label="Email the team"
+            variant="ghost"
+            className="min-h-0 border-none px-0 py-0 align-baseline"
+          />
+        </div>
+      </form>
+    </>
   );
 }

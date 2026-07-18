@@ -163,6 +163,36 @@ form-action 'self' mailto:;
 upgrade-insecure-requests
 ```
 
+### Response Headers Policy: keep decorative art out of Google Images
+
+The product screenshots under `/images/screens/*` are real UI and are the
+images we *want* in Google Images — they're listed in the image sitemap
+(`src/app/sitemap.ts`). The assets under `/images/devices/*` are the opposite:
+empty device bezels (the MacBook / iPhone chrome that frames a screenshot).
+With no guidance Google indexed the blank MacBook frame as a "SquareCampus"
+image, which is not the impression we want.
+
+There is no meta-tag for a standalone image file, so the signal has to be an
+HTTP header. Create a second Response Headers Policy — `squarecampus-noindex-art`
+— that adds one **custom header**:
+
+| Header | Value |
+|---|---|
+| X-Robots-Tag | `noimageindex` |
+
+Then add a cache behavior (above the default `*`) that matches the decorative
+assets and attaches this policy instead of the security-headers policy — or,
+simpler, clone the security policy and add the custom header so the behavior
+still ships the full security header set:
+
+- Path pattern: `/images/devices/*`
+- Response headers policy: `squarecampus-noindex-art`
+
+Googlebot drops those files from the image index on its next crawl while
+still rendering them on the page (noimageindex blocks indexing, not fetching).
+Everything else keeps indexing normally. Do **not** widen the pattern to
+`/images/*` — that would suppress the product screenshots you want ranked.
+
 ### WAF (optional, replaces the old middleware URL filter)
 
 The deleted `middleware.ts` blocked suspicious URL patterns (SQLi/XSS probes,

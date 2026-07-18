@@ -12,6 +12,14 @@ interface RevealProps {
   distance?: number;
   once?: boolean;
   staggerChildren?: boolean;
+  /**
+   * Above-the-fold content (e.g. the hero) must paint on first frame, not wait
+   * for JS to hydrate and the IntersectionObserver to fire — otherwise the LCP
+   * element is stuck at `opacity: 0` until hydration, which wrecks mobile LCP.
+   * `immediate` renders visible from SSR and plays a transform-only load
+   * animation (opacity stays 1, so LCP registers at first paint) with no JS.
+   */
+  immediate?: boolean;
 }
 
 /**
@@ -26,11 +34,16 @@ export function Reveal({
   distance = 20,
   once = true,
   staggerChildren = false,
+  immediate = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (immediate) {
+      return;
+    }
+
     const node = ref.current;
     if (!node) {
       return;
@@ -73,12 +86,16 @@ export function Reveal({
       observer.disconnect();
       clearTimeout(timeout);
     };
-  }, [once, prefersReducedMotion]);
+  }, [once, prefersReducedMotion, immediate]);
 
   return (
     <div
       ref={ref}
-      className={cn("reveal-root", staggerChildren && "reveal-stagger", className)}
+      className={cn(
+        immediate ? "reveal-immediate" : "reveal-root",
+        staggerChildren && "reveal-stagger",
+        className
+      )}
       style={
         {
           "--reveal-delay": `${delay}ms`,

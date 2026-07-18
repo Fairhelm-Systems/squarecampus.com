@@ -178,7 +178,7 @@ export default function SchoolManagementSystemPage() {
     <main>
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">School management system</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               School management system built for Indian schools.
@@ -209,7 +209,7 @@ export default function SchoolManagementSystemPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="surface-panel-strong rounded-[2rem] p-5 lg:p-6">
+          <Reveal immediate delay={120} className="surface-panel-strong rounded-[2rem] p-5 lg:p-6">
             <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
               <span>One view, zero chaos</span>
               <span className="inline-flex items-center gap-2">

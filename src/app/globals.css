@@ -256,6 +256,26 @@
   transform: none;
 }
 
+/*
+ * Above-the-fold entrance (hero). Unlike `.reveal-root`, this never sets
+ * opacity to 0 and never waits for JS: the element paints fully opaque on the
+ * first frame — so it stays LCP-eligible immediately — and only its transform
+ * animates on load. No IntersectionObserver, no hydration dependency.
+ */
+.reveal-immediate {
+  animation: reveal-immediate 0.82s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-immediate {
+  from {
+    transform: translateY(var(--reveal-distance, 20px));
+  }
+  to {
+    transform: none;
+  }
+}
+
 .reveal-stagger [data-reveal-item] {
   opacity: 0;
   transform: translateY(16px);
@@ -297,6 +317,9 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .reveal-immediate {
+    animation: none;
   }
 }
 

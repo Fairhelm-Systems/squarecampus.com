@@ -42,11 +42,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * - The supporting pages stay visible, but not louder than the core.
    * - Legal pages exist for trust, not traffic.
    */
+  // Absolute URLs for the product screenshots we want Google Images to index
+  // and associate with each page. Only images that actually render on the
+  // listed URL belong here — Google drops image-sitemap entries whose image
+  // is not present on the page. Decorative device bezels
+  // (/images/devices/*) are deliberately excluded and carry
+  // `X-Robots-Tag: noimageindex` at the edge (see DEPLOYMENT.md).
+  const img = (path: string) => `${SITE_URL}${path}`;
+
   const routes: Array<{
     path: `/${string}` | "/";
     sources: string[];
     changeFrequency: NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
     priority: number;
+    images?: string[];
   }> = [
     // Primary intent / "rank me for this" page
     {
@@ -54,6 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/school-management-system`],
       changeFrequency: "weekly",
       priority: 1.0,
+      images: [img("/images/marketing/dashboard.webp")],
     },
 
     // Home: high authority, frequent link target
@@ -62,6 +72,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/page.tsx`, `${APP}/layout.tsx`],
       changeFrequency: "weekly",
       priority: 0.9,
+      images: [
+        img("/images/screens/laptop/institution-command-center.webp"),
+        img("/images/screens/mobile/student-day-view.webp"),
+      ],
     },
 
     // Conversion + differentiation pages
@@ -88,6 +102,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/platform`],
       changeFrequency: "weekly",
       priority: 0.88,
+      images: [
+        img("/images/screens/laptop/platform-architecture.webp"),
+        img("/images/screens/mobile/teacher-attendance.webp"),
+      ],
     },
     {
       path: "/aegis",
@@ -106,12 +124,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/rollout`],
       changeFrequency: "weekly",
       priority: 0.82,
+      images: [img("/images/screens/laptop/rollout-control-room.webp")],
     },
     {
       path: "/ecosystem",
       sources: [`${APP}/(company)/ecosystem`],
       changeFrequency: "weekly",
       priority: 0.8,
+      images: [
+        img("/images/screens/laptop/ecosystem-operations.webp"),
+        img("/images/screens/mobile/transport-live-status.webp"),
+      ],
     },
 
     // Trust pages
@@ -120,6 +143,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/security`],
       changeFrequency: "monthly",
       priority: 0.6,
+      images: [img("/images/screens/laptop/security-audit-center.webp")],
     },
     {
       path: "/infrastructure",
@@ -206,5 +230,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: gitLastmod(r.sources),
     changeFrequency: r.changeFrequency,
     priority: r.priority,
+    ...(r.images ? { images: r.images } : {}),
   }));
 }
