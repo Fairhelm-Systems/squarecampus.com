@@ -201,7 +201,7 @@ export default function Home() {
             <Reveal immediate className="space-y-6">
               <p className="section-kicker">Sovereign School OS for Indian school groups</p>
               <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-[4.6rem]">
-                Run every campus. Govern the institution.
+                Run every campus. Govern them as one.
               </h1>
               <p className="max-w-xl text-lg leading-8 text-muted-foreground">
                 Most ERPs help staff enter data. SquareCampus helps management govern the

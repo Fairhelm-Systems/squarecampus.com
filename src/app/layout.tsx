@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from "next/font/google";
 import type { ReactNode } from "react";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "https://squarecampus.com/brand/squarecampus.png",
+        url: "https://squarecampus.com/og/default.png",
         width: 1200,
         height: 630,
         alt: "SquareCampus - School OS for India",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "SquareCampus | Sovereign School OS for Indian School Groups",
     description:
       "SquareCampus keeps admissions, academics, finance, communication, and operations in sync for school groups in India.",
-    images: ["https://squarecampus.com/brand/squarecampus.png"],
+    images: ["https://squarecampus.com/og/default.png"],
   },
   robots: {
     index: true,
@@ -74,6 +74,14 @@ export const metadata: Metadata = {
   other: {
     "permissions-policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
   },
+};
+
+// Tints the mobile browser chrome to the page background. The theme script
+// defaults every visitor to light (system preference is intentionally not
+// followed), so a single light value matches the rendered default — a
+// prefers-color-scheme variant would mis-tint OS-dark visitors on the light page.
+export const viewport: Viewport = {
+  themeColor: "#faf9f6",
 };
 
 export default function RootLayout({

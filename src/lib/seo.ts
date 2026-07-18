@@ -33,8 +33,10 @@ export const SEO_CONFIG = {
     "SquareCampus is a School OS for Indian school groups: admissions, academics, fees, transport, communication, compliance, and analytics in one governed system of record.",
   language: "en-IN",
   openGraphLocale: "en_IN",
+  // 1200x630 social card (correct OG/Twitter aspect ratio). The square brand
+  // mark below is the JSON-LD logo, not the share image.
   ogImage: {
-    default: "https://squarecampus.com/brand/squarecampus.png",
+    default: "https://squarecampus.com/og/default.png",
     width: 1200,
     height: 630,
   },

@@ -549,7 +549,7 @@ export default function SchoolManagementSystemPage() {
                 "@id": `${pageUrl}#webpage`,
                 primaryImageOfPage: {
                   "@type": "ImageObject",
-                  url: "https://squarecampus.com/brand/squarecampus.png",
+                  url: "https://squarecampus.com/og/default.png",
                 },
                 mainEntity: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
               },
