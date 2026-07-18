@@ -17,6 +17,15 @@ echo "==> Verifying AWS credentials"
 aws sts get-caller-identity --query Account --output text >/dev/null
 
 if [[ "${SKIP_BUILD:-}" != "1" ]]; then
+  if [[ -z "${NEXT_PUBLIC_CONTACT_ENDPOINT:-}" ]] \
+    && [[ "${NEXT_PUBLIC_CONTACT_FORM_MODE:-}" != "email" ]] \
+    && ! grep -qs '^NEXT_PUBLIC_CONTACT_ENDPOINT=.\+' .env.production .env.local .env 2>/dev/null \
+    && ! grep -qs '^NEXT_PUBLIC_CONTACT_FORM_MODE=email' .env.production .env.local .env 2>/dev/null; then
+    echo "error: NEXT_PUBLIC_CONTACT_ENDPOINT is not configured." >&2
+    echo "       The /demo form needs a real intake endpoint (see .env.example)," >&2
+    echo "       or set NEXT_PUBLIC_CONTACT_FORM_MODE=email for the explicit email-draft mode." >&2
+    exit 1
+  fi
   echo "==> Building static export"
   bun install --frozen-lockfile
   bun run build
