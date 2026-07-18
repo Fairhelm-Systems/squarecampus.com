@@ -25,13 +25,13 @@ export const faqs: FaqItem[] = [
   {
     question: "Who is SquareCampus for?",
     answer:
-      "Schools, colleges, universities, and multi-branch groups that need predictable, connected daily operations with enterprise-grade security. Whether you're a single-campus school or a network of 50+ institutions, SquareCampus scales to match your structure.",
+      "Schools, colleges, universities, and multi-branch groups that need predictable, connected daily operations. Whether you're a single-campus school or a multi-campus group, SquareCampus is structured to match how your institution is organised.",
     category: "getting-started",
   },
   {
     question: "How fast can we go live?",
     answer:
-      "Typical launch is measured in days, not months. We provide migration support, role-based training, and a dedicated success partner to configure your policies and timelines. Most institutions are operational within 2-4 weeks, depending on data complexity.",
+      "We provide migration support, role-based training, and a dedicated success partner to configure your policies and timelines. Rollout is sequenced around your academic calendar, and the timeline is agreed during scoping based on your data complexity.",
     category: "getting-started",
   },
   {
@@ -43,7 +43,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What data can be migrated from our existing systems?",
     answer:
-      "We support migration of student records, fee history, attendance data, academic records, staff information, and communication history. Our team works with you to map your existing data structure to SquareCampus, ensuring a clean transition with no data loss.",
+      "We support migration of student records, fee history, attendance data, academic records, staff information, and communication history. Our team works with you to map your existing data structure to SquareCampus and validates the migration with a parallel run before go-live.",
     category: "getting-started",
   },
 
@@ -51,7 +51,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What modules are included in SquareCampus?",
     answer:
-      "SquareCampus includes 12 core modules: Admissions, Student Management, Academics, Fee & Finance, Attendance, Timetable & Scheduling, Communication, Transport, Hostel, Library, HR & Payroll, and Reports & Analytics. All modules share the same database and work together seamlessly.",
+      "SquareCampus covers admissions, student management, academics, fee & finance, attendance, timetable & scheduling, communication, transport, hostel, library, HR & payroll, and reports & analytics. Every module works on the same unified institutional data model, so records stay consistent across workflows.",
     category: "features",
   },
   {
@@ -81,7 +81,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How often is the product updated?",
     answer:
-      "Updates ship continuously with zero-downtime releases, covering new capabilities, performance boosts, and security patches. We maintain a public changelog and notify admins of significant updates through in-app announcements.",
+      "Updates ship continuously, covering new capabilities, performance improvements, and security patches. Releases are planned to avoid disrupting school hours, and admins are notified of significant updates through in-app announcements.",
     category: "features",
   },
 
@@ -89,19 +89,19 @@ export const faqs: FaqItem[] = [
   {
     question: "How secure is our data?",
     answer:
-      "Data is encrypted in transit (TLS 1.3) and at rest (AES-256). Access is role-based with granular permissions, audit trails are enabled by default, and the platform runs on a resilient, monitored cloud infrastructure with automated backups. We follow OWASP security guidelines and conduct regular penetration testing.",
+      "Data is encrypted in transit and at rest. Access is role-based with granular permissions, audit trails are part of the product design, and the platform runs on monitored cloud infrastructure with automated backups. Detailed security documentation is available through the security review process.",
     category: "security",
   },
   {
     question: "Where is our data stored?",
     answer:
-      "All data is stored in India-based data centers, ensuring compliance with data localization requirements. We use redundant storage with automatic failover and maintain encrypted backups with point-in-time recovery capability.",
+      "The platform is designed with an India-first hosting posture, keeping institutional data in an Indian cloud region. Hosting details and backup design are documented and shared during security review.",
     category: "security",
   },
   {
     question: "What compliance standards do you follow?",
     answer:
-      "SquareCampus is designed with privacy-by-default principles. We support compliance with IT Act 2000, DPDP Act requirements, and education sector guidelines. Our platform includes consent management, data retention controls, and export capabilities for regulatory requests.",
+      "SquareCampus is designed with privacy-by-default principles and built to support institutions' obligations under the IT Act 2000, the DPDP Act, and education sector guidelines. The platform includes consent management, data retention controls, and export capabilities for regulatory requests.",
     category: "security",
   },
   {
@@ -139,7 +139,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How does SquareCampus prove ROI?",
     answer:
-      "Automation reduces manual hours (typically 40-60% reduction in admin tasks), fee collections become more predictable with automated reminders and online payments, and leadership gets real-time insights without manual consolidation. Most institutions see positive ROI within the first academic year.",
+      "Automation reduces manual admin hours, fee collections become more predictable with automated reminders and online payments, and leadership gets live insight without manual consolidation. During evaluation we map these outcomes to your current workflows so the value case is specific to your institution.",
     category: "pricing",
   },
   {

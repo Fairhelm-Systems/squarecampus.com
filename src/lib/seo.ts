@@ -1,7 +1,6 @@
-// SEO configuration and utilities for consistent metadata across the application
-// --------------------------------------------------------------
-// This file is the “identity kit” we hand to search engines.
-// Not hype. Not vibes. Just clear, consistent signals.
+// SEO configuration and utilities for consistent metadata across the application.
+// Rule of the file: every signal emitted here must be true and verifiable.
+// No rankings, no customer counts, no keyword stuffing.
 
 /**
  * squarecampus.com is the single canonical domain; squarecampus.in 301s to it
@@ -27,28 +26,11 @@ export function createAlternates(path: string) {
 export const SEO_CONFIG = {
   baseUrl,
   siteName: "SquareCampus",
-  // Your category: School OS. Your search reality: “school management system”.
-  // Our metadata must hold both truths without sounding confused.
-  defaultTitle: "SquareCampus | School OS & School Management System in India",
+  // Category: sovereign School OS. Search reality: "school management system".
+  // Metadata holds both without inventing rank or scale.
+  defaultTitle: "SquareCampus | Sovereign School OS for Indian School Groups",
   defaultDescription:
-    "SquareCampus is the School OS for India—admissions, academics, fees, transport, communication, compliance, and analytics connected in one school management system.",
-  defaultKeywords: [
-    "school management system",
-    "school management system India",
-    "school ERP",
-    "school ERP software",
-    "school management software",
-    "CBSE school ERP",
-    "ICSE school management",
-    "K-12 school software",
-    "college management system",
-    "university management system",
-    "student information system India",
-    "fee management system",
-    "attendance management system",
-    "transport management for schools",
-    "parent app for schools",
-  ],
+    "SquareCampus is a School OS for Indian school groups: admissions, academics, fees, transport, communication, compliance, and analytics in one governed system of record.",
   language: "en-IN",
   openGraphLocale: "en_IN",
   ogImage: {
@@ -71,7 +53,6 @@ export type PageMetadataConfig = {
   title: string;
   description: string;
   path: string;
-  keywords?: string[];
   ogTitle?: string;
   ogDescription?: string;
   twitterTitle?: string;
@@ -87,15 +68,15 @@ export type PageMetadataConfig = {
  *
  * The plan:
  * - Canonicals are non-negotiable.
- * - OG/Twitter are consistent across pages (avoid mismatch penalties).
+ * - OG/Twitter are page-specific and consistent (avoid mismatch penalties).
  * - robots flags are configurable per route.
+ * - No meta keywords: they are ignored by search engines and invite stuffing.
  */
 export function createPageMetadata(config: PageMetadataConfig) {
   const {
     title,
     description,
     path,
-    keywords,
     ogTitle,
     ogDescription,
     twitterTitle,
@@ -112,7 +93,6 @@ export function createPageMetadata(config: PageMetadataConfig) {
   return {
     title,
     description,
-    keywords: keywords?.length ? Array.from(keywords) : Array.from(SEO_CONFIG.defaultKeywords),
     alternates: {
       canonical: canonicalUrl,
     },
@@ -150,48 +130,6 @@ export function createPageMetadata(config: PageMetadataConfig) {
 }
 
 /**
- * JSON-LD: WebSite schema (site-level identity).
- * This anchors the #website entity referenced by other schemas.
- */
-export function createWebSiteSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SEO_CONFIG.baseUrl}/#website`,
-    url: SEO_CONFIG.baseUrl,
-    name: SEO_CONFIG.siteName,
-    description: SEO_CONFIG.defaultDescription,
-    inLanguage: SEO_CONFIG.language,
-  };
-}
-
-/**
- * JSON-LD: Organization schema (brand/entity).
- * This helps Google connect the site to a real-world entity.
- */
-export function createOrganizationSchema(config?: {
-  name?: string;
-  url?: string;
-  logo?: string;
-  sameAs?: string[];
-}) {
-  const name = config?.name ?? SEO_CONFIG.siteName;
-  const url = config?.url ?? SEO_CONFIG.baseUrl;
-  const logo = config?.logo ?? SEO_CONFIG.logo;
-  const sameAs = config?.sameAs ?? SEO_CONFIG.sameAs;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${url}/#organization`,
-    name,
-    url,
-    logo,
-    sameAs: sameAs.length ? sameAs : undefined,
-  };
-}
-
-/**
  * JSON-LD: WebPage schema (page-level identity)
  */
 export function createWebPageSchema(config: { name: string; description: string; url: string }) {
@@ -222,290 +160,5 @@ export function createBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: s
       name: crumb.name,
       item: crumb.url,
     })),
-  };
-}
-
-/**
- * JSON-LD: AboutPage schema
- */
-export function createAboutPageSchema(config: { name: string; description: string; url: string }) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "@id": `${config.url}#aboutpage`,
-    url: config.url,
-    name: config.name,
-    description: config.description,
-    inLanguage: SEO_CONFIG.language,
-    isPartOf: {
-      "@id": `${SEO_CONFIG.baseUrl}/#website`,
-    },
-  };
-}
-
-/**
- * JSON-LD: ContactPage schema
- * Rich contact page schema with organization contact details for enhanced search results.
- */
-export function createContactPageSchema(config: {
-  name: string;
-  description: string;
-  url: string;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "@id": `${config.url}#contactpage`,
-    url: config.url,
-    name: config.name,
-    description: config.description,
-    inLanguage: SEO_CONFIG.language,
-    isPartOf: {
-      "@id": `${SEO_CONFIG.baseUrl}/#website`,
-    },
-    mainEntity: {
-      "@type": "Organization",
-      "@id": `${SEO_CONFIG.baseUrl}/#organization`,
-      name: "SquareCampus",
-      url: SEO_CONFIG.baseUrl,
-      logo: SEO_CONFIG.logo,
-      description:
-        "India's leading School OS - unified school management system for admissions, academics, fees, transport, and communication.",
-      email: "contact@squarecampus.com",
-      contactPoint: [
-        {
-          "@type": "ContactPoint",
-          contactType: "sales",
-          email: "contact@squarecampus.com",
-          availableLanguage: ["English", "Hindi"],
-          areaServed: "IN",
-        },
-        {
-          "@type": "ContactPoint",
-          contactType: "customer support",
-          email: "support@squarecampus.com",
-          availableLanguage: ["English", "Hindi"],
-          areaServed: "IN",
-        },
-        {
-          "@type": "ContactPoint",
-          contactType: "security",
-          email: "security@squarecampus.com",
-          availableLanguage: ["English"],
-          areaServed: "IN",
-        },
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Mumbai",
-        addressCountry: "IN",
-      },
-    },
-  };
-}
-
-/**
- * JSON-LD: FAQPage schema for contact/demo related FAQs
- * Helps get rich FAQ snippets in search results.
- */
-export function createContactFAQSchema() {
-  const faqs = [
-    {
-      question: "How can I book a demo of SquareCampus?",
-      answer:
-        "You can book a free demo by filling out the contact form on our website or emailing contact@squarecampus.com. We typically respond within one business day and schedule demos at your convenience.",
-    },
-    {
-      question: "What is the pricing for SquareCampus school management system?",
-      answer:
-        "SquareCampus pricing is tailored based on your institution size, number of students, and required modules. Contact us for a personalized quote. We offer flexible plans for schools of all sizes.",
-    },
-    {
-      question: "How long does it take to implement SquareCampus?",
-      answer:
-        "Implementation typically takes 2-4 weeks depending on your institution size and data migration needs. Our dedicated success team guides you through the entire process.",
-    },
-    {
-      question: "Can SquareCampus migrate data from our existing school ERP?",
-      answer:
-        "Yes, we provide full migration support from any existing school management system including Fedena, Entab, Campus Care, and others. Our team handles data migration to ensure zero data loss.",
-    },
-    {
-      question: "Is SquareCampus suitable for multi-branch schools?",
-      answer:
-        "Absolutely. SquareCampus is designed for single schools as well as multi-branch school chains. You get centralized management with branch-level controls and consolidated reporting.",
-    },
-    {
-      question: "What support do you provide after implementation?",
-      answer:
-        "We provide dedicated customer support via email with response within one business day. Each institution gets a dedicated success partner, and we offer training for your staff.",
-    },
-  ];
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-}
-
-/**
- * JSON-LD: SoftwareApplication schema (SquareCampus is a product, not just a website).
- * Use this on high-intent pages like:
- * - /school-management-system
- * - /features
- * - /ecosystem
- *
- * Note: Keep claims conservative; avoid review/rating unless you have real review data.
- */
-export function createSoftwareApplicationSchema(config?: {
-  name?: string;
-  url?: string;
-  description?: string;
-  operatingSystem?: string;
-  applicationCategory?: string;
-}) {
-  const name = config?.name ?? "SquareCampus";
-  const url = config?.url ?? SEO_CONFIG.baseUrl;
-  const description = config?.description ?? SEO_CONFIG.defaultDescription;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name,
-    url,
-    description,
-    applicationCategory: config?.applicationCategory ?? "EducationalApplication",
-    operatingSystem: config?.operatingSystem ?? "Web",
-    offers: {
-      "@type": "Offer",
-      // Avoid hard pricing here if you do "book a call" style pricing.
-      price: "0",
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-    },
-    publisher: {
-      "@id": `${SEO_CONFIG.baseUrl}/#organization`,
-    },
-  };
-}
-
-export function createFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
-  return {
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-}
-
-/**
- * JSON-LD: LocalBusiness schema for local SEO signals.
- * Helps establish physical presence and local search visibility.
- */
-export function createLocalBusinessSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${SEO_CONFIG.baseUrl}/#localbusiness`,
-    name: "SquareCampus",
-    description:
-      "School management system provider offering comprehensive ERP solutions for schools, colleges, and educational institutions across India.",
-    url: SEO_CONFIG.baseUrl,
-    logo: SEO_CONFIG.logo,
-    image: SEO_CONFIG.ogImage.default,
-    telephone: "+91-contact", // Placeholder - update when available
-    email: "contact@squarecampus.com",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Mumbai",
-      addressLocality: "Mumbai",
-      addressRegion: "Maharashtra",
-      postalCode: "400001",
-      addressCountry: "IN",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "19.0760",
-      longitude: "72.8777",
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "India",
-    },
-    priceRange: "₹₹",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "18:00",
-    },
-    sameAs: SEO_CONFIG.sameAs.length ? SEO_CONFIG.sameAs : undefined,
-  };
-}
-
-/**
- * JSON-LD: Organization with hiring signals for careers page.
- * Helps indicate the company is actively hiring.
- */
-export function createHiringOrganizationSchema(config?: { hasOpenPositions?: boolean }) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SEO_CONFIG.baseUrl}/#hiring-org`,
-    name: "SquareCampus",
-    url: SEO_CONFIG.baseUrl,
-    logo: SEO_CONFIG.logo,
-    description:
-      "SquareCampus builds the operating system for modern schools and colleges in India. Join us to shape the future of education technology.",
-    foundingDate: "2023",
-    foundingLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Mumbai",
-        addressCountry: "IN",
-      },
-    },
-    numberOfEmployees: {
-      "@type": "QuantitativeValue",
-      minValue: 10,
-      maxValue: 50,
-    },
-    knowsAbout: [
-      "School Management Systems",
-      "Education Technology",
-      "ERP Software",
-      "SaaS Development",
-    ],
-    slogan: "The Operating System for Every School",
-    ...(config?.hasOpenPositions && {
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "Career Opportunities",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Career Opportunities at SquareCampus",
-              description: "Join our team building the future of school management in India",
-            },
-          },
-        ],
-      },
-    }),
   };
 }

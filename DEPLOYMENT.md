@@ -48,9 +48,20 @@ NEXT_PUBLIC_SITE_URL=https://squarecampus.in bun run build
 Every page emits hreflang alternates pointing at both domains either way
 (see [src/lib/seo.ts](src/lib/seo.ts)).
 
-Optional: set `NEXT_PUBLIC_CONTACT_ENDPOINT` at build time to a form intake
-endpoint (API Gateway + Lambda + SES, Formspree, etc.). Without it, the demo
-form opens a prefilled mail draft to contact@squarecampus.com.
+**Required:** set `NEXT_PUBLIC_CONTACT_ENDPOINT` at build time — production
+builds fail without it; there is no silent mailto fallback (see
+[next.config.ts](next.config.ts) and `.env.example`). The live intake is:
+
+```
+NEXT_PUBLIC_CONTACT_ENDPOINT=https://squarecampus.com/api/contact
+```
+
+Full intake infrastructure (Lambda + API Gateway + DynamoDB + stubbed SES,
+including abuse safeguards and the SES finish-line steps) is documented in
+[infra/contact-intake/README.md](infra/contact-intake/README.md). The
+endpoint is same-origin: CloudFront proxies `/api/*` to API Gateway using the
+existing ACM certificate, so the CSP stays at `connect-src 'self'`. `NEXT_PUBLIC_CONTACT_FORM_MODE=email` remains available as an explicit
+email-draft fallback mode, but is no longer needed.
 
 ## Upload to S3
 

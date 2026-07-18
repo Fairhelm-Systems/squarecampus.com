@@ -35,14 +35,14 @@ export const footerGroups = [
       { href: "/school-management-system", label: "School Management System" },
     ],
   },
+  // Careers and Press stay out of the footer until they have real content;
+  // both are noindex and reachable by direct link only.
   {
     title: "Company",
     links: [
       { href: "/about", label: "About" },
       { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
-      { href: "/careers", label: "Careers" },
-      { href: "/press", label: "Press" },
     ],
   },
   {
@@ -71,7 +71,7 @@ export const footerContact = {
 } as const;
 
 export const footerSignals = [
-  { label: "School OS", value: "One backbone" },
+  { label: "School OS", value: "One governed system" },
   { label: "India-first", value: "Local reality" },
   { label: "Rollout", value: "Guided go-live" },
 ] as const;

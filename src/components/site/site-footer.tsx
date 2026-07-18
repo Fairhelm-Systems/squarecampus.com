@@ -52,7 +52,7 @@ export function SiteFooter() {
             <div className="space-y-6">
               <p className="section-kicker">School OS for serious institutions</p>
               <h2 className="font-display text-3xl leading-[1.15] tracking-[-0.04em] sm:text-4xl lg:text-[2.6rem]">
-                Replace campus patchwork with one operating backbone.
+                Run every campus. Govern the institution.
               </h2>
               <p className="max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
                 SquareCampus brings admissions, academics, finance, communication, compliance, and

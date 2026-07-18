@@ -2,13 +2,11 @@ import {
   ArrowRightLeft,
   BellRing,
   BookOpenCheck,
-  BriefcaseBusiness,
   Building2,
   ChartNoAxesCombined,
-  FileSpreadsheet,
   Globe2,
+  Landmark,
   Languages,
-  MessageSquareShare,
   Radar,
   ShieldCheck,
   Sparkles,
@@ -27,89 +25,125 @@ import { SiteHeader } from "@/components/site/site-header";
 import { siteCtas } from "@/content/site-content";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | School OS & School Management System in India",
+  title: "SquareCampus | Sovereign School OS & School Management System in India",
   description:
-    "SquareCampus is the School OS for India, connecting admissions, academics, attendance, finance, communication, compliance, and operations in one institutional backbone.",
+    "Run every campus. Govern the institution. SquareCampus connects admissions, academics, attendance, finance, communication, and compliance in one governed system of record for Indian school groups.",
 };
 
-const workflowBlocks = [
+const heroProofPoints = [
+  "One governed system of record across every campus.",
+  "Trust-level governance with campus-level autonomy.",
+  "Multilingual and India-aware where usage reality demands it.",
+  "Built for operational calm, not dashboard theatre.",
+] as const;
+
+const governanceMoves = [
   {
-    title: "Admissions",
-    icon: BookOpenCheck,
-    body: "Inquiry, application, document collection, offer, enrollment, and the handoff into live academic records.",
+    title: "Set policy once",
+    body: "Fee rules, approval chains, academic calendars, and access boundaries are defined at the trust level — not re-invented per campus.",
   },
   {
-    title: "Academics",
-    icon: BriefcaseBusiness,
-    body: "Attendance, timetable, grading, assessments, curriculum visibility, and staff workflows on one shared institutional timeline.",
+    title: "Campuses execute with autonomy",
+    body: "Principals and campus teams run their day inside clear guardrails, with local variation where the institution allows it.",
   },
   {
-    title: "Finance & compliance",
-    icon: WalletCards,
-    body: "Fee plans, receipts, concessions, approvals, audit trails, and reporting without branch-level spreadsheet stitching.",
+    title: "Exceptions surface early",
+    body: "Attendance drift, fee exposure, and stalled approvals escalate to the right desk while they are still small.",
   },
   {
-    title: "Communication & operations",
-    icon: MessageSquareShare,
-    body: "Parents, students, staff, and operators receive the right updates while transport, services, and day-to-day tasks stay connected.",
+    title: "Every action stays accountable",
+    body: "Approvals, overrides, and edits land on one auditable timeline — who, what, when, and in which campus context.",
   },
 ] as const;
 
-const patchworkProblems = [
+const fragmentationCosts = [
   "Multiple tools create multiple truths. Reports become reconciliation exercises instead of decision tools.",
   "Parents bounce between channels while staff repeat the same update across apps, calls, and spreadsheets.",
   "Auditability breaks when approvals, fees, attendance, and communication live in different systems.",
-  "Leadership sees the institution late, usually through exports prepared after the real problem has already started.",
+  "Leadership sees the institution late, usually through exports prepared after the problem has already started.",
 ] as const;
 
-const capabilityStories = [
+const governedSystemGains = [
+  "An admission confirmed in one campus flows into academics, fees, and communication on the same record.",
+  "Management sees live institutional health instead of retrospective spreadsheet packages.",
+  "Parents, students, staff, and operators interact with one coordinated system.",
+  "Auditability is native because every approval and update lives on the same timeline.",
+] as const;
+
+const journeys = [
   {
-    title: "Leadership visibility",
+    title: "The student journey",
+    icon: BookOpenCheck,
+    summary: "One record from first inquiry to final transcript.",
+    steps: [
+      "Inquiry and application captured with documents and status",
+      "Enrolment flows into sections, timetable, and attendance",
+      "Assessments, remarks, and results build one academic history",
+      "Promotion and records stay audit-ready year over year",
+    ],
+  },
+  {
+    title: "The money journey",
+    icon: WalletCards,
+    summary: "Every rupee traceable from fee plan to audit.",
+    steps: [
+      "Fee plans, concessions, and transport slabs set by policy",
+      "Invoices, reminders, and online payments run on schedule",
+      "Receipts and reconciliation happen on the same record",
+      "Approvals and refunds carry a complete audit trail",
+    ],
+  },
+  {
+    title: "The decision journey",
     icon: ChartNoAxesCombined,
-    body: "A live picture of attendance, dues, academic health, and campus exceptions without waiting for stitched reports.",
+    summary: "From signal to action while the problem is still small.",
+    steps: [
+      "Live signals across attendance, fees, and academics",
+      "Exceptions flagged against policy, not discovered at term end",
+      "Reviews run on shared numbers, not competing exports",
+      "Actions and follow-ups tracked to closure",
+    ],
+  },
+] as const;
+
+const sovereigntyPillars = [
+  {
+    title: "Deployment on your terms",
+    icon: Landmark,
+    body: "Managed cloud on AWS Mumbai by default, private single-tenant deployment for strict segregation, and BYOC — your own cloud account — coming soon.",
   },
   {
-    title: "Teacher and staff workflows",
-    icon: Building2,
-    body: "Attendance, assessment, communication, and daily operational work happen in connected flows, not scattered tabs.",
+    title: "India-first residency posture",
+    icon: Globe2,
+    body: "The platform is designed to keep institutional data in an Indian cloud region, with the posture documented in writing during evaluation.",
   },
   {
-    title: "Finance and compliance",
-    icon: FileSpreadsheet,
-    body: "Fee operations, receipts, concessions, approvals, and audit trails stay ready for scrutiny.",
+    title: "Your data, your exit rights",
+    icon: ShieldCheck,
+    body: "Role-scoped access and audit trails while you operate — and complete exports in standard formats if you ever decide to leave.",
+  },
+] as const;
+
+const rolloutTrust = [
+  {
+    title: "Guided rollout",
+    icon: Globe2,
+    body: "Migration, role-based training, and go-live are sequenced around admissions, fee cycles, and exam windows — with named counterparts, not ticket queues.",
   },
   {
-    title: "Parent and student experience",
-    icon: BellRing,
-    body: "One app and one timeline for updates, dues, attendance, circulars, and progress visibility.",
-  },
-  {
-    title: "Multi-campus control",
+    title: "Parallel validation",
     icon: ArrowRightLeft,
-    body: "Institution-wide policy with campus-level accountability, without fragmenting data or ownership.",
+    body: "Critical workflows run in parallel with your current systems until finance, academic, and admin teams trust the numbers.",
   },
   {
     title: "Trust posture",
     icon: ShieldCheck,
-    body: "India-aware hosting, role-based access, auditability, and operational reliability are part of the product, not an afterthought.",
-  },
-] as const;
-
-const indiaFirstPoints = [
-  {
-    title: "Multilingual usage reality",
-    icon: Languages,
-    body: "Parent-facing flows can meet users where they are, without making reporting and institutional controls harder.",
+    body: "Role-based access, encryption in transit and at rest, and audit trails are product design — and security documentation is shared in writing on request.",
   },
   {
-    title: "Institution-aware operations",
-    icon: Globe2,
-    body: "SquareCampus is shaped around the operational patterns schools and colleges in India actually deal with every term.",
-  },
-  {
-    title: "Operational trust",
-    icon: ShieldCheck,
-    body: "The product is designed to stay credible under fee deadlines, admissions bursts, inspections, and board reviews.",
+    title: "Operational calm",
+    icon: BellRing,
+    body: "The outcome that matters: fee deadlines, inspections, and board reviews handled from one system, without the end-of-term scramble.",
   },
 ] as const;
 
@@ -161,19 +195,18 @@ export default function Home() {
     <div className="page-shell">
       <SiteHeader />
       <main>
+        {/* 1 — Hero */}
         <SectionShell className="pt-12 sm:pt-16">
           <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <Reveal className="space-y-6">
-              <p className="section-kicker">
-                School OS for schools, colleges, and multi-campus institutions
-              </p>
+              <p className="section-kicker">Sovereign School OS for Indian school groups</p>
               <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-[4.6rem]">
-                The School OS that keeps every campus system in sync.
+                Run every campus. Govern the institution.
               </h1>
               <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-                SquareCampus connects admissions, academics, attendance, fees, communication,
-                compliance, and operations in one operating backbone built for the realities of
-                institutions in India.
+                Most ERPs help staff enter data. SquareCampus helps management govern the
+                institution — admissions, academics, attendance, fees, communication, and compliance
+                running on one governed system of record.
               </p>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
@@ -183,14 +216,9 @@ export default function Home() {
                   variant="secondary"
                 />
               </div>
-              {/* Mobile shows only the two sharpest proof points; all four from sm: up. */}
+              {/* Mobile shows only the two sharpest points; all four from sm: up. */}
               <div className="hidden gap-3 pt-2 sm:grid sm:grid-cols-2">
-                {[
-                  "One login, one timeline, one institutional source of truth.",
-                  "Built for real school operations, not a generic admin dashboard.",
-                  "Multilingual and India-aware where usage reality demands it.",
-                  "Auditability, uptime, and operational calm where institutions cannot afford drift.",
-                ].map((item) => (
+                {heroProofPoints.map((item) => (
                   <div
                     key={item}
                     className="surface-panel rounded-[1.35rem] px-4 py-3 text-sm leading-6 text-muted-foreground"
@@ -207,247 +235,43 @@ export default function Home() {
           </div>
         </SectionShell>
 
+        {/* 2 — Command centre */}
         <SectionShell
-          eyebrow="Connected operating model"
+          eyebrow="The command centre"
           compactBody
-          title="Every critical workflow stays on the same institutional backbone"
-          body="SquareCampus is not just a school management interface. It behaves like the operating layer that keeps departments, people, and records aligned."
+          title="Management sees the institution the way a board expects to"
+          body="Trust-level governance with campus-level autonomy: policy is set once, campuses execute inside guardrails, and exceptions reach the right desk early."
         >
-          <MobileExpand label="Show the operating model">
-            <Reveal className="grid gap-4 xl:grid-cols-[0.94fr_1.06fr]">
+          <MobileExpand label="See the command centre">
+            <Reveal className="grid gap-4 xl:grid-cols-[1.06fr_0.94fr]">
               <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
-                <div className="pointer-events-none absolute inset-x-8 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.12),transparent_70%)]" />
-                <div className="relative flex h-full flex-col">
-                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--line) pb-5">
-                    <div>
-                      <p className="section-kicker">Connected workflow spine</p>
-                      <h2 className="mt-3 max-w-sm font-display text-2xl tracking-[-0.04em]">
-                        Four linked operating moves keep the institution in sync.
-                      </h2>
-                    </div>
-                    <span className="rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      One connected timeline
-                    </span>
-                  </div>
-
-                  <div className="mt-5 grid gap-2.5">
-                    {workflowBlocks.map((item, index) => (
-                      <div
-                        key={item.title}
-                        className="rounded-[1.3rem] border border-(--line) bg-(--surface) p-4 shadow-[0_18px_34px_rgba(8,15,30,0.05)]"
-                      >
-                        <div className="flex items-start gap-3.5">
-                          <div
-                            className={`flex size-9 shrink-0 items-center justify-center rounded-full border font-mono text-[0.7rem] ${
-                              index === 0
-                                ? "border-transparent bg-foreground text-background"
-                                : "border-(--line) bg-(--surface-strong) text-muted-foreground"
-                            }`}
-                          >
-                            {String(index + 1).padStart(2, "0")}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between gap-4">
-                              <h3 className="font-display text-lg tracking-[-0.03em]">
-                                {item.title}
-                              </h3>
-                              <item.icon className="size-4.5 shrink-0 text-(--brand)" />
-                            </div>
-                            <p className="mt-1.5 max-w-xl text-sm leading-6 text-muted-foreground">
-                              {item.body}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </article>
-
-              <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[linear-gradient(180deg,rgba(88,124,204,0.12),transparent)]" />
-                <div className="relative flex h-full flex-col">
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      <Building2 className="size-4 text-(--brand)" />
-                      Operating backbone
-                    </div>
-                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      Live institutional state
-                    </span>
-                  </div>
-
-                  <div className="mt-6">
-                    <p className="section-kicker">
-                      Start with the institution, not the module list
-                    </p>
-                    <h2 className="mt-3 max-w-xl font-display text-2xl tracking-[-0.04em] sm:text-3xl">
-                      The School OS keeps records, roles, and decisions moving in one direction.
-                    </h2>
-                    <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
-                      When admissions, fee logic, staff workflows, and parent communication run on
-                      the same operating layer, the institution stops passing context between teams
-                      and tools.
-                    </p>
-                  </div>
-
-                  <div className="mt-6 grid flex-1 gap-3 lg:grid-cols-[1.08fr_0.92fr]">
-                    <div className="rounded-[1.4rem] border border-(--line) bg-(--surface-strong) p-5">
-                      <p className="section-kicker">What SquareCampus handles here</p>
-                      <p className="mt-3 text-sm leading-6 text-foreground">
-                        Shared student identity, financial state, role-aware approvals, and parent
-                        communication all stay usable without rebuilding context every term.
-                      </p>
-                      <div className="mt-4 grid gap-2.5">
-                        {[
-                          "Admission changes flow into academics and fee setup on the same record",
-                          "Receipts, circulars, attendance, and exceptions stay visible on one timeline",
-                          "Operators, finance teams, and leadership work from the same live state",
-                        ].map((item) => (
-                          <div
-                            key={item}
-                            className="rounded-[1.1rem] border border-(--line) bg-(--surface) px-3.5 py-3 text-sm leading-6 text-muted-foreground"
-                          >
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="rounded-[1.4rem] border border-(--line) bg-(--surface-strong) p-5">
-                      <p className="section-kicker">Why this structure matters</p>
-                      {/* Mobile shows the first two; the full list from sm: up. */}
-                      <div className="mt-3 grid gap-2.5 [&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+3)]:flex">
-                        {[
-                          "No duplicate student profiles across admissions and academics",
-                          "No orphaned parent updates disconnected from fee and attendance state",
-                          "No branch reporting packs stitched together after the fact",
-                        ].map((item, index) => (
-                          <div
-                            key={item}
-                            className="flex items-start gap-3 rounded-[1.1rem] border border-(--line) bg-(--surface) px-3.5 py-3"
-                          >
-                            <p className="font-mono text-[0.58rem] leading-6 text-muted-foreground">
-                              {String(index + 1).padStart(2, "0")}
-                            </p>
-                            <p className="text-sm leading-6 text-foreground">{item}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-            <div className="w-full text-center">
-              <p className="mt-6 text-base text-center leading-8 text-muted-foreground">
-                Shared timeline means parents, staff, and operators stop chasing the latest version
-                of what happened.
-              </p>
-            </div>
-          </MobileExpand>
-        </SectionShell>
-
-        <SectionShell
-          eyebrow="Patchwork versus OS"
-          compactBody
-          title="The institution already feels the cost of fragmented software"
-          body="Most campuses are not missing features. They are missing a connected operating model."
-        >
-          <MobileExpand label="Compare patchwork vs OS">
-            <Reveal className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="surface-panel rounded-[1.8rem] p-7">
-                <p className="section-kicker">Patchwork pain</p>
-                <div className="mt-5 grid gap-3">
-                  {patchworkProblems.map((problem) => (
-                    <div
-                      key={problem}
-                      className="rounded-[1.2rem] bg-(--surface-muted) px-4 py-4 text-sm leading-6 text-muted-foreground"
-                    >
-                      {problem}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="surface-panel-strong rounded-[1.8rem] p-7">
-                <p className="section-kicker">SquareCampus difference</p>
-                <h2 className="mt-4 font-display text-3xl tracking-tighter">
-                  A School OS replaces exports, sync gaps, and operational guessing.
-                </h2>
-                <div className="mt-5 grid gap-3">
-                  {[
-                    "Admissions changes flow into academics, fees, and communication because the same record is being used everywhere.",
-                    "Leadership sees live institutional health instead of retrospective spreadsheet packages.",
-                    "Parents, students, staff, and operators interact with one coordinated system instead of disconnected tools.",
-                    "Auditability is native because approvals, updates, and communication all live on the same timeline.",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4 text-sm leading-6 text-muted-foreground"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </MobileExpand>
-        </SectionShell>
-
-        <SectionShell
-          eyebrow="Capability story"
-          compactBody
-          title="Product depth without becoming a feature dump"
-          body="The real story is how the platform changes day-to-day institutional behavior across teams."
-        >
-          <MobileExpand label="Explore the capability story">
-            <Reveal className="grid gap-4 xl:grid-cols-[1.02fr_0.98fr]">
-              <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-7 xl:p-8">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(88,124,204,0.14),transparent)]" />
                 <div className="relative flex h-full flex-col">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
                       <ChartNoAxesCombined className="size-4 text-(--teal)" />
-                      Leadership visibility
+                      Institution view
                     </div>
                     <span className="rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      Live institution view
+                      Live state
                     </span>
                   </div>
 
-                  <h2 className="mt-8 max-w-2xl font-display text-4xl tracking-[-0.06em] sm:text-[3.6rem]">
-                    {capabilityStories[0].title}
+                  <h2 className="mt-7 max-w-2xl font-display text-3xl tracking-[-0.05em] sm:text-4xl">
+                    Attendance, fee exposure, and exceptions — before the review meeting.
                   </h2>
-                  <p className="mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
-                    {capabilityStories[0].body}
+                  <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">
+                    Leadership reads live signals across campuses instead of waiting for stitched
+                    reports assembled after the fact.
                   </p>
 
-                  <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                    {[
-                      ["Fee exposure", "Visible branch by branch"],
-                      ["Attendance drift", "Exceptions before review meetings"],
-                    ].map(([label, detail]) => (
-                      <div
-                        key={label}
-                        className="rounded-[1.3rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4"
-                      >
-                        <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
-                          {label}
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]">
-                          {detail}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
                   <div className="mt-7 grid flex-1 items-stretch gap-4 lg:grid-cols-[1fr_1fr]">
-                    {/* Attendance by grade — horizontal bar chart */}
+                    {/* Attendance by grade — horizontal bar chart (illustrative UI) */}
                     <div className="flex h-full flex-col rounded-[1.7rem] border border-(--line) bg-(--surface) p-6">
                       <div className="flex items-center justify-between">
                         <p className="section-kicker">Attendance by grade</p>
                         <span className="rounded-full border border-(--line) bg-(--surface-strong) px-2.5 py-1 font-mono text-[0.48rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
-                          Today
+                          Sample view
                         </span>
                       </div>
                       <div className="mt-5 flex flex-1 flex-col justify-center gap-3">
@@ -481,7 +305,7 @@ export default function Home() {
                         ))}
                       </div>
                       <div className="mt-4 flex flex-wrap gap-2">
-                        {["Live branch roll-up", "Exceptions flagged"].map((item) => (
+                        {["Campus roll-up", "Exceptions flagged"].map((item) => (
                           <span
                             key={item}
                             className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-2 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
@@ -492,12 +316,12 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Fee collection — doughnut chart */}
+                    {/* Fee collection — doughnut chart (illustrative UI) */}
                     <div className="flex h-full flex-col rounded-[1.7rem] border border-(--line) bg-(--surface) p-6">
                       <div className="flex items-center justify-between">
                         <p className="section-kicker">Fee collection</p>
                         <span className="rounded-full border border-(--line) bg-(--surface-strong) px-2.5 py-1 font-mono text-[0.48rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
-                          This term
+                          Sample view
                         </span>
                       </div>
                       <div className="flex flex-1 items-center justify-center py-6">
@@ -559,7 +383,7 @@ export default function Home() {
                           </svg>
                           <div className="absolute inset-0 flex flex-col items-center justify-center">
                             <span className="font-display text-2xl tracking-[-0.04em] text-[color:var(--foreground)]">
-                              ₹2.4L
+                              72%
                             </span>
                             <span className="mt-0.5 font-mono text-[0.5rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
                               Collected
@@ -597,10 +421,10 @@ export default function Home() {
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.06),rgba(16,24,38,0.76))]" />
                       <div className="absolute inset-x-5 bottom-5 rounded-[1.3rem] border border-white/14 bg-[rgba(12,20,32,0.55)] p-4 text-white backdrop-blur-md">
                         <p className="font-mono text-[0.54rem] uppercase tracking-[0.18em] text-white/70">
-                          Real institutional context
+                          Built for institutional buyers
                         </p>
                         <p className="mt-3 font-display text-2xl tracking-[-0.04em]">
-                          A serious platform for operators, trustees, finance teams, and principals.
+                          A serious platform for trustees, principals, finance teams, and operators.
                         </p>
                       </div>
                     </div>
@@ -608,88 +432,48 @@ export default function Home() {
                 </div>
               </article>
 
-              <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-7 xl:p-8">
+              <article className="surface-panel relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
                 <div className="flex h-full flex-col">
-                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[color:var(--line)] pb-6">
+                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--line) pb-5">
                     <div>
-                      <p className="section-kicker">Operational depth</p>
-                      <h2 className="mt-4 font-display text-3xl tracking-[-0.05em]">
-                        Product breadth, arranged around how institutions actually work.
+                      <p className="section-kicker">Governance model</p>
+                      <h2 className="mt-3 max-w-sm font-display text-2xl tracking-[-0.04em]">
+                        Trust-level governance. Campus-level autonomy.
                       </h2>
                     </div>
-                    <span className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
-                      Institution-aware modules
+                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                      <Building2 className="mr-2 inline size-4 text-(--brand)" />
+                      Every campus
                     </span>
                   </div>
 
-                  <div className="mt-6 grid flex-1 gap-4 md:grid-cols-2">
-                    <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-5">
-                      <Building2 className="size-5 text-[color:var(--teal)]" />
-                      <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-                        {capabilityStories[1].title}
-                      </h3>
-                      <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                        {capabilityStories[1].body}
-                      </p>
-                    </div>
-
-                    <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-5">
-                      <FileSpreadsheet className="size-5 text-[color:var(--teal)]" />
-                      <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-                        {capabilityStories[2].title}
-                      </h3>
-                      <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                        {capabilityStories[2].body}
-                      </p>
-                    </div>
-
-                    <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-5">
-                      <BellRing className="size-5 text-[color:var(--teal)]" />
-                      <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-                        {capabilityStories[3].title}
-                      </h3>
-                      <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                        {capabilityStories[3].body}
-                      </p>
-                    </div>
-
-                    <div className="rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-5">
-                      <ArrowRightLeft className="size-5 text-[color:var(--teal)]" />
-                      <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-                        {capabilityStories[4].title}
-                      </h3>
-                      <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                        {capabilityStories[4].body}
-                      </p>
-                    </div>
-
-                    <div className="rounded-[1.6rem] border border-[color:var(--line)] bg-[color:var(--surface-strong)] p-5 md:col-span-2">
-                      <div className="space-y-5">
-                        <div className="max-w-2xl">
-                          <ShieldCheck className="size-5 text-[color:var(--teal)]" />
-                          <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-                            {capabilityStories[5].title}
-                          </h3>
-                          <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                            {capabilityStories[5].body}
-                          </p>
-                        </div>
-                        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                          {[
-                            "Role-aware access across branches",
-                            "Traceable approvals and edits",
-                            "Audit-friendly operating history",
-                          ].map((item) => (
-                            <div
-                              key={item}
-                              className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
-                            >
-                              {item}
-                            </div>
-                          ))}
+                  <div className="mt-5 grid flex-1 content-start gap-2.5">
+                    {governanceMoves.map((item, index) => (
+                      <div
+                        key={item.title}
+                        className="rounded-[1.3rem] border border-(--line) bg-(--surface-strong) p-4"
+                      >
+                        <div className="flex items-start gap-3.5">
+                          <div
+                            className={`flex size-9 shrink-0 items-center justify-center rounded-full border font-mono text-[0.7rem] ${
+                              index === 0
+                                ? "border-transparent bg-foreground text-background"
+                                : "border-(--line) bg-(--surface) text-muted-foreground"
+                            }`}
+                          >
+                            {String(index + 1).padStart(2, "0")}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-display text-lg tracking-[-0.03em]">
+                              {item.title}
+                            </h3>
+                            <p className="mt-1.5 max-w-xl text-sm leading-6 text-muted-foreground">
+                              {item.body}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </article>
@@ -697,32 +481,116 @@ export default function Home() {
           </MobileExpand>
         </SectionShell>
 
+        {/* 3 — Cost of fragmentation */}
         <SectionShell
-          eyebrow="India-first reality"
+          eyebrow="The cost of fragmentation"
           compactBody
-          title="Built for how institutions here actually operate"
-          body="This is not a side note. India-aware usage, language, trust, and institutional behavior shape the product itself."
+          title="Fragmented software taxes the institution every single day"
+          body="Most campuses are not missing features. They are missing one governed operating model."
         >
-          <MobileExpand label="See the India-first approach">
+          <MobileExpand label="Compare fragmented vs governed">
+            <Reveal className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
+              <div className="surface-panel rounded-[1.8rem] p-7">
+                <p className="section-kicker">What fragmentation costs</p>
+                <div className="mt-5 grid gap-3">
+                  {fragmentationCosts.map((problem) => (
+                    <div
+                      key={problem}
+                      className="rounded-[1.2rem] bg-(--surface-muted) px-4 py-4 text-sm leading-6 text-muted-foreground"
+                    >
+                      {problem}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="surface-panel-strong rounded-[1.8rem] p-7">
+                <p className="section-kicker">What one governed system changes</p>
+                <h2 className="mt-4 font-display text-3xl tracking-tighter">
+                  Exports, sync gaps, and operational guessing stop being the job.
+                </h2>
+                <div className="mt-5 grid gap-3">
+                  {governedSystemGains.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4 text-sm leading-6 text-muted-foreground"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </MobileExpand>
+        </SectionShell>
+
+        {/* 4 — Three connected journeys */}
+        <SectionShell
+          eyebrow="Three connected journeys"
+          compactBody
+          title="Students, money, and decisions move through one system"
+          body="Every campus runs the same three journeys. SquareCampus keeps each one connected end to end — on the same institutional record."
+        >
+          <MobileExpand label="Explore the three journeys">
+            <Reveal staggerChildren className="grid gap-4 lg:grid-cols-3">
+              {journeys.map((journey) => (
+                <article
+                  key={journey.title}
+                  data-reveal-item
+                  className="surface-panel flex flex-col rounded-[1.8rem] p-6"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <journey.icon className="size-5 text-(--brand)" />
+                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-1.5 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
+                      Connected
+                    </span>
+                  </div>
+                  <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{journey.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{journey.summary}</p>
+                  <div className="mt-5 grid flex-1 content-start gap-2.5">
+                    {journey.steps.map((step, index) => (
+                      <div
+                        key={step}
+                        className="flex items-start gap-3 rounded-[1.1rem] border border-(--line) bg-(--surface-strong) px-3.5 py-3"
+                      >
+                        <p className="font-mono text-[0.58rem] leading-6 text-muted-foreground">
+                          {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <p className="text-sm leading-6 text-foreground">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </Reveal>
+          </MobileExpand>
+        </SectionShell>
+
+        {/* 5 — Sovereignty */}
+        <SectionShell
+          eyebrow="Sovereignty"
+          compactBody
+          title="Your institution's data, under your institution's governance"
+          body="Sovereign means the institution stays in control: where the platform runs, who can see what, and how the data leaves if you ever want it to."
+        >
+          <MobileExpand label="See the sovereignty model">
             <Reveal className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
               <div className="surface-panel-strong relative overflow-hidden rounded-[1.8rem] p-8">
                 <div className="pointer-events-none absolute right-[-3rem] top-[-2rem] h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.16),transparent_72%)] blur-3xl" />
                 <Languages className="size-5 text-[color:var(--brand)]" />
                 <h2 className="mt-5 font-display text-3xl tracking-[-0.05em]">
-                  Multilingual where usage needs it. Structured where institutions demand it.
+                  Sovereign does not mean rigid.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  Parent-facing flows, communication, and engagement surfaces can adapt to language
-                  preferences while the institution still keeps consistent controls, reporting, and
-                  audit-ready records.
+                  Parent-facing flows adapt to language preferences while the institution keeps
+                  consistent controls, reporting, and audit-ready records underneath.
                 </p>
                 <div className="mt-8 grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
                   <div className="grid gap-4">
                     <div className="rounded-[1.45rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-5">
                       <p className="section-kicker">Preferred language</p>
                       <p className="mt-4 text-base leading-7 text-[color:var(--foreground)]">
-                        Parent-facing updates can flex by audience without fragmenting the
-                        institutional record.
+                        Parent-facing updates flex by audience without fragmenting the institutional
+                        record.
                       </p>
                       <div className="mt-4 flex flex-wrap gap-2">
                         {["English", "Hindi", "Kannada", "Tamil"].map((item) => (
@@ -785,14 +653,14 @@ export default function Home() {
                         India-aware operating model
                       </p>
                       <p className="mt-3 font-display text-2xl tracking-[-0.04em]">
-                        Language can stay flexible while the institution stays operationally strict.
+                        Language stays flexible while the institution stays operationally strict.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="grid content-start gap-4">
-                {indiaFirstPoints.map((item) => (
+                {sovereigntyPillars.map((item) => (
                   <article key={item.title} className="surface-panel rounded-[1.6rem] p-6">
                     <item.icon className="size-5 text-[color:var(--amber)]" />
                     <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{item.title}</h2>
@@ -801,15 +669,26 @@ export default function Home() {
                     </p>
                   </article>
                 ))}
+                <div className="surface-panel rounded-[1.6rem] p-6">
+                  <p className="section-kicker">Deployment details</p>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    Managed cloud, private deployment, and the BYOC early-access list live on the
+                    services page.
+                  </p>
+                  <div className="mt-4">
+                    <ButtonLink href="/services" label="See deployment options" variant="ghost" />
+                  </div>
+                </div>
               </div>
             </Reveal>
           </MobileExpand>
         </SectionShell>
 
+        {/* 6 — AEGIS (secondary to the OS) */}
         <SectionShell
           eyebrow="Governed intelligence"
           compactBody
-          title="AEGIS is the governed intelligence layer inside the operating system"
+          title="AEGIS is the governed intelligence layer inside SquareCampus"
           body="AEGIS — Adaptive Enterprise Governance & Intelligence System — surfaces what needs attention across the institution, inside the same permissions and audit trails as everything else."
         >
           <MobileExpand label="See AEGIS in action">
@@ -862,36 +741,16 @@ export default function Home() {
           </MobileExpand>
         </SectionShell>
 
+        {/* 7 — Rollout & trust */}
         <SectionShell
-          eyebrow="Why institutions switch"
+          eyebrow="Rollout & trust"
           compactBody
-          title="The value is not just modern design. It is operational calm."
-          body="Schools and colleges switch when they realize the current stack cannot produce clarity, accountability, and predictable execution at institutional scale."
+          title="Switching systems is an institutional decision. We treat it that way."
+          body="The move is sequenced around your academic calendar, validated in parallel, and governed by the same trust posture the platform runs on."
         >
-          <MobileExpand label="See why institutions switch">
+          <MobileExpand label="See rollout and trust">
             <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
-              {[
-                {
-                  title: "Trust and control",
-                  icon: ShieldCheck,
-                  body: "India-first posture, role-based access, auditability, and dependable infrastructure create confidence with leadership and operators alike.",
-                },
-                {
-                  title: "Fewer moving parts",
-                  icon: ArrowRightLeft,
-                  body: "One system replaces the friction of separate tools, exports, duplicate work, and support handoffs.",
-                },
-                {
-                  title: "Faster visibility",
-                  icon: ChartNoAxesCombined,
-                  body: "Campus leadership sees the institution through live signals instead of delayed reporting rituals.",
-                },
-                {
-                  title: "Guided adoption",
-                  icon: Globe2,
-                  body: "Rollout, migration, training, and post-launch support are part of the operating promise, not treated as an afterthought.",
-                },
-              ].map((item) => (
+              {rolloutTrust.map((item) => (
                 <article
                   key={item.title}
                   data-reveal-item
@@ -905,20 +764,33 @@ export default function Home() {
                 </article>
               ))}
             </Reveal>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <ButtonLink
+                href={siteCtas.rolloutHref}
+                label="See the rollout model"
+                variant="secondary"
+              />
+              <ButtonLink
+                href={siteCtas.securityHref}
+                label="Review the trust posture"
+                variant="secondary"
+              />
+            </div>
           </MobileExpand>
         </SectionShell>
 
+        {/* 8 — Final CTA */}
         <SectionShell className="pb-12 sm:pb-22">
           <Reveal className="surface-panel-strong rounded-[2rem] p-5 sm:p-8 lg:p-10">
             <div className="grid gap-5 sm:gap-8 lg:grid-cols-[1fr_0.82fr] lg:items-center">
               <div>
                 <p className="section-kicker">Next move</p>
                 <h2 className="mt-4 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
-                  See whether SquareCampus can replace your current patchwork.
+                  See whether SquareCampus can govern your institution.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  We will map the current stack, show the connected operating model, and walk
-                  through rollout, migration, and institutional fit without reducing the
+                  Bring your current stack. We will map it against the governed operating model and
+                  walk through rollout, controls, and institutional fit — without reducing the
                   conversation to a card wall of features.
                 </p>
               </div>

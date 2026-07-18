@@ -1,4 +1,4 @@
-import { Activity, Database, Landmark, Lock, Network, Server, ShieldCheck } from "lucide-react";
+import { Database, Landmark, Lock, Network, Server, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
@@ -10,107 +10,90 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { siteCtas } from "@/content/site-content";
-import { createAlternates } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: createAlternates("/infrastructure"),
-  title: "Infrastructure Transparency",
+// Rule of this page: every statement is either a design decision we can show,
+// or an offer to document specifics during a security review. No numbers we
+// cannot evidence, no absolutes, no fabricated status indicators.
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Infrastructure",
   description:
-    "SquareCampus runs on AWS Mumbai (ap-south-1) with 99.99% SLA, multi-AZ failover, encrypted data, and verified India-only data residency. Every claim is verifiable.",
-};
+    "How SquareCampus infrastructure is designed: AWS Mumbai (ap-south-1), multi-AZ architecture, encryption in transit and at rest, and an India data-residency posture — with documentation available through the security review process.",
+  path: "/infrastructure",
+});
 
 const heroSignals = [
-  ["Uptime SLA", "99.99% (AWS)"],
-  ["Measured", "99.97% actual"],
-  ["Zones", "3 in Mumbai"],
-  ["Residency", "India only"],
+  ["Cloud region", "AWS Mumbai"],
+  ["Architecture", "Multi-AZ design"],
+  ["Residency", "India-first posture"],
+  ["Encryption", "Transit & at rest"],
 ] as const;
 
 const comparisonData = [
   {
     category: "Data residency",
     us: {
-      title: "Mumbai, India",
-      details: "3 availability zones in ap-south-1 only, verified monthly.",
-    },
-    them: {
-      title: "“India” (claims)",
+      title: "AWS Mumbai (ap-south-1)",
       details:
-        "Often vague and unverified — could be a Singapore or US VPS with an India endpoint.",
-      ask: "Which data center? Can we visit?",
-    },
-  },
-  {
-    category: "Uptime SLA",
-    us: {
-      title: "99.99% (AWS SLA)",
-      details: "52 minutes/year maximum downtime. Actual measured: 99.97%.",
+        "The platform is designed to keep institutional data in the AWS Mumbai region, with controls intended to restrict resources to that region.",
     },
     them: {
-      title: "No formal SLA",
-      details: "Or 99% typical — that's 87 hours/year of downtime with no contractual guarantee.",
-      ask: "What's your contractual uptime guarantee?",
+      title: "“India” (unspecified)",
+      details: "Often vague: an India endpoint can sit in front of infrastructure hosted anywhere.",
+      ask: "Which region and provider, in writing?",
     },
   },
   {
-    category: "Disaster recovery",
+    category: "Reliability design",
     us: {
-      title: "Automatic multi-AZ failover",
-      details: "3 separate facilities in Mumbai. RTO 4 hours, RPO 15 minutes, tested quarterly.",
+      title: "Multi-AZ architecture",
+      details:
+        "Designed across multiple availability zones so a single facility issue does not take the platform down. Recovery objectives are documented and shared during evaluation.",
     },
     them: {
       title: "Single location",
-      details: "If the building fails, you're down. Manual recovery takes days or weeks.",
-      ask: "What's your disaster recovery plan?",
+      details: "One facility means one point of failure and manual recovery.",
+      ask: "What is your recovery plan if the building fails?",
     },
   },
   {
     category: "Physical security",
     us: {
-      title: "Bank-grade (ISO 27001)",
+      title: "AWS data centres",
       details:
-        "Biometric access, 24/7 security, CCTV, mantrap entry — audited third-party AWS facilities.",
+        "AWS facilities carry independent certifications (published by AWS). Our application-level controls are documented separately and shared on request.",
     },
     them: {
       title: "“Secure” (undefined)",
-      details: "Varies widely; often just a locked room with no third-party certification.",
-      ask: "Can you share a security audit?",
-    },
-  },
-  {
-    category: "Compliance",
-    us: {
-      title: "ISO 27001, SOC 2, PCI DSS",
-      details: "AWS facility certifications plus application-level compliance on top.",
-    },
-    them: {
-      title: "Usually none",
-      details: "Or “ISO certified” without proof — the building's certificate is not theirs.",
-      ask: "Can you share your ISO certificate?",
+      details: "Varies widely; sometimes a locked room with no third-party attestation.",
+      ask: "Can you share any third-party attestation?",
     },
   },
   {
     category: "Scalability",
     us: {
-      title: "Instant scaling",
-      details: "Auto-scale to millions of users. No hardware ordering, same Mumbai location.",
+      title: "Cloud auto-scaling",
+      details:
+        "Capacity scales with admission season and exam-week load without hardware purchases, in the same region.",
     },
     them: {
       title: "Hardware bottleneck",
-      details: "Must order, ship, and install for months; overprovisioning wastes money.",
-      ask: "How do you handle 10x growth?",
+      details: "Physical servers must be ordered, shipped, and installed to grow.",
+      ask: "How do you handle a 10x load spike?",
     },
   },
   {
     category: "Transparency",
     us: {
-      title: "Fully transparent",
-      details: "Monthly infrastructure reports, CloudTrail logs, third-party audits published.",
+      title: "Questions answered in writing",
+      details:
+        "We answer infrastructure questionnaires in writing and share architecture documentation during the security review process.",
     },
     them: {
       title: "Vague claims",
-      details: "No audit reports, no facility visits, no proof “own servers” aren't a foreign VPS.",
-      ask: "Prove it.",
+      details: "“Own servers” without documentation is a marketing line, not an architecture.",
+      ask: "Will you put your answers in writing?",
     },
   },
 ] as const;
@@ -118,132 +101,83 @@ const comparisonData = [
 const capabilities = [
   {
     icon: Server,
-    title: "Always available",
-    body: "Your data is stored in 3 separate facilities in Mumbai. If one has issues, the others keep everything running smoothly.",
-    specs: [
-      ["Data centers", "3 locations"],
-      ["Traffic handling", "Scales automatically"],
-      ["If one fails", "Others take over"],
-      ["Recovery time", "Under 30 seconds"],
-    ],
+    title: "Built to stay available",
+    body: "The platform is architected across multiple availability zones in the AWS Mumbai region, so a problem in one facility is designed not to take daily campus operations down.",
   },
   {
     icon: Database,
-    title: "Your data is safe",
-    body: "We keep multiple copies of your data and back up every 15 minutes. If anything goes wrong, we can restore to any point in the last 35 days.",
-    specs: [
-      ["Backups", "Every 15 minutes"],
-      ["Recovery window", "35 days"],
-      ["Copies", "Multiple facilities"],
-      ["Durability", "99.999999999%"],
-    ],
+    title: "Backups by design",
+    body: "Automated, encrypted backups are part of the platform design. Backup cadence, retention, and restore procedures are documented and shared during security review.",
   },
   {
     icon: ShieldCheck,
-    title: "Bank-grade security",
-    body: "All data is encrypted using the same standards banks use. Even we cannot read your raw data — only you hold the keys.",
-    specs: [
-      ["Data in transit", "Encrypted"],
-      ["Data at rest", "Encrypted"],
-      ["Encryption keys", "You control them"],
-      ["Activity logs", "Complete history"],
-    ],
+    title: "Encryption as baseline",
+    body: "Data is encrypted in transit and at rest as baseline infrastructure, with access controlled by roles and administrative activity logged.",
   },
   {
     icon: Lock,
-    title: "Data stays in India",
-    body: "Your data physically stays in Mumbai. Our systems block any transfer outside India — it's not just policy, it's technically enforced.",
-    specs: [
-      ["Location", "Mumbai only"],
-      ["Transfer outside", "Blocked"],
-      ["Backups", "Also in Mumbai"],
-      ["Legal compliance", "Indian law"],
-    ],
+    title: "India residency posture",
+    body: "The deployment is designed to keep institutional data in the AWS Mumbai region, with account-level controls intended to restrict where resources can be created.",
   },
   {
     icon: Network,
-    title: "Protected from attacks",
-    body: "Multiple security layers protect against hackers and attacks. Our servers are never directly exposed to the internet.",
-    specs: [
-      ["DDoS protection", "Enterprise-grade"],
-      ["Firewall", "Active"],
-      ["Monitoring", "24/7"],
-      ["Access", "Private network"],
-    ],
+    title: "Layered network protections",
+    body: "Application servers are designed to sit behind managed network protections rather than being directly exposed to the internet.",
   },
 ] as const;
 
 const faqData = [
   {
-    question: "Why Amazon Web Services instead of Indian cloud providers?",
+    question: "Why Amazon Web Services instead of “own servers”?",
     answer:
-      "We evaluated Indian cloud providers extensively. AWS Mumbai won on uptime (99.99% vs 99% typical), mature managed services, cost at scale, certifications (ISO, SOC, PCI), and redundancy (3 availability zones vs 1-2 typical). Data location matters, not who owns the hardware — AWS Mumbai provides enterprise reliability with full India residency.",
+      "Data residency is defined by where data physically sits and how access is governed — not by who owns the racks. AWS Mumbai gives us mature managed services, multiple availability zones in one Indian region, and independently certified facilities, which is a stronger foundation than self-managed hardware for a platform schools depend on daily.",
   },
   {
-    question: "Can the US government access data on AWS Mumbai?",
+    question: "How do we verify where our data is hosted?",
     answer:
-      "No. Data is encrypted with keys we control (not Amazon), data in India is subject to Indian law only, AWS has mechanisms to challenge foreign requests, we would be notified of any access request, and the US Cloud Act applies to US-stored data. Your data is more protected on AWS Mumbai than on many “Indian own servers” that actually run on foreign VPS providers.",
+      "Ask us in writing. During evaluation we share architecture documentation describing the region, the residency controls, and the data flows, and we support vendor security questionnaires. We would rather answer specific questions than ask you to take a marketing page on faith.",
   },
   {
-    question: "What if AWS opens a new region outside India?",
+    question: "What happens if a data centre has an outage?",
     answer:
-      "Cannot happen. Our Service Control Policies block resource creation outside ap-south-1. Even if Amazon opened ten new regions, moving data would require manually changing policies with multiple approvals, disabling controls, and overriding monitoring — which would immediately trigger security incidents. It is technically impossible for data to accidentally leave Mumbai.",
+      "The architecture spans multiple availability zones in the Mumbai region so the platform is designed to continue operating if one facility has issues. Recovery objectives and procedures are documented and shared during the security review process.",
   },
   {
-    question: "How do I verify you're really using AWS Mumbai?",
+    question: "Is our data encrypted?",
     answer:
-      "Easy: download our monthly infrastructure report, check our SSL certificate chain, or run a traceroute to our API (it shows Mumbai routing). Detailed: request a CloudTrail log excerpt, review third-party audit reports, or subscribe to our status page. Enterprise: coordinate an AWS facility visit or verify directly with the Amazon account team. We're transparent because we have nothing to hide.",
+      "Yes — in transit and at rest, as part of the platform's baseline design. Key management and implementation details are covered in the security documentation we share on request.",
   },
   {
-    question: "What happens if AWS Mumbai has an outage?",
+    question: "Can you complete our security questionnaire?",
     answer:
-      "Automatic failover to other Mumbai zones within about 30 seconds. The region has 3 separate facilities: if Zone A fails, traffic switches to Zone B; if two zones fail, the third handles load; if the entire region failed (it never has), we recover from backups with a 4-hour RTO. In 5+ years of AWS Mumbai operations, no region-wide outage has occurred.",
-  },
-  {
-    question: "Is AWS more expensive than “own servers”?",
-    answer:
-      "Usually cheaper on total cost. “Own servers” hide ₹1-5 Cr upfront capital, hardware refresh every 3-5 years, a dedicated infrastructure team (₹50L+/year), facility costs, and disaster-recovery duplication. AWS is $0 upfront, pay-per-use, auto-scaled with built-in redundancy — and we pass those savings to customers.",
+      "Yes. Send it to security@squarecampus.com. We answer infrastructure and security questionnaires in writing as part of institutional procurement.",
   },
 ] as const;
 
-const competitorQuestions = [
+const dueDiligenceQuestions = [
   {
-    question: "What is your contractual uptime SLA?",
-    whyItMatters: "Separates real infrastructure from hobby projects.",
-    expectedAnswer: "“We maintain high uptime” (no number), “We haven't had issues” (no guarantee)",
-    ourAnswer: "99.99% Amazon Web Services SLA + 99.97% actual measured performance",
+    question: "What region and provider host our data?",
+    whyItMatters: "“Hosted in India” without a named region and provider is unverifiable.",
+    ourAnswer:
+      "AWS Mumbai (ap-south-1). We document this in writing during evaluation, along with the controls designed to keep resources in that region.",
   },
   {
-    question: "Where exactly are your servers physically located?",
+    question: "What happens when a facility fails?",
+    whyItMatters: "This separates a real architecture from a single server in a rack.",
+    ourAnswer:
+      "The platform is designed across multiple availability zones; recovery objectives and tested procedures are part of the documentation we share during security review.",
+  },
+  {
+    question: "Can you share third-party attestations?",
     whyItMatters:
-      "“India” is vague. Mumbai? Bangalore? Or actually a Singapore datacenter with a VPN endpoint in India?",
-    expectedAnswer:
-      "“Secure facility in India” (no specifics), “We can't disclose for security” (red flag)",
-    ourAnswer: "AWS Mumbai Region (ap-south-1) — 3 availability zones, publicly documented",
+      "Anyone can say “secure”. Attestation and documentation are what procurement can rely on.",
+    ourAnswer:
+      "AWS publishes its facility certifications. Our application-level security documentation is shared on request, and we support vendor questionnaires.",
   },
   {
-    question: "Can you share your ISO 27001 certificate?",
-    whyItMatters:
-      "ISO 27001 is the minimum standard for handling sensitive data. Without it, their “secure” is undefined.",
-    expectedAnswer:
-      "“We're working on certification” (= we don't have it), “Our facility is ISO certified” (not them)",
-    ourAnswer:
-      "AWS facilities: ISO 27001, SOC 2 Type II, PCI DSS Level 1 — plus independent application audit",
-  },
-  {
-    question: "What happens if your data center loses power?",
-    whyItMatters: "Tests whether they have real disaster recovery or just “we have backups.”",
-    expectedAnswer:
-      "“We have generators” (single point of failure), “That's never happened” (no testing)",
-    ourAnswer:
-      "Automatic failover to another Mumbai availability zone in ~30 seconds. 3 facilities, tested quarterly.",
-  },
-  {
-    question: "Prove your data never leaves India.",
-    whyItMatters: "Anyone can claim “India hosting.” Can they prove it continuously?",
-    expectedAnswer: "“We promise” (not proof), silence, or offense at being questioned",
-    ourAnswer:
-      "Monthly public audit reports, CloudTrail logs, third-party verification, and IAM policies blocking non-Mumbai resources",
+    question: "Will you answer these questions in writing?",
+    whyItMatters: "Verbal assurances do not survive procurement or audits.",
+    ourAnswer: "Yes — every answer above, in writing, addressed to your institution.",
   },
 ] as const;
 
@@ -252,14 +186,14 @@ export default function InfrastructurePage() {
     <main>
       <SectionShell className="pt-12 sm:pt-16">
         <Reveal className="max-w-3xl space-y-6">
-          <p className="section-kicker">Infrastructure transparency</p>
+          <p className="section-kicker">Infrastructure</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-            Verifiable, audited, and transparent — not marketing claims.
+            Infrastructure, stated plainly.
           </h1>
           <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-            SquareCampus runs on Amazon Web Services in Mumbai. Every claim on this page is
-            verifiable: request proof anytime, or ask your current vendor the same questions and
-            compare the answers.
+            SquareCampus runs on Amazon Web Services in Mumbai. This page describes how the platform
+            is designed — and anything it does not answer, we will answer in writing during your
+            evaluation.
           </p>
           <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
             {heroSignals.map(([label, value]) => (
@@ -279,9 +213,9 @@ export default function InfrastructurePage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Why AWS Mumbai"
+        eyebrow="Why managed cloud"
         title="Why AWS Mumbai? Why not &ldquo;own servers&rdquo;?"
-        body="Data residency isn't compromised by who makes the servers — it's defined by where they physically sit and how access is governed. Choosing AWS Mumbai is engineering, not marketing."
+        body="Data residency isn't defined by who makes the servers — it's defined by where they physically sit and how access is governed. Choosing AWS Mumbai is an engineering decision."
       >
         <Reveal className="surface-panel-strong rounded-[1.8rem] p-7 lg:p-8">
           <div className="flex items-start gap-4">
@@ -291,14 +225,14 @@ export default function InfrastructurePage() {
                 The &ldquo;own servers&rdquo; reality check
               </h2>
               <p className="mt-3 max-w-3xl text-base leading-7 text-muted-foreground">
-                Most vendors claiming &ldquo;own servers in India&rdquo; actually mean one of these:
+                In this market, &ldquo;own servers in India&rdquo; can mean very different things:
               </p>
               <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
                 {[
                   "Rented racks in shared co-location facilities",
-                  "VPS from DigitalOcean, Linode, or Vultr (often Singapore/NYC)",
-                  "A single server in a locked room with consumer hardware",
-                  "“Own” = leased from a local hosting company",
+                  "A VPS from a hosting provider, sometimes outside India",
+                  "A single server in a locked room on consumer hardware",
+                  "“Own” hardware leased from a local hosting company",
                 ].map((item) => (
                   <p
                     key={item}
@@ -309,9 +243,9 @@ export default function InfrastructurePage() {
                 ))}
               </div>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-muted-foreground">
-                If they can&rsquo;t answer basic infrastructure questions, they don&rsquo;t have
-                enterprise &ldquo;own servers&rdquo; — they have consumer-grade hosting with
-                marketing spin.
+                None of these are automatically bad — but they are different risk profiles, and an
+                institution deserves to know which one it is buying. The useful move is to ask every
+                vendor, including us, the same infrastructure questions in writing.
               </p>
             </div>
           </div>
@@ -320,8 +254,9 @@ export default function InfrastructurePage() {
 
       <SectionShell
         id="comparison"
-        eyebrow="Honest comparison"
-        title="Enterprise cloud vs typical &ldquo;own servers&rdquo; claims"
+        eyebrow="The comparison"
+        title="Managed cloud design vs unspecified &ldquo;own servers&rdquo;"
+        body="What we run, next to the questions worth asking any vendor."
       >
         <Reveal staggerChildren className="grid gap-4">
           {comparisonData.map((row) => (
@@ -341,14 +276,14 @@ export default function InfrastructurePage() {
                 </div>
                 <div className="rounded-[1.3rem] bg-(--surface-muted) p-5">
                   <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-muted-foreground">
-                    &ldquo;Own servers&rdquo; · vendor claims
+                    Typical unspecified claims
                   </p>
                   <p className="mt-2.5 font-display text-xl tracking-[-0.03em] text-muted-foreground">
                     {row.them.title}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{row.them.details}</p>
                   <p className="mt-3 text-xs font-medium text-(--amber)">
-                    Ask them: {row.them.ask}
+                    Ask every vendor: {row.them.ask}
                   </p>
                 </div>
               </div>
@@ -358,9 +293,9 @@ export default function InfrastructurePage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Infrastructure guarantees"
-        title="What this means for you"
-        body="Enterprise-grade infrastructure with verifiable guarantees — engineering reality, not marketing claims."
+        eyebrow="Design decisions"
+        title="What this design means for your institution"
+        body="These are the architectural commitments the platform is built around. The specifics behind each one are documented for security reviews."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {capabilities.map((cap) => (
@@ -372,53 +307,36 @@ export default function InfrastructurePage() {
               <cap.icon className="size-5 text-(--brand)" />
               <h2 className="mt-5 font-display text-xl tracking-[-0.03em]">{cap.title}</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{cap.body}</p>
-              <dl className="mt-4 grid grid-cols-2 gap-2.5">
-                {cap.specs.map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="rounded-[1rem] border border-(--line) bg-(--surface) px-3 py-2.5"
-                  >
-                    <dt className="font-mono text-[0.5rem] uppercase tracking-[0.16em] text-muted-foreground">
-                      {label}
-                    </dt>
-                    <dd className="mt-1 text-xs font-medium text-foreground">{value}</dd>
-                  </div>
-                ))}
-              </dl>
             </article>
           ))}
           <article data-reveal-item className="surface-panel-strong rounded-[1.6rem] p-6">
-            <Activity className="size-5 text-(--teal)" />
-            <h2 className="mt-5 font-display text-xl tracking-[-0.03em]">Real-time status</h2>
+            <ShieldCheck className="size-5 text-(--teal)" />
+            <h2 className="mt-5 font-display text-xl tracking-[-0.03em]">
+              Documentation on request
+            </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Live indicators. Never fabricated.
+              Architecture summaries, data-flow documentation, and questionnaire responses are
+              available to evaluating institutions through the security review process.
             </p>
-            <ul className="mt-4 grid gap-2.5">
-              {[
-                "No incidents reported",
-                "All replicas synchronized",
-                "All resources in India",
-                "Mumbai zones operational",
-                "All security controls active",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                  <span className="size-1.5 animate-pulse rounded-full bg-(--teal)" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-5">
+              <ButtonLink
+                href="mailto:security@squarecampus.com?subject=Infrastructure%20Documentation%20Request"
+                label="Request documentation"
+                variant="secondary"
+              />
+            </div>
           </article>
         </Reveal>
       </SectionShell>
 
       <SectionShell
         eyebrow="Due diligence"
-        title="Questions your &ldquo;own servers&rdquo; vendor can't answer"
-        body="Ask these during your evaluation, and compare the answers."
+        title="Questions worth asking every vendor — including us"
+        body="Use these during your evaluation and compare the answers in writing."
       >
         <Reveal>
           <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
-            {competitorQuestions.map((item) => (
+            {dueDiligenceQuestions.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
                   {item.question}
@@ -428,10 +346,6 @@ export default function InfrastructurePage() {
                     <span className="font-medium text-foreground">Why it matters:</span>{" "}
                     {item.whyItMatters}
                   </p>
-                  <div className="rounded-[1.1rem] bg-(--surface-muted) px-4 py-3 text-sm leading-6 text-muted-foreground">
-                    <span className="font-medium">Expected vendor answer:</span>{" "}
-                    {item.expectedAnswer}
-                  </div>
                   <div className="rounded-[1.1rem] border border-(--line) bg-(--surface-strong) px-4 py-3 text-sm leading-6 text-foreground">
                     <span className="font-medium text-(--brand)">Our answer:</span> {item.ourAnswer}
                   </div>
@@ -461,21 +375,19 @@ export default function InfrastructurePage() {
 
       <SectionShell className="pb-22 pt-0">
         <Reveal className="surface-panel-strong rounded-[2rem] p-8 text-center lg:p-12">
-          <p className="section-kicker">
-            Enterprise infrastructure · Indian sovereignty · No compromises
-          </p>
+          <p className="section-kicker">Infrastructure review</p>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl tracking-[-0.05em] sm:text-4xl">
-            Verify everything we&rsquo;ve claimed.
+            Ask us the hard questions.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted-foreground">
-            We don&rsquo;t just talk about transparency — we prove it. Request the monthly
-            infrastructure report, compliance documents, or an architecture walkthrough.
+            Bring your security questionnaire, your IT committee, or your auditor. We answer
+            infrastructure questions in writing as part of every serious evaluation.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <ButtonLink href={siteCtas.demoHref} label="Book a technical deep-dive" />
             <ButtonLink
-              href="mailto:security@squarecampus.com?subject=Infrastructure%20Verification%20Request"
-              label="Request verification materials"
+              href="mailto:security@squarecampus.com?subject=Infrastructure%20Questions"
+              label="Email security"
               variant="secondary"
             />
           </div>

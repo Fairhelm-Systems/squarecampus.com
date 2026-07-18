@@ -18,7 +18,7 @@ const values = [
   {
     title: "Radical clarity for admins",
     icon: Target,
-    body: "Everyone sees the same source of truth: who is present, what is pending, and what needs action now.",
+    body: "Everyone works from the same governed record: who is present, what is pending, and what needs action now.",
   },
 ] as const;
 
@@ -140,11 +140,11 @@ export default function AboutPage() {
           <div className="surface-panel-strong rounded-[1.8rem] p-7 lg:p-8">
             <Landmark className="size-5 text-(--brand)" />
             <h2 className="mt-5 font-display text-3xl tracking-[-0.05em]">
-              One backbone for daily operations.
+              One system of record for daily operations.
             </h2>
             <p className="mt-4 text-base leading-7 text-muted-foreground">
               Decisions get made on partial context, and the office ends up firefighting instead of
-              planning. SquareCampus gives schools and colleges a single backbone where every
+              planning. SquareCampus gives schools and colleges one connected system where every
               workflow is connected, auditable, and simple enough to use every day.
             </p>
             <div className="mt-6 rounded-[1.4rem] border border-(--line) bg-(--surface) p-5">

@@ -7,18 +7,9 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Learn about SquareCampus, the team building operational infrastructure for Indian schools and colleges. Our mission: calm, connected, and accountable campus management.",
   path: "/about",
-  keywords: [
-    "about squarecampus",
-    "school OS India",
-    "education software company India",
-    "school management system India",
-    "campus management platform",
-    "K-12 school software India",
-    "college management system India",
-  ],
-  ogTitle: "About SquareCampus | The Team Behind India's School OS",
+  ogTitle: "About SquareCampus | The Team Behind the School OS",
   ogDescription:
-    "Meet the team building the operational backbone Indian education deserves. Single source of truth for admissions, academics, finance, and compliance.",
+    "Meet the team building operational infrastructure for Indian education: one governed system of record for admissions, academics, finance, and compliance.",
   twitterDescription:
     "Building operational infrastructure for Indian schools and colleges. Meet the founding team and learn our mission.",
 });

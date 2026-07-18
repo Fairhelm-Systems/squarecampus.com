@@ -39,7 +39,7 @@ export type Comparison = {
 
 const sharedDifferentiators = [
   {
-    title: "One shared database, not stitched modules",
+    title: "One unified institutional data model, not stitched modules",
     body: "Every SquareCampus module reads and writes the same institutional record. An admission confirmed flows into academics, fees, and communication automatically — no connectors to maintain between separate products.",
   },
   {
@@ -47,8 +47,8 @@ const sharedDifferentiators = [
     body: "AEGIS answers operational questions inside the same RBAC scopes and audit trails as the rest of the platform. Leadership asks; the system answers from live records, and every query is logged.",
   },
   {
-    title: "Infrastructure you can verify, not take on faith",
-    body: "We publish our region (AWS Mumbai, ap-south-1), SLA, and audit posture on the infrastructure page. Ask any vendor for the same detail and compare the answers.",
+    title: "Infrastructure questions answered in writing",
+    body: "We name our region (AWS Mumbai, ap-south-1) on the infrastructure page and answer infrastructure questionnaires in writing during evaluation. Ask any vendor for the same detail and compare the answers.",
   },
   {
     title: "Predictable, all-inclusive pricing",
@@ -76,7 +76,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Architecture",
         squarecampus:
-          "One shared database — every module reads and writes the same institutional record.",
+          "One unified institutional data model — every module reads and writes the same record.",
         competitor:
           "Established cloud ERP with a suite of modules for admissions, attendance, exams, fees, and transport.",
       },
@@ -94,7 +94,8 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Infrastructure transparency",
-        squarecampus: "Region, SLA, and audit posture published on the infrastructure page.",
+        squarecampus:
+          "Region and residency posture published; documentation shared in writing during evaluation.",
         competitor: "Available on request.",
       },
       {
@@ -104,7 +105,7 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Data residency",
-        squarecampus: "India — AWS Mumbai (ap-south-1), verifiable monthly.",
+        squarecampus: "India — AWS Mumbai (ap-south-1) by design; documentation on request.",
         competitor: "India-based (per vendor).",
       },
     ],
@@ -116,14 +117,14 @@ export const comparisons: Comparison[] = [
     ],
     weFitWhen: [
       "You want one connected system instead of a suite of modules to keep in sync.",
-      "You want a governed AI layer (AEGIS) and infrastructure you can independently verify.",
-      "You want predictable, all-inclusive headcount pricing with mobile apps included, and a 2–4 week guided go-live.",
+      "You want a governed AI layer (AEGIS) and an infrastructure posture answered in writing.",
+      "You want predictable, all-inclusive headcount pricing with mobile apps included, and a guided go-live.",
     ],
     faqs: [
       {
         question: "Is SquareCampus a good Entab CampusCare alternative?",
         answer:
-          "SquareCampus is a modern School OS built on one shared database with a governed intelligence layer (AEGIS), transparent infrastructure, and headcount-based pricing. Schools evaluating CampusCare often shortlist SquareCampus when they want a single connected system and verifiable infrastructure. We support full migration from existing school ERPs.",
+          "SquareCampus is a modern School OS built on one unified institutional data model with a governed intelligence layer (AEGIS), a published infrastructure posture, and headcount-based pricing. Schools evaluating CampusCare often shortlist SquareCampus when they want a single connected system and an infrastructure posture they can question in writing. We support guided migration from existing school ERPs.",
       },
       {
         question: "Can we migrate from Entab CampusCare to SquareCampus?",
@@ -151,7 +152,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Architecture",
         squarecampus:
-          "One shared database — modules are one system, not separately configured plugins.",
+          "One unified institutional data model — modules are one system, not separately configured plugins.",
         competitor:
           "Modular, plugin-extensible core; capabilities added via plugins and integrations.",
       },
@@ -179,7 +180,7 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Infrastructure transparency",
-        squarecampus: "Region, SLA, and audit posture published — because we run it.",
+        squarecampus: "Region and residency posture published — because we run it.",
         competitor: "Depends on your own hosting when self-hosted.",
       },
     ],
@@ -198,7 +199,7 @@ export const comparisons: Comparison[] = [
       {
         question: "Is SquareCampus a good Fedena alternative?",
         answer:
-          "If you want a fully managed School OS rather than a self-hosted, plugin-based system, SquareCampus is a strong Fedena alternative. You get one shared database, the AEGIS intelligence layer, managed infrastructure, and included mobile apps — without owning hosting, security, and upgrades yourself.",
+          "If you want a fully managed School OS rather than a self-hosted, plugin-based system, SquareCampus is a strong Fedena alternative. You get one unified institutional data model, the AEGIS intelligence layer, managed infrastructure, and included mobile apps — without owning hosting, security, and upgrades yourself.",
       },
       {
         question: "Does SquareCampus offer self-hosting like Fedena's open source?",
@@ -232,7 +233,7 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Architecture",
-        squarecampus: "One shared database built for institutional operations.",
+        squarecampus: "One unified institutional data model built for operations.",
         competitor:
           "Integrated platform; ERP capabilities strengthened via the MyClassCampus acquisition.",
       },
@@ -249,7 +250,8 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Infrastructure transparency",
-        squarecampus: "Region, SLA, and audit posture published on the infrastructure page.",
+        squarecampus:
+          "Region and residency posture published; documentation shared in writing during evaluation.",
         competitor: "Available on request.",
       },
       {
@@ -267,7 +269,7 @@ export const comparisons: Comparison[] = [
     weFitWhen: [
       "Your priority is running the institution: admissions, fees, attendance, compliance, multi-campus.",
       "You want a governed operational AI layer and one connected operating model.",
-      "You want verifiable infrastructure and predictable, all-inclusive pricing, with operations built as the core.",
+      "You want an infrastructure posture answered in writing and predictable, all-inclusive pricing, with operations built as the core.",
     ],
     faqs: [
       {
