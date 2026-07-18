@@ -7,7 +7,7 @@
 - **Audience:** Principals, IT heads, trustees doing vendor research
 - **Angle:** Evaluation checklist, red flags, must-have features
 - **CTA:** Book a demo
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-07-19 — /blog/how-to-choose-school-management-system/
 
 ### 2. Fee Collection Challenges in Indian Schools (And How Automation Solves Them)
 - **Target keywords:** fee management system, school fee collection software, online fee payment for schools
@@ -39,7 +39,7 @@
 - **Audience:** School chain owners, education group administrators
 - **Angle:** Permission hierarchies, consolidated reporting, policy management
 - **CTA:** Multi-campus demo
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-07-19 — /blog/multi-campus-school-governance/
 
 ### 6. The Complete Guide to School Transport Management in India
 - **Target keywords:** school transport management, school bus tracking software, student transport system
@@ -104,7 +104,7 @@
 ### SEO Requirements
 - Meta description: 150-160 characters
 - Include primary keyword in first 100 words
-- Internal links to /features, /security, /contact-us
+- Internal links to /platform, /security, /demo (old /features and /contact-us are 301s)
 - Alt text for all images
 
 ### Publishing Cadence
