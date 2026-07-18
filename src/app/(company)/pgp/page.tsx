@@ -1,7 +1,6 @@
 "use client";
 
 import { Check, Copy, Download, Key, Lock, Mail, Shield } from "lucide-react";
-import Script from "next/script";
 import { useState } from "react";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
@@ -180,8 +179,7 @@ export default function PGPPage() {
 
   return (
     <main>
-      <Script
-        id="pgp-structured-data"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />

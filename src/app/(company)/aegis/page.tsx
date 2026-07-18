@@ -12,7 +12,6 @@ import {
   WalletCards,
 } from "lucide-react";
 import type { Metadata } from "next";
-import Script from "next/script";
 import { AegisConsole } from "@/components/site/aegis-console";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
@@ -123,8 +122,7 @@ const structuredData = {
 export default function AegisPage() {
   return (
     <main>
-      <Script
-        id="aegis-structured-data"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />

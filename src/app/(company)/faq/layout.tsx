@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import { faqs as faqData } from "@/content/faq";
 import {
@@ -55,10 +54,8 @@ type FAQLayoutProps = {
 export default function FAQLayout({ children }: FAQLayoutProps) {
   return (
     <>
-      <Script
-        id="faq-structured-data"
+      <script
         type="application/ld+json"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}

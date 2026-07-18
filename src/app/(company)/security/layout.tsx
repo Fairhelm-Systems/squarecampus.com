@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import {
   createBreadcrumbSchema,
@@ -86,10 +85,8 @@ type SecurityLayoutProps = {
 export default function SecurityLayout({ children }: SecurityLayoutProps) {
   return (
     <>
-      <Script
-        id="security-structured-data"
+      <script
         type="application/ld+json"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}

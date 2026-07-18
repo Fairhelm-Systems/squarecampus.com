@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from "next/font/google";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -92,10 +91,9 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning className="antialiased">
         <ScrollToTop />
-        <Script
-          id="structured-data"
+        {/* Plain script tag: server-rendered so non-JS crawlers see the schema */}
+        <script
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",

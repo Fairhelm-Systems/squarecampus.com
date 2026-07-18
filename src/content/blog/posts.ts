@@ -269,8 +269,8 @@ export const blogPosts: BlogPost[] = [
       lede: "Schools deserve software that feels predictable, respectful, and accountable. SquareCampus is our response to the chaos schools were forced to manage every day. This is the story of why we built it, what we believe, and how we think about the future of school operations.",
     },
     image: {
-      src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&h=675&fit=crop",
-      alt: "Students in a modern classroom environment with natural light.",
+      src: "/images/editorial/campus-courtyard.webp",
+      alt: "Modern school campus courtyard with clean institutional architecture.",
       caption:
         "Schools are mission-critical environments. The software that runs them should reflect that seriousness.",
     },
@@ -288,12 +288,6 @@ export const blogPosts: BlogPost[] = [
           "Predictable workflows that do not collapse when staff changes.",
           "Real-time data that leadership can trust without manual verification.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=450&fit=crop",
-          alt: "Person working with documents and a laptop, representing administrative work.",
-          caption: "Administrative staff deserve tools that work with them, not against them.",
-          orientation: "right",
-        },
       },
       {
         heading: "What school operations actually look like",
@@ -301,12 +295,6 @@ export const blogPosts: BlogPost[] = [
           "Spend time inside school offices — with principals, bursars, class teachers, transport coordinators, and parents — and the patterns repeat across school sizes and boards. Fee collection is a pain point, not because parents don't want to pay, but because the process is fragmented and confusing. Attendance data exists but isn't actionable. Report cards take weeks to generate because data lives in different places. Communication with parents is either too much or too little, never quite right.",
           "Most importantly, schools are not looking for more features. They are looking for fewer problems. They want software that disappears into the background and lets them focus on education. That insight shaped everything we built.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&h=450&fit=crop",
-          alt: "Teacher interacting with students in a classroom setting.",
-          caption: "Every feature we build is informed by real conversations with educators.",
-          orientation: "top",
-        },
       },
       {
         heading: "An operating system, not another tool",
@@ -321,12 +309,6 @@ export const blogPosts: BlogPost[] = [
           "Permission inheritance: define once at the org level, customize at the branch level.",
           "Audit trails: every change logged with who, what, when, and why.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop",
-          alt: "Modern dashboard interface showing connected data systems.",
-          caption: "Every module shares the same identity model and permissions architecture.",
-          orientation: "left",
-        },
       },
       {
         heading: "The burden of broken systems",
@@ -335,13 +317,6 @@ export const blogPosts: BlogPost[] = [
           "Or the principal who cannot answer a trustee's question about student strength by board because the data is split across four systems with four different definitions of 'active student.' Or the transport coordinator managing 40 bus routes through WhatsApp groups and a printed spreadsheet because the official software is 'too complicated.'",
           "These are not edge cases. These are the everyday realities of Indian schools. And the people dealing with them are not complainers—they are dedicated professionals who have learned to work around their tools instead of with them. SquareCampus exists because they deserve better.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop",
-          alt: "Person overwhelmed with paperwork and documents.",
-          caption:
-            "Schools should not have to choose between doing their job and fighting their software.",
-          orientation: "right",
-        },
       },
       {
         heading: "Reliability is a promise, not a slogan",
@@ -365,12 +340,6 @@ export const blogPosts: BlogPost[] = [
           "SquareCampus is built for this complexity. Our fee structures support the installment patterns that Indian parents expect. Our report cards generate in the formats that different boards require. Our communication module handles WhatsApp, SMS, email, and app notifications because different parents prefer different channels. Our multi-campus architecture supports everything from centralized control to federated management.",
           "We also understand that data residency matters. SquareCampus is designed to keep institutional data in India, in an Indian cloud region. This is not just a compliance checkbox—it is a reflection of our belief that Indian schools should not have to send their students' data overseas.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop",
-          alt: "Diverse group of students in school uniforms.",
-          caption: "Built for the diversity and complexity of Indian education.",
-          orientation: "top",
-        },
       },
       {
         heading: "The mission we are accountable to",
@@ -387,12 +356,6 @@ export const blogPosts: BlogPost[] = [
           "We also want to build a community. Schools that use SquareCampus should be able to learn from each other—sharing workflows, templates, and best practices. We believe that the best ideas often come from educators themselves, and our job is to turn those ideas into software that works.",
           "If you are a school leader reading this, know that we built SquareCampus for you. Not for venture capitalists. Not for awards. For you, your staff, your students, and their parents. We would be honored to show you how it works.",
         ],
-        image: {
-          src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=450&fit=crop",
-          alt: "Team collaboration and discussion in a modern workspace.",
-          caption: "We're building this with schools, not just for them.",
-          orientation: "left",
-        },
       },
     ],
     cta: {

@@ -6,89 +6,86 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { blogPosts } from "@/content/blog/posts";
 
-// Decorative geometry in the same editorial language as the home page
-// overlays: thin survey lines, plotted nodes, one dashed arc. Variant shifts
-// the composition so adjacent cards don't repeat.
+// Editorial "survey" geometry over card banners: lines draw themselves in,
+// plotted nodes pop staggered, and a soft light sweep crosses the image.
+// Variant shifts the composition so adjacent cards don't repeat.
 function CardGeometry({ variant }: { variant: 0 | 1 | 2 }) {
+  const lineClass =
+    "transition-[stroke-dashoffset] duration-[1100ms] ease-out [stroke-dasharray:1] [stroke-dashoffset:1] group-hover:[stroke-dashoffset:0]";
+  const dashClass =
+    "transition-[stroke-dashoffset] delay-150 duration-[1300ms] ease-out [stroke-dasharray:1] [stroke-dashoffset:1] group-hover:[stroke-dashoffset:0]";
+  const nodeClass =
+    "origin-center scale-0 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] [transform-box:fill-box] group-hover:scale-100";
+
   const compositions = [
-    <g key="a">
-      <path d="M-20 150L150 70L300 108L470 20" fill="none" strokeWidth="1.6" />
-      <path d="M40 12C140 44 240 40 420 96" fill="none" strokeWidth="1.2" strokeDasharray="6 10" />
-      <circle cx="150" cy="70" r="11" strokeWidth="1.4" />
-      <circle cx="300" cy="108" r="7" strokeWidth="1.4" />
-      <circle cx="418" cy="30" r="16" strokeWidth="1.6" />
-    </g>,
-    <g key="b">
-      <path d="M-10 40L130 120L320 60L480 130" fill="none" strokeWidth="1.6" />
-      <path
-        d="M60 150C180 110 300 140 460 60"
-        fill="none"
-        strokeWidth="1.2"
-        strokeDasharray="6 10"
-      />
-      <circle cx="130" cy="120" r="9" strokeWidth="1.4" />
-      <circle cx="320" cy="60" r="14" strokeWidth="1.6" />
-      <circle cx="452" cy="122" r="7" strokeWidth="1.4" />
-    </g>,
-    <g key="c">
-      <path d="M20 -10L110 90L280 40L440 120" fill="none" strokeWidth="1.6" />
-      <path
-        d="M-10 110C120 150 260 90 470 140"
-        fill="none"
-        strokeWidth="1.2"
-        strokeDasharray="6 10"
-      />
-      <circle cx="110" cy="90" r="13" strokeWidth="1.6" />
-      <circle cx="280" cy="40" r="8" strokeWidth="1.4" />
-      <circle cx="430" cy="112" r="10" strokeWidth="1.4" />
-    </g>,
+    {
+      line: "M-20 150L150 70L300 108L470 20",
+      dash: "M40 12C140 44 240 40 420 96",
+      nodes: [
+        [150, 70, 11],
+        [300, 108, 7],
+        [418, 30, 16],
+      ],
+    },
+    {
+      line: "M-10 40L130 120L320 60L480 130",
+      dash: "M60 150C180 110 300 140 460 60",
+      nodes: [
+        [130, 120, 9],
+        [320, 60, 14],
+        [452, 122, 7],
+      ],
+    },
+    {
+      line: "M20 -10L110 90L280 40L440 120",
+      dash: "M-10 110C120 150 260 90 470 140",
+      nodes: [
+        [110, 90, 13],
+        [280, 40, 8],
+        [430, 112, 10],
+      ],
+    },
   ] as const;
+  const c = compositions[variant];
 
   return (
-    <svg
-      viewBox="0 0 480 160"
-      aria-hidden="true"
-      preserveAspectRatio="none"
-      className="pointer-events-none absolute inset-0 h-full w-full stroke-white/35 opacity-0 transition-opacity duration-500 [fill:rgba(255,255,255,0.08)] group-hover:opacity-100"
-    >
-      {compositions[variant]}
-    </svg>
-  );
-}
-
-// Fallback banner for posts without a hero image: the same geometry over a
-// quiet brand-tinted field, always visible.
-function AbstractBanner({ variant }: { variant: 0 | 1 | 2 }) {
-  return (
-    <div className="relative aspect-video overflow-hidden bg-[linear-gradient(135deg,color-mix(in_oklch,var(--brand),transparent_82%),color-mix(in_oklch,var(--teal),transparent_88%))]">
+    <>
+      {/* Light sweep */}
+      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(105deg,transparent_40%,rgba(255,255,255,0.18)_50%,transparent_60%)] transition-transform duration-[1200ms] ease-out group-hover:translate-x-full" />
       <svg
         viewBox="0 0 480 160"
         aria-hidden="true"
         preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full stroke-(--brand) opacity-40 [fill:color-mix(in_oklch,var(--brand),transparent_80%)]"
+        className="pointer-events-none absolute inset-0 h-full w-full stroke-white/50 [fill:rgba(255,255,255,0.12)]"
       >
-        {variant === 0 ? (
-          <g>
-            <path d="M-20 150L150 70L300 108L470 20" fill="none" strokeWidth="1.6" />
-            <circle cx="150" cy="70" r="11" strokeWidth="1.4" />
-            <circle cx="418" cy="30" r="16" strokeWidth="1.6" />
-          </g>
-        ) : variant === 1 ? (
-          <g>
-            <path d="M-10 40L130 120L320 60L480 130" fill="none" strokeWidth="1.6" />
-            <circle cx="320" cy="60" r="14" strokeWidth="1.6" />
-            <circle cx="130" cy="120" r="9" strokeWidth="1.4" />
-          </g>
-        ) : (
-          <g>
-            <path d="M20 -10L110 90L280 40L440 120" fill="none" strokeWidth="1.6" />
-            <circle cx="110" cy="90" r="13" strokeWidth="1.6" />
-            <circle cx="280" cy="40" r="8" strokeWidth="1.4" />
-          </g>
-        )}
+        <path d={c.line} fill="none" strokeWidth="1.6" pathLength={1} className={lineClass} />
+        <path
+          d={c.dash}
+          fill="none"
+          strokeWidth="1.2"
+          strokeDasharray="6 10"
+          pathLength={1}
+          className={dashClass}
+        />
+        {c.nodes.map(([cx, cy, r], i) => (
+          <circle
+            key={`${cx}-${cy}`}
+            cx={cx}
+            cy={cy}
+            r={r}
+            strokeWidth="1.5"
+            className={nodeClass}
+            style={{ transitionDelay: `${350 + i * 130}ms` }}
+          />
+        ))}
       </svg>
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,transparent,var(--surface))]" />
-    </div>
+      {/* Corner reticle */}
+      <div className="pointer-events-none absolute right-4 top-4 size-6 opacity-0 transition-opacity delay-200 duration-500 group-hover:opacity-70">
+        <div className="absolute inset-x-0 top-1/2 h-px bg-white/70" />
+        <div className="absolute inset-y-0 left-1/2 w-px bg-white/70" />
+        <div className="absolute inset-0 rounded-full border border-white/50" />
+      </div>
+    </>
   );
 }
 
@@ -135,9 +132,7 @@ export default function BlogPage() {
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.05),rgba(16,24,38,0.42))]" />
                       <CardGeometry variant={variant} />
                     </div>
-                  ) : (
-                    <AbstractBanner variant={variant} />
-                  )}
+                  ) : null}
 
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-center justify-between gap-3">

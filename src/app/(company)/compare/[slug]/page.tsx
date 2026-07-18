@@ -1,7 +1,6 @@
 import { ArrowUpRight, Check, ScrollText, ShieldCheck, Sparkles, Wallet } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
@@ -82,8 +81,7 @@ export default async function ComparePage({ params }: PageProps) {
 
   return (
     <main>
-      <Script
-        id="compare-structured-data"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />

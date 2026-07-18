@@ -12,7 +12,6 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
-import Script from "next/script";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
@@ -520,8 +519,7 @@ export default function SchoolManagementSystemPage() {
         </Reveal>
       </SectionShell>
 
-      <Script
-        id="sms-structured-data"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({

@@ -178,6 +178,8 @@
     overflow: clip;
   }
 
+  /* Layered survey-paper texture: 28px dot grid inside a 64px line grid,
+     fading out down the page. */
   .page-shell::before {
     content: "";
     position: fixed;
@@ -185,18 +187,23 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(28, 41, 64, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(28, 41, 64, 0.035) 1px, transparent 1px);
-    background-size: 64px 64px;
+      radial-gradient(circle, rgba(28, 41, 64, 0.055) 1px, transparent 1px),
+      linear-gradient(rgba(28, 41, 64, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28, 41, 64, 0.03) 1px, transparent 1px);
+    background-size:
+      28px 28px,
+      64px 64px,
+      64px 64px;
     mask-image: linear-gradient(180deg, black 0%, black 26%, transparent 100%);
     opacity: 0.65;
   }
 
   .dark .page-shell::before {
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-    opacity: 0.24;
+      radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    opacity: 0.26;
   }
 
   .surface-panel {
