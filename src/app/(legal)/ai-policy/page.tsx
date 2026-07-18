@@ -1,5 +1,16 @@
+// LEGAL REVIEW: substantive language in this document is pending counsel
+// review. Do not edit legal terms without legal sign-off.
+import type { Metadata } from "next";
 import { LegalSection, LegalShell } from "@/components/legal/legal-shell";
 import { Separator } from "@/components/ui/separator";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "AI Policy | SquareCampus",
+  description:
+    "How SquareCampus approaches AI in its products: scope, human oversight, data handling, responsible AI principles, and customer control.",
+  path: "/ai-policy",
+});
 
 export default function AIPolicyPage() {
   return (

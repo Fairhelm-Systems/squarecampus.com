@@ -10,28 +10,25 @@ import {
 
 // Security page - critical for enterprise trust and procurement decisions
 // Target: Security-conscious decision makers, IT heads, compliance officers
+// Rule: only design-posture statements here. Specific certifications, SLAs,
+// and audit artifacts are shared through the security review process.
 
-// Security FAQs for structured data (matches page.tsx securityFaqs)
+// Security FAQs for structured data (matches the posture on page.tsx)
 const securityFaqs = [
   {
     question: "Where is data hosted?",
     answer:
-      "SquareCampus is hosted in India by default, with data residency in India and no cross-border transfers unless explicitly requested.",
+      "SquareCampus is designed with an India-first hosting posture. Hosting details and data-flow documentation are shared during the security review process.",
   },
   {
     question: "How is data encrypted?",
     answer:
-      "We use TLS 1.3 for data in transit and AES-256 for data at rest, including encrypted backups and regular key rotation.",
+      "Data is encrypted in transit and at rest as part of the platform's baseline design. Implementation details are available under the security review process.",
   },
   {
     question: "Who can access data?",
     answer:
-      "Access is role-based and least-privileged. Only authorized staff with MFA can reach administrative systems, and all access is logged.",
-  },
-  {
-    question: "What happens if a device is lost?",
-    answer:
-      "Company-managed devices can be locked or wiped remotely, and access tokens are revoked to prevent further access.",
+      "Access is role-based and least-privileged by design, with administrative access logged and traceable.",
   },
   {
     question: "Do you support vendor security questionnaires?",
@@ -45,9 +42,9 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     createWebPageSchema({
-      name: "Security & Compliance | SquareCampus",
+      name: "Security & Trust | SquareCampus",
       description:
-        "Bank-grade security for your school data. SquareCampus offers encryption, India data residency, RBAC, audit trails, and compliance-ready infrastructure.",
+        "How SquareCampus approaches security for school data: encryption, role-based access, audit trails, and an India-first hosting posture.",
       url: `${SEO_CONFIG.baseUrl}/security`,
     }),
     createBreadcrumbSchema([
@@ -70,103 +67,16 @@ const structuredData = {
 };
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Security & Compliance | SquareCampus School Management System India",
+  title: "Security & Trust | SquareCampus School Management System",
   description:
-    "Bank-grade security for your school data. SquareCampus offers encryption, India data residency, RBAC, audit trails, and compliance-ready infrastructure. SOC 2 practices, GDPR aligned.",
+    "How SquareCampus approaches security for school data: encryption in transit and at rest, role-based access, audit trails, and an India-first hosting posture. Documentation available on request.",
   path: "/security",
-  keywords: [
-    // Primary security terms
-    "school ERP security",
-    "school management system security",
-    "secure school software",
-    "school data security",
-    "student data protection",
-    "school data privacy",
-
-    // Compliance
-    "school software compliance India",
-    "education data compliance",
-    "GDPR school software",
-    "data protection school",
-    "IT Act compliance school",
-    "DPDP Act school software",
-    "privacy compliant school ERP",
-
-    // Technical security
-    "encrypted school management system",
-    "school data encryption",
-    "SSL school software",
-    "end to end encryption school",
-    "secure cloud school ERP",
-    "AWS hosted school software",
-    "Azure school management",
-
-    // Access control
-    "RBAC school management",
-    "role based access school",
-    "school user permissions",
-    "multi-level access school",
-    "teacher access control",
-    "parent data access",
-    "admin access management",
-
-    // Audit & monitoring
-    "audit trail school software",
-    "school activity logging",
-    "data audit school ERP",
-    "compliance audit school",
-    "access logs school",
-
-    // Data residency
-    "India data residency school",
-    "data localization school",
-    "India hosted school ERP",
-    "Mumbai data center school",
-    "local data storage school",
-
-    // Enterprise security
-    "enterprise grade school ERP",
-    "bank grade security school",
-    "SOC 2 school software",
-    "ISO 27001 school ERP",
-    "penetration tested school software",
-    "vulnerability assessment school",
-
-    // Backup & recovery
-    "school data backup",
-    "disaster recovery school",
-    "data redundancy school ERP",
-    "automatic backup school",
-
-    // Trust signals
-    "trusted school management system",
-    "reliable school ERP",
-    "uptime guarantee school",
-    "SLA school software",
-    "99.9 uptime school ERP",
-
-    // Specific concerns
-    "student information security",
-    "parent data security",
-    "fee data security",
-    "exam data protection",
-    "report card security",
-    "school records security",
-
-    // Decision maker terms
-    "school IT security",
-    "school CTO requirements",
-    "school data protection officer",
-    "school security assessment",
-    "school vendor security",
-    "school software security review",
-  ],
-  ogTitle: "Enterprise Security | SquareCampus School Management System",
+  ogTitle: "Security & Trust | SquareCampus",
   ogDescription:
-    "Bank-grade security for schools. Encryption, India data residency, RBAC, audit trails, and compliance-ready infrastructure. Your data is protected.",
-  twitterTitle: "Security & Compliance | SquareCampus",
+    "Encryption, role-based access, audit trails, and an India-first hosting posture. Security documentation available through the review process.",
+  twitterTitle: "Security & Trust | SquareCampus",
   twitterDescription:
-    "Bank-grade security for school data. Encryption, India data residency, role-based access, and full audit trails.",
+    "Encryption, role-based access, audit trails, and an India-first hosting posture for school data.",
 });
 
 type SecurityLayoutProps = {

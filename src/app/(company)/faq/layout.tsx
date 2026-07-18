@@ -14,23 +14,9 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Find answers to common questions about SquareCampus school management system, including features, pricing, security, implementation, and support for schools in India.",
   path: "/faq",
-  keywords: [
-    "school management system FAQ",
-    "school ERP questions",
-    "SquareCampus help",
-    "school software pricing",
-    "school ERP implementation",
-    "school data security questions",
-    "school management support",
-    "education ERP FAQ",
-    "school software migration",
-    "multi-campus school software",
-    "CBSE school ERP questions",
-    "ICSE school management FAQ",
-  ],
   ogTitle: "FAQ | SquareCampus School Management System",
   ogDescription:
-    "Get answers to common questions about SquareCampus - India's leading school management system for admissions, academics, fees, and operations.",
+    "Answers to common questions about SquareCampus — a school management system for admissions, academics, fees, and operations in India.",
 });
 
 // Server-side structured data for FAQ page

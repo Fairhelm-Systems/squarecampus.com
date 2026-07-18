@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/contact-form";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { createAlternates } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: createAlternates("/demo"),
-  title: "Demo",
+export const metadata: Metadata = createPageMetadata({
+  title: "Book a Guided Demo",
   description:
     "Book a guided SquareCampus demo and see how the School OS maps to admissions, academics, finance, communication, and institutional operations.",
-};
+  path: "/demo",
+});
 
 const expectations = [
   {
@@ -47,8 +47,8 @@ export default function DemoPage() {
             </h1>
             <p className="max-w-xl text-lg leading-8 text-[color:var(--muted-foreground)]">
               A SquareCampus demo is not a feature parade. It is a guided review of how your
-              institution currently runs, where the patchwork breaks, and how a School OS changes
-              the day-to-day reality for operators and leadership.
+              institution currently runs, where the current stack breaks, and how a School OS
+              changes the day-to-day reality for operators and leadership.
             </p>
             <div className="grid gap-3">
               {[

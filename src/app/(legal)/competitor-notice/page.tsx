@@ -20,28 +20,30 @@ import "@/styles/competitor-notice-print.css";
 
 const linkClassName = "text-teal-300 hover:underline";
 
+// LEGAL REVIEW: substantive language on this page is pending counsel review.
+// Do not edit the notice text without legal sign-off. This page is a legal
+// artifact, not marketing: it stays noindex and out of customer-facing
+// navigation, reachable only by direct link.
 export const metadata: Metadata = {
   title: "Notice to Competitors | SquareCampus",
   description:
     "Public legal notice regarding unauthorized access or misuse of SquareCampus. This notice is intended to provide actual notice and preserve remedies under Indian law.",
-  keywords: [
-    "competitor notice",
-    "legal notice",
-    "unauthorized access",
-    "SquareCampus",
-    "Fairhelm Systems OPC",
-    "cybersecurity",
-    "IP protection",
-  ],
+  alternates: {
+    canonical: "https://squarecampus.com/competitor-notice/",
+  },
   openGraph: {
     title: "Notice to Competitors | SquareCampus",
     description: "Public legal notice regarding unauthorized access or misuse of SquareCampus.",
     type: "website",
-    url: "https://squarecampus.com/competitor-notice",
+    url: "https://squarecampus.com/competitor-notice/",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
   },
 };
 

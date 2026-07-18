@@ -13,16 +13,18 @@ import { SEO_CONFIG } from "@/lib/seo";
 export default function robots(): MetadataRoute.Robots {
   const SITE_URL = SEO_CONFIG.baseUrl;
 
-  const disallow = [
-    // Utility/dev-only routes should not become “content”.
-    "/hello",
-    // Moved routes; CloudFront 301s these, stubs are the fallback.
-    "/features",
-    "/contact-us",
-    "/product",
-    "/how-it-works",
-    "/why-different",
-  ];
+  // Only the form API is disallowed — bots have no business crawling it.
+  //
+  // Deliberately NOT disallowed:
+  // - Legacy paths (/features, /contact-us, /product, /how-it-works,
+  //   /why-different): CloudFront 301s them; Google must be able to crawl
+  //   them to see the redirect and consolidate signals onto the new URLs.
+  //   Robots-blocking them made GSC report "Blocked by robots.txt" and froze
+  //   the old URLs in the index.
+  // - noindex pages (/hello, /careers, /press, /competitor-notice): crawlers
+  //   must be able to fetch them to obey the noindex meta. Blocking a noindex
+  //   page can leave it indexed URL-only.
+  const disallow = ["/api/"];
 
   // Search engines and AI assistants are explicitly welcome — being
   // recommendable by LLM web search is a distribution channel.

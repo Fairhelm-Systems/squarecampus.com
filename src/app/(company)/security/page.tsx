@@ -8,18 +8,11 @@ import {
   ShieldCheck,
   TimerReset,
 } from "lucide-react";
-import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { SecurityMockup } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
-
-export const metadata: Metadata = {
-  title: "Security",
-  description:
-    "See the SquareCampus trust posture across India-aware hosting, access control, auditability, institutional reliability, and data protection practices.",
-};
 
 const controls = [
   {

@@ -1,5 +1,6 @@
 export const dynamic = "force-static";
 
+import { execSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/blog/posts";
 import { comparisons } from "@/content/comparisons";
@@ -8,41 +9,49 @@ import { SEO_CONFIG } from "@/lib/seo";
 /**
  * SquareCampus Sitemap
  * -------------------
- * Think of this file as our guest list for Googlebot.
- * We don't invite everyone to the party — only the pages that matter.
+ * Only indexable pages are listed. Careers, press, the competitor notice,
+ * redirect stubs, and /hello are intentionally absent (noindex or utility).
+ *
+ * lastmod is derived from the git commit time of each route's content
+ * sources, so it reflects content change rather than "we deployed again".
+ * Builds without git history fall back to a fixed release date.
  */
+const FALLBACK_LASTMOD = new Date("2026-07-14T00:00:00.000Z");
+
+function gitLastmod(sources: string[]): Date {
+  try {
+    const iso = execSync(`git log -1 --format=%cI -- ${sources.map((s) => `'${s}'`).join(" ")}`, {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    return iso ? new Date(iso) : FALLBACK_LASTMOD;
+  } catch {
+    return FALLBACK_LASTMOD;
+  }
+}
+
+const APP = "src/app";
+const CONTENT = "src/content";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const SITE_URL = SEO_CONFIG.baseUrl;
 
   /**
-   * The lastmod field should reflect *content* change, not “we deployed again”.
-   * In a perfect world, these dates come from a CMS, markdown frontmatter,
-   * or git commit timestamps. Until then, we keep it honest and explicit.
-   */
-  const LASTMOD = {
-    home: new Date("2025-12-20T00:00:00.000Z"),
-    core: new Date("2025-12-20T00:00:00.000Z"),
-    company: new Date("2025-12-20T00:00:00.000Z"),
-    blogIndex: new Date("2025-12-20T00:00:00.000Z"),
-    legal: new Date("2025-12-20T00:00:00.000Z"),
-  } as const;
-
-  /**
-   * Our crawl strategy:
+   * Crawl strategy:
    * - The money pages are the crown jewels.
    * - The supporting pages stay visible, but not louder than the core.
    * - Legal pages exist for trust, not traffic.
    */
   const routes: Array<{
     path: `/${string}` | "/";
-    lastModified: Date;
+    sources: string[];
     changeFrequency: NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
     priority: number;
   }> = [
-    // Primary intent / “rank me for this” page
+    // Primary intent / "rank me for this" page
     {
       path: "/school-management-system",
-      lastModified: LASTMOD.core,
+      sources: [`${APP}/(company)/school-management-system`],
       changeFrequency: "weekly",
       priority: 1.0,
     },
@@ -50,57 +59,57 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Home: high authority, frequent link target
     {
       path: "/",
-      lastModified: LASTMOD.home,
-      changeFrequency: "daily",
+      sources: [`${APP}/page.tsx`, `${APP}/layout.tsx`],
+      changeFrequency: "weekly",
       priority: 0.9,
     },
 
     // Conversion + differentiation pages
     {
       path: "/why-squarecampus",
-      lastModified: LASTMOD.core,
+      sources: [`${APP}/(company)/why-squarecampus`],
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       path: "/compare",
-      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      sources: [`${APP}/(company)/compare/page.tsx`, `${CONTENT}/comparisons.ts`],
       changeFrequency: "weekly",
       priority: 0.85,
     },
     ...comparisons.map((c) => ({
       path: `/compare/${c.slug}` as const,
-      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      sources: [`${APP}/(company)/compare/[slug]`, `${CONTENT}/comparisons.ts`],
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
     {
       path: "/platform",
-      lastModified: LASTMOD.core,
+      sources: [`${APP}/(company)/platform`],
       changeFrequency: "weekly",
       priority: 0.88,
     },
     {
       path: "/aegis",
-      lastModified: new Date("2026-07-11T00:00:00.000Z"),
+      sources: [`${APP}/(company)/aegis`],
       changeFrequency: "weekly",
       priority: 0.85,
     },
     {
       path: "/services",
-      lastModified: new Date("2026-07-12T00:00:00.000Z"),
+      sources: [`${APP}/(company)/services`],
       changeFrequency: "weekly",
       priority: 0.75,
     },
     {
       path: "/rollout",
-      lastModified: LASTMOD.core,
+      sources: [`${APP}/(company)/rollout`],
       changeFrequency: "weekly",
       priority: 0.82,
     },
     {
       path: "/ecosystem",
-      lastModified: LASTMOD.core,
+      sources: [`${APP}/(company)/ecosystem`],
       changeFrequency: "weekly",
       priority: 0.8,
     },
@@ -108,13 +117,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Trust pages
     {
       path: "/security",
-      lastModified: LASTMOD.company,
+      sources: [`${APP}/(company)/security`],
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
+      path: "/infrastructure",
+      sources: [`${APP}/(company)/infrastructure`],
+      changeFrequency: "monthly",
+      priority: 0.55,
+    },
+    {
+      path: "/pgp",
+      sources: [`${APP}/(company)/pgp`],
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
       path: "/about",
-      lastModified: LASTMOD.company,
+      sources: [`${APP}/(company)/about`],
       changeFrequency: "monthly",
       priority: 0.6,
     },
@@ -122,15 +143,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Content hub
     {
       path: "/blog",
-      lastModified: LASTMOD.blogIndex,
-      changeFrequency: "daily",
+      sources: [`${APP}/(company)/blog`, `${CONTENT}/blog/posts.ts`],
+      changeFrequency: "weekly",
       priority: 0.7,
     },
-
-    // Individual blog posts (dynamically added)
     ...blogPosts.map((post) => ({
       path: `/blog/${post.slug}` as const,
-      lastModified: new Date(post.date),
+      sources: [`${CONTENT}/blog/posts.ts`],
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
@@ -138,53 +157,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Support & contact
     {
       path: "/faq",
-      lastModified: LASTMOD.company,
+      sources: [`${APP}/(company)/faq`, `${CONTENT}/faq.ts`],
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
       path: "/demo",
-      lastModified: LASTMOD.company,
+      sources: [`${APP}/(company)/demo`, "src/components/site/contact-form.tsx"],
       changeFrequency: "monthly",
       priority: 0.7,
-    },
-
-    // Company / PR
-    {
-      path: "/careers",
-      lastModified: LASTMOD.company,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      path: "/press",
-      lastModified: LASTMOD.company,
-      changeFrequency: "monthly",
-      priority: 0.4,
     },
 
     // Legal: required, but not SEO targets
     {
       path: "/terms-of-service",
-      lastModified: LASTMOD.legal,
+      sources: [`${APP}/(legal)/terms-of-service`],
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       path: "/privacy-policy",
-      lastModified: LASTMOD.legal,
+      sources: [`${APP}/(legal)/privacy-policy`],
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
+      path: "/ai-policy",
+      sources: [`${APP}/(legal)/ai-policy`],
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
       path: "/acceptable-use",
-      lastModified: LASTMOD.legal,
+      sources: [`${APP}/(legal)/acceptable-use`],
       changeFrequency: "yearly",
       priority: 0.2,
     },
     {
       path: "/data-processing-addendum",
-      lastModified: LASTMOD.legal,
+      sources: [`${APP}/(legal)/data-processing-addendum`],
       changeFrequency: "yearly",
       priority: 0.2,
     },
@@ -192,7 +203,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return routes.map((r) => ({
     url: `${SITE_URL}${r.path === "/" ? "" : r.path}`,
-    lastModified: r.lastModified,
+    lastModified: gitLastmod(r.sources),
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));

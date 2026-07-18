@@ -13,14 +13,14 @@ import { RolloutMockup } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
-import { createAlternates } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: createAlternates("/rollout"),
+export const metadata: Metadata = createPageMetadata({
   title: "Rollout",
   description:
     "See how SquareCampus handles onboarding, migration, training, parallel runs, and go-live for schools, colleges, and multi-campus institutions.",
-};
+  path: "/rollout",
+});
 
 const rolloutSteps = [
   {

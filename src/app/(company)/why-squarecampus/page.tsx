@@ -8,24 +8,18 @@ import {
   Shield,
   Sparkles,
 } from "lucide-react";
-import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
-
-export const metadata: Metadata = {
-  title: "Why SquareCampus",
-  description:
-    "See why SquareCampus positions itself as a School OS instead of a rebranded ERP or a bundle of disconnected school tools.",
-};
 
 const comparisonRows = [
   {
     label: "System model",
     erp: "Modules adapted or stitched together for education use cases.",
     pointTools: "Separate apps with separate records, permissions, and reporting logic.",
-    squareCampus: "One connected backbone designed for institution-wide education operations.",
+    squareCampus:
+      "One governed operating model designed for institution-wide education operations.",
   },
   {
     label: "Daily work",

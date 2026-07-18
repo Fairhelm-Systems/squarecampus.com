@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "bun run check:claims && next build",
+    "check:claims": "bash scripts/check-claims.sh",
     "preview": "bunx serve out",
     "deploy": "./scripts/deploy.sh",
     "lint": "biome lint .",
@@ -13,7 +14,7 @@
     "format:check": "biome format .",
     "check": "biome check .",
     "fix": "biome check --write .",
-    "check-types": "turbo run check-types"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.11",
@@ -22,6 +23,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^1.24.0",
     "next": "^16.2.10",
+    "postcss": "^8.5.19",
     "radix-ui": "^1.6.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

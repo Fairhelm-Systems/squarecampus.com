@@ -37,7 +37,7 @@ const faqItems = [
   {
     question: "How is SquareCampus different from legacy school ERPs?",
     answer:
-      "Legacy ERPs bolt modules together and feel like separate products. SquareCampus is architected as one operating system: shared database, consistent workflows, and human support included.",
+      "Legacy ERPs bolt modules together and feel like separate products. SquareCampus is architected as one operating system: a unified institutional data model, consistent workflows, and human support included.",
   },
   {
     question: "Does SquareCampus handle Indian fee structures and compliance?",
@@ -47,7 +47,7 @@ const faqItems = [
   {
     question: "How fast can we go live?",
     answer:
-      "Most schools launch in days, not months. We import historical data, run a parallel dry run, train admins and teachers, and then go live with a rollback plan ready.",
+      "Rollout is guided and sequenced around your academic calendar. We import historical data, run a parallel dry run, train admins and teachers, and then go live with a rollback plan ready. Timelines depend on data complexity and are agreed before we start.",
   },
   {
     question: "Is there a mobile experience for parents and staff?",
@@ -57,12 +57,12 @@ const faqItems = [
   {
     question: "How is data secured inside the school management system?",
     answer:
-      "Role-based access, scoped permissions, SSO readiness, encryption in transit and at rest, activity logs, and export controls keep data safe. Every action is traceable.",
+      "Role-based access, scoped permissions, encryption in transit and at rest, activity logs, and export controls are part of the product design. Every action is traceable to a user and timestamp.",
   },
   {
     question: "How is school data protected and accessed securely?",
     answer:
-      "Access is role-based and scoped by campus, department, and workflow. Encryption in transit and at rest protects data, and immutable audit trails show every change with user and timestamp.",
+      "Access is role-based and scoped by campus, department, and workflow. Data is encrypted in transit and at rest, and audit trails show every change with user and timestamp.",
   },
   {
     question: "Can we see documentation for your security posture?",
@@ -108,7 +108,7 @@ const workflowModules = [
   {
     title: "Admissions to Enrolment",
     icon: GraduationCap,
-    body: "Inquiry → application → document verification → fee collection → section allocation. Parents see status live; admins get SLA alerts.",
+    body: "Inquiry → application → document verification → fee collection → section allocation. Parents see status; admins see where each application is stuck.",
   },
   {
     title: "Attendance to Fees",
@@ -133,14 +133,14 @@ const workflowModules = [
   {
     title: "Transport to Compliance",
     icon: Bus,
-    body: "Vehicle, route, and driver management with attendance sync, GPS hooks, and safety checks documented for audits.",
+    body: "Vehicle, route, and driver management with attendance sync and safety checks documented for audits.",
   },
 ] as const;
 
 const comparisonRows = [
   {
     title: "Architecture",
-    us: "Single database, shared workflows, consistent UX.",
+    us: "One unified institutional data model, shared workflows, consistent UX.",
     them: "Multiple products bolted together with custom scripts.",
   },
   {
@@ -191,7 +191,7 @@ export default function SchoolManagementSystemPage() {
               compliance stay connected so nothing slips.
             </p>
             <div className="flex flex-wrap gap-2">
-              {["Guided rollout", "Single source of truth", "Compliance baked in"].map((item) => (
+              {["Guided rollout", "One governed record", "Audit-ready by design"].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
@@ -349,7 +349,7 @@ export default function SchoolManagementSystemPage() {
                 "Handles complex fee plans, concessions, transport slabs, and arrears.",
                 "GST-ready invoicing, receipts, and exports to accounting tools.",
                 "Region-aware attendance rules and academic calendars.",
-                "Data residency and audit logs that match Indian compliance expectations.",
+                "Designed for India data-residency expectations, with audit logs built in.",
                 "Multi-branch hierarchies with shared services and campus-level autonomy.",
               ].map((item) => (
                 <li
@@ -370,11 +370,11 @@ export default function SchoolManagementSystemPage() {
             <ul className="mt-4 grid gap-2.5">
               {[
                 "Role-based access with fine-grained scopes by campus, department, and module.",
-                "TLS 1.3 in transit and AES-256 at rest for sensitive records.",
+                "Encryption in transit and at rest for sensitive records.",
                 "Activity timelines on every record: who changed what, when, and from where.",
-                "SSO-ready with export controls to prevent data leakage.",
-                "Immutable change logs tied to user identity and timestamps.",
-                "Alignment with DPDPA and local education data guidelines.",
+                "Export controls designed to prevent data leakage.",
+                "Change logs tied to user identity and timestamps.",
+                "Designed to support DPDP Act obligations and education data guidelines.",
               ].map((item) => (
                 <li
                   key={item}
@@ -404,15 +404,15 @@ export default function SchoolManagementSystemPage() {
           <div className="surface-panel rounded-[1.8rem] p-7">
             <CalendarClock className="size-5 text-(--amber)" />
             <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">
-              Implementation timeline
+              Implementation sequence
             </h3>
             <ol className="mt-5 grid gap-3 border-l border-(--line) pl-5">
               {[
-                "Day 0: Scope confirmation, data templates shared, owners assigned.",
-                "Day 3: Data import dry run, key workflows configured, access provisioned.",
-                "Day 7: Parallel run with real data, teacher and admin training.",
-                "Day 10: Go-live with rollback plan, success metrics, and support chat.",
-                "Day 14: Post-launch audit, optimize fee rules, automate recurring tasks.",
+                "Scope confirmation, data templates shared, owners assigned.",
+                "Data import dry run, key workflows configured, access provisioned.",
+                "Parallel run with real data, teacher and admin training.",
+                "Go-live with rollback plan, success metrics, and support channel.",
+                "Post-launch review, fee-rule tuning, recurring tasks automated.",
               ].map((item) => (
                 <li key={item} className="relative text-sm leading-6 text-muted-foreground">
                   <span className="absolute -left-[26px] top-2 size-2 rounded-full bg-(--brand)" />
@@ -532,7 +532,7 @@ export default function SchoolManagementSystemPage() {
                 "@id": `${SEO_CONFIG.baseUrl}/#org`,
                 name: "SquareCampus",
                 url: SEO_CONFIG.baseUrl,
-                logo: "https://squarecampus.com/logo.png",
+                logo: SEO_CONFIG.logo,
                 sameAs: ["https://www.linkedin.com/company/square-campus"],
                 brand: "SquareCampus",
               },
@@ -543,7 +543,6 @@ export default function SchoolManagementSystemPage() {
                 applicationCategory: "EducationalApplication",
                 operatingSystem: "Web",
                 url: "https://app.squarecampus.com",
-                offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
                 publisher: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
                 inLanguage: "en-IN",
               },

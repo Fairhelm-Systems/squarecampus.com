@@ -20,18 +20,18 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
 import {
-  createAlternates,
   createBreadcrumbSchema,
+  createPageMetadata,
   createWebPageSchema,
   SEO_CONFIG,
 } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "AEGIS — Governed Intelligence for School Operations",
   description:
     "AEGIS (Adaptive Enterprise Governance & Intelligence System) is SquareCampus' governed intelligence layer: role-aware answers, exception detection, and audit-ready decision support for school leaders. Ask AEGIS. Don't chase reports.",
-  alternates: createAlternates("/aegis"),
-};
+  path: "/aegis",
+});
 
 const roleScenarios = [
   {

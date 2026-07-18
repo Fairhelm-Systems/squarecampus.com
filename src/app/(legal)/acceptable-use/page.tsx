@@ -1,3 +1,5 @@
+// LEGAL REVIEW: substantive language in this document is pending counsel
+// review. Do not edit legal terms without legal sign-off.
 import { LegalSection, LegalShell } from "@/components/legal/legal-shell";
 import { Separator } from "@/components/ui/separator";
 

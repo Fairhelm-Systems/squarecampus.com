@@ -20,14 +20,14 @@ import { PlatformMockupRow } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
-import { createAlternates } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: createAlternates("/platform"),
+export const metadata: Metadata = createPageMetadata({
   title: "Platform",
   description:
     "See how SquareCampus structures admissions, academics, finance, communication, compliance, and institutional operations inside one connected School OS.",
-};
+  path: "/platform",
+});
 
 const backboneLayers = [
   {
@@ -95,7 +95,7 @@ const experienceSurfaces = [
 ] as const;
 
 const operatingClaims = [
-  "One login and one source of truth for admissions, academics, finance, and communication.",
+  "One login and one governed record for admissions, academics, finance, and communication.",
   "Institution-aware structure for schools, colleges, and multi-campus organizations.",
   "Multilingual parent-facing usage without turning English-first reporting into a mess.",
   "AEGIS layered inside the platform as governed intelligence, not marketed as a substitute for operational depth.",
@@ -108,7 +108,7 @@ export default function PlatformPage() {
         <Reveal className="mx-auto max-w-3xl space-y-6 text-center">
           <p className="section-kicker">Platform architecture</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-            One backbone. Many surfaces. No institutional drift.
+            One governed core. Many surfaces. No institutional drift.
           </h1>
           <p className="mx-auto max-w-xl text-lg leading-8 text-muted-foreground">
             SquareCampus is built like an operating system for institutions, not a loose bundle of
