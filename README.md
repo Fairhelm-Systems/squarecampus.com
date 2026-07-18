@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# squarecampus.com — marketing site
 
-## Getting Started
+Static Next.js export for the SquareCampus marketing site, served from
+S3 + CloudFront. SquareCampus is a sovereign School OS for Indian school
+groups, a product of Fairhelm Systems OPC.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router, `output: "export"`, trailing slashes) + Tailwind v4
+- Bun for everything (`bun run <script>`), Biome for lint/format
+- No server: redirects and security headers live at the CloudFront edge
+- Demo form posts to an external intake API (Lambda + API Gateway + DynamoDB
+  — see [infra/contact-intake/README.md](infra/contact-intake/README.md))
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun run dev            # local dev server
+bun run build          # claims check + static export to ./out (needs env, see below)
+bun run check:claims   # forbidden-claims regression check on its own
+bun run lint / format  # biome
+bun run check-types    # tsc --noEmit
+bun run deploy         # build + S3 sync + CloudFront invalidation + IndexNow
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
+`NEXT_PUBLIC_CONTACT_FORM_MODE=email` interim mode) — see `.env.example` and
+[DEPLOYMENT.md](DEPLOYMENT.md).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Ground rules
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **No invented proof.** Every marketing claim is tracked in
+  [docs/marketing-claims-register.md](docs/marketing-claims-register.md);
+  `scripts/check-claims.sh` fails the build if a forbidden claim reappears.
+- Say "unified institutional data model" / "one governed system of record" —
+  never "single/shared database".
+- Legal pages carry `LEGAL REVIEW` markers; don't edit their substantive
+  language without counsel.
+- Growth strategy and content cadence:
+  [docs/growth-playbook.md](docs/growth-playbook.md).
 
-## Learn More
+## Key docs
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [DEPLOYMENT.md](DEPLOYMENT.md) — infrastructure, edge config, deploy flow
+- [docs/marketing-claims-register.md](docs/marketing-claims-register.md)
+- [docs/growth-playbook.md](docs/growth-playbook.md)
+- [infra/contact-intake/README.md](infra/contact-intake/README.md)
+- [src/content/blog/BLOG_TOPICS.md](src/content/blog/BLOG_TOPICS.md)
