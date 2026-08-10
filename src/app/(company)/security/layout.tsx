@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { securityFaqs } from "@/content/security-faq";
 import {
   createBreadcrumbSchema,
   createPageMetadata,
@@ -11,30 +12,6 @@ import {
 // Target: Security-conscious decision makers, IT heads, compliance officers
 // Rule: only design-posture statements here. Specific certifications, SLAs,
 // and audit artifacts are shared through the security review process.
-
-// Security FAQs for structured data (matches the posture on page.tsx)
-const securityFaqs = [
-  {
-    question: "Where is data hosted?",
-    answer:
-      "SquareCampus is designed with an India-first hosting posture. Hosting details and data-flow documentation are shared during the security review process.",
-  },
-  {
-    question: "How is data encrypted?",
-    answer:
-      "Data is encrypted in transit and at rest as part of the platform's baseline design. Implementation details are available under the security review process.",
-  },
-  {
-    question: "Who can access data?",
-    answer:
-      "Access is role-based and least-privileged by design, with administrative access logged and traceable.",
-  },
-  {
-    question: "Do you support vendor security questionnaires?",
-    answer:
-      "Yes. We provide questionnaire support and can share security documentation and summaries on request.",
-  },
-];
 
 // Server-side structured data for security page
 const structuredData = {

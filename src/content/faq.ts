@@ -116,18 +116,48 @@ export const faqs: FaqItem[] = [
       "You own your data. If you decide to leave, we provide a complete export in standard formats (CSV, JSON) within 30 days of request. After the transition period, we securely delete all your data from our systems as per our data retention policy.",
     category: "security",
   },
+  {
+    question: "Does Microsoft SSO use our institution's existing accounts?",
+    answer:
+      "Yes. Enterprise customers can authenticate staff through their own Microsoft Entra ID tenant. Their institution continues to control identity policies such as MFA and Conditional Access, while SquareCampus controls campus, role, record and workflow permissions. Enterprise covers one approved institutional tenant, available subject to technical onboarding.",
+    category: "security",
+  },
+  {
+    question: "Does SquareCampus access our Outlook or Microsoft 365 data?",
+    answer:
+      "No. Standard Microsoft Entra ID SSO is used to authenticate identity. Access to email, files, Teams, SharePoint or other Microsoft Graph data is not required for basic sign-in.",
+    category: "security",
+  },
+  {
+    question: "Does SSO automatically create and remove users?",
+    answer:
+      "SSO authenticates users. Automated user provisioning and deprovisioning require a separately configured lifecycle-integration capability such as SCIM, which is scoped as an Enterprise service rather than included by default.",
+    category: "security",
+  },
+  {
+    question: "Can a trust use more than one Microsoft tenant?",
+    answer:
+      "Multiple Microsoft Entra ID tenants can be supported as an Enterprise federation requirement and are scoped during technical discovery.",
+    category: "security",
+  },
 
   // Pricing & support
   {
     question: "How do you price?",
     answer:
-      "Pricing is based on student count and campus structure. We offer transparent, predictable pricing with no hidden fees. You'll receive a clear quote after understanding your workflows during the demo, including all modules, support, and updates.",
+      "SquareCampus is licensed annually as one institutional platform. The licence is calculated through progressive, volume-based student bands, and the plan you select — Starter, Pro or Enterprise — reflects the operational and governance depth you need. Exact commercial terms are issued after a short institutional discovery.",
     category: "pricing",
   },
   {
     question: "Are there any setup or hidden fees?",
     answer:
-      "No hidden fees. The price we quote includes implementation support, data migration assistance, training, and ongoing updates. We believe in transparent pricing—what you see is what you pay.",
+      "There is no hidden module wall inside the licence. Some dimensions are scoped separately and quoted as their own lines — legacy data migration, custom integrations, private-cloud or on-premises deployment, premium implementation and support, and metered third-party usage such as SMS, WhatsApp and payment-gateway charges. Every line appears in the proposal before you sign.",
+    category: "pricing",
+  },
+  {
+    question: "Is the mobile app charged separately?",
+    answer:
+      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional licence charge. A white-labelled Android and iOS build — published under your institution's own branding and store listings — is a separately scoped one-time charge.",
     category: "pricing",
   },
   {

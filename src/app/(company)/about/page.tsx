@@ -173,9 +173,9 @@ export default function AboutPage() {
             <div className="surface-panel rounded-[1.6rem] p-6">
               <p className="section-kicker">Founder-led</p>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                SquareCampus, a product of Fairhelm Systems OPC, is built by a founder-led,
-                product-first team focused on building something that can sit at the center of your
-                institution for years, not months.
+                SquareCampus, a product of Fairhelm Systems (OPC) Private Limited, is built by a
+                founder-led, product-first team focused on building something that can sit at the
+                center of your institution for years, not months.
               </p>
               <div className="mt-5 grid gap-3">
                 {founders.map((person) => (

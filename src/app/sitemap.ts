@@ -78,6 +78,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ],
     },
 
+    // Canonical entity answer: "what is SquareCampus". High authority for
+    // category resolution by search engines and language models.
+    {
+      path: "/what-is-squarecampus",
+      sources: [`${APP}/(company)/what-is-squarecampus`, `${CONTENT}/what-is-squarecampus.ts`],
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+
     // Conversion + differentiation pages
     {
       path: "/why-squarecampus",
@@ -137,6 +146,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ],
     },
 
+    // Commercial model. High buyer intent, no prices published.
+    {
+      path: "/pricing",
+      sources: [`${APP}/(company)/pricing`, `${CONTENT}/pricing.ts`],
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+
     // Trust pages
     {
       path: "/security",
@@ -191,6 +208,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      path: "/contact",
+      sources: [`${APP}/(company)/contact`, `${CONTENT}/company.ts`],
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
 
     // Legal: required, but not SEO targets
     {
@@ -220,6 +243,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       path: "/data-processing-addendum",
       sources: [`${APP}/(legal)/data-processing-addendum`],
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
+      path: "/refund-policy",
+      sources: [`${APP}/(legal)/refund-policy`],
       changeFrequency: "yearly",
       priority: 0.2,
     },

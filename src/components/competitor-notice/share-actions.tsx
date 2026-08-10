@@ -72,7 +72,7 @@ export function ShareActions() {
   };
 
   const generateCitation = () => {
-    const citation = `Fairhelm Systems OPC. "Notice to Competitors: Unauthorized Access and Misuse Are Prohibited." SquareCampus, Document ID: COMP-NOTICE-2026-001, Version 1.1, January 22, 2026. ${window.location.href}`;
+    const citation = `Fairhelm Systems (OPC) Private Limited. "Notice to Competitors: Unauthorized Access and Misuse Are Prohibited." SquareCampus, Document ID: COMP-NOTICE-2026-001, Version 1.1, January 22, 2026. ${window.location.href}`;
     navigator.clipboard.writeText(citation);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

@@ -1,6 +1,6 @@
 // LEGAL REVIEW: substantive language in this document is pending counsel
 // review. Do not edit legal terms without legal sign-off.
-import { LegalSection, LegalShell } from "@/components/legal/legal-shell";
+import { EntityIdentity, LegalSection, LegalShell } from "@/components/legal/legal-shell";
 import { Separator } from "@/components/ui/separator";
 
 export default function TermsOfServicePage() {
@@ -58,16 +58,12 @@ export default function TermsOfServicePage() {
 
       <div className="space-y-10">
         <LegalSection title="1. Company & Contracting Entity" id="company-entity">
+          <EntityIdentity documentNoun="these Terms" />
           <p>
-            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
-            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
-            in a written agreement or order form.
-          </p>
-          <p>References to "SquareCampus" in these Terms mean Fairhelm Systems OPC.</p>
-          <p>
-            These Terms form a binding agreement between Fairhelm Systems OPC and the Institution or
-            individual User accessing the Service. If you are accepting these Terms on behalf of an
-            Institution, you confirm that you have the authority to bind that Institution.
+            These Terms form a binding agreement between Fairhelm Systems (OPC) Private Limited and
+            the Institution or individual User accessing the Service. If you are accepting these
+            Terms on behalf of an Institution, you confirm that you have the authority to bind that
+            Institution.
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>The Institution is the entity subscribing to SquareCampus ("Institution"); and</li>
@@ -336,9 +332,9 @@ export default function TermsOfServicePage() {
           <p className="font-medium text-foreground">17.1 Institution Indemnification</p>
           <p>
             The Institution shall defend, indemnify, and hold harmless SquareCampus, Fairhelm
-            Systems OPC, and their respective officers, directors, employees, and agents from and
-            against any and all claims, damages, losses, liabilities, costs, and expenses (including
-            reasonable attorneys' fees) arising from or related to:
+            Systems (OPC) Private Limited, and their respective officers, directors, employees, and
+            agents from and against any and all claims, damages, losses, liabilities, costs, and
+            expenses (including reasonable attorneys' fees) arising from or related to:
           </p>
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -513,7 +509,7 @@ export default function TermsOfServicePage() {
         <LegalSection title="20. Contact Information" id="contact">
           <p>If you have questions about these Terms, contact:</p>
           <p>
-            <strong>Fairhelm Systems OPC</strong>
+            <strong>Fairhelm Systems (OPC) Private Limited</strong>
             <br />
             Email: <a href="mailto:support@squarecampus.com">support@squarecampus.com</a>
             <br />

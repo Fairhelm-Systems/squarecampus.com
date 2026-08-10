@@ -74,10 +74,10 @@ export default function CompetitorNoticePage() {
                 severity="critical"
               >
                 <Paragraph>
-                  Fairhelm Systems OPC (trading as SquareCampus) issues this public legal notice to
-                  competitors, their employees, contractors, agents, and anyone seeking access to
-                  SquareCampus. Unauthorized access, credential solicitation, or misuse of
-                  non-public information is prohibited.
+                  Fairhelm Systems (OPC) Private Limited (trading as SquareCampus) issues this
+                  public legal notice to competitors, their employees, contractors, agents, and
+                  anyone seeking access to SquareCampus. Unauthorized access, credential
+                  solicitation, or misuse of non-public information is prohibited.
                 </Paragraph>
                 <Paragraph>
                   This notice is informational and intended to provide actual notice. It does not
@@ -731,8 +731,8 @@ export default function CompetitorNoticePage() {
                 severity="info"
               >
                 <Paragraph>
-                  Fairhelm Systems OPC reserves all rights and remedies. Any delay or failure to
-                  enforce a right is not a waiver of that right or any other.
+                  Fairhelm Systems (OPC) Private Limited reserves all rights and remedies. Any delay
+                  or failure to enforce a right is not a waiver of that right or any other.
                 </Paragraph>
               </NoticeSection>
 

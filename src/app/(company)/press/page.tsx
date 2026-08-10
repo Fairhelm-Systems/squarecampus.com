@@ -21,7 +21,7 @@ const companyFacts = [
   },
   {
     title: "Founded",
-    body: "SquareCampus is a product of Fairhelm Systems OPC, founded and led by Mohit Gupta (Founder & CTO).",
+    body: "SquareCampus is a product of Fairhelm Systems (OPC) Private Limited, incorporated in India on 5 August 2026, founded and led by Mohit Gupta, sole founder.",
   },
   {
     title: "Media contact",

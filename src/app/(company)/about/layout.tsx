@@ -12,7 +12,7 @@ export const metadata: Metadata = createPageMetadata({
   ogDescription:
     "Meet the team building operational infrastructure for Indian education: one governed system of record for admissions, academics, finance, and compliance.",
   twitterDescription:
-    "Building operational infrastructure for Indian schools and colleges. Meet the founding team and learn our mission.",
+    "Building operational infrastructure for Indian schools and colleges. Founder-led, product-first, and focused on institutional operating command.",
 });
 
 type AboutLayoutProps = {

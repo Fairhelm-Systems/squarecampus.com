@@ -1,5 +1,7 @@
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { company, copyrightLine } from "@/content/company";
 import {
   footerContact,
   footerGroups,
@@ -10,6 +12,57 @@ import {
 import { BrandLogo } from "./brand-logo";
 import { ButtonLink } from "./button-link";
 import { MobileExpand } from "./mobile-expand";
+
+function DisclosureField({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+        {label}
+      </p>
+      <div className="text-sm leading-6 text-[color:var(--muted-foreground)]">{children}</div>
+    </div>
+  );
+}
+
+/**
+ * Statutory company disclosure. Section 12(3) of the Companies Act, 2013
+ * requires the company's name, registered office, CIN, telephone and email on
+ * its business letters and notices; the footer is the surface that carries it
+ * on every page. It stays visible rather than collapsing behind a link — the
+ * mobile disclosure above it is for navigation, not for this.
+ */
+function CompanyDisclosure() {
+  return (
+    <address className="grid gap-6 not-italic py-6 sm:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr]">
+      <DisclosureField label="Registered office">
+        <p className="font-medium text-[color:var(--foreground)]">{company.legalName}</p>
+        <p className="mt-1">{company.address.full}</p>
+      </DisclosureField>
+      <DisclosureField label="CIN">
+        <p className="font-mono text-[0.78rem] tracking-tight text-[color:var(--foreground)]">
+          {company.cin}
+        </p>
+        <p className="mt-1">{company.incorporationStatus}</p>
+      </DisclosureField>
+      <DisclosureField label="Contact">
+        <a
+          href={`mailto:${company.email.general}`}
+          className="block transition-colors hover:text-[color:var(--foreground)]"
+        >
+          {company.email.general}
+        </a>
+        {company.phone ? (
+          <a
+            href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
+            className="mt-1 block transition-colors hover:text-[color:var(--foreground)]"
+          >
+            {company.phone}
+          </a>
+        ) : null}
+      </DisclosureField>
+    </address>
+  );
+}
 
 export function SiteFooter() {
   return (
@@ -101,7 +154,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-8 border-b border-[color:var(--line)] pb-8 sm:mt-10 sm:gap-10 sm:pb-10 lg:grid-cols-[1.1fr_1.5fr]">
+        <div className="mt-6 grid gap-8 border-b border-[color:var(--line)] pb-8 sm:mt-10 sm:gap-10 sm:pb-10 lg:grid-cols-[1fr_1.95fr] lg:gap-12">
           <div className="space-y-5">
             <BrandLogo subtitle="One login. One timeline. One truth." />
             <p className="hidden max-w-md text-sm leading-7 text-[color:var(--muted-foreground)] sm:block">
@@ -138,7 +191,7 @@ export function SiteFooter() {
           </div>
 
           <MobileExpand label="Explore all pages">
-            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:gap-8 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-5 lg:gap-x-5">
               {footerGroups.map((group) => (
                 <div key={group.title}>
                   <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
@@ -162,7 +215,9 @@ export function SiteFooter() {
           </MobileExpand>
         </div>
 
-        <div className="flex flex-col gap-4 pt-6 text-sm text-[color:var(--muted-foreground)] sm:flex-row sm:items-center sm:justify-between">
+        <CompanyDisclosure />
+
+        <div className="flex flex-col gap-4 border-t border-[color:var(--line)] pt-6 text-sm text-[color:var(--muted-foreground)] sm:flex-row sm:items-start sm:justify-between">
           <div className="inline-flex items-center gap-3">
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
               Built in India
@@ -170,10 +225,10 @@ export function SiteFooter() {
             <span className="h-1 w-1 rounded-full bg-[color:var(--muted-foreground)]/50" />
             <span>For institutions that cannot afford operational drift.</span>
           </div>
-          <p>
-            SquareCampus™ is a trademark of Fairhelm Systems OPC. © {new Date().getFullYear()}{" "}
-            SquareCampus. All rights reserved.
-          </p>
+          <div className="sm:max-w-md sm:text-right">
+            <p>{copyrightLine(new Date().getFullYear())}</p>
+            <p className="mt-1">{company.trademarkNotice}</p>
+          </div>
         </div>
       </div>
 

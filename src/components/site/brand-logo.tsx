@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 interface BrandLogoProps {
   className?: string;
   subtitle?: string;
+  /** Lets the header reclaim the subtitle's width when the nav is crowded. */
+  subtitleClassName?: string;
   iconSize?: number;
   framed?: boolean;
 }
@@ -12,6 +14,7 @@ interface BrandLogoProps {
 export function BrandLogo({
   className,
   subtitle = "School OS for India",
+  subtitleClassName,
   iconSize = 44,
   framed = false,
 }: BrandLogoProps) {
@@ -28,7 +31,7 @@ export function BrandLogo({
       >
         <Image
           src="/images/marketing/logo-light.webp"
-          alt="SquareCampus"
+          alt=""
           fill
           sizes={`${iconSize}px`}
           className="object-contain"
@@ -38,7 +41,12 @@ export function BrandLogo({
         <span className="block truncate font-display text-lg tracking-[-0.03em] text-[color:var(--foreground)]">
           SquareCampus
         </span>
-        <span className="mt-0.5 block font-mono text-[0.58rem] uppercase tracking-[0.24em] text-[color:var(--muted-foreground)]">
+        <span
+          className={cn(
+            "mt-0.5 block font-mono text-[0.58rem] uppercase tracking-[0.24em] text-[color:var(--muted-foreground)]",
+            subtitleClassName
+          )}
+        >
           {subtitle}
         </span>
       </span>

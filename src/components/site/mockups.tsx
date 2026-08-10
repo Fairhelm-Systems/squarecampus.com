@@ -1,6 +1,6 @@
 "use client";
 
-import { Network, Sparkles } from "lucide-react";
+import { Network } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef } from "react";
@@ -112,9 +112,6 @@ function LaptopFrame({
         <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
           {title}
         </p>
-        <span className="rounded-full border border-(--line) bg-(--surface-strong) px-2.5 py-1 font-mono text-[0.54rem] uppercase tracking-[0.22em] text-muted-foreground">
-          Live surface
-        </span>
       </div>
       <div className="relative aspect-[3880/2300]">
         <div
@@ -184,39 +181,6 @@ function PhoneFrame({
         </div>
       </div>
     </div>
-  );
-}
-
-export function HeroMockupCluster() {
-  return (
-    <AnimatedScene className="mx-auto max-w-[60rem]">
-      <LaptopFrame
-        title="Admin command center"
-        screenSrc="/images/screens/laptop/institution-command-center.webp"
-        screenAlt="SquareCampus institution command center with multi-campus attendance, fees, and academic health roll-up"
-        motionRole="primary"
-        priority
-      />
-      <PhoneFrame
-        title="Student experience"
-        screenSrc="/images/screens/mobile/student-day-view.webp"
-        screenAlt="SquareCampus student app showing the day's timetable, next class, and assignments due soon"
-        className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
-        motionRole="secondary"
-      />
-      <div
-        className="surface-panel pointer-events-none absolute -bottom-14 left-4 hidden max-w-[14rem] rounded-[1.4rem] p-4 lg:block"
-        data-scene-accent
-      >
-        <div className="flex items-center gap-2 text-sm text-foreground">
-          <Sparkles className="size-4 text-(--amber)" />
-          AEGIS governed intelligence
-        </div>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          Surfaces cross-workflow anomalies without changing the core operational model.
-        </p>
-      </div>
-    </AnimatedScene>
   );
 }
 

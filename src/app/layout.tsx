@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeScript } from "@/components/site/theme-script";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { company } from "@/content/company";
 import { SEO_CONFIG } from "@/lib/seo";
 import "./globals.css";
 
@@ -34,20 +35,20 @@ const displayFont = Sora({
 export const metadata: Metadata = {
   metadataBase: new URL(SEO_CONFIG.baseUrl),
   title: {
-    default: "SquareCampus | Sovereign School OS & School Management System in India",
+    default: "SquareCampus | School Operating System for Institutional Command",
     template: "%s | SquareCampus",
   },
   description:
-    "SquareCampus is a School OS for Indian school groups, connecting admissions, academics, finance, communication, compliance, and operations in one governed system of record.",
+    "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
   alternates: {
     canonical: `${SEO_CONFIG.baseUrl}/`,
   },
   openGraph: {
     type: "website",
     url: "https://squarecampus.com/",
-    title: "SquareCampus | Sovereign School OS for Indian School Groups",
+    title: "SquareCampus | School Operating System for Institutional Command",
     description:
-      "Run every campus. Govern the institution. SquareCampus connects admissions, academics, finance, communication, and operations in one governed system of record.",
+      "Know what requires attention today. SquareCampus connects school operations, assigns ownership to exceptions, and gives leadership a governed view of the institution.",
     siteName: "SquareCampus",
     locale: "en_IN",
     images: [
@@ -61,9 +62,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SquareCampus | Sovereign School OS for Indian School Groups",
+    title: "SquareCampus | School Operating System for Institutional Command",
     description:
-      "SquareCampus keeps admissions, academics, finance, communication, and operations in sync for school groups in India.",
+      "A system of record stores what happened. A decision layer shows what requires attention, who owns it, and what happens next.",
     images: ["https://squarecampus.com/og/home.png"],
   },
   robots: {
@@ -98,6 +99,20 @@ export default function RootLayout({
     >
       <head>
         <ThemeScript />
+        {/*
+          The scroll-reveal system starts at `opacity: 0` and relies on JS to
+          add `.is-revealed`. Without JS that class never arrives, so every
+          revealed block on every page would render invisible. This restores
+          the fully-composed page for no-JS visitors and crawlers that do not
+          execute scripts — the content is already in the HTML either way.
+        */}
+        <noscript>
+          <style>
+            {
+              ".reveal-root,.reveal-stagger [data-reveal-item],.scene-root,.scene-root [data-scene-item],.scene-root [data-scene-accent],.aegis-visual [data-aegis-rise],.aegis-visual [data-aegis-dot],.aegis-console [data-console-step],nav[aria-label='Table of contents'] a{opacity:1!important;transform:none!important;animation:none!important}.aegis-visual [data-aegis-line]{stroke-dashoffset:0!important;opacity:.5!important}.aegis-visual [data-aegis-bar],.svc-flow [data-svc-bar]{transform:none!important;animation:none!important}.aegis-console .aegis-console-query{max-width:100%!important;white-space:normal!important;animation:none!important}"
+            }
+          </style>
+        </noscript>
       </head>
       <body suppressHydrationWarning className="antialiased">
         <ScrollToTop />
@@ -112,9 +127,34 @@ export default function RootLayout({
                   "@type": "Organization",
                   "@id": "https://squarecampus.com/#org",
                   name: "SquareCampus",
-                  legalName: "Fairhelm Systems OPC",
+                  legalName: company.legalName,
                   url: "https://squarecampus.com",
                   logo: SEO_CONFIG.logo,
+                  foundingDate: company.incorporationDate,
+                  email: company.email.general,
+                  // Telephone is omitted until a statutory line is
+                  // provisioned — an empty string would publish a claim we
+                  // cannot honour.
+                  ...(company.phone ? { telephone: company.phone } : {}),
+                  identifier: {
+                    "@type": "PropertyValue",
+                    propertyID: "CIN",
+                    name: "Corporate Identity Number",
+                    value: company.cin,
+                  },
+                  address: {
+                    "@type": "PostalAddress",
+                    name: "Registered office",
+                    streetAddress: company.address.street,
+                    addressLocality: company.address.locality,
+                    addressRegion: company.address.region,
+                    postalCode: company.address.postalCode,
+                    addressCountry: company.address.country,
+                  },
+                  founder: {
+                    "@type": "Person",
+                    name: "Mohit Gupta",
+                  },
                   sameAs: [
                     "https://www.linkedin.com/company/square-campus",
                     "https://x.com/squarecampus",
@@ -143,8 +183,18 @@ export default function RootLayout({
                 },
                 {
                   "@type": "SoftwareApplication",
+                  "@id": "https://squarecampus.com/#software",
                   name: "SquareCampus",
-                  applicationCategory: "EducationalApplication",
+                  // Category signal: School Operating System / institutional
+                  // operations, NOT "school ERP" or "school management
+                  // software". `applicationCategory` stays a schema.org value;
+                  // `applicationSubCategory` and `description` carry the
+                  // canonical category wording. No offers/price: the site
+                  // publishes no figures.
+                  applicationCategory: "BusinessApplication",
+                  applicationSubCategory: "School Operating System",
+                  description:
+                    "SquareCampus is a School Operating System and institutional decision layer for schools and educational trusts, connecting school cycles to ownership, exception handling, auditability and leadership decisions.",
                   operatingSystem: "Web",
                   url: "https://app.squarecampus.com",
                   publisher: { "@id": "https://squarecampus.com/#org" },

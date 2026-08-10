@@ -4,6 +4,7 @@ import {
   BookOpenCheck,
   Building2,
   ChartNoAxesCombined,
+  Check,
   Globe2,
   Landmark,
   Languages,
@@ -16,25 +17,32 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
+import { HeroProductComposition } from "@/components/site/hero-product";
 import { MobileExpand } from "@/components/site/mobile-expand";
-import { HeroMockupCluster } from "@/components/site/mockups";
+import { PainRemedyGrid } from "@/components/site/pain-remedy";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { SyntheticDataNote } from "@/components/site/synthetic-data-note";
+import {
+  CANONICAL_PROMISE,
+  homepagePainIds,
+  RECORD_VS_DECISION,
+} from "@/content/operational-pains";
 import { siteCtas } from "@/content/site-content";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | Sovereign School OS & School Management System in India",
+  title: "SquareCampus | School Operating System for Institutional Command",
   description:
-    "Run every campus. Govern the institution. SquareCampus connects admissions, academics, attendance, finance, communication, and compliance in one governed system of record for Indian school groups.",
+    "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
 };
 
 const heroProofPoints = [
-  "One governed system of record across every campus.",
-  "Trust-level governance with campus-level autonomy.",
-  "Multilingual and India-aware where usage reality demands it.",
-  "Built for operational calm, not dashboard theatre.",
+  "Exceptions surface with an owner — before term end.",
+  "Leadership sees current state, not stitched reports.",
+  "Every approval and override remains auditable.",
+  "Processes survive staff changes because ownership is recorded.",
 ] as const;
 
 const governanceMoves = [
@@ -195,47 +203,106 @@ export default function Home() {
     <div className="page-shell">
       <SiteHeader />
       <main>
-        {/* 1 — Hero */}
-        <SectionShell className="pt-12 sm:pt-16">
-          <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-            <Reveal immediate className="space-y-6">
-              <p className="section-kicker">Sovereign School OS for Indian school groups</p>
-              <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-[4.6rem]">
-                Run every campus. Govern them as one.
-              </h1>
-              <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-                Most ERPs help staff enter data. SquareCampus helps management govern the
-                institution — admissions, academics, attendance, fees, communication, and compliance
-                running on one governed system of record.
+        {/* 1 — Hero.
+            DOM order is the mobile order the brief requires: proposition →
+            product proof → supporting evidence. Explicit grid placement then
+            lifts the proof statements back under the copy on desktop, so no
+            `order` juggling is needed and the tab order stays natural. */}
+        <SectionShell className="pt-8 pb-6 sm:pt-14 sm:pb-12 lg:pb-16">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12 xl:gap-14">
+            <Reveal
+              immediate
+              className="space-y-4 sm:space-y-5 lg:col-start-1 lg:row-start-1 lg:self-end"
+            >
+              <p className="section-kicker">Institutional operating command</p>
+              <h1 className="type-display">Know what requires attention today.</h1>
+              <p className="type-body measure text-muted-foreground">
+                SquareCampus connects school operations, assigns ownership to exceptions, and gives
+                leadership a governed view of what is changing across the institution.
               </p>
-              <div className="flex flex-wrap gap-3">
-                <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              {/* Stacked and full-width on phones; one row from sm up. */}
+              <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
+                <ButtonLink
+                  href={siteCtas.demoHref}
+                  label="Diagnose an operational bottleneck"
+                  variant="cta"
+                  className="w-full justify-center text-center sm:w-auto"
+                />
                 <ButtonLink
                   href={siteCtas.platformHref}
-                  label="Explore the platform"
+                  label="See the School OS"
                   variant="secondary"
+                  className="w-full justify-center sm:w-auto"
                 />
-              </div>
-              {/* Mobile shows only the two sharpest points; all four from sm: up. */}
-              <div className="hidden gap-3 pt-2 sm:grid sm:grid-cols-2">
-                {heroProofPoints.map((item) => (
-                  <div
-                    key={item}
-                    className="surface-panel rounded-[1.35rem] px-4 py-3 text-sm leading-6 text-muted-foreground"
-                  >
-                    {item}
-                  </div>
-                ))}
               </div>
             </Reveal>
 
-            <Reveal immediate delay={120}>
-              <HeroMockupCluster />
+            <Reveal
+              immediate
+              delay={120}
+              className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center"
+            >
+              <HeroProductComposition />
+            </Reveal>
+
+            {/* Supporting evidence — after the product on mobile, under the
+                copy on desktop. Compact rows, not four feature cards. */}
+            <Reveal
+              immediate
+              delay={200}
+              className="lg:col-start-1 lg:row-start-2 lg:self-start lg:pt-2"
+            >
+              <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+                {heroProofPoints.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                    <Check
+                      aria-hidden
+                      className="mt-1 size-3.5 shrink-0 text-[color:var(--brand)]"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           </div>
         </SectionShell>
 
-        {/* 2 — Command centre */}
+        {/* 2 — Operational pain and the remedy. This sits directly under the
+            hero on purpose: the institution's problem is the entry point to
+            the story, not the module list. */}
+        <SectionShell
+          id="operational-pain"
+          eyebrow="What institutions actually feel"
+          title="The problem is rarely a missing feature. It is delayed visibility and unclear ownership."
+          body="Recurring school cycles break in predictable places. Each one has a hidden cost, a remedy, an accountable owner, and something a pilot can measure."
+        >
+          <Reveal>
+            <PainRemedyGrid ids={homepagePainIds} />
+          </Reveal>
+
+          <Reveal delay={80}>
+            <div className="surface-panel-strong mt-5 rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
+              <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-12">
+                <div>
+                  <p className="eyebrow">Record versus decision</p>
+                  <p className="type-quote mt-4 text-balance">{RECORD_VS_DECISION}</p>
+                </div>
+                <div className="grid gap-4 border-t border-[color:var(--line)] pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                  <p className="type-body measure text-muted-foreground">{CANONICAL_PROMISE}</p>
+                  <div className="flex flex-wrap gap-3">
+                    <ButtonLink
+                      href="/what-is-squarecampus"
+                      label="What is SquareCampus?"
+                      variant="secondary"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </SectionShell>
+
+        {/* 3 — Command centre */}
         <SectionShell
           eyebrow="The command centre"
           compactBody
@@ -252,9 +319,9 @@ export default function Home() {
                       <ChartNoAxesCombined className="size-4 text-(--teal)" />
                       Institution view
                     </div>
-                    <span className="rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      Live state
-                    </span>
+                    {/* Replaces a "Live state" chip: this panel renders
+                        synthetic figures, so it must not imply live data. */}
+                    <SyntheticDataNote />
                   </div>
 
                   <h2 className="mt-7 max-w-2xl font-display text-3xl tracking-[-0.05em] sm:text-4xl">
@@ -270,9 +337,7 @@ export default function Home() {
                     <div className="flex h-full flex-col rounded-[1.7rem] border border-(--line) bg-(--surface) p-6">
                       <div className="flex items-center justify-between">
                         <p className="section-kicker">Attendance by grade</p>
-                        <span className="rounded-full border border-(--line) bg-(--surface-strong) px-2.5 py-1 font-mono text-[0.48rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
-                          Sample view
-                        </span>
+                        <SyntheticDataNote variant="chip" />
                       </div>
                       <div className="mt-5 flex flex-1 flex-col justify-center gap-3">
                         {[
@@ -320,9 +385,7 @@ export default function Home() {
                     <div className="flex h-full flex-col rounded-[1.7rem] border border-(--line) bg-(--surface) p-6">
                       <div className="flex items-center justify-between">
                         <p className="section-kicker">Fee collection</p>
-                        <span className="rounded-full border border-(--line) bg-(--surface-strong) px-2.5 py-1 font-mono text-[0.48rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
-                          Sample view
-                        </span>
+                        <SyntheticDataNote variant="chip" />
                       </div>
                       <div className="flex flex-1 items-center justify-center py-6">
                         <div className="relative">

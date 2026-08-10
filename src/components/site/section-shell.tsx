@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { SectionHeader } from "./marketing";
 
 interface SectionShellProps {
   id?: string;
@@ -31,31 +32,14 @@ export function SectionShell({
       className={cn("relative px-4 py-9 sm:px-6 sm:py-16 lg:px-8 lg:py-24", className)}
     >
       <div className="mx-auto max-w-6xl">
-        {(eyebrow || title || body) && (
-          <div
-            className={cn(
-              "mb-6 max-w-3xl space-y-3 sm:mb-10 sm:space-y-4 lg:mb-14",
-              align === "center" && "mx-auto text-center"
-            )}
-          >
-            {eyebrow ? <p className="section-kicker">{eyebrow}</p> : null}
-            {title ? (
-              <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-                {title}
-              </h2>
-            ) : null}
-            {body ? (
-              <p
-                className={cn(
-                  "max-w-2xl text-[0.95rem] leading-7 text-[color:var(--muted-foreground)] sm:text-lg",
-                  compactBody && "hidden sm:block"
-                )}
-              >
-                {body}
-              </p>
-            ) : null}
-          </div>
-        )}
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={title}
+          body={body}
+          align={align}
+          className="mb-6 sm:mb-10 lg:mb-14"
+          bodyClassName={cn(compactBody && "hidden sm:block")}
+        />
         <div className={contentClassName}>{children}</div>
       </div>
     </section>

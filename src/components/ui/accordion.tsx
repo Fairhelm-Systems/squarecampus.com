@@ -53,7 +53,12 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+      // `data-[state=closed]:hidden` is what makes `forceMount` safe: the
+      // answer stays in the served HTML (so FAQPage structured data matches
+      // the page) but is removed from the accessibility tree and the tab order
+      // while collapsed. It costs the collapse animation; the expand animation
+      // is unaffected.
+      className="overflow-hidden text-sm data-[state=closed]:hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
       {...props}
     >
       <div className={cn("pt-0 pb-4", className)}>{children}</div>

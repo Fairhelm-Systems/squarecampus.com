@@ -47,11 +47,11 @@ export function Hero() {
                 <span className="text-red-400">Unauthorized Access and Misuse Are Prohibited</span>
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg">
-                Fairhelm Systems OPC (trading as SquareCampus) issues this public legal notice to
-                competitors and their agents. Any unauthorized access, credential solicitation,
-                misuse of non-public information, or circumvention of access controls is prohibited.
-                We reserve the right to pursue civil, criminal, and regulatory remedies as permitted
-                by Indian law.
+                Fairhelm Systems (OPC) Private Limited (trading as SquareCampus) issues this public
+                legal notice to competitors and their agents. Any unauthorized access, credential
+                solicitation, misuse of non-public information, or circumvention of access controls
+                is prohibited. We reserve the right to pursue civil, criminal, and regulatory
+                remedies as permitted by Indian law.
               </p>
             </div>
 

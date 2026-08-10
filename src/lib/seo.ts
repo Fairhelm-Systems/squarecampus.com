@@ -26,11 +26,13 @@ export function createAlternates(path: string) {
 export const SEO_CONFIG = {
   baseUrl,
   siteName: "SquareCampus",
-  // Category: sovereign School OS. Search reality: "school management system".
-  // Metadata holds both without inventing rank or scale.
-  defaultTitle: "SquareCampus | Sovereign School OS for Indian School Groups",
+  // Canonical category: School Operating System / institutional decision
+  // layer. ERP and "school management system" terminology is deliberately
+  // confined to search-intent routes (/school-management-system, /compare,
+  // /school-erp-alternative) so the brand pages resolve to the right category.
+  defaultTitle: "SquareCampus | School Operating System for Institutional Command",
   defaultDescription:
-    "SquareCampus is a School OS for Indian school groups: admissions, academics, fees, transport, communication, compliance, and analytics in one governed system of record.",
+    "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
   language: "en-IN",
   openGraphLocale: "en_IN",
   // 1200x630 social card (correct OG/Twitter aspect ratio). The square brand

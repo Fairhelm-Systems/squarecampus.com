@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { company } from "@/content/company";
 import { cn } from "@/lib/utils";
 
 type LegalPageLink = {
@@ -28,7 +29,57 @@ export const legalPageLinks: LegalPageLink[] = [
     title: "AI Policy",
     href: "/ai-policy",
   },
+  {
+    title: "Cancellation & Refunds",
+    href: "/refund-policy",
+  },
 ];
+
+/**
+ * The entity paragraph that opens every legal document: who is actually
+ * bound, with the statutory particulars a reader needs to identify and reach
+ * the company. `documentNoun` is how the page refers to itself ("this
+ * Policy", "these Terms", "this DPA"), so the sentence reads naturally.
+ */
+export function EntityIdentity({ documentNoun }: { documentNoun: string }) {
+  return (
+    <>
+      <p>
+        {company.trademarkNotice} All services are provided by {company.legalNameDisplay}, unless
+        otherwise stated in a written agreement or order form.
+      </p>
+      <p>
+        References to "SquareCampus" in {documentNoun} mean {company.legalNameDisplay}.
+      </p>
+      <address className="not-italic rounded-[1.2rem] border border-(--line) bg-(--surface) p-4 text-sm leading-6">
+        <span className="block font-medium text-foreground">{company.legalName}</span>
+        <span className="mt-1 block">Registered office: {company.address.full}</span>
+        <span className="mt-1 block">
+          CIN: <span className="font-mono text-[0.8rem]">{company.cin}</span> ·{" "}
+          {company.incorporationStatus}
+        </span>
+        <span className="mt-1 block">
+          Email:{" "}
+          <a href={`mailto:${company.email.general}`} className="hover:text-foreground">
+            {company.email.general}
+          </a>
+          {company.phone ? (
+            <>
+              {" · "}
+              Telephone:{" "}
+              <a
+                href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
+                className="hover:text-foreground"
+              >
+                {company.phone}
+              </a>
+            </>
+          ) : null}
+        </span>
+      </address>
+    </>
+  );
+}
 
 type LegalShellProps = {
   title: string;

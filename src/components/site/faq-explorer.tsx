@@ -64,7 +64,13 @@ export function FaqExplorer() {
               <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="max-w-3xl text-base leading-7 text-muted-foreground">
+              {/* forceMount: without it Radix leaves closed answers out of the
+                  DOM entirely, so the FAQPage JSON-LD on this route declares
+                  answers that appear nowhere in the rendered page. */}
+              <AccordionContent
+                forceMount
+                className="max-w-3xl text-base leading-7 text-muted-foreground"
+              >
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

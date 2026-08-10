@@ -33,14 +33,43 @@ fi
 
 [[ -f "$OUT_DIR/index.html" ]] || { echo "error: $OUT_DIR/index.html missing — build failed?" >&2; exit 1; }
 
+# Media directories. These are excluded from the HTML pass and uploaded
+# separately so each object is written exactly once with the right header:
+# `aws s3 sync` skips files whose size and mtime already match, so a second
+# pass over the same keys would NOT rewrite their Cache-Control metadata.
+MEDIA_DIRS=(images og icons brand)
+
+# Long, but deliberately NOT `immutable`. These filenames are not
+# content-hashed (unlike everything under _next/), so an image replaced under
+# the same name must still be recoverable. `immutable` tells browsers never to
+# revalidate, and a CloudFront invalidation cannot reach a browser cache — a
+# returning visitor would keep a stale hero for a year. 30 days plus
+# stale-while-revalidate keeps repeat visits instant while leaving a way out.
+MEDIA_CACHE="public,max-age=2592000,stale-while-revalidate=86400"
+
+# Finder metadata gets copied out of public/ into the export and would
+# otherwise be served at https://squarecampus.com/.DS_Store, which discloses
+# directory contents. Excluded from every pass so a stray local file can never
+# reach the bucket.
+JUNK=(--exclude "*.DS_Store" --exclude "*/.DS_Store" --exclude "Thumbs.db")
+
 echo "==> Uploading HTML and non-hashed assets (revalidate on every request)"
+HTML_EXCLUDES=(--exclude "_next/*")
+for d in "${MEDIA_DIRS[@]}"; do HTML_EXCLUDES+=(--exclude "$d/*"); done
 aws s3 sync "$OUT_DIR/" "s3://$BUCKET" --delete \
   --cache-control "public,max-age=0,must-revalidate" \
-  --exclude "_next/*" --only-show-errors
+  "${HTML_EXCLUDES[@]}" "${JUNK[@]}" --only-show-errors
 
 echo "==> Uploading hashed assets (immutable, 1 year)"
 aws s3 sync "$OUT_DIR/_next/" "s3://$BUCKET/_next/" --delete \
-  --cache-control "public,max-age=31536000,immutable" --only-show-errors
+  --cache-control "public,max-age=31536000,immutable" "${JUNK[@]}" --only-show-errors
+
+echo "==> Uploading media (30 days, revalidate in background)"
+for d in "${MEDIA_DIRS[@]}"; do
+  [[ -d "$OUT_DIR/$d" ]] || continue
+  aws s3 sync "$OUT_DIR/$d/" "s3://$BUCKET/$d/" --delete \
+    --cache-control "$MEDIA_CACHE" "${JUNK[@]}" --only-show-errors
+done
 
 echo "==> Invalidating CloudFront cache"
 INVALIDATION_ID=$(aws cloudfront create-invalidation \

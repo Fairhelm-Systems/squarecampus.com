@@ -9,9 +9,12 @@ import {
   TimerReset,
 } from "lucide-react";
 import { ButtonLink } from "@/components/site/button-link";
+import { DetailsFaq } from "@/components/site/details-faq";
+import { IdentityFlow } from "@/components/site/identity-flow";
 import { SecurityMockup } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { securityFaqs } from "@/content/security-faq";
 import { siteCtas } from "@/content/site-content";
 
 const controls = [
@@ -107,6 +110,34 @@ export default function SecurityPage() {
       </SectionShell>
 
       <SectionShell
+        id="identity"
+        eyebrow="Identity and access"
+        title="Your identity environment remains yours"
+        body="Enterprise customers can connect SquareCampus to their institution's Microsoft Entra ID environment. Staff authenticate using their existing organisational accounts and remain subject to the institution's MFA, Conditional Access and user-assignment policies."
+      >
+        <Reveal>
+          <IdentityFlow />
+        </Reveal>
+
+        <Reveal delay={80}>
+          <div className="surface-panel mt-5 rounded-[1.6rem] p-6 sm:p-7">
+            <p className="text-base leading-7 text-[color:var(--foreground)]">
+              SquareCampus does not delegate product authorisation to email addresses alone.
+              Institution membership, campus scope, roles, records and workflow permissions remain
+              governed inside SquareCampus.
+            </p>
+            <p className="mt-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
+              Standard sign-in authenticates identity only &mdash; it does not require access to
+              email, files, Teams, SharePoint or other Microsoft 365 business data. Enterprise
+              covers one approved institutional tenant, available subject to technical onboarding.
+              Automated provisioning such as SCIM, additional Entra ID tenants, SAML and
+              non-Microsoft identity providers are scoped separately during technical discovery.
+            </p>
+          </div>
+        </Reveal>
+      </SectionShell>
+
+      <SectionShell
         eyebrow="Why this matters"
         title="The security story is really an operations story"
         body="Institutions trust software when it remains understandable, controllable, and accountable during the moments that matter."
@@ -155,6 +186,18 @@ export default function SecurityPage() {
               ))}
             </div>
           </div>
+        </Reveal>
+      </SectionShell>
+
+      {/* This route's FAQPage JSON-LD is built from the same array. Previously
+          the schema declared answers that were never rendered anywhere. */}
+      <SectionShell
+        id="security-faq"
+        eyebrow="Security questions"
+        title="What review teams ask first"
+      >
+        <Reveal>
+          <DetailsFaq items={securityFaqs} />
         </Reveal>
       </SectionShell>
 

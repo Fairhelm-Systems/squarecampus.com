@@ -230,7 +230,10 @@ export default async function ComparePage({ params }: PageProps) {
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="max-w-3xl text-base leading-7 text-muted-foreground">
+                <AccordionContent
+                  forceMount
+                  className="max-w-3xl text-base leading-7 text-muted-foreground"
+                >
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

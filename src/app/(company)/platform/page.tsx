@@ -19,13 +19,14 @@ import { ButtonLink } from "@/components/site/button-link";
 import { PlatformMockupRow } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { SystemLayerGrid } from "@/components/site/system-layers";
 import { siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Platform",
   description:
-    "See how SquareCampus structures admissions, academics, finance, communication, compliance, and institutional operations inside one connected School OS.",
+    "The four layers of the SquareCampus School Operating System: record, workflow, governance and intelligence — and the operational outcome each one changes.",
   path: "/platform",
   ogImage: "https://squarecampus.com/og/platform.png",
 });
@@ -138,21 +139,35 @@ export default function PlatformPage() {
         </Reveal>
       </SectionShell>
 
+      {/* The four layers, outcome first. This replaces the old domain-area
+          grid so the page is organised by what each layer changes about the
+          institution, not by which modules exist. */}
       <SectionShell
-        eyebrow="Operating layers"
-        title="How the School OS is structured"
-        body="Every major institutional workflow sits on the same foundation, which is why SquareCampus feels coordinated instead of stitched together."
+        id="layers"
+        eyebrow="How the School OS is structured"
+        title="Four layers, each with an operational outcome"
+        body="Every institutional workflow sits on the same foundation. What matters is not how many modules are present, but what each layer changes about the way the institution runs."
+      >
+        <Reveal>
+          <SystemLayerGrid showCapabilities />
+        </Reveal>
+      </SectionShell>
+
+      <SectionShell
+        eyebrow="Operating domains"
+        title="The cycles the backbone has to carry"
+        body="Evidence that the operating model is complete, rather than the reason to choose it."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {backboneLayers.map((layer) => (
             <article
               key={layer.title}
               data-reveal-item
-              className="surface-panel rounded-[1.6rem] p-6"
+              className="surface-quiet rounded-[1.6rem] p-6"
             >
               <layer.icon className="size-5 text-(--brand)" />
-              <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{layer.title}</h2>
-              <p className="mt-3 text-base leading-7 text-muted-foreground">{layer.body}</p>
+              <h2 className="mt-5 type-card-title">{layer.title}</h2>
+              <p className="type-support mt-3">{layer.body}</p>
             </article>
           ))}
         </Reveal>

@@ -1,7 +1,8 @@
 // LEGAL REVIEW: substantive language in this document is pending counsel
 // review. Do not edit legal terms without legal sign-off.
-import { LegalSection, LegalShell } from "@/components/legal/legal-shell";
+import { EntityIdentity, LegalSection, LegalShell } from "@/components/legal/legal-shell";
 import { Separator } from "@/components/ui/separator";
+import { company } from "@/content/company";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -24,16 +25,17 @@ export default function PrivacyPolicyPage() {
         </div>
         <div className="mt-4 grid gap-3 text-xs text-muted-foreground sm:grid-cols-2">
           {[
-            { label: "Company & Data Controller", href: "#company-controller" },
+            { label: "Company & Data Fiduciary", href: "#company-controller" },
             { label: "Information We Collect", href: "#information-collected" },
             { label: "How We Use the Information", href: "#use-of-information" },
             { label: "Legal Basis for Processing", href: "#legal-basis" },
             { label: "Data Sharing and Transfers", href: "#data-sharing" },
             { label: "Data Security", href: "#data-security" },
             { label: "Data Retention", href: "#data-retention" },
-            { label: "Rights of Institutions and Users", href: "#rights" },
+            { label: "Your Rights as a Data Principal", href: "#rights" },
             { label: "Cookies and Similar Technologies", href: "#cookies" },
-            { label: "Children’s Privacy", href: "#children" },
+            { label: "Children’s and Student Data", href: "#children" },
+            { label: "Grievance Redressal", href: "#grievance" },
             { label: "Changes to This Policy", href: "#changes" },
             { label: "Contact Us", href: "#contact" },
           ].map((item) => (
@@ -49,18 +51,20 @@ export default function PrivacyPolicyPage() {
       </nav>
 
       <div className="space-y-10">
-        <LegalSection title="1. Company & Data Controller" id="company-controller">
+        <LegalSection title="1. Company & Data Fiduciary" id="company-controller">
+          <EntityIdentity documentNoun="this Policy" />
           <p>
-            SquareCampus™ is a trademark (registration pending) and product brand of Fairhelm
-            Systems OPC. All services are provided by Fairhelm Systems OPC, unless otherwise stated
-            in a written agreement or order form.
+            This Policy uses the vocabulary of the Digital Personal Data Protection Act, 2023 (the
+            "DPDP Act"): a <strong>Data Principal</strong> is the individual the personal data is
+            about, a <strong>Data Fiduciary</strong> decides why and how it is processed, and a{" "}
+            <strong>Data Processor</strong> processes it on a Fiduciary's instructions.
           </p>
-          <p>References to "SquareCampus" in this Policy mean Fairhelm Systems OPC.</p>
           <p>
-            For the purposes of applicable data protection law, Fairhelm Systems OPC acts as the
-            Data Controller for its own business operations and the SquareCampus website. When
-            processing personal data on behalf of an Institution within the Service, Fairhelm
-            Systems OPC acts as a Data Processor as described in the Data Processing Addendum.
+            {company.legalNameDisplay} is the Data Fiduciary for its own business operations and the
+            SquareCampus website. When processing personal data on behalf of an Institution within
+            the Service, the Institution is the Data Fiduciary and {company.legalNameDisplay} acts
+            as its Data Processor, as described in the Data Processing Addendum. In that case the
+            Institution's own notice governs its relationship with students, guardians and staff.
           </p>
           <p>
             SquareCampus service data is hosted and processed in India. We do not transfer or store
@@ -168,6 +172,15 @@ export default function PrivacyPolicyPage() {
             quickly to incidents.
           </p>
           <p>
+            <strong className="text-foreground">Breach notification.</strong> On becoming aware of a
+            personal data breach, we intimate each affected Data Principal without delay —
+            describing the nature, extent and timing of the breach, its likely consequences, the
+            mitigation we are applying, the steps they can take, and where to reach us — and we
+            report it to the Data Protection Board of India, followed by a detailed report within 72
+            hours as Rule 7 of the DPDP Rules, 2025 requires. Where we act as an Institution's Data
+            Processor, we notify the Institution without delay so it can meet its own obligation.
+          </p>
+          <p>
             A summary of our security practices is available at{" "}
             <a href="/security" className="text-foreground">
               https://squarecampus.com/security
@@ -184,14 +197,42 @@ export default function PrivacyPolicyPage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="8. Rights of Institutions and Users" id="rights">
+        <LegalSection title="8. Your Rights as a Data Principal" id="rights">
           <p>
-            Subject to applicable law and our contracts with Institutions, Users may request access,
-            correction, data export, or deletion, subject to legal and contractual limitations.
+            Where {company.legalNameDisplay} is the Data Fiduciary, the DPDP Act gives you the
+            following rights. Requests may be sent to the grievance contact in section 11.
           </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <strong>Access</strong> — a summary of the personal data being processed, the
+              processing activities, and the identities of other Data Fiduciaries and Processors it
+              has been shared with (section 11).
+            </li>
+            <li>
+              <strong>Correction and erasure</strong> — correction, completion, updating, and
+              erasure of your personal data (section 12).
+            </li>
+            <li>
+              <strong>Grievance redressal</strong> — a readily available means of raising a
+              complaint with us, answered within the period prescribed under the Act, before
+              approaching the Data Protection Board of India (section 13).
+            </li>
+            <li>
+              <strong>Nomination</strong> — the right to nominate another individual to exercise
+              these rights on your behalf in the event of your death or incapacity (section 14).
+            </li>
+            <li>
+              <strong>Withdrawal of consent</strong> — where processing rests on your consent, you
+              may withdraw it at any time, with the same ease as it was given. Withdrawal stops
+              further processing for that purpose; it does not undo lawful processing already
+              carried out, nor affect records we must retain by law.
+            </li>
+          </ul>
           <p>
-            Most requests should flow through the Institution, which controls user data. We will
-            collaborate with Institutions to fulfil requests when required.
+            Where your data sits inside an Institution's deployment, that Institution is the Data
+            Fiduciary. Raise the request with the Institution first; we will support it as the
+            Institution's Data Processor. We may need to verify your identity, and your authority
+            where you act for someone else, before acting on a request.
           </p>
         </LegalSection>
 
@@ -203,26 +244,77 @@ export default function PrivacyPolicyPage() {
           </p>
         </LegalSection>
 
-        <LegalSection title="10. Children’s Privacy" id="children">
+        <LegalSection title="10. Children’s and Student Data" id="children">
           <p>
-            SquareCampus is provided to Institutions, not directly to children. Institutions are
-            responsible for ensuring compliance with applicable laws and policies regarding minors
-            and for managing access on behalf of students.
+            Student records are the most sensitive data SquareCampus touches, and a large share of
+            them concern children — anyone under eighteen. Section 9 of the DPDP Act requires
+            verifiable consent from a parent or lawful guardian before a child's personal data is
+            processed, and prohibits tracking, behavioural monitoring, and targeted advertising
+            directed at children. Rule 10 of the DPDP Rules, 2025 adds that the consent must be
+            genuinely verifiable: due diligence is required to confirm that the person giving it is
+            an identifiable adult entitled to act for the child.
+          </p>
+          <p>
+            SquareCampus is provided to Institutions, not directly to children. The Institution
+            holds the relationship with students and guardians and is responsible for obtaining and
+            recording verifiable parental consent, for managing access on behalf of students, and
+            for its own compliance regarding minors. Our role is to process what the Institution
+            instructs and to make that instruction boundary enforceable in the product.
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>We do not sell student, child, or guardian data, or share it for advertising.</li>
+            <li>
+              We do not track, profile, or behaviourally monitor children, and run no advertising
+              technology in the product.
+            </li>
+            <li>
+              We do not use student or child data to train AI models. The AEGIS posture is
+              read-only, role-scoped, and audit-backed.
+            </li>
+            <li>
+              We undertake no processing that is likely to have a detrimental effect on the
+              well-being of a child.
+            </li>
+          </ul>
+        </LegalSection>
+
+        <LegalSection title="11. Grievance Redressal" id="grievance">
+          <p>
+            Complaints, rights requests, and questions about this Policy should be addressed to the{" "}
+            {company.grievance.name}, at{" "}
+            <a href={`mailto:${company.grievance.email}`}>{company.grievance.email}</a>, or by post
+            to the registered office at {company.address.full}.
+          </p>
+          <p>
+            We acknowledge receipt and respond within ninety days, the period prescribed under the
+            DPDP Rules, 2025. Most requests are answered well inside it. If a grievance is not
+            resolved to your satisfaction, you may complain to the Data Protection Board of India
+            directly — no lawyer and no fee are required.
           </p>
         </LegalSection>
 
-        <LegalSection title="11. Changes to This Policy" id="changes">
+        <LegalSection title="12. Changes to This Policy" id="changes">
           <p>
             We may update this Privacy Policy occasionally. Updated versions will appear on this
             page, and we may provide additional notices when appropriate.
           </p>
+          <p>
+            The DPDP Rules, 2025 were notified on 14 November 2025 and take effect in phases, with
+            full compliance required by 13 May 2027. We are building toward that date rather than
+            waiting for it, and this Policy will be revised as consent, notice, and rights machinery
+            lands in the product.
+          </p>
           <p>Continued use after changes means acceptance of the revised policy.</p>
         </LegalSection>
 
-        <LegalSection title="12. Contact Us" id="contact">
+        <LegalSection title="13. Contact Us" id="contact">
           <p>If you have questions or requests, contact:</p>
           <p>
-            <strong>Fairhelm Systems OPC</strong>
+            <strong>{company.legalName}</strong>
+            <br />
+            Registered office: {company.address.full}
+            <br />
+            CIN: {company.cin}
             <br />
             Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
             <br />

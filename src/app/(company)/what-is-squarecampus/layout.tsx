@@ -1,0 +1,77 @@
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { CANONICAL_DEFINITION, entityFaqs } from "@/content/what-is-squarecampus";
+import {
+  createBreadcrumbSchema,
+  createPageMetadata,
+  createWebPageSchema,
+  SEO_CONFIG,
+} from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "What is SquareCampus? | School Operating System and Decision Layer",
+  description:
+    "SquareCampus is a School Operating System and institutional decision layer for Indian schools and educational trusts, connecting school cycles to ownership, exceptions, auditability and leadership decisions.",
+  path: "/what-is-squarecampus",
+  ogTitle: "What is SquareCampus? | School Operating System for Schools and Trusts",
+  ogDescription:
+    "A system of record stores what happened. A decision layer shows what requires attention, why it matters, who owns it, and what happens next.",
+});
+
+/**
+ * This route is the canonical entity answer for "what is SquareCampus". The
+ * `DefinedTerm` node states the category explicitly so search engines and
+ * language models resolve the brand to School Operating System rather than to
+ * ERP software.
+ *
+ * The FAQPage entries are generated from the same `entityFaqs` array the page
+ * renders, so the markup and the visible answers cannot drift apart.
+ */
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    createWebPageSchema({
+      name: "What is SquareCampus? | School Operating System and Decision Layer",
+      description: CANONICAL_DEFINITION,
+      url: `${SEO_CONFIG.baseUrl}/what-is-squarecampus`,
+    }),
+    createBreadcrumbSchema([
+      { name: "Home", url: SEO_CONFIG.baseUrl },
+      { name: "What is SquareCampus?", url: `${SEO_CONFIG.baseUrl}/what-is-squarecampus` },
+    ]),
+    {
+      "@type": "DefinedTerm",
+      "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#definition`,
+      name: "SquareCampus",
+      description: CANONICAL_DEFINITION,
+      inDefinedTermSet: {
+        "@type": "DefinedTermSet",
+        name: "School Operating System",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#faqpage`,
+      mainEntity: entityFaqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ],
+};
+
+export default function WhatIsSquareCampusLayout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      {children}
+    </>
+  );
+}
