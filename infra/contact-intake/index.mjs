@@ -1,7 +1,7 @@
 // squarecampus-contact-intake — Lambda behind API Gateway (HTTP API).
-// Receives /demo form submissions, stores them in DynamoDB, and (once SES is
-// verified) emails a notification. SES failures never fail the request: the
-// submission is already stored by then.
+// Receives /demo form submissions, stores them in DynamoDB, and emails a
+// notification via Microsoft 365 (Graph API, app-only OAuth). Mail failures
+// never fail the request: the submission is already stored in DynamoDB by then.
 //
 // Traffic path: browsers call https://squarecampus.com/api/contact (same
 // origin, no CORS preflight); CloudFront proxies to API Gateway with a shared
@@ -9,31 +9,24 @@
 //
 // Abuse safeguards (layered with API Gateway stage throttling):
 //   - Edge key: requests must carry the x-intake-edge-key header that only
-//     the CloudFront origin config knows — the public execute-api URL is a
-//     dead end (403).
-//   - Origin allowlist: browsers send Origin on every POST, so script spam
-//     without the right Origin is rejected with 403.
-//   - Per-IP rate limit via DynamoDB atomic counter, RATE_LIMIT_PER_HOUR/hr,
-//     keyed on the real viewer IP from CloudFront-Viewer-Address (set by
-//     CloudFront itself; not client-spoofable).
+//     the CloudFront origin config knows.
+//   - Origin allowlist: browsers send Origin on every POST.
+//   - Per-IP rate limit via DynamoDB atomic counter, RATE_LIMIT_PER_HOUR/hr.
 //   - Honeypot field honored server-side (pretend success, store nothing).
-//   - Strict validation: required fields, email shape, consent, length caps,
-//     20KB body cap.
-//   - No submission content is written to CloudWatch logs (PII stays in the
-//     table).
+//   - Strict validation + 20KB body cap. No PII written to CloudWatch.
 //
 // Env vars:
 //   TABLE_NAME           DynamoDB table for submissions + rate counters
 //   EDGE_SECRET          shared secret set as a CloudFront origin header
 //   ALLOWED_ORIGINS      comma-separated Origin allowlist
 //   RATE_LIMIT_PER_HOUR  per-IP submission cap (default 5)
-//   SES_ENABLED          "true" to send email notifications (stubbed until
-//                        the squarecampus.com SES identity is verified)
-//   NOTIFY_EMAIL         where notifications go (contact@squarecampus.com)
-//   SENDER_EMAIL         verified SES sender (no-reply@squarecampus.com)
+//   NOTIFY_EMAIL         where notifications are sent (hello@fairhelmsystems.com)
+//   M365_SENDER          M365 mailbox to send AS (hello@fairhelmsystems.com)
+//   M365_SECRET_ID       Secrets Manager secret id holding JSON
+//                        {tenantId, clientId, clientSecret} for the Entra app
 import { randomUUID } from "node:crypto";
 import { DynamoDBClient, PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
-import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
 const TABLE = process.env.TABLE_NAME;
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "https://squarecampus.com")
@@ -42,12 +35,13 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "https://squarecampus.co
   .filter(Boolean);
 const RATE_LIMIT_PER_HOUR = Number(process.env.RATE_LIMIT_PER_HOUR ?? "5");
 const EDGE_SECRET = process.env.EDGE_SECRET;
-const SES_ENABLED = process.env.SES_ENABLED === "true";
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL;
-const SENDER_EMAIL = process.env.SENDER_EMAIL;
+const M365_SENDER = process.env.M365_SENDER;
+const M365_SECRET_ID = process.env.M365_SECRET_ID;
+const MAIL_ENABLED = Boolean(M365_SECRET_ID && NOTIFY_EMAIL && M365_SENDER);
 
 const ddb = new DynamoDBClient({});
-const ses = new SESv2Client({});
+const secrets = new SecretsManagerClient({});
 
 const REQUIRED = ["name", "email", "phone", "institution", "role", "campusCount"];
 const MAX_LEN = {
@@ -68,12 +62,62 @@ const resp = (statusCode, body) => ({
   body: JSON.stringify(body),
 });
 
+// --- Microsoft 365 Graph mailer (app-only OAuth, client credentials) ---
+let cachedCreds = null;
+let cachedToken = null;
+
+async function getCreds() {
+  if (cachedCreds) return cachedCreds;
+  const out = await secrets.send(new GetSecretValueCommand({ SecretId: M365_SECRET_ID }));
+  cachedCreds = JSON.parse(out.SecretString);
+  return cachedCreds;
+}
+
+async function getToken() {
+  const now = Date.now();
+  if (cachedToken && cachedToken.expiresAt > now + 60_000) return cachedToken.value;
+  const { tenantId, clientId, clientSecret } = await getCreds();
+  const body = new URLSearchParams({
+    client_id: clientId,
+    client_secret: clientSecret,
+    grant_type: "client_credentials",
+    scope: "https://graph.microsoft.com/.default",
+  });
+  const r = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+  if (!r.ok) throw new Error(`token ${r.status}: ${await r.text()}`);
+  const j = await r.json();
+  cachedToken = { value: j.access_token, expiresAt: now + (j.expires_in ?? 3600) * 1000 };
+  return cachedToken.value;
+}
+
+async function sendNotification({ subject, text, replyTo }) {
+  const token = await getToken();
+  const message = {
+    subject,
+    body: { contentType: "Text", content: text },
+    toRecipients: [{ emailAddress: { address: NOTIFY_EMAIL } }],
+  };
+  if (replyTo) message.replyTo = [{ emailAddress: { address: replyTo } }];
+  const r = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(M365_SENDER)}/sendMail`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ message, saveToSentItems: false }),
+    }
+  );
+  if (!r.ok) throw new Error(`sendMail ${r.status}: ${await r.text()}`);
+}
+
 export const handler = async (event) => {
   if (event.requestContext?.http?.method !== "POST") {
     return resp(405, { error: "method not allowed" });
   }
 
-  // Only CloudFront knows the edge secret; direct execute-api calls stop here.
   if (!EDGE_SECRET || event.headers?.["x-intake-edge-key"] !== EDGE_SECRET) {
     return resp(403, { error: "forbidden" });
   }
@@ -96,7 +140,6 @@ export const handler = async (event) => {
     return resp(400, { error: "invalid JSON" });
   }
 
-  // Honeypot field: bots fill it, humans never see it. Pretend success.
   if (data.website) return resp(200, { ok: true });
 
   for (const field of REQUIRED) {
@@ -109,16 +152,12 @@ export const handler = async (event) => {
     return resp(400, { error: "invalid email" });
   }
 
-  // Per-IP rate limit: atomic counter per IP per hour bucket, cleaned up by
-  // the table's TTL. Checked after validation so malformed junk never counts.
-  // Behind CloudFront the TCP peer is an edge server, so the real viewer IP
-  // comes from CloudFront-Viewer-Address ("ip:port", set by CloudFront).
   const viewerAddress = event.headers?.["cloudfront-viewer-address"];
   const ip = viewerAddress
     ? viewerAddress.slice(0, viewerAddress.lastIndexOf(":"))
     : (event.requestContext?.http?.sourceIp ?? "unknown");
   const receivedAt = new Date().toISOString();
-  const hourBucket = receivedAt.slice(0, 13); // YYYY-MM-DDTHH
+  const hourBucket = receivedAt.slice(0, 13);
   const counter = await ddb.send(
     new UpdateItemCommand({
       TableName: TABLE,
@@ -159,25 +198,18 @@ export const handler = async (event) => {
     })
   );
 
-  if (SES_ENABLED && NOTIFY_EMAIL && SENDER_EMAIL) {
+  if (MAIL_ENABLED) {
     try {
       const lines = Object.entries(clean)
         .map(([k, v]) => `${k}: ${v}`)
         .join("\n");
-      await ses.send(
-        new SendEmailCommand({
-          FromEmailAddress: SENDER_EMAIL,
-          Destination: { ToAddresses: [NOTIFY_EMAIL] },
-          Content: {
-            Simple: {
-              Subject: { Data: `Demo request — ${clean.institution}` },
-              Body: { Text: { Data: `${lines}\n\nid: ${id}\nreceived: ${receivedAt}` } },
-            },
-          },
-        })
-      );
+      await sendNotification({
+        subject: `Demo request — ${clean.institution}`,
+        text: `${lines}\n\nid: ${id}\nreceived: ${receivedAt}`,
+        replyTo: clean.email,
+      });
     } catch (err) {
-      console.error("SES send failed (submission already stored in DynamoDB)", err);
+      console.error("M365 notify failed (submission already stored in DynamoDB)", err);
     }
   }
 
