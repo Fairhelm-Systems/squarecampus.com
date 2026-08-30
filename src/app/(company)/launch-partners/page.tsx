@@ -121,7 +121,8 @@ export default function LaunchPartnersPage() {
       >
         <Reveal>
           <div className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {/* 8 capabilities: two columns divide evenly, three leave a ragged row. */}
+            <ul className="grid gap-3 sm:grid-cols-2">
               {page.digitalCampus.capabilities.map((capability) => (
                 <li
                   key={capability}
@@ -230,7 +231,34 @@ export default function LaunchPartnersPage() {
         </Reveal>
       </SectionShell>
 
-      {/* 6 — Final CTA */}
+      {/* 6 — Objection handling. The single biggest conversion obstacle for a
+          young company is not interest, it is the board meeting afterwards.
+          Answering the hard questions in public — including "why would we
+          depend on you" — is worth more than another benefit card, and it
+          costs nothing in claims because every answer points at something the
+          site already substantiates. */}
+      <SectionShell
+        id="before-you-commit"
+        className="scroll-mt-24"
+        eyebrow={page.objections.eyebrow}
+        title={page.objections.heading}
+        body={page.objections.body}
+      >
+        <Reveal staggerChildren className="grid gap-4 lg:grid-cols-2">
+          {page.objections.items.map((item) => (
+            <article
+              key={item.question}
+              data-reveal-item
+              className="surface-panel rounded-[var(--radius-panel)] p-6 sm:p-7"
+            >
+              <h3 className="type-card-title">{item.question}</h3>
+              <p className="type-support mt-3">{item.answer}</p>
+            </article>
+          ))}
+        </Reveal>
+      </SectionShell>
+
+      {/* 7 — Final CTA */}
       <SectionShell className="pb-12 sm:pb-22">
         <Reveal className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">

@@ -63,13 +63,18 @@ const STEPS: Record<RolloutVariant, Step[]> = {
 };
 
 const COPY: Record<RolloutVariant, { eyebrow: string; title: string }> = {
+  // These titles must not repeat the DOM heading the figure sits under.
+  // The founding variant previously read "Start with evidence. Expand when it
+  // is earned." directly beneath an <h2> saying almost exactly that, and the
+  // rollout variant repeated its page's <h1>. Both now say something the
+  // surrounding copy does not.
   founding: {
     eyebrow: "Founding institutional partner",
-    title: "Start with evidence. Expand when it is earned.",
+    title: "One bottleneck. One baseline. One decision.",
   },
   rollout: {
     eyebrow: "Rollout model",
-    title: "Go live like an institution.",
+    title: "Sequenced around the calendar you actually run.",
   },
 };
 

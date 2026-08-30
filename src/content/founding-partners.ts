@@ -171,6 +171,55 @@ export const foundingPartners = {
         "Founding status does not create exclusivity, ownership of SquareCampus intellectual property, veto rights over other customers, or an unlimited bespoke-engineering commitment. Exact entitlements are governed by the proposal and signed order form.",
     },
 
+    /**
+     * The questions a trustee actually asks before agreeing to a pilot with a
+     * young company — answered without a single new claim. Every answer below
+     * points at something the site already substantiates: the written baseline
+     * and convert/extend/stop model on /pricing/, the parallel-validation
+     * rollout on /rollout/, the export and access posture on /security/.
+     *
+     * "Who are you?" is answered by naming the risk rather than talking around
+     * it. An institution that has already noticed the company is new is not
+     * reassured by a page that pretends otherwise.
+     */
+    objections: {
+      eyebrow: "Before you commit",
+      heading: "The questions a board asks before it says yes.",
+      body: "None of these have flattering answers, so here are the accurate ones.",
+      items: [
+        {
+          question: "You are a new company. Why would we depend on you?",
+          answer:
+            "You would not — not at first. A pilot is scoped to one campus or one workflow bundle, runs alongside the system you already have, and is judged against a measure written down before it starts. The institution keeps its existing system throughout, and keeps its data in standard export formats regardless of what it decides at the end.",
+        },
+        {
+          question: "What happens if the pilot fails?",
+          answer:
+            "You stop. Convert, extend and stop are the three published outcomes, and stopping is not a failure state we argue you out of — it is the reason the baseline is written down first. You leave with the measurement, the process documentation and your data.",
+        },
+        {
+          question: "We cannot afford disruption during admissions or fee cycles.",
+          answer:
+            "Neither can the pilot. Sequencing around admissions, fee deadlines, examinations and results is part of the rollout method, not an accommodation. Critical workflows run in parallel until finance and academic teams trust the numbers.",
+        },
+        {
+          question: "Who actually does the work?",
+          answer:
+            "A named counterpart, with founder-level involvement in discovery and implementation. That is a consequence of the cohort being small, and it is one of the things founding partners are trading for.",
+        },
+        {
+          question: "Who owns the data, and can we get it out?",
+          answer:
+            "The institution does, throughout. Access is role-scoped and every approval and override lands on an audit timeline while you operate — and complete exports in standard formats are available if you decide to leave. That is the same posture the platform runs on, not a concession made for pilots.",
+        },
+        {
+          question: "What does it cost to find out?",
+          answer:
+            "Scope, success measure and commercial terms are agreed in writing before any work begins, so the cost is known before you commit rather than discovered afterwards. The first conversation is a 30-minute diagnosis and costs nothing.",
+        },
+      ],
+    },
+
     finalCta: {
       eyebrow: "The first conversation",
       heading: "Bring one bottleneck. We will map the operating path around it.",

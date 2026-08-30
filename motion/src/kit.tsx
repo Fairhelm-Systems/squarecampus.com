@@ -93,28 +93,35 @@ export const Panel: React.FC<{
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }> = ({ theme, state = "resting", style, children }) => {
+  // State is carried by a thin border and by the label colour, exactly as the
+  // site does it. A saturated fill would make the diagram read green or blue
+  // when the page around it reads warm off-white.
   const border =
     state === "active"
-      ? theme.brand
+      ? theme.brandLine
       : state === "settled"
         ? theme.teal
         : state === "attention"
           ? theme.amber
           : theme.line;
+  // Fills stay at panel level. "Settled" in particular gets NO tint: three
+  // mint-filled boxes made the whole composition read green while the page
+  // around it reads warm off-white. Green survives as a border and as the
+  // label colour, which is all the site ever gives it.
   const fill =
     state === "active"
       ? theme.brandSoft
-      : state === "settled"
-        ? theme.tealSoft
-        : state === "attention"
-          ? theme.amberSoft
-          : theme.panel;
+      : state === "attention"
+        ? theme.amberSoft
+        : theme.panel;
 
   return (
     <div
       style={{
-        borderRadius: 18,
-        border: `2px solid ${border}`,
+        // 26px ≈ the site's --radius-panel (1.6rem); 1.5px reads as the site's
+        // hairline border once the 1280px canvas is scaled down in the page.
+        borderRadius: 26,
+        border: `1.5px solid ${border}`,
         backgroundColor: fill,
         opacity: state === "excluded" ? 0.34 : 1,
         padding: "20px 24px",
@@ -167,11 +174,14 @@ export const Meta: React.FC<{ theme: MotionTheme; children: React.ReactNode }> =
 }) => (
   <div
     style={{
-      fontFamily: FONT.mono,
+      // Sans, not mono: the site reserves mono for uppercase micro-labels.
+      // Mono at this size wrapping across lines was the loudest "not our
+      // design system" signal in the first render.
+      fontFamily: FONT.body,
       fontSize: typeScale.meta,
-      letterSpacing: "0.06em",
-      color: theme.dim,
-      marginTop: 8,
+      lineHeight: 1.45,
+      color: theme.muted,
+      marginTop: 6,
     }}
   >
     {children}
@@ -249,12 +259,12 @@ export const StatusChip: React.FC<{
         alignItems: "center",
         alignSelf: "flex-start",
         borderRadius: 999,
-        border: `2px solid ${colour}`,
+        border: `1.5px solid ${colour}`,
         backgroundColor: soft,
         color: colour,
         fontFamily: FONT.mono,
         fontSize: typeScale.meta,
-        letterSpacing: "0.14em",
+        letterSpacing: "0.22em",
         textTransform: "uppercase",
         whiteSpace: "nowrap",
         padding: "8px 18px",

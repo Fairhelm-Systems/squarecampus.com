@@ -1,10 +1,24 @@
 /**
  * SquareCampus motion tokens.
  *
- * These are the site's own values, not a second palette invented for video:
- * the hex pairs mirror `src/app/globals.css` and the homepage command-centre
- * SVG, so a rendered composition sits inside a `surface-panel` without looking
- * like a foreign asset.
+ * These are the site's own values, converted from the oklch() definitions in
+ * `src/app/globals.css` — not approximations, and deliberately NOT the
+ * homepage hero SVG's palette, which is a cooler and more saturated system.
+ * An earlier version of this file mirrored the hero and the result read as a
+ * foreign rectangle pasted onto the page: cool lilac ground against the site's
+ * warm off-white, 2px saturated borders against the site's hairlines, and
+ * green used as a filled panel where the site only ever uses it as a thin
+ * status accent.
+ *
+ * Ground rules, taken from the CSS rather than invented here:
+ *  - The composition sits inside `.surface-panel`, so its ground is `--surface`,
+ *    not `--background`. It should have no visible seam against its frame.
+ *  - Borders are hairlines (`--line`, `--line-strong`), never heavy strokes.
+ *  - Green (`--state-ok`) and amber (`--state-attention`) appear as a thin
+ *    border and as text, over the barely-there `*-soft` tint. Never as a fill
+ *    that carries the eye.
+ *  - Mono is for uppercase micro-labels only (`.eyebrow`, step numbers, chips).
+ *    Sentence text is always the body sans.
  *
  * Every composition renders twice — once per theme. Only one file is ever
  * fetched by a visitor: the delivery component picks the variant that matches
@@ -41,46 +55,46 @@ export type MotionTheme = {
 
 export const THEMES: Record<ThemeName, MotionTheme> = {
   light: {
-    bg: "#F1F5FB",
+    bg: "#FEFDFC", // --surface over --background: the panel interior, no seam
     panel: "#FFFFFF",
-    panelAlt: "#F5F8FE",
-    line: "#E3EAF5",
-    lineStrong: "#C9D5E8",
-    text: "#1B2334",
-    muted: "#57647C",
-    dim: "#8592A9",
-    faint: "#B3BECE",
-    brand: "#3F6BC4",
-    brandSoft: "#E7EEFB",
-    brandLine: "#9FBAEA",
-    teal: "#217F6C",
-    tealSoft: "#E0F1ED",
-    amber: "#A96D14",
-    amberSoft: "#FAEFDC",
+    panelAlt: "#F7F6F3", // --surface-muted
+    line: "#E7E7E7", // --line
+    lineStrong: "#D8D9DA", // --line-strong
+    text: "#161E26", // --foreground
+    muted: "#4D5661", // --muted-foreground
+    dim: "#6B747E",
+    faint: "#AEB3B8",
+    brand: "#4485BE", // --brand
+    brandSoft: "#EFF4F9",
+    brandLine: "#B9D0E4",
+    teal: "#318267", // --state-ok
+    tealSoft: "#EDF4F1", // --state-ok-soft, lightened toward the panel
+    amber: "#A26E22", // --state-attention
+    amberSoft: "#F7F1E6", // --state-attention-soft
     violet: "#5F45C0",
-    gridOpacity: 0.055,
-    shadow: "0 18px 44px rgba(26,44,80,0.10)",
+    gridOpacity: 0.035,
+    shadow: "0 18px 44px rgba(8,15,30,0.06)", // --shadow-2
   },
   dark: {
-    bg: "#070C15",
-    panel: "#111A2B",
-    panelAlt: "#0B1220",
-    line: "#1B2540",
-    lineStrong: "#2B3A5E",
-    text: "#EAEEF7",
-    muted: "#8595B2",
-    dim: "#63718F",
-    faint: "#3C4964",
-    brand: "#6E9CE8",
-    brandSoft: "#16233D",
-    brandLine: "#3E63B8",
-    teal: "#3FA894",
-    tealSoft: "#102A29",
-    amber: "#E0A44A",
-    amberSoft: "#2A2216",
+    bg: "#070B13", // --surface in dark
+    panel: "#0B111C",
+    panelAlt: "#0A0B0D",
+    line: "#1B1D22", // --line
+    lineStrong: "#282B30", // --line-strong
+    text: "#F5F3F0", // --foreground
+    muted: "#B5BBC3", // --muted-foreground
+    dim: "#8A929C",
+    faint: "#4A5058",
+    brand: "#6CA1D0", // --brand
+    brandSoft: "#0E1520",
+    brandLine: "#2E4560",
+    teal: "#7DC2A7", // --state-ok
+    tealSoft: "#0C1817",
+    amber: "#E6B374", // --state-attention
+    amberSoft: "#1B160E",
     violet: "#8B6BE8",
-    gridOpacity: 0.07,
-    shadow: "0 18px 44px rgba(0,0,0,0.45)",
+    gridOpacity: 0.045,
+    shadow: "0 18px 44px rgba(0,0,0,0.4)",
   },
 };
 
@@ -112,7 +126,7 @@ export const eyebrowStyle = (t: MotionTheme) =>
   ({
     fontFamily: FONT.mono,
     fontSize: type.eyebrow,
-    letterSpacing: "0.22em",
+    letterSpacing: "0.28em",
     textTransform: "uppercase",
     color: t.dim,
   }) as const;

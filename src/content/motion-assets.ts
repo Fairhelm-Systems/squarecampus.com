@@ -44,12 +44,12 @@ export const motionAssets = {
     description:
       "Four stages of the Founding Institutional Partner pilot: one bottleneck is chosen, a baseline is written down, the current system and SquareCampus run in parallel for 60 to 90 days, and the institution converts, extends or stops against the agreed measure.",
     light: {
-      poster: "/motion/founding-partner-path-light.fbd753ec.webp",
-      mp4: "/motion/founding-partner-path-light.a17f7592.mp4",
+      poster: "/motion/founding-partner-path-light.bc9af67e.webp",
+      mp4: "/motion/founding-partner-path-light.71e9f75b.mp4",
     },
     dark: {
-      poster: "/motion/founding-partner-path-dark.b9aac4ff.webp",
-      mp4: "/motion/founding-partner-path-dark.6d3bc4cf.mp4",
+      poster: "/motion/founding-partner-path-dark.97ebfffe.webp",
+      mp4: "/motion/founding-partner-path-dark.9e76876d.mp4",
     },
   },
   "rollout-path": {
@@ -63,12 +63,12 @@ export const motionAssets = {
     description:
       "The six-stage SquareCampus rollout: blueprint, migration clinic, role-based training, parallel validation, staged go-live, and adoption follow-through after handover.",
     light: {
-      poster: "/motion/rollout-path-light.de41756b.webp",
-      mp4: "/motion/rollout-path-light.95ae10a8.mp4",
+      poster: "/motion/rollout-path-light.4f02bdfe.webp",
+      mp4: "/motion/rollout-path-light.024f727b.mp4",
     },
     dark: {
-      poster: "/motion/rollout-path-dark.63bdbfb0.webp",
-      mp4: "/motion/rollout-path-dark.e38896d6.mp4",
+      poster: "/motion/rollout-path-dark.f2cf905f.webp",
+      mp4: "/motion/rollout-path-dark.834f205e.mp4",
     },
   },
   "governed-question-path": {
@@ -82,12 +82,12 @@ export const motionAssets = {
     description:
       "A leadership question passes through the tenant boundary and the asker's role before any answer is composed. Records outside that scope are refused rather than summarised, the answer is drawn only from what remains, and the query itself is written to the audit timeline.",
     light: {
-      poster: "/motion/governed-question-path-light.be0a91f2.webp",
-      mp4: "/motion/governed-question-path-light.708294ed.mp4",
+      poster: "/motion/governed-question-path-light.e177f77c.webp",
+      mp4: "/motion/governed-question-path-light.a4230232.mp4",
     },
     dark: {
-      poster: "/motion/governed-question-path-dark.9f8d2d9a.webp",
-      mp4: "/motion/governed-question-path-dark.c02ba941.mp4",
+      poster: "/motion/governed-question-path-dark.9563f553.webp",
+      mp4: "/motion/governed-question-path-dark.0f023c0b.mp4",
     },
   },
   "platform-core-surfaces": {
@@ -101,12 +101,12 @@ export const motionAssets = {
     description:
       "Admissions, academics, finance, communication and operations stop exchanging exports with each other and instead act on one shared identity, data and workflow core, so a change made once is already current everywhere else.",
     light: {
-      poster: "/motion/platform-core-surfaces-light.8f2233e2.webp",
-      mp4: "/motion/platform-core-surfaces-light.1a280962.mp4",
+      poster: "/motion/platform-core-surfaces-light.e92112e0.webp",
+      mp4: "/motion/platform-core-surfaces-light.315a321c.mp4",
     },
     dark: {
-      poster: "/motion/platform-core-surfaces-dark.552fd1af.webp",
-      mp4: "/motion/platform-core-surfaces-dark.c05ef5cc.mp4",
+      poster: "/motion/platform-core-surfaces-dark.a6947d69.webp",
+      mp4: "/motion/platform-core-surfaces-dark.b9fe0c14.mp4",
     },
   },
   "ecosystem-core-surfaces": {
@@ -119,8 +119,12 @@ export const motionAssets = {
     durationInFrames: 264,
     description:
       "Parents, teachers, principals, finance teams and trustees each work from the same institutional record, seeing the part of it their role owns.",
-    light: { poster: "/motion/ecosystem-core-surfaces-light.a98deff7.webp" },
-    dark: { poster: "/motion/ecosystem-core-surfaces-dark.a53e40e8.webp" },
+    light: {
+      poster: "/motion/ecosystem-core-surfaces-light.6d17cfe4.webp",
+    },
+    dark: {
+      poster: "/motion/ecosystem-core-surfaces-dark.e5bbd5a7.webp",
+    },
   },
   "operating-signal-to-action": {
     id: "operating-signal-to-action",
@@ -132,8 +136,12 @@ export const motionAssets = {
     durationInFrames: 252,
     description:
       "A routine record becomes an exception, the exception is routed to a named owner, the owner acts with a recorded reason, and the action is committed to an append-only audit timeline.",
-    light: { poster: "/motion/operating-signal-to-action-light.1fb6cdbc.webp" },
-    dark: { poster: "/motion/operating-signal-to-action-dark.1d0a569e.webp" },
+    light: {
+      poster: "/motion/operating-signal-to-action-light.4fbbfbc7.webp",
+    },
+    dark: {
+      poster: "/motion/operating-signal-to-action-dark.a30471e9.webp",
+    },
   },
 } as const satisfies Record<string, MotionAsset>;
 
