@@ -250,7 +250,7 @@ export default function PricingPage() {
         </Reveal>
       </SectionShell>
 
-      {/* 7 — Design-partner pilot */}
+      {/* 7 — Founding-partner pilot */}
       <SectionShell
         id="pilot"
         eyebrow="Founding-partner pilot"
