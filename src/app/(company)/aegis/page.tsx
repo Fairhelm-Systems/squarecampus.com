@@ -15,8 +15,10 @@ import type { Metadata } from "next";
 import { AegisConsole } from "@/components/site/aegis-console";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
+import { MotionFigure } from "@/components/site/motion-figure";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
 import {
   createBreadcrumbSchema,
@@ -130,7 +132,7 @@ export default function AegisPage() {
 
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker inline-flex items-center gap-2">
               <Radar className="size-3.5 text-(--brand)" />
               Adaptive Enterprise Governance &amp; Intelligence System
@@ -200,6 +202,17 @@ export default function AegisPage() {
         title="Intelligence that strengthens control instead of leaking it"
         body="Most 'AI in ERP' pitches bolt a chatbot onto old software. AEGIS was designed the other way around: governance first, intelligence inside it."
       >
+        {/* The composition shows the part the copy below cannot: records being
+            refused before an answer exists. It carries a caption because it is
+            not a restatement of the cards. */}
+        <Reveal className="mb-5">
+          <MotionFigure
+            asset={motionAssets["governed-question-path"]}
+            className="mx-auto w-full max-w-4xl"
+            caption="Scope is applied before an answer exists. Records outside the asker's tenant and role are refused rather than summarised, and the query itself becomes an audit entry."
+          />
+        </Reveal>
+
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {governancePillars.map((pillar) => (
             <article

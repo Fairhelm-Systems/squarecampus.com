@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/site/button-link";
 import type { BlogSection } from "@/content/blog/posts";
 import { blogPostBySlug, blogPosts } from "@/content/blog/posts";
+import { canonicalUrl, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 type PageProps = {
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const post = blogPostBySlug(slug);
   if (!post) {
-    return { title: "Blog | SquareCampus" };
+    return { title: "Blog" };
   }
 
   return {
@@ -53,7 +54,6 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   const articleSchema = {
-    "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": `https://squarecampus.com/blog/${post.slug}/#article`,
     headline: post.title,
@@ -76,7 +76,21 @@ export default async function BlogPostPage({ params }: PageProps) {
     <main className="px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              articleSchema,
+              // Every other indexable page carries breadcrumbs; a post that
+              // does not is the inconsistency search engines notice.
+              createBreadcrumbSchema([
+                { name: "Home", url: SEO_CONFIG.baseUrl },
+                { name: "Blog", url: canonicalUrl("/blog") },
+                { name: post.title, url: canonicalUrl(`/blog/${post.slug}`) },
+              ]),
+            ],
+          }),
+        }}
       />
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-12">
         <header className="space-y-6">

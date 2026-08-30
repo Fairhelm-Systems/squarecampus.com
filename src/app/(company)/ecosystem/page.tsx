@@ -11,18 +11,14 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { EcosystemMockup } from "@/components/site/mockups";
+import { MotionPoster } from "@/components/site/motion-poster";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
-
-export const metadata: Metadata = {
-  title: "Ecosystem",
-  description:
-    "See how admins, staff, parents, students, finance, communication, integrations, and institutional controls connect inside the SquareCampus School OS.",
-};
 
 const ecosystemRules = [
   {
@@ -73,9 +69,15 @@ const ecosystemActors = [
 export default function EcosystemPage() {
   return (
     <main>
+      <PageSchema
+        name="Ecosystem"
+        description="The SquareCampus ecosystem: admin console, teacher workspace, parent and student apps, integrations and institutional controls acting on one record."
+        path="/ecosystem"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">Connected ecosystem</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Every operator, every surface, one institutional source of truth.
@@ -127,6 +129,14 @@ export default function EcosystemPage() {
         title="Built across the institution, not just for the administrator"
         body="Each audience has a purpose-built experience, but the institutional model underneath stays connected and consistent."
       >
+        {/* Tier 2 in the motion plan: the still only. No video ships on this
+            page until the tier-1 placements have cleared their gates. */}
+        <MotionPoster
+          asset={motionAssets["ecosystem-core-surfaces"]}
+          className="mx-auto mb-5 w-full max-w-4xl"
+          alt="Parents, teachers, principals, finance teams and trustees connected to one institutional record, each seeing the part their role owns."
+        />
+
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {ecosystemActors.map((item) => (
             <article

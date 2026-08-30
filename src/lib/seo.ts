@@ -17,10 +17,25 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || PRIMARY_
  * engines read it as a duplicate of the homepage.
  */
 export function createAlternates(path: string) {
-  const normalized = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
   return {
-    canonical: `${baseUrl}${normalized}`,
+    canonical: canonicalUrl(path),
   };
+}
+
+/**
+ * The one true URL for a route.
+ *
+ * `trailingSlash: true` (next.config.ts) means `/pricing` is not a page — the
+ * edge 301s it to `/pricing/`. Anything that emits a URL (canonical, OG url,
+ * sitemap entry, JSON-LD `url`/`item`/`@id`) has to emit the destination, not
+ * the redirect: a BreadcrumbList pointing at a 301 makes Google resolve the
+ * hop before it can trust the item, and a sitemap of redirects is a crawl
+ * budget tax. Everything routes through here so the four signals cannot drift
+ * apart again.
+ */
+export function canonicalUrl(path: string) {
+  const withSlash = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
+  return `${baseUrl}${withSlash}`;
 }
 
 export const SEO_CONFIG = {
@@ -90,20 +105,19 @@ export function createPageMetadata(config: PageMetadataConfig) {
     noFollow = false,
   } = config;
 
-  const normalizedPath = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
-  const canonicalUrl = `${SEO_CONFIG.baseUrl}${normalizedPath}`;
+  const pageUrl = canonicalUrl(path);
   const imageUrl = ogImage || SEO_CONFIG.ogImage.default;
 
   return {
     title,
     description,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: pageUrl,
     },
     openGraph: {
       title: ogTitle || title,
       description: ogDescription || description,
-      url: canonicalUrl,
+      url: pageUrl,
       siteName: SEO_CONFIG.siteName,
       type: "website" as const,
       locale: SEO_CONFIG.openGraphLocale,
@@ -134,6 +148,32 @@ export function createPageMetadata(config: PageMetadataConfig) {
 }
 
 /**
+ * Normalise an absolute site URL to its canonical, 200-status form.
+ *
+ * Callers pass `${baseUrl}/pricing`; the live URL is `${baseUrl}/pricing/`.
+ * Fragment identifiers (`#faqpage`) and file URLs (`/og/home.png`) are left
+ * alone — only directory-style paths get the slash.
+ */
+function canonicalise(url: string) {
+  const hash = url.indexOf("#");
+  const base = hash === -1 ? url : url.slice(0, hash);
+  const fragment = hash === -1 ? "" : url.slice(hash);
+  if (base.endsWith("/")) {
+    return `${base}${fragment}`;
+  }
+  // Split off the origin first. Without this the host itself ("squarecampus.com")
+  // looks like a filename because of the dot, and the bare origin used as the
+  // "Home" breadcrumb never gains its slash.
+  const originEnd = base.indexOf("/", base.indexOf("//") + 2);
+  const path = originEnd === -1 ? "" : base.slice(originEnd);
+  const lastSegment = path.slice(path.lastIndexOf("/") + 1);
+  if (lastSegment.includes(".")) {
+    return `${base}${fragment}`;
+  }
+  return `${base}/${fragment}`;
+}
+
+/**
  * JSON-LD: WebPage schema (page-level identity)
  */
 export function createWebPageSchema(config: { name: string; description: string; url: string }) {
@@ -142,7 +182,7 @@ export function createWebPageSchema(config: { name: string; description: string;
     "@type": "WebPage",
     name: config.name,
     description: config.description,
-    url: config.url,
+    url: canonicalise(config.url),
     inLanguage: SEO_CONFIG.language,
     isPartOf: {
       "@id": `${SEO_CONFIG.baseUrl}/#website`,
@@ -162,7 +202,7 @@ export function createBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: s
       "@type": "ListItem",
       position: index + 1,
       name: crumb.name,
-      item: crumb.url,
+      item: canonicalise(crumb.url),
     })),
   };
 }

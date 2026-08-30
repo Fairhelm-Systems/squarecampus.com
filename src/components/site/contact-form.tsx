@@ -5,6 +5,7 @@ import { Toaster, toast } from "sonner";
 import { ButtonLink } from "./button-link";
 
 type DemoFormState = {
+  enquiryType: string;
   name: string;
   email: string;
   phone: string;
@@ -19,6 +20,7 @@ type DemoFormState = {
 };
 
 const initialState: DemoFormState = {
+  enquiryType: "Guided platform demo",
   name: "",
   email: "",
   phone: "",
@@ -30,6 +32,23 @@ const initialState: DemoFormState = {
   message: "",
   consent: false,
   website: "",
+};
+
+/**
+ * Enquiry type. The form has always tagged submissions with a fixed
+ * `source: "demo-form"`; this is the visitor-editable version of the same
+ * idea, so the Founding Partner CTAs can hand over their intent without a
+ * second form or a second backend.
+ */
+const enquiryTypeOptions = ["Guided platform demo", "Founding Institutional Partnership"] as const;
+
+/**
+ * Query-string intents, mapped to the options above. Only these exact keys are
+ * honoured and the value used is always one of our own constants — the raw
+ * parameter is never rendered, stored or echoed back.
+ */
+const INTENT_PARAM: Record<string, (typeof enquiryTypeOptions)[number]> = {
+  "founding-partner": "Founding Institutional Partnership",
 };
 
 const roleOptions = [
@@ -70,8 +89,9 @@ const EMAIL_DRAFT_MODE = !CONTACT_ENDPOINT && process.env.NEXT_PUBLIC_CONTACT_FO
 const CONTACT_EMAIL = "contact@squarecampus.com";
 
 function buildEmailDraft(state: DemoFormState) {
-  const subject = `Demo request — ${state.institution || state.name}`;
+  const subject = `${state.enquiryType} — ${state.institution || state.name}`;
   const body = [
+    `Enquiry type: ${state.enquiryType}`,
     `Name: ${state.name}`,
     `Email: ${state.email}`,
     `Phone: ${state.phone}`,
@@ -89,6 +109,12 @@ function buildEmailDraft(state: DemoFormState) {
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+/** Stable machine tag for the intake record. */
+function sourceTag(enquiryType: string) {
+  const intent = Object.entries(INTENT_PARAM).find(([, label]) => label === enquiryType)?.[0];
+  return intent ? `demo-form:${intent}` : "demo-form";
+}
+
 type SubmitStatus = "idle" | "submitting" | "success" | "error" | "draft";
 
 export function ContactForm() {
@@ -100,6 +126,17 @@ export function ContactForm() {
     return () => {
       mountedRef.current = false;
     };
+  }, []);
+
+  // /demo/?intent=founding-partner preselects the founding-partner enquiry
+  // type. It stays a normal select the visitor can change; an unrecognised
+  // value simply leaves the default in place.
+  useEffect(() => {
+    const intent = new URLSearchParams(window.location.search).get("intent");
+    const mapped = intent ? INTENT_PARAM[intent] : undefined;
+    if (mapped) {
+      setState((current) => ({ ...current, enquiryType: mapped }));
+    }
   }, []);
 
   const set = <K extends keyof DemoFormState>(key: K, value: DemoFormState[K]) =>
@@ -144,7 +181,10 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...payload, source: "demo-form" }),
+        // The intent also rides along in `source`, which the intake function
+        // has always stored, so a founding-partner enquiry is distinguishable
+        // even before the handler's field allowlist is redeployed.
+        body: JSON.stringify({ ...payload, source: sourceTag(state.enquiryType) }),
       });
 
       if (!response.ok) {
@@ -175,6 +215,26 @@ export function ContactForm() {
           sonner ships on /demo instead of every page in the root layout. */}
       <Toaster position="top-right" richColors />
       <form onSubmit={handleSubmit} className="grid gap-4">
+        <div>
+          <label htmlFor="demo-enquiry-type" className={labelClassName}>
+            What is this about? *
+          </label>
+          <select
+            id="demo-enquiry-type"
+            name="enquiryType"
+            required
+            className={inputClassName}
+            value={state.enquiryType}
+            onChange={(event) => set("enquiryType", event.target.value)}
+          >
+            {enquiryTypeOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="demo-name" className={labelClassName}>

@@ -6,7 +6,7 @@ import { createPageMetadata } from "@/lib/seo";
 // No press releases are published yet, so this page stays noindex until it
 // has real content. Reachable directly, but kept out of primary crawl paths.
 export const metadata: Metadata = createPageMetadata({
-  title: "Press | SquareCampus",
+  title: "Press",
   description: "Press resources, company overview, and media contact information for SquareCampus.",
   path: "/press",
   noIndex: true,

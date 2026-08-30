@@ -8,7 +8,7 @@ export default function FAQPage() {
   return (
     <main>
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="max-w-3xl space-y-6">
+        <Reveal immediate className="max-w-3xl space-y-6">
           <p className="section-kicker">Frequently asked questions</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             The questions institutions actually ask.

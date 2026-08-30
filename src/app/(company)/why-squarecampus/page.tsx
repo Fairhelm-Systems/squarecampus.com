@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
@@ -80,8 +81,14 @@ const switchingReasons = [
 export default function WhyDifferentPage() {
   return (
     <main>
+      <PageSchema
+        name="Why SquareCampus"
+        description="Why institutions choose a School Operating System over a conventional school ERP: ownership, exception handling, auditability and leadership visibility."
+        path="/why-squarecampus"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="space-y-6">
+        <Reveal immediate className="space-y-6">
           <p className="section-kicker">School OS positioning</p>
           <h1 className="max-w-4xl font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             Not a rebranded ERP. Not a bundle of point tools.

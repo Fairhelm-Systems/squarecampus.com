@@ -4,7 +4,7 @@ import { execSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/blog/posts";
 import { comparisons } from "@/content/comparisons";
-import { SEO_CONFIG } from "@/lib/seo";
+import { canonicalUrl, SEO_CONFIG } from "@/lib/seo";
 
 /**
  * SquareCampus Sitemap
@@ -15,6 +15,11 @@ import { SEO_CONFIG } from "@/lib/seo";
  * lastmod is derived from the git commit time of each route's content
  * sources, so it reflects content change rather than "we deployed again".
  * Builds without git history fall back to a fixed release date.
+ *
+ * Every URL is emitted through `canonicalUrl()`, i.e. in the trailing-slash
+ * form the site actually serves. The previous form (`${SITE_URL}${path}`)
+ * listed `/platform`, which the edge 301s to `/platform/` — a sitemap of
+ * redirects, and a mismatch with the canonical tag on the page itself.
  */
 const FALLBACK_LASTMOD = new Date("2026-07-14T00:00:00.000Z");
 
@@ -151,6 +156,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
 
+    // Founding Institutional Partner programme: a qualified-conversion page,
+    // not another school-ERP keyword landing page. Sits next to /pricing
+    // because it is the commercial path, not a product page.
+    {
+      path: "/launch-partners",
+      sources: [`${APP}/(company)/launch-partners`, `${CONTENT}/founding-partners.ts`],
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+
     // Trust pages
     {
       path: "/security",
@@ -252,7 +267,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return routes.map((r) => ({
-    url: `${SITE_URL}${r.path === "/" ? "" : r.path}`,
+    url: canonicalUrl(r.path),
     lastModified: gitLastmod(r.sources),
     changeFrequency: r.changeFrequency,
     priority: r.priority,

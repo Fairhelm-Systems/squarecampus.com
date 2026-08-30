@@ -58,8 +58,8 @@ export default function PricingPage() {
             <CTAGroup>
               <ButtonLink href={siteCtas.demoHref} label="Get a tailored proposal" variant="cta" />
               <ButtonLink
-                href={siteCtas.demoHref}
-                label="Start with a design-partner pilot"
+                href={siteCtas.launchPartnersHref}
+                label="Explore the Founding Partner programme"
                 variant="secondary"
               />
             </CTAGroup>
@@ -253,9 +253,9 @@ export default function PricingPage() {
       {/* 7 — Design-partner pilot */}
       <SectionShell
         id="pilot"
-        eyebrow="Design-partner pilot"
+        eyebrow="Founding-partner pilot"
         title="The lowest-risk way to establish evidence before committing."
-        body="A pilot is a measured operational exercise, not a trial account. It runs on a written baseline and closes against an agreed metric."
+        body="A pilot is a measured operational exercise, not a trial account. It runs on a written baseline and closes against an agreed metric. For the first cohort it runs inside the Founding Institutional Partner programme."
       >
         <Reveal>
           <div className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
@@ -273,6 +273,11 @@ export default function PricingPage() {
                 </p>
                 <CTAGroup className="mt-7">
                   <ButtonLink href={siteCtas.demoHref} label="Scope a pilot" variant="cta" />
+                  <ButtonLink
+                    href={siteCtas.launchPartnersHref}
+                    label="Founding Institutional Partners"
+                    variant="link"
+                  />
                 </CTAGroup>
               </div>
 

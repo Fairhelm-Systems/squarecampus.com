@@ -532,7 +532,7 @@ export default function SchoolManagementSystemPage() {
                 "@type": "Organization",
                 "@id": `${SEO_CONFIG.baseUrl}/#org`,
                 name: "SquareCampus",
-                url: SEO_CONFIG.baseUrl,
+                url: `${SEO_CONFIG.baseUrl}/`,
                 logo: SEO_CONFIG.logo,
                 sameAs: ["https://www.linkedin.com/company/square-campus"],
                 brand: "SquareCampus",

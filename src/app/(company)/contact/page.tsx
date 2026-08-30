@@ -1,10 +1,11 @@
 import { Building2, LifeBuoy, Mail, Newspaper, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { SectionShell } from "@/components/site/section-shell";
 import { company } from "@/content/company";
 import { siteCtas } from "@/content/site-content";
-import { createBreadcrumbSchema, createPageMetadata, SEO_CONFIG } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Contact | Registered Office and Enquiries",
@@ -44,20 +45,18 @@ const channels = [
 export default function ContactPage() {
   return (
     <main>
-      {/* Plain script tag: server-rendered so non-JS crawlers see the schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            createBreadcrumbSchema([
-              { name: "Home", url: SEO_CONFIG.baseUrl },
-              { name: "Contact", url: `${SEO_CONFIG.baseUrl}/contact/` },
-            ])
-          ),
-        }}
+      <PageSchema
+        name="Contact | Registered Office and Enquiries"
+        description="Registered particulars for Fairhelm Systems OPC, the mailbox for each kind of enquiry, and how to request a guided SquareCampus walkthrough."
+        path="/contact"
+        label="Contact"
       />
 
+      {/* This section header is the page's H1: the page had no H1 at all,
+          because SectionShell defaults its title to h2. */}
       <SectionShell
+        as="h1"
+        titleSize="page"
         eyebrow="Contact"
         title="Talk to the company behind SquareCampus."
         body="Registered particulars, the right mailbox for what you need, and a guided demo when you are ready to see the system run."

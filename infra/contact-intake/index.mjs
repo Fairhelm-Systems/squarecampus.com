@@ -44,7 +44,13 @@ const ddb = new DynamoDBClient({});
 const secrets = new SecretsManagerClient({});
 
 const REQUIRED = ["name", "email", "phone", "institution", "role", "campusCount"];
+// Allowlist: anything not named here is dropped rather than stored.
+// `enquiryType` distinguishes a guided demo from a Founding Institutional
+// Partnership enquiry. The website also folds the same intent into `source`
+// (e.g. `demo-form:founding-partner`), which this function already stores —
+// so intent is never lost even before this handler is redeployed.
 const MAX_LEN = {
+  enquiryType: 60,
   name: 200,
   email: 254,
   phone: 32,

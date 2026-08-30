@@ -62,7 +62,7 @@ export default function SecurityPage() {
     <main>
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">Trust and security</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Security is the campus nervous system. It has to stay calm under load.

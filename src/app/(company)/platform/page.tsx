@@ -17,9 +17,12 @@ import {
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { PlatformMockupRow } from "@/components/site/mockups";
+import { MotionFigure } from "@/components/site/motion-figure";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SystemLayerGrid } from "@/components/site/system-layers";
+import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -106,8 +109,14 @@ const operatingClaims = [
 export default function PlatformPage() {
   return (
     <main>
+      <PageSchema
+        name="Platform"
+        description="The SquareCampus platform architecture: four layers, the operating domains they carry, and the shared core underneath every surface."
+        path="/platform"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="mx-auto max-w-3xl space-y-6 text-center">
+        <Reveal immediate className="mx-auto max-w-3xl space-y-6 text-center">
           <p className="section-kicker">Platform architecture</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             One governed core. Many surfaces. No institutional drift.
@@ -178,6 +187,15 @@ export default function PlatformPage() {
         title="The system underneath the UI matters"
         body="The real product advantage is not a prettier dashboard. It is that the institution stops operating through sync gaps, duplicate records, and broken reporting chains."
       >
+        {/* One core, many surfaces: the argument the cards below make in prose. */}
+        <Reveal className="mb-5">
+          <MotionFigure
+            asset={motionAssets["platform-core-surfaces"]}
+            className="mx-auto w-full max-w-4xl"
+            caption="Admissions, academics, finance, communication and operations act on one identity, data and workflow core, so a change made once needs no export to reach the rest."
+          />
+        </Reveal>
+
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {sharedSystem.map((item) => (
             <article

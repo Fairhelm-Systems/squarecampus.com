@@ -91,8 +91,16 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
+    /*
+      One language policy, applied everywhere: en-IN. The site is written in
+      Indian English for Indian institutions, WebSite/WebPage JSON-LD already
+      declares `inLanguage: "en-IN"`, and the OG locale is `en_IN`; `lang="en"`
+      was the one signal disagreeing with the other three. No hreflang set is
+      emitted: there is exactly one language, and squarecampus.in 301s here, so
+      alternates would point at redirects.
+    */
     <html
-      lang="en"
+      lang="en-IN"
       className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} scroll-smooth`}
       suppressHydrationWarning
       data-theme="light"
@@ -128,7 +136,7 @@ export default function RootLayout({
                   "@id": "https://squarecampus.com/#org",
                   name: "SquareCampus",
                   legalName: company.legalName,
-                  url: "https://squarecampus.com",
+                  url: "https://squarecampus.com/",
                   logo: SEO_CONFIG.logo,
                   foundingDate: company.incorporationDate,
                   email: company.email.general,
@@ -176,7 +184,7 @@ export default function RootLayout({
                 {
                   "@type": "WebSite",
                   "@id": "https://squarecampus.com/#website",
-                  url: "https://squarecampus.com",
+                  url: "https://squarecampus.com/",
                   name: "SquareCampus",
                   publisher: { "@id": "https://squarecampus.com/#org" },
                   inLanguage: "en-IN",
@@ -198,7 +206,7 @@ export default function RootLayout({
                   operatingSystem: "Web",
                   url: "https://app.squarecampus.com",
                   publisher: { "@id": "https://squarecampus.com/#org" },
-                  inLanguage: "en",
+                  inLanguage: "en-IN",
                 },
               ],
             }),

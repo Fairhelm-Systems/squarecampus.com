@@ -1,0 +1,140 @@
+/**
+ * GENERATED FILE — do not edit by hand.
+ *
+ * Written by `bun run motion:render` (motion/scripts/render.ts). It is the
+ * only thing the website knows about the motion pipeline: filenames, intrinsic
+ * dimensions and a text description. No Remotion code is imported here, or
+ * anywhere else under src/.
+ *
+ * Filenames are content-hashed, so `public/motion/*` is safe to serve with a
+ * one-year immutable cache.
+ */
+
+export type MotionSource = {
+  /** Poster is always present: it is the complete fallback. */
+  poster: string;
+  /** Present for tier-1 assets only. Tier 2 ships the still and no video. */
+  mp4?: string;
+  webm?: string;
+};
+
+export type MotionAsset = {
+  id: string;
+  family: string;
+  tier: 1 | 2;
+  width: number;
+  height: number;
+  fps: number;
+  durationInFrames: number;
+  /** Text alternative. The DOM around the figure remains authoritative. */
+  description: string;
+  light: MotionSource;
+  dark: MotionSource;
+};
+
+export const motionAssets = {
+  "founding-partner-path": {
+    id: "founding-partner-path",
+    family: "EvidenceLedRollout",
+    tier: 1,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 276,
+    description:
+      "Four stages of the Founding Institutional Partner pilot: one bottleneck is chosen, a baseline is written down, the current system and SquareCampus run in parallel for 60 to 90 days, and the institution converts, extends or stops against the agreed measure.",
+    light: {
+      poster: "/motion/founding-partner-path-light.fbd753ec.webp",
+      mp4: "/motion/founding-partner-path-light.a17f7592.mp4",
+    },
+    dark: {
+      poster: "/motion/founding-partner-path-dark.b9aac4ff.webp",
+      mp4: "/motion/founding-partner-path-dark.6d3bc4cf.mp4",
+    },
+  },
+  "rollout-path": {
+    id: "rollout-path",
+    family: "EvidenceLedRollout",
+    tier: 1,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 324,
+    description:
+      "The six-stage SquareCampus rollout: blueprint, migration clinic, role-based training, parallel validation, staged go-live, and adoption follow-through after handover.",
+    light: {
+      poster: "/motion/rollout-path-light.de41756b.webp",
+      mp4: "/motion/rollout-path-light.95ae10a8.mp4",
+    },
+    dark: {
+      poster: "/motion/rollout-path-dark.63bdbfb0.webp",
+      mp4: "/motion/rollout-path-dark.e38896d6.mp4",
+    },
+  },
+  "governed-question-path": {
+    id: "governed-question-path",
+    family: "GovernedQuestionPath",
+    tier: 1,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "A leadership question passes through the tenant boundary and the asker's role before any answer is composed. Records outside that scope are refused rather than summarised, the answer is drawn only from what remains, and the query itself is written to the audit timeline.",
+    light: {
+      poster: "/motion/governed-question-path-light.be0a91f2.webp",
+      mp4: "/motion/governed-question-path-light.708294ed.mp4",
+    },
+    dark: {
+      poster: "/motion/governed-question-path-dark.9f8d2d9a.webp",
+      mp4: "/motion/governed-question-path-dark.c02ba941.mp4",
+    },
+  },
+  "platform-core-surfaces": {
+    id: "platform-core-surfaces",
+    family: "OneCoreManySurfaces",
+    tier: 1,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "Admissions, academics, finance, communication and operations stop exchanging exports with each other and instead act on one shared identity, data and workflow core, so a change made once is already current everywhere else.",
+    light: {
+      poster: "/motion/platform-core-surfaces-light.8f2233e2.webp",
+      mp4: "/motion/platform-core-surfaces-light.1a280962.mp4",
+    },
+    dark: {
+      poster: "/motion/platform-core-surfaces-dark.552fd1af.webp",
+      mp4: "/motion/platform-core-surfaces-dark.c05ef5cc.mp4",
+    },
+  },
+  "ecosystem-core-surfaces": {
+    id: "ecosystem-core-surfaces",
+    family: "OneCoreManySurfaces",
+    tier: 2,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "Parents, teachers, principals, finance teams and trustees each work from the same institutional record, seeing the part of it their role owns.",
+    light: { poster: "/motion/ecosystem-core-surfaces-light.a98deff7.webp" },
+    dark: { poster: "/motion/ecosystem-core-surfaces-dark.a53e40e8.webp" },
+  },
+  "operating-signal-to-action": {
+    id: "operating-signal-to-action",
+    family: "OperatingSignalToAction",
+    tier: 2,
+    width: 1280,
+    height: 720,
+    fps: 24,
+    durationInFrames: 252,
+    description:
+      "A routine record becomes an exception, the exception is routed to a named owner, the owner acts with a recorded reason, and the action is committed to an append-only audit timeline.",
+    light: { poster: "/motion/operating-signal-to-action-light.1fb6cdbc.webp" },
+    dark: { poster: "/motion/operating-signal-to-action-dark.1d0a569e.webp" },
+  },
+} as const satisfies Record<string, MotionAsset>;
+
+export type MotionAssetId = keyof typeof motionAssets;

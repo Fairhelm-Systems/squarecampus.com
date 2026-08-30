@@ -45,8 +45,9 @@ bun run build
 NEXT_PUBLIC_SITE_URL=https://squarecampus.in bun run build
 ```
 
-Every page emits hreflang alternates pointing at both domains either way
-(see [src/lib/seo.ts](src/lib/seo.ts)).
+No hreflang alternates are emitted: squarecampus.in 301s to squarecampus.com
+at the edge, so alternates would point at redirects. `lang` and every
+`inLanguage` value are `en-IN` (see [src/lib/seo.ts](src/lib/seo.ts)).
 
 **Required:** set `NEXT_PUBLIC_CONTACT_ENDPOINT` at build time — production
 builds fail without it; there is no silent mailto fallback (see

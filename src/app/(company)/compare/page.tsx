@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { comparisons } from "@/content/comparisons";
@@ -66,8 +67,14 @@ const evaluationCriteria = [
 export default function CompareHubPage() {
   return (
     <main>
+      <PageSchema
+        name="Compare School Management Systems"
+        description="Evaluation hub for comparing SquareCampus with existing school ERP and school management platforms, one named comparison per page."
+        path="/compare"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="max-w-3xl space-y-6">
+        <Reveal immediate className="max-w-3xl space-y-6">
           <p className="section-kicker">Compare</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             Evaluating school management systems? Start here.

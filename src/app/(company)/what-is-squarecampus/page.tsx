@@ -2,9 +2,11 @@ import { Check } from "lucide-react";
 import { ButtonLink } from "@/components/site/button-link";
 import { DetailsFaq } from "@/components/site/details-faq";
 import { CTAGroup, Eyebrow, OperationalBadge } from "@/components/site/marketing";
+import { MotionPoster } from "@/components/site/motion-poster";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SystemLayerGrid } from "@/components/site/system-layers";
+import { motionAssets } from "@/content/motion-assets";
 import { CANONICAL_PROMISE, RECORD_VS_DECISION } from "@/content/operational-pains";
 import { siteCtas } from "@/content/site-content";
 import {
@@ -66,6 +68,14 @@ export default function WhatIsSquareCampusPage() {
         title="A bar chart shows a condition. A decision layer explains what to do about it."
         body="This is the difference between reporting that describes the institution and an operating layer that moves it."
       >
+        {/* Tier 2: still only. The five stages are the literal answer to the
+            heading above, so the alt text states them rather than decorating. */}
+        <MotionPoster
+          asset={motionAssets["operating-signal-to-action"]}
+          className="mx-auto mb-5 w-full max-w-4xl"
+          alt="A record becomes an exception, the exception is routed to a named owner, the owner acts with a recorded reason, and the action is committed to an append-only audit timeline."
+        />
+
         <Reveal className="grid gap-4 lg:grid-cols-2">
           <div className="surface-quiet rounded-[var(--radius-panel)] p-6 sm:p-7">
             <Eyebrow>A dashboard tells you</Eyebrow>

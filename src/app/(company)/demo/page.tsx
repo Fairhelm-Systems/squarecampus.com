@@ -1,6 +1,7 @@
 import { BadgeCheck, Building2, CalendarClock, FileSpreadsheet, UsersRound } from "lucide-react";
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/contact-form";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { createPageMetadata } from "@/lib/seo";
@@ -38,9 +39,15 @@ const expectations = [
 export default function DemoPage() {
   return (
     <main>
+      <PageSchema
+        name="Book a Guided Demo"
+        description="Request a guided SquareCampus walkthrough mapped to the institution's own admissions, academics, finance, communication and governance workflows."
+        path="/demo"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">Guided demo</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Bring the patchwork. We will show the operating model.

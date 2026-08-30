@@ -1,6 +1,7 @@
 import { Database, Landmark, Lock, Network, Server, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import {
@@ -185,8 +186,14 @@ const dueDiligenceQuestions = [
 export default function InfrastructurePage() {
   return (
     <main>
+      <PageSchema
+        name="Infrastructure"
+        description="SquareCampus deployment and hosting architecture: Indian cloud regions, data residency posture, isolation options and operational resilience."
+        path="/infrastructure"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="max-w-3xl space-y-6">
+        <Reveal immediate className="max-w-3xl space-y-6">
           <p className="section-kicker">Infrastructure</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             Infrastructure, stated plainly.

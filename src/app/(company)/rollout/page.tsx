@@ -10,8 +10,11 @@ import {
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import { RolloutMockup } from "@/components/site/mockups";
+import { MotionFigure } from "@/components/site/motion-figure";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -81,9 +84,15 @@ const buyersQuestions = [
 export default function RolloutPage() {
   return (
     <main>
+      <PageSchema
+        name="Rollout"
+        description="How a SquareCampus rollout runs: institution blueprint, migration clinic, role-based training, parallel validation, staged go-live and adoption follow-through."
+        path="/rollout"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">Rollout model</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Go live like an institution, not a software experiment.
@@ -123,6 +132,17 @@ export default function RolloutPage() {
         title="A rollout sequence built for operational reality"
         body="This is the part many vendors under-design. SquareCampus treats rollout as the institution’s first proof of product quality."
       >
+        {/* Redundant by design: it animates exactly the six stages listed
+            below, so it is hidden from assistive technology rather than read
+            out twice. */}
+        <Reveal className="mb-5">
+          <MotionFigure
+            asset={motionAssets["rollout-path"]}
+            redundant
+            className="mx-auto w-full max-w-4xl"
+          />
+        </Reveal>
+
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {rolloutSteps.map((step, index) => (
             <article

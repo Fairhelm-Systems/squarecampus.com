@@ -100,6 +100,42 @@ Every security, infrastructure, AI, rollout, customer, and compliance claim that
 | "Built systems processing 100M+ records daily" (founder bio) | about | **NEEDS BACKEND EVIDENCE** (personal-history claim; keep or remove at founder's discretion) |
 | Location: Bangalore, India (footer) | footer | **VERIFIED** (company fact; note: old Mumbai JSON-LD address removed as fabricated) |
 
+## Founding Institutional Partner programme
+
+The programme copy lives in one file, `src/content/founding-partners.ts`, so
+the homepage section and `/launch-partners/` cannot describe different
+programmes. Every entitlement is worded as *preferential*, *agreed*, *defined*,
+*bounded* or *selected*.
+
+| Claim | Where | Status |
+| --- | --- | --- |
+| Founder-led rollout with a named implementation counterpart | homepage section, /launch-partners | **NEEDS BACKEND EVIDENCE** (service commitment; keep only while the team actually staffs it — same standing as the guided-rollout claim above) |
+| Preferential terms, price protection for the agreed initial term, pre-agreed expansion bands | homepage section, /launch-partners | **NEEDS LEGAL REVIEW** (must match the proposal and signed order form; the page says so explicitly) |
+| Structured product-council access, early previews, a defined annual innovation allocation | /launch-partners | **NEEDS LEGAL REVIEW** (bounded entitlement; never describe as unlimited) |
+| Priority escalation and capacity planning around peak cycles | homepage section, /launch-partners | **NEEDS BACKEND EVIDENCE** (operational commitment) |
+| Managed digital campus: websites, microsites, hosting, SSL, CDN, backups | /launch-partners | **SCOPED — NOT INCLUDED BY DEFAULT.** The page states site count, migration, traffic, storage and change allowances are defined in the proposal, and that this is not an unlimited creative-services retainer. Do not weaken that note. |
+| 60–90 day pilot, written baseline, convert/extend/stop | /launch-partners, /pricing | **VERIFIED** (already the published pricing doctrine; this page reuses it, it does not invent it) |
+
+Deliberately **absent**, and must stay absent from public copy:
+
+- Equity, shares, warrants, board seats, or any securities language. 
+- Guaranteed lifetime pricing or a perpetual discount.
+- Unlimited development, support, hosting, storage or AI usage.
+- Exclusivity, territory rights, or a veto over other customers or sectors.
+- Any ownership of SquareCampus source code or intellectual property.
+- Named launch partners, customer logos, testimonials or outcome numbers.
+- "Limited seats remaining", countdowns, or any invented scarcity number.
+  "A small cohort by design" is a statement of intent, not a count.
+
+## Motion assets
+
+The rendered compositions in `public/motion/` are marketing surfaces and are
+held to the same standard. They contain **no** customer names, telemetry, fee
+collection rates, test scores, uptime figures or certifications. Labels such as
+"Campus A" and "Fee ledger" are illustrative structure, not data. The founding
+partner composition shows Convert, Extend and Stop with equal visual weight
+precisely so it cannot be read as promising conversion.
+
 ## Legal documents flagged for counsel review
 
 All substantive legal language was left unedited; each file now carries a

@@ -7,6 +7,7 @@ export const siteCtas = {
   ecosystemHref: "/ecosystem",
   securityHref: "/security",
   pricingHref: "/pricing",
+  launchPartnersHref: "/launch-partners",
   loginHref: "https://app.squarecampus.com",
 } as const;
 
@@ -45,6 +46,7 @@ export const footerGroups = [
     title: "Commercial",
     links: [
       { href: siteCtas.pricingHref, label: "Pricing" },
+      { href: siteCtas.launchPartnersHref, label: "Founding Partners" },
       { href: siteCtas.rolloutHref, label: "Rollout" },
       { href: "/services", label: "Data & Integration Services" },
       { href: "/compare", label: "Compare School ERPs" },

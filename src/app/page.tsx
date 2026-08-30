@@ -14,9 +14,9 @@ import {
   WalletCards,
 } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
+import { FoundingPartnerSection } from "@/components/site/founding-partner-section";
 import { HeroProductComposition } from "@/components/site/hero-product";
 import { MobileExpand } from "@/components/site/mobile-expand";
 import { PainRemedyGrid } from "@/components/site/pain-remedy";
@@ -473,12 +473,22 @@ export default function Home() {
 
                   <div className="mt-4 grid flex-1 items-stretch gap-4">
                     <div className="relative hidden min-h-72 overflow-hidden rounded-[1.7rem] border border-[color:var(--line)] sm:block">
-                      <Image
+                      {/* Plain <img>: `images.unoptimized` is on for the static
+                          export, so next/image emits no srcset — it would ship
+                          the 1280w file to every screen. Explicit width/height
+                          give the intrinsic ratio; the container reserves the
+                          box, so this contributes no layout shift. */}
+                      {/* biome-ignore lint/performance/noImgElement: see above */}
+                      <img
                         src="/images/editorial/campus-courtyard.webp"
+                        srcSet="/images/editorial/campus-courtyard-800.webp 800w, /images/editorial/campus-courtyard-1024.webp 1024w, /images/editorial/campus-courtyard.webp 1280w"
+                        sizes="(min-width: 1280px) 35vw, 50vw"
                         alt="Modern campus courtyard"
-                        fill
-                        sizes="(min-width: 1280px) 35vw, 100vw"
-                        className="object-cover"
+                        width={1280}
+                        height={853}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                       <EditorialGeometryOverlay />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.06),rgba(16,24,38,0.76))]" />
@@ -676,12 +686,18 @@ export default function Home() {
                   </div>
 
                   <div className="relative hidden min-h-[20rem] overflow-hidden rounded-[1.6rem] border border-[color:var(--line)] sm:block">
-                    <Image
+                    {/* See the note on the courtyard image above. */}
+                    {/* biome-ignore lint/performance/noImgElement: see above */}
+                    <img
                       src="/images/editorial/school-building-delhi.webp"
+                      srcSet="/images/editorial/school-building-delhi-800.webp 800w, /images/editorial/school-building-delhi-1024.webp 1024w, /images/editorial/school-building-delhi.webp 1280w"
+                      sizes="(min-width: 1280px) 28vw, 50vw"
                       alt="Institution building for India-first operations context"
-                      fill
-                      sizes="(min-width: 1280px) 28vw, 100vw"
-                      className="object-cover"
+                      width={1280}
+                      height={853}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                     <EditorialGeometryOverlay variant="warm" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.08),rgba(16,24,38,0.78))]" />
@@ -842,7 +858,14 @@ export default function Home() {
           </MobileExpand>
         </SectionShell>
 
-        {/* 8 — Final CTA */}
+        {/* 8 — Founding Institutional Partners.
+            Placed after rollout & trust and before the final CTA: the reader
+            now has the problem, the posture, the trust model and the rollout
+            approach, so this is where earned trust becomes a privileged next
+            step — and it hands straight off to "Next move" below. */}
+        <FoundingPartnerSection />
+
+        {/* 9 — Final CTA */}
         <SectionShell className="pb-12 sm:pb-22">
           <Reveal className="surface-panel-strong rounded-[2rem] p-5 sm:p-8 lg:p-10">
             <div className="grid gap-5 sm:gap-8 lg:grid-cols-[1fr_0.82fr] lg:items-center">

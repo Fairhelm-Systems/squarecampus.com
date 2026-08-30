@@ -1,5 +1,6 @@
 import { Activity, Compass, Landmark, ShieldCheck, Sparkles, Target } from "lucide-react";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { siteCtas } from "@/content/site-content";
@@ -96,9 +97,15 @@ const weReject = [
 export default function AboutPage() {
   return (
     <main>
+      <PageSchema
+        name="About SquareCampus"
+        description="SquareCampus is built by Fairhelm Systems OPC for Indian schools, school groups and education trusts that need one governed operating system."
+        path="/about"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <Reveal className="space-y-6">
+          <Reveal immediate className="space-y-6">
             <p className="section-kicker">About SquareCampus</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Educational institutions shape the future. Their software should respect that.

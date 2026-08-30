@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { COMPARISON_AS_OF, comparisonBySlug, comparisons } from "@/content/comparisons";
 import { siteCtas } from "@/content/site-content";
-import { createAlternates, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
+import { canonicalUrl, createAlternates, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const c = comparisonBySlug(slug);
   if (!c) {
-    return { title: "Compare | SquareCampus" };
+    return { title: "Compare" };
   }
   return {
     title: c.metaTitle,
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: c.metaTitle,
       description: c.metaDescription,
-      url: `${SEO_CONFIG.baseUrl}/compare/${c.slug}/`,
+      url: canonicalUrl(`/compare/${c.slug}`),
     },
   };
 }
@@ -58,14 +58,17 @@ export default async function ComparePage({ params }: PageProps) {
         "@id": `${SEO_CONFIG.baseUrl}/compare/${c.slug}#webpage`,
         name: c.metaTitle,
         description: c.metaDescription,
-        url: `${SEO_CONFIG.baseUrl}/compare/${c.slug}`,
+        url: canonicalUrl(`/compare/${c.slug}`),
         inLanguage: SEO_CONFIG.language,
         isPartOf: { "@id": `${SEO_CONFIG.baseUrl}/#website` },
       },
       createBreadcrumbSchema([
         { name: "Home", url: SEO_CONFIG.baseUrl },
-        { name: "Compare", url: `${SEO_CONFIG.baseUrl}/compare` },
-        { name: `SquareCampus vs ${c.competitor}`, url: `${SEO_CONFIG.baseUrl}/compare/${c.slug}` },
+        { name: "Compare", url: canonicalUrl("/compare") },
+        {
+          name: `SquareCampus vs ${c.competitor}`,
+          url: canonicalUrl(`/compare/${c.slug}`),
+        },
       ]),
       {
         "@type": "FAQPage",
@@ -87,7 +90,7 @@ export default async function ComparePage({ params }: PageProps) {
       />
 
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="max-w-3xl space-y-6">
+        <Reveal immediate className="max-w-3xl space-y-6">
           <p className="section-kicker">
             <Link href="/compare" className="hover:text-foreground">
               Compare

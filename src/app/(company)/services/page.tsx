@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { ServicesFlowVisual } from "@/components/site/services-flow-visual";
@@ -102,9 +103,15 @@ const deploymentOptions = [
 export default function ServicesPage() {
   return (
     <main>
+      <PageSchema
+        name="Data and Integration Services"
+        description="Integration, data migration and deployment services: connecting existing school tools, building pipelines, and running SquareCampus on managed, private or customer-owned infrastructure."
+        path="/services"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <Reveal className="max-w-3xl space-y-6">
+          <Reveal immediate className="max-w-3xl space-y-6">
             <p className="section-kicker">Integration, data &amp; deployment services</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
               Your existing tools don&rsquo;t have to be dead ends.

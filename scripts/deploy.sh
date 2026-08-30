@@ -47,6 +47,13 @@ MEDIA_DIRS=(images og icons brand)
 # stale-while-revalidate keeps repeat visits instant while leaving a way out.
 MEDIA_CACHE="public,max-age=2592000,stale-while-revalidate=86400"
 
+# public/motion/ is the exception to the note above: those filenames ARE
+# content-hashed (`<id>-<theme>.<sha8>.mp4`), written by `bun run motion:render`,
+# so a re-render publishes a new URL and the old one can never be stale. These
+# get the same one-year immutable policy as _next/.
+MOTION_DIR="motion"
+MOTION_CACHE="public,max-age=31536000,immutable"
+
 # Finder metadata gets copied out of public/ into the export and would
 # otherwise be served at https://squarecampus.com/.DS_Store, which discloses
 # directory contents. Excluded from every pass so a stray local file can never
@@ -56,6 +63,7 @@ JUNK=(--exclude "*.DS_Store" --exclude "*/.DS_Store" --exclude "Thumbs.db")
 echo "==> Uploading HTML and non-hashed assets (revalidate on every request)"
 HTML_EXCLUDES=(--exclude "_next/*")
 for d in "${MEDIA_DIRS[@]}"; do HTML_EXCLUDES+=(--exclude "$d/*"); done
+HTML_EXCLUDES+=(--exclude "$MOTION_DIR/*")
 aws s3 sync "$OUT_DIR/" "s3://$BUCKET" --delete \
   --cache-control "public,max-age=0,must-revalidate" \
   "${HTML_EXCLUDES[@]}" "${JUNK[@]}" --only-show-errors
@@ -70,6 +78,12 @@ for d in "${MEDIA_DIRS[@]}"; do
   aws s3 sync "$OUT_DIR/$d/" "s3://$BUCKET/$d/" --delete \
     --cache-control "$MEDIA_CACHE" "${JUNK[@]}" --only-show-errors
 done
+
+echo "==> Uploading rendered motion assets (immutable, 1 year — content-hashed)"
+if [[ -d "$OUT_DIR/$MOTION_DIR" ]]; then
+  aws s3 sync "$OUT_DIR/$MOTION_DIR/" "s3://$BUCKET/$MOTION_DIR/" --delete \
+    --cache-control "$MOTION_CACHE" "${JUNK[@]}" --only-show-errors
+fi
 
 echo "==> Invalidating CloudFront cache"
 INVALIDATION_ID=$(aws cloudfront create-invalidation \

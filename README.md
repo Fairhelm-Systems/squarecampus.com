@@ -21,6 +21,8 @@ bun run check:claims   # forbidden-claims regression check on its own
 bun run lint / format  # biome
 bun run check-types    # tsc --noEmit
 bun run deploy         # build + S3 sync + CloudFront invalidation + IndexNow
+bun run motion:render  # re-render the explanatory motion assets (see motion/)
+bun run motion:studio  # preview/edit those compositions in Remotion Studio
 ```
 
 Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
@@ -38,6 +40,13 @@ Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
   language without counsel.
 - Growth strategy and content cadence:
   [docs/growth-playbook.md](docs/growth-playbook.md).
+- **Motion is produced at build time, never at runtime.** Remotion lives in
+  [motion/](motion/README.md) as a separate package; the site ships rendered
+  MP4/WebP files and no animation library. Re-render with
+  `bun run motion:render`.
+- Every URL the site emits — canonical, OG, sitemap, JSON-LD — goes through
+  `canonicalUrl()` / `createWebPageSchema()` in [src/lib/seo.ts](src/lib/seo.ts)
+  so it is in the trailing-slash form the edge actually serves.
 
 ## Key docs
 
@@ -45,4 +54,6 @@ Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
 - [docs/marketing-claims-register.md](docs/marketing-claims-register.md)
 - [docs/growth-playbook.md](docs/growth-playbook.md)
 - [infra/contact-intake/README.md](infra/contact-intake/README.md)
+- [docs/page-intent-map.md](docs/page-intent-map.md) — what each indexable page is for
+- [motion/README.md](motion/README.md) — the build-time motion pipeline
 - [src/content/blog/BLOG_TOPICS.md](src/content/blog/BLOG_TOPICS.md)

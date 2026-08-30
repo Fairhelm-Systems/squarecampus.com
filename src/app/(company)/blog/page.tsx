@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { blogPosts } from "@/content/blog/posts";
@@ -95,8 +96,14 @@ export default function BlogPage() {
 
   return (
     <main>
+      <PageSchema
+        name="Blog"
+        description="Writing on school operations, multi-campus governance, migration risk and how institutions evaluate school management systems."
+        path="/blog"
+      />
+
       <SectionShell className="pt-12 sm:pt-16">
-        <Reveal className="max-w-3xl space-y-6">
+        <Reveal immediate className="max-w-3xl space-y-6">
           <p className="section-kicker">Blog</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             Stories from the SquareCampus team.

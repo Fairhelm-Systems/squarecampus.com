@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/lib/seo";
 // Target: Users looking for comprehensive/integrated solutions
 
 export const metadata: Metadata = createPageMetadata({
-  title: "School Management Ecosystem | Apps, Integrations & Platform | SquareCampus",
+  title: "School Management Ecosystem | Apps, Integrations and Platform",
   description:
     "The SquareCampus ecosystem: admin console, teacher workspace, parent and student apps, payment integrations, SMS, WhatsApp, and biometrics — one platform, all touchpoints.",
   path: "/ecosystem",

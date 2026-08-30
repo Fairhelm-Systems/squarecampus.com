@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Data Processing Addendum (DPA) | SquareCampus",
+  title: "Data Processing Addendum (DPA)",
   description:
     "SquareCampus Data Processing Addendum: Legal framework governing how we process personal data on behalf of educational institutions, ensuring GDPR and Indian data protection compliance.",
   path: "/data-processing-addendum",

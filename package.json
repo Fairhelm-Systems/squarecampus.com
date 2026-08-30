@@ -14,7 +14,9 @@
     "format:check": "biome format .",
     "check": "biome check .",
     "fix": "biome check --write .",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "motion:studio": "cd motion && bun install && bun run studio",
+    "motion:render": "cd motion && bun install && bun run render"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.15",

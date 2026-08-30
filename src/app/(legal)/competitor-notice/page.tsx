@@ -25,7 +25,7 @@ const linkClassName = "text-teal-300 hover:underline";
 // artifact, not marketing: it stays noindex and out of customer-facing
 // navigation, reachable only by direct link.
 export const metadata: Metadata = {
-  title: "Notice to Competitors | SquareCampus",
+  title: "Notice to Competitors",
   description:
     "Public legal notice regarding unauthorized access or misuse of SquareCampus. This notice is intended to provide actual notice and preserve remedies under Indian law.",
   alternates: {
