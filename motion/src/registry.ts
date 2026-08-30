@@ -18,9 +18,16 @@ import {
   OperatingSignalToAction,
 } from "./compositions/OperatingSignalToAction";
 import {
+  PHONE_SCREEN,
+  PhoneScreen,
+  phoneScreenDuration,
+  type PhoneVariant,
+} from "./compositions/PhoneScreen";
+import {
   PRODUCT_SCREEN,
   ProductScreen,
   productScreenDuration,
+  type ScreenVariant,
 } from "./compositions/ProductScreen";
 import { CANVAS, type ThemeName } from "./theme";
 
@@ -83,6 +90,45 @@ const surfaces = (variant: SurfacesVariant, id: string, tier: 1 | 2, description
   description,
 });
 
+/**
+ * Rendered product screens for the device bezels.
+ *
+ * Tier matters here: a page that already carries a tier-1 diagram gets its
+ * bezel as a *still* (tier 2), so the AI screenshot is still replaced but the
+ * page never ships two auto-starting assets. /security/ has no diagram, so its
+ * screen is the page's one motion asset.
+ */
+const screen = (
+  variant: ScreenVariant,
+  id: string,
+  tier: 1 | 2,
+  description: string
+): MotionEntry => ({
+  id,
+  family: "ProductScreen",
+  tier,
+  posterFrame: productScreenDuration - 1,
+  durationInFrames: productScreenDuration,
+  width: PRODUCT_SCREEN.width,
+  height: PRODUCT_SCREEN.height,
+  component: ProductScreen,
+  props: (theme: ThemeName) => ({ theme, variant }),
+  description,
+});
+
+const phone = (variant: PhoneVariant, id: string, description: string): MotionEntry => ({
+  id,
+  family: "PhoneScreen",
+  tier: 2,
+  posterFrame: phoneScreenDuration - 1,
+  durationInFrames: phoneScreenDuration,
+  width: PHONE_SCREEN.width,
+  height: PHONE_SCREEN.height,
+  component: PhoneScreen,
+  props: (theme: ThemeName) => ({ theme, variant }),
+  description,
+});
+
 export const MOTION_ENTRIES: MotionEntry[] = [
   rollout(
     "founding",
@@ -121,19 +167,40 @@ export const MOTION_ENTRIES: MotionEntry[] = [
     2,
     "Parents, teachers, principals, finance teams and trustees each work from the same institutional record, seeing the part of it their role owns."
   ),
-  {
-    id: "security-audit-screen",
-    family: "ProductScreen",
-    tier: 1,
-    posterFrame: productScreenDuration - 1,
-    durationInFrames: productScreenDuration,
-    width: PRODUCT_SCREEN.width,
-    height: PRODUCT_SCREEN.height,
-    component: ProductScreen,
-    props: (theme: ThemeName) => ({ theme }),
-    description:
-      "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction made after the cut-off as a logged override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled.",
-  },
+  screen(
+    "audit",
+    "security-audit-screen",
+    1,
+    "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction logged as an override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled."
+  ),
+  screen(
+    "operations",
+    "platform-operations-screen",
+    2,
+    "The SquareCampus daily operations console: fee follow-up drifting past its reminder window with an owner assigned, admissions waiting on document verification, attendance below the policy threshold escalated, and a concession request awaiting trust sign-off."
+  ),
+  screen(
+    "parallel-run",
+    "rollout-parallel-run-screen",
+    2,
+    "Parallel validation during a rollout: the collection register, the daily attendance register and guardian circular delivery reconciled against the institution's existing system, with one admissions discrepancy under review and the agreed success measure tracked."
+  ),
+  screen(
+    "surfaces",
+    "ecosystem-surfaces-screen",
+    2,
+    "One institutional record acted on from every surface: a guardian acknowledging a fee reminder, a teacher marking a register, finance applying an approved concession, transport notifying a route change, and the trust view already current without an export."
+  ),
+  phone(
+    "attendance",
+    "phone-attendance-screen",
+    "A teacher marking the morning register on a phone, with a third absence in the week raised as an exception that routes to a named owner."
+  ),
+  phone(
+    "fees",
+    "phone-fees-screen",
+    "A guardian's view of a term fee on a phone: tuition and transport due, an approved concession recorded, and the previous term's receipt available."
+  ),
   {
     id: "operating-signal-to-action",
     family: "OperatingSignalToAction",

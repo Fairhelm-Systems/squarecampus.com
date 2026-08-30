@@ -113,10 +113,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/platform`],
       changeFrequency: "weekly",
       priority: 0.88,
-      images: [
-        img("/images/screens/laptop/platform-architecture.webp"),
-        img("/images/screens/mobile/teacher-attendance.webp"),
-      ],
     },
     {
       path: "/aegis",
@@ -135,17 +131,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/rollout`],
       changeFrequency: "weekly",
       priority: 0.82,
-      images: [img("/images/screens/laptop/rollout-control-room.webp")],
     },
     {
       path: "/ecosystem",
       sources: [`${APP}/(company)/ecosystem`],
       changeFrequency: "weekly",
       priority: 0.8,
-      images: [
-        img("/images/screens/laptop/ecosystem-operations.webp"),
-        img("/images/screens/mobile/transport-live-status.webp"),
-      ],
     },
 
     // Commercial model. High buyer intent, no prices published.

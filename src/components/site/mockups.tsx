@@ -169,12 +169,16 @@ function PhoneFrame({
   title,
   screenSrc,
   screenAlt,
+  screenAsset,
   className,
   motionRole,
 }: {
   title: string;
-  screenSrc: string;
+  /** Still for the cutout. Omit when `screenAsset` supplies a rendered screen. */
+  screenSrc?: string;
   screenAlt: string;
+  /** Rendered screen, at the cutout's own 390:844 so it does not letterbox. */
+  screenAsset?: MotionAsset;
   className?: string;
   motionRole?: "primary" | "secondary";
 }) {
@@ -192,7 +196,11 @@ function PhoneFrame({
       </div>
       <div className="relative mx-auto aspect-[390/844] w-full">
         <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
-          <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
+          {screenAsset ? (
+            <MotionFigure asset={screenAsset} bare caption={screenAlt} />
+          ) : screenSrc ? (
+            <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
+          ) : null}
           <div className="pointer-events-none absolute inset-0 z-5 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
         </div>
         <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
@@ -213,16 +221,16 @@ export function PlatformMockupRow() {
   return (
     <AnimatedScene className="mx-auto max-w-[60rem]">
       <LaptopFrame
-        title="Platform architecture"
-        screenSrc="/images/screens/laptop/platform-architecture.webp"
-        screenAlt="SquareCampus platform architecture surface with module integration health and shared institutional core"
+        title="Daily operations"
+        screenAsset={motionAssets["platform-operations-screen"]}
+        screenAlt="The SquareCampus daily operations console: fee follow-up drifting past its reminder window with an owner assigned, admissions waiting on document verification, attendance below the policy threshold escalated, and a concession request awaiting trust sign-off."
         motionRole="primary"
         priority
       />
       <PhoneFrame
         title="Teacher workspace"
-        screenSrc="/images/screens/mobile/teacher-attendance.webp"
-        screenAlt="SquareCampus teacher app marking class attendance with present, absent, and late states"
+        screenAsset={motionAssets["phone-attendance-screen"]}
+        screenAlt="A teacher marking the morning register on a phone, with a third absence in the week raised as an exception that routes to a named owner."
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
       />
@@ -246,9 +254,9 @@ export function RolloutMockup() {
   return (
     <AnimatedScene className="mx-auto max-w-[56rem]" floatSecondary={false}>
       <LaptopFrame
-        title="Implementation program"
-        screenSrc="/images/screens/laptop/rollout-control-room.webp"
-        screenAlt="SquareCampus rollout control room with six-week timeline, migration status, and go-live readiness"
+        title="Parallel validation"
+        screenAsset={motionAssets["rollout-parallel-run-screen"]}
+        screenAlt="Parallel validation during a rollout: the collection register, the daily attendance register and guardian circular delivery reconciled against the institution's existing system, with one admissions discrepancy under review and the agreed success measure tracked."
       />
     </AnimatedScene>
   );
@@ -258,15 +266,15 @@ export function EcosystemMockup() {
   return (
     <AnimatedScene className="mx-auto max-w-[60rem]">
       <LaptopFrame
-        title="Connected ecosystem"
-        screenSrc="/images/screens/laptop/ecosystem-operations.webp"
-        screenAlt="SquareCampus ecosystem operations map connecting audiences, shared backbone, and module groups"
+        title="One institutional record"
+        screenAsset={motionAssets["ecosystem-surfaces-screen"]}
+        screenAlt="One institutional record acted on from every surface: a guardian acknowledging a fee reminder, a teacher marking a register, finance applying an approved concession, transport notifying a route change, and the trust view already current without an export."
         motionRole="primary"
       />
       <PhoneFrame
-        title="Transport live status"
-        screenSrc="/images/screens/mobile/transport-live-status.webp"
-        screenAlt="SquareCampus parent app showing live bus route progress with stop-by-stop status"
+        title="Guardian app"
+        screenAsset={motionAssets["phone-fees-screen"]}
+        screenAlt="A guardian's view of a term fee on a phone: tuition and transport due, an approved concession recorded, and the previous term's receipt available."
         className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
         motionRole="secondary"
       />

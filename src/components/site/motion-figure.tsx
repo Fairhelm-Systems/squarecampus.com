@@ -164,17 +164,42 @@ export function MotionFigure({
 
   const label = caption ?? asset.description;
 
-  // Tier-2 assets have no video, and this component is not the way to render
-  // them: use `MotionPoster` directly. Importing that Server Component here
-  // put one module in both the server and client graphs, and Turbopack's
-  // static export then emitted a flight reference to a client chunk it never
-  // wrote — every page using this component died with a ChunkLoadError during
-  // hydration and lost its entire DOM. The two graphs stay separate.
-  if (!asset.light.mp4) {
-    return null;
-  }
-
   if (bare) {
+    // Inside a device bezel a tier-2 asset is still the whole picture, so it
+    // renders as the theme pair rather than nothing. The markup is duplicated
+    // from MotionPoster rather than imported: putting that Server Component in
+    // the client graph too made Turbopack's static export emit a flight
+    // reference to a chunk it never wrote, and every page using this component
+    // died with a ChunkLoadError during hydration. The graphs stay separate.
+    if (!asset.light.mp4) {
+      const text = redundant ? "" : label;
+      const shared = {
+        width: asset.width,
+        height: asset.height,
+        loading: "lazy" as const,
+        decoding: "async" as const,
+      };
+      return (
+        <>
+          {/* biome-ignore lint/performance/noImgElement: next/image is unoptimized
+              in this static export; these are pre-sized, content-hashed assets. */}
+          <img
+            {...shared}
+            alt={text}
+            src={asset.light.poster}
+            className="absolute inset-0 block h-full w-full object-fill dark:hidden"
+          />
+          {/* biome-ignore lint/performance/noImgElement: see above */}
+          <img
+            {...shared}
+            alt={text}
+            src={asset.dark.poster}
+            className="absolute inset-0 hidden h-full w-full object-fill dark:block"
+          />
+        </>
+      );
+    }
+
     return (
       // Silent diagram: no audio track, so no <track> element.
       <video
@@ -190,6 +215,12 @@ export function MotionFigure({
         {...(redundant ? {} : { role: "img", "aria-label": label })}
       />
     );
+  }
+
+  // Outside a bezel, a tier-2 asset belongs to `MotionPoster` — same reasoning
+  // about keeping the two module graphs separate.
+  if (!asset.light.mp4) {
+    return null;
   }
 
   return (

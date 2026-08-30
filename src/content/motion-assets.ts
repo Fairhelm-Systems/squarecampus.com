@@ -135,14 +135,99 @@ export const motionAssets = {
     fps: 24,
     durationInFrames: 264,
     description:
-      "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction made after the cut-off as a logged override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled.",
+      "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction logged as an override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled.",
     light: {
-      poster: "/motion/security-audit-screen-light.6b47ca51.webp",
-      mp4: "/motion/security-audit-screen-light.a55ed67d.mp4",
+      poster: "/motion/security-audit-screen-light.bbfd3eca.webp",
+      mp4: "/motion/security-audit-screen-light.9d506474.mp4",
     },
     dark: {
-      poster: "/motion/security-audit-screen-dark.1dfafb92.webp",
-      mp4: "/motion/security-audit-screen-dark.a8115efa.mp4",
+      poster: "/motion/security-audit-screen-dark.7acfc87e.webp",
+      mp4: "/motion/security-audit-screen-dark.ee5821ad.mp4",
+    },
+  },
+  "platform-operations-screen": {
+    id: "platform-operations-screen",
+    family: "ProductScreen",
+    tier: 2,
+    width: 1600,
+    height: 1000,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "The SquareCampus daily operations console: fee follow-up drifting past its reminder window with an owner assigned, admissions waiting on document verification, attendance below the policy threshold escalated, and a concession request awaiting trust sign-off.",
+    light: {
+      poster: "/motion/platform-operations-screen-light.8c2bd86e.webp",
+    },
+    dark: {
+      poster: "/motion/platform-operations-screen-dark.5e86b192.webp",
+    },
+  },
+  "rollout-parallel-run-screen": {
+    id: "rollout-parallel-run-screen",
+    family: "ProductScreen",
+    tier: 2,
+    width: 1600,
+    height: 1000,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "Parallel validation during a rollout: the collection register, the daily attendance register and guardian circular delivery reconciled against the institution's existing system, with one admissions discrepancy under review and the agreed success measure tracked.",
+    light: {
+      poster: "/motion/rollout-parallel-run-screen-light.fe49f319.webp",
+    },
+    dark: {
+      poster: "/motion/rollout-parallel-run-screen-dark.3f8428a6.webp",
+    },
+  },
+  "ecosystem-surfaces-screen": {
+    id: "ecosystem-surfaces-screen",
+    family: "ProductScreen",
+    tier: 2,
+    width: 1600,
+    height: 1000,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "One institutional record acted on from every surface: a guardian acknowledging a fee reminder, a teacher marking a register, finance applying an approved concession, transport notifying a route change, and the trust view already current without an export.",
+    light: {
+      poster: "/motion/ecosystem-surfaces-screen-light.4150b45f.webp",
+    },
+    dark: {
+      poster: "/motion/ecosystem-surfaces-screen-dark.9b4a92f5.webp",
+    },
+  },
+  "phone-attendance-screen": {
+    id: "phone-attendance-screen",
+    family: "PhoneScreen",
+    tier: 2,
+    width: 780,
+    height: 1688,
+    fps: 24,
+    durationInFrames: 240,
+    description:
+      "A teacher marking the morning register on a phone, with a third absence in the week raised as an exception that routes to a named owner.",
+    light: {
+      poster: "/motion/phone-attendance-screen-light.06b6a5d1.webp",
+    },
+    dark: {
+      poster: "/motion/phone-attendance-screen-dark.6fa2ec3b.webp",
+    },
+  },
+  "phone-fees-screen": {
+    id: "phone-fees-screen",
+    family: "PhoneScreen",
+    tier: 2,
+    width: 780,
+    height: 1688,
+    fps: 24,
+    durationInFrames: 240,
+    description:
+      "A guardian's view of a term fee on a phone: tuition and transport due, an approved concession recorded, and the previous term's receipt available.",
+    light: {
+      poster: "/motion/phone-fees-screen-light.e995233b.webp",
+    },
+    dark: {
+      poster: "/motion/phone-fees-screen-dark.035c3e9e.webp",
     },
   },
   "operating-signal-to-action": {
