@@ -17,7 +17,12 @@ import {
   operatingSignalDuration,
   OperatingSignalToAction,
 } from "./compositions/OperatingSignalToAction";
-import type { ThemeName } from "./theme";
+import {
+  PRODUCT_SCREEN,
+  ProductScreen,
+  productScreenDuration,
+} from "./compositions/ProductScreen";
+import { CANVAS, type ThemeName } from "./theme";
 
 /**
  * The single list the Studio, the render script and the website manifest all
@@ -37,6 +42,13 @@ export type MotionEntry = {
   /** Frame held as the poster — always the composition's meaningful end state. */
   posterFrame: number;
   durationInFrames: number;
+  /**
+   * Canvas size. Defaults to 16:9. Compositions that render inside a device
+   * bezel must match that bezel's screen cutout instead — 8:5 for the MacBook
+   * frame in src/components/site/mockups.tsx — or they letterbox.
+   */
+  width: number;
+  height: number;
   // biome-ignore lint/suspicious/noExplicitAny: each entry carries its own props shape
   component: React.FC<any>;
   // biome-ignore lint/suspicious/noExplicitAny: see above
@@ -51,6 +63,8 @@ const rollout = (variant: RolloutVariant, id: string, tier: 1 | 2, description: 
   tier,
   posterFrame: rolloutDuration(variant) - 1,
   durationInFrames: rolloutDuration(variant),
+  width: CANVAS.width,
+  height: CANVAS.height,
   component: EvidenceLedRollout,
   props: (theme: ThemeName) => ({ theme, variant }),
   description,
@@ -62,6 +76,8 @@ const surfaces = (variant: SurfacesVariant, id: string, tier: 1 | 2, description
   tier,
   posterFrame: oneCoreDuration - 1,
   durationInFrames: oneCoreDuration,
+  width: CANVAS.width,
+  height: CANVAS.height,
   component: OneCoreManySurfaces,
   props: (theme: ThemeName) => ({ theme, variant }),
   description,
@@ -86,6 +102,8 @@ export const MOTION_ENTRIES: MotionEntry[] = [
     tier: 1,
     posterFrame: governedQuestionPathDuration - 1,
     durationInFrames: governedQuestionPathDuration,
+    width: CANVAS.width,
+    height: CANVAS.height,
     component: GovernedQuestionPath,
     props: (theme: ThemeName) => ({ theme }),
     description:
@@ -104,11 +122,26 @@ export const MOTION_ENTRIES: MotionEntry[] = [
     "Parents, teachers, principals, finance teams and trustees each work from the same institutional record, seeing the part of it their role owns."
   ),
   {
+    id: "security-audit-screen",
+    family: "ProductScreen",
+    tier: 1,
+    posterFrame: productScreenDuration - 1,
+    durationInFrames: productScreenDuration,
+    width: PRODUCT_SCREEN.width,
+    height: PRODUCT_SCREEN.height,
+    component: ProductScreen,
+    props: (theme: ThemeName) => ({ theme }),
+    description:
+      "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction made after the cut-off as a logged override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled.",
+  },
+  {
     id: "operating-signal-to-action",
     family: "OperatingSignalToAction",
     tier: 2,
     posterFrame: operatingSignalDuration - 1,
     durationInFrames: operatingSignalDuration,
+    width: CANVAS.width,
+    height: CANVAS.height,
     component: OperatingSignalToAction,
     props: (theme: ThemeName) => ({ theme }),
     description:

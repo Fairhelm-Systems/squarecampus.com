@@ -4,8 +4,11 @@ import { Network } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef } from "react";
+import { type MotionAsset, motionAssets } from "@/content/motion-assets";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
+import { MotionFigure } from "./motion-figure";
+import { SyntheticDataNote } from "./synthetic-data-note";
 
 /**
  * Device mockups. The frames are transparent PNGs with a screen cutout;
@@ -91,13 +94,21 @@ function LaptopFrame({
   title,
   screenSrc,
   screenAlt,
+  screenAsset,
   className,
   motionRole,
   priority = false,
 }: {
   title: string;
-  screenSrc: string;
+  /** Still for the bezel. Omit when `screenAsset` supplies a rendered screen. */
+  screenSrc?: string;
   screenAlt: string;
+  /**
+   * Rendered screen for the bezel. When present it replaces the still: the
+   * poster is a frame of the same composition, so nothing is lost if the video
+   * never loads. Rendered at the cutout's own 8:5, so it does not letterbox.
+   */
+  screenAsset?: MotionAsset;
   className?: string;
   motionRole?: "primary" | "secondary";
   priority?: boolean;
@@ -108,24 +119,35 @@ function LaptopFrame({
       data-scene-item
       data-float={motionRole}
     >
-      <div className="mb-3 flex items-center justify-between px-3">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2 px-3">
         <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
           {title}
         </p>
+        {/* Every screen in these frames shows fictional institutions, campuses
+            and figures. SyntheticDataNote's contract is that the label is
+            visible in the same component as the numbers it qualifies — these
+            frames were the one place on the site that skipped it. */}
+        <SyntheticDataNote variant="chip" />
       </div>
       <div className="relative aspect-[3880/2300]">
         <div
           className="absolute overflow-hidden rounded-[0.8rem] bg-(--surface)"
           style={laptopScreenStyle}
         >
-          <Image
-            src={screenSrc}
-            alt={screenAlt}
-            fill
-            sizes="(max-width: 768px) 100vw, 896px"
-            className="object-fill"
-            priority={priority}
-          />
+          {screenAsset || !screenSrc ? (
+            screenAsset ? (
+              <MotionFigure asset={screenAsset} bare caption={screenAlt} />
+            ) : null
+          ) : (
+            <Image
+              src={screenSrc}
+              alt={screenAlt}
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-fill"
+              priority={priority}
+            />
+          )}
           <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.04)_0%,transparent_40%,transparent_60%,rgba(255,255,255,0.02)_100%)]" />
         </div>
         <div className="pointer-events-none absolute inset-0 z-20">
@@ -162,8 +184,11 @@ function PhoneFrame({
       data-scene-item
       data-float={motionRole}
     >
-      <div className="mb-3 text-center font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
-        {title}
+      <div className="mb-3 flex flex-col items-center gap-2">
+        <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+          {title}
+        </span>
+        <SyntheticDataNote variant="chip" />
       </div>
       <div className="relative mx-auto aspect-[390/844] w-full">
         <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
@@ -252,10 +277,15 @@ export function EcosystemMockup() {
 export function SecurityMockup() {
   return (
     <AnimatedScene className="mx-auto max-w-[56rem]" floatSecondary={false}>
+      {/* The still this replaces asserted "MFA enforced", "Healthy" across five
+          control domains, "0 open critical incidents" and a "99.6% success
+          rate" — live operational status nobody has audited, in a picture that
+          `check-claims.sh` cannot read. The rendered screen shows mechanism
+          instead: who acted, in what scope, and that it was written down. */}
       <LaptopFrame
-        title="Trust architecture"
-        screenSrc="/images/screens/laptop/security-audit-center.webp"
-        screenAlt="SquareCampus trust and security center with India data residency, encryption posture, and live audit trail"
+        title="Audit timeline"
+        screenAsset={motionAssets["security-audit-screen"]}
+        screenAlt="The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction logged as an override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused."
       />
     </AnimatedScene>
   );

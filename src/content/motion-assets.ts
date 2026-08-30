@@ -45,11 +45,11 @@ export const motionAssets = {
       "Four stages of the Founding Institutional Partner pilot: one bottleneck is chosen, a baseline is written down, the current system and SquareCampus run in parallel for 60 to 90 days, and the institution converts, extends or stops against the agreed measure.",
     light: {
       poster: "/motion/founding-partner-path-light.bc9af67e.webp",
-      mp4: "/motion/founding-partner-path-light.71e9f75b.mp4",
+      mp4: "/motion/founding-partner-path-light.53299fb2.mp4",
     },
     dark: {
       poster: "/motion/founding-partner-path-dark.97ebfffe.webp",
-      mp4: "/motion/founding-partner-path-dark.9e76876d.mp4",
+      mp4: "/motion/founding-partner-path-dark.5297fcf6.mp4",
     },
   },
   "rollout-path": {
@@ -64,11 +64,11 @@ export const motionAssets = {
       "The six-stage SquareCampus rollout: blueprint, migration clinic, role-based training, parallel validation, staged go-live, and adoption follow-through after handover.",
     light: {
       poster: "/motion/rollout-path-light.4f02bdfe.webp",
-      mp4: "/motion/rollout-path-light.024f727b.mp4",
+      mp4: "/motion/rollout-path-light.bbd8ff70.mp4",
     },
     dark: {
       poster: "/motion/rollout-path-dark.f2cf905f.webp",
-      mp4: "/motion/rollout-path-dark.834f205e.mp4",
+      mp4: "/motion/rollout-path-dark.30f59ba6.mp4",
     },
   },
   "governed-question-path": {
@@ -83,11 +83,11 @@ export const motionAssets = {
       "A leadership question passes through the tenant boundary and the asker's role before any answer is composed. Records outside that scope are refused rather than summarised, the answer is drawn only from what remains, and the query itself is written to the audit timeline.",
     light: {
       poster: "/motion/governed-question-path-light.e177f77c.webp",
-      mp4: "/motion/governed-question-path-light.a4230232.mp4",
+      mp4: "/motion/governed-question-path-light.d4f72e8b.mp4",
     },
     dark: {
       poster: "/motion/governed-question-path-dark.9563f553.webp",
-      mp4: "/motion/governed-question-path-dark.0f023c0b.mp4",
+      mp4: "/motion/governed-question-path-dark.dbdb4a1e.mp4",
     },
   },
   "platform-core-surfaces": {
@@ -102,11 +102,11 @@ export const motionAssets = {
       "Admissions, academics, finance, communication and operations stop exchanging exports with each other and instead act on one shared identity, data and workflow core, so a change made once is already current everywhere else.",
     light: {
       poster: "/motion/platform-core-surfaces-light.e92112e0.webp",
-      mp4: "/motion/platform-core-surfaces-light.315a321c.mp4",
+      mp4: "/motion/platform-core-surfaces-light.1f18abf2.mp4",
     },
     dark: {
       poster: "/motion/platform-core-surfaces-dark.a6947d69.webp",
-      mp4: "/motion/platform-core-surfaces-dark.b9fe0c14.mp4",
+      mp4: "/motion/platform-core-surfaces-dark.32316ffa.mp4",
     },
   },
   "ecosystem-core-surfaces": {
@@ -124,6 +124,25 @@ export const motionAssets = {
     },
     dark: {
       poster: "/motion/ecosystem-core-surfaces-dark.e5bbd5a7.webp",
+    },
+  },
+  "security-audit-screen": {
+    id: "security-audit-screen",
+    family: "ProductScreen",
+    tier: 1,
+    width: 1600,
+    height: 1000,
+    fps: 24,
+    durationInFrames: 264,
+    description:
+      "The SquareCampus audit timeline: a fee concession approved with a recorded reason, an attendance correction made after the cut-off as a logged override, a report export recorded against the person who ran it, and a request for records outside the asker's role refused rather than fulfilled.",
+    light: {
+      poster: "/motion/security-audit-screen-light.6b47ca51.webp",
+      mp4: "/motion/security-audit-screen-light.a55ed67d.mp4",
+    },
+    dark: {
+      poster: "/motion/security-audit-screen-dark.1dfafb92.webp",
+      mp4: "/motion/security-audit-screen-dark.a8115efa.mp4",
     },
   },
   "operating-signal-to-action": {

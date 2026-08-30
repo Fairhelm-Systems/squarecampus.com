@@ -49,6 +49,7 @@ export function MotionFigure({
   className,
   redundant = false,
   caption,
+  bare = false,
 }: {
   asset: MotionAsset;
   className?: string;
@@ -56,6 +57,11 @@ export function MotionFigure({
   redundant?: boolean;
   /** Visible caption. Also becomes the accessible name when not redundant. */
   caption?: string;
+  /**
+   * Drop the panel chrome and fill the parent instead. For screens rendered
+   * inside a device mockup, where the bezel is already the frame.
+   */
+  bare?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -166,6 +172,24 @@ export function MotionFigure({
   // hydration and lost its entire DOM. The two graphs stay separate.
   if (!asset.light.mp4) {
     return null;
+  }
+
+  if (bare) {
+    return (
+      // Silent diagram: no audio track, so no <track> element.
+      <video
+        ref={videoRef}
+        poster={asset.light.poster}
+        width={asset.width}
+        height={asset.height}
+        muted
+        playsInline
+        preload="none"
+        disablePictureInPicture
+        className={cn("absolute inset-0 h-full w-full object-fill", className)}
+        {...(redundant ? {} : { role: "img", "aria-label": label })}
+      />
+    );
   }
 
   return (

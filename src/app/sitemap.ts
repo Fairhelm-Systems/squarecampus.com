@@ -172,7 +172,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(company)/security`],
       changeFrequency: "monthly",
       priority: 0.6,
-      images: [img("/images/screens/laptop/security-audit-center.webp")],
+      // No image entry: /security/ now renders the audit screen as video, whose
+      // poster is a `poster` attribute rather than an <img>. Listing it would
+      // claim a page image Google cannot associate, which is the exact failure
+      // the note above warns about.
     },
     {
       path: "/infrastructure",

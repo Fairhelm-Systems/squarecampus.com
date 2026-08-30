@@ -19,8 +19,8 @@ export const RemotionRoot: React.FC = () => {
             component={entry.component}
             durationInFrames={entry.durationInFrames}
             fps={CANVAS.fps}
-            width={CANVAS.width}
-            height={CANVAS.height}
+            width={entry.width}
+            height={entry.height}
             defaultProps={entry.props(theme)}
           />
         ))
