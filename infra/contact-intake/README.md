@@ -33,7 +33,62 @@ DEPLOYMENT.md).
 - Validation: required fields, email shape, `consent: true`, per-field length
   caps, 20 KB body cap. Failures return 4xx and do not count against the rate
   limit.
+- Human check: a submission must carry a `humanToken` from a solved board.
+  See "Human check" below.
 - No submission content is logged to CloudWatch; PII lives only in the table.
+
+## Human check
+
+`challenge.mjs` renders a board as a PNG: a handful of wires crossing each
+other, each ending on a dot, plus many more identical dots that end nothing.
+The visitor drags a tile from one end of its wire to the other.
+
+The property that matters is that **the answer never leaves the function**.
+The response carries the picture, the tile's starting point and the tolerance;
+it does not carry the target, and it does not carry the dot positions. The
+target is written to `board#<id>` (TTL 10 min) and read back exactly once —
+`markBoard` deletes the row *before* comparing, so a board is worth one guess
+whether that guess is right or wrong. A correct answer returns an HMAC-signed
+pass token whose nonce is burned at `pass#<nonce>` on submission, so one solve
+cannot post twice.
+
+That makes it a vision problem rather than a DOM problem. It is not
+unbreakable — nothing rendered to a screen is — and a patient multimodal agent
+will solve some share of boards. The budgets below are what make that
+uneconomic, and the panel always offers `contact@squarecampus.com` as a route
+that involves no puzzle at all.
+
+Budgets, per IP, in DynamoDB counters (`humanboard#`, `humanfail#`,
+`humanfailday#`, all TTL-cleaned):
+
+| Limit | Value | Why |
+| --- | --- | --- |
+| Boards issued | 20/hour | Bounds the cost of someone reloading. |
+| Wrong answers | 3/hour | A mistyped drag is well inside this. |
+| Wrong answers | 5/day | The one that matters: without a daily cap an attacker just waits out each hour. ~70 dots per board puts blind guessing at roughly 7% per IP-day. |
+
+### Enabling and disabling it
+
+`CHALLENGE_SECRET` is the switch, and its **absence is meaningful**: with no
+secret the challenge routes answer 503 and submissions are accepted exactly as
+they were before the check existed. The browser treats 503 as "not enforcing"
+and submits without a token. So the safe order is:
+
+1. Deploy the function (no secret yet) — nothing changes for visitors.
+2. Deploy the site — it asks for a board, gets 503, submits as before.
+3. Set `CHALLENGE_SECRET` — enforcement begins.
+
+Reversing step 3 turns the check off in about thirty seconds, which is the
+rollback if anything goes wrong. Doing it in the other order — secret first —
+leaves the live form demanding a token the deployed site cannot produce.
+
+### IAM
+
+The execution role needs `dynamodb:DeleteItem` on the table, in addition to
+`PutItem` and `UpdateItem`. It is easy to miss: the deployed role had only the
+latter two, and the symptom is a 500 from `/api/challenge/solve` while every
+other route keeps working, because `markBoard` is the only code path that
+deletes anything. IAM changes here took roughly a minute to take effect.
 
 ## Reading submissions (until SES email lands)
 

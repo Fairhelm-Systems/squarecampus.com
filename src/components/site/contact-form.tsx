@@ -8,6 +8,7 @@ import {
   FOUNDING_PARTNER_INTENT,
 } from "@/content/demo-intents";
 import { ButtonLink } from "./button-link";
+import { HumanCheck, type HumanCheckResult } from "./human-check";
 
 type DemoFormState = {
   enquiryType: string;
@@ -136,6 +137,19 @@ const labelClassName =
 // sanctioned interim state is NEXT_PUBLIC_CONTACT_FORM_MODE=email: the form
 // visibly tells the visitor that submitting opens a pre-filled email draft.
 const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+
+/**
+ * The human check sits beside the intake endpoint on the same function, so it
+ * is derived rather than configured: a second environment variable would be a
+ * second thing to get wrong at deploy time, and one that points somewhere else
+ * would be worse than none. If the endpoint is not the shape we expect, the
+ * check is skipped here — and the intake function is the thing that decides
+ * whether a submission without a pass token is accepted, so skipping it in the
+ * browser cannot be used to get past it.
+ */
+const CHALLENGE_ENDPOINT = CONTACT_ENDPOINT?.endsWith("/contact")
+  ? `${CONTACT_ENDPOINT.slice(0, -"/contact".length)}/challenge`
+  : undefined;
 const EMAIL_DRAFT_MODE = !CONTACT_ENDPOINT && process.env.NEXT_PUBLIC_CONTACT_FORM_MODE === "email";
 const CONTACT_EMAIL = "contact@squarecampus.com";
 
@@ -199,11 +213,12 @@ function sourceTag(enquiryType: string) {
   return intent ? `demo-form:${intent}` : "demo-form";
 }
 
-type SubmitStatus = "idle" | "submitting" | "success" | "error" | "draft";
+type SubmitStatus = "idle" | "verifying" | "submitting" | "success" | "error" | "draft";
 
 export function ContactForm() {
   const [state, setState] = useState(initialState);
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [checking, setChecking] = useState(false);
   const mountedRef = useRef(true);
   const isFoundingPartner = state.enquiryType === FOUNDING_PARTNER_ENQUIRY;
 
@@ -277,10 +292,24 @@ export function ContactForm() {
       return;
     }
 
+    // Everything the visitor typed is valid. The only thing left is the human
+    // check, which is why it opens here rather than sitting in the form as one
+    // more field to clear on the way down: nobody reading the page is asked to
+    // prove anything, and no board is rendered for a form that was never sent.
+    if (!CHALLENGE_ENDPOINT) {
+      void submitToIntake();
+      return;
+    }
+    setStatus("verifying");
+    setChecking(true);
+  };
+
+  /** The actual POST. Carries a pass token when the check issued one. */
+  const submitToIntake = async (humanToken?: string) => {
     setStatus("submitting");
 
     try {
-      const response = await fetch(CONTACT_ENDPOINT, {
+      const response = await fetch(CONTACT_ENDPOINT as string, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -288,7 +317,11 @@ export function ContactForm() {
         // The intent also rides along in `source`, which the intake function
         // has always stored, so a founding-partner enquiry is distinguishable
         // even before the handler's field allowlist is redeployed.
-        body: JSON.stringify({ ...buildPayload(state), source: sourceTag(state.enquiryType) }),
+        body: JSON.stringify({
+          ...buildPayload(state),
+          source: sourceTag(state.enquiryType),
+          ...(humanToken ? { humanToken } : {}),
+        }),
       });
 
       if (!response.ok) {
@@ -313,11 +346,24 @@ export function ContactForm() {
     }
   };
 
+  const handleCheckResult = (result: HumanCheckResult) => {
+    setChecking(false);
+    if (result.kind === "cancel") {
+      // Nothing typed is lost; the form is exactly where they left it.
+      setStatus("idle");
+      return;
+    }
+    void submitToIntake(result.kind === "pass" ? result.token : undefined);
+  };
+
   return (
     <>
       {/* Toaster lives with the form (the only surface that fires toasts), so
           sonner ships on /demo instead of every page in the root layout. */}
       <Toaster position="top-right" richColors />
+      {checking && CHALLENGE_ENDPOINT ? (
+        <HumanCheck endpoint={CHALLENGE_ENDPOINT} onResolve={handleCheckResult} />
+      ) : null}
       <form onSubmit={handleSubmit} className="grid gap-4">
         <div>
           <label htmlFor="demo-enquiry-type" className={labelClassName}>
@@ -673,10 +719,10 @@ export function ContactForm() {
           </p>
           <button
             type="submit"
-            disabled={status === "submitting"}
+            disabled={status === "submitting" || status === "verifying"}
             className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--foreground)] px-5 text-center text-sm font-medium text-[color:var(--background)] transition-opacity hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status === "submitting" ? (
+            {status === "submitting" || status === "verifying" ? (
               "Submitting..."
             ) : (
               <>
