@@ -46,8 +46,8 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
-import { BOARD, generateBoard, newNonce, signPass, TOLERANCE, verifyPass } from "./challenge.mjs";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+import { BOARD, generateBoard, newNonce, signPass, TOLERANCE, verifyPass } from "./challenge.mjs";
 
 const TABLE = process.env.TABLE_NAME;
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "https://squarecampus.com")
@@ -335,7 +335,9 @@ function crmPayload(item) {
     ["Executive sponsor", text(item, "executiveSponsor")],
     ["Time sensitivity", text(item, "timeSensitivity")],
     ["Success measure", text(item, "successMeasure")],
-  ].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`);
+  ]
+    .filter(([, value]) => value)
+    .map(([label, value]) => `${label}: ${value}`);
   const message = [text(item, "message"), ...contextLines].filter(Boolean).join("\n\n");
   return {
     source: "marketing_contact_form",
@@ -360,16 +362,19 @@ function crmPayload(item) {
 }
 
 async function markDelivery(id, status, leadId = "") {
-  await ddb.send(new UpdateItemCommand({
-    TableName: TABLE,
-    Key: { id: { S: id } },
-    UpdateExpression: "SET crmDeliveryStatus = :status, crmDeliveryUpdatedAt = :updatedAt, crmLeadId = :leadId",
-    ExpressionAttributeValues: {
-      ":status": { S: status },
-      ":updatedAt": { S: new Date().toISOString() },
-      ":leadId": { S: leadId },
-    },
-  }));
+  await ddb.send(
+    new UpdateItemCommand({
+      TableName: TABLE,
+      Key: { id: { S: id } },
+      UpdateExpression:
+        "SET crmDeliveryStatus = :status, crmDeliveryUpdatedAt = :updatedAt, crmLeadId = :leadId",
+      ExpressionAttributeValues: {
+        ":status": { S: status },
+        ":updatedAt": { S: new Date().toISOString() },
+        ":leadId": { S: leadId },
+      },
+    })
+  );
 }
 
 async function deliverToCrm(item) {
@@ -386,15 +391,21 @@ async function deliverToCrm(item) {
   });
   if (!response.ok) throw new Error(`CRM intake ${response.status}`);
   const body = await response.json();
-  await markDelivery(text(item, "id"), body.duplicate ? "duplicate" : "delivered", String(body.lead?.id ?? ""));
+  await markDelivery(
+    text(item, "id"),
+    body.duplicate ? "duplicate" : "delivered",
+    String(body.lead?.id ?? "")
+  );
 }
 
 async function queueCrmRetry(id) {
   if (!CRM_RETRY_QUEUE_URL) throw new Error("CRM retry queue is not configured");
-  await sqs.send(new SendMessageCommand({
-    QueueUrl: CRM_RETRY_QUEUE_URL,
-    MessageBody: JSON.stringify({ submissionId: id }),
-  }));
+  await sqs.send(
+    new SendMessageCommand({
+      QueueUrl: CRM_RETRY_QUEUE_URL,
+      MessageBody: JSON.stringify({ submissionId: id }),
+    })
+  );
   await markDelivery(id, "queued");
 }
 
@@ -519,13 +530,19 @@ export const handler = async (event) => {
   );
 
   try {
-    await deliverToCrm({ id: { S: id }, sourceIp: { S: ip }, userAgent: { S: (event.requestContext?.http?.userAgent ?? "unknown").slice(0, 300) }, consent: { BOOL: true }, ...Object.fromEntries(Object.entries(clean).map(([k, v]) => [k, { S: v }])) });
-  } catch (err) {
+    await deliverToCrm({
+      id: { S: id },
+      sourceIp: { S: ip },
+      userAgent: { S: (event.requestContext?.http?.userAgent ?? "unknown").slice(0, 300) },
+      consent: { BOOL: true },
+      ...Object.fromEntries(Object.entries(clean).map(([k, v]) => [k, { S: v }])),
+    });
+  } catch {
     // No PII in logs. The durable DynamoDB row is already present; an SQS
     // worker retries with this same idempotency key and redrives to a DLQ.
     try {
       await queueCrmRetry(id);
-    } catch (queueErr) {
+    } catch {
       await markDelivery(id, "queue_failed").catch(() => undefined);
       console.error("CRM delivery and retry queue unavailable", { submissionId: id });
     }
@@ -560,8 +577,11 @@ export const retryHandler = async (event) => {
   for (const record of event.Records ?? []) {
     try {
       const { submissionId } = JSON.parse(record.body ?? "{}");
-      if (typeof submissionId !== "string" || !submissionId) throw new Error("invalid retry message");
-      const result = await ddb.send(new GetItemCommand({ TableName: TABLE, Key: { id: { S: submissionId } } }));
+      if (typeof submissionId !== "string" || !submissionId)
+        throw new Error("invalid retry message");
+      const result = await ddb.send(
+        new GetItemCommand({ TableName: TABLE, Key: { id: { S: submissionId } } })
+      );
       if (!result.Item) throw new Error("contact submission is missing");
       await deliverToCrm(result.Item);
     } catch {
