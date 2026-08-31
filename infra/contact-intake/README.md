@@ -1,4 +1,4 @@
-# Contact intake — Lambda + API Gateway + DynamoDB (+ SES, stubbed)
+# Contact intake — Lambda + API Gateway + DynamoDB + Platform CRM bridge
 
 Live since 2026-07-14 in `ap-south-1`, account `ACCOUNT_ID`.
 
@@ -8,6 +8,8 @@ Live since 2026-07-14 in `ap-south-1`, account `ACCOUNT_ID`.
 | CloudFront | distribution `E3ATKH99UOL8C2`: origin `contact-api` → execute-api with secret `x-intake-edge-key` header; behavior `/api/*` (CachingDisabled + origin request policy `squarecampus-api-origin`, no viewer functions) |
 | HTTP API | `squarecampus-contact` (`API_ID`), stage `$default`, throttle 5 rps / burst 10; routes `POST /contact` and `POST /api/contact` |
 | Lambda | `squarecampus-contact-intake` (nodejs22.x, 128 MB, 10 s) — source: [index.mjs](index.mjs) |
+| CRM retry worker | `squarecampus-contact-crm-retry` (nodejs22.x) — same package, `retryHandler` entry point |
+| CRM queue | `squarecampus-contact-crm-retry` with an operator-visible redrive DLQ; message bodies contain only a submission UUID |
 | Role | `squarecampus-contact-intake-role` (logs + PutItem/UpdateItem on the table + `ses:SendEmail` conditioned on `FromAddress=no-reply@squarecampus.com`) |
 | DynamoDB | `squarecampus-contact-requests` (on-demand, PK `id`, TTL on `expiresAt`) — submissions **and** per-IP rate counters |
 | CORS | not needed for browsers (same-origin); API-level CORS config remains but direct calls are blocked by the edge key anyway |
@@ -34,6 +36,33 @@ DEPLOYMENT.md).
   caps, 20 KB body cap. Failures return 4xx and do not count against the rate
   limit.
 - No submission content is logged to CloudWatch; PII lives only in the table.
+
+## Platform CRM delivery
+
+After the submission row is written, the intake Lambda delivers it to
+`POST /api/platform/v1/crm/marketing-intake`. It uses a dedicated bridge
+credential in `x-marketing-intake-key`; it is not a Platform user token and is
+accepted by no other backend operation. The credential is stored separately in
+AWS Secrets Manager and Azure Key Vault.
+
+The submission UUID is the backend idempotency key. A successful delivery (or a
+backend duplicate replay) records `delivered`/`duplicate` and the CRM lead id
+on the DynamoDB row. A failed immediate call enqueues only that UUID. The retry
+worker retrieves the original row, retries with the same idempotency key, and
+lets SQS redrive exhausted failures to the DLQ. Neither Lambda logs contact
+content or the bridge secret.
+
+Required Lambda configuration, supplied only during deployment:
+
+- `CRM_INTAKE_URL=https://crm-intake.internal/api/platform/v1/crm/marketing-intake`
+- `CRM_BRIDGE_SECRET_ID` — AWS Secrets Manager id for the bridge secret
+- `CRM_RETRY_QUEUE_URL` — retry queue URL (not the DLQ)
+
+The intake role needs `sqs:SendMessage` only to the retry queue and
+`secretsmanager:GetSecretValue` only to the CRM bridge secret in addition to
+its existing permissions. The retry role needs DynamoDB `GetItem`/`UpdateItem`,
+that one secret read, and SQS-trigger permissions only. Do not put PII in queue
+messages or turn this into a generic backend credential.
 
 ## Reading submissions (until SES email lands)
 
