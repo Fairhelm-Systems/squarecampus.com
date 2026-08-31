@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SubmissionReadAndDeliveryStatusWrite",
+      "Effect": "Allow",
+      "Action": ["dynamodb:GetItem", "dynamodb:UpdateItem"],
+      "Resource": "arn:aws:dynamodb:ap-south-1:ACCOUNT_ID:table/squarecampus-contact-requests"
+    },
+    {
+      "Sid": "CrmBridgeSecretRead",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:squarecampus/contact-crm-bridge-*"
+    },
+    {
+      "Sid": "RetryQueueConsume",
+      "Effect": "Allow",
+      "Action": ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:GetQueueAttributes"],
+      "Resource": "arn:aws:sqs:ap-south-1:ACCOUNT_ID:squarecampus-contact-crm-retry"
+    }
+  ]
+}

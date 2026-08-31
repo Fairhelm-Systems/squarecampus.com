@@ -34,15 +34,20 @@
 //                        then the site, then set the secret to switch
 //                        enforcement on without a window where the live form
 //                        rejects everyone.
+//   CRM_INTAKE_URL       Platform CRM marketing-intake REST route
+//   CRM_BRIDGE_SECRET_ID Secrets Manager secret id holding the one-RPC bridge key
+//   CRM_RETRY_QUEUE_URL  SQS retry queue URL; messages contain only submission ids
 import { randomUUID } from "node:crypto";
 import {
   DeleteItemCommand,
   DynamoDBClient,
+  GetItemCommand,
   PutItemCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import { BOARD, generateBoard, newNonce, signPass, TOLERANCE, verifyPass } from "./challenge.mjs";
+import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 
 const TABLE = process.env.TABLE_NAME;
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "https://squarecampus.com")
@@ -79,9 +84,16 @@ const BOARDS_PER_HOUR = 20;
  */
 const WRONG_ANSWERS_PER_HOUR = 3;
 const WRONG_ANSWERS_PER_DAY = 5;
+// The bridge capability is distinct from the email OAuth secret and is used
+// only for the backend CRM intake RPC. Missing configuration is a delivery
+// failure, never a silent success.
+const CRM_INTAKE_URL = process.env.CRM_INTAKE_URL;
+const CRM_BRIDGE_SECRET_ID = process.env.CRM_BRIDGE_SECRET_ID;
+const CRM_RETRY_QUEUE_URL = process.env.CRM_RETRY_QUEUE_URL;
 
 const ddb = new DynamoDBClient({});
 const secrets = new SecretsManagerClient({});
+const sqs = new SQSClient({});
 
 const REQUIRED = ["name", "email", "phone", "institution", "role", "campusCount"];
 // Allowlist: anything not named here is dropped rather than stored.
@@ -105,12 +117,12 @@ const MAX_LEN = {
   campusCount: 40,
   currentSystem: 300,
   primaryPain: 200,
-  message: 5000,
   bottleneck: 2000,
   pilotUnit: 300,
   executiveSponsor: 200,
-  timeSensitivity: 60,
+  timeSensitivity: 200,
   successMeasure: 500,
+  message: 5000,
 };
 
 const resp = (statusCode, body) => ({
@@ -244,6 +256,7 @@ async function markBoard(data, ip) {
 // --- Microsoft 365 Graph mailer (app-only OAuth, client credentials) ---
 let cachedCreds = null;
 let cachedToken = null;
+let cachedCrmBridgeSecret = null;
 
 async function getCreds() {
   if (cachedCreds) return cachedCreds;
@@ -290,6 +303,99 @@ async function sendNotification({ subject, text, replyTo }) {
     }
   );
   if (!r.ok) throw new Error(`sendMail ${r.status}: ${await r.text()}`);
+}
+
+async function getCrmBridgeSecret() {
+  if (cachedCrmBridgeSecret) return cachedCrmBridgeSecret;
+  if (!CRM_BRIDGE_SECRET_ID) throw new Error("CRM bridge secret is not configured");
+  const out = await secrets.send(new GetSecretValueCommand({ SecretId: CRM_BRIDGE_SECRET_ID }));
+  const raw = out.SecretString ?? "";
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    parsed = raw;
+  }
+  const secret = typeof parsed === "string" ? parsed : parsed.current;
+  if (typeof secret !== "string" || !secret) throw new Error("CRM bridge secret is malformed");
+  cachedCrmBridgeSecret = secret;
+  return secret;
+}
+
+const text = (item, key) => item?.[key]?.S ?? "";
+const bool = (item, key) => item?.[key]?.BOOL === true;
+
+function crmPayload(item) {
+  const contextLines = [
+    ["Enquiry type", text(item, "enquiryType")],
+    ["Current system", text(item, "currentSystem")],
+    ["Primary pain", text(item, "primaryPain")],
+    ["Bottleneck", text(item, "bottleneck")],
+    ["Pilot unit", text(item, "pilotUnit")],
+    ["Executive sponsor", text(item, "executiveSponsor")],
+    ["Time sensitivity", text(item, "timeSensitivity")],
+    ["Success measure", text(item, "successMeasure")],
+  ].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`);
+  const message = [text(item, "message"), ...contextLines].filter(Boolean).join("\n\n");
+  return {
+    source: "marketing_contact_form",
+    idempotencyKey: text(item, "id"),
+    contactName: text(item, "name"),
+    contactEmail: text(item, "email"),
+    contactPhone: text(item, "phone"),
+    contactRole: text(item, "role"),
+    schoolName: text(item, "institution"),
+    studentCountRange: text(item, "campusCount"),
+    message,
+    consentContact: bool(item, "consent"),
+    consentMarketing: false,
+    campaignSource: "squarecampus.com",
+    campaignMedium: "website",
+    campaignName: text(item, "enquiryType"),
+    landingPage: "/demo",
+    requestId: text(item, "id"),
+    sourceIp: text(item, "sourceIp"),
+    userAgent: text(item, "userAgent"),
+  };
+}
+
+async function markDelivery(id, status, leadId = "") {
+  await ddb.send(new UpdateItemCommand({
+    TableName: TABLE,
+    Key: { id: { S: id } },
+    UpdateExpression: "SET crmDeliveryStatus = :status, crmDeliveryUpdatedAt = :updatedAt, crmLeadId = :leadId",
+    ExpressionAttributeValues: {
+      ":status": { S: status },
+      ":updatedAt": { S: new Date().toISOString() },
+      ":leadId": { S: leadId },
+    },
+  }));
+}
+
+async function deliverToCrm(item) {
+  if (!CRM_INTAKE_URL) throw new Error("CRM intake URL is not configured");
+  const secret = await getCrmBridgeSecret();
+  const response = await fetch(CRM_INTAKE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-marketing-intake-key": secret,
+      "x-correlation-id": text(item, "id"),
+    },
+    body: JSON.stringify(crmPayload(item)),
+  });
+  if (!response.ok) throw new Error(`CRM intake ${response.status}`);
+  const body = await response.json();
+  await markDelivery(text(item, "id"), body.duplicate ? "duplicate" : "delivered", String(body.lead?.id ?? ""));
+}
+
+async function queueCrmRetry(id) {
+  if (!CRM_RETRY_QUEUE_URL) throw new Error("CRM retry queue is not configured");
+  await sqs.send(new SendMessageCommand({
+    QueueUrl: CRM_RETRY_QUEUE_URL,
+    MessageBody: JSON.stringify({ submissionId: id }),
+  }));
+  await markDelivery(id, "queued");
 }
 
 export const handler = async (event) => {
@@ -412,6 +518,19 @@ export const handler = async (event) => {
     })
   );
 
+  try {
+    await deliverToCrm({ id: { S: id }, sourceIp: { S: ip }, userAgent: { S: (event.requestContext?.http?.userAgent ?? "unknown").slice(0, 300) }, consent: { BOOL: true }, ...Object.fromEntries(Object.entries(clean).map(([k, v]) => [k, { S: v }])) });
+  } catch (err) {
+    // No PII in logs. The durable DynamoDB row is already present; an SQS
+    // worker retries with this same idempotency key and redrives to a DLQ.
+    try {
+      await queueCrmRetry(id);
+    } catch (queueErr) {
+      await markDelivery(id, "queue_failed").catch(() => undefined);
+      console.error("CRM delivery and retry queue unavailable", { submissionId: id });
+    }
+  }
+
   if (MAIL_ENABLED) {
     try {
       const lines = Object.entries(clean)
@@ -431,4 +550,23 @@ export const handler = async (event) => {
   }
 
   return resp(200, { ok: true, id });
+};
+
+// SQS worker entry point. It retrieves the original DynamoDB submission so
+// SQS contains only an opaque id. Returning batch failures preserves SQS's
+// bounded retry and DLQ behaviour without exposing contact data in logs.
+export const retryHandler = async (event) => {
+  const batchItemFailures = [];
+  for (const record of event.Records ?? []) {
+    try {
+      const { submissionId } = JSON.parse(record.body ?? "{}");
+      if (typeof submissionId !== "string" || !submissionId) throw new Error("invalid retry message");
+      const result = await ddb.send(new GetItemCommand({ TableName: TABLE, Key: { id: { S: submissionId } } }));
+      if (!result.Item) throw new Error("contact submission is missing");
+      await deliverToCrm(result.Item);
+    } catch {
+      batchItemFailures.push({ itemIdentifier: record.messageId });
+    }
+  }
+  return { batchItemFailures };
 };
