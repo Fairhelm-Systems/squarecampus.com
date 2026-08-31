@@ -34,6 +34,14 @@ export function createAlternates(path: string) {
  * apart again.
  */
 export function canonicalUrl(path: string) {
+  // A path whose last segment carries an extension is a file, not a route:
+  // /llms.txt is served as-is and /llms.txt/ is a 404. `canonicalise()` below
+  // already applied this rule to absolute URLs; the two disagreed, which is
+  // exactly the kind of drift this module exists to prevent.
+  const lastSegment = path.slice(path.lastIndexOf("/") + 1);
+  if (lastSegment.includes(".")) {
+    return `${baseUrl}${path}`;
+  }
   const withSlash = path === "/" ? "/" : path.endsWith("/") ? path : `${path}/`;
   return `${baseUrl}${withSlash}`;
 }

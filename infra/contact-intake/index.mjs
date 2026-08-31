@@ -49,6 +49,12 @@ const REQUIRED = ["name", "email", "phone", "institution", "role", "campusCount"
 // Partnership enquiry. The website also folds the same intent into `source`
 // (e.g. `demo-form:founding-partner`), which this function already stores —
 // so intent is never lost even before this handler is redeployed.
+//
+// The five founding-partner fields at the end are sent only by a Founding
+// Institutional Partnership enquiry (a generic demo submission omits them
+// entirely). Until this handler is redeployed they are dropped, so ship the
+// Lambda before or with the site build that starts collecting them —
+// otherwise the diagnosis answers are silently lost.
 const MAX_LEN = {
   enquiryType: 60,
   name: 200,
@@ -60,6 +66,11 @@ const MAX_LEN = {
   currentSystem: 300,
   primaryPain: 200,
   message: 5000,
+  bottleneck: 2000,
+  pilotUnit: 300,
+  executiveSponsor: 200,
+  timeSensitivity: 60,
+  successMeasure: 500,
 };
 
 const resp = (statusCode, body) => ({
@@ -210,7 +221,10 @@ export const handler = async (event) => {
         .map(([k, v]) => `${k}: ${v}`)
         .join("\n");
       await sendNotification({
-        subject: `Demo request — ${clean.institution}`,
+        // A founding-partner diagnosis and a guided demo need different
+        // response times, so the difference belongs in the subject line
+        // rather than three lines into the body.
+        subject: `${clean.enquiryType || "Demo request"} — ${clean.institution}`,
         text: `${lines}\n\nid: ${id}\nreceived: ${receivedAt}`,
         replyTo: clean.email,
       });

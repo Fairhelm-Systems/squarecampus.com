@@ -6,6 +6,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { blogPosts } from "@/content/blog/posts";
+import { canonicalUrl, SEO_CONFIG } from "@/lib/seo";
 
 // Editorial "survey" geometry over card banners: lines draw themselves in,
 // plotted nodes pop staggered, and a soft light sweep crosses the image.
@@ -100,6 +101,42 @@ export default function BlogPage() {
         name="Blog"
         description="Writing on school operations, multi-campus governance, migration risk and how institutions evaluate school management systems."
         path="/blog"
+      />
+
+      {/*
+        Blog + ItemList for the index itself.
+
+        PageSchema says what this page is; this says what it contains. Without
+        it, the library is discoverable only by following each card, and a
+        crawler or assistant that reads structured data has no way to learn the
+        set exists. Every post is listed with its own URL, date and headline —
+        all facts already on the page, restated in a form machines read.
+      */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "@id": `${canonicalUrl("/blog")}#blog`,
+            name: "SquareCampus Blog",
+            description:
+              "Writing on school operations, governance, exception handling and how institutions evaluate school management systems.",
+            url: canonicalUrl("/blog"),
+            inLanguage: SEO_CONFIG.language,
+            publisher: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
+            blogPost: posts.map((post) => ({
+              "@type": "BlogPosting",
+              "@id": `${canonicalUrl(`/blog/${post.slug}`)}#article`,
+              headline: post.title,
+              description: post.summary,
+              url: canonicalUrl(`/blog/${post.slug}`),
+              datePublished: post.date,
+              ...(post.tag && { articleSection: post.tag }),
+              ...(post.tags?.length && { keywords: post.tags.join(", ") }),
+            })),
+          }),
+        }}
       />
 
       <SectionShell className="pt-12 sm:pt-16">

@@ -117,7 +117,10 @@ export function SiteFooter() {
                     key={signal.label}
                     className="flex items-center gap-3 rounded-xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3"
                   >
+                    {/* Decorative: the label and value beside it carry the
+                        meaning, so it stays out of the accessibility tree. */}
                     <svg
+                      aria-hidden="true"
                       className="size-4 shrink-0 text-[color:var(--brand)]"
                       viewBox="0 0 16 16"
                       fill="none"
@@ -198,16 +201,28 @@ export function SiteFooter() {
                     {group.title}
                   </p>
                   <ul className="mt-4 space-y-3">
-                    {group.links.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {group.links.map((link) => {
+                      // A path with an extension is a file, not a route. The
+                      // client router cannot navigate to one, so those render
+                      // as plain anchors. Same test the CloudFront function
+                      // uses to decide what not to canonicalise.
+                      const isFile = link.href.includes(".");
+                      const className =
+                        "text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]";
+                      return (
+                        <li key={link.href}>
+                          {isFile ? (
+                            <a href={link.href} className={className}>
+                              {link.label}
+                            </a>
+                          ) : (
+                            <Link href={link.href} className={className}>
+                              {link.label}
+                            </Link>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}

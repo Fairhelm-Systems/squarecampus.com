@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import {
   CTAGroup,
@@ -8,17 +9,58 @@ import {
   TrustNote,
 } from "@/components/site/marketing";
 import { MotionFigure } from "@/components/site/motion-figure";
+import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { FOUNDING_PARTNER_DEMO_HREF, foundingPartners } from "@/content/founding-partners";
+import {
+  FOUNDING_PARTNER_DEMO_HREF,
+  foundingPartners,
+  higherEducationPartners,
+} from "@/content/founding-partners";
 import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
+import { createPageMetadata } from "@/lib/seo";
+
+/**
+ * Metadata and structured data live on the page, not in a `layout.tsx`.
+ *
+ * A layout wraps every route beneath it, so the WebPage/BreadcrumbList it
+ * emitted would also have been served on /launch-partners/higher-education/ —
+ * describing the parent page, at the child's URL. Moving both here keeps each
+ * route's identity to itself. The rendered output for this page is unchanged.
+ */
+export const metadata: Metadata = createPageMetadata({
+  title: "Founding Institutional Partners",
+  description:
+    "A measured, founder-led programme for schools, school groups and education trusts that want to shape SquareCampus against a real operating bottleneck.",
+  path: "/launch-partners",
+  ogTitle: "Founding Institutional Partners | SquareCampus",
+  ogDescription:
+    "A founder-led 60–90 day pilot against one measurable operating bottleneck, with preferential founding terms, protected expansion economics and structured roadmap participation.",
+});
 
 const { page } = foundingPartners;
 
 export default function LaunchPartnersPage() {
   return (
     <main>
+      {/*
+        WebPage + BreadcrumbList only, alongside the Organization / WebSite /
+        SoftwareApplication graph the root layout already emits.
+
+        Deliberately absent:
+        - Product/Offer — the page publishes no price and makes no offer of sale.
+        - Event — the programme is not an event with a date and a place.
+        - VideoObject — the composition on this page is a silent supplementary
+          diagram, not a video watch page. Marking it up would claim
+          video-result eligibility for content that is not what a viewer would
+          be sent to watch.
+      */}
+      <PageSchema
+        name="Founding Institutional Partners | SquareCampus"
+        description="The SquareCampus Founding Institutional Partner programme: a founder-led 60–90 day pilot run against one measurable operating bottleneck, with preferential founding terms and structured roadmap participation."
+        path="/launch-partners"
+      />
       {/* 1 — Hero. `immediate` keeps the H1 painted on the first frame instead
           of waiting for hydration to remove the reveal's opacity: 0. */}
       <SectionShell className="pt-12 sm:pt-16">
@@ -181,6 +223,42 @@ export default function LaunchPartnersPage() {
               </a>
               , run with founder-level involvement.
             </p>
+          </div>
+        </Reveal>
+
+        {/* The programme already said it is not a free trial. It never said
+            what it is. Stated here, next to the path it applies to, rather
+            than left for the proposal call to reveal. */}
+        <Reveal delay={120}>
+          <div className="surface-panel mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-[var(--radius-panel)] px-6 py-5">
+            <OperationalBadge tone="brand">Paid, scoped engagement</OperationalBadge>
+            <p className="type-support flex-1">{page.path.paidNote}</p>
+          </div>
+        </Reveal>
+      </SectionShell>
+
+      {/* Higher-education lane. A contextual route, not a navigation item: the
+          site stays school-led, and a university reading this page should be
+          able to find the version written for it without the global menu
+          growing a second column. */}
+      <SectionShell id="higher-education" className="pt-0 sm:pt-0 lg:pt-0">
+        <Reveal className="surface-quiet rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
+          <div className="grid gap-6 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+            <div>
+              <Eyebrow>{page.higherEducationLink.eyebrow}</Eyebrow>
+              <h2 className="type-section-title mt-4">{page.higherEducationLink.heading}</h2>
+              <p className="type-body measure mt-4 text-[color:var(--muted-foreground)]">
+                {page.higherEducationLink.body}
+              </p>
+            </div>
+            <div className="grid gap-3">
+              <ButtonLink
+                href={higherEducationPartners.href}
+                label={page.higherEducationLink.linkLabel}
+                variant="secondary"
+                className="justify-center"
+              />
+            </div>
           </div>
         </Reveal>
       </SectionShell>

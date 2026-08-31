@@ -132,6 +132,89 @@ function handler(event) {
 }
 ```
 
+### Canonical host: collapsing the two-hop redirect (NOT YET APPLIED)
+
+Measured on 2026-08-31 against the live distribution:
+
+| Request | Hops |
+|---|---|
+| `http://squarecampus.com/` → `https://squarecampus.com/` | 1 ✅ |
+| `https://www.squarecampus.com/` → `https://squarecampus.com/` | 1 ✅ |
+| `https://squarecampus.in/` → `https://squarecampus.com/` | 1 ✅ |
+| `http://www.squarecampus.com/` → `https://www.squarecampus.com/` → `https://squarecampus.com/` | **2** ❌ |
+
+The cause is ordering, not the function. The distribution's viewer protocol
+policy is `redirect-to-https`, and CloudFront applies that **before** it
+invokes the viewer-request function — so a plain-HTTP request to a
+non-canonical host is bounced to HTTPS *on the same host* first, and only then
+reaches the function that canonicalises the host.
+
+It cannot be fixed inside `squarecampus-router`. A CloudFront Function's
+viewer-request event does not carry the request scheme (`CloudFront-Forwarded-Proto`
+is an origin-request header), so the function cannot tell an HTTP request from
+an HTTPS one — and switching the distribution to `allow-all` without that
+signal would serve the whole site over plain HTTP.
+
+**The fix, when someone has console/IaC access.** Split the non-canonical
+aliases onto their own redirect-only distribution:
+
+1. Create a second CloudFront distribution — call it `squarecampus-redirect`.
+   - Aliases: `www.squarecampus.com`, `squarecampus.in`, `www.squarecampus.in`
+     (remove those three from `E3ATKH99UOL8C2`; keep `squarecampus.com` there).
+   - The existing 4-SAN ACM cert in us-east-1 covers all of them and can be
+     attached to both distributions.
+   - **Viewer protocol policy: `allow-all`.** This is the whole point: the
+     function must see the request instead of CloudFront redirecting first.
+   - Origin: any reachable origin (the same S3 bucket is fine). Nothing is ever
+     fetched from it — the function returns before the request leaves the edge.
+   - Attach `squarecampus-security-headers` unchanged. HSTS is not weakened:
+     the header still ships on every HTTPS response from both distributions,
+     `includeSubDomains; preload` is untouched, and a browser ignores HSTS on a
+     plain-HTTP response either way.
+2. Attach this viewer-request function to it:
+
+```js
+function handler(event) {
+  // Every alias on this distribution is non-canonical, so there is nothing to
+  // decide: one 301 to the canonical origin, preserving path and query.
+  var request = event.request;
+  var qs = "";
+  for (var key in request.querystring) {
+    var v = request.querystring[key];
+    qs += (qs ? "&" : "?") + key + (v.value ? "=" + encodeURIComponent(v.value) : "");
+  }
+  return {
+    statusCode: 301,
+    statusDescription: "Moved Permanently",
+    headers: { location: { value: "https://squarecampus.com" + request.uri + qs } },
+  };
+}
+```
+
+3. Repoint the Route 53 A/AAAA aliases for those three hosts at the new
+   distribution. `squarecampus.com` stays on `E3ATKH99UOL8C2`.
+
+After this every non-canonical host/scheme variant reaches
+`https://squarecampus.com/` in one hop. `http://squarecampus.com/` stays at one
+hop and cannot be fewer — the HTTP→HTTPS redirect on the canonical host is the
+hop.
+
+**Worth weighing before doing it.** HSTS is served as
+`max-age=63072000; includeSubDomains; preload`, so any browser that has seen
+`https://squarecampus.com` upgrades `http://www.squarecampus.com` internally
+and never issues the plain-HTTP request at all. The second hop is paid only by
+genuinely first-contact clients and by crawlers that do not honour HSTS. The
+change is correct and cheap to run, but it is a housekeeping fix, not a
+conversion fix.
+
+### Compression
+
+Verified 2026-08-31: the distribution negotiates correctly — `Accept-Encoding:
+br, gzip` returns `content-encoding: br`, `gzip` alone returns gzip. Nothing to
+change. Note when reading audit numbers: the homepage is ~438 KB raw HTML,
+~80 KB gzip, **~44 KB brotli**. A tool that reports ~82 KB for the homepage
+measured the gzip path, not what a modern browser actually receives.
+
 ### Response Headers Policy: security headers
 
 These replace the old `headers()` block in next.config.ts:

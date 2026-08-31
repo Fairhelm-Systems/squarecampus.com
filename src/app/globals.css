@@ -442,6 +442,55 @@
   border-radius: inherit;
 }
 
+/*
+ * Select fields: replace the native chevron.
+ *
+ * These fields are pills (26px radius) with 1rem of horizontal padding, and
+ * the UA-drawn chevron sits hard against the right edge — visually detached
+ * from the value it belongs to and crowding the rounded corner, while the
+ * text inputs beside them breathe at 1rem. This draws the chevron at the same
+ * 1rem inset as the text, so a row of inputs and selects lines up.
+ *
+ * The colour is baked into the data URI because a background-image cannot
+ * read a custom property, so the two themes are declared separately from the
+ * resolved sRGB of `--muted-foreground`. `padding-right` reserves room so a
+ * long option label never runs underneath the chevron.
+ */
+.select-field {
+  appearance: none;
+  padding-right: 2.75rem;
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%234d5661' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.dark .select-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23b5bbc3' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Safari/Firefox leave their own affordance behind without this. */
+.select-field::-ms-expand {
+  display: none;
+}
+
+/*
+ * Intent-aware /demo/ copy.
+ *
+ * The page ships both variants and hides one. `data-demo-intent` is written to
+ * <html> before first paint by the inline script in src/content/demo-intents.ts
+ * (and kept in sync afterwards by the form), so the founding-partner heading
+ * never flashes the generic one first — which a query-string branch decided
+ * after hydration always would.
+ *
+ * These rules only ever *hide*. Nothing here restores a display value, so the
+ * visible variant keeps whatever layout its own classes give it.
+ */
+html:not([data-demo-intent="founding-partner"]) [data-when-intent="founding-partner"],
+html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
+  display: none;
+}
+
 /* Scroll-reveal system: Reveal toggles `.is-revealed`; everything else is CSS. */
 .reveal-root {
   opacity: 0;

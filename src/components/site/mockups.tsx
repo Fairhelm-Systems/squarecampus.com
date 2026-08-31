@@ -150,13 +150,17 @@ function LaptopFrame({
           )}
           <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.04)_0%,transparent_40%,transparent_60%,rgba(255,255,255,0.02)_100%)]" />
         </div>
+        {/* Explicit intrinsic dimensions rather than `fill`: the parent
+            already reserves the box, so this costs nothing and leaves no
+            <img> on the site without a declared width and height. */}
         <div className="pointer-events-none absolute inset-0 z-20">
           <Image
             src="/images/devices/macbook-air-figma.webp"
             alt=""
-            fill
+            width={1792}
+            height={1062}
             sizes="(max-width: 768px) 100vw, 896px"
-            className="object-contain"
+            className="h-full w-full object-contain"
             priority={priority}
           />
         </div>
@@ -203,13 +207,16 @@ function PhoneFrame({
           ) : null}
           <div className="pointer-events-none absolute inset-0 z-5 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
         </div>
+        {/* See the laptop bezel above: intrinsic dimensions, box already
+            reserved by the parent's aspect ratio. */}
         <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
           <Image
             src="/images/devices/iphone-13-silver-portrait.webp"
             alt=""
-            fill
+            width={840}
+            height={1620}
             sizes="272px"
-            className="object-fill"
+            className="h-full w-full object-fill"
           />
         </div>
       </div>
