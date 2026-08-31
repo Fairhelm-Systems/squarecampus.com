@@ -64,6 +64,11 @@ its existing permissions. The retry role needs DynamoDB `GetItem`/`UpdateItem`,
 that one secret read, and SQS-trigger permissions only. Do not put PII in queue
 messages or turn this into a generic backend credential.
 
+The exact reviewed role documents are in [iam](iam/):
+`contact-intake-access-policy.json`, `crm-retry-role-trust-policy.json`, and
+`crm-retry-access-policy.json`. They are deliberately account/region-bound to
+this temporary AWS marketing plane; do not reuse them for customer workloads.
+
 ## Reading submissions (until SES email lands)
 
 ```bash
