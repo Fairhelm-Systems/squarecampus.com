@@ -12,6 +12,12 @@
       "Effect": "Allow",
       "Action": ["secretsmanager:GetSecretValue"],
       "Resource": "arn:aws:secretsmanager:ap-south-1:ACCOUNT_ID:secret:squarecampus/contact-crm-bridge-*"
+    },
+    {
+      "Sid": "RetryQueueConsume",
+      "Effect": "Allow",
+      "Action": ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:GetQueueAttributes"],
+      "Resource": "arn:aws:sqs:ap-south-1:ACCOUNT_ID:squarecampus-contact-crm-retry"
     }
   ]
 }
