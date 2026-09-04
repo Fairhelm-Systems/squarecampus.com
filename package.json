@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "bun run check:claims && next build",
+    "build": "bun run check:claims && bun run check:content && next build",
     "check:claims": "bash scripts/check-claims.sh",
+    "check:content": "bun scripts/check-content.ts",
     "preview": "bunx serve out",
     "deploy": "./scripts/deploy.sh",
     "lint": "biome lint .",

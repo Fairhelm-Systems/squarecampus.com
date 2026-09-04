@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "marketing-dev",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["run", "dev", "--port", "3111"],
+      "port": 3111
+    },
+    {
+      "name": "marketing-out",
+      "runtimeExecutable": "bunx",
+      "runtimeArgs": ["serve", "out", "-l", "3222"],
+      "port": 3222
+    }
+  ]
+}

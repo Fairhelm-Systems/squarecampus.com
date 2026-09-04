@@ -2,27 +2,22 @@
 
 import { Network } from "lucide-react";
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
 import { type MotionAsset, motionAssets } from "@/content/motion-assets";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
+import { LaptopDevice, PhoneDevice } from "./device-frames";
 import { MotionFigure } from "./motion-figure";
 import { SyntheticDataNote } from "./synthetic-data-note";
+import { TiltStage } from "./tilt-stage";
 
 /**
- * Device mockups. The frames are transparent PNGs with a screen cutout;
- * the screen content is a pre-rendered product illustration from
- * /public/images/screens (laptop: 2560x1600 @ 16:10, mobile: 1170x2532
- * @ 390:844 — both match their cutouts exactly).
+ * Device scenes. The frames are drawn in CSS (see device-frames.tsx); the
+ * screen content is a build-time rendered product screen from
+ * /public/motion (laptop at 16:10, phone at 390:844 — both match their
+ * cutouts exactly, so nothing letterboxes).
  */
-
-const laptopScreenStyle = {
-  top: "8.7%",
-  left: "12.84%",
-  right: "12.96%",
-  bottom: "13.09%",
-} satisfies CSSProperties;
 
 function AnimatedScene({
   children,
@@ -79,13 +74,32 @@ function AnimatedScene({
     <div
       ref={ref}
       className={cn(
-        "scene-root relative select-none",
+        "scene-root device-stage select-none",
         floatPrimary && "scene-float-primary",
         floatSecondary && "scene-float-secondary",
         className
       )}
     >
-      {children}
+      <TiltStage>{children}</TiltStage>
+    </div>
+  );
+}
+
+function FrameLabel({ title, align = "between" }: { title: string; align?: "between" | "center" }) {
+  return (
+    <div
+      className={cn(
+        "mb-3 flex flex-wrap items-center gap-2 px-1",
+        align === "between" ? "justify-between" : "flex-col justify-center"
+      )}
+    >
+      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+        {title}
+      </p>
+      {/* Every screen in these frames shows fictional institutions, campuses
+          and figures. SyntheticDataNote's contract is that the label is
+          visible in the same component as the numbers it qualifies. */}
+      <SyntheticDataNote variant="chip" />
     </div>
   );
 }
@@ -100,13 +114,13 @@ function LaptopFrame({
   priority = false,
 }: {
   title: string;
-  /** Still for the bezel. Omit when `screenAsset` supplies a rendered screen. */
+  /** Still for the screen. Omit when `screenAsset` supplies a rendered screen. */
   screenSrc?: string;
   screenAlt: string;
   /**
-   * Rendered screen for the bezel. When present it replaces the still: the
-   * poster is a frame of the same composition, so nothing is lost if the video
-   * never loads. Rendered at the cutout's own 8:5, so it does not letterbox.
+   * Rendered screen. When present it replaces the still: the poster is a
+   * frame of the same composition, so nothing is lost if the video never
+   * loads. Rendered at the cutout's own 16:10, so it does not letterbox.
    */
   screenAsset?: MotionAsset;
   className?: string;
@@ -119,48 +133,21 @@ function LaptopFrame({
       data-scene-item
       data-float={motionRole}
     >
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2 px-3">
-        <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
-          {title}
-        </p>
-        {/* Every screen in these frames shows fictional institutions, campuses
-            and figures. SyntheticDataNote's contract is that the label is
-            visible in the same component as the numbers it qualifies — these
-            frames were the one place on the site that skipped it. */}
-        <SyntheticDataNote variant="chip" />
-      </div>
-      <div className="relative aspect-[3880/2300]">
-        <div
-          className="absolute overflow-hidden rounded-[0.8rem] bg-(--surface)"
-          style={laptopScreenStyle}
-        >
-          {screenAsset || !screenSrc ? (
-            screenAsset ? (
-              <MotionFigure asset={screenAsset} bare caption={screenAlt} />
-            ) : null
-          ) : (
-            <Image
-              src={screenSrc}
-              alt={screenAlt}
-              fill
-              sizes="(max-width: 768px) 100vw, 896px"
-              className="object-fill"
-              priority={priority}
-            />
-          )}
-          <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.04)_0%,transparent_40%,transparent_60%,rgba(255,255,255,0.02)_100%)]" />
-        </div>
-        <div className="pointer-events-none absolute inset-0 z-20">
+      <FrameLabel title={title} />
+      <LaptopDevice>
+        {screenAsset ? (
+          <MotionFigure asset={screenAsset} bare caption={screenAlt} />
+        ) : screenSrc ? (
           <Image
-            src="/images/devices/macbook-air-figma.webp"
-            alt=""
+            src={screenSrc}
+            alt={screenAlt}
             fill
             sizes="(max-width: 768px) 100vw, 896px"
-            className="object-contain"
+            className="object-fill"
             priority={priority}
           />
-        </div>
-      </div>
+        ) : null}
+      </LaptopDevice>
     </div>
   );
 }
@@ -174,7 +161,7 @@ function PhoneFrame({
   motionRole,
 }: {
   title: string;
-  /** Still for the cutout. Omit when `screenAsset` supplies a rendered screen. */
+  /** Still for the screen. Omit when `screenAsset` supplies a rendered screen. */
   screenSrc?: string;
   screenAlt: string;
   /** Rendered screen, at the cutout's own 390:844 so it does not letterbox. */
@@ -188,38 +175,30 @@ function PhoneFrame({
       data-scene-item
       data-float={motionRole}
     >
-      <div className="mb-3 flex flex-col items-center gap-2">
-        <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
-          {title}
-        </span>
-        <SyntheticDataNote variant="chip" />
-      </div>
-      <div className="relative mx-auto aspect-[390/844] w-full">
-        <div className="absolute inset-0 overflow-hidden rounded-[1.75rem] bg-[#f4f2ee] shadow-[inset_0_0_16px_rgba(0,0,0,0.05)]">
-          {screenAsset ? (
-            <MotionFigure asset={screenAsset} bare caption={screenAlt} />
-          ) : screenSrc ? (
-            <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
-          ) : null}
-          <div className="pointer-events-none absolute inset-0 z-5 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
-        </div>
-        <div className="pointer-events-none absolute inset-x-[-9.9%] inset-y-[-3.32%] z-20">
-          <Image
-            src="/images/devices/iphone-13-silver-portrait.webp"
-            alt=""
-            fill
-            sizes="272px"
-            className="object-fill"
-          />
-        </div>
-      </div>
+      <FrameLabel title={title} align="center" />
+      <PhoneDevice>
+        {screenAsset ? (
+          <MotionFigure asset={screenAsset} bare caption={screenAlt} />
+        ) : screenSrc ? (
+          <Image src={screenSrc} alt={screenAlt} fill sizes="272px" className="object-fill" />
+        ) : null}
+      </PhoneDevice>
     </div>
   );
 }
 
+/** The phone's overlap position at the laptop's lower-right corner. */
+const phoneOverlap = "absolute -bottom-8 right-0 hidden max-w-[13.5rem] md:block lg:-right-3";
+
+/**
+ * Scenes with overlapping layers reserve the overhang below the laptop, so
+ * the phone and the accent card never run into the next block of content.
+ */
+const overlapScene = "mx-auto max-w-[60rem] md:mb-8 lg:mb-16";
+
 export function PlatformMockupRow() {
   return (
-    <AnimatedScene className="mx-auto max-w-[60rem]">
+    <AnimatedScene className={overlapScene}>
       <LaptopFrame
         title="Daily operations"
         screenAsset={motionAssets["platform-operations-screen"]}
@@ -231,11 +210,13 @@ export function PlatformMockupRow() {
         title="Teacher workspace"
         screenAsset={motionAssets["phone-attendance-screen"]}
         screenAlt="A teacher marking the morning register on a phone, with a third absence in the week raised as an exception that routes to a named owner."
-        className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
+        className={phoneOverlap}
         motionRole="secondary"
       />
+      {/* Accent card: overlaps the deck's left end the way the phone overlaps
+          the right, hanging below the base so the screen stays uncovered. */}
       <div
-        className="surface-panel pointer-events-none absolute -bottom-14 left-4 hidden max-w-[14rem] rounded-[1.4rem] p-4 lg:block"
+        className="surface-panel-strong pointer-events-none absolute -bottom-16 -left-2 hidden max-w-[14rem] rounded-[1.4rem] p-4 lg:block xl:-left-6"
         data-scene-accent
       >
         <div className="flex items-center gap-2 text-sm text-foreground">
@@ -264,7 +245,7 @@ export function RolloutMockup() {
 
 export function EcosystemMockup() {
   return (
-    <AnimatedScene className="mx-auto max-w-[60rem]">
+    <AnimatedScene className={overlapScene}>
       <LaptopFrame
         title="One institutional record"
         screenAsset={motionAssets["ecosystem-surfaces-screen"]}
@@ -275,7 +256,7 @@ export function EcosystemMockup() {
         title="Guardian app"
         screenAsset={motionAssets["phone-fees-screen"]}
         screenAlt="A guardian's view of a term fee on a phone: tuition and transport due, an approved concession recorded, and the previous term's receipt available."
-        className="absolute -bottom-6 right-0 hidden max-w-[13rem] md:block lg:-right-2"
+        className={phoneOverlap}
         motionRole="secondary"
       />
     </AnimatedScene>

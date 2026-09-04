@@ -132,6 +132,89 @@ function handler(event) {
 }
 ```
 
+### Canonical host: collapsing the two-hop redirect (NOT YET APPLIED)
+
+Measured on 2026-08-31 against the live distribution:
+
+| Request | Hops |
+|---|---|
+| `http://squarecampus.com/` → `https://squarecampus.com/` | 1 ✅ |
+| `https://www.squarecampus.com/` → `https://squarecampus.com/` | 1 ✅ |
+| `https://squarecampus.in/` → `https://squarecampus.com/` | 1 ✅ |
+| `http://www.squarecampus.com/` → `https://www.squarecampus.com/` → `https://squarecampus.com/` | **2** ❌ |
+
+The cause is ordering, not the function. The distribution's viewer protocol
+policy is `redirect-to-https`, and CloudFront applies that **before** it
+invokes the viewer-request function — so a plain-HTTP request to a
+non-canonical host is bounced to HTTPS *on the same host* first, and only then
+reaches the function that canonicalises the host.
+
+It cannot be fixed inside `squarecampus-router`. A CloudFront Function's
+viewer-request event does not carry the request scheme (`CloudFront-Forwarded-Proto`
+is an origin-request header), so the function cannot tell an HTTP request from
+an HTTPS one — and switching the distribution to `allow-all` without that
+signal would serve the whole site over plain HTTP.
+
+**The fix, when someone has console/IaC access.** Split the non-canonical
+aliases onto their own redirect-only distribution:
+
+1. Create a second CloudFront distribution — call it `squarecampus-redirect`.
+   - Aliases: `www.squarecampus.com`, `squarecampus.in`, `www.squarecampus.in`
+     (remove those three from `E3ATKH99UOL8C2`; keep `squarecampus.com` there).
+   - The existing 4-SAN ACM cert in us-east-1 covers all of them and can be
+     attached to both distributions.
+   - **Viewer protocol policy: `allow-all`.** This is the whole point: the
+     function must see the request instead of CloudFront redirecting first.
+   - Origin: any reachable origin (the same S3 bucket is fine). Nothing is ever
+     fetched from it — the function returns before the request leaves the edge.
+   - Attach `squarecampus-security-headers` unchanged. HSTS is not weakened:
+     the header still ships on every HTTPS response from both distributions,
+     `includeSubDomains; preload` is untouched, and a browser ignores HSTS on a
+     plain-HTTP response either way.
+2. Attach this viewer-request function to it:
+
+```js
+function handler(event) {
+  // Every alias on this distribution is non-canonical, so there is nothing to
+  // decide: one 301 to the canonical origin, preserving path and query.
+  var request = event.request;
+  var qs = "";
+  for (var key in request.querystring) {
+    var v = request.querystring[key];
+    qs += (qs ? "&" : "?") + key + (v.value ? "=" + encodeURIComponent(v.value) : "");
+  }
+  return {
+    statusCode: 301,
+    statusDescription: "Moved Permanently",
+    headers: { location: { value: "https://squarecampus.com" + request.uri + qs } },
+  };
+}
+```
+
+3. Repoint the Route 53 A/AAAA aliases for those three hosts at the new
+   distribution. `squarecampus.com` stays on `E3ATKH99UOL8C2`.
+
+After this every non-canonical host/scheme variant reaches
+`https://squarecampus.com/` in one hop. `http://squarecampus.com/` stays at one
+hop and cannot be fewer — the HTTP→HTTPS redirect on the canonical host is the
+hop.
+
+**Worth weighing before doing it.** HSTS is served as
+`max-age=63072000; includeSubDomains; preload`, so any browser that has seen
+`https://squarecampus.com` upgrades `http://www.squarecampus.com` internally
+and never issues the plain-HTTP request at all. The second hop is paid only by
+genuinely first-contact clients and by crawlers that do not honour HSTS. The
+change is correct and cheap to run, but it is a housekeeping fix, not a
+conversion fix.
+
+### Compression
+
+Verified 2026-08-31: the distribution negotiates correctly — `Accept-Encoding:
+br, gzip` returns `content-encoding: br`, `gzip` alone returns gzip. Nothing to
+change. Note when reading audit numbers: the homepage is ~438 KB raw HTML,
+~80 KB gzip, **~44 KB brotli**. A tool that reports ~82 KB for the homepage
+measured the gzip path, not what a modern browser actually receives.
+
 ### Response Headers Policy: security headers
 
 These replace the old `headers()` block in next.config.ts:
@@ -168,10 +251,15 @@ upgrade-insecure-requests
 
 The product screenshots under `/images/screens/*` are real UI and are the
 images we *want* in Google Images — they're listed in the image sitemap
-(`src/app/sitemap.ts`). The assets under `/images/devices/*` are the opposite:
+(`src/app/sitemap.ts`). The assets under `/images/devices/*` were the opposite:
 empty device bezels (the MacBook / iPhone chrome that frames a screenshot).
 With no guidance Google indexed the blank MacBook frame as a "SquareCampus"
 image, which is not the impression we want.
+
+> Since September 2026 the device frames are drawn in CSS
+> (`src/components/site/device-frames.tsx`) and `/images/devices/*` no longer
+> exists in the export. The behavior below is harmless with nothing to match
+> and can stay as a guard for any future decorative asset placed there.
 
 There is no meta-tag for a standalone image file, so the signal has to be an
 HTTP header. Create a second Response Headers Policy — `squarecampus-noindex-art`
@@ -201,6 +289,36 @@ path traversal). On CloudFront, attach **AWS WAF** with the
 `AWSManagedRulesCommonRuleSet` and `AWSManagedRulesSQLiRuleSet` managed rule
 groups for equivalent (better) coverage.
 
+## Contact API routes
+
+The `/api/*` behaviour points at the intake API (CachingDisabled,
+AllViewerExceptHostHeader, all methods). Four routes exist on the HTTP API,
+all POST, all backed by the same Lambda:
+
+| Route | Purpose |
+| --- | --- |
+| `POST /api/contact` | Form submission. |
+| `POST /contact` | Legacy path, kept working. |
+| `POST /api/challenge` | Issue a human-check board (PNG + tile start). |
+| `POST /api/challenge/solve` | Mark one board, return a pass token. |
+
+Two things about this that cost time to discover:
+
+- **Lambda invoke permission is scoped per path.** The existing statements
+  named `.../*/*/contact` and `.../*/*/api/contact` only, so the new routes
+  returned a 500 from API Gateway — the function was never invoked. Every new
+  route needs its own `lambda add-permission` with a matching `--source-arn`.
+- **Both challenge routes are POST on purpose.** Browsers do not send `Origin`
+  on a same-origin GET, and the handler's origin allowlist is one of the things
+  keeping bare scripts out — a GET route would have left that check inspecting
+  a header that is never there.
+
+A 403 from any of these renders as the site's HTML 404 page, because the
+distribution maps `403 -> /404.html` for the whole distribution. It is
+misleading when debugging and harmless in practice: 400, 429 and 503 pass
+through untouched, and a real browser always sends `Origin`. Narrowing the
+custom error responses to exclude `/api/*` would fix it.
+
 ## Domains
 
 Point both `squarecampus.com` and `squarecampus.in` (plus `www.` variants
@@ -224,3 +342,33 @@ aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 - `headers()` / `redirects()` in next.config.ts → response headers policy +
   CloudFront Function above
 - Resend/Upstash/AWS SDK server dependencies → no longer needed at runtime
+
+## Contact API routes
+
+The `/api/*` behaviour points at the intake API (CachingDisabled,
+AllViewerExceptHostHeader, all methods). Four routes exist on the HTTP API,
+all POST, all backed by the same Lambda:
+
+| Route | Purpose |
+| --- | --- |
+| `POST /api/contact` | Form submission. |
+| `POST /contact` | Legacy path, kept working. |
+| `POST /api/challenge` | Issue a human-check board (PNG + tile start). |
+| `POST /api/challenge/solve` | Mark one board, return a pass token. |
+
+Two things about this that cost time to discover:
+
+- **Lambda invoke permission is scoped per path.** The existing statements
+  named `.../*/*/contact` and `.../*/*/api/contact` only, so the new routes
+  returned a 500 from API Gateway — the function was never invoked. Every new
+  route needs its own `lambda add-permission` with a matching `--source-arn`.
+- **Both challenge routes are POST on purpose.** Browsers do not send `Origin`
+  on a same-origin GET, and the handler's origin allowlist is one of the things
+  keeping bare scripts out — a GET route would have left that check inspecting
+  a header that is never there.
+
+A 403 from any of these renders as the site's HTML 404 page, because the
+distribution maps `403 -> /404.html` for the whole distribution. It is
+misleading when debugging and harmless in practice: 400, 429 and 503 pass
+through untouched, and a real browser always sends `Origin`. Narrowing the
+custom error responses to exclude `/api/*` would fix it.

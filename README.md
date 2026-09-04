@@ -18,6 +18,7 @@ groups, a product of Fairhelm Systems OPC.
 bun run dev            # local dev server
 bun run build          # claims check + static export to ./out (needs env, see below)
 bun run check:claims   # forbidden-claims regression check on its own
+bun run check:content  # structural check of comparison pages and blog posts
 bun run lint / format  # biome
 bun run check-types    # tsc --noEmit
 bun run deploy         # build + S3 sync + CloudFront invalidation + IndexNow
@@ -34,6 +35,11 @@ Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
 - **No invented proof.** Every marketing claim is tracked in
   [docs/marketing-claims-register.md](docs/marketing-claims-register.md);
   `scripts/check-claims.sh` fails the build if a forbidden claim reappears.
+- **No half-built content pages.** `scripts/check-content.ts` (`bun run
+  check:content`, also part of `build`) checks the shape of every comparison
+  page and blog post: competitor strengths and "they fit when" present, a FAQ
+  block, minimum sections, valid dates, and CTAs that resolve to a live route
+  in trailing-slash form — never to a redirect stub.
 - Say "unified institutional data model" / "one governed system of record" —
   never "single/shared database".
 - Legal pages carry `LEGAL REVIEW` markers; don't edit their substantive

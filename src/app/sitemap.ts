@@ -12,6 +12,12 @@ import { canonicalUrl, SEO_CONFIG } from "@/lib/seo";
  * Only indexable pages are listed. Careers, press, the competitor notice,
  * redirect stubs, and /hello are intentionally absent (noindex or utility).
  *
+ * One deliberate non-HTML entry: /llms.txt. It is a crawlable, indexable text
+ * document and the site's machine-readable summary, and a sitemap entry is the
+ * strongest crawl signal available — stronger than the footer link alone. An
+ * SEO linter may flag a non-HTML URL here; that is cosmetic, and the crawl is
+ * the point.
+ *
  * lastmod is derived from the git commit time of each route's content
  * sources, so it reflects content change rather than "we deployed again".
  * Builds without git history fall back to a fixed release date.
@@ -50,9 +56,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Absolute URLs for the product screenshots we want Google Images to index
   // and associate with each page. Only images that actually render on the
   // listed URL belong here — Google drops image-sitemap entries whose image
-  // is not present on the page. Decorative device bezels
-  // (/images/devices/*) are deliberately excluded and carry
-  // `X-Robots-Tag: noimageindex` at the edge (see DEPLOYMENT.md).
+  // is not present on the page. The device frames around product screens are
+  // drawn in CSS (src/components/site/device-frames.tsx), so there is no
+  // decorative bezel image to exclude any more.
   const img = (path: string) => `${SITE_URL}${path}`;
 
   const routes: Array<{
@@ -157,6 +163,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
+    // The higher-education lane of the same programme. Lower priority than
+    // its parent on purpose: the site is school-led, and this route is a
+    // qualified path for universities and multi-school groups rather than a
+    // second front door.
+    {
+      path: "/launch-partners/higher-education",
+      sources: [
+        `${APP}/(company)/launch-partners/higher-education`,
+        `${CONTENT}/founding-partners.ts`,
+      ],
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+
     // Trust pages
     {
       path: "/security",
@@ -257,6 +277,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/(legal)/refund-policy`],
       changeFrequency: "yearly",
       priority: 0.2,
+    },
+
+    // Machine-readable site summary. Low priority on purpose: it exists to be
+    // crawled and read by assistants, not to compete with the pages it points at.
+    {
+      path: "/llms.txt",
+      sources: ["public/llms.txt"],
+      changeFrequency: "monthly",
+      priority: 0.3,
     },
   ];
 

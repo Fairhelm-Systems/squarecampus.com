@@ -132,6 +132,17 @@ export const foundingPartners = {
     path: {
       eyebrow: "Partnership path",
       heading: "Start with evidence. Expand only when it earns the right.",
+      /**
+       * The programme said what it is not ("not a free trial") without ever
+       * saying what it is. An institution reading "founding partner" and
+       * "shape the roadmap" can reasonably infer a free or subsidised
+       * arrangement, and discovering otherwise on the proposal call costs more
+       * credibility than saying it here. No figure is published: the sentence
+       * establishes that money changes hands and that the terms are written
+       * down first, which is all a board needs before the first call.
+       */
+      paidNote:
+        "Founding pilots are paid, scoped commercial engagements. Scope, success measures, fees and conversion terms are agreed in writing before implementation begins.",
       steps: [
         {
           number: "01",
@@ -226,6 +237,202 @@ export const foundingPartners = {
       body: "Tell us where visibility arrives late, ownership becomes unclear, or staff rebuild the same truth by hand. We will determine whether it belongs in a Founding Institutional Partner pilot.",
       microcopy: "No commitment · 30-minute institutional diagnosis",
     },
+
+    /** Contextual route to the higher-education lane, from /launch-partners/. */
+    higherEducationLink: {
+      eyebrow: "Universities and multi-school groups",
+      heading: "A private university or a multi-school group is a different conversation.",
+      body: "The same 60–90 day evidence model applies, but the wedge is usually an exception queue between systems that already exist — admissions-to-enrolment, payment-to-ERP reconciliation, interdepartmental approvals — rather than a school's day-to-day operations.",
+      linkLabel: "Read the higher-education lane",
+    },
+  },
+} as const;
+
+/**
+ * The higher-education Founding Institutional Partner lane.
+ *
+ * Separate copy, deliberately, and separate discipline. The site is
+ * school-led and stays school-led; this page exists because private
+ * universities and multi-school groups are worth approaching at the workflow
+ * level, and approaching them with school copy would be transparent.
+ *
+ * Three rules this copy does not break, because breaking them would be worse
+ * than not having the page:
+ *
+ *  1. It never claims SquareCampus is a university ERP, SIS or LMS. It is the
+ *     governed layer over the ones the institution already runs.
+ *  2. Clinical and hospital information systems are named as out of scope.
+ *     A teaching hospital is not a pilot wedge, and saying so protects the
+ *     conversation more than staying silent would.
+ *  3. No accreditation, regulatory, medical or patient-care claim appears
+ *     anywhere on it. Governance of an administrative workflow is not
+ *     compliance certification, and the two must not be blurred.
+ */
+export const higherEducationPartners = {
+  href: "/launch-partners/higher-education",
+
+  hero: {
+    eyebrow: "Founding institutional partners · Higher education",
+    heading: "Your systems are not the problem. The space between them is.",
+    body: "Private universities and multi-school groups rarely lack software. They run an ERP, an LMS, one or more payment portals, an identity provider and several communication channels — and lose weeks in the gaps between them, where a case is stalled, unowned, and visible to nobody until someone escalates. SquareCampus is the governed layer across that space.",
+    trustLine:
+      "Runs alongside your existing ERP, LMS, payment and identity systems · One bounded workflow · Paid, scoped pilot",
+  },
+
+  honesty: {
+    eyebrow: "What this is, precisely",
+    heading: "Not a university ERP. A governed operating layer over the one you have.",
+    body: "It is worth being exact about this before anything else, because the wrong expectation wastes both sides' time.",
+    isNot: [
+      "Not a replacement for your student information system or ERP of record",
+      "Not a learning management system, and not a competitor to the one you run",
+      "Not a payment gateway, an identity provider, or a finance ledger",
+      "Not a clinical, hospital or patient-care system, and not proposed for one",
+    ],
+    is: [
+      "A governed layer that watches the workflow across those systems",
+      "An exception queue with a named owner and a due position for every open case",
+      "An append-only record of who decided what, when, and on what basis",
+      "A leadership view of a bounded operational workflow that is current without an export",
+    ],
+  },
+
+  wedges: {
+    eyebrow: "Where a pilot starts",
+    heading: "Five wedges that produce evidence inside one term.",
+    body: "Each one is bounded, already measurable today, and does not require switching off anything the institution depends on.",
+    items: [
+      {
+        number: "01",
+        title: "Admissions-to-enrolment exception ownership",
+        body: "Applications that clear one stage and stall at the next — document verification, fee confirmation, seat allocation, registration. The exception gets an owner and a position instead of living in an inbox.",
+      },
+      {
+        number: "02",
+        title: "Payment-success-to-ERP reconciliation",
+        body: "Payments that succeed at the gateway and do not land cleanly against the record. The mismatch is raised as an exception, routed, and closed with a recorded reason rather than reconciled by hand at month end.",
+      },
+      {
+        number: "03",
+        title: "Interdepartmental approvals and stalled cases",
+        body: "Requests that cross academic, finance, registry and administrative boundaries and lose their owner at each handover. Latency becomes visible while it is still recoverable.",
+      },
+      {
+        number: "04",
+        title: "Leadership visibility across one bounded workflow",
+        body: "A current view of one workflow — what is open, who owns it, what is overdue and what was decided — without a department preparing a deck for it.",
+      },
+      {
+        number: "05",
+        title: "Evidence collection and accountable closure",
+        body: "Administrative and operational workflows outside clinical and hospital systems, where a decision needs a recorded reason and an auditable close.",
+      },
+    ],
+    exclusion:
+      "Clinical and hospital information systems are outside the suggested pilot scope. Where an institution operates a teaching hospital, the pilot is scoped to non-clinical administrative workflows only, and SquareCampus makes no medical, patient-care, accreditation or regulatory claim.",
+  },
+
+  coexistence: {
+    eyebrow: "How it sits",
+    heading: "Above or alongside. Nothing is switched off to find out whether this works.",
+    body: "During the pilot the institution's ERP, LMS, payment portals, forms and identity provider stay exactly where they are and stay authoritative. SquareCampus governs the workflow that runs across them.",
+    layers: [
+      {
+        title: "Systems of record stay in place",
+        body: "The ERP or SIS remains the record. SquareCampus does not ask to become it, and does not require a migration to start.",
+      },
+      {
+        title: "The workflow is governed across them",
+        body: "A case is tracked from the event that starts it to the decision that closes it, regardless of how many systems it touches on the way.",
+      },
+      {
+        title: "Ownership is explicit, not implied",
+        body: "Every open exception has a named accountable owner and a position. Nothing sits in a shared mailbox waiting to be noticed.",
+      },
+      {
+        title: "The decision is recorded",
+        body: "Approvals, overrides and refusals land on an append-only timeline with the reason attached, scoped to the role that took them.",
+      },
+    ],
+  },
+
+  evidence: {
+    eyebrow: "The 60–90 day evidence model",
+    heading: "The same discipline as every founding pilot, scoped to a university.",
+    steps: [
+      {
+        number: "01",
+        title: "One bounded scope",
+        body: "One workflow, or one non-clinical constituent school or department. Not the institution, and not a phased programme dressed up as a pilot.",
+      },
+      {
+        number: "02",
+        title: "One written baseline",
+        body: "The current position — volumes, delays, ownership gaps — written down before implementation, so the result is measured rather than argued.",
+      },
+      {
+        number: "03",
+        title: "One named executive sponsor",
+        body: "A Registrar, Dean, Finance lead, COO or CIO who owns the outcome internally and can convene the people the workflow crosses.",
+      },
+      {
+        number: "04",
+        title: "Parallel validation where needed",
+        body: "Anything finance or registry teams must trust runs alongside the existing process until the numbers agree.",
+      },
+      {
+        number: "05",
+        title: "Convert, extend or stop",
+        body: "Judged against the measure agreed at the start. Stopping is a published outcome, not a failure state we argue you out of.",
+      },
+    ],
+    paidNote:
+      "Founding pilots are paid, scoped commercial engagements. Scope, success measures, fees and conversion terms are agreed in writing before implementation begins.",
+  },
+
+  /** Written for the people who each have to say yes for a pilot to happen. */
+  leadership: {
+    eyebrow: "Who this has to convince",
+    heading: "Five people, five different questions.",
+    items: [
+      {
+        role: "President / Vice Chancellor",
+        question: "What does this change at my level?",
+        answer:
+          "One bounded workflow stops arriving as an escalation and starts arriving as a current position. The pilot is small enough to stop and specific enough to judge.",
+      },
+      {
+        role: "Registrar",
+        question: "Does this add another system for my office to run?",
+        answer:
+          "It governs the ones you already run. The registry keeps its system of record; what changes is that a stalled case has an owner and a position instead of a follow-up email.",
+      },
+      {
+        role: "Dean / Academic leader",
+        question: "Will this reach into academic judgement?",
+        answer:
+          "No. The scope is administrative and operational workflow — where a case is, who owns it, and whether a decision was recorded. Academic decisions stay with the people who make them.",
+      },
+      {
+        role: "Finance leader",
+        question: "What happens to reconciliation?",
+        answer:
+          "Mismatches between payment success and the record become routed exceptions with a recorded closure, and run in parallel with the existing process until finance trusts the numbers.",
+      },
+      {
+        role: "CIO / IT leader",
+        question: "What is the integration and data burden?",
+        answer:
+          "Scoped to the workflow in the pilot, agreed in writing before implementation, and read-oriented where the existing system stays authoritative. Access is role-scoped and exports are available in standard formats throughout.",
+      },
+    ],
+  },
+
+  finalCta: {
+    eyebrow: "The first conversation",
+    heading: "Bring one bottleneck. We will map the governed path around it.",
+    body: "A 30-minute diagnosis of one workflow: where it stalls, who should own it, what a bounded pilot would cover, and whether it belongs in the founding cohort at all.",
+    microcopy: "No commitment · 30-minute institutional diagnosis",
   },
 } as const;
 

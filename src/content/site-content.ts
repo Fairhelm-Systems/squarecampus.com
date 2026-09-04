@@ -68,6 +68,18 @@ export const footerGroups = [
       { href: "/infrastructure", label: "Infrastructure" },
       { href: "/pgp", label: "PGP Key" },
       { href: "/data-processing-addendum", label: "Data Processing" },
+      /*
+        The site's machine-readable summary. It sat at /llms.txt with nothing
+        on the site linking to it, so the only crawlers that could find it were
+        the ones already guessing the conventional path. One real internal
+        link, on every page, is what makes it discoverable to the rest —
+        including the search crawlers that do not know the convention.
+
+        Rendered as a plain anchor rather than a <Link>: it is a file, not a
+        route, and the client router has nothing to navigate to. The footer
+        decides that from the extension, the same test the edge function uses.
+      */
+      { href: "/llms.txt", label: "llms.txt" },
     ],
   },
   {

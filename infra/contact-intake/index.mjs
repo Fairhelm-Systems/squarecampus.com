@@ -13,6 +13,9 @@
 //   - Origin allowlist: browsers send Origin on every POST.
 //   - Per-IP rate limit via DynamoDB atomic counter, RATE_LIMIT_PER_HOUR/hr.
 //   - Honeypot field honored server-side (pretend success, store nothing).
+//   - Human check: a traced-wire board rendered here as a PNG, whose answer
+//     never leaves this function. See challenge.mjs. A submission must carry
+//     a signed pass token from a solved board.
 //   - Strict validation + 20KB body cap. No PII written to CloudWatch.
 //
 // Env vars:
@@ -24,11 +27,19 @@
 //   M365_SENDER          M365 mailbox to send AS (hello@fairhelmsystems.com)
 //   M365_SECRET_ID       Secrets Manager secret id holding JSON
 //                        {tenantId, clientId, clientSecret} for the Entra app
+//   CHALLENGE_SECRET     HMAC key for human-check pass tokens. Its ABSENCE is
+//                        meaningful: with no secret the check is not enforced
+//                        and submissions are accepted exactly as before. That
+//                        is what makes the rollout safe — ship this function,
+//                        then the site, then set the secret to switch
+//                        enforcement on without a window where the live form
+//                        rejects everyone.
 //   CRM_INTAKE_URL       Platform CRM marketing-intake REST route
 //   CRM_BRIDGE_SECRET_ID Secrets Manager secret id holding the one-RPC bridge key
 //   CRM_RETRY_QUEUE_URL  SQS retry queue URL; messages contain only submission ids
 import { randomUUID } from "node:crypto";
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
@@ -36,6 +47,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+import { BOARD, generateBoard, newNonce, signPass, TOLERANCE, verifyPass } from "./challenge.mjs";
 
 const TABLE = process.env.TABLE_NAME;
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "https://squarecampus.com")
@@ -48,6 +60,30 @@ const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL;
 const M365_SENDER = process.env.M365_SENDER;
 const M365_SECRET_ID = process.env.M365_SECRET_ID;
 const MAIL_ENABLED = Boolean(M365_SECRET_ID && NOTIFY_EMAIL && M365_SENDER);
+const CHALLENGE_SECRET = process.env.CHALLENGE_SECRET;
+const HUMAN_CHECK_ENABLED = Boolean(CHALLENGE_SECRET);
+
+/** A board is worth solving for ten minutes; a solved board is worth posting
+ *  for twenty. Both are far longer than a real visitor needs and far shorter
+ *  than a harvested token stays useful. */
+const BOARD_TTL_SECONDS = 600;
+const PASS_TTL_SECONDS = 1200;
+/** Boards handed out per IP per hour. A visitor who keeps getting it wrong is
+ *  still well inside this; a script grinding for a lucky guess is not. */
+const BOARDS_PER_HOUR = 20;
+/**
+ * Wrong answers per IP before new boards stop being issued.
+ *
+ * The hourly cap is the one a mistyped drag hits, and it clears on its own.
+ * The daily cap is the one that matters against a script: without it an
+ * attacker simply waits out each hour, and three guesses an hour against a
+ * ~60-dot board adds up to a near-certain hit inside a day. With it, the same
+ * attacker gets five guesses a day from one address. A person who has failed
+ * five boards in a day is not being served by this form anyway, and the
+ * fallback shown to them is the address a real enquiry can just email.
+ */
+const WRONG_ANSWERS_PER_HOUR = 3;
+const WRONG_ANSWERS_PER_DAY = 5;
 // The bridge capability is distinct from the email OAuth secret and is used
 // only for the backend CRM intake RPC. Missing configuration is a delivery
 // failure, never a silent success.
@@ -65,6 +101,12 @@ const REQUIRED = ["name", "email", "phone", "institution", "role", "campusCount"
 // Partnership enquiry. The website also folds the same intent into `source`
 // (e.g. `demo-form:founding-partner`), which this function already stores —
 // so intent is never lost even before this handler is redeployed.
+//
+// The five founding-partner fields at the end are sent only by a Founding
+// Institutional Partnership enquiry (a generic demo submission omits them
+// entirely). Until this handler is redeployed they are dropped, so ship the
+// Lambda before or with the site build that starts collecting them —
+// otherwise the diagnosis answers are silently lost.
 const MAX_LEN = {
   enquiryType: 60,
   name: 200,
@@ -75,8 +117,8 @@ const MAX_LEN = {
   campusCount: 40,
   currentSystem: 300,
   primaryPain: 200,
-  bottleneck: 500,
-  pilotUnit: 200,
+  bottleneck: 2000,
+  pilotUnit: 300,
   executiveSponsor: 200,
   timeSensitivity: 200,
   successMeasure: 500,
@@ -88,6 +130,128 @@ const resp = (statusCode, body) => ({
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(body),
 });
+
+/** Client IP as CloudFront sees it, falling back to the API Gateway view. */
+function viewerIp(event) {
+  const viewerAddress = event.headers?.["cloudfront-viewer-address"];
+  return viewerAddress
+    ? viewerAddress.slice(0, viewerAddress.lastIndexOf(":"))
+    : (event.requestContext?.http?.sourceIp ?? "unknown");
+}
+
+/**
+ * Atomic per-IP counter in the submissions table, bucketed by hour.
+ *
+ * `by: 0` reads the current value without spending an attempt, which is how
+ * the board endpoint checks the wrong-answer budget before deciding to issue.
+ */
+async function bumpCounter(key, by, ttlSeconds) {
+  const out = await ddb.send(
+    new UpdateItemCommand({
+      TableName: TABLE,
+      Key: { id: { S: key } },
+      UpdateExpression: "ADD #c :n SET expiresAt = if_not_exists(expiresAt, :ttl)",
+      ExpressionAttributeNames: { "#c": "count" },
+      ExpressionAttributeValues: {
+        ":n": { N: String(by) },
+        ":ttl": { N: String(Math.floor(Date.now() / 1000) + ttlSeconds) },
+      },
+      ReturnValues: "ALL_NEW",
+    })
+  );
+  return Number(out.Attributes?.count?.N ?? "0");
+}
+
+const hourBucketNow = () => new Date().toISOString().slice(0, 13);
+
+// --- human check ---------------------------------------------------------
+
+/**
+ * Hand out a board.
+ *
+ * The response carries the picture and where the tile starts. It deliberately
+ * does not carry where the tile belongs, nor the positions of the dots: with
+ * either of those the puzzle collapses into a form field a script can fill.
+ * The answer is written here, against a one-time id, and read back once.
+ */
+async function issueBoard(data, ip) {
+  const hour = hourBucketNow();
+  const day = hour.slice(0, 10);
+  const [wrongHour, wrongDay] = await Promise.all([
+    bumpCounter(`humanfail#${ip}#${hour}`, 0, 7200),
+    bumpCounter(`humanfailday#${ip}#${day}`, 0, 172800),
+  ]);
+  if (wrongHour >= WRONG_ANSWERS_PER_HOUR || wrongDay >= WRONG_ANSWERS_PER_DAY) {
+    return resp(429, { error: "too many attempts" });
+  }
+
+  const issued = await bumpCounter(`humanboard#${ip}#${hour}`, 1, 7200);
+  if (issued > BOARDS_PER_HOUR) return resp(429, { error: "too many attempts" });
+
+  const board = generateBoard(data.theme === "dark" ? "dark" : "light");
+  const id = newNonce();
+  await ddb.send(
+    new PutItemCommand({
+      TableName: TABLE,
+      Item: {
+        id: { S: `board#${id}` },
+        x: { N: String(board.answer.x) },
+        y: { N: String(board.answer.y) },
+        expiresAt: { N: String(Math.floor(Date.now() / 1000) + BOARD_TTL_SECONDS) },
+      },
+    })
+  );
+
+  return resp(200, {
+    id,
+    image: `data:image/png;base64,${board.png.toString("base64")}`,
+    width: BOARD.w,
+    height: BOARD.h,
+    start: board.start,
+    tolerance: TOLERANCE,
+  });
+}
+
+/**
+ * Mark one board.
+ *
+ * The board is deleted before the answer is compared, so every board is worth
+ * exactly one guess whether that guess is right or wrong. Without that, a
+ * script could sit on a single board and walk the dots.
+ */
+async function markBoard(data, ip) {
+  const id = typeof data.id === "string" ? data.id : "";
+  const x = Number(data.x);
+  const y = Number(data.y);
+  if (!id || id.length > 64 || !Number.isFinite(x) || !Number.isFinite(y)) {
+    return resp(400, { error: "invalid answer" });
+  }
+
+  const burned = await ddb.send(
+    new DeleteItemCommand({
+      TableName: TABLE,
+      Key: { id: { S: `board#${id}` } },
+      ReturnValues: "ALL_OLD",
+    })
+  );
+  const previous = burned.Attributes;
+  if (!previous) return resp(200, { ok: false, expired: true });
+  if (Number(previous.expiresAt?.N ?? "0") < Math.floor(Date.now() / 1000)) {
+    return resp(200, { ok: false, expired: true });
+  }
+
+  const off = Math.hypot(x - Number(previous.x.N), y - Number(previous.y.N));
+  if (off > TOLERANCE) {
+    const hour = hourBucketNow();
+    await Promise.all([
+      bumpCounter(`humanfail#${ip}#${hour}`, 1, 7200),
+      bumpCounter(`humanfailday#${ip}#${hour.slice(0, 10)}`, 1, 172800),
+    ]);
+    return resp(200, { ok: false });
+  }
+
+  return resp(200, { ok: true, pass: signPass(CHALLENGE_SECRET, newNonce(), PASS_TTL_SECONDS) });
+}
 
 // --- Microsoft 365 Graph mailer (app-only OAuth, client credentials) ---
 let cachedCreds = null;
@@ -171,7 +335,9 @@ function crmPayload(item) {
     ["Executive sponsor", text(item, "executiveSponsor")],
     ["Time sensitivity", text(item, "timeSensitivity")],
     ["Success measure", text(item, "successMeasure")],
-  ].filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`);
+  ]
+    .filter(([, value]) => value)
+    .map(([label, value]) => `${label}: ${value}`);
   const message = [text(item, "message"), ...contextLines].filter(Boolean).join("\n\n");
   return {
     source: "marketing_contact_form",
@@ -196,16 +362,19 @@ function crmPayload(item) {
 }
 
 async function markDelivery(id, status, leadId = "") {
-  await ddb.send(new UpdateItemCommand({
-    TableName: TABLE,
-    Key: { id: { S: id } },
-    UpdateExpression: "SET crmDeliveryStatus = :status, crmDeliveryUpdatedAt = :updatedAt, crmLeadId = :leadId",
-    ExpressionAttributeValues: {
-      ":status": { S: status },
-      ":updatedAt": { S: new Date().toISOString() },
-      ":leadId": { S: leadId },
-    },
-  }));
+  await ddb.send(
+    new UpdateItemCommand({
+      TableName: TABLE,
+      Key: { id: { S: id } },
+      UpdateExpression:
+        "SET crmDeliveryStatus = :status, crmDeliveryUpdatedAt = :updatedAt, crmLeadId = :leadId",
+      ExpressionAttributeValues: {
+        ":status": { S: status },
+        ":updatedAt": { S: new Date().toISOString() },
+        ":leadId": { S: leadId },
+      },
+    })
+  );
 }
 
 async function deliverToCrm(item) {
@@ -222,15 +391,21 @@ async function deliverToCrm(item) {
   });
   if (!response.ok) throw new Error(`CRM intake ${response.status}`);
   const body = await response.json();
-  await markDelivery(text(item, "id"), body.duplicate ? "duplicate" : "delivered", String(body.lead?.id ?? ""));
+  await markDelivery(
+    text(item, "id"),
+    body.duplicate ? "duplicate" : "delivered",
+    String(body.lead?.id ?? "")
+  );
 }
 
 async function queueCrmRetry(id) {
   if (!CRM_RETRY_QUEUE_URL) throw new Error("CRM retry queue is not configured");
-  await sqs.send(new SendMessageCommand({
-    QueueUrl: CRM_RETRY_QUEUE_URL,
-    MessageBody: JSON.stringify({ submissionId: id }),
-  }));
+  await sqs.send(
+    new SendMessageCommand({
+      QueueUrl: CRM_RETRY_QUEUE_URL,
+      MessageBody: JSON.stringify({ submissionId: id }),
+    })
+  );
   await markDelivery(id, "queued");
 }
 
@@ -255,10 +430,23 @@ export const handler = async (event) => {
   let data;
   try {
     data = JSON.parse(
-      event.isBase64Encoded ? Buffer.from(event.body, "base64").toString("utf8") : event.body
+      event.isBase64Encoded
+        ? Buffer.from(event.body, "base64").toString("utf8")
+        : (event.body ?? "{}")
     );
   } catch {
     return resp(400, { error: "invalid JSON" });
+  }
+
+  // The human check rides on the same function, origin allowlist and edge key
+  // as the form itself. Both of its routes are POST so that browsers attach an
+  // Origin header — a same-origin GET does not, which would leave the origin
+  // allowlist above checking nothing.
+  const path = event.requestContext?.http?.path ?? event.rawPath ?? "";
+  if (path.endsWith("/challenge") || path.endsWith("/challenge/solve")) {
+    if (!HUMAN_CHECK_ENABLED) return resp(503, { error: "human check unavailable" });
+    const ip = viewerIp(event);
+    return path.endsWith("/solve") ? markBoard(data, ip) : issueBoard(data, ip);
   }
 
   if (data.website) return resp(200, { ok: true });
@@ -273,10 +461,32 @@ export const handler = async (event) => {
     return resp(400, { error: "invalid email" });
   }
 
-  const viewerAddress = event.headers?.["cloudfront-viewer-address"];
-  const ip = viewerAddress
-    ? viewerAddress.slice(0, viewerAddress.lastIndexOf(":"))
-    : (event.requestContext?.http?.sourceIp ?? "unknown");
+  // One solved board, one submission. The token is signed rather than looked
+  // up, so a valid one costs no read; the nonce inside it is burned here with
+  // a conditional write, so a replay costs one failed write and nothing else.
+  if (HUMAN_CHECK_ENABLED) {
+    const pass = verifyPass(CHALLENGE_SECRET, data.humanToken);
+    if (!pass) return resp(400, { error: "human check required" });
+    try {
+      await ddb.send(
+        new PutItemCommand({
+          TableName: TABLE,
+          Item: {
+            id: { S: `pass#${pass.nonce}` },
+            expiresAt: { N: String(Math.floor(Date.now() / 1000) + PASS_TTL_SECONDS + 60) },
+          },
+          ConditionExpression: "attribute_not_exists(id)",
+        })
+      );
+    } catch (err) {
+      if (err.name === "ConditionalCheckFailedException") {
+        return resp(400, { error: "human check already used" });
+      }
+      throw err;
+    }
+  }
+
+  const ip = viewerIp(event);
   const receivedAt = new Date().toISOString();
   const hourBucket = receivedAt.slice(0, 13);
   const counter = await ddb.send(
@@ -320,13 +530,19 @@ export const handler = async (event) => {
   );
 
   try {
-    await deliverToCrm({ id: { S: id }, sourceIp: { S: ip }, userAgent: { S: (event.requestContext?.http?.userAgent ?? "unknown").slice(0, 300) }, consent: { BOOL: true }, ...Object.fromEntries(Object.entries(clean).map(([k, v]) => [k, { S: v }])) });
-  } catch (err) {
+    await deliverToCrm({
+      id: { S: id },
+      sourceIp: { S: ip },
+      userAgent: { S: (event.requestContext?.http?.userAgent ?? "unknown").slice(0, 300) },
+      consent: { BOOL: true },
+      ...Object.fromEntries(Object.entries(clean).map(([k, v]) => [k, { S: v }])),
+    });
+  } catch {
     // No PII in logs. The durable DynamoDB row is already present; an SQS
     // worker retries with this same idempotency key and redrives to a DLQ.
     try {
       await queueCrmRetry(id);
-    } catch (queueErr) {
+    } catch {
       await markDelivery(id, "queue_failed").catch(() => undefined);
       console.error("CRM delivery and retry queue unavailable", { submissionId: id });
     }
@@ -338,7 +554,10 @@ export const handler = async (event) => {
         .map(([k, v]) => `${k}: ${v}`)
         .join("\n");
       await sendNotification({
-        subject: `Demo request — ${clean.institution}`,
+        // A founding-partner diagnosis and a guided demo need different
+        // response times, so the difference belongs in the subject line
+        // rather than three lines into the body.
+        subject: `${clean.enquiryType || "Demo request"} — ${clean.institution}`,
         text: `${lines}\n\nid: ${id}\nreceived: ${receivedAt}`,
         replyTo: clean.email,
       });
@@ -358,8 +577,11 @@ export const retryHandler = async (event) => {
   for (const record of event.Records ?? []) {
     try {
       const { submissionId } = JSON.parse(record.body ?? "{}");
-      if (typeof submissionId !== "string" || !submissionId) throw new Error("invalid retry message");
-      const result = await ddb.send(new GetItemCommand({ TableName: TABLE, Key: { id: { S: submissionId } } }));
+      if (typeof submissionId !== "string" || !submissionId)
+        throw new Error("invalid retry message");
+      const result = await ddb.send(
+        new GetItemCommand({ TableName: TABLE, Key: { id: { S: submissionId } } })
+      );
       if (!result.Item) throw new Error("contact submission is missing");
       await deliverToCrm(result.Item);
     } catch {

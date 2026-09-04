@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, Handshake, MonitorPlay } from "lucide-react";
+import type { FormEvent, ReactNode } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
+import {
+  DEMO_INTENT_ATTRIBUTE,
+  demoIntents,
+  FOUNDING_PARTNER_INTENT,
+} from "@/content/demo-intents";
+import { cn } from "@/lib/utils";
 import { ButtonLink } from "./button-link";
+import { HumanCheck, type HumanCheckResult } from "./human-check";
 
 type DemoFormState = {
   enquiryType: string;
@@ -17,6 +26,13 @@ type DemoFormState = {
   message: string;
   consent: boolean;
   website: string;
+  // Founding-partner diagnosis answers. Only posted for a founding-partner
+  // enquiry (see `buildPayload`).
+  bottleneck: string;
+  executiveSponsor: string;
+  pilotUnit: string;
+  timeSensitivity: string;
+  successMeasure: string;
 };
 
 const initialState: DemoFormState = {
@@ -32,6 +48,11 @@ const initialState: DemoFormState = {
   message: "",
   consent: false,
   website: "",
+  bottleneck: "",
+  executiveSponsor: "",
+  pilotUnit: "",
+  timeSensitivity: "",
+  successMeasure: "",
 };
 
 /**
@@ -40,16 +61,30 @@ const initialState: DemoFormState = {
  * idea, so the Founding Partner CTAs can hand over their intent without a
  * second form or a second backend.
  */
-const enquiryTypeOptions = ["Guided platform demo", "Founding Institutional Partnership"] as const;
+const enquiryTypeOptions = [
+  {
+    value: "Guided platform demo",
+    title: "Guided platform demo",
+    body: "A walkthrough mapped to how your institution runs today.",
+    icon: MonitorPlay,
+  },
+  {
+    value: "Founding Institutional Partnership",
+    title: "Founding partnership",
+    body: "Pilot one bottleneck against a written baseline.",
+    icon: Handshake,
+  },
+] as const;
 
 /**
  * Query-string intents, mapped to the options above. Only these exact keys are
  * honoured and the value used is always one of our own constants — the raw
  * parameter is never rendered, stored or echoed back.
  */
-const INTENT_PARAM: Record<string, (typeof enquiryTypeOptions)[number]> = {
-  "founding-partner": "Founding Institutional Partnership",
+const INTENT_PARAM: Record<string, (typeof enquiryTypeOptions)[number]["value"]> = {
+  [FOUNDING_PARTNER_INTENT]: "Founding Institutional Partnership",
 };
+const FOUNDING_PARTNER_ENQUIRY = INTENT_PARAM[FOUNDING_PARTNER_INTENT];
 
 const roleOptions = [
   "Trustee / Director",
@@ -62,21 +97,57 @@ const roleOptions = [
 
 const campusCountOptions = ["1 campus", "2–5 campuses", "6–15 campuses", "15+ campuses"] as const;
 
+/**
+ * Pain points, written so one list serves a school and a multi-school
+ * university group. The exception-shaped options (reconciliation, ownership,
+ * approvals) are the ones a founding pilot can actually be scoped around.
+ */
 const primaryPainOptions = [
+  "Payment-to-ERP reconciliation exceptions",
+  "Admissions-to-enrolment visibility",
+  "Cross-department workflow ownership",
+  "Approvals and decision latency",
+  "Multi-campus or multi-school governance",
   "Fragmented reporting across systems",
-  "Fee collection and reconciliation",
-  "Admissions pipeline visibility",
-  "Parent communication overload",
+  "Parent and guardian communication overload",
   "Compliance and audit readiness",
-  "Multi-campus control",
   "Other",
 ] as const;
 
-const inputClassName =
-  "h-12 w-full rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 text-sm text-[color:var(--foreground)] outline-none transition-colors placeholder:text-[color:var(--muted-foreground)] focus:border-[color:var(--line-strong)]";
+const timeSensitivityOptions = [
+  "Blocking us now",
+  "Before the next admissions cycle",
+  "This academic year",
+  "Exploring, no fixed date",
+] as const;
 
-const labelClassName =
-  "mb-1.5 block text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--muted-foreground)]";
+/** Founding-partner answers, in the order the reader was asked for them. */
+const foundingPartnerFields = [
+  ["bottleneck", "Operational bottleneck"],
+  ["pilotUnit", "Intended pilot unit"],
+  ["executiveSponsor", "Executive sponsor"],
+  ["timeSensitivity", "Time sensitivity"],
+  ["successMeasure", "Success measure"],
+] as const;
+
+/**
+ * The wire payload.
+ *
+ * A generic demo enquiry sends exactly the fields it always sent: the
+ * founding-partner answers are dropped rather than posted as five empty
+ * strings, so nothing about the existing intake record changes shape.
+ */
+function buildPayload(state: DemoFormState) {
+  const { website: _honeypot, ...rest } = state;
+  if (state.enquiryType === FOUNDING_PARTNER_ENQUIRY) {
+    return rest;
+  }
+  const generic = { ...rest };
+  for (const [key] of foundingPartnerFields) {
+    delete (generic as Partial<DemoFormState>)[key];
+  }
+  return generic;
+}
 
 // Static export: the site has no server of its own, so the form posts to an
 // external intake endpoint configured at build time via
@@ -88,8 +159,25 @@ const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
 const EMAIL_DRAFT_MODE = !CONTACT_ENDPOINT && process.env.NEXT_PUBLIC_CONTACT_FORM_MODE === "email";
 const CONTACT_EMAIL = "contact@squarecampus.com";
 
+/**
+ * The human check sits beside the intake endpoint on the same function, so it
+ * is derived rather than configured: a second environment variable would be a
+ * second thing to get wrong at deploy time, and one that points somewhere else
+ * would be worse than none. If the endpoint is not the shape we expect, the
+ * check is skipped here — and the intake function is the thing that decides
+ * whether a submission without a pass token is accepted, so skipping it in the
+ * browser cannot be used to get past it.
+ */
+const CHALLENGE_ENDPOINT = CONTACT_ENDPOINT?.endsWith("/contact")
+  ? `${CONTACT_ENDPOINT.slice(0, -"/contact".length)}/challenge`
+  : undefined;
+
 function buildEmailDraft(state: DemoFormState) {
   const subject = `${state.enquiryType} — ${state.institution || state.name}`;
+  const founding =
+    state.enquiryType === FOUNDING_PARTNER_ENQUIRY
+      ? foundingPartnerFields.map(([key, label]) => state[key] && `${label}: ${state[key]}`)
+      : [];
   const body = [
     `Enquiry type: ${state.enquiryType}`,
     `Name: ${state.name}`,
@@ -100,6 +188,7 @@ function buildEmailDraft(state: DemoFormState) {
     `Campuses: ${state.campusCount}`,
     state.currentSystem && `Current system: ${state.currentSystem}`,
     state.primaryPain && `Primary pain point: ${state.primaryPain}`,
+    ...founding,
     "",
     state.message,
   ]
@@ -115,12 +204,235 @@ function sourceTag(enquiryType: string) {
   return intent ? `demo-form:${intent}` : "demo-form";
 }
 
-type SubmitStatus = "idle" | "submitting" | "success" | "error" | "draft";
+type SubmitStatus = "idle" | "verifying" | "submitting" | "success" | "error" | "draft";
+
+/**
+ * The three steps. Each one asks for what a person can answer without
+ * looking anything up, and the required fields are front-loaded so the
+ * optional ones never block the request.
+ */
+const steps = [
+  { id: "about", label: "About you", hint: "Who to reply to" },
+  { id: "institution", label: "Institution", hint: "Scale and role" },
+  { id: "focus", label: "Focus", hint: "What to cover" },
+] as const;
+
+type StepIndex = 0 | 1 | 2;
+const LAST_STEP: StepIndex = 2;
+
+/** Field-level messages. Native validity is the source of truth; these are the words. */
+function validationMessage(control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+  const v = control.validity;
+  if (v.valueMissing) {
+    return control.type === "radio"
+      ? "Choose one to continue."
+      : control.type === "checkbox"
+        ? "Please confirm to continue."
+        : "This one is needed to reply to you.";
+  }
+  if (v.typeMismatch && control.type === "email") {
+    return "That does not look like an email address.";
+  }
+  if (v.typeMismatch || v.patternMismatch) {
+    return "Please check this value.";
+  }
+  return control.validationMessage || "Please check this value.";
+}
+
+const fieldClassName =
+  "h-12 w-full rounded-xl border border-(--line-strong) bg-(--surface-raised) px-4 text-[0.95rem] text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-muted-foreground/70 focus:border-(--brand) focus:ring-4 focus:ring-(--brand-tint) aria-invalid:border-(--state-critical) aria-invalid:ring-4 aria-invalid:ring-(--state-critical-soft)";
+
+const labelClassName = "mb-1.5 block text-sm font-medium text-foreground";
+
+/** Choice chip: a native radio, visually a pill. `has-checked` styles the label. */
+const chipClassName =
+  "group/chip relative flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-(--line-strong) bg-(--surface-raised) px-4 py-2 text-sm leading-5 text-foreground transition-[border-color,background-color,box-shadow,color] hover:border-(--brand) has-checked:border-(--brand) has-checked:bg-(--brand) has-checked:text-white has-checked:shadow-[0_8px_24px_-10px_var(--brand)] has-focus-visible:ring-4 has-focus-visible:ring-(--brand-tint)";
+
+function Field({
+  id,
+  label,
+  optional = false,
+  error,
+  children,
+  className,
+}: {
+  id: string;
+  label: string;
+  optional?: boolean;
+  error?: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <label htmlFor={id} className={labelClassName}>
+        {label}
+        {optional ? (
+          <span className="ml-1.5 font-normal text-muted-foreground">Optional</span>
+        ) : null}
+      </label>
+      {children}
+      {error ? (
+        <p id={`${id}-error`} className="mt-1.5 text-sm text-(--state-critical)" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function ChoiceGroup({
+  name,
+  legend,
+  options,
+  value,
+  onChange,
+  required = false,
+  optional = false,
+  error,
+  columns = "wrap",
+}: {
+  name: keyof DemoFormState;
+  legend: string;
+  options: readonly string[];
+  value: string;
+  onChange: (value: string) => void;
+  required?: boolean;
+  optional?: boolean;
+  error?: string;
+  columns?: "wrap" | "segmented";
+}) {
+  const errorId = useId();
+  return (
+    <fieldset
+      aria-describedby={error ? errorId : undefined}
+      aria-invalid={error ? true : undefined}
+    >
+      <legend className={labelClassName}>
+        {legend}
+        {optional ? (
+          <span className="ml-1.5 font-normal text-muted-foreground">Optional</span>
+        ) : null}
+      </legend>
+      <div
+        className={cn(columns === "segmented" ? "grid grid-cols-2 gap-2" : "flex flex-wrap gap-2")}
+      >
+        {options.map((option) => (
+          <label
+            key={option}
+            className={cn(
+              chipClassName,
+              columns === "segmented" && "justify-center px-3 text-center"
+            )}
+          >
+            <input
+              type="radio"
+              name={name}
+              value={option}
+              required={required}
+              checked={value === option}
+              onChange={() => onChange(option)}
+              className="sr-only"
+            />
+            <Check
+              aria-hidden
+              className="size-3.5 shrink-0 scale-0 opacity-0 transition-[transform,opacity] group-has-checked/chip:scale-100 group-has-checked/chip:opacity-100"
+            />
+            <span className={cn(columns === "segmented" && "-ml-5.5 group-has-checked/chip:ml-0")}>
+              {option}
+            </span>
+          </label>
+        ))}
+      </div>
+      {error ? (
+        <p id={errorId} className="mt-2 text-sm text-(--state-critical)" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </fieldset>
+  );
+}
+
+function StepRail({ current, onJump }: { current: StepIndex; onJump: (step: StepIndex) => void }) {
+  return (
+    <ol className="flex items-start gap-2 sm:gap-3" aria-label="Request steps">
+      {steps.map((step, index) => {
+        const state = index < current ? "done" : index === current ? "current" : "todo";
+        const label = (
+          <>
+            <span
+              className={cn(
+                "flex size-7 shrink-0 items-center justify-center rounded-full border font-mono text-[0.7rem] transition-colors",
+                state === "done" && "border-(--brand) bg-(--brand) text-white",
+                state === "current" &&
+                  "border-(--brand) bg-(--surface-raised) text-(--brand) ring-4 ring-(--brand-tint)",
+                state === "todo" &&
+                  "border-(--line-strong) bg-(--surface-raised) text-muted-foreground"
+              )}
+            >
+              {state === "done" ? <Check aria-hidden className="size-3.5" /> : index + 1}
+            </span>
+            <span className="min-w-0">
+              <span
+                className={cn(
+                  "block whitespace-nowrap text-sm font-medium",
+                  state === "todo" ? "text-muted-foreground" : "text-foreground"
+                )}
+              >
+                {step.label}
+              </span>
+              <span className="hidden whitespace-nowrap text-xs text-muted-foreground lg:block">
+                {step.hint}
+              </span>
+            </span>
+          </>
+        );
+        return (
+          <li
+            key={step.id}
+            className={cn("flex min-w-0 flex-1 items-start gap-2", index > 0 && "sm:gap-3")}
+            aria-current={state === "current" ? "step" : undefined}
+          >
+            {index > 0 ? (
+              <span
+                aria-hidden
+                className={cn(
+                  "mt-3.5 h-px w-4 shrink-0 sm:w-6",
+                  index <= current ? "bg-(--brand)" : "bg-(--line-strong)"
+                )}
+              />
+            ) : null}
+            {state === "done" ? (
+              <button
+                type="button"
+                onClick={() => onJump(index as StepIndex)}
+                className="flex min-w-0 items-start gap-2 rounded-lg text-left hover:opacity-80"
+              >
+                {label}
+              </button>
+            ) : (
+              <span className="flex min-w-0 items-start gap-2">{label}</span>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 export function ContactForm() {
   const [state, setState] = useState(initialState);
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [step, setStep] = useState<StepIndex>(0);
+  const [errors, setErrors] = useState<Partial<Record<keyof DemoFormState, string>>>({});
+  const [announcement, setAnnouncement] = useState("");
+  const [checking, setChecking] = useState(false);
   const mountedRef = useRef(true);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const firstRenderRef = useRef(true);
+  const ids = useId();
+  const isFoundingPartner = state.enquiryType === FOUNDING_PARTNER_ENQUIRY;
+  const intentCopy = demoIntents[isFoundingPartner ? FOUNDING_PARTNER_INTENT : "demo"].form;
 
   useEffect(() => {
     return () => {
@@ -128,8 +440,28 @@ export function ContactForm() {
     };
   }, []);
 
+  /*
+    Keep the page copy and the choice in agreement, in both directions.
+
+    On a hard load the inline script in demo-intents.ts has already set this
+    attribute before paint; this effect is then a no-op. It earns its keep on a
+    client-side navigation (where no inline script re-runs) and when a visitor
+    changes the enquiry type by hand — the surrounding copy follows the choice
+    rather than contradicting it. The attribute is cleared on unmount so it
+    cannot leak into another route.
+  */
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isFoundingPartner) {
+      root.setAttribute(DEMO_INTENT_ATTRIBUTE, FOUNDING_PARTNER_INTENT);
+    } else {
+      root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
+    }
+    return () => root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
+  }, [isFoundingPartner]);
+
   // /demo/?intent=founding-partner preselects the founding-partner enquiry
-  // type. It stays a normal select the visitor can change; an unrecognised
+  // type. It stays a normal choice the visitor can change; an unrecognised
   // value simply leaves the default in place.
   useEffect(() => {
     const intent = new URLSearchParams(window.location.search).get("intent");
@@ -139,12 +471,63 @@ export function ContactForm() {
     }
   }, []);
 
-  const set = <K extends keyof DemoFormState>(key: K, value: DemoFormState[K]) =>
+  // Moving between steps: announce, and put focus on the first control of
+  // the new step. Not on first render — that would steal focus on page load.
+  useEffect(() => {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
+    setAnnouncement(`Step ${step + 1} of ${steps.length}: ${steps[step].label}`);
+    const first = panelRef.current?.querySelector<HTMLElement>(
+      "input:not([type=hidden]):not(.sr-only), select, textarea, label:has(input.sr-only) input"
+    );
+    first?.focus({ preventScroll: true });
+    panelRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [step]);
+
+  const set = <K extends keyof DemoFormState>(key: K, value: DemoFormState[K]) => {
     setState((current) => ({ ...current, [key]: value }));
+    setErrors((current) => (current[key] ? { ...current, [key]: undefined } : current));
+  };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  /** Validate only the controls rendered in the current step. */
+  const validateStep = () => {
+    const panel = panelRef.current;
+    if (!panel) {
+      return true;
+    }
+    const controls = Array.from(
+      panel.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+        "input, select, textarea"
+      )
+    );
+    const next: Partial<Record<keyof DemoFormState, string>> = {};
+    let firstInvalid: HTMLElement | null = null;
+    for (const control of controls) {
+      if (control.validity.valid) {
+        continue;
+      }
+      const key = control.name as keyof DemoFormState;
+      if (!next[key]) {
+        next[key] = validationMessage(control);
+        firstInvalid ??= control;
+      }
+    }
+    setErrors(next);
+    if (firstInvalid) {
+      firstInvalid.focus({ preventScroll: true });
+      return false;
+    }
+    return true;
+  };
 
+  const goTo = (next: StepIndex) => {
+    setErrors({});
+    setStep(next);
+  };
+
+  const submit = () => {
     // Honeypot: bots fill the hidden field, humans never see it.
     if (state.website) {
       setStatus("success");
@@ -172,11 +555,24 @@ export function ContactForm() {
       return;
     }
 
+    // Everything the visitor typed is valid. The only thing left is the human
+    // check, which is why it opens here rather than sitting in the form as one
+    // more step to clear on the way down: nobody reading the page is asked to
+    // prove anything, and no board is rendered for a form that was never sent.
+    if (!CHALLENGE_ENDPOINT) {
+      void submitToIntake();
+      return;
+    }
+    setStatus("verifying");
+    setChecking(true);
+  };
+
+  /** The actual POST. Carries a pass token when the check issued one. */
+  const submitToIntake = async (humanToken?: string) => {
     setStatus("submitting");
 
     try {
-      const { website: _honeypot, ...payload } = state;
-      const response = await fetch(CONTACT_ENDPOINT, {
+      const response = await fetch(CONTACT_ENDPOINT as string, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -184,7 +580,11 @@ export function ContactForm() {
         // The intent also rides along in `source`, which the intake function
         // has always stored, so a founding-partner enquiry is distinguishable
         // even before the handler's field allowlist is redeployed.
-        body: JSON.stringify({ ...payload, source: sourceTag(state.enquiryType) }),
+        body: JSON.stringify({
+          ...buildPayload(state),
+          source: sourceTag(state.enquiryType),
+          ...(humanToken ? { humanToken } : {}),
+        }),
       });
 
       if (!response.ok) {
@@ -200,7 +600,6 @@ export function ContactForm() {
       toast.success("Your request has been sent. We reply within one business day.");
       if (mountedRef.current) {
         setStatus("success");
-        setState(initialState);
       }
     } catch (error) {
       console.error(error);
@@ -209,184 +608,364 @@ export function ContactForm() {
     }
   };
 
+  const handleCheckResult = (result: HumanCheckResult) => {
+    setChecking(false);
+    if (result.kind === "cancel") {
+      // Nothing typed is lost; the form is exactly where they left it.
+      setStatus("idle");
+      return;
+    }
+    void submitToIntake(result.kind === "pass" ? result.token : undefined);
+  };
+
+  // One handler for Enter and for the buttons: Continue on the early steps,
+  // the real submit on the last. `noValidate` on the form keeps the browser
+  // from trying to focus a required control that is not on screen.
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!validateStep()) {
+      return;
+    }
+    if (step < LAST_STEP) {
+      goTo((step + 1) as StepIndex);
+      return;
+    }
+    submit();
+  };
+
+  if (status === "success" || status === "draft") {
+    return (
+      <>
+        <Toaster position="top-right" richColors />
+        <div
+          className="rounded-[1.4rem] border border-(--line) bg-(--surface-raised) p-6 sm:p-8"
+          role="status"
+        >
+          <span className="flex size-11 items-center justify-center rounded-full bg-(--state-ok-soft) text-(--state-ok)">
+            <Check aria-hidden className="size-5" />
+          </span>
+          <h3 className="type-card-title mt-5 text-foreground">
+            {status === "draft" ? "Email draft opened" : "Request received"}
+          </h3>
+          <p className="type-support mt-2 max-w-md">
+            {status === "draft"
+              ? "Send it from your mail app to complete the request. We reply within one business day."
+              : `We reply within one business day with a walkthrough plan for ${state.institution || "your institution"} and the right people to bring into the evaluation.`}
+          </p>
+          <div className="mt-6 text-sm text-muted-foreground">
+            Something to add?{" "}
+            <ButtonLink
+              href={`mailto:${CONTACT_EMAIL}`}
+              label="Email the team"
+              variant="ghost"
+              className="min-h-0 border-none px-0 py-0 align-baseline"
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       {/* Toaster lives with the form (the only surface that fires toasts), so
           sonner ships on /demo instead of every page in the root layout. */}
       <Toaster position="top-right" richColors />
-      <form onSubmit={handleSubmit} className="grid gap-4">
-        <div>
-          <label htmlFor="demo-enquiry-type" className={labelClassName}>
-            What is this about? *
-          </label>
-          <select
-            id="demo-enquiry-type"
-            name="enquiryType"
-            required
-            className={inputClassName}
-            value={state.enquiryType}
-            onChange={(event) => set("enquiryType", event.target.value)}
-          >
-            {enquiryTypeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
+      {checking && CHALLENGE_ENDPOINT ? (
+        <HumanCheck endpoint={CHALLENGE_ENDPOINT} onResolve={handleCheckResult} />
+      ) : null}
+      <form onSubmit={handleSubmit} noValidate className="grid gap-6">
+        <StepRail current={step} onJump={goTo} />
+        <p className="sr-only" aria-live="polite">
+          {announcement}
+        </p>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="demo-name" className={labelClassName}>
-              Your name *
-            </label>
-            <input
-              id="demo-name"
-              name="name"
-              required
-              autoComplete="name"
-              className={inputClassName}
-              placeholder="Full name"
-              value={state.name}
-              onChange={(event) => set("name", event.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="demo-email" className={labelClassName}>
-              Work email *
-            </label>
-            <input
-              id="demo-email"
-              name="email"
-              required
-              type="email"
-              autoComplete="email"
-              className={inputClassName}
-              placeholder="you@institution.edu.in"
-              value={state.email}
-              onChange={(event) => set("email", event.target.value)}
-            />
-          </div>
-        </div>
+        <div
+          key={step}
+          ref={panelRef}
+          className="grid gap-5 animate-in fade-in slide-in-from-right-2 duration-300 motion-reduce:animate-none"
+        >
+          {step === 0 ? (
+            <>
+              <fieldset>
+                <legend className={labelClassName}>What is this about?</legend>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {enquiryTypeOptions.map((option) => (
+                    <label
+                      key={option.value}
+                      className="group/card relative flex cursor-pointer gap-3 rounded-2xl border border-(--line-strong) bg-(--surface-raised) p-4 transition-[border-color,box-shadow] hover:border-(--brand) has-checked:border-(--brand) has-checked:shadow-[0_0_0_4px_var(--brand-tint)] has-focus-visible:ring-4 has-focus-visible:ring-(--brand-tint)"
+                    >
+                      <input
+                        type="radio"
+                        name="enquiryType"
+                        value={option.value}
+                        checked={state.enquiryType === option.value}
+                        onChange={() => set("enquiryType", option.value)}
+                        className="sr-only"
+                      />
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-(--brand-tint) text-(--brand) transition-colors group-has-checked/card:bg-(--brand) group-has-checked/card:text-white">
+                        <option.icon aria-hidden className="size-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-sm font-medium text-foreground">
+                          {option.title}
+                        </span>
+                        <span className="mt-0.5 block text-sm leading-5 text-muted-foreground">
+                          {option.body}
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden
+                        className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full border border-(--line-strong) bg-(--surface-raised) text-white transition-colors group-has-checked/card:border-(--brand) group-has-checked/card:bg-(--brand)"
+                      >
+                        <Check className="size-3 opacity-0 group-has-checked/card:opacity-100" />
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="demo-phone" className={labelClassName}>
-              Phone *
-            </label>
-            <input
-              id="demo-phone"
-              name="phone"
-              required
-              type="tel"
-              autoComplete="tel"
-              className={inputClassName}
-              placeholder="+91"
-              value={state.phone}
-              onChange={(event) => set("phone", event.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="demo-role" className={labelClassName}>
-              Your role *
-            </label>
-            <select
-              id="demo-role"
-              name="role"
-              required
-              autoComplete="organization-title"
-              className={inputClassName}
-              value={state.role}
-              onChange={(event) => set("role", event.target.value)}
-            >
-              <option value="" disabled>
-                Select role
-              </option>
-              {roleOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+              <Field id={`${ids}-name`} label="Your name" error={errors.name}>
+                <input
+                  id={`${ids}-name`}
+                  name="name"
+                  required
+                  autoComplete="name"
+                  className={fieldClassName}
+                  placeholder="Full name"
+                  value={state.name}
+                  aria-invalid={errors.name ? true : undefined}
+                  aria-describedby={errors.name ? `${ids}-name-error` : undefined}
+                  onChange={(event) => set("name", event.target.value)}
+                />
+              </Field>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="demo-institution" className={labelClassName}>
-              Institution / group name *
-            </label>
-            <input
-              id="demo-institution"
-              name="institution"
-              required
-              autoComplete="organization"
-              className={inputClassName}
-              placeholder="Institution or group name"
-              value={state.institution}
-              onChange={(event) => set("institution", event.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="demo-campuses" className={labelClassName}>
-              Number of campuses *
-            </label>
-            <select
-              id="demo-campuses"
-              name="campusCount"
-              required
-              className={inputClassName}
-              value={state.campusCount}
-              onChange={(event) => set("campusCount", event.target.value)}
-            >
-              <option value="" disabled>
-                Select
-              </option>
-              {campusCountOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field id={`${ids}-email`} label="Work email" error={errors.email}>
+                  <input
+                    id={`${ids}-email`}
+                    name="email"
+                    required
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    className={fieldClassName}
+                    placeholder="you@institution.edu.in"
+                    value={state.email}
+                    aria-invalid={errors.email ? true : undefined}
+                    aria-describedby={errors.email ? `${ids}-email-error` : undefined}
+                    onChange={(event) => set("email", event.target.value)}
+                  />
+                </Field>
+                <Field id={`${ids}-phone`} label="Phone" error={errors.phone}>
+                  <input
+                    id={`${ids}-phone`}
+                    name="phone"
+                    required
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    className={fieldClassName}
+                    placeholder="+91"
+                    value={state.phone}
+                    aria-invalid={errors.phone ? true : undefined}
+                    aria-describedby={errors.phone ? `${ids}-phone-error` : undefined}
+                    onChange={(event) => set("phone", event.target.value)}
+                  />
+                </Field>
+              </div>
+            </>
+          ) : null}
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="demo-current-system" className={labelClassName}>
-              Current system
-            </label>
-            <input
-              id="demo-current-system"
-              name="currentSystem"
-              autoComplete="off"
-              className={inputClassName}
-              placeholder="ERP name, spreadsheets, or mixed"
-              value={state.currentSystem}
-              onChange={(event) => set("currentSystem", event.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="demo-pain" className={labelClassName}>
-              Primary pain point
-            </label>
-            <select
-              id="demo-pain"
-              name="primaryPain"
-              className={inputClassName}
-              value={state.primaryPain}
-              onChange={(event) => set("primaryPain", event.target.value)}
-            >
-              <option value="" disabled>
-                Select
-              </option>
-              {primaryPainOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+          {step === 1 ? (
+            <>
+              <Field
+                id={`${ids}-institution`}
+                label="Institution or group"
+                error={errors.institution}
+              >
+                <input
+                  id={`${ids}-institution`}
+                  name="institution"
+                  required
+                  autoComplete="organization"
+                  className={fieldClassName}
+                  placeholder="Institution or group name"
+                  value={state.institution}
+                  aria-invalid={errors.institution ? true : undefined}
+                  aria-describedby={errors.institution ? `${ids}-institution-error` : undefined}
+                  onChange={(event) => set("institution", event.target.value)}
+                />
+              </Field>
+
+              <ChoiceGroup
+                name="campusCount"
+                legend="How many campuses?"
+                options={campusCountOptions}
+                value={state.campusCount}
+                onChange={(value) => set("campusCount", value)}
+                required
+                error={errors.campusCount}
+                columns="segmented"
+              />
+
+              <ChoiceGroup
+                name="role"
+                legend="Your role"
+                options={roleOptions}
+                value={state.role}
+                onChange={(value) => set("role", value)}
+                required
+                error={errors.role}
+              />
+
+              <Field id={`${ids}-current-system`} label="What runs the institution today?" optional>
+                <input
+                  id={`${ids}-current-system`}
+                  name="currentSystem"
+                  autoComplete="off"
+                  className={fieldClassName}
+                  placeholder="An ERP name, spreadsheets, or a mix"
+                  value={state.currentSystem}
+                  onChange={(event) => set("currentSystem", event.target.value)}
+                />
+              </Field>
+            </>
+          ) : null}
+
+          {step === 2 ? (
+            <>
+              {/* What the visitor has told us so far, so the last step feels
+                  like a confirmation rather than another form. */}
+              <dl className="flex flex-wrap gap-x-5 gap-y-1.5 rounded-xl bg-(--surface-sunken) px-4 py-3 text-sm">
+                {[
+                  ["Request", state.enquiryType],
+                  ["Institution", state.institution],
+                  ["Scale", state.campusCount],
+                  ["Role", state.role],
+                ].map(([term, value]) => (
+                  <div key={term} className="flex gap-1.5">
+                    <dt className="text-muted-foreground">{term}</dt>
+                    <dd className="font-medium text-foreground">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <ChoiceGroup
+                name="primaryPain"
+                legend="Where does it hurt most?"
+                options={primaryPainOptions}
+                value={state.primaryPain}
+                onChange={(value) => set("primaryPain", value)}
+                optional
+              />
+
+              {isFoundingPartner ? (
+                <div className="grid gap-5 rounded-2xl border border-(--line) bg-(--surface-sunken) p-4 sm:p-5">
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    The diagnosis is only as good as the bottleneck. Anything you can answer here
+                    makes the first conversation shorter and more concrete. All optional.
+                  </p>
+                  <Field id={`${ids}-bottleneck`} label="The operational bottleneck" optional>
+                    <textarea
+                      id={`${ids}-bottleneck`}
+                      name="bottleneck"
+                      rows={3}
+                      className={cn(fieldClassName, "h-auto resize-y py-3")}
+                      placeholder="Where visibility arrives late, ownership becomes unclear, or staff rebuild the same truth by hand."
+                      value={state.bottleneck}
+                      onChange={(event) => set("bottleneck", event.target.value)}
+                    />
+                  </Field>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field id={`${ids}-pilot-unit`} label="Intended pilot unit" optional>
+                      <input
+                        id={`${ids}-pilot-unit`}
+                        name="pilotUnit"
+                        autoComplete="off"
+                        className={fieldClassName}
+                        placeholder="One campus, school, department or workflow"
+                        value={state.pilotUnit}
+                        onChange={(event) => set("pilotUnit", event.target.value)}
+                      />
+                    </Field>
+                    <Field id={`${ids}-sponsor`} label="Accountable executive sponsor" optional>
+                      <input
+                        id={`${ids}-sponsor`}
+                        name="executiveSponsor"
+                        autoComplete="off"
+                        className={fieldClassName}
+                        placeholder="Name and role, or 'to be confirmed'"
+                        value={state.executiveSponsor}
+                        onChange={(event) => set("executiveSponsor", event.target.value)}
+                      />
+                    </Field>
+                  </div>
+                  <ChoiceGroup
+                    name="timeSensitivity"
+                    legend="Time sensitivity"
+                    options={timeSensitivityOptions}
+                    value={state.timeSensitivity}
+                    onChange={(value) => set("timeSensitivity", value)}
+                    optional
+                  />
+                  <Field id={`${ids}-success`} label="What would count as success" optional>
+                    <input
+                      id={`${ids}-success`}
+                      name="successMeasure"
+                      autoComplete="off"
+                      className={fieldClassName}
+                      placeholder="One measure you would judge the pilot on"
+                      value={state.successMeasure}
+                      onChange={(event) => set("successMeasure", event.target.value)}
+                    />
+                  </Field>
+                </div>
+              ) : null}
+
+              <Field id={`${ids}-message`} label="Anything the session should focus on?" optional>
+                <textarea
+                  id={`${ids}-message`}
+                  name="message"
+                  rows={3}
+                  className={cn(fieldClassName, "h-auto resize-y py-3")}
+                  placeholder="Current stack, timelines, or the one workflow you want to see."
+                  value={state.message}
+                  onChange={(event) => set("message", event.target.value)}
+                />
+              </Field>
+
+              <div>
+                <label className="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    required
+                    checked={state.consent}
+                    aria-invalid={errors.consent ? true : undefined}
+                    onChange={(event) => set("consent", event.target.checked)}
+                    className="mt-1 size-4 shrink-0 accent-(--brand)"
+                  />
+                  <span>
+                    SquareCampus may contact me about this request and process the details above as
+                    described in the{" "}
+                    <a
+                      href="/privacy-policy/"
+                      className="underline underline-offset-2 hover:text-foreground"
+                    >
+                      privacy policy
+                    </a>
+                    .
+                  </span>
+                </label>
+                {errors.consent ? (
+                  <p className="mt-1.5 text-sm text-(--state-critical)" role="alert">
+                    {errors.consent}
+                  </p>
+                ) : null}
+              </div>
+            </>
+          ) : null}
         </div>
 
         {/* Honeypot field — visually hidden and skipped by keyboard users. */}
@@ -400,78 +979,50 @@ export function ContactForm() {
           onChange={(event) => set("website", event.target.value)}
         />
 
-        <div>
-          <label htmlFor="demo-message" className={labelClassName}>
-            Anything else we should know?
-          </label>
-          <textarea
-            id="demo-message"
-            name="message"
-            rows={4}
-            className="w-full rounded-[1.5rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3 text-sm text-[color:var(--foreground)] outline-none transition-colors placeholder:text-[color:var(--muted-foreground)] focus:border-[color:var(--line-strong)]"
-            placeholder="Context on your current stack, timelines, or what the demo should focus on."
-            value={state.message}
-            onChange={(event) => set("message", event.target.value)}
-          />
-        </div>
-
-        <label className="flex items-start gap-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
-          <input
-            type="checkbox"
-            name="consent"
-            required
-            checked={state.consent}
-            onChange={(event) => set("consent", event.target.checked)}
-            className="mt-1 size-4 shrink-0 accent-[color:var(--brand)]"
-          />
-          <span>
-            I agree that SquareCampus may contact me about this request and process the details
-            above as described in the{" "}
-            <a
-              href="/privacy-policy/"
-              className="underline underline-offset-2 hover:text-[color:var(--foreground)]"
-            >
-              privacy policy
-            </a>
-            . *
-          </span>
-        </label>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p
-            aria-live="polite"
-            className="max-w-md text-sm leading-6 text-[color:var(--muted-foreground)]"
-          >
-            {status === "success"
-              ? "Request received. We reply within one business day."
-              : status === "draft"
-                ? "Email draft opened — send it from your mail app to complete the request."
-                : status === "error"
-                  ? `Submission failed. Email us at ${CONTACT_EMAIL} and we will pick it up.`
-                  : EMAIL_DRAFT_MODE
-                    ? `Submitting opens a pre-filled email draft to ${CONTACT_EMAIL} in your mail app — nothing is sent until you hit send.`
-                    : "We reply with a guided walkthrough plan and the right stakeholders to bring into the evaluation."}
-          </p>
+        <div className="flex flex-col-reverse gap-3 border-t border-(--line) pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            {step > 0 ? (
+              <button
+                type="button"
+                onClick={() => goTo((step - 1) as StepIndex)}
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-foreground transition-colors hover:bg-(--surface-muted)"
+              >
+                <ArrowLeft aria-hidden className="size-4" />
+                Back
+              </button>
+            ) : null}
+            <p aria-live="polite" className="max-w-sm text-sm leading-5 text-muted-foreground">
+              {status === "error"
+                ? `Submission failed. Email us at ${CONTACT_EMAIL} and we will pick it up.`
+                : step === LAST_STEP
+                  ? EMAIL_DRAFT_MODE
+                    ? `Submitting opens a pre-filled email draft to ${CONTACT_EMAIL} — nothing is sent until you hit send.`
+                    : intentCopy.idleNote
+                  : `Step ${step + 1} of ${steps.length}`}
+            </p>
+          </div>
           <button
             type="submit"
-            disabled={status === "submitting"}
-            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--foreground)] px-5 text-sm font-medium text-[color:var(--background)] transition-opacity hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={status === "submitting" || status === "verifying"}
+            className={cn(
+              "group/button inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-60",
+              step === LAST_STEP
+                ? "cta-button text-white"
+                : "bg-foreground text-background hover:opacity-92 active:opacity-85"
+            )}
           >
-            {status === "submitting"
-              ? "Submitting..."
-              : EMAIL_DRAFT_MODE
-                ? "Request Demo via Email"
-                : "Request Demo"}
+            {status === "submitting" || status === "verifying"
+              ? "Sending…"
+              : step === LAST_STEP
+                ? EMAIL_DRAFT_MODE
+                  ? intentCopy.emailSubmitLabel
+                  : intentCopy.submitLabel
+                : "Continue"}
+            <ArrowRight
+              aria-hidden
+              className="size-4 transition-transform duration-300 group-hover/button:translate-x-0.5"
+            />
           </button>
-        </div>
-        <div className="text-sm text-[color:var(--muted-foreground)]">
-          Need a direct line instead?{" "}
-          <ButtonLink
-            href={`mailto:${CONTACT_EMAIL}`}
-            label="Email the team"
-            variant="ghost"
-            className="min-h-0 border-none px-0 py-0 align-baseline"
-          />
         </div>
       </form>
     </>

@@ -334,7 +334,7 @@ export const pricingFaqs = [
   {
     question: "Can we keep our existing ERP during the pilot?",
     answer:
-      "Yes. A founding-partner pilot is deliberately scoped to one campus or one workflow bundle so the existing system keeps running alongside it. There is no compulsory rip-and-replace before the institution has evidence.",
+      "Yes. A founding-partner pilot is deliberately scoped to one campus or one workflow bundle, so the existing ERP keeps running and stays authoritative alongside it. Replacing anything is a later decision the institution takes once the evidence exists — never a precondition of starting.",
   },
   {
     question: "Is migration included?",

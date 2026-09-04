@@ -29,12 +29,22 @@ export function BrandLogo({
         )}
         style={{ width: iconSize, height: iconSize }}
       >
+        {/*
+          Explicit intrinsic width/height rather than `fill`.
+
+          `fill` emits an absolutely-positioned <img> with no width or height
+          attributes, which is the one remaining missing-dimension case on the
+          site — and it is the most repeated image there is, appearing in the
+          header and the footer of every page. The square box around it is
+          already sized by `iconSize`, so the attributes cost nothing and give
+          the browser the aspect ratio before the file arrives.
+        */}
         <Image
           src="/images/marketing/logo-light.webp"
           alt=""
-          fill
-          sizes={`${iconSize}px`}
-          className="object-contain"
+          width={iconSize}
+          height={iconSize}
+          className="h-full w-full object-contain"
         />
       </span>
       <span className="min-w-0">
