@@ -6,14 +6,14 @@ const baseUrl = "https://squarecampus.com";
 
 export const metadata: Metadata = {
   title: {
-    default: "Blog | SquareCampus",
+    // Bare "Blog", not "Blog | SquareCampus": the root layout's template
+    // already appends the brand, so the fuller string was rendering as
+    // "Blog | SquareCampus | SquareCampus" on the index.
+    default: "Blog",
     template: "%s | SquareCampus Blog",
   },
   description:
     "Product updates, implementation stories, and practical insights on how SquareCampus helps schools and colleges run on a single operating system.",
-  alternates: {
-    canonical: `${baseUrl}/blog`,
-  },
   openGraph: {
     title: "SquareCampus Blog",
     description:
@@ -31,6 +31,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  // The feed is the one discovery format every aggregator and assistant
+  // crawler already understands. `rel="alternate"` is correct here in a way it
+  // would not be site-wide: this really is another representation of /blog/.
+  alternates: {
+    canonical: `${baseUrl}/blog`,
+    types: {
+      "application/rss+xml": [{ url: `${baseUrl}/blog/feed.xml`, title: "SquareCampus Blog" }],
+    },
   },
 };
 

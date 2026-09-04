@@ -14,14 +14,15 @@
 - **Audience:** Finance officers, bursars, school administrators
 - **Angle:** Pain points (late payments, reconciliation) + solution (UPI, reminders, reports)
 - **CTA:** See fee module demo
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-07 — /blog/school-fee-reconciliation/
 
-### 3. School ERP Implementation: A 30-Day Rollout Playbook
+### 3. School ERP Implementation: What It Actually Involves
+- **Note:** published without the original "30-Day" framing — fixed implementation timelines are a forbidden claim (see docs/marketing-claims-register.md).
 - **Target keywords:** school ERP implementation, school software migration, how to implement school management system
 - **Audience:** IT coordinators, principals planning transitions
 - **Angle:** Week-by-week timeline, data migration checklist, staff training tips
 - **CTA:** Talk to implementation team
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-07-16 — /blog/school-erp-implementation/
 
 ---
 
@@ -32,7 +33,7 @@
 - **Audience:** Academic coordinators, curriculum heads
 - **Angle:** Grading patterns, report card formats, exam scheduling differences
 - **CTA:** See board-specific features
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-07-23 — /blog/board-specific-school-software/
 
 ### 5. Managing Multi-Branch Schools: Centralized Control vs Campus Autonomy
 - **Target keywords:** multi-campus school software, school chain management, group of schools ERP
@@ -46,7 +47,7 @@
 - **Audience:** Transport coordinators, operations managers, parents
 - **Angle:** Route optimization, GPS tracking, parent notifications, driver management
 - **CTA:** See transport module
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-04 — /blog/school-transport-management-india/
 
 ---
 
@@ -57,14 +58,14 @@
 - **Audience:** IT heads, compliance officers, data protection officers
 - **Angle:** Regulatory requirements, audit checklist, vendor evaluation criteria
 - **CTA:** Security documentation request
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-14 — /blog/student-data-security-dpdp-checklist/
 
 ### 8. Why Schools Are Moving Away from Spreadsheets (And What to Use Instead)
 - **Target keywords:** school management without Excel, replace spreadsheets school, school digitization
 - **Audience:** Administrators still using manual processes
 - **Angle:** Hidden costs of spreadsheets, data integrity risks, automation benefits
 - **CTA:** Free assessment call
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-21 — /blog/schools-outgrow-spreadsheets/
 
 ---
 
@@ -75,14 +76,14 @@
 - **Audience:** Class teachers, coordinators, principals
 - **Angle:** Biometric vs app-based, parent notifications, analytics, leave management
 - **CTA:** See attendance features
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-12 — /blog/attendance-early-warning-system/
 
 ### 10. Parent Communication Apps: What Schools Get Wrong (And How to Fix It)
 - **Target keywords:** parent app for schools, school communication app, parent teacher communication software
 - **Audience:** Principals, communication coordinators
 - **Angle:** Over-notification fatigue, message categorization, two-way communication
 - **CTA:** See parent app demo
-- **Status:** [ ] Draft [ ] Review [ ] Published
+- **Status:** [x] Published 2026-08-19 — /blog/parent-communication-schools/
 
 ---
 
@@ -110,3 +111,25 @@
 ### Publishing Cadence
 - Target: 2 posts per month
 - Prioritize by search volume and buyer intent
+
+---
+
+## Published outside this backlog
+
+Written because the site needed them, not because a keyword did.
+
+- [x] 2026-07-20 — /blog/school-erp-data-exit/ — what happens to your data when you leave a school ERP (exit clauses, export formats, evidenced deletion)
+- [x] 2026-07-29 — /blog/admissions-to-enrolment-gap/ — where admissions stall between enquiry and enrolment
+- [x] 2026-08-09 — /blog/exam-and-result-operations/ — datesheet to report card as a chain of handovers
+- [x] 2026-08-26 — /blog/trust-board-monthly-reporting/ — the monthly pack a trust board should actually see
+- [x] 2026-08-29 — /blog/founding-institutional-partner-pilot/ — the definitive explainer for the Founding Institutional Partner programme
+
+## Still open
+
+Topic 5 (multi-branch) and topic 1 (buyer's guide) were already published. Everything
+else in Priority 1-4 above is now published. Next candidates, in rough order of value:
+
+- Staff and HR operations: substitutions, leave, and the timetable that breaks
+- Fee concessions and RTE seats: governing exceptions that must be defensible
+- Build in-house or buy a platform: an honest comparison for school groups
+- What a school CIO should ask about integrations and APIs

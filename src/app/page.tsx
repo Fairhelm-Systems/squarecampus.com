@@ -394,7 +394,11 @@ export default function Home() {
                       </div>
                       <div className="flex flex-1 items-center justify-center py-6">
                         <div className="relative">
+                          {/* Decorative: every figure in this ring is also
+                              printed as text beside it, so the chart itself is
+                              kept out of the accessibility tree. */}
                           <svg
+                            aria-hidden="true"
                             width="160"
                             height="160"
                             viewBox="0 0 160 160"

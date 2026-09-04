@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ButtonLink } from "@/components/site/button-link";
 import type { BlogSection } from "@/content/blog/posts";
-import { blogPostBySlug, blogPosts } from "@/content/blog/posts";
+import { blogPostBySlug, blogPosts, relatedPosts, sectionSlug } from "@/content/blog/posts";
 import { canonicalUrl, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -52,6 +52,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   const post = blogPostBySlug(slug);
   if (!post) notFound();
+  const related = relatedPosts(slug);
 
   const articleSchema = {
     "@type": "BlogPosting",
@@ -70,6 +71,18 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
     publisher: { "@id": "https://squarecampus.com/#org" },
     ...(post.image && { image: post.image.src }),
+    // Word count is a real, checkable property of the document, so it costs
+    // nothing to state and helps a crawler judge depth. dateModified equals
+    // datePublished until a post is actually revised — claiming a fresher
+    // modification date than the content has is exactly the signal not to send.
+    wordCount: post.sections.reduce(
+      (total, section) =>
+        total +
+        section.paragraphs.join(" ").split(/\s+/).length +
+        (section.bullets?.join(" ").split(/\s+/).length ?? 0),
+      0
+    ),
+    dateModified: post.date,
   };
 
   return (
@@ -134,6 +147,39 @@ export default async function BlogPostPage({ params }: PageProps) {
           </figure>
         ) : null}
 
+        {/*
+          In-page contents. These posts run to nine or ten minutes, and a
+          reader arriving from search usually wants one section rather than the
+          whole thing. It doubles as a set of internal anchors a search engine
+          can offer as jump links. Suppressed on genuinely short posts, where
+          it would be furniture rather than navigation.
+        */}
+        {post.sections.length >= 5 ? (
+          <nav aria-labelledby="post-contents" className="surface-quiet rounded-[1.4rem] p-6">
+            <h2
+              id="post-contents"
+              className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground"
+            >
+              In this article
+            </h2>
+            <ol className="mt-4 grid gap-2 sm:grid-cols-2">
+              {post.sections.map((section, index) => (
+                <li key={section.heading} className="flex gap-3 text-sm leading-6">
+                  <span className="font-mono text-[0.7rem] text-muted-foreground tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <a
+                    href={`#${sectionSlug(section.heading)}`}
+                    className="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                  >
+                    {section.heading}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : null}
+
         <section className="flex flex-col gap-12">
           {post.sections.map((section) => (
             <BlogSectionBlock key={section.heading} section={section} />
@@ -147,6 +193,43 @@ export default async function BlogPostPage({ params }: PageProps) {
             <ButtonLink href={post.cta.href} label={post.cta.label} />
           </div>
         </section>
+
+        {/*
+          Related reading. Three links per post turns a flat list of articles
+          into a browsable library — the reader gets somewhere to go next, and
+          the crawler gets internal links between posts that would otherwise
+          only ever be reachable from the index.
+        */}
+        {related.length > 0 ? (
+          <section aria-labelledby="related-posts" className="border-t border-(--line) pt-10">
+            <h2
+              id="related-posts"
+              className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground"
+            >
+              Related reading
+            </h2>
+            <div className="mt-5 grid gap-4 sm:grid-cols-3">
+              {related.map((item) => (
+                <article
+                  key={item.slug}
+                  className="surface-panel group relative flex flex-col rounded-[1.3rem] p-5"
+                >
+                  <span className="font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground">
+                    {item.tag ?? "Update"}
+                  </span>
+                  <h3 className="mt-3 font-display text-lg leading-snug tracking-[-0.03em]">
+                    <Link href={`/blog/${item.slug}`} className="after:absolute after:inset-0">
+                      {item.title}
+                    </Link>
+                  </h3>
+                  <span className="mt-auto pt-4 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted-foreground">
+                    {item.readingTime}
+                  </span>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-(--line) pt-8 text-sm text-muted-foreground">
           <div className="flex w-full flex-wrap items-center justify-between gap-4">
@@ -199,7 +282,13 @@ function SectionImage({ image, className }: { image: BlogSection["image"]; class
 function SectionContent({ section }: { section: BlogSection }) {
   return (
     <div className="space-y-4">
-      <h2 className="font-display text-2xl tracking-[-0.04em]">{section.heading}</h2>
+      {/* scroll-mt clears the sticky header when an anchor is followed. */}
+      <h2
+        id={sectionSlug(section.heading)}
+        className="scroll-mt-24 font-display text-2xl tracking-[-0.04em]"
+      >
+        {section.heading}
+      </h2>
       {section.paragraphs.map((paragraph) => (
         <p key={paragraph} className="text-base leading-8 text-muted-foreground">
           {paragraph}

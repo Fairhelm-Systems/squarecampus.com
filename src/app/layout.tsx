@@ -106,6 +106,21 @@ export default function RootLayout({
       data-theme="light"
     >
       <head>
+        {/*
+          Pointer to the machine-readable site summary.
+
+          `rel="llms-txt"` is a custom relation, not a registered one: browsers
+          and search engines ignore unknown rel tokens, so it costs nothing and
+          risks nothing, and the tooling that does look for it finds the file
+          without having to guess the conventional path. Deliberately NOT
+          `rel="alternate" type="text/plain"` — that would claim llms.txt is an
+          alternate representation of whichever page it appears on, which is
+          false on all but the homepage.
+
+          Discovery is layered on purpose: this tag, a footer link on every
+          page, a pointer comment in robots.txt, and a sitemap entry.
+        */}
+        <link rel="llms-txt" href="/llms.txt" />
         <ThemeScript />
         {/*
           The scroll-reveal system starts at `opacity: 0` and relies on JS to

@@ -4,6 +4,11 @@ import { ArrowLeft, ArrowRight, Check, Handshake, MonitorPlay } from "lucide-rea
 import type { FormEvent, ReactNode } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
+import {
+  DEMO_INTENT_ATTRIBUTE,
+  demoIntents,
+  FOUNDING_PARTNER_INTENT,
+} from "@/content/demo-intents";
 import { cn } from "@/lib/utils";
 import { ButtonLink } from "./button-link";
 import { HumanCheck, type HumanCheckResult } from "./human-check";
@@ -21,6 +26,13 @@ type DemoFormState = {
   message: string;
   consent: boolean;
   website: string;
+  // Founding-partner diagnosis answers. Only posted for a founding-partner
+  // enquiry (see `buildPayload`).
+  bottleneck: string;
+  executiveSponsor: string;
+  pilotUnit: string;
+  timeSensitivity: string;
+  successMeasure: string;
 };
 
 const initialState: DemoFormState = {
@@ -36,6 +48,11 @@ const initialState: DemoFormState = {
   message: "",
   consent: false,
   website: "",
+  bottleneck: "",
+  executiveSponsor: "",
+  pilotUnit: "",
+  timeSensitivity: "",
+  successMeasure: "",
 };
 
 /**
@@ -65,8 +82,9 @@ const enquiryTypeOptions = [
  * parameter is never rendered, stored or echoed back.
  */
 const INTENT_PARAM: Record<string, (typeof enquiryTypeOptions)[number]["value"]> = {
-  "founding-partner": "Founding Institutional Partnership",
+  [FOUNDING_PARTNER_INTENT]: "Founding Institutional Partnership",
 };
+const FOUNDING_PARTNER_ENQUIRY = INTENT_PARAM[FOUNDING_PARTNER_INTENT];
 
 const roleOptions = [
   "Trustee / Director",
@@ -79,15 +97,57 @@ const roleOptions = [
 
 const campusCountOptions = ["1 campus", "2–5 campuses", "6–15 campuses", "15+ campuses"] as const;
 
+/**
+ * Pain points, written so one list serves a school and a multi-school
+ * university group. The exception-shaped options (reconciliation, ownership,
+ * approvals) are the ones a founding pilot can actually be scoped around.
+ */
 const primaryPainOptions = [
+  "Payment-to-ERP reconciliation exceptions",
+  "Admissions-to-enrolment visibility",
+  "Cross-department workflow ownership",
+  "Approvals and decision latency",
+  "Multi-campus or multi-school governance",
   "Fragmented reporting across systems",
-  "Fee collection and reconciliation",
-  "Admissions pipeline visibility",
-  "Parent communication overload",
+  "Parent and guardian communication overload",
   "Compliance and audit readiness",
-  "Multi-campus control",
   "Other",
 ] as const;
+
+const timeSensitivityOptions = [
+  "Blocking us now",
+  "Before the next admissions cycle",
+  "This academic year",
+  "Exploring, no fixed date",
+] as const;
+
+/** Founding-partner answers, in the order the reader was asked for them. */
+const foundingPartnerFields = [
+  ["bottleneck", "Operational bottleneck"],
+  ["pilotUnit", "Intended pilot unit"],
+  ["executiveSponsor", "Executive sponsor"],
+  ["timeSensitivity", "Time sensitivity"],
+  ["successMeasure", "Success measure"],
+] as const;
+
+/**
+ * The wire payload.
+ *
+ * A generic demo enquiry sends exactly the fields it always sent: the
+ * founding-partner answers are dropped rather than posted as five empty
+ * strings, so nothing about the existing intake record changes shape.
+ */
+function buildPayload(state: DemoFormState) {
+  const { website: _honeypot, ...rest } = state;
+  if (state.enquiryType === FOUNDING_PARTNER_ENQUIRY) {
+    return rest;
+  }
+  const generic = { ...rest };
+  for (const [key] of foundingPartnerFields) {
+    delete (generic as Partial<DemoFormState>)[key];
+  }
+  return generic;
+}
 
 // Static export: the site has no server of its own, so the form posts to an
 // external intake endpoint configured at build time via
@@ -114,6 +174,10 @@ const CHALLENGE_ENDPOINT = CONTACT_ENDPOINT?.endsWith("/contact")
 
 function buildEmailDraft(state: DemoFormState) {
   const subject = `${state.enquiryType} — ${state.institution || state.name}`;
+  const founding =
+    state.enquiryType === FOUNDING_PARTNER_ENQUIRY
+      ? foundingPartnerFields.map(([key, label]) => state[key] && `${label}: ${state[key]}`)
+      : [];
   const body = [
     `Enquiry type: ${state.enquiryType}`,
     `Name: ${state.name}`,
@@ -124,6 +188,7 @@ function buildEmailDraft(state: DemoFormState) {
     `Campuses: ${state.campusCount}`,
     state.currentSystem && `Current system: ${state.currentSystem}`,
     state.primaryPain && `Primary pain point: ${state.primaryPain}`,
+    ...founding,
     "",
     state.message,
   ]
@@ -366,12 +431,34 @@ export function ContactForm() {
   const panelRef = useRef<HTMLDivElement | null>(null);
   const firstRenderRef = useRef(true);
   const ids = useId();
+  const isFoundingPartner = state.enquiryType === FOUNDING_PARTNER_ENQUIRY;
+  const intentCopy = demoIntents[isFoundingPartner ? FOUNDING_PARTNER_INTENT : "demo"].form;
 
   useEffect(() => {
     return () => {
       mountedRef.current = false;
     };
   }, []);
+
+  /*
+    Keep the page copy and the choice in agreement, in both directions.
+
+    On a hard load the inline script in demo-intents.ts has already set this
+    attribute before paint; this effect is then a no-op. It earns its keep on a
+    client-side navigation (where no inline script re-runs) and when a visitor
+    changes the enquiry type by hand — the surrounding copy follows the choice
+    rather than contradicting it. The attribute is cleared on unmount so it
+    cannot leak into another route.
+  */
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isFoundingPartner) {
+      root.setAttribute(DEMO_INTENT_ATTRIBUTE, FOUNDING_PARTNER_INTENT);
+    } else {
+      root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
+    }
+    return () => root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
+  }, [isFoundingPartner]);
 
   // /demo/?intent=founding-partner preselects the founding-partner enquiry
   // type. It stays a normal choice the visitor can change; an unrecognised
@@ -485,7 +572,6 @@ export function ContactForm() {
     setStatus("submitting");
 
     try {
-      const { website: _honeypot, ...payload } = state;
       const response = await fetch(CONTACT_ENDPOINT as string, {
         method: "POST",
         headers: {
@@ -495,7 +581,7 @@ export function ContactForm() {
         // has always stored, so a founding-partner enquiry is distinguishable
         // even before the handler's field allowlist is redeployed.
         body: JSON.stringify({
-          ...payload,
+          ...buildPayload(state),
           source: sourceTag(state.enquiryType),
           ...(humanToken ? { humanToken } : {}),
         }),
@@ -774,6 +860,69 @@ export function ContactForm() {
                 optional
               />
 
+              {isFoundingPartner ? (
+                <div className="grid gap-5 rounded-2xl border border-(--line) bg-(--surface-sunken) p-4 sm:p-5">
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    The diagnosis is only as good as the bottleneck. Anything you can answer here
+                    makes the first conversation shorter and more concrete. All optional.
+                  </p>
+                  <Field id={`${ids}-bottleneck`} label="The operational bottleneck" optional>
+                    <textarea
+                      id={`${ids}-bottleneck`}
+                      name="bottleneck"
+                      rows={3}
+                      className={cn(fieldClassName, "h-auto resize-y py-3")}
+                      placeholder="Where visibility arrives late, ownership becomes unclear, or staff rebuild the same truth by hand."
+                      value={state.bottleneck}
+                      onChange={(event) => set("bottleneck", event.target.value)}
+                    />
+                  </Field>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field id={`${ids}-pilot-unit`} label="Intended pilot unit" optional>
+                      <input
+                        id={`${ids}-pilot-unit`}
+                        name="pilotUnit"
+                        autoComplete="off"
+                        className={fieldClassName}
+                        placeholder="One campus, school, department or workflow"
+                        value={state.pilotUnit}
+                        onChange={(event) => set("pilotUnit", event.target.value)}
+                      />
+                    </Field>
+                    <Field id={`${ids}-sponsor`} label="Accountable executive sponsor" optional>
+                      <input
+                        id={`${ids}-sponsor`}
+                        name="executiveSponsor"
+                        autoComplete="off"
+                        className={fieldClassName}
+                        placeholder="Name and role, or 'to be confirmed'"
+                        value={state.executiveSponsor}
+                        onChange={(event) => set("executiveSponsor", event.target.value)}
+                      />
+                    </Field>
+                  </div>
+                  <ChoiceGroup
+                    name="timeSensitivity"
+                    legend="Time sensitivity"
+                    options={timeSensitivityOptions}
+                    value={state.timeSensitivity}
+                    onChange={(value) => set("timeSensitivity", value)}
+                    optional
+                  />
+                  <Field id={`${ids}-success`} label="What would count as success" optional>
+                    <input
+                      id={`${ids}-success`}
+                      name="successMeasure"
+                      autoComplete="off"
+                      className={fieldClassName}
+                      placeholder="One measure you would judge the pilot on"
+                      value={state.successMeasure}
+                      onChange={(event) => set("successMeasure", event.target.value)}
+                    />
+                  </Field>
+                </div>
+              ) : null}
+
               <Field id={`${ids}-message`} label="Anything the session should focus on?" optional>
                 <textarea
                   id={`${ids}-message`}
@@ -848,7 +997,7 @@ export function ContactForm() {
                 : step === LAST_STEP
                   ? EMAIL_DRAFT_MODE
                     ? `Submitting opens a pre-filled email draft to ${CONTACT_EMAIL} — nothing is sent until you hit send.`
-                    : "We reply within one business day."
+                    : intentCopy.idleNote
                   : `Step ${step + 1} of ${steps.length}`}
             </p>
           </div>
@@ -866,8 +1015,8 @@ export function ContactForm() {
               ? "Sending…"
               : step === LAST_STEP
                 ? EMAIL_DRAFT_MODE
-                  ? "Request demo via email"
-                  : "Request the walkthrough"
+                  ? intentCopy.emailSubmitLabel
+                  : intentCopy.submitLabel
                 : "Continue"}
             <ArrowRight
               aria-hidden

@@ -127,6 +127,50 @@ export default function RolloutPage() {
         </div>
       </SectionShell>
 
+      {/*
+        Deployment paths.
+
+        The site describes SquareCampus three ways — as a connected system that
+        replaces fragmented tools, as a layer that coexists with what an
+        institution already runs, and as a governed decision layer. Those are
+        the same product at three points on one path, but a reader meeting all
+        three across /pricing/, /launch-partners/ and here has no way to know
+        that. Stated once, on the page about how deployment actually happens,
+        so the other pages do not each have to hedge.
+      */}
+      <SectionShell
+        id="deployment-paths"
+        eyebrow="Two paths, one product"
+        title="Coexistence first. Replacement only when the institution chooses it."
+        body="Nothing has to be switched off for a SquareCampus deployment to begin, and nothing is replaced on a vendor’s schedule."
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-2">
+          <div className="surface-panel rounded-[1.6rem] p-6 sm:p-8">
+            <p className="section-kicker">Path one · Coexistence</p>
+            <h2 className="mt-4 font-display text-2xl tracking-[-0.04em]">
+              A bounded deployment runs alongside the current stack.
+            </h2>
+            <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
+              One campus, or one workflow bundle. The existing ERP, LMS, payment portal and identity
+              provider stay in place and stay authoritative. SquareCampus governs the workflow that
+              runs across them — routing exceptions, assigning ownership, recording what was decided
+              — while critical numbers are validated in parallel.
+            </p>
+          </div>
+          <div className="surface-quiet rounded-[1.6rem] p-6 sm:p-8">
+            <p className="section-kicker">Path two · Consolidation</p>
+            <h2 className="mt-4 font-display text-2xl tracking-[-0.04em]">
+              A later rollout may replace selected fragmented tools.
+            </h2>
+            <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
+              When the institution decides to — after the evidence exists, and workflow by workflow.
+              Consolidation is an outcome an institution can choose, never a precondition of
+              starting. There is no compulsory rip-and-replace at any point.
+            </p>
+          </div>
+        </Reveal>
+      </SectionShell>
+
       <SectionShell
         eyebrow="Execution path"
         title="A rollout sequence built for operational reality"
@@ -213,15 +257,15 @@ export default function RolloutPage() {
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
                 We can map your institution’s current operating stack, outline a rollout path, and
-                show where SquareCampus replaces complexity without destabilizing the term in
-                motion.
+                show where SquareCampus would sit alongside what you already run — and where it
+                would eventually replace complexity, without destabilizing the term in motion.
               </p>
             </div>
             <div className="grid gap-3">
               <ButtonLink href={siteCtas.demoHref} label="Book rollout session" />
               <ButtonLink
                 href={siteCtas.whyDifferentHref}
-                label="See why institutions switch"
+                label="See why institutions choose us"
                 variant="secondary"
               />
             </div>
