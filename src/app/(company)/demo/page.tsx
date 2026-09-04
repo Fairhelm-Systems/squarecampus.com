@@ -79,8 +79,7 @@ export default function DemoPage() {
               Tell us what needs replacing.
             </h2>
             <p className="mt-3 max-w-xl text-base leading-7 text-[color:var(--muted-foreground)]">
-              The more specific you are, the better the session. Admissions chaos, fee operations,
-              parent communication overload, fragmented reporting, or all of the above.
+              Three short steps. The more specific the bottleneck, the better the session.
             </p>
             <div className="mt-6">
               <ContactForm />

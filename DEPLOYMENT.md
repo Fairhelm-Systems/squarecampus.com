@@ -168,10 +168,15 @@ upgrade-insecure-requests
 
 The product screenshots under `/images/screens/*` are real UI and are the
 images we *want* in Google Images — they're listed in the image sitemap
-(`src/app/sitemap.ts`). The assets under `/images/devices/*` are the opposite:
+(`src/app/sitemap.ts`). The assets under `/images/devices/*` were the opposite:
 empty device bezels (the MacBook / iPhone chrome that frames a screenshot).
 With no guidance Google indexed the blank MacBook frame as a "SquareCampus"
 image, which is not the impression we want.
+
+> Since September 2026 the device frames are drawn in CSS
+> (`src/components/site/device-frames.tsx`) and `/images/devices/*` no longer
+> exists in the export. The behavior below is harmless with nothing to match
+> and can stay as a guard for any future decorative asset placed there.
 
 There is no meta-tag for a standalone image file, so the signal has to be an
 HTTP header. Create a second Response Headers Policy — `squarecampus-noindex-art`
@@ -224,3 +229,33 @@ aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 - `headers()` / `redirects()` in next.config.ts → response headers policy +
   CloudFront Function above
 - Resend/Upstash/AWS SDK server dependencies → no longer needed at runtime
+
+## Contact API routes
+
+The `/api/*` behaviour points at the intake API (CachingDisabled,
+AllViewerExceptHostHeader, all methods). Four routes exist on the HTTP API,
+all POST, all backed by the same Lambda:
+
+| Route | Purpose |
+| --- | --- |
+| `POST /api/contact` | Form submission. |
+| `POST /contact` | Legacy path, kept working. |
+| `POST /api/challenge` | Issue a human-check board (PNG + tile start). |
+| `POST /api/challenge/solve` | Mark one board, return a pass token. |
+
+Two things about this that cost time to discover:
+
+- **Lambda invoke permission is scoped per path.** The existing statements
+  named `.../*/*/contact` and `.../*/*/api/contact` only, so the new routes
+  returned a 500 from API Gateway — the function was never invoked. Every new
+  route needs its own `lambda add-permission` with a matching `--source-arn`.
+- **Both challenge routes are POST on purpose.** Browsers do not send `Origin`
+  on a same-origin GET, and the handler's origin allowlist is one of the things
+  keeping bare scripts out — a GET route would have left that check inspecting
+  a header that is never there.
+
+A 403 from any of these renders as the site's HTML 404 page, because the
+distribution maps `403 -> /404.html` for the whole distribution. It is
+misleading when debugging and harmless in practice: 400, 429 and 503 pass
+through untouched, and a real browser always sends `Origin`. Narrowing the
+custom error responses to exclude `/api/*` would fix it.

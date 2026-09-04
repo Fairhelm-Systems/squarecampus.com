@@ -17,6 +17,7 @@ import type { Metadata } from "next";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
 import { ButtonLink } from "@/components/site/button-link";
 import { FoundingPartnerSection } from "@/components/site/founding-partner-section";
+import { GlyphField } from "@/components/site/glyph-field";
 import { HeroProductComposition } from "@/components/site/hero-product";
 import { MobileExpand } from "@/components/site/mobile-expand";
 import { PainRemedyGrid } from "@/components/site/pain-remedy";
@@ -208,7 +209,11 @@ export default function Home() {
             product proof → supporting evidence. Explicit grid placement then
             lifts the proof statements back under the copy on desktop, so no
             `order` juggling is needed and the tab order stays natural. */}
-        <SectionShell className="pt-8 pb-6 sm:pt-14 sm:pb-12 lg:pb-16">
+        <SectionShell className="isolate pt-8 pb-6 sm:pt-14 sm:pb-12 lg:pb-16">
+          {/* Ledger glyph backdrop. `isolate` on the section keeps the canvas's
+              negative z-index inside the section, above the page texture and
+              below the copy. Decoration only — see glyph-field.tsx. */}
+          <GlyphField />
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12 xl:gap-14">
             <Reveal
               immediate

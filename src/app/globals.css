@@ -119,23 +119,35 @@
   --radius-panel: 1.6rem;
   --radius-panel-lg: 2rem;
   --radius-chip: 0.9rem;
+
+  /* Device frames (see "Device frames" below). The shell is the aluminium,
+     the glass is the black border around every screen, the lip is the
+     shadow the lid casts on the base. */
+  --device-shell-a: #f1f2f4;
+  --device-shell-b: #c3c7cf;
+  --device-shell-edge: rgba(20, 28, 44, 0.24);
+  --device-glass: #0b0e14;
+  --device-glass-edge: rgba(255, 255, 255, 0.09);
+  --device-lip: rgba(20, 28, 44, 0.22);
+  --device-shadow: rgba(8, 15, 30, 0.3);
+  --device-glare: rgba(255, 255, 255, 0.16);
 }
 
 .dark {
-  --background: oklch(0.085 0.01 252);
+  --background: oklch(0.055 0.008 252);
   --foreground: oklch(0.965 0.004 85);
-  --card: oklch(0.11 0.01 252);
+  --card: oklch(0.085 0.009 252);
   --card-foreground: oklch(0.965 0.004 85);
-  --popover: oklch(0.11 0.01 252);
+  --popover: oklch(0.085 0.009 252);
   --popover-foreground: oklch(0.965 0.004 85);
   --primary: oklch(0.965 0.004 85);
-  --primary-foreground: oklch(0.085 0.01 252);
-  --secondary: oklch(0.145 0.01 252);
+  --primary-foreground: oklch(0.055 0.008 252);
+  --secondary: oklch(0.115 0.009 252);
   --secondary-foreground: oklch(0.94 0.004 85);
-  --muted: oklch(0.14 0.01 252);
+  --muted: oklch(0.11 0.009 252);
   --muted-foreground: oklch(0.79 0.013 252);
   --accent: oklch(0.69 0.09 247);
-  --accent-foreground: oklch(0.085 0.01 252);
+  --accent-foreground: oklch(0.055 0.008 252);
   --destructive: oklch(0.68 0.18 25);
   --border: oklch(0.96 0.004 85 / 7%);
   --input: oklch(0.96 0.004 85 / 8%);
@@ -145,25 +157,25 @@
   --chart-3: oklch(0.78 0.1 74);
   --chart-4: oklch(0.73 0.11 32);
   --chart-5: oklch(0.76 0.05 220);
-  --sidebar: oklch(0.11 0.01 252);
+  --sidebar: oklch(0.085 0.009 252);
   --sidebar-foreground: oklch(0.965 0.004 85);
   --sidebar-primary: oklch(0.965 0.004 85);
-  --sidebar-primary-foreground: oklch(0.085 0.01 252);
-  --sidebar-accent: oklch(0.145 0.01 252);
+  --sidebar-primary-foreground: oklch(0.055 0.008 252);
+  --sidebar-accent: oklch(0.115 0.009 252);
   --sidebar-accent-foreground: oklch(0.94 0.004 85);
   --sidebar-border: oklch(0.96 0.004 85 / 7%);
   --sidebar-ring: oklch(0.72 0.08 247);
-  --surface: rgba(9, 14, 24, 0.74);
-  --surface-strong: rgba(11, 18, 30, 0.9);
+  --surface: rgba(5, 8, 15, 0.78);
+  --surface-strong: rgba(7, 11, 20, 0.92);
   --surface-muted: rgba(255, 255, 255, 0.035);
-  --line: rgba(214, 222, 238, 0.075);
-  --line-strong: rgba(214, 222, 238, 0.13);
+  --line: rgba(214, 222, 238, 0.085);
+  --line-strong: rgba(214, 222, 238, 0.15);
   --brand: oklch(0.69 0.09 247);
   --brand-soft: rgba(76, 109, 203, 0.14);
   --teal: oklch(0.72 0.07 181);
   --amber: oklch(0.79 0.09 74);
 
-  --surface-raised: rgba(16, 24, 39, 0.94);
+  --surface-raised: rgba(10, 15, 26, 0.95);
   --surface-sunken: rgba(255, 255, 255, 0.022);
   --brand-tint: rgba(96, 132, 214, 0.09);
 
@@ -176,9 +188,18 @@
 
   --focus-ring: oklch(0.78 0.1 247);
 
-  --shadow-1: 0 12px 32px rgba(0, 0, 0, 0.26);
-  --shadow-2: 0 24px 70px rgba(0, 0, 0, 0.34);
-  --shadow-3: 0 34px 100px rgba(0, 0, 0, 0.44);
+  --shadow-1: 0 12px 32px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 24px 70px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 34px 100px rgba(0, 0, 0, 0.6);
+
+  --device-shell-a: #3b414d;
+  --device-shell-b: #171b23;
+  --device-shell-edge: rgba(255, 255, 255, 0.14);
+  --device-glass: #04060a;
+  --device-glass-edge: rgba(255, 255, 255, 0.12);
+  --device-lip: rgba(0, 0, 0, 0.55);
+  --device-shadow: rgba(0, 0, 0, 0.6);
+  --device-glare: rgba(255, 255, 255, 0.09);
 }
 
 @layer base {
@@ -206,8 +227,8 @@
     background-image:
       radial-gradient(circle at 16% -4%, rgba(76, 109, 203, 0.16), transparent 24%),
       radial-gradient(circle at 84% 4%, rgba(63, 156, 147, 0.08), transparent 18%),
-      radial-gradient(circle at 50% 100%, rgba(24, 35, 60, 0.28), transparent 30%),
-      linear-gradient(180deg, rgb(4 8 16), rgb(6 10 18) 42%, rgb(3 6 12));
+      radial-gradient(circle at 50% 100%, rgba(18, 27, 48, 0.24), transparent 30%),
+      linear-gradient(180deg, rgb(2 4 9), rgb(3 6 12) 42%, rgb(1 2 6));
   }
 
   body::selection {
@@ -248,25 +269,17 @@
   }
 
   /*
-   * Hero decoration loaded via CSS, not <img>.
+   * Hero student-phone screen loaded via CSS, not <img>.
    *
    * `display:none` does NOT prevent an <img> from being fetched, and neither
    * does loading="lazy" on a hidden element — Chrome downloads both. A
    * background-image declared inside a media query that does not match is
-   * genuinely never requested, so phones never pay for the laptop bezel
-   * (23 kB) or the student phone (51 kB).
+   * genuinely never requested, so phones never pay for the student screen
+   * (51 kB). The device bezels themselves are drawn in CSS (see "Device
+   * frames" below) and cost no request at any breakpoint.
    */
-  .hero-bezel,
   .hero-phone-screen {
     background-repeat: no-repeat;
-  }
-
-  @media (min-width: 64rem) {
-    .hero-bezel {
-      background-image: url("/images/devices/macbook-air-figma.webp");
-      background-size: contain;
-      background-position: center;
-    }
   }
 
   @media (min-width: 80rem) {
@@ -700,6 +713,409 @@
   }
 }
 
+/* In the components layer on purpose: an unlayered `.device-phone { position:
+   relative }` would beat Tailwind's `absolute` utility on the same element,
+   and callers do position these frames with utilities. */
+@layer components {
+  /* ---------------------------------------------------------------------------
+   * Device frames.
+   *
+   * The MacBook and the phone are drawn in CSS: no raster bezel, no request at
+   * any breakpoint, and the shell follows the theme (silver in light, space
+   * grey in dark). Every dimension is in container-query units, so a frame
+   * scales with whatever column it is placed in and the screen cutout is
+   * always exactly 16:10 (laptop) or 390:844 (phone) — the ratios the rendered
+   * screens are produced at.
+   *
+   *   .device-laptop            container (width = 100cqw)
+   *     .device-laptop__lid     black glass with the camera dot
+   *       .device-laptop__screen  16:10, overflow hidden, receives the screen
+   *     .device-laptop__base    aluminium deck with the lid notch
+   *     .device-laptop__shadow  soft floor shadow
+   *
+   *   .device-phone             container
+   *     .device-phone__body     aluminium rail + black glass rim, 410:864
+   *       .device-phone__screen 390:844, overflow hidden
+   *       .device-phone__island Dynamic-Island cutout
+   *       .device-phone__btn    side buttons
+   *
+   * `.device-laptop--collapsible` drops the bezel below lg: on a phone the
+   * frame costs a quarter of the width, which is what made the dashboard
+   * illegible, so small screens get the screen alone in a plain rounded box.
+   * ------------------------------------------------------------------------ */
+  .device-laptop {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+  }
+
+  .device-laptop__lid {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    width: 86cqw;
+    padding: 1.55cqw 1.35cqw 2cqw;
+    border-radius: 1.8cqw 1.8cqw 0.55cqw 0.55cqw;
+    background: var(--device-glass);
+    box-shadow:
+      inset 0 0 0 0.09cqw var(--device-glass-edge),
+      0 0 0 0.3cqw var(--device-shell-b),
+      0 0 0 0.38cqw var(--device-shell-edge),
+      0 1.6cqw 3cqw -1cqw var(--device-shadow);
+  }
+
+  /* Camera. */
+  .device-laptop__lid::before {
+    content: "";
+    position: absolute;
+    top: 0.58cqw;
+    left: 50%;
+    width: 0.46cqw;
+    height: 0.46cqw;
+    margin-left: -0.23cqw;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 36%, #3d4a63 0%, #121826 55%, #05070b 100%);
+    box-shadow: 0 0 0 0.08cqw rgba(255, 255, 255, 0.08);
+  }
+
+  .device-laptop__screen {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 0.5cqw;
+    background: var(--surface);
+    /* A hair of black behind the screen edge reads as the glass bevel. */
+    box-shadow: inset 0 0 0 0.06cqw rgba(0, 0, 0, 0.4);
+  }
+
+  .device-laptop__screen > * {
+    position: absolute;
+    inset: 0;
+  }
+
+  .device-laptop__base {
+    position: relative;
+    z-index: 2;
+    width: 100cqw;
+    height: 2.05cqw;
+    border-radius: 0.3cqw 0.3cqw 1.2cqw 1.2cqw / 0.3cqw 0.3cqw 1.9cqw 1.9cqw;
+    background: linear-gradient(180deg, var(--device-shell-a) 0%, var(--device-shell-b) 100%);
+    box-shadow:
+      inset 0 0.1cqw 0 rgba(255, 255, 255, 0.65),
+      inset 0 -0.08cqw 0 rgba(0, 0, 0, 0.22),
+      0 0.5cqw 1.2cqw -0.3cqw var(--device-shadow);
+  }
+
+  /* Lid notch. */
+  .device-laptop__base::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 15cqw;
+    height: 0.7cqw;
+    transform: translateX(-50%);
+    border-radius: 0 0 0.6cqw 0.6cqw;
+    background: linear-gradient(180deg, var(--device-lip), transparent);
+  }
+
+  /* Front edge. */
+  .device-laptop__base::after {
+    content: "";
+    position: absolute;
+    left: 1.6cqw;
+    right: 1.6cqw;
+    bottom: -0.18cqw;
+    height: 0.18cqw;
+    border-radius: 0 0 1cqw 1cqw;
+    background: var(--device-shell-edge);
+  }
+
+  .device-laptop__shadow {
+    position: absolute;
+    left: 6cqw;
+    right: 6cqw;
+    bottom: -2.2cqw;
+    height: 3.6cqw;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, var(--device-shadow), transparent 72%);
+    filter: blur(0.5cqw);
+    opacity: 0.55;
+  }
+
+  .dark .device-laptop__base {
+    box-shadow:
+      inset 0 0.1cqw 0 rgba(255, 255, 255, 0.16),
+      inset 0 -0.08cqw 0 rgba(0, 0, 0, 0.5),
+      0 0.5cqw 1.2cqw -0.3cqw var(--device-shadow);
+  }
+
+  @media (max-width: 63.99rem) {
+    .device-laptop--collapsible .device-laptop__lid {
+      width: 100%;
+      padding: 0;
+      border-radius: 0.9rem;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .device-laptop--collapsible .device-laptop__lid::before,
+    .device-laptop--collapsible .device-laptop__base,
+    .device-laptop--collapsible .device-laptop__shadow {
+      display: none;
+    }
+
+    .device-laptop--collapsible .device-laptop__screen {
+      border: 1px solid var(--line-strong);
+      border-radius: 0.9rem;
+      box-shadow: var(--shadow-2);
+    }
+  }
+
+  .device-phone {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+  }
+
+  .device-phone__body {
+    position: relative;
+    aspect-ratio: 410 / 864;
+    padding: 2.44cqw;
+    border-radius: 13.4cqw;
+    background: linear-gradient(165deg, var(--device-shell-a) 0%, var(--device-shell-b) 100%);
+    box-shadow:
+      inset 0 0 0 0.55cqw var(--device-glass),
+      inset 0 0 0 0.65cqw var(--device-glass-edge),
+      0 0 0 0.22cqw var(--device-shell-edge),
+      0 3cqw 6cqw -2cqw var(--device-shadow);
+  }
+
+  .device-phone__screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 11cqw;
+    background: #f4f2ee;
+  }
+
+  .device-phone__screen > * {
+    position: absolute;
+    inset: 0;
+  }
+
+  .device-phone__island {
+    position: absolute;
+    top: 5.6cqw;
+    left: 50%;
+    z-index: 4;
+    width: 27cqw;
+    height: 7.4cqw;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #04060a;
+    box-shadow: inset 0 0 0 0.2cqw rgba(255, 255, 255, 0.05);
+  }
+
+  /* Front camera inside the island. */
+  .device-phone__island::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 2cqw;
+    width: 3cqw;
+    height: 3cqw;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2a3550 0%, #0d1220 60%, #04060a 100%);
+  }
+
+  .device-phone__btn {
+    position: absolute;
+    width: 0.9cqw;
+    border-radius: 0.45cqw;
+    background: linear-gradient(
+      90deg,
+      var(--device-shell-b),
+      var(--device-shell-a) 60%,
+      var(--device-shell-b)
+    );
+    box-shadow: 0 0 0 0.12cqw var(--device-shell-edge);
+  }
+
+  .device-phone__btn--mute {
+    left: -0.9cqw;
+    top: 17cqw;
+    height: 5cqw;
+  }
+
+  .device-phone__btn--up {
+    left: -0.9cqw;
+    top: 25.5cqw;
+    height: 9.5cqw;
+  }
+
+  .device-phone__btn--down {
+    left: -0.9cqw;
+    top: 37cqw;
+    height: 9.5cqw;
+  }
+
+  .device-phone__btn--power {
+    right: -0.9cqw;
+    top: 29cqw;
+    height: 15cqw;
+  }
+
+  /* Screen glare — a fixed diagonal highlight plus, once, a light sweep across
+     the glass when the scene comes alive. Opacity/transform only. */
+  .device-glare {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      112deg,
+      var(--device-glare) 0%,
+      rgba(255, 255, 255, 0.03) 26%,
+      transparent 44%
+    );
+  }
+
+  .device-glare::after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    bottom: -30%;
+    left: -40%;
+    width: 34%;
+    transform: translateX(-160%) skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+    opacity: 0;
+  }
+
+  .device-shine .device-glare::after,
+  .scene-root.is-live .device-glare::after {
+    animation: device-sweep 1.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.65s 1 both;
+  }
+
+  @keyframes device-sweep {
+    0% {
+      transform: translateX(-160%) skewX(-18deg);
+      opacity: 0;
+    }
+    18% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(560%) skewX(-18deg);
+      opacity: 0;
+    }
+  }
+
+  /* Stage: the brand-tinted pool of light the devices sit in. */
+  .device-stage {
+    position: relative;
+  }
+
+  .device-stage::before {
+    content: "";
+    position: absolute;
+    inset: -14% -10% -22%;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+    background:
+      radial-gradient(60% 58% at 50% 62%, var(--brand-soft), transparent 70%),
+      radial-gradient(34% 30% at 82% 18%, rgba(84, 189, 177, 0.14), transparent 70%);
+    filter: blur(18px);
+    opacity: 0.85;
+  }
+
+  /* Hero spotlight (glyph-field.tsx): a radial mask that follows the mouse,
+     a brand gradient inside it, and a sheet of scrambling characters blended
+     over the gradient. The mask centre comes from JS as --mx / --my. */
+  .glyph-spot {
+    --mx: -9999px;
+    --my: -9999px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .glyph-spot.is-lit {
+    opacity: 1;
+  }
+
+  /* Two masks intersected: the pointer circle, and a wide ellipse that
+     keeps the spotlight at roughly half strength behind the headline and the
+     device so the copy stays legible when the cursor crosses it. */
+  .glyph-spot__glow,
+  .glyph-spot__sheet {
+    -webkit-mask-image:
+      radial-gradient(190px at var(--mx) var(--my), white, transparent),
+      radial-gradient(ellipse 58% 62% at 50% 47%, rgba(255, 255, 255, 0.3) 30%, white 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(190px at var(--mx) var(--my), white, transparent),
+      radial-gradient(ellipse 58% 62% at 50% 47%, rgba(255, 255, 255, 0.3) 30%, white 100%);
+    mask-composite: intersect;
+  }
+
+  .glyph-spot__glow {
+    background: linear-gradient(100deg, var(--brand), var(--teal));
+    opacity: 0.32;
+  }
+
+  .dark .glyph-spot__glow {
+    opacity: 0.42;
+  }
+
+  /* Same 17×24 grid as the canvas: one character advance is 1ch plus the
+     letter-spacing, so `calc(17px - 1ch)` lands every glyph on a cell. */
+  .glyph-spot__sheet {
+    overflow: hidden;
+    padding: 6px 0 0 3px;
+    font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: calc(17px - 1ch);
+    white-space: pre;
+    color: #fff;
+    opacity: 0.7;
+    mix-blend-mode: overlay;
+  }
+
+  /* Tilt: a pointer-driven parallax on hover-capable devices. The wrapper sets
+     --tilt-x / --tilt-y; the transform lives on the child so the phone's float
+     (which uses `translate`/`rotate`, not `transform`) composes with it. */
+  .tilt-stage {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    perspective: 1600px;
+  }
+
+  .tilt-stage > * {
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .device-shine .device-glare::after,
+    .scene-root.is-live .device-glare::after {
+      animation: none;
+    }
+
+    .tilt-stage > * {
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
 /* Device mockup scenes: hidden until `.is-live`, then cascade + gentle float. */
 .scene-root {
   opacity: 0;
@@ -952,5 +1368,97 @@ nav[aria-label="Table of contents"] a:nth-child(n + 13) {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/*
+  Human check — the panel shown after submit (components/site/human-check.tsx).
+
+  Three small pieces of motion, all of which have to survive being turned off:
+  the board shakes when an answer is wrong, and the confirmation draws a ring
+  and a tick onto a ruled panel. Under reduced motion the tick is simply
+  already drawn, which is the state that carries the meaning; the animation is
+  only how it gets there.
+*/
+.human-check-nudge {
+  animation: hc-nudge 0.38s ease-in-out;
+}
+
+@keyframes hc-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+/* The ruled panel. The grid sits on a pseudo-element rather than on the box
+   itself so the radial fade can soften the lines at the edges without also
+   fading the tick and the label standing on top of them. */
+.human-check-verified {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface);
+}
+
+.human-check-verified::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line-strong) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-strong) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: center;
+  -webkit-mask-image: radial-gradient(ellipse 76% 76% at 50% 50%, #000 30%, transparent 76%);
+  mask-image: radial-gradient(ellipse 76% 76% at 50% 50%, #000 30%, transparent 76%);
+}
+
+.human-check-verified > * {
+  position: relative;
+}
+
+/* `pathLength="1"` on the markup normalises both shapes, so one keyframe
+   draws a circle and a polyline that have nothing else in common. */
+.human-check-tick path,
+.human-check-ring {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.human-check-ring {
+  animation: hc-draw 0.55s ease-out forwards;
+}
+
+.human-check-tick path {
+  animation: hc-draw 0.4s 0.16s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes hc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .human-check-nudge {
+    animation: none;
+  }
+
+  .human-check-tick path,
+  .human-check-ring {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }

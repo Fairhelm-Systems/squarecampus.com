@@ -144,7 +144,7 @@ export const blogPosts: BlogPost[] = [
     cta: {
       heading: "Run this checklist against us",
       body: "Book a demo and bring the 25 questions. We answer all of them in writing — it is how we think evaluations should work.",
-      href: "/demo",
+      href: "/demo/",
       label: "Book a guided demo",
     },
   },
@@ -251,7 +251,7 @@ export const blogPosts: BlogPost[] = [
     cta: {
       heading: "See your group's structure in the system",
       body: "Bring your campuses, fee frameworks, and approval rules to a guided demo — we will map trust-level governance with campus-level autonomy to how your group actually runs.",
-      href: "/demo",
+      href: "/demo/",
       label: "Book a multi-campus demo",
     },
   },
@@ -361,7 +361,7 @@ export const blogPosts: BlogPost[] = [
     cta: {
       heading: "See how the system fits your campus",
       body: "If you want a calm, audit-friendly operating system built for Indian schools, we would like to show you how SquareCampus maps to your workflows. Book a 30-minute demo and see the difference a unified system makes.",
-      href: "/contact-us",
+      href: "/demo/",
       label: "Book a guided demo",
     },
   },

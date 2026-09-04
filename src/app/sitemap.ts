@@ -50,9 +50,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Absolute URLs for the product screenshots we want Google Images to index
   // and associate with each page. Only images that actually render on the
   // listed URL belong here — Google drops image-sitemap entries whose image
-  // is not present on the page. Decorative device bezels
-  // (/images/devices/*) are deliberately excluded and carry
-  // `X-Robots-Tag: noimageindex` at the edge (see DEPLOYMENT.md).
+  // is not present on the page. The device frames around product screens are
+  // drawn in CSS (src/components/site/device-frames.tsx), so there is no
+  // decorative bezel image to exclude any more.
   const img = (path: string) => `${SITE_URL}${path}`;
 
   const routes: Array<{
