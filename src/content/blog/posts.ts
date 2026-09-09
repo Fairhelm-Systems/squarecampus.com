@@ -2238,6 +2238,12 @@ export const allBlogPosts: BlogPost[] = [
       },
       {
         heading: "Year two is where it really bites",
+        image: {
+          src: "/images/blog/erp-true-cost-renewal.webp",
+          alt: "An opened renewal letter and its envelope on a school office desk, a pen across the page, beside a desk calendar with one date circled in red.",
+          caption: "The renewal letter is where the structure shows itself.",
+          orientation: "right",
+        },
         paragraphs: [
           "The first year is expensive. The second year is where the structure reveals itself. The renewal letter arrives with an escalation of ten percent, which is inside the eight-to-twelve percent range that published guides describe as common. The annual maintenance charge is calculated as a percentage of the 'list value' of the modules, not of the ₹18,000 the school actually paid, so it is larger than the licence itself. The school has changed boards for its senior section; the report-card templates need 'reconfiguration', which is chargeable. Storage of scanned documents has crossed a quota nobody knew existed.",
           "Then there is the quiet arithmetic of dependency. The SMS sender ID that parents recognise belongs to the vendor. The Play Store listing parents installed belongs to the vendor. The receipt numbering sequence, the one the auditor checks, lives inside the vendor's database. The custom fee-defaulter report the accountant relies on was built by the vendor as a paid customisation and is not exportable. Every one of these makes leaving a little more expensive than staying, and that, not the price, is the product being sold.",
@@ -2312,6 +2318,11 @@ export const allBlogPosts: BlogPost[] = [
       "school data governance",
     ],
     readingTime: "8 min read",
+    image: {
+      src: "/images/blog/governed-ai-hero.webp",
+      alt: "Two people seen from behind in a school principal's office, facing a laptop during a vendor demonstration, with a curtained window and tea cups on the desk.",
+      caption: "The demo shows the answer. It never shows where the answer came from.",
+    },
     hero: {
       eyebrow: "Evaluation",
       lede: "The demo is impressive. The principal asks which classes have attendance falling, and the assistant answers in a sentence. What the demo does not show is where the answer came from, who else could have asked it, and whether anyone will ever know it was asked. Those three things are the whole difference between intelligence inside a school's system and a chatbot bolted onto it.",
@@ -2388,6 +2399,11 @@ export const allBlogPosts: BlogPost[] = [
       "parent engagement india",
     ],
     readingTime: "7 min read",
+    image: {
+      src: "/images/blog/multilingual-communication-hero.webp",
+      alt: "Parents seen from behind outside a school boundary wall at pick-up time, several reading their phones, late-afternoon light through the trees.",
+      caption: "A reminder a parent cannot read is a line in a report, not a reminder.",
+    },
     hero: {
       eyebrow: "Communication",
       lede: "A fee reminder that a parent cannot read is not a reminder. It is a line in a report that says the reminder was sent. Indian schools serve families across languages as a matter of course, and most of them pay a quiet tax for it: circulars translated by hand, WhatsApp groups per language, and an office that cannot say which families actually understood what was sent.",
