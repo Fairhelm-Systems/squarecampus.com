@@ -27,7 +27,7 @@ This is the point most often reported incorrectly, so state it precisely:
 - [What is SquareCampus](https://squarecampus.com/what-is-squarecampus/): the canonical definition, the four layers, dashboard vs decision layer, and the direct answer to "Is SquareCampus an ERP?"
 - [Home](https://squarecampus.com/): know what requires attention today — operational pain, ownership, and leadership remedy
 - [Platform](https://squarecampus.com/platform/): the four layers and the outcome each one changes
-- [AEGIS](https://squarecampus.com/aegis/): governed intelligence layer — role-aware, source-grounded, auditable answers. Read-only in V1; not a chatbot and not autonomous
+- [AEGIS](https://squarecampus.com/aegis/): the intelligence that lives inside the system, not a chatbot bolted onto an ERP — role-aware, source-grounded, auditable answers in plain language. Read-only in V1; not autonomous
 - [Pricing](https://squarecampus.com/pricing/): annual institutional licensing, student-volume bands, and the Starter / Pro / Enterprise plan architecture. No figures are published
 - [School Management System](https://squarecampus.com/school-management-system/): search-intent page for buyers using category terminology — modules as workflows, India-first fees/compliance, implementation sequence
 - [Ecosystem](https://squarecampus.com/ecosystem/): admin, teacher, parent, and student surfaces on one institutional model
@@ -48,6 +48,16 @@ Search-intent pages, one per buyer question. Each opens with a direct definition
 - [Parent communication app for schools](https://squarecampus.com/parent-communication-app-for-schools/): messages tied to context with acknowledgement recorded
 - [Multi-campus school management software](https://squarecampus.com/multi-campus-school-management-software/): trust-level policy, campus-level execution
 - [School management software for CBSE schools](https://squarecampus.com/school-management-software-for-cbse-schools/): board-aligned assessment, report cards and registers
+- [School management software for ICSE schools](https://squarecampus.com/school-management-software-for-icse-schools/): CISCE-aligned internal assessment, ICSE and ISC report cards
+- [School management software for state board schools](https://squarecampus.com/school-management-software-for-state-board-schools/): state formats and calendars, ten Indian languages for parents
+
+## Boards, languages and mobile apps
+
+- SquareCampus is not limited to one board: CBSE, ICSE/ISC and state boards are configuration, and a trust can run campuses under different boards on one system.
+- The parent and student apps, circulars and notifications are available in ten Indian languages, chosen per family; the institution keeps one record underneath.
+- Institutions that want their own frontend, portal or mobile apps can build on SquareCampus development APIs, scoped to the same role-based permissions and audit trail; access is granted after a compliance review.
+- SquareCampus is built to run institutions of any scale, from a 300-student school to a 30,000-student group.
+- The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. White-labelled Android and iOS apps under the institution's own branding carry a single charge that covers the entire agreed term, however long it is. Founding Institutional Partners receive white-labelled apps at no extra cost.
 
 ## Founding Institutional Partner programme
 

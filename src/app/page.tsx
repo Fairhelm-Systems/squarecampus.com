@@ -34,7 +34,7 @@ import {
 import { siteCtas } from "@/content/site-content";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | School Operating System for Institutional Command",
+  title: "SquareCampus | School Operating System for Indian Schools and Trusts",
   description:
     "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
 };
@@ -665,7 +665,7 @@ export default function Home() {
                   Sovereign does not mean rigid.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  Parent-facing flows adapt to language preferences while the institution keeps
+                  Parent-facing flows run in ten Indian languages while the institution keeps
                   consistent controls, reporting, and audit-ready records underneath.
                 </p>
                 <div className="mt-8 grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
@@ -730,7 +730,7 @@ export default function Home() {
                         </div>
                       </div>
                       <p className="mt-3 font-display text-xl tracking-[-0.04em]">
-                        Fee reminder queued in Hindi and English
+                        Fee reminder queued in the family's language
                       </p>
                       <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)] dark:text-white/60">
                         Same due date, same receipt trail, same operator view. Language adapts
@@ -779,7 +779,7 @@ export default function Home() {
           eyebrow="Governed intelligence"
           compactBody
           title="AEGIS is the governed intelligence layer inside SquareCampus"
-          body="AEGIS — Adaptive Enterprise Governance & Intelligence System — surfaces what needs attention across the institution, inside the same permissions and audit trails as everything else."
+          body="AEGIS is the intelligence that lives inside SquareCampus, not a chatbot bolted onto an ERP. It surfaces what needs attention across the institution, inside the same permissions and audit trails as everything else."
         >
           <MobileExpand label="See AEGIS in action">
             <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
@@ -793,9 +793,10 @@ export default function Home() {
                     Ask AEGIS. Don&rsquo;t chase reports.
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                    Because AEGIS works with the same permissions, timelines, and live records, it
-                    can surface exceptions, suggest next steps, and support leadership visibility —
-                    with governance, tenant boundaries, and auditability built in, not bolted on.
+                    Because AEGIS works from the same permissions, timelines and live records, it
+                    can surface exceptions, suggest next steps and answer leadership in plain
+                    language, with governance, tenant boundaries and auditability built in. As
+                    simple as asking. For a 300-student school or a 30,000-student group.
                   </p>
                   <div className="mt-6 grid gap-3">
                     {[

@@ -30,7 +30,7 @@ export const foundingPartners = {
       {
         number: "02",
         title: "Protected founding economics",
-        body: "Preferential terms for the initial agreement, price protection for the agreed term, and pre-agreed expansion bands for additional campuses.",
+        body: "Preferential terms for the initial agreement, price protection for the agreed term, pre-agreed expansion bands for additional campuses, and white-labelled mobile apps at no extra cost.",
       },
       {
         number: "03",
@@ -93,6 +93,7 @@ export const foundingPartners = {
           "Preferential terms for the initial agreement",
           "Price protection for the agreed initial term",
           "Pre-agreed commercial bands for campus expansion",
+          "White-labelled Android and iOS apps under the institution's own branding, at no extra cost",
           "Clearly bounded implementation and digital-campus allowances",
           "No hidden module wall or surprise pass-through markup",
         ],
