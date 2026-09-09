@@ -128,7 +128,7 @@ export const socialLinks = [
     label: "LinkedIn",
   },
   {
-    href: "https://x.com/squarecampus",
+    href: "https://x.com/squarecampushq",
     label: "X",
   },
   {
