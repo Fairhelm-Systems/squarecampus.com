@@ -78,6 +78,7 @@ export const intentPages: IntentPage[] = [
     indiaSpecifics: [
       "Fee structures with term plans, sibling and staff concessions, transport slabs, late fees and GST-aware receipts.",
       "CBSE, ICSE and state-board grading templates and report formats.",
+      "Ten Indian languages across the parent and student apps.",
       "Multi-campus and trust-level structures as a first-class model, not a customisation.",
       "Parent communication over the app and WhatsApp-style channels, with acknowledgements recorded.",
       "An India-first data-residency posture, with the hosting region named in writing on the infrastructure page.",
@@ -520,7 +521,7 @@ export const intentPages: IntentPage[] = [
     metaDescription:
       "School management software for CBSE schools: grading templates, attendance registers, report formats and the records CBSE affiliation and inspections expect.",
     h1: "Built around the CBSE calendar, not adapted to it.",
-    lede: "A CBSE school runs on the board's rhythm: registration, internal assessment, term reports, board exam records and the documentation an affiliation inspection asks for. SquareCampus carries those formats and cycles as configuration, so the office is not maintaining them in spreadsheets on the side.",
+    lede: "A CBSE school runs on the board's rhythm: registration, internal assessment, term reports, board exam records and the documentation an affiliation inspection asks for. SquareCampus carries those formats and cycles as configuration, so the office is not maintaining them in spreadsheets on the side. ICSE and state-board schools run on the same platform with their own configuration.",
     audience: [
       "CBSE school principals",
       "Examination in-charges",
@@ -609,6 +610,16 @@ export const intentPages: IntentPage[] = [
         href: "/school-management-system/",
         label: "School management system",
         note: "The category page",
+      },
+      {
+        href: "/school-management-software-for-icse-schools/",
+        label: "For ICSE schools",
+        note: "The same platform, configured for CISCE",
+      },
+      {
+        href: "/school-management-software-for-state-board-schools/",
+        label: "For state-board schools",
+        note: "State formats, languages and calendars",
       },
       { href: "/rollout/", label: "Rollout", note: "Sequenced around the academic calendar" },
     ],
@@ -745,7 +756,7 @@ export const intentPages: IntentPage[] = [
     ],
     indiaSpecifics: [
       "Notifications on the app with fallbacks on channels Indian parents actually read.",
-      "Language options for circulars and notifications.",
+      "Ten Indian languages across the parent and student apps, circulars and notifications.",
       "Fee reminders that link to payment and record the acknowledgement.",
       "Multi-campus sending with trust-level oversight.",
       "Communication logs that help when a dispute or inspection asks what was communicated.",
@@ -776,7 +787,7 @@ export const intentPages: IntentPage[] = [
       {
         question: "Can communication be sent in more than one language?",
         answer:
-          "Circulars and notifications can be prepared in the languages the school communicates in; the options are set during rollout.",
+          "Yes. The parent and student apps, circulars and notifications are available in ten Indian languages, so families use the language they are comfortable in while the institution keeps one record.",
       },
     ],
     related: [
@@ -797,6 +808,209 @@ export const intentPages: IntentPage[] = [
         note: "Reminders that link to payment",
       },
       { href: "/contact/", label: "Contact", note: "Speak to the team" },
+    ],
+  },
+  {
+    slug: "school-management-software-for-icse-schools",
+    keyword: "School management software for ICSE schools",
+    metaTitle: "School Management Software for ICSE Schools",
+    metaDescription:
+      "School management software for ICSE and ISC schools: CISCE-aligned assessment, internal marks, report cards, registers and the records affiliation expects.",
+    h1: "Configured for CISCE, from internal assessment to ISC.",
+    lede: "ICSE and ISC schools carry a heavier internal-assessment load than most boards, with project work, practicals and continuous evaluation feeding the final record. SquareCampus holds the CISCE structure as configuration, so marks, moderation and report cards follow the board's shape without a spreadsheet beside them.",
+    audience: [
+      "ICSE school principals",
+      "Examination in-charges",
+      "Academic coordinators",
+      "Administrators",
+    ],
+    definition: {
+      title: "What should ICSE school management software include?",
+      body: "School management software for ICSE schools should carry the CISCE assessment structure for ICSE and ISC, including internal assessment components, project and practical marks, and grading scales; produce report cards in the school's format; keep attendance registers and student records the way affiliation requires; and treat the board's registration and examination cycles as part of the academic year rather than as separate spreadsheets.",
+    },
+    workflows: [
+      {
+        title: "Internal assessment as configuration",
+        body: "Components, weightages and grading scales for ICSE and ISC are configured per class and session; project and practical marks sit alongside written papers in one record.",
+      },
+      {
+        title: "Marks, moderation and report cards",
+        body: "Subject teachers enter marks for their allocation, moderation rules apply consistently, and report cards are produced in the school's CISCE-aligned format with every change attributed.",
+      },
+      {
+        title: "Registration and examination records",
+        body: "Student data required for board registration is kept complete from admission, so the annual export is a verification step.",
+      },
+      {
+        title: "Attendance registers for affiliation",
+        body: "Registers and percentages are produced from the daily record in the layouts an affiliation visit expects.",
+      },
+      {
+        title: "Timetable, practicals and substitution",
+        body: "Period allocation, laboratory sessions and substitutions run against the academic calendar, with cover visible to the coordinator.",
+      },
+    ],
+    indiaSpecifics: [
+      "ICSE and ISC assessment structures maintained as configuration, not a build per session.",
+      "Report card formats per class group, including internal assessment and co-scholastic areas.",
+      "Student master data kept complete for CISCE registration from the day of admission.",
+      "Ten Indian languages across the parent and student apps.",
+      "Fees, transport and communication on the same record as academics.",
+    ],
+    evaluation: [
+      "Can internal assessment, project and practical marks live in the same record as written papers?",
+      "Are ICSE and ISC grading scales configuration, or a custom build per session?",
+      "Can report cards be produced without exporting marks to a spreadsheet?",
+      "Is student master data complete enough for board registration without a data drive?",
+      "Does academics share a record with fees and communication, or sit in its own module?",
+    ],
+    faqs: [
+      {
+        question: "Does SquareCampus support ICSE and ISC assessment?",
+        answer:
+          "Yes. Internal assessment components, project and practical marks, weightages and grading scales for ICSE and ISC are configured per class and session, and report cards are produced from them.",
+      },
+      {
+        question: "Can a trust run ICSE and CBSE campuses on one system?",
+        answer:
+          "Yes. Campuses under different boards run on one trust with board-specific academic configuration per campus, and one view for leadership.",
+      },
+      {
+        question: "How are report card formats handled?",
+        answer:
+          "Formats are configured per class group in the school's CISCE-aligned layout, including internal assessment and co-scholastic areas, and produced directly from the marks record.",
+      },
+      {
+        question: "Will teachers need to learn a new grading workflow?",
+        answer:
+          "Marks entry follows the school's existing assessment structure. Role-based training during rollout covers the examination workflow end to end.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/board-specific-school-software/",
+        label: "Board-specific school software",
+        note: "What differs between CBSE, ICSE and state boards",
+      },
+      {
+        href: "/school-exam-management-software/",
+        label: "Exam management",
+        note: "The examination workflow in detail",
+      },
+      {
+        href: "/school-management-software-for-cbse-schools/",
+        label: "For CBSE schools",
+        note: "The same platform, configured for CBSE",
+      },
+      {
+        href: "/school-management-software-for-state-board-schools/",
+        label: "For state-board schools",
+        note: "State formats, languages and calendars",
+      },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "The category page",
+      },
+    ],
+  },
+  {
+    slug: "school-management-software-for-state-board-schools",
+    keyword: "School management software for state board schools",
+    metaTitle: "School Management Software for State Board Schools",
+    metaDescription:
+      "School management software for state-board schools in India: state formats and calendars, ten Indian languages for parents, fees and registers on one record.",
+    h1: "Your state's formats, your families' languages, one record.",
+    lede: "State-board schools serve the widest range of families in India, and the office pays for it in translated circulars, hand-filled state registers and fee structures that follow local rules. SquareCampus carries state formats and calendars as configuration and speaks to parents in ten Indian languages, while the institution keeps one governed record underneath.",
+    audience: ["State-board school principals", "Administrators", "Class teachers", "Parents"],
+    definition: {
+      title: "What should state board school management software include?",
+      body: "School management software for state-board schools should carry the state's assessment scheme, report formats, registers and academic calendar as configuration; communicate with parents in the languages they read; handle local fee rules, concessions and government scheme records; and keep attendance and student records in the shape district and board inspections expect, all on one record shared with fees and communication.",
+    },
+    workflows: [
+      {
+        title: "State assessment and report formats",
+        body: "Grading schemes, report layouts and promotion rules for the state board are configured per class and session, and report cards follow from the marks record.",
+      },
+      {
+        title: "Registers for inspection",
+        body: "Attendance, admission and fee registers come out of the daily record in the layouts district and board inspections expect.",
+      },
+      {
+        title: "Parent communication in ten languages",
+        body: "Circulars, dues reminders, results and notices reach families in the language they read, with delivery and acknowledgement recorded against the student.",
+      },
+      {
+        title: "Fees under local rules",
+        body: "Fee structures, concessions and scheme-linked waivers follow the state's rules, with receipts and reconciliation on one ledger.",
+      },
+      {
+        title: "Leadership view",
+        body: "Principals and management see attendance, collections and exceptions across sections and campuses with an owner against each item.",
+      },
+    ],
+    indiaSpecifics: [
+      "State-board assessment schemes, report formats and calendars as configuration.",
+      "Ten Indian languages across the parent and student apps, circulars and notifications.",
+      "Scheme and concession records kept against the student for audits and claims.",
+      "Registers in the layouts district inspections ask for.",
+      "Trusts running state-board, CBSE and ICSE campuses on one system.",
+    ],
+    evaluation: [
+      "Are the state's report formats and registers configuration, or a custom build?",
+      "Can parents receive every notice in the language they read, with acknowledgement recorded?",
+      "Do fee rules, concessions and scheme records live on the same ledger as collections?",
+      "Can registers for inspection be produced from the daily record without re-typing?",
+      "Does the vendor support the state boards you run, and say so in writing?",
+    ],
+    faqs: [
+      {
+        question: "Which state boards does SquareCampus support?",
+        answer:
+          "State-board assessment schemes, report formats and calendars are configuration. The boards an institution runs are confirmed during scoping and set up during rollout.",
+      },
+      {
+        question: "Which languages are available for parents?",
+        answer:
+          "The parent and student apps, circulars and notifications are available in ten Indian languages, chosen per family, while the institution keeps one record.",
+      },
+      {
+        question: "Can we run a state-board school and a CBSE school under one trust?",
+        answer:
+          "Yes. Campuses under different boards run on one trust with board-specific configuration per campus and one leadership view.",
+      },
+      {
+        question: "How are government scheme records handled?",
+        answer:
+          "Scheme eligibility, concessions and waivers are recorded against the student and reflected on the fee ledger, so claims and audits draw from one record.",
+      },
+    ],
+    related: [
+      {
+        href: "/parent-communication-app-for-schools/",
+        label: "Parent communication",
+        note: "Messages in the family's language, with a record",
+      },
+      {
+        href: "/fee-management-software-for-schools/",
+        label: "Fee management",
+        note: "Concessions and scheme rules on one ledger",
+      },
+      {
+        href: "/school-management-software-for-cbse-schools/",
+        label: "For CBSE schools",
+        note: "The same platform, configured for CBSE",
+      },
+      {
+        href: "/school-management-software-for-icse-schools/",
+        label: "For ICSE schools",
+        note: "The same platform, configured for CISCE",
+      },
+      {
+        href: "/blog/board-specific-school-software/",
+        label: "Board-specific school software",
+        note: "What differs between the boards",
+      },
     ],
   },
 ];

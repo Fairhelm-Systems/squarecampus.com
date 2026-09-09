@@ -60,6 +60,8 @@ export const footerGroups = [
       { href: "/school-management-system", label: "School Management System" },
       { href: "/multi-campus-school-management-software", label: "Multi-Campus Groups" },
       { href: "/school-management-software-for-cbse-schools", label: "CBSE Schools" },
+      { href: "/school-management-software-for-icse-schools", label: "ICSE Schools" },
+      { href: "/school-management-software-for-state-board-schools", label: "State Board Schools" },
       { href: "/launch-partners/higher-education", label: "Higher Education" },
       { href: siteCtas.launchPartnersHref, label: "Founding Partners" },
     ],

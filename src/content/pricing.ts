@@ -261,7 +261,7 @@ export const separatelyScoped: ReadonlyArray<{
       { label: "Custom integrations" },
       { label: "Private-cloud deployment" },
       { label: "On-premises deployment" },
-      { label: "White-label Android and iOS apps", tag: "One-time" },
+      { label: "White-label Android and iOS apps", tag: "One charge, full term" },
     ],
   },
   {
@@ -292,13 +292,14 @@ export const separatelyScoped: ReadonlyArray<{
 ] as const;
 
 /**
- * The standard SquareCampus parent and staff apps carry no additional licence
- * charge in any plan. Only a white-labelled build — the institution's own
- * branding and its own Play Store / App Store listings — is chargeable, and
- * that charge is one-time rather than recurring.
+ * The standard SquareCampus parent and staff apps carry no additional charge
+ * in any plan. A white-labelled build — the institution's own branding and its
+ * own Play Store / App Store listings — carries a single charge that covers
+ * the whole agreed term, however long that term is. Founding Institutional
+ * Partners receive the white-labelled build at no extra cost.
  */
 export const MOBILE_APP_NOTE =
-  "The SquareCampus parent and staff mobile apps are included in every plan at no additional licence charge. Only white-labelled Android and iOS builds published under the institution's own branding carry a one-time charge.";
+  "The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. White-labelled Android and iOS apps, published under the institution's own branding and store listings, carry a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive white-labelled apps at no extra cost.";
 
 export const pilot = {
   window: "60–90 days",
@@ -349,7 +350,7 @@ export const pricingFaqs = [
   {
     question: "Is the mobile app charged separately?",
     answer:
-      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional licence charge. A white-labelled Android and iOS build — published under your institution's own branding and store listings — is a separately scoped one-time charge.",
+      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. A white-labelled Android and iOS build, published under your institution's own branding and store listings, carries a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive the white-labelled build at no extra cost.",
   },
   {
     question: "Does Microsoft SSO use our institution's existing accounts?",

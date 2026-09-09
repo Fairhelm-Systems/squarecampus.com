@@ -3,6 +3,7 @@ import {
   Cable,
   ChartNoAxesCombined,
   Cloud,
+  Code2,
   Database,
   Landmark,
   Lock,
@@ -58,6 +59,11 @@ const integrationPoints = [
     title: "Built as workflows",
     icon: Workflow,
     body: "Integrations follow your operating logic: an admission confirmed in one system triggers fee setup in another and a welcome message in a third.",
+  },
+  {
+    title: "Development APIs for your own apps",
+    icon: Code2,
+    body: "Institutions that want their own portal, frontend or mobile apps build on SquareCampus development APIs. Access is scoped to the same role-based permissions and audit trail, and granted after a compliance review.",
   },
 ] as const;
 

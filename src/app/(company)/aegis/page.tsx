@@ -30,7 +30,7 @@ import {
 export const metadata: Metadata = createPageMetadata({
   title: "AEGIS — Governed Intelligence for School Operations",
   description:
-    "AEGIS (Adaptive Enterprise Governance & Intelligence System) is SquareCampus' governed intelligence layer: role-aware answers, exception detection, and audit-ready decision support for school leaders. Ask AEGIS. Don't chase reports.",
+    "AEGIS is the intelligence inside SquareCampus, not a chatbot on an ERP: plain-language answers from live records, in role scope, with an audit trail on every question.",
   path: "/aegis",
   ogImage: "https://squarecampus.com/og/aegis.png",
 });
@@ -141,10 +141,11 @@ export default function AegisPage() {
               Ask AEGIS. Don&rsquo;t chase reports.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-              AEGIS is SquareCampus&rsquo; governed intelligence layer for school leaders, trust
-              administrators, principals, and operational teams. Instead of chasing scattered
-              reports, ask what needs attention — across attendance, fees, academics, communication,
-              compliance, and campus operations.
+              AEGIS is the intelligence that lives inside SquareCampus, not a chatbot bolted onto an
+              ERP. It reads the same role graph, timelines, fee state and communication trail the
+              institution already runs on, and answers inside the same permissions and audit trail.
+              Ask in plain language. Get an answer from live records. For a 300-student school or a
+              30,000-student group.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label="See AEGIS in a guided demo" />
@@ -155,16 +156,18 @@ export default function AegisPage() {
               />
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
-              {["Not a generic chatbot", "RBAC-scoped answers", "Audit trail on every query"].map(
-                (item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
-                  >
-                    {item}
-                  </span>
-                )
-              )}
+              {[
+                "Lives inside the system",
+                "Answers in role scope",
+                "Audit trail on every query",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
           </Reveal>
 

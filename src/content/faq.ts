@@ -61,9 +61,15 @@ export const faqs: FaqItem[] = [
     category: "features",
   },
   {
+    question: "Can we build our own frontend or mobile apps on SquareCampus?",
+    answer:
+      "Yes. Institutions that want their own portal, frontend or mobile apps can build on SquareCampus development APIs. Access is scoped to the same role-based permissions and audit trail as the platform and is granted after a compliance review, so what you build inherits the institution's governance rather than bypassing it.",
+    category: "features",
+  },
+  {
     question: "Do you have mobile apps?",
     answer:
-      "Yes. Parents and students use dedicated mobile apps (iOS and Android) for fee payments, attendance tracking, progress reports, and announcements. Staff have a fully responsive web experience optimized for day-to-day operations on any device.",
+      "Yes. Parents and students use dedicated mobile apps (iOS and Android) for fee payments, attendance tracking, progress reports, and announcements, available in ten Indian languages. Staff have a fully responsive web experience optimized for day-to-day operations on any device.",
     category: "features",
   },
   {
@@ -157,7 +163,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Is the mobile app charged separately?",
     answer:
-      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional licence charge. A white-labelled Android and iOS build — published under your institution's own branding and store listings — is a separately scoped one-time charge.",
+      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. A white-labelled Android and iOS build, published under your institution's own branding and store listings, carries a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive the white-labelled build at no extra cost.",
     category: "pricing",
   },
   {

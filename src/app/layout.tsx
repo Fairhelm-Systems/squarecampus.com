@@ -35,7 +35,7 @@ const displayFont = Sora({
 export const metadata: Metadata = {
   metadataBase: new URL(SEO_CONFIG.baseUrl),
   title: {
-    default: "SquareCampus | School Operating System for Institutional Command",
+    default: "SquareCampus | School Operating System for Indian Schools and Trusts",
     template: "%s | SquareCampus",
   },
   description:
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://squarecampus.com/",
-    title: "SquareCampus | School Operating System for Institutional Command",
+    title: "SquareCampus | School Operating System for Indian Schools and Trusts",
     description:
       "Know what requires attention today. SquareCampus connects school operations, assigns ownership to exceptions, and gives leadership a governed view of the institution.",
     siteName: "SquareCampus",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SquareCampus | School Operating System for Institutional Command",
+    title: "SquareCampus | School Operating System for Indian Schools and Trusts",
     description:
       "A system of record stores what happened. A decision layer shows what requires attention, who owns it, and what happens next.",
     images: ["https://squarecampus.com/og/home.png"],
