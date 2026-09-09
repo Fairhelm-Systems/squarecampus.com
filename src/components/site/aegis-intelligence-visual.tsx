@@ -170,7 +170,7 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
   };
 
   return (
-    <div ref={ref} className={cn("aegis-visual @container relative", className)}>
+    <div data-md-skip ref={ref} className={cn("aegis-visual @container relative", className)}>
       <div className="surface-panel-strong relative overflow-hidden rounded-4xl p-4 sm:p-5 md:p-6">
         {/* Ambient light behind the hub. Plain gradients, no filter blur. */}
         <div className="pointer-events-none absolute inset-x-[10%] top-[30%] h-[40%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(88,124,204,0.16),transparent_68%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(88,124,204,0.14),transparent_70%)]" />

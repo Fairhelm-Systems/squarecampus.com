@@ -55,7 +55,7 @@ const heroSignals = [
 
 export function HeroProductComposition() {
   return (
-    <div className="w-full">
+    <div data-md-skip className="w-full">
       <div className="mb-3 flex items-center justify-between gap-3">
         <p className="eyebrow">Admin &amp; trust command centre</p>
       </div>

@@ -155,7 +155,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    // Commercial model. High buyer intent, no prices published.
+    // Commercial model. High buyer intent; the model is published, figures
+    // follow a written proposal.
     {
       path: "/pricing",
       sources: [`${APP}/(company)/pricing`, `${CONTENT}/pricing.ts`],
@@ -293,7 +294,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // crawled and read by assistants, not to compete with the pages it points at.
     {
       path: "/llms.txt",
-      sources: ["public/llms.txt"],
+      sources: [`${APP}/llms.txt/route.ts`, `${CONTENT}/llms.ts`, `${CONTENT}/commercial.ts`],
       changeFrequency: "monthly",
       priority: 0.3,
     },

@@ -2,6 +2,8 @@
 // Rule of the file: every signal emitted here must be true and verifiable.
 // No rankings, no customer counts, no keyword stuffing.
 
+import { hasMarkdownAlternate, markdownAlternatePath } from "@/content/markdown-alternates";
+
 /**
  * squarecampus.com is the single canonical domain; squarecampus.in 301s to it
  * at the edge, so no hreflang set is emitted (redirecting alternates would be
@@ -12,13 +14,22 @@ export const PRIMARY_DOMAIN = "https://squarecampus.com";
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || PRIMARY_DOMAIN;
 
 /**
- * Canonical for a page. Every page that exports its own metadata must set
- * this, otherwise it inherits the root layout's canonical ("/") and search
- * engines read it as a duplicate of the homepage.
+ * Canonical for a page, plus the Markdown alternate where the page has one.
+ * Every page that exports its own metadata must set this, otherwise it
+ * inherits the root layout's canonical ("/") and search engines read it as a
+ * duplicate of the homepage.
+ *
+ * `types["text/markdown"]` renders as
+ * `<link rel="alternate" type="text/markdown" href="…/index.md">` — the
+ * advertised agent-readable representation of the same page. The HTML URL
+ * stays canonical; the Markdown is an alternate, never a duplicate route.
  */
 export function createAlternates(path: string) {
   return {
     canonical: canonicalUrl(path),
+    ...(hasMarkdownAlternate(path)
+      ? { types: { "text/markdown": `${baseUrl}${markdownAlternatePath(path)}` } }
+      : {}),
   };
 }
 
@@ -118,12 +129,15 @@ export function createPageMetadata(config: PageMetadataConfig) {
   const pageUrl = canonicalUrl(path);
   const imageUrl = ogImage || SEO_CONFIG.ogImage.default;
 
+  // The root layout's title template appends " | SquareCampus". A title that
+  // already carries the brand is emitted as-is, so no page renders
+  // "… | SquareCampus | SquareCampus".
+  const documentTitle = title.includes("SquareCampus") ? { absolute: title } : title;
+
   return {
-    title,
+    title: documentTitle,
     description,
-    alternates: {
-      canonical: pageUrl,
-    },
+    alternates: createAlternates(path),
     openGraph: {
       title: ogTitle || title,
       description: ogDescription || description,
@@ -185,20 +199,34 @@ function canonicalise(url: string) {
   return `${base}/${fragment}`;
 }
 
+/** Stable entity identifiers, so page-level nodes join the root graph. */
+export const SCHEMA_IDS = {
+  org: `${SEO_CONFIG.baseUrl}/#org`,
+  website: `${SEO_CONFIG.baseUrl}/#website`,
+  software: `${SEO_CONFIG.baseUrl}/#software`,
+} as const;
+
 /**
  * JSON-LD: WebPage schema (page-level identity)
+ *
+ * Carries a stable `@id` (`<canonical>#webpage`), joins the WebSite node and
+ * names the SoftwareApplication as its subject, so every page's node hangs
+ * off the same three root entities rather than floating as an unrelated
+ * fragment.
  */
 export function createWebPageSchema(config: { name: string; description: string; url: string }) {
+  const url = canonicalise(config.url);
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": `${url}#webpage`,
     name: config.name,
     description: config.description,
-    url: canonicalise(config.url),
+    url,
     inLanguage: SEO_CONFIG.language,
-    isPartOf: {
-      "@id": `${SEO_CONFIG.baseUrl}/#website`,
-    },
+    isPartOf: { "@id": SCHEMA_IDS.website },
+    about: { "@id": SCHEMA_IDS.software },
+    publisher: { "@id": SCHEMA_IDS.org },
   };
 }
 
@@ -207,9 +235,11 @@ export function createWebPageSchema(config: { name: string; description: string;
  * Breadcrumbs help Google understand hierarchy (and sometimes show it).
  */
 export function createBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: string }>) {
+  const last = breadcrumbs[breadcrumbs.length - 1];
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    ...(last ? { "@id": `${canonicalise(last.url)}#breadcrumb` } : {}),
     itemListElement: breadcrumbs.map((crumb, index) => ({
       "@type": "ListItem",
       position: index + 1,

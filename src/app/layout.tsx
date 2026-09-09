@@ -4,8 +4,9 @@ import type { ReactNode } from "react";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeScript } from "@/components/site/theme-script";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { product } from "@/content/commercial";
 import { company } from "@/content/company";
-import { SEO_CONFIG } from "@/lib/seo";
+import { SCHEMA_IDS, SEO_CONFIG } from "@/lib/seo";
 import "./globals.css";
 
 const bodyFont = IBM_Plex_Sans({
@@ -40,6 +41,10 @@ export const metadata: Metadata = {
   },
   description:
     "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
+  // Only the canonical here. The homepage's Markdown alternate is declared in
+  // app/page.tsx: a root-layout `alternates.types` would be inherited by every
+  // route without its own metadata (404, /hello), advertising the homepage's
+  // Markdown as theirs.
   alternates: {
     canonical: `${SEO_CONFIG.baseUrl}/`,
   },
@@ -116,18 +121,16 @@ export default function RootLayout({
         {/*
           Pointer to the machine-readable site summary.
 
-          `rel="llms-txt"` is a custom relation, not a registered one: browsers
-          and search engines ignore unknown rel tokens, so it costs nothing and
-          risks nothing, and the tooling that does look for it finds the file
-          without having to guess the conventional path. Deliberately NOT
-          `rel="alternate" type="text/plain"` — that would claim llms.txt is an
-          alternate representation of whichever page it appears on, which is
-          false on all but the homepage.
+          `rel="describedby"` is the relation the llms.txt convention uses: the
+          document at /llms.txt describes this site (and therefore this page),
+          without claiming to be an alternate representation of the page —
+          `rel="alternate"` is reserved for the per-page Markdown, emitted
+          through `alternates.types` in metadata.
 
           Discovery is layered on purpose: this tag, a footer link on every
           page, a pointer comment in robots.txt, and a sitemap entry.
         */}
-        <link rel="llms-txt" href="/llms.txt" />
+        <link rel="describedby" href="/llms.txt" />
         <ThemeScript />
         {/*
           The scroll-reveal system starts at `opacity: 0` and relies on JS to
@@ -155,9 +158,10 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://squarecampus.com/#org",
+                  "@id": SCHEMA_IDS.org,
                   name: "SquareCampus",
                   legalName: company.legalName,
+                  description: `${company.legalNameDisplay} operates SquareCampus, a School Operating System for schools, educational trusts and multi-campus groups in India.`,
                   url: "https://squarecampus.com/",
                   logo: SEO_CONFIG.logo,
                   foundingDate: company.incorporationDate,
@@ -185,12 +189,8 @@ export default function RootLayout({
                     "@type": "Person",
                     name: "Mohit Gupta",
                   },
-                  sameAs: [
-                    "https://www.linkedin.com/company/square-campus",
-                    "https://x.com/squarecampushq",
-                    "https://instagram.com/squarecampus",
-                  ],
-                  brand: "SquareCampus",
+                  sameAs: SEO_CONFIG.sameAs,
+                  brand: { "@type": "Brand", name: "SquareCampus", logo: SEO_CONFIG.logo },
                   areaServed: {
                     "@type": "Country",
                     name: "India",
@@ -205,29 +205,44 @@ export default function RootLayout({
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://squarecampus.com/#website",
+                  "@id": SCHEMA_IDS.website,
                   url: "https://squarecampus.com/",
                   name: "SquareCampus",
-                  publisher: { "@id": "https://squarecampus.com/#org" },
+                  description: product.shortDescription,
+                  publisher: { "@id": SCHEMA_IDS.org },
+                  about: { "@id": SCHEMA_IDS.software },
                   inLanguage: "en-IN",
                 },
                 {
                   "@type": "SoftwareApplication",
-                  "@id": "https://squarecampus.com/#software",
+                  "@id": SCHEMA_IDS.software,
                   name: "SquareCampus",
-                  // Category signal: School Operating System / institutional
-                  // operations, NOT "school ERP" or "school management
-                  // software". `applicationCategory` stays a schema.org value;
-                  // `applicationSubCategory` and `description` carry the
-                  // canonical category wording. No offers/price: the site
-                  // publishes no figures.
+                  // Category signal. `SoftwareApplication` is the accurate
+                  // type: the product is a platform with web and mobile
+                  // clients, so the narrower WebApplication would be wrong for
+                  // the apps. `BusinessApplication` is the accurate category:
+                  // it is institutional operations software used by
+                  // administrators and leadership, not a learning application
+                  // — "EducationalApplication" would describe the customer's
+                  // domain, not what the software does. The sub-category
+                  // carries the canonical wording, School Operating System —
+                  // NOT "school ERP" or "school management software".
+                  // `description` is the one canonical short description from
+                  // content/commercial.ts. No offers, price, ratings or
+                  // reviews: the site publishes no figures and holds no
+                  // first-party review data.
                   applicationCategory: "BusinessApplication",
-                  applicationSubCategory: "School Operating System",
-                  description:
-                    "SquareCampus is a School Operating System and institutional decision layer for schools and educational trusts, connecting school cycles to ownership, exception handling, auditability and leadership decisions.",
+                  applicationSubCategory: product.category,
+                  description: product.shortDescription,
                   operatingSystem: "Web",
                   url: "https://app.squarecampus.com",
-                  publisher: { "@id": "https://squarecampus.com/#org" },
+                  // The marketing pages that describe the application. The
+                  // pricing page states the model; it publishes no figure.
+                  mainEntityOfPage: `${SEO_CONFIG.baseUrl}/what-is-squarecampus/`,
+                  softwareHelp: { "@type": "WebPage", "@id": `${SEO_CONFIG.baseUrl}/faq/#webpage` },
+                  publisher: { "@id": SCHEMA_IDS.org },
+                  brand: { "@id": SCHEMA_IDS.org },
+                  areaServed: { "@type": "Country", name: "India" },
                   inLanguage: "en-IN",
                 },
               ],
