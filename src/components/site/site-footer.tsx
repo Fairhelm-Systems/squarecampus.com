@@ -194,7 +194,7 @@ export function SiteFooter() {
           </div>
 
           <MobileExpand label="Explore all pages">
-            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-5 lg:gap-x-5">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 lg:gap-x-8">
               {footerGroups.map((group) => (
                 <div key={group.title}>
                   <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
