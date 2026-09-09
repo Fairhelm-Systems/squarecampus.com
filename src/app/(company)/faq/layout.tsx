@@ -9,12 +9,12 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Frequently Asked Questions | SquareCampus School Management System",
+  title: "Frequently Asked Questions | SquareCampus School Operating System",
   description:
-    "Find answers to common questions about SquareCampus school management system, including features, pricing, security, implementation, and support for schools in India.",
+    "Answers to common questions about SquareCampus, the School Operating System for Indian schools and trusts: getting started, features, security and identity, pricing, implementation and support.",
   path: "/faq",
   ogImage: "https://squarecampus.com/og/faq.png",
-  ogTitle: "FAQ | SquareCampus School Management System",
+  ogTitle: "FAQ | SquareCampus School Operating System",
   ogDescription:
     "Answers to common questions about SquareCampus — a school management system for admissions, academics, fees, and operations in India.",
 });
@@ -26,7 +26,7 @@ const structuredData = {
     createWebPageSchema({
       name: "Frequently Asked Questions | SquareCampus",
       description:
-        "Find answers to common questions about SquareCampus school management system, including features, pricing, security, and implementation.",
+        "Answers to common questions about SquareCampus: getting started, features, security and identity, pricing and implementation.",
       url: `${SEO_CONFIG.baseUrl}/faq`,
     }),
     createBreadcrumbSchema([

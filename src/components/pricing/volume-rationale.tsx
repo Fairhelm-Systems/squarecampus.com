@@ -26,7 +26,10 @@ function MarginalRateChart() {
   return (
     // `flex-1` on the plot area lets the chart absorb whatever height the
     // panel has, instead of a fixed 8rem plot leaving the panel half empty.
-    <div className="flex min-h-0 flex-1 flex-col rounded-[var(--radius-panel)] border border-[color:var(--line)] bg-[color:var(--surface-muted)] p-5 sm:p-6">
+    <div
+      data-md-skip
+      className="flex min-h-0 flex-1 flex-col rounded-[var(--radius-panel)] border border-[color:var(--line)] bg-[color:var(--surface-muted)] p-5 sm:p-6"
+    >
       {/* The eyebrow's wide letter-spacing needs its own line on narrow phones,
           otherwise the axis label collides with it. */}
       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">

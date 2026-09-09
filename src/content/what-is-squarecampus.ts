@@ -8,8 +8,10 @@
  * to an ERP.
  */
 
+import { multiCampusContrast } from "./commercial";
+
 export const CANONICAL_DEFINITION =
-  "SquareCampus is a School Operating System and institutional decision layer for Indian schools and educational trusts. It includes the operational systems of record institutions expect, but its primary purpose is to connect recurring school cycles to ownership, exception handling, auditability and leadership decisions.";
+  "SquareCampus is a School Operating System and institutional decision layer for schools, educational trusts and multi-campus groups in India. It includes the operational systems of record institutions expect, but its primary purpose is to connect recurring school cycles to ownership, exception handling, auditability and leadership decisions.";
 
 /**
  * The four layers the platform is organised around.
@@ -54,7 +56,7 @@ export const systemLayers = [
       "Trust and campus hierarchy",
       "Approval and governance chains",
       "Audit history and advanced audit exports",
-      "Institution-managed identity, including Microsoft Entra ID SSO",
+      "Institutional identity: SquareCampus-managed sign-in, optional Microsoft Entra ID single sign-on from Pro, identity governance under Enterprise",
     ],
   },
   {
@@ -99,6 +101,47 @@ export const aegisBoundaries = [
   "Human-controlled — decisions remain with the people accountable for them",
 ] as const;
 
+/**
+ * What the site means by its own vocabulary. Rendered as a glossary on
+ * /what-is-squarecampus and emitted as DefinedTerm structured data, so a
+ * term like "School OS" has factual content behind it rather than acting as
+ * a synonym for ERP.
+ */
+export const glossary = [
+  {
+    term: "School Operating System (School OS)",
+    definition:
+      "The connected backbone an institution runs on. It holds the records a school expects, and it also carries the workflows, ownership, approvals, exceptions and audit history that turn those records into accountable day-to-day operations. The distinction from an ERP is factual: every cycle has stages, an owner and a deadline; every exception is routed to a named desk; every override is recorded with a reason.",
+  },
+  {
+    term: "Governance",
+    definition:
+      "Policy, approval chains, role boundaries and audit history held as institutional configuration rather than as habits. A concession limit, a refund approval or a campus-level deviation from trust policy is defined once, enforced on every record, and visible to the people accountable for it.",
+  },
+  {
+    term: "Exception ownership",
+    definition:
+      "When a record leaves its expected state (collections behind plan, attendance under a threshold, an approval overdue) the deviation becomes an exception with a named owner, a position and a due date, rather than a line in a report that someone may notice.",
+  },
+  {
+    term: "Accountability",
+    definition:
+      "Every approval, override and closure is attributed to a role and a person, recorded with the reason, and kept on an append-only timeline. Leadership can see not only what happened but who decided it and on what basis.",
+  },
+  {
+    term: "Institutional visibility",
+    definition:
+      "Leadership sees the current position of the institution from the records the campuses run on, without a department preparing a report first: what requires attention, why it matters, who owns it and what happens next.",
+  },
+  {
+    term: "Multi-campus governance",
+    definition:
+      "More than supporting several campuses. Trust, school and campus are one hierarchy; policy is set once and executed locally; scope is a property of the role; exceptions and board views cross campuses without consolidation.",
+  },
+] as const;
+
+export { multiCampusContrast };
+
 export const entityFaqs = [
   {
     question: "Is SquareCampus an ERP?",
@@ -118,7 +161,7 @@ export const entityFaqs = [
   {
     question: "Who is SquareCampus built for?",
     answer:
-      "Indian schools, educational trusts, church-run school groups and multi-campus institutions. It suits institutions that care about operational control, accountable ownership and leadership visibility — whether they run one campus or many.",
+      "Indian schools, educational trusts, church-run school groups and multi-campus institutions, and higher-education institutions as a governed layer over the systems they already run. It suits institutions that care about operational control, accountable ownership and leadership visibility — whether they run one campus or many. It is not designed for an institution that needs only basic attendance, fees and report cards at the lowest possible price.",
   },
   {
     question: "Is AEGIS a chatbot?",
@@ -129,5 +172,15 @@ export const entityFaqs = [
     question: "Can SquareCampus replace our existing school ERP?",
     answer:
       "Institutions commonly move to SquareCampus from a school ERP, a set of disconnected tools, or a mix of both. Migration scope, sequencing and how long the existing system runs alongside are agreed during discovery rather than assumed.",
+  },
+  {
+    question: "What does SquareCampus mean by governance, exception ownership and accountability?",
+    answer:
+      "Governance is policy, approval chains, role boundaries and audit history held as institutional configuration. Exception ownership means a deviation from the expected state becomes a routed item with a named owner, a position and a due date. Accountability means every approval, override and closure is attributed to a person and a role, recorded with the reason, on an append-only timeline.",
+  },
+  {
+    question: "How does multi-campus governance differ from supporting multiple campuses?",
+    answer:
+      "Supporting multiple campuses means the software can hold several campuses' records. Multi-campus governance means trust, school and campus are one hierarchy: policy is set once and executed locally with deviations recorded as exceptions, access scope is a property of the role, and exceptions and board views cross campuses from the same records without consolidation.",
   },
 ] as const;

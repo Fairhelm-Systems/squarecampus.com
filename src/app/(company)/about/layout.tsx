@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "About SquareCampus | Building the Operating System for Indian Education",
   description:
-    "Learn about SquareCampus, the team building operational infrastructure for Indian schools and colleges. Our mission: calm, connected, and accountable campus management.",
+    "SquareCampus is a School Operating System for schools, educational trusts and multi-campus groups in India, built by Fairhelm Systems (OPC) Private Limited. Founder-led, focused on connected operations, governance and accountability.",
   path: "/about",
   ogImage: "https://squarecampus.com/og/about.png",
   ogTitle: "About SquareCampus | The Team Behind the School OS",

@@ -32,11 +32,14 @@ import {
   RECORD_VS_DECISION,
 } from "@/content/operational-pains";
 import { siteCtas } from "@/content/site-content";
+import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "SquareCampus | School Operating System for Indian Schools and Trusts",
   description:
     "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
+  // Canonical plus the homepage's Markdown alternate (content/markdown-alternates.ts).
+  alternates: createAlternates("/"),
 };
 
 const heroProofPoints = [

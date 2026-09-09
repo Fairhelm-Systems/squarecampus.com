@@ -51,8 +51,8 @@ const sharedDifferentiators = [
     body: "We name our region (AWS Mumbai, ap-south-1) on the infrastructure page and answer infrastructure questionnaires in writing during evaluation. Ask any vendor for the same detail and compare the answers.",
   },
   {
-    title: "Predictable, all-inclusive pricing",
-    body: "Like most vendors, we quote after scoping — but the model is simple and stated up front: one headcount-based price with all modules and mobile apps included, no per-module upsells and no hidden 'parent app' fees.",
+    title: "A published licensing model",
+    body: "Like most vendors, we issue figures after scoping — but the model is published up front: one annual institutional licence on student-volume bands with the platform's modules and the standard parent and staff apps included, no per-module upsells and no hidden 'parent app' fees. Migration, integrations and premium implementation are scoped as their own lines.",
   },
 ] as const;
 
@@ -89,7 +89,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Pricing",
         squarecampus:
-          "Headcount-based; all modules and mobile apps included; quoted after scoping.",
+          "Model published: annual licence on student-volume bands, modules and standard apps included; figures by written proposal after discovery.",
         competitor: "Not publicly listed; quote on request.",
       },
       {
@@ -118,13 +118,13 @@ export const comparisons: Comparison[] = [
     weFitWhen: [
       "You want one connected system instead of a suite of modules to keep in sync.",
       "You want a governed AI layer (AEGIS) and an infrastructure posture answered in writing.",
-      "You want predictable, all-inclusive headcount pricing with mobile apps included, and a guided go-live.",
+      "You want a published licensing model with the standard mobile apps included, separately scoped lines stated up front, and a guided go-live.",
     ],
     faqs: [
       {
         question: "Is SquareCampus a good Entab CampusCare alternative?",
         answer:
-          "SquareCampus is a modern School OS built on one unified institutional data model with a governed intelligence layer (AEGIS), a published infrastructure posture, and headcount-based pricing. Schools evaluating CampusCare often shortlist SquareCampus when they want a single connected system and an infrastructure posture they can question in writing. We support guided migration from existing school ERPs.",
+          "SquareCampus is a modern School OS built on one unified institutional data model with a governed intelligence layer (AEGIS), a published infrastructure posture, and a published licensing model on student-volume bands. Schools evaluating CampusCare often shortlist SquareCampus when they want a single connected system and an infrastructure posture they can question in writing. We support guided migration from existing school ERPs.",
       },
       {
         question: "Can we migrate from Entab CampusCare to SquareCampus?",
@@ -170,7 +170,8 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Pricing",
-        squarecampus: "Headcount-based; all modules and mobile apps included.",
+        squarecampus:
+          "Model published: annual licence on student-volume bands, modules and standard apps included; figures by proposal.",
         competitor: "Free open-source core; Fedena Pro is paid / plan-based.",
       },
       {
@@ -245,7 +246,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Pricing",
         squarecampus:
-          "Headcount-based; all modules and mobile apps included; quoted after scoping.",
+          "Model published: annual licence on student-volume bands, modules and standard apps included; figures by written proposal after discovery.",
         competitor: "Quote-based.",
       },
       {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { CANONICAL_DEFINITION, entityFaqs } from "@/content/what-is-squarecampus";
+import { CANONICAL_DEFINITION, entityFaqs, glossary } from "@/content/what-is-squarecampus";
 import {
   createBreadcrumbSchema,
   createPageMetadata,
@@ -41,15 +41,28 @@ const structuredData = {
       { name: "What is SquareCampus?", url: `${SEO_CONFIG.baseUrl}/what-is-squarecampus` },
     ]),
     {
+      "@type": "DefinedTermSet",
+      "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#terms`,
+      name: "SquareCampus vocabulary",
+      url: `${SEO_CONFIG.baseUrl}/what-is-squarecampus/#glossary`,
+    },
+    {
       "@type": "DefinedTerm",
       "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#definition`,
       name: "SquareCampus",
       description: CANONICAL_DEFINITION,
-      inDefinedTermSet: {
-        "@type": "DefinedTermSet",
-        name: "School Operating System",
-      },
+      inDefinedTermSet: { "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#terms` },
     },
+    // The glossary terms the page renders, so "School OS", "governance" and
+    // "exception ownership" resolve to stated definitions rather than to
+    // marketing vocabulary.
+    ...glossary.map((entry, index) => ({
+      "@type": "DefinedTerm",
+      "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#term-${index + 1}`,
+      name: entry.term,
+      description: entry.definition,
+      inDefinedTermSet: { "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#terms` },
+    })),
     {
       "@type": "FAQPage",
       "@id": `${SEO_CONFIG.baseUrl}/what-is-squarecampus#faqpage`,

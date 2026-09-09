@@ -72,7 +72,7 @@ export function ServicesFlowVisual({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div ref={ref} className={cn("aegis-visual svc-flow", className)}>
+    <div data-md-skip ref={ref} className={cn("aegis-visual svc-flow", className)}>
       <div className="surface-panel-strong relative overflow-hidden rounded-4xl p-4 sm:p-6">
         <div className="pointer-events-none absolute inset-x-[20%] top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.16),transparent_70%)]" />
 

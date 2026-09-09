@@ -3,7 +3,8 @@ import type { ElementType } from "react";
 import { OperationalBadge } from "./marketing";
 
 /**
- * Identity flow for Enterprise Microsoft Entra ID SSO.
+ * Identity flow for institutional single sign-on (Microsoft Entra ID, from
+ * the Pro plan).
  *
  * The whole point of the diagram is the boundary: the institution's own tenant
  * answers "who is this person", and SquareCampus answers "what may they do".
@@ -90,10 +91,10 @@ export function IdentityFlow() {
       </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
-        <OperationalBadge tone="brand">Enterprise capability</OperationalBadge>
+        <OperationalBadge tone="brand">Optional from Pro</OperationalBadge>
         <p className="type-support">
           Microsoft Entra ID verifies who the user is. SquareCampus determines what the user may
-          access and perform.
+          access and perform. Single sign-on is chosen by the institution, never required.
         </p>
       </div>
     </div>

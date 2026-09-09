@@ -1,7 +1,9 @@
 import {
   Building2,
   CalendarRange,
+  Check,
   FileText,
+  Minus,
   ShieldCheck,
   Smartphone,
   Sparkles,
@@ -13,6 +15,7 @@ import { ScopedCostGrid } from "@/components/pricing/scoped-cost-grid";
 import { VolumeRationale } from "@/components/pricing/volume-rationale";
 import { ButtonLink } from "@/components/site/button-link";
 import { DetailsFaq } from "@/components/site/details-faq";
+import { FactTable } from "@/components/site/fact-table";
 import {
   CTAGroup,
   Eyebrow,
@@ -22,6 +25,7 @@ import {
 } from "@/components/site/marketing";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { enterpriseBeyondModules, fit, identity, pricingAvailability } from "@/content/commercial";
 import {
   ALLOWANCE_NOTE,
   DISCOVERY_NOTE,
@@ -169,6 +173,109 @@ export default function PricingPage() {
         </Reveal>
       </SectionShell>
 
+      {/* 3b — What Enterprise adds beyond ordinary ERP modules. A table, not a
+          slogan: procurement reads it dimension by dimension. */}
+      <SectionShell
+        id="enterprise-adds"
+        eyebrow="What Enterprise adds"
+        title="Enterprise is not Pro with more modules."
+        body="An ordinary ERP grows by adding modules. Enterprise grows by adding institutional governance: the structure, command, identity, audit and deployment controls a trust or a complex institution actually has to run on."
+      >
+        <Reveal>
+          <FactTable
+            caption="What Enterprise adds beyond ordinary ERP modules, by dimension."
+            columns={[
+              { key: "modules", label: "Ordinary ERP modules" },
+              { key: "enterprise", label: "SquareCampus Enterprise" },
+            ]}
+            rows={enterpriseBeyondModules.map((row) => ({
+              label: row.dimension,
+              values: [row.modules, row.enterprise],
+            }))}
+          />
+        </Reveal>
+      </SectionShell>
+
+      {/* 3c — Identity options by plan. The doctrine: credentials everywhere,
+          optional SSO from Pro, identity governance under Enterprise. */}
+      <SectionShell
+        id="identity"
+        eyebrow="Identity options"
+        title="Sign-in is the institution's choice. Authorisation is always SquareCampus's."
+        body={identity.principle}
+      >
+        <Reveal>
+          <FactTable
+            caption="Identity and access options by plan."
+            columns={[
+              { key: "starter", label: "Starter" },
+              { key: "pro", label: "Pro" },
+              { key: "enterprise", label: "Enterprise" },
+            ]}
+            rows={identity.byPlan.map((row) => ({
+              label: row.capability,
+              values: [row.starter, row.pro, row.enterprise],
+            }))}
+          />
+        </Reveal>
+        <Reveal delay={80}>
+          <ul className="surface-panel mt-5 grid gap-3 rounded-[var(--radius-panel)] px-6 py-5 sm:grid-cols-2">
+            {identity.notes.map((note) => (
+              <li key={note} className="type-support flex items-start gap-3">
+                <ShieldCheck
+                  aria-hidden
+                  className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
+                />
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </SectionShell>
+
+      {/* 3d — Fit. Buyer qualification, not self-deprecation: the institution
+          that only needs attendance and fees should find out here. */}
+      <SectionShell
+        id="fit"
+        eyebrow="Fit"
+        title="Who SquareCampus is priced for, and who it is not."
+        body={pricingAvailability.positioning}
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-2">
+          <div className="surface-panel rounded-[var(--radius-panel)] p-6 sm:p-8">
+            <Eyebrow>Best suited to</Eyebrow>
+            <ul className="mt-5">
+              {fit.bestFor.map((item) => (
+                <li
+                  key={item}
+                  className="type-support flex gap-3 border-t border-[color:var(--line)] py-3.5 first:border-t-0 first:pt-0"
+                >
+                  <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-[color:var(--teal)]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="surface-quiet rounded-[var(--radius-panel)] p-6 sm:p-8">
+            <Eyebrow>SquareCampus may not be the right fit if</Eyebrow>
+            <ul className="mt-5">
+              {fit.notRightFitIf.map((item) => (
+                <li
+                  key={item}
+                  className="type-support flex gap-3 border-t border-[color:var(--line)] py-3.5 first:border-t-0 first:pt-0"
+                >
+                  <Minus
+                    aria-hidden
+                    className="mt-1 size-3.5 shrink-0 text-[color:var(--muted-foreground)]"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </SectionShell>
+
       {/* 4 — Why volume-based pricing */}
       <SectionShell
         id="volume"
@@ -218,9 +325,9 @@ export default function PricingPage() {
       {/* 6 — What is priced separately */}
       <SectionShell
         id="scoped-separately"
-        eyebrow="Cost transparency"
+        eyebrow="Included versus separately scoped"
         title="No hidden subsidies. No surprise implementation bill."
-        body="Some dimensions vary far too much between institutions to be averaged into a licence. They are scoped independently and quoted openly, so the annual commitment stays predictable."
+        body={`${pricingAvailability.included} ${pricingAvailability.scopedSeparately}`}
       >
         <Reveal>
           <ScopedCostGrid />
@@ -255,7 +362,7 @@ export default function PricingPage() {
         id="pilot"
         eyebrow="Founding-partner pilot"
         title="The lowest-risk way to establish evidence before committing."
-        body="A pilot is a measured operational exercise, not a trial account. It runs on a written baseline and closes against an agreed metric. For the first cohort it runs inside the Founding Institutional Partner programme."
+        body="A pilot is a measured operational exercise, not a trial account. It runs on a written baseline and closes against an agreed metric. For the two Founding Institutional Partner positions it runs inside that programme."
       >
         <Reveal>
           <div className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
@@ -328,11 +435,7 @@ export default function PricingPage() {
                   aria-hidden
                   className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
                 />
-                <span>
-                  If an institution only needs a conventional attendance, fee and report-card
-                  system, SquareCampus will look expensive. It is priced for institutions that want
-                  operational command, measurable ownership and leadership visibility.
-                </span>
+                <span>{pricingAvailability.positioning}</span>
               </p>
             </div>
             <div className="grid gap-3">

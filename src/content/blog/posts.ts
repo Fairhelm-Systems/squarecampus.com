@@ -1284,7 +1284,7 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Where software helps — and where the work stays yours",
         paragraphs: [
           "Software’s honest role in all of this is enforcement. Once the institution has decided who may see what, a well-built system applies that decision every hour of every day without getting tired: role-based access, an audit trail recording who changed what and when, encryption in transit and at rest, and exports in standard formats so your data is never trapped. That is the standard we hold SquareCampus to. It is built as a School Operating System — a governed operating layer for the institution — and it is designed to support DPDP Act obligations. We do not claim a compliance certificate, because no software purchase can make that claim true on its own.",
-          "On infrastructure, we publish what we run and stop there: hosted on AWS Mumbai (ap-south-1) with a multi-AZ design and an India-first residency posture, with Microsoft Entra ID SSO available as an Enterprise capability so staff sign in under your institution’s own policies. Our AI layer, AEGIS, answers questions inside the same role permissions as the rest of the platform, grounded in your own records, with every query landing on the audit trail — read-only in its first version, and deliberately not autonomous. The details live on the security page at squarecampus.com/security/ and the infrastructure page at squarecampus.com/infrastructure/, and we answer security questionnaires in writing.",
+          "On infrastructure, we publish what we run and stop there: hosted on AWS Mumbai (ap-south-1) with a multi-AZ design and an India-first residency posture, with optional Microsoft Entra ID single sign-on from the Pro plan so staff sign in under your institution’s own policies, and SquareCampus-managed credentials in every plan. Our AI layer, AEGIS, answers questions inside the same role permissions as the rest of the platform, grounded in your own records, with every query landing on the audit trail — read-only in its first version, and deliberately not autonomous. The details live on the security page at squarecampus.com/security/ and the infrastructure page at squarecampus.com/infrastructure/, and we answer security questionnaires in writing.",
           "Two closing honesties. First, a SquareCampus deployment is bounded by design: it coexists with the ERP, payment portal, or identity provider you already run, which stay authoritative for their domains — consolidating tools is a later choice, if you ever make it, never a precondition. Second, and more important: no vendor can decide your access map, empty your WhatsApp groups, or revoke your leavers’ accounts. That work is the institution’s, it is mostly free, and it is where student data protection is actually won. Print the checklist. Walk the campus with it. Do that much, and every software decision you make afterwards gets easier.",
         ],
       },
@@ -1803,7 +1803,7 @@ export const allBlogPosts: BlogPost[] = [
         paragraphs: [
           "A founding pilot closes with one of three outcomes, and all three are published on the pricing page at squarecampus.com/pricing/ rather than negotiated in the room. The decision is made against the success measure agreed at the start, by the sponsor, on the evidence. There is no fourth outcome in which the pilot drifts on indefinitely because nobody wants to call it — that drift is the commonest way pilots fail institutions, and the published outcomes exist to prevent it.",
           "Stopping is a real outcome, not a failure state anyone will argue you out of. An institution that stops leaves with three things: the measurement itself, the process documentation written during the pilot, and its data in standard export formats — the same export posture described on the trust page at squarecampus.com/security/. A written baseline and a clean stop leave you better equipped for your next evaluation, whoever it is with. We think that is a fair floor for a pilot with a young company.",
-          "The stop option is also what makes a conversion mean something. When walking away is easy, and expected as a possibility from the start, an institution that chooses to continue is doing so on evidence — and its board can defend that decision in one page. That is worth more to us than a renewal won by inertia. To be blunt, it is the only kind of customer a small cohort can be built on.",
+          "The stop option is also what makes a conversion mean something. When walking away is easy, and expected as a possibility from the start, an institution that chooses to continue is doing so on evidence — and its board can defend that decision in one page. That is worth more to us than a renewal won by inertia. To be blunt, it is the only kind of institution a programme with two founding positions can be built on.",
         ],
         bullets: [
           "Convert: the measure was met, and the institution moves onto the founding-partner commercial structure agreed before the pilot began.",
@@ -1820,7 +1820,7 @@ export const allBlogPosts: BlogPost[] = [
       {
         heading: "What founding status does not give you",
         paragraphs: [
-          "Founding partner status carries real entitlements — preferential commercial terms, a named implementation counterpart, structured influence on the roadmap. It is just as important to say what it does not create, because unspoken expectations surface at the worst possible moments. The list below is not small print; it is the same boundary published on the founding partner page at squarecampus.com/launch-partners/, and it applies to every partner in the cohort equally.",
+          "Founding partner status carries real entitlements — a protected 40% discount on Enterprise commercial terms, white-labelled mobile apps without the standard white-label charge, a named implementation counterpart, defined influence on the roadmap. It is just as important to say what it does not create, because unspoken expectations surface at the worst possible moments. The list below is not small print; it is the same boundary published on the founding partner page at squarecampus.com/launch-partners/, and it applies to both Founding Partner positions equally.",
           "Exact entitlements are governed by the proposal and the signed order form — not by this post, and not by anything said in a meeting. If a promise matters to your institution, ask for it in writing and expect to receive it in writing. That is the standard we recommend for every vendor evaluation, and we hold ourselves to it. A programme that trades on being honest cannot carry private side-arrangements that contradict the published one.",
         ],
         bullets: [
@@ -1835,7 +1835,7 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Who should not apply",
         paragraphs: [
           "The most useful thing we can publish about this programme is a list of institutions it will not serve well. Applying, being accepted, and then discovering mid-pilot that the fit was wrong costs a school far more than reading this section. If any of the following describes your institution today, a founding pilot is the wrong instrument — sometimes only for now, sometimes altogether. None of these are judgements about the institution; they are statements about what a pilot needs in order to work.",
-          "The mirror image is also true. An institution with a sponsor, a bottleneck it genuinely wants measured, and the capacity to take part in discovery and weekly reviews is exactly who the cohort is for. The cohort is small and selected by design — that is a statement about how the work is done, not a scarcity device, and you will not find a countdown anywhere on our site. The full programme, including the questions boards ask before saying yes, is on the founding partner page.",
+          "The mirror image is also true. An institution with a sponsor, a bottleneck it genuinely wants measured, and the capacity to take part in discovery and weekly reviews is exactly who the programme is for. There are two founding positions, one school and one university, and the programme closes when both are allocated — that is a statement about how the work is done, not a scarcity device, and you will not find a countdown anywhere on our site. The full programme, including the questions boards ask before saying yes, is on the founding partner page.",
         ],
         bullets: [
           "No executive sponsor: if no principal, trustee, director, registrar or group leader will own the outcome, the pilot will drift no matter how good the software is.",
@@ -1856,7 +1856,7 @@ export const allBlogPosts: BlogPost[] = [
     ],
     cta: {
       heading: "Bring one bottleneck to the first conversation",
-      body: "A 30-minute institutional diagnosis, with no commitment on either side: where the workflow stalls, what a bounded 60–90 day pilot would cover, what it would measure, and whether it belongs in the founding cohort at all.",
+      body: "A 30-minute institutional diagnosis, with no commitment on either side: where the workflow stalls, what a bounded 60–90 day pilot would cover, what it would measure, and whether a Founding Partner position is the right fit at all.",
       href: "/demo/?intent=founding-partner",
       label: "Request a partnership diagnosis",
     },
@@ -1956,7 +1956,7 @@ export const allBlogPosts: BlogPost[] = [
       {
         heading: "Where SquareCampus fits — and where it may not",
         paragraphs: [
-          "SquareCampus is built as one governed system of record for Indian schools and school groups: a unified institutional data model, trust-level governance with campus-level autonomy, guided migration with parallel runs, and infrastructure questions answered in writing as part of every evaluation. Pricing is headcount-based with all modules and mobile apps included.",
+          "SquareCampus is built as one governed system of record for Indian schools and school groups: a unified institutional data model, trust-level governance with campus-level autonomy, guided migration with parallel runs, and infrastructure questions answered in writing as part of every evaluation. The licensing model is published: one annual institutional licence on student-volume bands, with modules and the standard mobile apps included and figures issued by written proposal.",
           "We are not the right fit for everyone. If your priority is classroom content and LMS depth rather than institutional operations, or you want open-source software your own IT team hosts and modifies, other vendors serve those needs better — our comparison pages say so by name. We would rather lose an evaluation honestly than win it with a checkbox matrix.",
           "Whoever you evaluate, use the checklist. It will make every vendor — including us — earn the decision.",
         ],
@@ -2277,7 +2277,7 @@ export const allBlogPosts: BlogPost[] = [
           "Every vendor, including us, should be asked to complete the same sheet before a decision is made. If a vendor cannot or will not fill a line, that is the answer for that line. Ask for it in writing, attach it to the order, and make it override any price list.",
         ],
         bullets: [
-          "One price per year, on headcount, with every module and the standard parent and staff apps included. Any excluded module named.",
+          "One price per year, on enrolment, with every module and the standard parent and staff apps included. Any excluded module named.",
           "Implementation, data migration and training itemised and capped, with what 'messy data' costs stated before the migration starts.",
           "SMS, WhatsApp and payment-gateway charges passed through at the provider's rate, or the markup stated as a number.",
           "Escalation capped, and the annual maintenance charge defined against the price paid, not a list value.",

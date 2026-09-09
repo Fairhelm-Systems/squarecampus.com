@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
 import {
@@ -98,7 +98,7 @@ export default function LaunchPartnersPage() {
               </p>
               <dl className="mt-7 border-t border-[color:var(--line)]">
                 {[
-                  { term: "Cohort", detail: "Small and selected" },
+                  { term: "Positions", detail: "Two, ever: one school, one university" },
                   { term: "Window", detail: "60–90 days" },
                   { term: "Scope", detail: "One campus or one workflow bundle" },
                   { term: "Close", detail: "Convert, extend or stop" },
@@ -119,12 +119,78 @@ export default function LaunchPartnersPage() {
         </div>
       </SectionShell>
 
+      {/* 1b — The programme, precisely. Positions, nature, entitlements and
+          boundaries come from content/commercial.ts, so this block, the
+          homepage section, the FAQ and llms.txt cannot describe different
+          programmes. */}
+      <SectionShell
+        id="programme"
+        className="scroll-mt-24"
+        eyebrow={page.programme.eyebrow}
+        title={page.programme.heading}
+        body={page.programme.nature}
+      >
+        <Reveal className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
+            <Eyebrow>The two positions</Eyebrow>
+            <ol className="mt-5">
+              {page.programme.positions.map((position, index) => (
+                <li
+                  key={position}
+                  className="flex gap-4 border-t border-[color:var(--line)] py-4 first:border-t-0 first:pt-0"
+                >
+                  <span className="eyebrow mt-1 shrink-0 text-[color:var(--brand)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="type-body text-[color:var(--foreground)]">{position}</span>
+                </li>
+              ))}
+            </ol>
+            <TrustNote className="mt-6">{page.programme.closure}</TrustNote>
+          </div>
+
+          <div className="surface-panel rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
+            <Eyebrow>What a Founding Partner receives, under the executed agreement</Eyebrow>
+            <dl className="mt-5">
+              {page.programme.entitlements.map((entitlement) => (
+                <div
+                  key={entitlement.title}
+                  className="border-t border-[color:var(--line)] py-4 first:border-t-0 first:pt-0"
+                >
+                  <dt className="text-sm font-medium text-[color:var(--foreground)]">
+                    {entitlement.title}
+                  </dt>
+                  <dd className="type-support mt-1.5">{entitlement.body}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Reveal>
+
+        <Reveal delay={80}>
+          <div className="surface-quiet mt-4 rounded-[var(--radius-panel)] p-6 sm:p-8">
+            <Eyebrow>What founding status is not</Eyebrow>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {page.programme.boundaries.map((boundary) => (
+                <li key={boundary} className="type-support flex gap-3">
+                  <Minus
+                    aria-hidden
+                    className="mt-1 size-3.5 shrink-0 text-[color:var(--muted-foreground)]"
+                  />
+                  <span>{boundary}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </SectionShell>
+
       {/* 2 — What founding status changes */}
       <SectionShell
         id="what-changes"
         eyebrow="What founding status changes"
         title={page.pillarsHeading}
-        body="Three pillars, not a wall of feature cards. Each one is bounded by the proposal and the signed order form."
+        body="Three pillars, not a wall of feature cards. Each one is bounded by the executed agreement."
       >
         <Reveal staggerChildren className="grid gap-4 lg:grid-cols-3">
           {page.pillars.map((pillar) => (

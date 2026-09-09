@@ -5,6 +5,8 @@
  * FAQPage JSON-LD. It previously lived only inside the layout, which meant the
  * structured data declared answers that appeared nowhere on the page.
  */
+import { identity } from "./commercial";
+
 export const securityFaqs = [
   {
     question: "Where is data hosted?",
@@ -27,8 +29,19 @@ export const securityFaqs = [
       "Yes. We provide questionnaire support and can share security documentation and summaries on request.",
   },
   {
+    question: "Can an institution use normal SquareCampus credentials?",
+    answer: `Yes. ${identity.baseline.body}`,
+  },
+  {
     question: "Can staff sign in with our own Microsoft accounts?",
-    answer:
-      "Microsoft Entra ID SSO is available as an Enterprise capability for one approved institutional tenant, subject to technical onboarding. Authentication happens in your tenant under your MFA and Conditional Access policies, while SquareCampus continues to govern campus, role, record and workflow permissions.",
+    answer: `From Pro, yes. ${identity.pro.body}`,
+  },
+  {
+    question: "What identity options does Enterprise add?",
+    answer: identity.enterprise.body,
+  },
+  {
+    question: "Who decides what a signed-in user may do?",
+    answer: identity.principle,
   },
 ] as const;

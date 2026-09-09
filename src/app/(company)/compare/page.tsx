@@ -48,7 +48,7 @@ const evaluationCriteria = [
   },
   {
     q: "Is the pricing transparent?",
-    body: "Ask what's included versus billed separately: mobile apps, each module, support, training. Headcount pricing with everything included is easier to budget than per-module upsells.",
+    body: "Ask what's included versus billed separately: mobile apps, each module, support, training. One institutional licence with the standard apps included and the separately scoped lines stated up front is easier to budget than per-module upsells.",
   },
   {
     q: "Who runs and secures it?",

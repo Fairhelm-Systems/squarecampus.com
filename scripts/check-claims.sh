@@ -2,8 +2,8 @@
 # Regression check: forbidden marketing claims must never re-enter the site.
 #
 # Runs as part of `bun run build` (and standalone via `bun run check:claims`).
-# Scans src/ and public/llms.txt — everything that ships as visible copy,
-# metadata, JSON-LD, or crawler-facing text.
+# Scans src/ — everything that ships as visible copy, metadata, JSON-LD, or
+# crawler-facing text (/llms.txt is generated from src/content/llms.ts).
 #
 # If a claim on this list gains real evidence, record it in
 # docs/marketing-claims-register.md FIRST, then relax the pattern here.
@@ -11,7 +11,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-TARGETS=(src public/llms.txt)
+TARGETS=(src)
 
 # Pattern | description
 PATTERNS=(
@@ -31,6 +31,20 @@ PATTERNS=(
   "tested quarterly|unverified test-cadence claim"
   "RTO [0-9]|unverified recovery objective"
   "RPO [0-9]|unverified recovery objective"
+  # Commercial doctrine (see docs/marketing-claims-register.md, content/commercial.ts)
+  "[Nn]o prices are published|stale pricing-availability wording (the model is published; figures by proposal)"
+  "[Nn]o figures are published|stale pricing-availability wording"
+  "[Nn]o prices, rates|stale pricing-availability wording"
+  "student \+ staff|stale headcount basis (licence is on active enrolled students)"
+  "[Hh]eadcount-based|stale headcount basis (licence is on student-volume bands)"
+  "[Ii]mplementation and training included|stale bundling claim (implementation is scoped)"
+  "(small|first|initial) cohort|stale Founding Partner wording (two positions, ever)"
+  "one approved (institutional )?tenant|stale Entra wording (SSO is optional from Pro)"
+  "price protection for the (agreed|initial)|stale Founding Partner wording (no protection duration is published)"
+  "[Ll]ifetime (pricing|discount|protection)|forbidden Founding Partner wording"
+  "not an investment|stale Founding Partner wording (strategic capital commitment under a separate agreement)"
+  "Enterprise-only|stale identity tier wording"
+  "SSO-ready|vague identity capability wording"
 )
 
 FAILED=0

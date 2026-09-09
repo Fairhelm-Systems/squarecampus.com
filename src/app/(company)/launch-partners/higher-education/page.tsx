@@ -275,6 +275,31 @@ export default function HigherEducationPartnersPage() {
         </Reveal>
       </SectionShell>
 
+      {/* 6b — The one university position. Stated, not implied: the same
+          facts as /launch-partners/ and the FAQ, from content/commercial.ts. */}
+      <SectionShell
+        id="position"
+        eyebrow={he.position.eyebrow}
+        title={he.position.heading}
+        body={he.position.body}
+      >
+        <Reveal>
+          <dl className="grid gap-4 sm:grid-cols-2">
+            {he.position.entitlements.map((entitlement) => (
+              <div
+                key={entitlement.title}
+                className="surface-panel rounded-[var(--radius-panel)] p-6"
+              >
+                <dt className="text-sm font-medium text-[color:var(--foreground)]">
+                  {entitlement.title}
+                </dt>
+                <dd className="type-support mt-2">{entitlement.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </SectionShell>
+
       {/* 7 — Final CTA */}
       <SectionShell className="pb-12 sm:pb-22">
         <Reveal className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">

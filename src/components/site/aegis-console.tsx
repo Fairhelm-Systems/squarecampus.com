@@ -41,7 +41,7 @@ export function AegisConsole({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div ref={ref} className={cn("aegis-console", className)}>
+    <div data-md-skip ref={ref} className={cn("aegis-console", className)}>
       <div className="surface-panel-strong relative overflow-hidden rounded-[1.9rem]">
         <div className="pointer-events-none absolute inset-x-[10%] top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(88,124,204,0.18),transparent_70%)]" />
 

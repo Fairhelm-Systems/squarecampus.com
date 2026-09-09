@@ -23,7 +23,11 @@ function ItemList({ items, className }: { items: readonly ScopedItem[]; classNam
         >
           <span className="type-support">{item.label}</span>
           {item.tag ? (
-            <span className="shrink-0 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[color:var(--muted-foreground)]">
+            <span
+              data-md-prefix="("
+              data-md-suffix=")"
+              className="shrink-0 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-[color:var(--muted-foreground)]"
+            >
               {item.tag}
             </span>
           ) : null}

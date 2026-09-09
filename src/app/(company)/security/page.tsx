@@ -14,6 +14,7 @@ import { IdentityFlow } from "@/components/site/identity-flow";
 import { SecurityMockup } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { identity } from "@/content/commercial";
 import { securityFaqs } from "@/content/security-faq";
 import { siteCtas } from "@/content/site-content";
 
@@ -113,26 +114,58 @@ export default function SecurityPage() {
         id="identity"
         eyebrow="Identity and access"
         title="Your identity environment remains yours"
-        body="Enterprise customers can connect SquareCampus to their institution's Microsoft Entra ID environment. Staff authenticate using their existing organisational accounts and remain subject to the institution's MFA, Conditional Access and user-assignment policies."
+        body={identity.principle}
       >
-        <Reveal>
+        {/* The three tiers of identity, stated as facts a review team can
+            check against the pricing page: credentials everywhere, optional
+            institutional SSO from Pro, identity governance under Enterprise. */}
+        <Reveal staggerChildren className="grid gap-4 md:grid-cols-3">
+          {[
+            { step: "All plans", ...identity.baseline },
+            { step: "From Pro", ...identity.pro },
+            { step: "Enterprise", ...identity.enterprise },
+          ].map((tier) => (
+            <article
+              key={tier.name}
+              data-reveal-item
+              className="surface-panel rounded-[1.6rem] p-6"
+            >
+              <p className="section-kicker">{tier.step}</p>
+              <h3 className="mt-4 font-display text-2xl tracking-[-0.04em]">{tier.name}</h3>
+              <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                {tier.body}
+              </p>
+            </article>
+          ))}
+        </Reveal>
+
+        <Reveal className="mt-5">
           <IdentityFlow />
         </Reveal>
 
         <Reveal delay={80}>
           <div className="surface-panel mt-5 rounded-[1.6rem] p-6 sm:p-7">
-            <p className="text-base leading-7 text-[color:var(--foreground)]">
-              SquareCampus does not delegate product authorisation to email addresses alone.
-              Institution membership, campus scope, roles, records and workflow permissions remain
-              governed inside SquareCampus.
-            </p>
-            <p className="mt-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
-              Standard sign-in authenticates identity only &mdash; it does not require access to
-              email, files, Teams, SharePoint or other Microsoft 365 business data. Enterprise
-              covers one approved institutional tenant, available subject to technical onboarding.
-              Automated provisioning such as SCIM, additional Entra ID tenants, SAML and
-              non-Microsoft identity providers are scoped separately during technical discovery.
-            </p>
+            <p className="section-kicker">Sign-in modes the institution chooses between</p>
+            <ol className="mt-4 grid gap-2 sm:grid-cols-3">
+              {identity.modes.map((mode, index) => (
+                <li
+                  key={mode}
+                  className="rounded-[1.2rem] bg-[color:var(--surface-muted)] px-4 py-4 text-sm leading-6 text-[color:var(--foreground)]"
+                >
+                  <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
+                    Mode {index + 1}
+                  </span>
+                  <span className="mt-2 block">{mode}</span>
+                </li>
+              ))}
+            </ol>
+            <ul className="mt-5 grid gap-2 border-t border-[color:var(--line)] pt-5">
+              {identity.notes.map((note) => (
+                <li key={note} className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+                  {note}
+                </li>
+              ))}
+            </ul>
           </div>
         </Reveal>
       </SectionShell>

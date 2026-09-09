@@ -1,3 +1,5 @@
+import { foundingProgramme, identity, pricingAvailability } from "./commercial";
+
 export type FaqCategoryId = "getting-started" | "features" | "security" | "pricing";
 
 export type FaqItem = {
@@ -25,7 +27,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Who is SquareCampus for?",
     answer:
-      "Schools, colleges, universities, and multi-branch groups that need predictable, connected daily operations. Whether you're a single-campus school or a multi-campus group, SquareCampus is structured to match how your institution is organised.",
+      "Schools, educational trusts, multi-campus school groups and, as a governed operating layer over the systems they already run, higher-education institutions in India. It suits institutions that want operational governance, accountable ownership and leadership visibility, whether they run one campus or many. It is not designed for an institution that needs only basic attendance, fees and report cards at the lowest possible licence price.",
     category: "getting-started",
   },
   {
@@ -37,7 +39,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How do we get started?",
     answer:
-      "Book a tailored demo. We'll map your workflows, share a rollout plan, and align on timelines and pricing. After the demo, you'll receive a detailed proposal with migration scope, training schedule, and go-live milestones.",
+      "Book a guided demo. We map your workflows, share a rollout plan, and align on timelines and commercial terms. After discovery you receive a written proposal with the licence, the separately scoped lines such as migration and integrations, the training schedule and go-live milestones.",
     category: "getting-started",
   },
   {
@@ -123,47 +125,63 @@ export const faqs: FaqItem[] = [
     category: "security",
   },
   {
-    question: "Does Microsoft SSO use our institution's existing accounts?",
-    answer:
-      "Yes. Enterprise customers can authenticate staff through their own Microsoft Entra ID tenant. Their institution continues to control identity policies such as MFA and Conditional Access, while SquareCampus controls campus, role, record and workflow permissions. Enterprise covers one approved institutional tenant, available subject to technical onboarding.",
+    question: "Can an institution use normal SquareCampus credentials?",
+    answer: `Yes. ${identity.baseline.body} Single sign-on is an option, not a requirement.`,
+    category: "security",
+  },
+  {
+    question: "Does Pro support institutional single sign-on?",
+    answer: `Yes. ${identity.pro.body} The institution chooses the sign-in mode: ${identity.modes.join("; ")}.`,
     category: "security",
   },
   {
     question: "Does SquareCampus access our Outlook or Microsoft 365 data?",
     answer:
-      "No. Standard Microsoft Entra ID SSO is used to authenticate identity. Access to email, files, Teams, SharePoint or other Microsoft Graph data is not required for basic sign-in.",
+      "No. Standard Microsoft Entra ID sign-in is used to authenticate identity. Access to email, files, Teams, SharePoint or other Microsoft Graph data is not required for sign-in.",
     category: "security",
   },
   {
-    question: "Does SSO automatically create and remove users?",
+    question: "Does single sign-on automatically create and remove users?",
     answer:
-      "SSO authenticates users. Automated user provisioning and deprovisioning require a separately configured lifecycle-integration capability such as SCIM, which is scoped as an Enterprise service rather than included by default.",
+      "No. Single sign-on authenticates users. Automated provisioning, deprovisioning and joiner-mover-leaver lifecycle controls are identity governance requirements scoped under Enterprise rather than part of SSO.",
     category: "security",
   },
   {
-    question: "Can a trust use more than one Microsoft tenant?",
-    answer:
-      "Multiple Microsoft Entra ID tenants can be supported as an Enterprise federation requirement and are scoped during technical discovery.",
+    question: "What identity governance does Enterprise add?",
+    answer: `${identity.enterprise.body} ${identity.principle}`,
     category: "security",
   },
 
   // Pricing & support
   {
-    question: "How do you price?",
-    answer:
-      "SquareCampus is licensed annually as one institutional platform. The licence is calculated through progressive, volume-based student bands, and the plan you select — Starter, Pro or Enterprise — reflects the operational and governance depth you need. Exact commercial terms are issued after a short institutional discovery.",
+    question: "Is pricing public?",
+    answer: `${pricingAvailability.short} ${pricingAvailability.model}`,
     category: "pricing",
   },
   {
-    question: "Are there any setup or hidden fees?",
-    answer:
-      "There is no hidden module wall inside the licence. Some dimensions are scoped separately and quoted as their own lines — legacy data migration, custom integrations, private-cloud or on-premises deployment, premium implementation and support, and metered third-party usage such as SMS, WhatsApp and payment-gateway charges. Every line appears in the proposal before you sign.",
+    question: "What is included, and what is scoped separately?",
+    answer: `${pricingAvailability.included} ${pricingAvailability.scopedSeparately} There is no hidden module wall inside the licence, and every separately scoped line appears in the proposal before you sign.`,
+    category: "pricing",
+  },
+  {
+    question: "What happens as enrolment grows?",
+    answer: pricingAvailability.volume,
+    category: "pricing",
+  },
+  {
+    question: "Is SquareCampus appropriate if we only need attendance and fees?",
+    answer: `Usually not. ${pricingAvailability.positioning}`,
+    category: "pricing",
+  },
+  {
+    question: "How many Founding Institutional Partner positions exist?",
+    answer: `${foundingProgramme.positionsStatement} ${foundingProgramme.nature} Under the executed agreement a Founding Partner receives defined roadmap influence, a protected ${foundingProgramme.enterpriseDiscountPercent}% discount on Enterprise commercial terms, white-labelled mobile apps without the standard white-label charge, and any other privileges explicitly agreed.`,
     category: "pricing",
   },
   {
     question: "Is the mobile app charged separately?",
     answer:
-      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. A white-labelled Android and iOS build, published under your institution's own branding and store listings, carries a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive the white-labelled build at no extra cost.",
+      "No. The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. A white-labelled Android and iOS build, published under your institution's own branding and store listings, carries a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive the white-labelled build without the standard white-label charge.",
     category: "pricing",
   },
   {
@@ -173,15 +191,15 @@ export const faqs: FaqItem[] = [
     category: "pricing",
   },
   {
-    question: "How does SquareCampus prove ROI?",
+    question: "How is value measured?",
     answer:
-      "Automation reduces manual admin hours, fee collections become more predictable with automated reminders and online payments, and leadership gets live insight without manual consolidation. During evaluation we map these outcomes to your current workflows so the value case is specific to your institution.",
+      "SquareCampus publishes no measured outcomes. A pilot is designed to measure one agreed metric against a written baseline: for example, days between an attendance threshold breach and a recorded follow-up, or the time from collection close to a reconciled position. The value case is specific to the institution and is judged on that evidence, not on a vendor's percentage.",
     category: "pricing",
   },
   {
     question: "Is there a trial or pilot option?",
     answer:
-      "We offer guided pilots for larger institutions where you can test the platform with a subset of users before full rollout. For smaller institutions, we provide a detailed demo environment where you can explore all features with sample data.",
+      "A pilot is a paid, scoped 60–90 day engagement on one campus or one workflow bundle, judged against a written baseline, that ends in convert, extend or stop. There is no free trial. A guided demo environment with synthetic data is available for evaluation.",
     category: "pricing",
   },
 ];

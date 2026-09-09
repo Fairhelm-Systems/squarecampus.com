@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { ButtonLink } from "@/components/site/button-link";
 import { DetailsFaq } from "@/components/site/details-faq";
+import { FactTable } from "@/components/site/fact-table";
 import { CTAGroup, Eyebrow, OperationalBadge } from "@/components/site/marketing";
 import { MotionPoster } from "@/components/site/motion-poster";
 import { Reveal } from "@/components/site/reveal";
@@ -15,6 +16,8 @@ import {
   CANONICAL_DEFINITION,
   dashboardVsDecisionLayer,
   entityFaqs,
+  glossary,
+  multiCampusContrast,
 } from "@/content/what-is-squarecampus";
 
 export default function WhatIsSquareCampusPage() {
@@ -119,6 +122,42 @@ export default function WhatIsSquareCampusPage() {
               ))}
             </ul>
           </div>
+        </Reveal>
+      </SectionShell>
+
+      {/* Glossary. "School OS" has to mean something checkable, or it is a
+          synonym for ERP. Each term is also emitted as DefinedTerm JSON-LD. */}
+      <SectionShell
+        id="glossary"
+        eyebrow="What the words mean here"
+        title="School OS, governance, exception ownership, accountability."
+        body="These terms are used across the site with specific meanings. This is what each one commits SquareCampus to."
+      >
+        <Reveal>
+          <dl className="grid gap-4 md:grid-cols-2">
+            {glossary.map((entry) => (
+              <div key={entry.term} className="surface-panel rounded-[var(--radius-panel)] p-6">
+                <dt className="type-card-title">{entry.term}</dt>
+                <dd className="type-support mt-3">{entry.definition}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+
+        <Reveal delay={80} className="mt-8">
+          <Eyebrow>Multi-campus governance versus supporting multiple campuses</Eyebrow>
+          <FactTable
+            className="mt-4"
+            caption="How multi-campus governance differs from software that merely supports several campuses."
+            columns={[
+              { key: "supports", label: "Supports multiple campuses" },
+              { key: "governs", label: "Multi-campus governance" },
+            ]}
+            rows={multiCampusContrast.map((row) => ({
+              label: row.dimension,
+              values: [row.supports, row.governs],
+            }))}
+          />
         </Reveal>
       </SectionShell>
 
