@@ -37,7 +37,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: post.date,
       section: post.tag,
       tags: post.tags,
-      ...(post.image && { images: [{ url: post.image.src, alt: post.image.alt }] }),
+      images: post.image
+        ? [{ url: post.image.src, alt: post.image.alt }]
+        : [
+            {
+              url: "https://squarecampus.com/og/blog.png",
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ],
     },
     twitter: {
       card: "summary_large_image" as const,

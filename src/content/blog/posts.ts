@@ -39,7 +39,13 @@ export type BlogPost = {
   };
 };
 
-export const blogPosts: BlogPost[] = [
+/**
+ * Every post, including ones dated in the future. Posts are scheduled by
+ * date: `blogPosts` below only contains the ones whose date has arrived at
+ * build time, so a deploy after that date publishes them and nothing before
+ * it does. The content gate validates all of them.
+ */
+export const allBlogPosts: BlogPost[] = [
   {
     slug: "school-erp-implementation",
     title:
@@ -2180,8 +2186,270 @@ export const blogPosts: BlogPost[] = [
       label: "Book a guided demo",
     },
   },
+  {
+    slug: "eighteen-thousand-rupee-school-erp-true-cost",
+    title: "The ₹18,000 School ERP: How a Quote Becomes 20x by the Time It Goes Live",
+    summary:
+      "A worked example of how an ₹18,000-a-year school ERP quote grows into a multi-lakh commitment by go-live, line by line, and the clauses that stop it from happening to your school.",
+    date: "2026-09-09",
+    tag: "Buyer's guide",
+    tags: [
+      "school erp cost",
+      "school erp hidden costs",
+      "school management software pricing",
+      "vendor lock-in",
+      "total cost of ownership",
+    ],
+    readingTime: "11 min read",
+    hero: {
+      eyebrow: "Total cost of ownership",
+      lede: "The cheapest school ERP quote in the folder is rarely the cheapest school ERP. This is a worked example, with illustrative figures drawn from publicly published Indian price lists, of how an ₹18,000 headline turns into roughly twenty times that by the end of the first year, and a one-page sheet that makes it impossible for that to happen to you.",
+    },
+    sections: [
+      {
+        heading: "The quote that starts the story",
+        paragraphs: [
+          "Picture a 1,200-student school, one campus, a principal who has finally decided the registers and the four spreadsheets have to go. Three vendors present. One quote is clearly the lowest: ₹18,000 a year, all modules, cloud-hosted, mobile app, support included. The principal is relieved. The trustee who asked for three quotes is satisfied that due process was followed. The order is signed before the admission season.",
+          "Everything in this post is illustrative. The school is invented, the vendor is nobody in particular, and the figures are ranges that Indian school-software vendors and consultancies publish openly in their own pricing guides as of September 2026. Nothing here is a secret. That is the point: every line below is visible before signing, to anyone who knows to ask for it.",
+          "By the time the school has been live for twelve months, the finance office has paid out close to ₹3.8 lakh against that ₹18,000 quote. No single invoice looked unreasonable. Each one arrived with a reason. Added together they are about twenty-one times the number the trustee approved.",
+        ],
+      },
+      {
+        heading: "Line by line: where the twenty times comes from",
+        paragraphs: [
+          "The headline price was for the software licence. It was accurate. It simply was not the price of running a school on the software. Here is the first year as the accountant eventually reconstructed it, using the kinds of charges that appear, with these ranges, in vendors' own published rate cards.",
+          "The total comes to about ₹3,79,000. Not one line is fraudulent, and several are legitimately work that somebody had to do. The problem is that none of them were on the page the trustee approved, and every one of them arrived after the school was already dependent on the system.",
+        ],
+        bullets: [
+          "Licence, as quoted: ₹18,000. All modules, as promised, at the base tier.",
+          "Per-student activation: ₹100 per student, mentioned on page four of the terms. 1,200 students: ₹1,20,000.",
+          "Implementation and data migration: ₹45,000. Published setup ranges run from roughly ₹20,000 to ₹50,000; the school's spreadsheets were messy, so it landed at the top.",
+          "Training beyond the two included sessions: ₹15,000. The teachers who missed the first session needed a third.",
+          "Parent mobile app, 'premium' tier: ₹30,000. The included app was the browser version. Push notifications and fee payment needed the upgrade.",
+          "Transport and hostel modules: ₹40,000. 'All modules' meant all core modules. These were add-ons.",
+          "SMS and WhatsApp: about ₹36,000. Around 40 messages per family per year at ₹0.25 each, plus a WhatsApp Business line billed monthly.",
+          "Payment gateway markup: ₹75,000. The gateway charged its own fee; the vendor added half a percent on ₹1.5 crore of online collections.",
+        ],
+      },
+      {
+        heading: "Year two is where it really bites",
+        paragraphs: [
+          "The first year is expensive. The second year is where the structure reveals itself. The renewal letter arrives with an escalation of ten percent, which is inside the eight-to-twelve percent range that published guides describe as common. The annual maintenance charge is calculated as a percentage of the 'list value' of the modules, not of the ₹18,000 the school actually paid, so it is larger than the licence itself. The school has changed boards for its senior section; the report-card templates need 'reconfiguration', which is chargeable. Storage of scanned documents has crossed a quota nobody knew existed.",
+          "Then there is the quiet arithmetic of dependency. The SMS sender ID that parents recognise belongs to the vendor. The Play Store listing parents installed belongs to the vendor. The receipt numbering sequence, the one the auditor checks, lives inside the vendor's database. The custom fee-defaulter report the accountant relies on was built by the vendor as a paid customisation and is not exportable. Every one of these makes leaving a little more expensive than staying, and that, not the price, is the product being sold.",
+        ],
+      },
+      {
+        heading: "The lock-in mechanics, named",
+        paragraphs: [
+          "Lock-in in Indian school software is rarely a villain's plan. It is usually a set of ordinary commercial choices that each make sense to the vendor and together make the exit door very heavy. Naming them is most of the defence, because a school that recognises the mechanism can ask for it to be removed before signing.",
+        ],
+        bullets: [
+          "Export as a service: your data comes back only when the vendor's team runs the export, on their timeline, for a fee.",
+          "Proprietary formats: the export arrives, but as a backup file only the vendor's software can read.",
+          "Identity captured: sender IDs, app-store listings, domain names and payment sub-merchant accounts registered in the vendor's name.",
+          "Configuration as a customisation: fee rules, grading bands and approval chains built by the vendor, billed as work, owned by nobody in writing.",
+          "Auto-renewal with a narrow window: the contract renews for another year unless notice is served in a 30-day window nobody diarised.",
+          "Transition assistance: a fee for helping you leave, priced after you have decided to.",
+          "Deletion on their terms: no stated timeline for removing your students' data from the vendor's systems after exit.",
+        ],
+      },
+      {
+        heading: "Why this works on schools in particular",
+        paragraphs: [
+          "The structure works because of who sees which number. The quote lands with the principal or the trustee, who compares headlines. The invoices land with the accounts office, spread across twelve months, each small enough not to be escalated. Nobody in the institution ever sees the total on one page. And by the time anyone thinks to add it up, the school is mid-session, with fee receipts issued, parents on the app and marks entered, and switching feels like changing the engine while the bus is moving.",
+          "Procurement rules make it worse, not better, when they reward the lowest quote rather than the lowest total cost. A trustee who insists on three quotes has done the right thing. A trustee who insists that all three quotes be restated as a first-year and three-year total, on a fixed template, has done the thing that actually protects the school.",
+        ],
+      },
+      {
+        heading: "The one-page total-cost sheet",
+        paragraphs: [
+          "Every vendor, including us, should be asked to complete the same sheet before a decision is made. If a vendor cannot or will not fill a line, that is the answer for that line. Ask for it in writing, attach it to the order, and make it override any price list.",
+        ],
+        bullets: [
+          "One price per year, on headcount, with every module and the standard parent and staff apps included. Any excluded module named.",
+          "Implementation, data migration and training itemised and capped, with what 'messy data' costs stated before the migration starts.",
+          "SMS, WhatsApp and payment-gateway charges passed through at the provider's rate, or the markup stated as a number.",
+          "Escalation capped, and the annual maintenance charge defined against the price paid, not a list value.",
+          "Sender IDs, app-store listings and payment accounts registered in the school's name, or transferable at no cost.",
+          "Configuration the vendor builds belongs to the school and exports with the data.",
+          "Full export in CSV or Excel at any time, by the school's own staff, at no charge.",
+          "Exit assistance priced now, and a deletion timeline for the vendor's copies after exit.",
+          "Renewal notice terms and the window stated on the front page, not in an annexure.",
+          "The three-year total, on this sheet, signed by the vendor.",
+        ],
+      },
+      {
+        heading: "How the SquareCampus licence is built, for comparison",
+        paragraphs: [
+          "We publish the model rather than the figures, because the figures depend on scoping. The model is one annual institutional licence calculated on student-volume bands, with every module and the standard parent and staff mobile apps included. White-labelled apps under the school's own branding carry a single charge that covers the whole agreed term. Implementation, migration and training are scoped explicitly rather than folded into an unstated blended rate, and your data exports in standard formats whenever you decide to leave. The sheet above is one we are happy to fill in first.",
+        ],
+      },
+    ],
+    cta: {
+      heading: "Ask for the sheet, from everyone",
+      body: "See how the SquareCampus licence is composed, then ask every vendor on your shortlist to restate their quote the same way.",
+      href: "/pricing/",
+      label: "How the licence is composed",
+    },
+  },
+  {
+    slug: "ai-in-school-erp-governed-intelligence-vs-chatbot",
+    title: "AI in School ERPs: How to Tell Governed Intelligence from a Chatbot Bolted On",
+    summary:
+      "Every school ERP now claims AI. Five tests separate intelligence that lives inside the system from a chatbot answering off a copy of your data, and the questions to ask in the demo.",
+    date: "2026-09-16",
+    tag: "Governance",
+    tags: [
+      "ai school erp",
+      "school management software ai",
+      "governed intelligence",
+      "aegis",
+      "school data governance",
+    ],
+    readingTime: "8 min read",
+    hero: {
+      eyebrow: "Evaluation",
+      lede: "The demo is impressive. The principal asks which classes have attendance falling, and the assistant answers in a sentence. What the demo does not show is where the answer came from, who else could have asked it, and whether anyone will ever know it was asked. Those three things are the whole difference between intelligence inside a school's system and a chatbot bolted onto it.",
+    },
+    sections: [
+      {
+        heading: "The demo trick",
+        paragraphs: [
+          "Most 'AI in ERP' features are built the same way: a copy of the school's data is sent to a general-purpose model, along with the question, and the model writes an answer. It is quick to build and it demonstrates well. It also has three properties a school should not accept. The copy is outside the permissions that govern the original. The answer is generated from that copy, so it is only as fresh as the last sync. And the exchange happens outside the audit trail, so a question about a named student's fees leaves no record that it was asked.",
+          "None of this is visible in a demo, because the demo is run by the vendor, on the vendor's data, with the vendor's account. The way to see it is to ask five questions and insist on seeing, not hearing, the answers.",
+        ],
+      },
+      {
+        heading: "Five tests that cannot be faked",
+        paragraphs: [
+          "Run these with your own roles, in the vendor's sandbox, during the evaluation. Each one takes a minute and each one has a right answer that is easy to check.",
+        ],
+        bullets: [
+          "Scope: log in as a class teacher and ask about another class's fee defaulters. Governed intelligence declines, because the teacher's role cannot see that. A bolted-on chatbot answers, because the copy has no roles.",
+          "Source: ask a question and then ask 'which records did you use?'. Governed intelligence points at the records, with a link the role can open. A chatbot restates the answer.",
+          "Freshness: change one attendance mark, then ask the question that depends on it. Governed intelligence reflects the change now. A chatbot reflects it after the next sync, if there is one.",
+          "Audit: ask the vendor to show the question you just asked in the audit log, with your name and time against it. If it is not there, nothing you ask will ever be there.",
+          "Tenant: ask, in writing, whether your data is pooled with other schools' data anywhere in the answering process, and whether it is used to train anything. The answer belongs in the contract, not the demo.",
+        ],
+      },
+      {
+        heading: "What 'inside the system' actually means",
+        paragraphs: [
+          "Intelligence that lives inside the system reads the same role graph, timelines, fee state and communication trail the institution already runs on. It does not have its own copy. When a trustee asks which campuses are behind on collections, the answer is computed from the live ledger, scoped to what a trustee is allowed to see, and the question itself becomes an entry on the audit timeline beside the approvals and overrides it may lead to.",
+          "The practical consequence is that the intelligence inherits the institution's governance rather than bypassing it. Every control the school negotiated for the platform, role scope, tenant boundary, audit, data residency, applies to the answers too, because the answers are produced by the platform. That is what makes it usable for the questions that matter, which are almost always about money, named people and exceptions, exactly the questions a school would never put to a general chatbot.",
+        ],
+      },
+      {
+        heading: "A worked question",
+        paragraphs: [
+          "A trust administrator asks: which campuses have fee collections drifting this term? A governed answer says two of six campuses are behind plan, names them, shows the collected-versus-planned figure for each, and offers the next steps the role can take: queue a reminder circular, review concession approvals at the campus that has issued the most, flag the pattern for the principal. Each next step is a workflow with an owner, not a suggestion in a chat window. The question and the answer are logged. If the same question is asked by a campus principal, the answer covers one campus, because that is the principal's scope.",
+          "That is the standard to hold every vendor to. Not whether the assistant can write a sentence, but whether the sentence came from live records, inside the asker's role, with a record that it was asked.",
+        ],
+      },
+      {
+        heading: "Questions for the vendor, in writing",
+        paragraphs: [
+          "Put these in the evaluation questionnaire and ask for written answers. They are short, they are checkable, and a vendor who has built intelligence inside the system will be glad to answer them.",
+        ],
+        bullets: [
+          "Does the AI read live records, or a copy? If a copy, where is it, how often is it refreshed, and who can access it?",
+          "Are answers scoped by the asker's role, using the same permissions as the rest of the platform?",
+          "Is every question logged on the audit trail with user and time?",
+          "Can an answer show which records it was drawn from?",
+          "Is our data pooled with other institutions' data, or used to train any model, and where is that stated contractually?",
+          "Can the AI take actions, or only answer? If it can act, under whose approval?",
+        ],
+      },
+    ],
+    cta: {
+      heading: "See the five tests answered",
+      body: "AEGIS is the intelligence inside SquareCampus: live records, role scope, an audit entry for every question. Read how it is built, then put it to the same tests.",
+      href: "/aegis/",
+      label: "Read about AEGIS",
+    },
+  },
+  {
+    slug: "multilingual-parent-communication-indian-schools",
+    title: "Ten Languages, One Record: Parent Communication in Multilingual Indian Schools",
+    summary:
+      "Most Indian schools speak to families in two or three languages and pay for it in translated circulars and missed messages. How to make language a per-family preference without fragmenting the institution's record.",
+    date: "2026-09-23",
+    tag: "Communication",
+    tags: [
+      "parent communication",
+      "multilingual school app",
+      "school circulars",
+      "state board schools",
+      "parent engagement india",
+    ],
+    readingTime: "7 min read",
+    hero: {
+      eyebrow: "Communication",
+      lede: "A fee reminder that a parent cannot read is not a reminder. It is a line in a report that says the reminder was sent. Indian schools serve families across languages as a matter of course, and most of them pay a quiet tax for it: circulars translated by hand, WhatsApp groups per language, and an office that cannot say which families actually understood what was sent.",
+    },
+    sections: [
+      {
+        heading: "The translation tax",
+        paragraphs: [
+          "Walk into the office of a state-board school on the morning a circular goes out and watch what happens. The circular is drafted in English or the state language. A teacher translates it into the second language over tea. Someone pastes both into three WhatsApp groups and a bulk SMS panel. Parents reply into the groups, which nobody is assigned to read. A week later, the office cannot say who received which version, who read it, and who replied. The circular was 'sent'. That is the only fact the school can prove.",
+          "Multiply that by fee reminders, exam schedules, transport changes, consent forms and results, and the translation tax is a measurable share of a front office's week. It is also a governance gap. When a dispute arises over what a family was told, the evidence is a screenshot of a group chat.",
+        ],
+      },
+      {
+        heading: "Why broadcast tools cannot fix it",
+        paragraphs: [
+          "Messaging tools treat language as a property of the message: you write one version, then another, then send each to a list. The school ends up maintaining lists per language, and the lists drift from the student record the moment a family changes phones or a sibling joins. The fix is to treat language as a property of the family, held on the student record, and to have every message generated from the record in that family's language, automatically, with delivery and acknowledgement recorded against the student.",
+          "That is what 'ten Indian languages' means in SquareCampus: not ten translated apps, but one parent and student app, one set of circulars and notifications, rendered per family in the language the family chose, while the institution keeps exactly one record underneath.",
+        ],
+      },
+      {
+        heading: "What stays single",
+        paragraphs: [
+          "Language flexibility only works if the things that must not vary stay single. The due amount is one number. The receipt sequence is one sequence. The circular has one version of record, and the translations are renderings of it, not copies that can diverge. The acknowledgement is one field on the student's timeline, whichever language the parent read it in. The office sees one view: which families have acknowledged, which have not, in what language each was reached.",
+          "This is the difference between a communication feature and a communication system. The feature sends. The system knows what was sent, to whom, in which language, whether it was seen, and what happened next, and it keeps that beside attendance, fees and results on the same record.",
+        ],
+        bullets: [
+          "Language is chosen per family, once, and applies to every notification and circular.",
+          "Circulars have one version of record; translations render from it and cannot drift.",
+          "Delivery and acknowledgement are recorded against the student, whichever language was used.",
+          "Replies route to the right role and are logged, so the WhatsApp group stops being the record.",
+          "Consents and permissions are collected as recorded responses, in the family's language.",
+        ],
+      },
+      {
+        heading: "The state-board context",
+        paragraphs: [
+          "State-board schools feel this most, because they serve the widest range of families and run on state formats and calendars that already stretch the office. A school in a district where three languages are read at home cannot afford a communication process that only one of them can follow. The same is true for CBSE and ICSE schools in cities with migrant families, where the board's language and the family's language are often different things.",
+          "The measure of a communication system in that setting is not how many languages appear in the brochure. It is whether the office can answer, today, which families have not acknowledged the fee reminder and which language they read, and act on it as a task with an owner rather than another message into a group.",
+        ],
+      },
+      {
+        heading: "A checklist for the next demo",
+        paragraphs: [
+          "Ask the vendor to show these live, with a family whose language is not English, from the parent's phone and from the office screen at the same time.",
+        ],
+        bullets: [
+          "Set a family's language once and watch a fee reminder, a circular and an absence alert arrive in it without any manual translation.",
+          "Show the office view of who acknowledged the circular, and in which language each family was reached.",
+          "Reply from the parent's phone and show where the reply lands and who owns it.",
+          "Change the circular after sending and show that every language version updated from the one record.",
+          "Show the communication log for one student beside their fees and attendance.",
+        ],
+      },
+    ],
+    cta: {
+      heading: "See parent communication with a record",
+      body: "Messages tied to context, in ten Indian languages, with delivery and acknowledgement recorded against the student.",
+      href: "/parent-communication-app-for-schools/",
+      label: "Parent communication in SquareCampus",
+    },
+  },
 ];
 
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+
+/** Published posts only: everything dated on or before the build date. */
+export const blogPosts: BlogPost[] = allBlogPosts.filter((post) => post.date <= BUILD_DATE);
 export const blogPostBySlug = (slug: string) => blogPosts.find((post) => post.slug === slug);
 
 /**
