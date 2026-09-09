@@ -2,6 +2,7 @@ import { ArrowUpRight, Check, CircleHelp, MapPinned, Workflow } from "lucide-rea
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
+import { FactTable } from "@/components/site/fact-table";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import {
@@ -178,6 +179,28 @@ export default async function IntentPage({ params }: PageProps) {
         </Reveal>
       </SectionShell>
 
+      {page.contrast ? (
+        <SectionShell
+          eyebrow={page.contrast.eyebrow}
+          title={page.contrast.title}
+          body={page.contrast.body}
+        >
+          <Reveal>
+            <FactTable
+              caption={page.contrast.title}
+              columns={[
+                { key: "left", label: page.contrast.columns[0] },
+                { key: "right", label: page.contrast.columns[1] },
+              ]}
+              rows={page.contrast.rows.map((row) => ({
+                label: row.dimension,
+                values: [row.left, row.right],
+              }))}
+            />
+          </Reveal>
+        </SectionShell>
+      ) : null}
+
       <SectionShell
         eyebrow="Built for India"
         title="The realities Indian schools run on"
@@ -295,7 +318,7 @@ export default async function IntentPage({ params }: PageProps) {
             <Link href="/about/" className="text-foreground underline-offset-4 hover:underline">
               founder-led team
             </Link>
-            . No figures on the site, no pressure in the call.
+            . The licensing model is published; figures follow a written proposal.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />

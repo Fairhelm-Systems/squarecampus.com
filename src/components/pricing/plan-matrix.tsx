@@ -44,9 +44,10 @@ const rows: readonly MatrixRow[] = [
   },
   {
     label: "Sign-in and identity",
-    starter: "SquareCampus accounts, role-based access",
-    pro: "SquareCampus accounts, role-based access",
-    enterprise: "Microsoft Entra ID SSO for one approved institutional tenant",
+    starter: "SquareCampus-managed credentials, role-based access",
+    pro: "Credentials plus optional Microsoft Entra ID single sign-on",
+    enterprise:
+      "Identity governance: multi-directory, group-to-role mappings, enforcement policy, lifecycle (scoped)",
   },
   {
     label: "Integrations",
@@ -94,8 +95,8 @@ export function PlanMatrix() {
         <table className="w-full min-w-[46rem] border-collapse text-left">
           <caption className="sr-only">
             SquareCampus plan comparison across operational scope, visibility, accountability,
-            structure, integrations, intelligence, deployment and support. No prices are published;
-            commercial terms are issued after institutional discovery.
+            structure, integrations, intelligence, deployment and support. The licensing model is
+            published; figures are issued in a written proposal after institutional discovery.
           </caption>
           <thead>
             <tr>

@@ -18,6 +18,8 @@
  *   and one post, so the graph is dense in both directions.
  */
 
+import { multiCampusContrast } from "./commercial";
+
 export type IntentPage = {
   slug: string;
   /** The primary query the page targets; appears in the kicker. */
@@ -33,6 +35,17 @@ export type IntentPage = {
   evaluation: readonly string[];
   faqs: readonly { question: string; answer: string }[];
   related: readonly { href: string; label: string; note: string }[];
+  /**
+   * Optional two-column fact table for pages whose buyer question is a
+   * distinction ("governance" versus "support"). Rendered as a real table.
+   */
+  contrast?: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    columns: readonly [string, string];
+    rows: ReadonlyArray<{ dimension: string; left: string; right: string }>;
+  };
 };
 
 export const intentPages: IntentPage[] = [
@@ -86,7 +99,7 @@ export const intentPages: IntentPage[] = [
     evaluation: [
       "Does a change in admissions, attendance or fees appear everywhere else without re-entry?",
       "Can you see who approved an exception and why, months later, without asking the vendor?",
-      "Is pricing headcount-based with modules and mobile apps included, or per-module with add-ons?",
+      "Is pricing one institutional licence on student-volume bands with modules and the standard mobile apps included, or per-module with add-ons?",
       "What does the rollout involve: migration, parallel run, role-based training, and a rollback plan?",
       "Will the vendor answer an infrastructure and security questionnaire in writing?",
       "What happens to your data when you leave, in what format, and by when?",
@@ -105,7 +118,7 @@ export const intentPages: IntentPage[] = [
       {
         question: "How is pricing structured?",
         answer:
-          "One headcount-based annual licence with modules and mobile apps included. Figures are quoted after scoping; the model is published on the pricing page.",
+          "One annual institutional licence calculated on student-volume bands, with the platform's modules and the standard parent and staff mobile apps included. The model is published on the pricing page; figures are issued in a written proposal after discovery, and migration, integrations and premium implementation are scoped as their own lines.",
       },
       {
         question: "What does implementation involve?",
@@ -135,7 +148,7 @@ export const intentPages: IntentPage[] = [
         label: "How to choose a school management system",
         note: "A vendor-neutral buyer's checklist",
       },
-      { href: "/pricing/", label: "Pricing", note: "The licensing model, no figures" },
+      { href: "/pricing/", label: "Pricing", note: "The licensing model; figures by proposal" },
     ],
   },
   {
@@ -230,7 +243,7 @@ export const intentPages: IntentPage[] = [
         label: "Rollout",
         note: "Parallel run on the fee ledger before go-live",
       },
-      { href: "/pricing/", label: "Pricing", note: "Headcount-based, modules included" },
+      { href: "/pricing/", label: "Pricing", note: "Student-volume bands, modules included" },
     ],
   },
   {
@@ -468,6 +481,17 @@ export const intentPages: IntentPage[] = [
       "Can the board see today's state across campuses without a prepared pack?",
       "How does adding a campus work: configuration or a new implementation?",
     ],
+    contrast: {
+      eyebrow: "Governance versus support",
+      title: "Multi-campus governance is not the same as supporting multiple campuses.",
+      body: "Most school software can hold several campuses' records. The buyer question is whether policy, scope, exceptions and board reporting cross campuses without consolidation. This is the difference, dimension by dimension.",
+      columns: ["Supports multiple campuses", "Multi-campus governance"],
+      rows: multiCampusContrast.map((row) => ({
+        dimension: row.dimension,
+        left: row.supports,
+        right: row.governs,
+      })),
+    },
     faqs: [
       {
         question: "Does each campus need its own instance?",

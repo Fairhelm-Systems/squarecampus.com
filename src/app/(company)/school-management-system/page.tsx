@@ -22,6 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { identity, pricingAvailability } from "@/content/commercial";
 import { intentPages } from "@/content/intent-pages";
 import { siteCtas } from "@/content/site-content";
 import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
@@ -71,14 +72,12 @@ const faqItems = [
       "Yes. We can share a security and compliance pack with data flow summaries, subprocessors, and incident response overview upon request.",
   },
   {
-    question: "Do you support secure SSO integrations with our identity provider?",
-    answer:
-      "We are SSO-ready and can align with your identity provider for scoped, role-based access and streamlined onboarding.",
+    question: "Do you support single sign-on with our identity provider?",
+    answer: `Every plan includes SquareCampus-managed credentials with role-based access. ${identity.pro.body} ${identity.enterprise.body}`,
   },
   {
     question: "What does pricing look like?",
-    answer:
-      "Transparent pricing based on students and staff. No per-module surprises, no hidden mobile fees, and implementation plus training are included.",
+    answer: `${pricingAvailability.short} ${pricingAvailability.model} ${pricingAvailability.included} Migration, custom integrations and premium implementation are scoped as their own lines and shown in the proposal before signature.`,
   },
   {
     question: "Can SquareCampus integrate with our existing tools?",
@@ -457,11 +456,11 @@ export default function SchoolManagementSystemPage() {
             <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">Pricing philosophy</h3>
             <ul className="mt-5 grid gap-2.5">
               {[
-                "One platform, one predictable price — no per-module surprises.",
-                "Mobile apps included; no hidden 'parent app' fees.",
-                "Based on student + staff headcount, not usage penalties.",
-                "Implementation and training included, not a separate line item.",
-                "Transparent renewals with clear storage and integration tiers.",
+                "One annual institutional licence — no per-module surprises.",
+                "Standard parent and staff mobile apps included; no hidden 'parent app' fees.",
+                "Calculated on active enrolled students in progressive volume bands, not usage penalties.",
+                "Migration, integrations and premium implementation scoped as their own lines, stated before signature.",
+                "The model is published on the pricing page; figures follow a written proposal after discovery.",
               ].map((item) => (
                 <li
                   key={item}
@@ -559,26 +558,11 @@ export default function SchoolManagementSystemPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
+            // Organization and SoftwareApplication are emitted once, by the
+            // root layout, with stable ids. This page used to redeclare both
+            // with fewer facts and a different category; nodes here reference
+            // those ids instead of restating them.
             "@graph": [
-              {
-                "@type": "Organization",
-                "@id": `${SEO_CONFIG.baseUrl}/#org`,
-                name: "SquareCampus",
-                url: `${SEO_CONFIG.baseUrl}/`,
-                logo: SEO_CONFIG.logo,
-                sameAs: ["https://www.linkedin.com/company/square-campus"],
-                brand: "SquareCampus",
-              },
-              {
-                "@type": "SoftwareApplication",
-                "@id": `${SEO_CONFIG.baseUrl}/#software`,
-                name: "SquareCampus",
-                applicationCategory: "EducationalApplication",
-                operatingSystem: "Web",
-                url: "https://app.squarecampus.com",
-                publisher: { "@id": `${SEO_CONFIG.baseUrl}/#org` },
-                inLanguage: "en-IN",
-              },
               {
                 ...webPageSchema,
                 "@id": `${pageUrl}#webpage`,

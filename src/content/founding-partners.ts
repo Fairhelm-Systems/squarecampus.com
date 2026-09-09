@@ -1,51 +1,56 @@
 /**
  * Founding Institutional Partner programme copy.
  *
- * One source for the homepage section and /launch-partners/ so the two
- * surfaces cannot drift into describing different programmes.
+ * One source for the homepage section, /launch-partners/ and the
+ * higher-education lane, so the surfaces cannot drift into describing
+ * different programmes. Programme facts — the two positions, the protected
+ * Enterprise discount, the white-label entitlement and the boundaries — come
+ * from content/commercial.ts.
  *
  * Claim discipline (see docs/marketing-claims-register.md and
- * scripts/check-claims.sh): every entitlement here is written as
- * "preferential", "agreed", "defined", "bounded" or "selected". Nothing on
- * this page may imply equity, guaranteed lifetime pricing, unlimited
- * development or support, exclusivity, or a veto over other customers —
- * those belong in a private conversation after legal review, never in public
- * marketing copy. No named partners, logos, testimonials, outcome figures or
- * scarcity counters appear here, because none of them are substantiated.
+ * scripts/check-claims.sh): every entitlement here is written as "defined",
+ * "agreed", "protected" or "bounded". Nothing on this page may use equity,
+ * shareholder, securities, debt or board language, state a duration for the
+ * price protection, or imply unlimited development, exclusivity or a veto —
+ * those belong to the executed agreement, never to public copy. No named
+ * partners, logos, testimonials or outcome figures appear here, because none
+ * of them are substantiated.
  */
 
+import { foundingProgramme } from "./commercial";
+
 export const foundingPartners = {
-  href: "/launch-partners",
+  href: foundingProgramme.href,
 
   home: {
     eyebrow: "Founding institutional partners",
     heading: "Don't just adopt the School OS. Help shape it.",
-    lead: "SquareCampus is selecting a small first cohort of schools, school groups and education trusts to solve a real operating bottleneck, establish evidence, and shape the operating model before wider rollout.",
+    lead: `${foundingProgramme.positionsStatement} ${foundingProgramme.nature}`,
     benefits: [
       {
         number: "01",
-        title: "Founder-led rollout",
-        body: "A named counterpart maps the workflow, coordinates implementation, and validates the result alongside your team.",
+        title: "Two positions, ever",
+        body: "One school or eligible school institution and one university. When both are allocated, the programme closes permanently; it is not a launch programme or an early-customer discount.",
       },
       {
         number: "02",
-        title: "Protected founding economics",
-        body: "Preferential terms for the initial agreement, price protection for the agreed term, pre-agreed expansion bands for additional campuses, and white-labelled mobile apps at no extra cost.",
+        title: "Protected 40% Enterprise discount",
+        body: "A protected 40% discount on Enterprise commercial terms, set out in the executed Founding Partner agreement.",
       },
       {
         number: "03",
-        title: "Roadmap influence",
-        body: "Structured product-council access, early previews, and a defined innovation allocation for high-value reusable workflows.",
+        title: "Defined roadmap influence",
+        body: "Structured, written consideration of the partner's operating requirements in roadmap planning, and material participation in product validation.",
       },
       {
         number: "04",
-        title: "Priority in critical cycles",
-        body: "Capacity planning and priority escalation around admissions, fee deadlines, examinations, results and parent-communication peaks.",
+        title: "White-labelled mobile apps",
+        body: "The parent and staff apps published under the institution's own branding and store listings, without the standard white-label charge.",
       },
       {
         number: "05",
-        title: "Managed digital campus",
-        body: "Optional group and campus websites, admissions microsites, managed hosting, and forms connected to the operating system.",
+        title: "Founder-led rollout",
+        body: "A named counterpart maps the workflow, coordinates implementation, and validates the result alongside your team.",
       },
       {
         number: "06",
@@ -54,9 +59,9 @@ export const foundingPartners = {
       },
     ],
     qualification: {
-      eyebrow: "A small cohort by design",
+      eyebrow: "A strategic commitment, not a subscription",
       heading: "Partnership requires commitment on both sides.",
-      body: "Founding partnership is for institutions with an executive sponsor, a measurable operating bottleneck, and the willingness to run a disciplined 60–90 day pilot. This is not a free trial or an unlimited custom-development programme.",
+      body: "Founding partnership is for an institution with an executive sponsor, a measurable operating bottleneck, and the willingness to make a strategic capital commitment under a separately executed agreement and take part in product validation. This is not a free trial, a launch discount or an unlimited custom-development programme.",
     },
     ctaNote:
       "Scope, success measure and commercial terms are agreed in writing before work begins.",
@@ -68,6 +73,17 @@ export const foundingPartners = {
       heading: "Build the School OS with us—against a real institutional problem.",
       body: "Founding Partners do not receive a generic beta account. We establish a baseline, deploy around one measurable operational bottleneck, validate the result with your team, and use that evidence to decide what should scale next.",
       trustLine: "Measured pilot · Founder-led implementation · No compulsory rip-and-replace",
+    },
+
+    /** The programme facts, rendered as their own block above the pillars. */
+    programme: {
+      eyebrow: "The programme, precisely",
+      heading: "Two Founding Institutional Partner positions. Then the programme closes.",
+      positions: foundingProgramme.positionLabels,
+      nature: foundingProgramme.nature,
+      closure: foundingProgramme.closure,
+      entitlements: foundingProgramme.entitlements,
+      boundaries: foundingProgramme.boundaries,
     },
 
     pillarsHeading:
@@ -90,10 +106,8 @@ export const foundingPartners = {
         title: "Better economics",
         summary: "The commercial structure is agreed up front and holds.",
         points: [
-          "Preferential terms for the initial agreement",
-          "Price protection for the agreed initial term",
-          "Pre-agreed commercial bands for campus expansion",
-          "White-labelled Android and iOS apps under the institution's own branding, at no extra cost",
+          "A protected 40% discount on Enterprise commercial terms under the executed agreement",
+          "White-labelled Android and iOS apps under the institution's own branding, without the standard white-label charge",
           "Clearly bounded implementation and digital-campus allowances",
           "No hidden module wall or surprise pass-through markup",
         ],
@@ -103,9 +117,9 @@ export const foundingPartners = {
         title: "Better influence",
         summary: "The institution's operating reality reaches the roadmap.",
         points: [
-          "Structured product-council participation",
+          "Defined roadmap influence under the executed agreement",
+          "Material participation in product validation",
           "Early access to selected capabilities",
-          "A defined annual innovation allocation",
           "Written consideration of major workflow proposals",
           "Direct operating feedback with Fairhelm leadership",
         ],
@@ -177,10 +191,11 @@ export const foundingPartners = {
         "Campus teams can participate in discovery and weekly implementation reviews",
         "The institution can provide legitimate exports or process documentation needed for the agreed scope",
         "Leadership wants a multi-year operating relationship if the pilot succeeds",
+        "The institution is prepared to make a strategic capital commitment under a separately executed agreement",
         "The institution values governance, accountability and cross-campus visibility—not merely a cheaper attendance app",
       ],
       boundary:
-        "Founding status does not create exclusivity, ownership of SquareCampus intellectual property, veto rights over other customers, or an unlimited bespoke-engineering commitment. Exact entitlements are governed by the proposal and signed order form.",
+        "Founding status does not create exclusivity, ownership of SquareCampus intellectual property, veto rights, product or architectural control, or an unlimited bespoke-engineering commitment. SquareCampus retains final product, architecture, security and engineering authority unless a signed agreement explicitly states otherwise. Exact entitlements are governed by the executed agreement.",
     },
 
     /**
@@ -217,7 +232,7 @@ export const foundingPartners = {
         {
           question: "Who actually does the work?",
           answer:
-            "A named counterpart, with founder-level involvement in discovery and implementation. That is a consequence of the cohort being small, and it is one of the things founding partners are trading for.",
+            "A named counterpart, with founder-level involvement in discovery and implementation. That is a consequence of there being only two founding positions, and it is one of the things a Founding Partner is trading for.",
         },
         {
           question: "Who owns the data, and can we get it out?",
@@ -228,6 +243,11 @@ export const foundingPartners = {
           question: "What does it cost to find out?",
           answer:
             "Scope, success measure and commercial terms are agreed in writing before any work begins, so the cost is known before you commit rather than discovered afterwards. The first conversation is a 30-minute diagnosis and costs nothing.",
+        },
+        {
+          question: "What does a Founding Partner actually receive?",
+          answer:
+            "Under the executed agreement: defined roadmap influence, a protected 40% discount on Enterprise commercial terms, white-labelled mobile apps without the standard white-label charge, and any other privileges explicitly agreed. Roadmap influence is structured input, not a veto or control over the product, its architecture or its intellectual property.",
         },
       ],
     },
@@ -241,8 +261,8 @@ export const foundingPartners = {
 
     /** Contextual route to the higher-education lane, from /launch-partners/. */
     higherEducationLink: {
-      eyebrow: "Universities and multi-school groups",
-      heading: "A private university or a multi-school group is a different conversation.",
+      eyebrow: "The university position",
+      heading: "The second Founding Partner position is reserved for a university.",
       body: "The same 60–90 day evidence model applies, but the wedge is usually an exception queue between systems that already exist — admissions-to-enrolment, payment-to-ERP reconciliation, interdepartmental approvals — rather than a school's day-to-day operations.",
       linkLabel: "Read the higher-education lane",
     },
@@ -271,6 +291,14 @@ export const foundingPartners = {
  */
 export const higherEducationPartners = {
   href: "/launch-partners/higher-education",
+
+  /** The one university position, stated on the page rather than implied. */
+  position: {
+    eyebrow: "One position",
+    heading: "One university Founding Institutional Partner position exists.",
+    body: `${foundingProgramme.positionsStatement} ${foundingProgramme.nature}`,
+    entitlements: foundingProgramme.entitlements,
+  },
 
   hero: {
     eyebrow: "Founding institutional partners · Higher education",
@@ -432,7 +460,7 @@ export const higherEducationPartners = {
   finalCta: {
     eyebrow: "The first conversation",
     heading: "Bring one bottleneck. We will map the governed path around it.",
-    body: "A 30-minute diagnosis of one workflow: where it stalls, who should own it, what a bounded pilot would cover, and whether it belongs in the founding cohort at all.",
+    body: "A 30-minute diagnosis of one workflow: where it stalls, who should own it, what a bounded pilot would cover, and whether the university Founding Partner position is the right fit at all.",
     microcopy: "No commitment · 30-minute institutional diagnosis",
   },
 } as const;
