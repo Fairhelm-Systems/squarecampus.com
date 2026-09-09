@@ -19,7 +19,7 @@
 import { readdirSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { blogPosts } from "../src/content/blog/posts";
+import { allBlogPosts, blogPosts } from "../src/content/blog/posts";
 import { comparisons } from "../src/content/comparisons";
 import { intentPages } from "../src/content/intent-pages";
 
@@ -263,11 +263,11 @@ for (const page of intentPages) {
 // structure: several sections with headings, a lede, and a CTA that goes to a
 // live page.
 // ---------------------------------------------------------------------------
-unique(blogPosts, (p) => p.slug, "posts.ts", "slug");
+unique(allBlogPosts, (p) => p.slug, "posts.ts", "slug");
 
 const today = new Date().toISOString().slice(0, 10);
 
-for (const post of blogPosts) {
+for (const post of allBlogPosts) {
   const where = `posts.ts › ${post.slug}`;
 
   if (!SLUG.test(post.slug)) {
@@ -282,7 +282,7 @@ for (const post of blogPosts) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(post.date) || Number.isNaN(Date.parse(post.date))) {
     error(where, `date "${post.date}" must be a valid YYYY-MM-DD`);
   } else if (post.date > today) {
-    error(where, `date "${post.date}" is in the future`);
+    warn(where, `scheduled: date "${post.date}" is after today, so this build does not publish it`);
   }
   if (!/^\d+ min read$/.test(post.readingTime)) {
     error(where, `readingTime "${post.readingTime}" must look like "7 min read"`);
