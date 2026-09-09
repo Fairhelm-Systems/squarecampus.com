@@ -64,7 +64,7 @@ export const comparisons: Comparison[] = [
     competitorUrl: "https://www.entab.in/",
     metaTitle: "SquareCampus vs Entab CampusCare — School ERP Comparison",
     metaDescription:
-      "An honest comparison of SquareCampus and Entab CampusCare for Indian schools: architecture, AI, pricing transparency, deployment, and where each one fits. Looking for an Entab CampusCare alternative? Start here.",
+      "SquareCampus vs Entab CampusCare for Indian schools: architecture, AI, pricing transparency, deployment, and where each fits. An honest alternative guide.",
     intentLabel: "Entab CampusCare alternative",
     lede: "Entab's CampusCare is one of India's most established school ERPs, in use across thousands of schools. If you're evaluating it against SquareCampus, here's the honest breakdown — including where Entab may be the better call.",
     competitorStrengths: [
@@ -140,7 +140,7 @@ export const comparisons: Comparison[] = [
     competitorUrl: "https://fedena.com/",
     metaTitle: "SquareCampus vs Fedena — School Management Software Comparison",
     metaDescription:
-      "SquareCampus vs Fedena for schools and colleges: managed School OS versus open-source, plugin-based ERP. Architecture, AI, deployment, and pricing compared honestly. Looking for a Fedena alternative? Read this.",
+      "SquareCampus vs Fedena: managed School OS versus open-source, plugin-based ERP. Architecture, AI, deployment and pricing compared honestly for schools.",
     intentLabel: "Fedena alternative",
     lede: "Fedena is a widely used, plugin-extensible school ERP with an open-source core. The real choice between Fedena and SquareCampus is about who runs the system — you, or us. Here's the honest comparison.",
     competitorStrengths: [
@@ -215,7 +215,7 @@ export const comparisons: Comparison[] = [
     competitorUrl: "https://www.teachmint.com/",
     metaTitle: "SquareCampus vs Teachmint — School Platform Comparison",
     metaDescription:
-      "SquareCampus vs Teachmint for schools: a governed School OS versus an LMS-and-content-first integrated platform. Architecture, AI, and operations compared. Looking for a Teachmint alternative? Read the honest breakdown.",
+      "SquareCampus vs Teachmint: a governed School OS versus an LMS-and-content-first platform. Architecture, AI and operations compared honestly for Indian schools.",
     intentLabel: "Teachmint alternative",
     lede: "Teachmint built its name on teaching and content, then added ERP through acquisition. SquareCampus starts from operations. If your priority is running the institution — not just the classroom — here's the honest comparison.",
     competitorStrengths: [

@@ -1859,7 +1859,7 @@ export const blogPosts: BlogPost[] = [
     slug: "how-to-choose-school-management-system",
     title: "How to Choose a School Management System in 2026: A Buyer's Guide for Indian Schools",
     summary:
-      "A vendor-neutral evaluation framework for Indian schools and school groups: the questions that actually separate vendors, the red flags procurement should treat as disqualifying, and a 25-point checklist you can take into any demo.",
+      "A vendor-neutral framework for Indian schools and school groups: the questions that actually separate vendors, the red flags procurement should treat as disqualifying, and a 25-point demo checklist.",
     date: "2026-07-10",
     tag: "Buyer's guide",
     tags: [
@@ -1967,7 +1967,7 @@ export const blogPosts: BlogPost[] = [
     slug: "multi-campus-school-governance",
     title: "Running Multi-Campus School Groups: Centralised Control vs Campus Autonomy",
     summary:
-      "Why school groups oscillate between head-office bottlenecks and campus drift, the governance model that resolves the tension, and what it requires from software: policy at the trust level, execution at the campus level, accountability everywhere.",
+      "Why school groups swing between head-office bottlenecks and campus drift, the governance model that resolves the tension, and what it demands from software: policy at trust level, execution at campus level.",
     date: "2026-07-17",
     tag: "Governance",
     tags: [
