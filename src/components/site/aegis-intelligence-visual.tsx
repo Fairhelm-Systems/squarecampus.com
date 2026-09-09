@@ -4,72 +4,85 @@ import {
   BellRing,
   BookOpenCheck,
   ChartNoAxesCombined,
-  FileSpreadsheet,
+  Check,
   Fingerprint,
   MessageSquareShare,
   Radar,
-  ShieldCheck,
   WalletCards,
 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-const sourceCards = [
+const sources = [
   {
     title: "Role graph",
     detail: "Trustees, principals, finance, teachers, parents",
     icon: Fingerprint,
-    position: "md:left-[4%] md:top-[7%]",
-    line: "M250 240 C210 180 150 118 84 86",
   },
   {
     title: "Admissions",
     detail: "Applications, documents, offers, enrollment",
     icon: BookOpenCheck,
-    position: "md:right-[5%] md:top-[10%]",
-    line: "M250 240 C300 176 372 120 438 92",
   },
   {
     title: "Attendance",
     detail: "Classroom signal, staff follow-through, exceptions",
     icon: BellRing,
-    position: "md:left-[6%] md:top-[46%]",
-    line: "M250 240 C184 238 124 246 66 280",
   },
   {
     title: "Finance ledger",
     detail: "Dues, receipts, concessions, approval history",
     icon: WalletCards,
-    position: "md:right-[6%] md:top-[46%]",
-    line: "M250 240 C316 238 382 246 454 282",
   },
   {
     title: "Communication",
     detail: "App, WhatsApp, circulars, acknowledgements",
     icon: MessageSquareShare,
-    position: "md:left-[9%] md:bottom-[4%]",
-    line: "M250 240 C202 308 154 350 112 392",
   },
   {
     title: "Leadership view",
     detail: "Campus health, branch risk, cross-team visibility",
     icon: ChartNoAxesCombined,
-    position: "md:right-[9%] md:bottom-[4%]",
-    line: "M250 240 C300 308 348 350 408 392",
   },
 ] as const;
 
 const governanceChecks = [
-  { label: "Tenant boundary respected", width: "100%" },
-  { label: "Role-based answer scope", width: "95%" },
-  { label: "Audit trail on every question", width: "100%" },
-  { label: "Live operating context", width: "92%" },
+  { label: "Tenant boundary", width: "100%" },
+  { label: "Role-scoped answers", width: "94%" },
+  { label: "Audit trail per question", width: "100%" },
+  { label: "Live operating context", width: "90%" },
 ] as const;
 
+const capabilities = ["Role-aware answers", "Exception detection", "Audit-ready by default"];
+
+/** Entrance timing (ms). Beams and packets key off the same base so packets
+ *  never travel a beam that has not been drawn yet. */
+const T = {
+  hub: 80,
+  source: 260,
+  sourceStep: 70,
+  beam: 520,
+  beamStep: 60,
+  check: 900,
+  checkStep: 150,
+  chip: 1250,
+  chipStep: 70,
+  loop: 1500,
+  loopStep: 420,
+};
+
+type Vars = React.CSSProperties & Record<`--${string}`, string>;
+
 /**
- * The AEGIS hub-and-spoke visual: institutional records feeding one governed
- * intelligence layer. Entrance choreography is pure CSS (`.aegis-visual`
- * rules in globals.css); this component only flips `.is-live` on scroll.
+ * The AEGIS signal bus: six live record streams feeding one governed
+ * intelligence layer. Three sources sit above the hub and three below, each
+ * wired to a hub port by a vertical beam that carries data packets inward.
+ *
+ * The layout is a container-query grid, so the composition holds at every
+ * column width it is placed in. Every animation is transform/opacity only
+ * and lives in `.aegis-visual` rules in globals.css; this component flips
+ * `.is-live` once the visual scrolls into view and `.is-paused` while it is
+ * off-screen so the ambient loops cost nothing when nobody is looking.
  */
 export function AegisIntelligenceVisual({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -85,14 +98,17 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             node.classList.add("is-live");
-            observer.disconnect();
+            node.classList.remove("is-paused");
+          } else if (node.classList.contains("is-live")) {
+            node.classList.add("is-paused");
           }
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.18 }
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.15 }
     );
 
     observer.observe(node);
+    // Never leave the visual hidden if the observer misfires.
     const timeout = setTimeout(() => node.classList.add("is-live"), 4000);
 
     return () => {
@@ -101,158 +117,175 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
     };
   }, []);
 
+  const renderSpoke = (index: number, side: "top" | "bottom") => {
+    const item = sources[index];
+    const loopDelay = `${T.loop + index * T.loopStep}ms`;
+    return (
+      <div
+        key={item.title}
+        className={cn("aegis-spoke group flex flex-col", side === "top" ? "" : "flex-col-reverse")}
+      >
+        <div
+          data-aegis-sat
+          data-side={side}
+          style={{ "--d": `${T.source + index * T.sourceStep}ms` } as Vars}
+          className="relative rounded-[1.25rem] border border-(--line) bg-(--surface) p-3.5 shadow-(--shadow-1) transition-[border-color,translate] duration-300 group-hover:border-(--line-strong) sm:p-4"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <span className="flex size-8 items-center justify-center rounded-full bg-(--brand-tint)">
+              <item.icon className="size-4 text-(--brand)" />
+            </span>
+            <span
+              data-aegis-dot
+              style={{ "--d": loopDelay } as Vars}
+              className="mt-1 size-1.5 rounded-full bg-(--brand)"
+            />
+          </div>
+          <p className="mt-3 font-display text-[0.92rem] leading-snug tracking-[-0.03em] text-foreground">
+            {item.title}
+          </p>
+          <p className="mt-1.5 text-[0.7rem] leading-[1.15rem] text-muted-foreground">
+            {item.detail}
+          </p>
+        </div>
+
+        <div
+          data-aegis-beam
+          data-side={side}
+          aria-hidden="true"
+          style={
+            {
+              "--d": `${T.beam + index * T.beamStep}ms`,
+              "--loop-d": loopDelay,
+            } as Vars
+          }
+          className="relative hidden h-(--beam) w-full @lg:block"
+        >
+          <span className="aegis-beam-line" />
+          <span className="aegis-packet" />
+          <span className="aegis-port" />
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div ref={ref} className={cn("aegis-visual relative", className)}>
-      <div className="surface-panel-strong relative overflow-hidden rounded-4xl p-5 md:p-6">
-        <div className="pointer-events-none absolute inset-x-[14%] top-8 h-28 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.22),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(88,124,204,0.16),transparent_72%)]" />
+    <div ref={ref} className={cn("aegis-visual @container relative", className)}>
+      <div className="surface-panel-strong relative overflow-hidden rounded-4xl p-4 sm:p-5 md:p-6">
+        {/* Ambient light behind the hub. Plain gradients, no filter blur. */}
+        <div className="pointer-events-none absolute inset-x-[10%] top-[30%] h-[40%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(88,124,204,0.16),transparent_68%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(88,124,204,0.14),transparent_70%)]" />
 
-        <div className="space-y-4">
-          <div className="relative grid grid-cols-2 gap-3 md:block md:min-h-148">
-            <svg
-              viewBox="0 0 500 480"
-              className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
-              aria-hidden="true"
-            >
-              {sourceCards.map((item, index) => (
-                <path
-                  key={item.title}
-                  d={item.line}
-                  data-aegis-line
-                  pathLength={1}
-                  style={{ "--d": `${120 + index * 90}ms` } as React.CSSProperties}
-                  fill="none"
-                  stroke="var(--brand)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              ))}
-            </svg>
+        <div className="relative grid grid-cols-2 gap-3 @lg:block">
+          {/* Sources above the hub */}
+          <div className="contents @lg:grid @lg:grid-cols-3 @lg:gap-3">
+            {[0, 1, 2].map((index) => renderSpoke(index, "top"))}
+          </div>
 
-            <div className="pointer-events-none absolute inset-x-[20%] top-[15%] hidden h-72 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.1),transparent_72%)] blur-3xl md:block dark:bg-[radial-gradient(circle,rgba(88,124,204,0.12),transparent_74%)]" />
+          {/* The governed intelligence layer */}
+          <div
+            data-aegis-hub
+            style={{ "--d": `${T.hub}ms` } as Vars}
+            className="order-first col-span-2 relative rounded-[1.6rem] border border-(--line-strong) bg-(--surface-strong) p-5 shadow-(--shadow-3) @lg:order-none sm:p-6"
+          >
+            <span className="aegis-ring" aria-hidden="true" />
 
-            {sourceCards.map((item, index) => (
-              <div
-                key={item.title}
-                data-aegis-rise
-                data-aegis-drift
-                style={
-                  {
-                    "--d": `${220 + index * 85}ms`,
-                    "--drift-d": `${1200 + index * 350}ms`,
-                  } as React.CSSProperties
-                }
-                className={cn(
-                  "z-10 rounded-[1.3rem] border border-(--line) bg-(--surface) p-4 shadow-[0_18px_40px_rgba(8,15,30,0.08)] backdrop-blur-md md:absolute md:w-44",
-                  item.position
-                )}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <item.icon className="size-4 text-(--brand)" />
-                  <span
-                    data-aegis-dot
-                    style={{ "--d": `${360 + index * 90}ms` } as React.CSSProperties}
-                    className="mt-0.5 size-2 rounded-full bg-(--brand)"
-                  />
-                </div>
-                <p className="mt-4 break-words font-display text-[0.95rem] leading-snug tracking-[-0.03em] text-foreground md:text-[1rem]">
-                  {item.title}
+            <div className="relative grid gap-6 @xl:grid-cols-[1.05fr_0.95fr] @xl:gap-8">
+              <div>
+                <p className="flex items-center gap-2 font-mono text-[0.56rem] uppercase tracking-[0.22em] text-muted-foreground">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-soft),transparent_70%)]">
+                    <Radar className="size-3 text-(--brand)" />
+                  </span>
+                  AEGIS · Governed intelligence
                 </p>
-                <p className="mt-2 text-[0.72rem] leading-5 text-muted-foreground">{item.detail}</p>
-              </div>
-            ))}
 
-            <div
-              data-aegis-rise
-              style={{ "--d": "120ms" } as React.CSSProperties}
-              className="order-first col-span-2 z-20 rounded-[1.7rem] border border-(--line-strong) bg-(--surface-strong) p-5 shadow-[0_26px_70px_rgba(8,15,30,0.14)] backdrop-blur-xl md:order-none md:absolute md:left-1/2 md:top-[37%] md:w-[76%] md:max-w-88 md:-translate-x-1/2 md:-translate-y-1/2"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-muted-foreground">
-                    AEGIS · Governed intelligence
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl tracking-[-0.05em] text-foreground">
-                    Ask AEGIS. Don&rsquo;t chase reports.
-                  </h3>
-                </div>
-                <div className="rounded-full bg-[linear-gradient(135deg,var(--brand-soft),transparent_70%)] p-2.5">
-                  <Radar className="size-4 text-(--brand)" />
-                </div>
-              </div>
+                <h3 className="mt-4 font-display text-[1.45rem] leading-[1.15] tracking-[-0.045em] text-foreground sm:text-2xl">
+                  Live records in.
+                  <br />
+                  Governed answers out.
+                </h3>
 
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                AEGIS reads the same role graph, timeline, fee state, communication trail, and
-                campus visibility that already live inside the School OS — never a copy of your data
-                in someone else&rsquo;s system.
-              </p>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  Nothing is exported, copied, or re-keyed. AEGIS reads each record where it already
+                  lives, inside the same permissions and audit trail as the rest of the School OS.
+                </p>
 
-              <div className="mt-5 space-y-3">
-                {governanceChecks.map((bar, index) => (
-                  <div key={bar.label}>
-                    <div className="mb-2 flex items-center justify-between text-[0.68rem]">
-                      <span className="text-foreground">{bar.label}</span>
-                      <span className="font-mono uppercase tracking-[0.16em] text-muted-foreground">
-                        Enforced
-                      </span>
-                    </div>
-                    <div className="h-2 rounded-full bg-(--surface-muted)">
-                      <div
-                        data-aegis-bar
-                        style={
-                          {
-                            width: bar.width,
-                            "--d": `${480 + index * 80}ms`,
-                          } as React.CSSProperties
-                        }
-                        className="h-full rounded-full bg-[linear-gradient(90deg,var(--brand),var(--teal))]"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["Role-aware answers", "Exception detection", "Audit-ready by default"].map(
-                  (item, index) => (
-                    <div
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {capabilities.map((item, index) => (
+                    <span
                       key={item}
                       data-aegis-rise
-                      style={{ "--d": `${620 + index * 70}ms` } as React.CSSProperties}
-                      className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground"
+                      style={{ "--d": `${T.chip + index * T.chipStep}ms` } as Vars}
+                      className="rounded-full border border-(--line) bg-(--surface) px-3 py-1.5 font-mono text-[0.5rem] uppercase tracking-[0.18em] text-muted-foreground"
                     >
                       {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col rounded-[1.2rem] border border-(--line) bg-(--surface-sunken) p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="font-mono text-[0.52rem] uppercase tracking-[0.2em] text-muted-foreground">
+                    Governance checks
+                  </p>
+                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.5rem] uppercase tracking-[0.18em] text-muted-foreground">
+                    <span className="aegis-live-dot size-1.5 rounded-full bg-(--state-ok)" />
+                    Live
+                  </span>
+                </div>
+                <div className="mt-3.5 space-y-3">
+                  {governanceChecks.map((check, index) => {
+                    const delay = `${T.check + index * T.checkStep}ms`;
+                    return (
+                      <div key={check.label} data-aegis-check style={{ "--d": delay } as Vars}>
+                        <div className="mb-1.5 flex items-center justify-between gap-3 text-[0.68rem]">
+                          <span className="text-foreground">{check.label}</span>
+                          <span className="aegis-status relative font-mono text-[0.5rem] uppercase tracking-[0.16em]">
+                            <span className="aegis-status-pending text-muted-foreground">
+                              Checking
+                            </span>
+                            <span className="aegis-status-done inline-flex items-center gap-1 text-(--state-ok)">
+                              <Check className="size-2.5" strokeWidth={3} />
+                              Enforced
+                            </span>
+                          </span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-(--surface-muted)">
+                          <div
+                            data-aegis-bar
+                            style={{ width: check.width }}
+                            className="h-full rounded-full bg-[linear-gradient(90deg,var(--brand),var(--teal))]"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <dl className="mt-auto grid grid-cols-2 gap-3 border-t border-(--line) pt-3.5 font-mono text-[0.5rem] uppercase tracking-[0.16em] text-muted-foreground">
+                  {[
+                    { label: "Records copied out", value: "0" },
+                    { label: "Questions audited", value: "100%" },
+                  ].map((stat, index) => (
+                    <div
+                      key={stat.label}
+                      data-aegis-rise
+                      style={{ "--d": `${T.chip + 120 + index * T.chipStep}ms` } as Vars}
+                    >
+                      <dt>{stat.label}</dt>
+                      <dd className="mt-1 font-display text-base tracking-[-0.03em] text-foreground normal-case">
+                        {stat.value}
+                      </dd>
                     </div>
-                  )
-                )}
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
 
-          <div className="hidden gap-3 sm:grid sm:grid-cols-3">
-            {[
-              {
-                icon: ShieldCheck,
-                text: "Same trust boundaries and role-aware controls as the core platform.",
-              },
-              {
-                icon: FileSpreadsheet,
-                text: "Works on live dues, approvals, receipts, and compliance records.",
-              },
-              {
-                icon: Radar,
-                text: "Surfaces signals across finance, academics, communication, and operations.",
-              },
-            ].map((item, index) => (
-              <div
-                key={item.text}
-                data-aegis-rise
-                style={{ "--d": `${720 + index * 85}ms` } as React.CSSProperties}
-                className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4"
-              >
-                <item.icon className="mb-3 size-4 text-(--brand)" />
-                <p className="text-[0.8rem] leading-6 text-muted-foreground">{item.text}</p>
-              </div>
-            ))}
+          {/* Sources below the hub */}
+          <div className="contents @lg:grid @lg:grid-cols-3 @lg:gap-3">
+            {[3, 4, 5].map((index) => renderSpoke(index, "bottom"))}
           </div>
         </div>
       </div>

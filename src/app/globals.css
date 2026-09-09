@@ -586,17 +586,122 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 }
 
-/* AEGIS intelligence visual: hidden until `.is-live`, then cascades in.
-   Elements set their own delay via --d. Lines use pathLength="1". */
+/* ---------------------------------------------------------------------------
+ * AEGIS signal bus (aegis-intelligence-visual.tsx).
+ *
+ * Six record sources feed one governed hub through vertical beams. Everything
+ * is hidden until `.is-live`, then cascades in on a per-element `--d` delay.
+ * Only transform and opacity are animated, so the whole sequence stays on the
+ * compositor; ambient loops (packets, ports, ring) pause via `.is-paused`
+ * when the visual scrolls out of view and are removed under reduced motion.
+ * ------------------------------------------------------------------------- */
+.aegis-visual {
+  --beam: 2.75rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --loop: 3.4s;
+}
+
+.aegis-visual [data-aegis-hub],
+.aegis-visual [data-aegis-sat],
 .aegis-visual [data-aegis-rise] {
   opacity: 0;
 }
 
-.aegis-visual.is-live [data-aegis-rise] {
-  animation: aegis-rise 0.76s cubic-bezier(0.16, 1, 0.3, 1) both;
+.aegis-visual.is-live [data-aegis-hub] {
+  animation: aegis-hub-in 0.9s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 
+.aegis-visual.is-live [data-aegis-sat][data-side="top"] {
+  animation: aegis-drop 0.7s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.aegis-visual.is-live [data-aegis-sat][data-side="bottom"],
+.aegis-visual.is-live [data-aegis-rise] {
+  animation: aegis-rise 0.7s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Hover lift uses `translate` so it composes with the entrance transform. */
+@media (hover: hover) and (pointer: fine) {
+  .aegis-spoke:hover [data-aegis-sat] {
+    translate: 0 -2px;
+  }
+}
+
+/* Beam: a 1px line from the source to the hub, a packet that travels it, and
+   a port where it lands. Bottom beams are mirrored with scaleY(-1) so one set
+   of keyframes serves both directions. */
+.aegis-visual [data-aegis-beam][data-side="bottom"] {
+  transform: scaleY(-1);
+}
+
+.aegis-beam-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  background: linear-gradient(to bottom, var(--line-strong), var(--brand));
+  opacity: 0.55;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: opacity 0.3s;
+}
+
+.aegis-visual.is-live .aegis-beam-line {
+  animation: aegis-beam-draw 0.6s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.aegis-spoke:hover .aegis-beam-line {
+  opacity: 1;
+}
+
+.aegis-packet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 1.1rem;
+  margin-left: -1.5px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent, var(--brand));
+  box-shadow: 0 0 8px var(--brand-soft);
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.aegis-visual.is-live .aegis-packet {
+  animation: aegis-packet var(--loop) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: var(--loop-d, 1.5s);
+}
+
+.aegis-port {
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px var(--surface-strong);
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.aegis-visual.is-live .aegis-port {
+  animation:
+    aegis-port-in 0.5s var(--ease-out) both,
+    aegis-port-pulse var(--loop) ease-in-out infinite;
+  animation-delay: calc(var(--d, 0ms) + 0.35s), var(--loop-d, 1.5s);
+}
+
+/* SVG spokes (used by the services flow, which reuses this root class):
+   drawn with pathLength="1" so one dash length serves every path. */
 .aegis-visual [data-aegis-line] {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -605,47 +710,146 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
 
 .aegis-visual.is-live [data-aegis-line] {
   --line-length: 1;
-  animation: aegis-line-draw 0.86s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: aegis-line-draw 0.86s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 
+/* Source dot: steady pulse once its beam is connected. */
 .aegis-visual [data-aegis-dot] {
   opacity: 0;
 }
 
 .aegis-visual.is-live [data-aegis-dot] {
-  opacity: 1;
   animation: aegis-pulse 2.6s ease-in-out infinite;
   animation-delay: var(--d, 0ms);
 }
 
+/* Hub ring: a conic highlight sweeps the border once on entrance, then keeps
+   circling slowly. The gradient is painted once on a rotated child; the mask
+   on the wrapper cuts it down to a 1px stroke. */
+.aegis-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.aegis-ring::before {
+  content: "";
+  position: absolute;
+  inset: -75%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 58%,
+    var(--brand) 76%,
+    var(--teal) 84%,
+    transparent 92% 100%
+  );
+}
+
+.aegis-visual.is-live .aegis-ring {
+  opacity: 1;
+  transition: opacity 0.6s ease 0.5s;
+}
+
+.aegis-visual.is-live .aegis-ring::before {
+  animation:
+    aegis-spin 1.6s var(--ease-out) 0.45s 1 both,
+    aegis-spin 11s linear 2.05s infinite;
+}
+
+/* Live pill dot in the hub header. */
+.aegis-visual .aegis-live-dot {
+  animation: aegis-pulse 2s ease-in-out infinite;
+}
+
+/* Governance checks: bar fills, then "Checking" swaps to "Enforced". */
 .aegis-visual [data-aegis-bar] {
   transform: scaleX(0);
   transform-origin: left center;
 }
 
 .aegis-visual.is-live [data-aegis-bar] {
-  animation: aegis-bar 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: aegis-bar 0.8s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 
+.aegis-status-done {
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.aegis-visual.is-live .aegis-status-pending {
+  animation: aegis-fade-out 0.3s ease both;
+  animation-delay: calc(var(--d, 0ms) + 0.55s);
+}
+
+.aegis-visual.is-live .aegis-status-done {
+  animation: aegis-rise 0.45s var(--ease-out) both;
+  animation-delay: calc(var(--d, 0ms) + 0.6s);
+}
+
+/* Freeze the ambient loops while the visual is off-screen. */
+.aegis-visual.is-paused .aegis-packet,
+.aegis-visual.is-paused .aegis-port,
+.aegis-visual.is-paused .aegis-ring::before,
+.aegis-visual.is-paused [data-aegis-dot],
+.aegis-visual.is-paused .aegis-live-dot {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .aegis-visual [data-aegis-hub],
+  .aegis-visual [data-aegis-sat],
   .aegis-visual [data-aegis-rise],
-  .aegis-visual [data-aegis-dot] {
+  .aegis-visual [data-aegis-dot],
+  .aegis-visual .aegis-port,
+  .aegis-visual .aegis-ring,
+  .aegis-visual .aegis-live-dot,
+  .aegis-visual .aegis-status-done {
     opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .aegis-visual .aegis-status .aegis-status-pending {
+    opacity: 0;
+    animation: none !important;
+  }
+
+  .aegis-visual .aegis-beam-line,
+  .aegis-visual [data-aegis-bar] {
+    transform: none;
+    animation: none !important;
+  }
+
+  .aegis-visual .aegis-packet,
+  .aegis-visual .aegis-ring::before {
+    display: none;
   }
 
   .aegis-visual [data-aegis-line] {
     stroke-dashoffset: 0;
     opacity: 0.5;
-  }
-
-  .aegis-visual [data-aegis-bar] {
-    transform: none;
+    animation: none !important;
   }
 }
 
-/* AEGIS intelligence visual: line-draw, pulse, and cascade entrances. */
 @keyframes aegis-line-draw {
   from {
     stroke-dashoffset: var(--line-length, 600);
@@ -654,6 +858,107 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   to {
     stroke-dashoffset: 0;
     opacity: 0.56;
+  }
+}
+
+@keyframes aegis-hub-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aegis-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aegis-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aegis-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes aegis-beam-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes aegis-packet {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  8% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 1;
+    transform: translateY(var(--beam));
+  }
+  52%,
+  100% {
+    opacity: 0;
+    transform: translateY(var(--beam));
+  }
+}
+
+@keyframes aegis-port-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes aegis-port-pulse {
+  0%,
+  40% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  48% {
+    opacity: 1;
+    transform: scale(1.7);
+  }
+  62%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes aegis-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -666,17 +971,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   50% {
     transform: scale(1.32);
     opacity: 1;
-  }
-}
-
-@keyframes aegis-rise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -1325,23 +1619,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 }
 
-/* Satellite cards drift gently once the hub is live. */
-.aegis-visual.is-live [data-aegis-drift] {
-  animation:
-    aegis-rise 0.76s cubic-bezier(0.16, 1, 0.3, 1) both,
-    aegis-drift 6.5s ease-in-out infinite alternate;
-  animation-delay: var(--d, 0ms), var(--drift-d, 1.2s);
-}
-
-@keyframes aegis-drift {
-  from {
-    translate: 0 0;
-  }
-  to {
-    translate: 0 -6px;
-  }
-}
-
 /* Legal table-of-contents: links surface with a quick stagger on load. */
 nav[aria-label="Table of contents"] a {
   opacity: 0;
@@ -1362,11 +1639,6 @@ nav[aria-label="Table of contents"] a:nth-child(n + 13) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aegis-visual.is-live [data-aegis-drift] {
-    animation: none;
-    opacity: 1;
-  }
-
   nav[aria-label="Table of contents"] a {
     animation: none;
     opacity: 1;

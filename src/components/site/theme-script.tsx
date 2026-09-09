@@ -5,14 +5,14 @@ const themeScript = `
   try {
     const saved = localStorage.getItem(storageKey);
     const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const theme = saved === "dark" || saved === "light" ? saved : "light";
+    const theme = saved === "dark" || saved === "light" ? saved : "dark";
     const root = document.documentElement;
 
     root.classList.toggle("dark", theme === "dark");
     root.dataset.theme = theme || preferred;
   } catch (error) {
-    document.documentElement.classList.remove("dark");
-    document.documentElement.dataset.theme = "light";
+    document.documentElement.classList.add("dark");
+    document.documentElement.dataset.theme = "dark";
   }
 })();
 `;

@@ -64,7 +64,7 @@ export function MotionFigure({
   bare?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   // Follow the site's own theme switch. Cheap: one observer on one attribute.
   useEffect(() => {
