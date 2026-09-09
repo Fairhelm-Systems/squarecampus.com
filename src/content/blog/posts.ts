@@ -2201,6 +2201,11 @@ export const allBlogPosts: BlogPost[] = [
       "total cost of ownership",
     ],
     readingTime: "11 min read",
+    image: {
+      src: "/images/blog/erp-true-cost-hero.webp",
+      alt: "A school accounts office desk in late-afternoon light: a stack of invoices on a spike file, a calculator, an open ledger and a steel tea cup, with grey filing cabinets behind.",
+      caption: "The quote lands with the principal. The invoices land here, one at a time.",
+    },
     hero: {
       eyebrow: "Total cost of ownership",
       lede: "The cheapest school ERP quote in the folder is rarely the cheapest school ERP. This is a worked example, with illustrative figures drawn from publicly published Indian price lists, of how an ₹18,000 headline turns into roughly twenty times that by the end of the first year, and a one-page sheet that makes it impossible for that to happen to you.",
