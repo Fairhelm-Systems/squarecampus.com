@@ -34,6 +34,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "A measured, founder-led programme for schools, school groups and education trusts that want to shape SquareCampus against a real operating bottleneck.",
   path: "/launch-partners",
+  ogImage: "https://squarecampus.com/og/launch-partners.png",
   ogTitle: "Founding Institutional Partners | SquareCampus",
   ogDescription:
     "A founder-led 60–90 day pilot against one measurable operating bottleneck, with preferential founding terms, protected expansion economics and structured roadmap participation.",

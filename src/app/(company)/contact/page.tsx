@@ -12,6 +12,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Registered office, corporate identity, and contact channels for Fairhelm Systems (OPC) Private Limited, the company behind SquareCampus.",
   path: "/contact",
+  ogImage: "https://squarecampus.com/og/contact.png",
   ogDescription: "Registered office, CIN, and how to reach the team behind SquareCampus.",
 });
 

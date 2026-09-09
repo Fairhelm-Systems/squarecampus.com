@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/accordion";
 import { COMPARISON_AS_OF, comparisonBySlug, comparisons } from "@/content/comparisons";
 import { siteCtas } from "@/content/site-content";
-import { canonicalUrl, createAlternates, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
+import {
+  canonicalUrl,
+  createAlternates,
+  createBreadcrumbSchema,
+  createPageMetadata,
+  SEO_CONFIG,
+} from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -29,14 +35,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Compare" };
   }
   return {
-    title: c.metaTitle,
-    description: c.metaDescription,
-    alternates: createAlternates(`/compare/${c.slug}`),
-    openGraph: {
+    ...createPageMetadata({
       title: c.metaTitle,
       description: c.metaDescription,
-      url: canonicalUrl(`/compare/${c.slug}`),
-    },
+      path: `/compare/${c.slug}`,
+      ogImage: `${SEO_CONFIG.baseUrl}/og/${c.slug}.png`,
+    }),
+    alternates: createAlternates(`/compare/${c.slug}`),
   };
 }
 

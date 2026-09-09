@@ -41,6 +41,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Book a guided SquareCampus demo and see how the School OS maps to admissions, academics, finance, communication, and institutional operations.",
   path: "/demo",
+  ogImage: "https://squarecampus.com/og/demo.png",
 });
 
 const INTENTS = ["demo", "founding-partner"] as const;

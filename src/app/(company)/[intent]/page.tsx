@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/accordion";
 import { intentPageBySlug, intentPages } from "@/content/intent-pages";
 import { siteCtas } from "@/content/site-content";
-import { canonicalUrl, createAlternates, createBreadcrumbSchema, SEO_CONFIG } from "@/lib/seo";
+import {
+  canonicalUrl,
+  createAlternates,
+  createBreadcrumbSchema,
+  createPageMetadata,
+  SEO_CONFIG,
+} from "@/lib/seo";
 
 /**
  * Search-intent pages, one per query cluster, rendered from
@@ -38,14 +44,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "SquareCampus" };
   }
   return {
-    title: page.metaTitle,
-    description: page.metaDescription,
-    alternates: createAlternates(`/${page.slug}`),
-    openGraph: {
+    ...createPageMetadata({
       title: page.metaTitle,
       description: page.metaDescription,
-      url: canonicalUrl(`/${page.slug}`),
-    },
+      path: `/${page.slug}`,
+      ogImage: `${SEO_CONFIG.baseUrl}/og/${page.slug}.png`,
+    }),
+    alternates: createAlternates(`/${page.slug}`),
   };
 }
 
