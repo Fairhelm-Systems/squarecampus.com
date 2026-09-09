@@ -1,0 +1,804 @@
+/**
+ * Search-intent pages.
+ *
+ * One page per query cluster a school buyer actually types. Each lives at a
+ * flat keyword slug (`/fee-management-software-for-schools/`) and is rendered
+ * by `src/app/(company)/[intent]/page.tsx`. `scripts/check-content.ts` reads
+ * this same array, so a page cannot ship without its definition block, at
+ * least four workflows, four FAQs, and resolvable related links.
+ *
+ * Writing rules (the claims gate enforces the hard ones):
+ * - The `definition` is a direct 40–70 word answer to "what is X". It is the
+ *   part search engines lift into a snippet, so it must stand alone.
+ * - Vendor-neutral where the query is neutral: the `evaluation` list is what
+ *   any buyer should check of any vendor, including us.
+ * - No customer counts, rankings, fixed timelines, or certifications. Security
+ *   language stays at "designed to"; see docs/marketing-claims-register.md.
+ * - Every page links out to the platform, the category page, one comparison
+ *   and one post, so the graph is dense in both directions.
+ */
+
+export type IntentPage = {
+  slug: string;
+  /** The primary query the page targets; appears in the kicker. */
+  keyword: string;
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  lede: string;
+  audience: readonly string[];
+  definition: { title: string; body: string };
+  workflows: readonly { title: string; body: string }[];
+  indiaSpecifics: readonly string[];
+  evaluation: readonly string[];
+  faqs: readonly { question: string; answer: string }[];
+  related: readonly { href: string; label: string; note: string }[];
+};
+
+export const intentPages: IntentPage[] = [
+  {
+    slug: "school-erp-software",
+    keyword: "School ERP software",
+    metaTitle: "School ERP Software for Indian Schools",
+    metaDescription:
+      "School ERP software that connects admissions, fees, attendance, exams and communication on one governed record. Built for Indian schools and school groups.",
+    h1: "School ERP software that behaves like one system, not seven.",
+    lede: "Most school ERP software is a set of modules sold together. SquareCampus is built the other way round: one institutional record, one workflow engine, one audit trail, and the modules a school expects sitting on top of it.",
+    audience: ["Principals", "Trust administrators", "IT coordinators", "Finance officers"],
+    definition: {
+      title: "What is school ERP software?",
+      body: "School ERP software is the system a school uses to run its recurring operations: admissions, student records, attendance, fees, examinations, timetables, transport and parent communication. The term comes from enterprise resource planning. In practice the useful question is not which modules exist but whether they share one record, so a change in one place is reflected everywhere else without re-entry.",
+    },
+    workflows: [
+      {
+        title: "Admissions to enrolment",
+        body: "An enquiry becomes an application, a verified document set, a fee plan and a section allocation, with each hand-off owned by a named person and visible to the parent.",
+      },
+      {
+        title: "Attendance to fees and alerts",
+        body: "Daily attendance feeds fee rules, transport billing and guardian alerts. Exceptions carry a reason and an approver rather than a note in a register.",
+      },
+      {
+        title: "Exams to results and promotion",
+        body: "Schedules, marks entry, moderation, publication and promotion run as one sequence with a record of who changed what and when.",
+      },
+      {
+        title: "Approvals with an audit trail",
+        body: "Leave, concessions, refunds, purchases and gate passes move through role-scoped approvals, so the trail exists before an auditor asks for it.",
+      },
+      {
+        title: "Communication tied to context",
+        body: "Messages to parents and staff attach to the class, term, fee state or incident they concern, with delivery status and escalation paths.",
+      },
+      {
+        title: "Leadership view",
+        body: "Trustees and principals see what requires attention across campuses today, with an owner against each item, instead of a monthly report pack.",
+      },
+    ],
+    indiaSpecifics: [
+      "Fee structures with term plans, sibling and staff concessions, transport slabs, late fees and GST-aware receipts.",
+      "CBSE, ICSE and state-board grading templates and report formats.",
+      "Multi-campus and trust-level structures as a first-class model, not a customisation.",
+      "Parent communication over the app and WhatsApp-style channels, with acknowledgements recorded.",
+      "An India-first data-residency posture, with the hosting region named in writing on the infrastructure page.",
+    ],
+    evaluation: [
+      "Does a change in admissions, attendance or fees appear everywhere else without re-entry?",
+      "Can you see who approved an exception and why, months later, without asking the vendor?",
+      "Is pricing headcount-based with modules and mobile apps included, or per-module with add-ons?",
+      "What does the rollout involve: migration, parallel run, role-based training, and a rollback plan?",
+      "Will the vendor answer an infrastructure and security questionnaire in writing?",
+      "What happens to your data when you leave, in what format, and by when?",
+    ],
+    faqs: [
+      {
+        question: "Is SquareCampus a school ERP?",
+        answer:
+          "SquareCampus includes the record and workflow capabilities schools expect from ERP software, and is positioned as a School Operating System: the same capabilities, connected by one record and governed by ownership and audit trails.",
+      },
+      {
+        question: "Can school ERP software run alongside the tools we already use?",
+        answer:
+          "Yes. A bounded deployment can run next to an existing ERP, LMS, payment portal or identity provider, governing the workflow that crosses them. Consolidation is a later choice, never a precondition.",
+      },
+      {
+        question: "How is pricing structured?",
+        answer:
+          "One headcount-based annual licence with modules and mobile apps included. Figures are quoted after scoping; the model is published on the pricing page.",
+      },
+      {
+        question: "What does implementation involve?",
+        answer:
+          "A guided rollout sequenced around the academic calendar: institution blueprint, data migration, a parallel run on anything finance or academic teams must trust, role-based training, then go-live.",
+      },
+      {
+        question: "How does the platform handle security and data access?",
+        answer:
+          "Access is role-based and scoped by campus, department and workflow step; actions are logged with user and timestamp; data is designed to be encrypted in transit and at rest. Documentation is shared on request.",
+      },
+    ],
+    related: [
+      { href: "/platform/", label: "Platform", note: "The four layers every module sits on" },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "The category page, modules as workflows",
+      },
+      {
+        href: "/compare/squarecampus-vs-fedena/",
+        label: "SquareCampus vs Fedena",
+        note: "Managed School OS against an open-source ERP",
+      },
+      {
+        href: "/blog/how-to-choose-school-management-system/",
+        label: "How to choose a school management system",
+        note: "A vendor-neutral buyer's checklist",
+      },
+      { href: "/pricing/", label: "Pricing", note: "The licensing model, no figures" },
+    ],
+  },
+  {
+    slug: "fee-management-software-for-schools",
+    keyword: "Fee management software for schools",
+    metaTitle: "Fee Management Software for Schools in India",
+    metaDescription:
+      "Fee management software for Indian schools: term plans, concessions, transport slabs, GST receipts, reminders and reconciliation on one governed ledger.",
+    h1: "Fee management that closes the month without a spreadsheet.",
+    lede: "Fee collection in an Indian school is not one number. It is term plans, concessions, transport slabs, late fees, partial payments and a reconciliation that someone does by hand every month. SquareCampus keeps all of it on one ledger with an owner against every exception.",
+    audience: ["Finance officers", "Bursars", "Trust accountants", "Principals"],
+    definition: {
+      title: "What is fee management software?",
+      body: "Fee management software is the part of a school system that defines fee structures, raises dues per student, records payments across channels, applies concessions and late fees, issues receipts and reconciles collections against the bank. Done well, it is a ledger the whole school shares rather than a collection module that finance reconciles against everything else.",
+    },
+    workflows: [
+      {
+        title: "Fee plans per student",
+        body: "Term plans, optional components, sibling and staff concessions and transport slabs resolve into one due amount per student, with the rule that produced it visible.",
+      },
+      {
+        title: "Collection across channels",
+        body: "Online payments, counter cash, cheques and bank transfers post to the same ledger and issue receipts from one sequence.",
+      },
+      {
+        title: "Reminders with an acknowledgement",
+        body: "Dues reminders go to parents in context, and the record shows what was sent, when, and whether it was seen.",
+      },
+      {
+        title: "Concessions and refunds as approvals",
+        body: "Every concession, waiver and refund runs through a role-scoped approval with a reason, so the finance trail is complete before an audit.",
+      },
+      {
+        title: "Reconciliation and audit exports",
+        body: "Collections reconcile against settlements and bank statements, with exports in the formats auditors and trust boards ask for.",
+      },
+    ],
+    indiaSpecifics: [
+      "GST-aware receipts for taxable components such as transport and hostel.",
+      "Partial payments and instalment plans without losing the original due.",
+      "Late-fee rules that respect board holidays and school-specific grace periods.",
+      "Trust-level visibility across campuses with campus-level execution.",
+      "Defaulter follow-up as a workflow with an owner, not a printed list.",
+    ],
+    evaluation: [
+      "Can one student carry a term plan, a concession and a transport slab without a manual override?",
+      "Do online, counter and bank payments land on the same ledger and the same receipt sequence?",
+      "Is every concession and refund approved by a named role with a recorded reason?",
+      "How long does month-end reconciliation take, and who does it?",
+      "Can the trust board see collections across campuses without a prepared report?",
+    ],
+    faqs: [
+      {
+        question: "Does the fee module support Indian fee structures?",
+        answer:
+          "Yes. Term plans, concessions, transport slabs, late fees, partial payments and GST-aware receipts are part of the fee model rather than customisations.",
+      },
+      {
+        question: "Which payment methods are supported?",
+        answer:
+          "Online payments through a payment gateway, counter cash, cheques and bank transfers post to one ledger. Gateway options are confirmed during scoping.",
+      },
+      {
+        question: "How are defaulters handled?",
+        answer:
+          "Outstanding dues become a follow-up workflow with reminders in context, an owner, and a record of every contact, so leadership sees the state without chasing the office.",
+      },
+      {
+        question: "Can finance keep its existing accounting software?",
+        answer:
+          "Yes. Collections and receipts export in accounting-friendly formats, and a bounded deployment can run alongside the existing finance stack.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/school-fee-reconciliation/",
+        label: "School fee reconciliation",
+        note: "Why the month-end takes so long, and what fixes it",
+      },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "Fees inside the wider operating loop",
+      },
+      {
+        href: "/compare/squarecampus-vs-entab-campuscare/",
+        label: "SquareCampus vs Entab CampusCare",
+        note: "An honest comparison for finance-led evaluations",
+      },
+      {
+        href: "/rollout/",
+        label: "Rollout",
+        note: "Parallel run on the fee ledger before go-live",
+      },
+      { href: "/pricing/", label: "Pricing", note: "Headcount-based, modules included" },
+    ],
+  },
+  {
+    slug: "school-attendance-management-system",
+    keyword: "School attendance management system",
+    metaTitle: "School Attendance Management System",
+    metaDescription:
+      "Attendance management for Indian schools that turns daily marks into early warnings, parent alerts, fee rules and a record every exception is owned in.",
+    h1: "Attendance that raises a hand before term end.",
+    lede: "Attendance is the earliest signal a school has about a student, a section or a teacher. Most systems store it. SquareCampus acts on it: an absence pattern becomes an exception with an owner, a guardian alert, and a line in the leadership view the same day.",
+    audience: ["Principals", "Class teachers", "Academic coordinators", "Parents"],
+    definition: {
+      title: "What is a school attendance management system?",
+      body: "A school attendance management system records daily and period-wise presence for students and staff, notifies guardians, produces the registers and percentages that boards require, and flags patterns that need follow-up. The difference between a register and a system is what happens after the mark: whether an exception is assigned to someone and tracked to resolution.",
+    },
+    workflows: [
+      {
+        title: "Marking in seconds",
+        body: "Class and period attendance from the teacher app or a device at the gate, with late arrivals and early departures captured with a reason.",
+      },
+      {
+        title: "Guardian alerts in context",
+        body: "Absence and late notifications reach parents through the app with the date, period and a way to respond, and the response is recorded.",
+      },
+      {
+        title: "Early-warning exceptions",
+        body: "Consecutive absences, falling percentages and section-wide dips surface as exceptions with a named owner rather than a figure in a month-end report.",
+      },
+      {
+        title: "Attendance to fees and transport",
+        body: "Attendance feeds transport billing and fee rules where the school configures it, so the office is not reconciling two registers.",
+      },
+      {
+        title: "Registers and board formats",
+        body: "Class registers, percentage reports and board-specific formats are produced from the same record, ready for inspection.",
+      },
+    ],
+    indiaSpecifics: [
+      "Board-required attendance percentages and registers in the expected layouts.",
+      "Staff attendance and substitution recorded against the timetable.",
+      "Transport attendance per route and stop, reconciled with the classroom mark.",
+      "Alerts to guardians on the channels Indian parents actually read.",
+      "Multi-campus dashboards for trusts that need one view across schools.",
+    ],
+    evaluation: [
+      "Does an absence pattern become a task for someone, or only a number on a report?",
+      "Can a teacher mark a class in under a minute from a phone?",
+      "Are guardian alerts recorded with delivery and acknowledgement?",
+      "Do transport and classroom attendance reconcile automatically?",
+      "Can the principal see today's attendance across campuses without asking?",
+    ],
+    faqs: [
+      {
+        question: "How is attendance marked?",
+        answer:
+          "From the teacher app, a shared classroom device, or an integrated gate device, per class or per period, with late and early-leave reasons captured in place.",
+      },
+      {
+        question: "Are parents notified automatically?",
+        answer:
+          "Yes. Absence and late notifications go to guardians through the parent app with context, and the acknowledgement is recorded against the student.",
+      },
+      {
+        question: "What counts as an attendance exception?",
+        answer:
+          "Rules the school sets: consecutive absences, a percentage falling below a threshold, or a section-wide dip. Each becomes an exception with an owner and a resolution trail.",
+      },
+      {
+        question: "Does it support staff attendance and substitutions?",
+        answer:
+          "Yes. Staff attendance is recorded against the timetable, and substitutions are assigned and logged so cover is visible to the coordinator.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/attendance-early-warning-system/",
+        label: "Attendance as an early-warning system",
+        note: "The patterns worth acting on, and when",
+      },
+      { href: "/ecosystem/", label: "Ecosystem", note: "Teacher, parent and student surfaces" },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "Attendance inside the operating loop",
+      },
+      {
+        href: "/aegis/",
+        label: "AEGIS",
+        note: "Ask which sections need attention today, in plain language",
+      },
+      {
+        href: "/compare/squarecampus-vs-teachmint/",
+        label: "SquareCampus vs Teachmint",
+        note: "Operations-first against classroom-first",
+      },
+    ],
+  },
+  {
+    slug: "school-admission-management-software",
+    keyword: "School admission management software",
+    metaTitle: "School Admission Management Software",
+    metaDescription:
+      "Admission management software for Indian schools: enquiry to enrolment with document verification, fee plans, section allocation and a status parents can see.",
+    h1: "Admissions with a status every parent can see.",
+    lede: "An admissions season is hundreds of applications moving through verification, interaction, offer, fee and allocation, with parents phoning the office to ask where theirs is. SquareCampus runs the sequence with an owner on every step and a status the parent sees without calling.",
+    audience: ["Admissions coordinators", "Front office", "Principals", "Parents"],
+    definition: {
+      title: "What is school admission management software?",
+      body: "School admission management software runs the enquiry-to-enrolment sequence: capturing enquiries, issuing application forms, collecting and verifying documents, scheduling interactions, issuing offers, collecting admission fees and allocating sections. Its job is to make every application's status visible to the office and the parent, and to turn a confirmed admission into a student record without re-entry.",
+    },
+    workflows: [
+      {
+        title: "Enquiry capture",
+        body: "Enquiries from the website, walk-ins and calls land in one queue with source, class sought and a follow-up owner.",
+      },
+      {
+        title: "Application and documents",
+        body: "Parents complete forms and upload documents online; the office verifies against a checklist, and gaps go back to the parent as a request, not a phone call.",
+      },
+      {
+        title: "Interaction and offer",
+        body: "Interaction slots, outcomes and offers are recorded in sequence, with offer letters issued from the record.",
+      },
+      {
+        title: "Admission fee to enrolment",
+        body: "A paid admission fee confirms the seat, creates the student record, attaches the fee plan and allocates a section in one step.",
+      },
+      {
+        title: "Leadership view of the season",
+        body: "Applications by stage, class and campus are visible daily, with stalled applications surfaced as exceptions.",
+      },
+    ],
+    indiaSpecifics: [
+      "Class-wise seat matrices with sibling and staff-ward priorities.",
+      "Document checklists that match board and state requirements.",
+      "Admission, registration and caution-deposit fees handled as distinct components.",
+      "Transfer-certificate and previous-school records captured at enrolment.",
+      "Multi-campus seasons run centrally with campus-level execution.",
+    ],
+    evaluation: [
+      "Can a parent see their application's stage without calling the office?",
+      "Does a confirmed admission create the student, the fee plan and the section allocation together?",
+      "Are document gaps requested from the parent in the system, with a record?",
+      "Can leadership see stalled applications today, by class and campus?",
+      "What happens to the enquiry list after the season, and who owns it?",
+    ],
+    faqs: [
+      {
+        question: "Can parents apply online?",
+        answer:
+          "Yes. Parents complete the application and upload documents from the app or the web, and see the stage their application is at throughout.",
+      },
+      {
+        question: "How are seats and priorities handled?",
+        answer:
+          "Class-wise seat matrices with the priorities the school defines, such as siblings and staff wards, applied consistently and visibly.",
+      },
+      {
+        question: "What happens once an admission is confirmed?",
+        answer:
+          "The student record, fee plan and section allocation are created from the application in one step, so nothing is typed twice.",
+      },
+      {
+        question: "Can we run admissions for several campuses centrally?",
+        answer:
+          "Yes. A trust can run one season across campuses with central visibility and campus-level execution.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/admissions-to-enrolment-gap/",
+        label: "The admissions-to-enrolment gap",
+        note: "Where applications stall, and the fix",
+      },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "Admissions as the first step of the loop",
+      },
+      {
+        href: "/fee-management-software-for-schools/",
+        label: "Fee management",
+        note: "The fee plan the admission creates",
+      },
+      { href: "/rollout/", label: "Rollout", note: "Going live before the next season" },
+      { href: "/faq/", label: "FAQ", note: "Common evaluation questions answered" },
+    ],
+  },
+  {
+    slug: "multi-campus-school-management-software",
+    keyword: "Multi-campus school management software",
+    metaTitle: "Multi-Campus School Management Software for Trusts",
+    metaDescription:
+      "Multi-campus school management software for trusts and school groups: policy at the trust level, execution at each campus, one governed view across all of them.",
+    h1: "One trust, many campuses, one governed view.",
+    lede: "School groups swing between two failures: a head office that becomes the bottleneck for every decision, and campuses that drift into their own processes. SquareCampus is modelled on trust, school and campus from the start, so policy is set once and executed locally.",
+    audience: ["Trustees", "Group CEOs and directors", "Head-office finance", "Campus principals"],
+    definition: {
+      title: "What is multi-campus school management software?",
+      body: "Multi-campus school management software runs several schools or campuses on one system with a shared institutional model. The trust or head office sets policy, fee structures, academic calendars and approval limits; each campus executes within them; and leadership sees attendance, collections, admissions and exceptions across all campuses in one view without consolidating reports.",
+    },
+    workflows: [
+      {
+        title: "Policy at the trust level",
+        body: "Fee structures, concession rules, approval limits and academic calendars are defined once and inherited by campuses, with local variations recorded as exceptions.",
+      },
+      {
+        title: "Execution at the campus",
+        body: "Each campus runs its own admissions, attendance, fees and communication inside the trust's rules, with its own owners and its own audit trail.",
+      },
+      {
+        title: "Roles scoped by campus",
+        body: "A campus principal sees their campus; a trust finance officer sees collections everywhere; a trustee sees exceptions across the group. Scope is a property of the role.",
+      },
+      {
+        title: "Cross-campus exceptions",
+        body: "Collections behind plan, attendance dips and stalled approvals surface as exceptions with an owner, whichever campus they belong to.",
+      },
+      {
+        title: "Board reporting from the record",
+        body: "Monthly trust-board views come from the same data the campuses run on, so there is nothing to reconcile before the meeting.",
+      },
+    ],
+    indiaSpecifics: [
+      "Trust, society and company structures with campuses under different boards.",
+      "Campus-specific fee schedules within a trust-level policy.",
+      "Consolidated collections and outstanding across campuses for the trust accountant.",
+      "Staff transfers between campuses with history intact.",
+      "Central communication to all parents with campus-level sending.",
+    ],
+    evaluation: [
+      "Is the trust-campus hierarchy part of the data model, or a workaround with separate instances?",
+      "Can head office set a fee policy once and see where campuses deviate?",
+      "Are roles scoped by campus, so a principal never sees another school's data?",
+      "Can the board see today's state across campuses without a prepared pack?",
+      "How does adding a campus work: configuration or a new implementation?",
+    ],
+    faqs: [
+      {
+        question: "Does each campus need its own instance?",
+        answer:
+          "No. Trust, school and campus are one model. Campuses share the trust's policies and run their own operations inside them.",
+      },
+      {
+        question: "Can campuses have different fee structures?",
+        answer:
+          "Yes. Campus-specific schedules sit within trust-level policy, and any deviation is visible to head office as a recorded exception.",
+      },
+      {
+        question: "How is access separated between campuses?",
+        answer:
+          "Roles carry a scope. A campus role sees its campus; trust roles see across campuses. The scope applies to every screen, report and AEGIS answer.",
+      },
+      {
+        question: "Can we add a campus later?",
+        answer:
+          "Yes. A new campus is configured under the trust and inherits its policies, with its own rollout sequence for migration and training.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/multi-campus-school-governance/",
+        label: "Centralised control vs campus autonomy",
+        note: "The governance model that resolves it",
+      },
+      {
+        href: "/blog/trust-board-monthly-reporting/",
+        label: "Trust-board monthly reporting",
+        note: "From report packs to a live view",
+      },
+      {
+        href: "/launch-partners/",
+        label: "Founding Institutional Partners",
+        note: "The programme for school groups",
+      },
+      { href: "/aegis/", label: "AEGIS", note: "Cross-campus questions, answered in scope" },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "The category page",
+      },
+    ],
+  },
+  {
+    slug: "school-management-software-for-cbse-schools",
+    keyword: "School management software for CBSE schools",
+    metaTitle: "School Management Software for CBSE Schools",
+    metaDescription:
+      "School management software for CBSE schools: grading templates, attendance registers, report formats and the records CBSE affiliation and inspections expect.",
+    h1: "Built around the CBSE calendar, not adapted to it.",
+    lede: "A CBSE school runs on the board's rhythm: registration, internal assessment, term reports, board exam records and the documentation an affiliation inspection asks for. SquareCampus carries those formats and cycles as configuration, so the office is not maintaining them in spreadsheets on the side.",
+    audience: [
+      "CBSE school principals",
+      "Examination in-charges",
+      "Academic coordinators",
+      "Administrators",
+    ],
+    definition: {
+      title: "What should CBSE school management software include?",
+      body: "School management software for CBSE schools should carry the board's grading and assessment structure, produce term reports in the expected formats, keep attendance registers and student records the way affiliation and inspection require, and handle the board's registration and examination cycles as part of the academic year rather than as separate spreadsheets.",
+    },
+    workflows: [
+      {
+        title: "Assessment structure as configuration",
+        body: "Internal assessment components, weightages and grading scales are configured per class and session, and the report card follows from them.",
+      },
+      {
+        title: "Term reports and report cards",
+        body: "Marks entry, moderation and publication produce report cards in the school's CBSE-aligned format, with a record of every change.",
+      },
+      {
+        title: "Registration and examination records",
+        body: "Student data required for board registration is kept complete from admission, so the annual export is a check rather than a scramble.",
+      },
+      {
+        title: "Attendance registers for inspection",
+        body: "Registers and percentages are produced from the daily record in the layouts inspections expect.",
+      },
+      {
+        title: "Timetable and substitution",
+        body: "Period allocation, teacher load and substitutions run against the academic calendar, with cover visible to the coordinator.",
+      },
+    ],
+    indiaSpecifics: [
+      "Grading scales and assessment components aligned to current CBSE guidance, maintained as configuration.",
+      "Report card formats per class group, from primary to senior secondary.",
+      "Student master data kept complete for board registration from the day of admission.",
+      "Documentation trails that help an affiliation or inspection visit.",
+      "Fee, transport and communication running on the same record as academics.",
+    ],
+    evaluation: [
+      "Are assessment components and grading scales configuration, or a custom build per session?",
+      "Can report cards be produced without exporting marks to a spreadsheet?",
+      "Is student master data complete enough for board registration without a data drive?",
+      "Do attendance registers come out in the layout an inspection expects?",
+      "Does academics share a record with fees and communication, or sit in its own module?",
+    ],
+    faqs: [
+      {
+        question: "Does SquareCampus support CBSE grading and report cards?",
+        answer:
+          "Yes. Assessment components, weightages and grading scales are configured per class and session, and report cards are produced from them in the school's CBSE-aligned format.",
+      },
+      {
+        question: "Can we run other boards at the same trust?",
+        answer:
+          "Yes. Campuses under different boards run on one trust with board-specific academic configuration per campus.",
+      },
+      {
+        question: "How is board registration data handled?",
+        answer:
+          "Student master data required for registration is captured at admission and kept complete, so the annual export is a verification step.",
+      },
+      {
+        question: "Will teachers need to learn a new grading workflow?",
+        answer:
+          "Marks entry follows the school's existing assessment structure. Role-based training during rollout covers the examination workflow end to end.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/board-specific-school-software/",
+        label: "Board-specific school software",
+        note: "What differs between CBSE, ICSE and state boards",
+      },
+      {
+        href: "/blog/exam-and-result-operations/",
+        label: "Exam and result operations",
+        note: "From schedule to publication without drift",
+      },
+      {
+        href: "/school-exam-management-software/",
+        label: "Exam management",
+        note: "The examination workflow in detail",
+      },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "The category page",
+      },
+      { href: "/rollout/", label: "Rollout", note: "Sequenced around the academic calendar" },
+    ],
+  },
+  {
+    slug: "school-exam-management-software",
+    keyword: "School exam management software",
+    metaTitle: "School Exam Management Software",
+    metaDescription:
+      "Exam management software for Indian schools: schedules, marks entry, moderation, report cards, results publication and promotion on one auditable record.",
+    h1: "From exam schedule to results without a single re-typed mark.",
+    lede: "Examinations are the most audited thing a school does and usually the most spreadsheet-driven. SquareCampus runs the cycle as one sequence, schedule, marks, moderation, publication and promotion, with every change attributed and every result traceable to its entry.",
+    audience: ["Examination in-charges", "Subject teachers", "Academic coordinators", "Principals"],
+    definition: {
+      title: "What is school exam management software?",
+      body: "School exam management software schedules examinations, allocates rooms and invigilators, captures marks per subject and component, applies grading and moderation rules, produces report cards and result sheets, publishes results to parents, and rolls students into the next class. Its value is an unbroken record from the mark entered to the result published, so any question later has an answer.",
+    },
+    workflows: [
+      {
+        title: "Schedule and allocation",
+        body: "Exam dates, rooms, seating and invigilation are planned against the timetable, with clashes surfaced before they reach a notice board.",
+      },
+      {
+        title: "Marks entry by role",
+        body: "Subject teachers enter marks for their allocation only; entries are timestamped and attributable, and late or missing entries surface as exceptions.",
+      },
+      {
+        title: "Grading and moderation",
+        body: "Weightages, grading scales and moderation rules apply consistently, with every override recorded with a reason and an approver.",
+      },
+      {
+        title: "Report cards and publication",
+        body: "Report cards are produced in the school's format and published to parents through the app, with re-issues tracked.",
+      },
+      {
+        title: "Promotion and the next session",
+        body: "Promotion decisions roll students into the next class and carry their record forward, so the new session starts clean.",
+      },
+    ],
+    indiaSpecifics: [
+      "Board-aligned assessment structures for CBSE, ICSE and state boards.",
+      "Report card formats per class group, including remarks and co-scholastic areas.",
+      "Result sheets and toppers lists in the layouts schools publish.",
+      "Re-evaluation and re-test handling as recorded workflows.",
+      "Multi-campus examination calendars with campus-level execution.",
+    ],
+    evaluation: [
+      "Can a teacher enter marks only for their own allocation, with each entry attributed?",
+      "Are overrides and moderation recorded with a reason and an approver?",
+      "Can report cards be produced without exporting to a spreadsheet?",
+      "How are re-tests and re-evaluations handled and traced?",
+      "Does promotion carry the full record into the next session?",
+    ],
+    faqs: [
+      {
+        question: "Can teachers enter marks from their phones?",
+        answer:
+          "Yes. Marks entry is available from the teacher app for the teacher's own allocation, with entries timestamped and attributable.",
+      },
+      {
+        question: "How are report card formats handled?",
+        answer:
+          "Formats are configured per class group and board, including remarks and co-scholastic areas, and produced directly from the marks record.",
+      },
+      {
+        question: "What if a result needs to be corrected after publication?",
+        answer:
+          "Corrections run as a recorded workflow with a reason and an approver, and the re-issued report card is tracked against the original.",
+      },
+      {
+        question: "Does it handle promotion to the next class?",
+        answer:
+          "Yes. Promotion decisions roll students into the next session with their record intact, including pending dues and documents.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/exam-and-result-operations/",
+        label: "Exam and result operations",
+        note: "The failure points in a typical exam cycle",
+      },
+      {
+        href: "/school-management-software-for-cbse-schools/",
+        label: "For CBSE schools",
+        note: "Board-aligned configuration",
+      },
+      {
+        href: "/school-management-system/",
+        label: "School management system",
+        note: "Exams inside the operating loop",
+      },
+      { href: "/ecosystem/", label: "Ecosystem", note: "Teacher and parent surfaces" },
+      {
+        href: "/what-is-squarecampus/",
+        label: "What is SquareCampus?",
+        note: "The canonical definition",
+      },
+    ],
+  },
+  {
+    slug: "parent-communication-app-for-schools",
+    keyword: "Parent communication app for schools",
+    metaTitle: "Parent Communication App for Schools in India",
+    metaDescription:
+      "A parent communication app that ties every message to context: attendance, fees, results and circulars, with delivery and acknowledgement recorded.",
+    h1: "Parent communication with a record, not a broadcast.",
+    lede: "Schools do not lack ways to message parents. They lack a record of what was sent, to whom, about what, and whether it was seen. SquareCampus attaches every message to the student, class, fee state or incident it concerns, and keeps the acknowledgement.",
+    audience: ["Principals", "Class teachers", "Front office", "Parents"],
+    definition: {
+      title: "What is a parent communication app for schools?",
+      body: "A parent communication app is the channel through which a school sends circulars, attendance and fee notifications, results, event notices and individual messages to guardians, and through which parents respond, acknowledge and pay. The difference between a messaging tool and a communication system is context and record: each message belongs to something, and the school can see delivery and acknowledgement.",
+    },
+    workflows: [
+      {
+        title: "Notifications in context",
+        body: "Absence, dues, results and incident notifications carry the student, date and detail they concern, and link to the action a parent can take.",
+      },
+      {
+        title: "Circulars with acknowledgement",
+        body: "Circulars go to the right classes and campuses, and the school sees who has read and acknowledged them.",
+      },
+      {
+        title: "Two-way, role-aware messaging",
+        body: "Parents reach the class teacher or office through the app; messages route to the right role and are recorded against the student.",
+      },
+      {
+        title: "Consent and permissions",
+        body: "Trip consents, medical updates and photo permissions are collected as recorded responses, not paper slips.",
+      },
+      {
+        title: "Escalation paths",
+        body: "Unanswered or unresolved messages escalate to the coordinator or principal on rules the school sets.",
+      },
+    ],
+    indiaSpecifics: [
+      "Notifications on the app with fallbacks on channels Indian parents actually read.",
+      "Language options for circulars and notifications.",
+      "Fee reminders that link to payment and record the acknowledgement.",
+      "Multi-campus sending with trust-level oversight.",
+      "Communication logs that help when a dispute or inspection asks what was communicated.",
+    ],
+    evaluation: [
+      "Is every message attached to a student, class or event, or is it a broadcast list?",
+      "Can the school see delivery and acknowledgement per parent?",
+      "Do parents have a way to respond that reaches the right role?",
+      "Are consents and permissions recorded as responses?",
+      "Is communication on the same record as attendance, fees and results?",
+    ],
+    faqs: [
+      {
+        question: "Is the parent app included?",
+        answer:
+          "Yes. Parent and student apps are part of the licence, not a per-user add-on. App availability is confirmed during scoping.",
+      },
+      {
+        question: "Can parents reply to messages?",
+        answer:
+          "Yes. Replies route to the right role, such as the class teacher or the office, and are recorded against the student.",
+      },
+      {
+        question: "How do circular acknowledgements work?",
+        answer:
+          "A circular can require acknowledgement. The school sees who has read and acknowledged it, and follows up the rest as a task.",
+      },
+      {
+        question: "Can communication be sent in more than one language?",
+        answer:
+          "Circulars and notifications can be prepared in the languages the school communicates in; the options are set during rollout.",
+      },
+    ],
+    related: [
+      {
+        href: "/blog/parent-communication-schools/",
+        label: "Parent communication in schools",
+        note: "Why broadcasts fail and what replaces them",
+      },
+      { href: "/ecosystem/", label: "Ecosystem", note: "The parent and student apps" },
+      {
+        href: "/school-attendance-management-system/",
+        label: "Attendance",
+        note: "The alerts parents receive most",
+      },
+      {
+        href: "/fee-management-software-for-schools/",
+        label: "Fee management",
+        note: "Reminders that link to payment",
+      },
+      { href: "/contact/", label: "Contact", note: "Speak to the team" },
+    ],
+  },
+];
+
+export const intentPageBySlug = (slug: string) => intentPages.find((page) => page.slug === slug);

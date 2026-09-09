@@ -21,6 +21,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { blogPosts } from "../src/content/blog/posts";
 import { comparisons } from "../src/content/comparisons";
+import { intentPages } from "../src/content/intent-pages";
 
 type Level = "error" | "warn";
 type Finding = { level: Level; where: string; message: string };
@@ -66,6 +67,13 @@ for (const post of blogPosts) {
 }
 for (const c of comparisons) {
   routes.set(`/compare/${c.slug}/`, { redirectStub: false });
+}
+for (const page of intentPages) {
+  const path = `/${page.slug}/`;
+  if (routes.has(path)) {
+    error(`intent-pages.ts › ${page.slug}`, `slug collides with the static route ${path}`);
+  }
+  routes.set(path, { redirectStub: false });
 }
 
 /** Internal links must be root-relative and in the trailing-slash form the edge serves. */
@@ -195,6 +203,62 @@ for (const c of comparisons) {
 }
 
 // ---------------------------------------------------------------------------
+// Search-intent pages. The contract is what makes one citable: a direct
+// answer that stands alone, enough workflows to show the work connects, a
+// neutral evaluation list, a FAQ block for the schema, and related links
+// that resolve — the pages exist partly to densify the internal graph.
+// ---------------------------------------------------------------------------
+unique(intentPages, (p) => p.slug, "intent-pages", "slug");
+
+for (const page of intentPages) {
+  const where = `intent-pages.ts › ${page.slug}`;
+
+  if (!SLUG.test(page.slug)) {
+    error(where, `slug must be lowercase words joined by "-"`);
+  }
+  nonEmpty(where, "keyword", page.keyword);
+  if (nonEmpty(where, "metaTitle", page.metaTitle)) {
+    lengthBetween(where, "metaTitle", page.metaTitle, 20, 70);
+  }
+  if (nonEmpty(where, "metaDescription", page.metaDescription)) {
+    lengthBetween(where, "metaDescription", page.metaDescription, 70, 160);
+  }
+  nonEmpty(where, "h1", page.h1);
+  nonEmpty(where, "lede", page.lede);
+  if (nonEmpty(where, "definition.body", page.definition.body)) {
+    const words = page.definition.body.trim().split(/\s+/).length;
+    if (words < 40 || words > 90) {
+      warn(where, `definition.body is ${words} words; a snippet-friendly answer is 40–90`);
+    }
+  }
+  if (!/\?$/.test(page.definition.title.trim())) {
+    warn(where, `definition.title should be phrased as the question it answers`);
+  }
+  atLeast(where, "audience", page.audience, 3);
+  atLeast(where, "workflows", page.workflows, 4);
+  atLeast(where, "indiaSpecifics", page.indiaSpecifics, 3);
+  atLeast(where, "evaluation", page.evaluation, 4);
+  atLeast(where, "faqs", page.faqs, 4);
+  atLeast(where, "related", page.related, 4);
+
+  page.faqs.forEach((faq, i) => {
+    nonEmpty(`${where} › faqs[${i}]`, "answer", faq.answer);
+    if (
+      nonEmpty(`${where} › faqs[${i}]`, "question", faq.question) &&
+      !faq.question.trim().endsWith("?")
+    ) {
+      warn(`${where} › faqs[${i}]`, `question does not end with "?"`);
+    }
+  });
+  page.related.forEach((link, i) => {
+    checkInternalLink(`${where} › related[${i}]`, link.href);
+    if (link.href === `/${page.slug}/`) {
+      error(`${where} › related[${i}]`, `page links to itself`);
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Blog posts. Framework-first posts (see docs/growth-playbook.md) need real
 // structure: several sections with headings, a lede, and a CTA that goes to a
 // live page.
@@ -265,7 +329,7 @@ for (const f of findings) {
   console.log(`${f.level === "error" ? "ERROR" : "warn "}  ${f.where}\n       ${f.message}`);
 }
 
-const checked = `${comparisons.length} comparison page${comparisons.length === 1 ? "" : "s"}, ${blogPosts.length} blog post${blogPosts.length === 1 ? "" : "s"}`;
+const checked = `${comparisons.length} comparison page${comparisons.length === 1 ? "" : "s"}, ${intentPages.length} intent page${intentPages.length === 1 ? "" : "s"}, ${blogPosts.length} blog post${blogPosts.length === 1 ? "" : "s"}`;
 
 if (errors.length > 0) {
   console.log(

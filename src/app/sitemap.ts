@@ -4,6 +4,7 @@ import { execSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/content/blog/posts";
 import { comparisons } from "@/content/comparisons";
+import { intentPages } from "@/content/intent-pages";
 import { canonicalUrl, SEO_CONFIG } from "@/lib/seo";
 
 /**
@@ -76,6 +77,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
       images: [img("/images/marketing/dashboard.webp")],
     },
+
+    // Search-intent pages: one per query cluster, flat keyword slugs, all
+    // reachable from the category page above and from the footer.
+    ...intentPages.map((page) => ({
+      path: `/${page.slug}` as const,
+      sources: [`${APP}/(company)/[intent]`, `${CONTENT}/intent-pages.ts`],
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
 
     // Home: high authority, frequent link target
     {
