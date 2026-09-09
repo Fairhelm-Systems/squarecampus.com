@@ -21,12 +21,14 @@ export const metadata: Metadata = {
     type: "website",
     url: `${baseUrl}/blog`,
     siteName: "SquareCampus",
+    images: [{ url: `${baseUrl}/og/blog.png`, width: 1200, height: 630, alt: "SquareCampus Blog" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "SquareCampus Blog",
     description:
       "Product notes, implementation stories, and practical guidance for institutions using SquareCampus.",
+    images: [`${baseUrl}/og/blog.png`],
   },
   robots: {
     index: true,

@@ -7,11 +7,18 @@
 // static-card pattern (public/og/services-card.png stays hand-designed).
 //
 //   bun scripts/og-cards/generate.mjs [slug]   # one card, or all if omitted
+//
+// Cards for content-driven routes (search-intent pages, comparisons) are
+// derived from the same typed content the pages render from, so their copy
+// cannot drift. Palette is the site's dark theme: the site defaults to dark,
+// and a share preview should look like the page it opens.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ImageResponse } from "next/og";
+import { comparisons } from "../../src/content/comparisons.ts";
+import { intentPages } from "../../src/content/intent-pages.ts";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const font = (f) => readFileSync(join(DIR, "fonts", f));
@@ -32,14 +39,14 @@ const h = (type, props = {}, ...children) => ({
 });
 
 const C = {
-  bg1: "#FBFBF9",
-  bg2: "#EEF2F8",
-  ink: "#1B2437",
-  muted: "#5A6472",
-  accent: "#3F63B4",
-  kicker: "#6E7C97",
-  line: "#E4E7EC",
-  panel: "#FFFFFF",
+  bg1: "#070B14",
+  bg2: "#0E1626",
+  ink: "#F3F4F6",
+  muted: "#A9B3C4",
+  accent: "#6E9AE0",
+  kicker: "#8B97AE",
+  line: "#1C2637",
+  panel: "#111A2B",
 };
 
 // decorative connection graph (echoes the site's hero motif), lower-right, faint
@@ -287,6 +294,79 @@ export const CARDS = {
       "SquareCampus vs Entab CampusCare, Fedena, Teachmint, and other school ERPs — plus a framework to evaluate any system.",
     path: "compare",
   },
+  default: {
+    label: "SCHOOL OS FOR INDIA",
+    headline: "Know what requires attention today.",
+    subhead:
+      "One system for operations, ownership and leadership visibility. Every exception gets an owner. Every change stays governed.",
+    path: "",
+  },
+  pricing: {
+    label: "PRICING",
+    headline: "Priced by the institution, not by software complexity.",
+    subhead:
+      "One annual institutional licence, calculated on student-volume bands and scoped to operational depth. Modules and mobile apps included.",
+    path: "pricing",
+  },
+  "what-is-squarecampus": {
+    label: "WHAT IS SQUARECAMPUS",
+    headline: "A School Operating System and decision layer.",
+    subhead:
+      "A system of record stores what happened. A decision layer shows what requires attention, why it matters, who owns it, and what happens next.",
+    path: "what-is-squarecampus",
+  },
+  faq: {
+    label: "FAQ",
+    headline: "The questions procurement teams ask.",
+    subhead:
+      "Evaluation, security, rollout, pricing and data exit — answered the way a school buyer asks them.",
+    path: "faq",
+  },
+  "launch-partners": {
+    label: "FOUNDING PARTNERS",
+    headline: "Shape the School OS against a real bottleneck.",
+    subhead:
+      "A founder-led pilot for schools, school groups and trusts, with preferential founding terms and a written baseline.",
+    path: "launch-partners",
+  },
+  blog: {
+    label: "BLOG",
+    headline: "Operating notes for school leadership.",
+    subhead:
+      "Frameworks on fees, attendance, admissions, exams, governance and rollout — written for principals, trustees and administrators.",
+    path: "blog",
+  },
+  demo: {
+    label: "GUIDED DEMO",
+    headline: "Bring one real bottleneck. See how it runs.",
+    subhead:
+      "A guided demo on your own scenario, followed by a written scope. No figures on the site, no pressure in the call.",
+    path: "demo",
+  },
+  contact: {
+    label: "CONTACT",
+    headline: "Registered office and enquiries.",
+    subhead:
+      "Fairhelm Systems (OPC) Private Limited, Bangalore. How to reach the team behind SquareCampus.",
+    path: "contact",
+  },
+  ...Object.fromEntries(
+    intentPages.map((page) => [
+      page.slug,
+      { label: "SOLUTIONS", headline: page.h1, subhead: page.metaDescription, path: page.slug },
+    ])
+  ),
+  ...Object.fromEntries(
+    comparisons.map((c) => [
+      c.slug,
+      {
+        label: "COMPARE",
+        headline: `SquareCampus vs ${c.competitor}`,
+        subhead: c.metaDescription,
+        path: `compare/${c.slug}`,
+      },
+    ])
+  ),
 };
 
 const only = process.argv[2];

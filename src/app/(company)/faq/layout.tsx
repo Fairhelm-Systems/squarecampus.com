@@ -13,6 +13,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Find answers to common questions about SquareCampus school management system, including features, pricing, security, implementation, and support for schools in India.",
   path: "/faq",
+  ogImage: "https://squarecampus.com/og/faq.png",
   ogTitle: "FAQ | SquareCampus School Management System",
   ogDescription:
     "Answers to common questions about SquareCampus — a school management system for admissions, academics, fees, and operations in India.",

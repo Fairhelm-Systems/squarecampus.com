@@ -13,6 +13,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Explore Starter, Pro and Enterprise plans for SquareCampus. Annual institutional licensing scales with student volume, campus complexity, governance depth and deployment requirements.",
   path: "/pricing",
+  ogImage: "https://squarecampus.com/og/pricing.png",
   ogTitle: "SquareCampus Pricing | Plans for Schools, Trusts and Multi-Campus Groups",
   ogDescription:
     "Annual institutional licensing calculated through student-volume bands and scoped to operational depth, governance and deployment. Tailored proposal after institutional discovery.",
