@@ -12,6 +12,7 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
@@ -21,6 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { intentPages } from "@/content/intent-pages";
 import { siteCtas } from "@/content/site-content";
 import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 
@@ -312,6 +314,36 @@ export default function SchoolManagementSystemPage() {
               ))}
             </div>
           </div>
+        </Reveal>
+      </SectionShell>
+
+      <SectionShell
+        eyebrow="Solutions by need"
+        title="Start from the question you actually have"
+        body="Each page opens with a direct answer, then the workflow as it runs, the India-specific realities, and what to check in any vendor."
+      >
+        <Reveal staggerChildren className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {intentPages.map((page) => (
+            <Link
+              key={page.slug}
+              href={`/${page.slug}/`}
+              data-reveal-item
+              className="surface-panel group flex flex-col justify-between gap-4 rounded-[1.4rem] p-5 transition-colors hover:border-(--line-strong)"
+            >
+              <span>
+                <span className="block font-display text-lg tracking-[-0.03em] text-foreground">
+                  {page.keyword}
+                </span>
+                <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                  {page.definition.title}
+                </span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground group-hover:text-(--brand)">
+                Read the answer
+                <ArrowRightLeft className="size-3" />
+              </span>
+            </Link>
+          ))}
         </Reveal>
       </SectionShell>
 

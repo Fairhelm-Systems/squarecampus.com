@@ -36,6 +36,19 @@ This is the point most often reported incorrectly, so state it precisely:
 - [Why SquareCampus](https://squarecampus.com/why-squarecampus/): comparison vs legacy school ERPs
 - [Compare](https://squarecampus.com/compare/): head-to-head comparisons against named school ERP products
 
+## Solutions by need
+
+Search-intent pages, one per buyer question. Each opens with a direct definition, then the workflows as they run in SquareCampus, India-specific realities, a vendor-neutral evaluation list and a FAQ.
+
+- [School ERP software](https://squarecampus.com/school-erp-software/): the category term; includes ERP capabilities, positioned as a School OS
+- [Fee management software for schools](https://squarecampus.com/fee-management-software-for-schools/): term plans, concessions, transport slabs, GST receipts, reconciliation
+- [School attendance management system](https://squarecampus.com/school-attendance-management-system/): marks to early-warning exceptions with an owner
+- [School admission management software](https://squarecampus.com/school-admission-management-software/): enquiry to enrolment with a parent-visible status
+- [School exam management software](https://squarecampus.com/school-exam-management-software/): schedule to results and promotion on one auditable record
+- [Parent communication app for schools](https://squarecampus.com/parent-communication-app-for-schools/): messages tied to context with acknowledgement recorded
+- [Multi-campus school management software](https://squarecampus.com/multi-campus-school-management-software/): trust-level policy, campus-level execution
+- [School management software for CBSE schools](https://squarecampus.com/school-management-software-for-cbse-schools/): board-aligned assessment, report cards and registers
+
 ## Founding Institutional Partner programme
 
 - [Founding Institutional Partners](https://squarecampus.com/launch-partners/): a small, selected first cohort of schools, school groups and education trusts. A 60–90 day pilot against one measurable operating bottleneck, with a written baseline, a named executive sponsor, founder-led implementation, and a convert / extend / stop decision taken against the agreed measure.

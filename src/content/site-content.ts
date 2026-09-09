@@ -43,6 +43,19 @@ export const footerGroups = [
     ],
   },
   {
+    title: "Solutions",
+    links: [
+      { href: "/school-erp-software", label: "School ERP Software" },
+      { href: "/fee-management-software-for-schools", label: "Fee Management" },
+      { href: "/school-attendance-management-system", label: "Attendance" },
+      { href: "/school-admission-management-software", label: "Admissions" },
+      { href: "/school-exam-management-software", label: "Exams & Results" },
+      { href: "/parent-communication-app-for-schools", label: "Parent Communication" },
+      { href: "/multi-campus-school-management-software", label: "Multi-Campus Groups" },
+      { href: "/school-management-software-for-cbse-schools", label: "CBSE Schools" },
+    ],
+  },
+  {
     title: "Commercial",
     links: [
       { href: siteCtas.pricingHref, label: "Pricing" },
