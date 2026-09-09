@@ -28,41 +28,5 @@ Only posts still missing images are listed below. Prompts for the sixteen
 earlier posts were removed once their images shipped (see git history).
 
 -----------------------------------------------------------------------------
-POST 17 — /blog/eighteen-thousand-rupee-school-erp-true-cost/
-"The ₹18,000 School ERP: How a Quote Becomes 20x by the Time It Goes Live"
-(hero shipped 2026-09-09; section image still open)
------------------------------------------------------------------------------
-
-17b. SECTION (after "Year two is where it really bites") —
-public/images/blog/erp-true-cost-renewal.webp (800x450, orientation: "right")
-PROMPT: Editorial documentary photograph, 16:9. A single sealed envelope and
-an opened letter lying on a school office desk beside a desk calendar with
-one date circled, seen from above at a slight angle, morning light, a pen
-across the letter. Letter text blurred and unreadable. Quiet, consequential
-mood.
-
------------------------------------------------------------------------------
-POST 18 — /blog/ai-in-school-erp-governed-intelligence-vs-chatbot/
-"AI in School ERPs: How to Tell Governed Intelligence from a Chatbot Bolted On"
------------------------------------------------------------------------------
-
-18a. HERO — public/images/blog/governed-ai-hero.webp (1200x675, 16:9)
-PROMPT: Editorial documentary photograph, wide 16:9. A school principal's
-office in India during a vendor demonstration: two people seen from behind,
-facing a laptop whose screen is angled away from camera and not visible, a
-printed questionnaire with blurred unreadable lines beside it, tea cups,
-framed by a doorway, warm afternoon light. Attentive, sceptical mood. No
-faces, no readable text, no visible screen content.
-
------------------------------------------------------------------------------
-POST 19 — /blog/multilingual-parent-communication-indian-schools/
-"Ten Languages, One Record: Parent Communication in Multilingual Indian Schools"
------------------------------------------------------------------------------
-
-19a. HERO — public/images/blog/multilingual-communication-hero.webp (1200x675, 16:9)
-PROMPT: Editorial documentary photograph, wide 16:9. Outside the gate of an
-Indian school at pick-up time, parents seen from behind and at a distance,
-several looking at their phones, a mix of clothing styles, late-afternoon
-light, a tree and a low wall, the school building soft in the background.
-No faces visible, no readable signage, no logos. Negative space on the left
-third.
+No open prompts. Every published or scheduled post has its images. Add a new
+section here when a post is written without one.
