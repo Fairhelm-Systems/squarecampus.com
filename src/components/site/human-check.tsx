@@ -53,7 +53,7 @@ const clamp = (value: number, min: number, max: number) =>
 
 /** Boards are rendered server-side, so the theme has to be sent, not inherited. */
 function currentTheme() {
-  if (typeof document === "undefined") return "light";
+  if (typeof document === "undefined") return "dark";
   return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 

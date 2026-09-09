@@ -78,11 +78,11 @@ export const metadata: Metadata = {
 };
 
 // Tints the mobile browser chrome to the page background. The theme script
-// defaults every visitor to light (system preference is intentionally not
-// followed), so a single light value matches the rendered default — a
-// prefers-color-scheme variant would mis-tint OS-dark visitors on the light page.
+// defaults every visitor to dark (system preference is intentionally not
+// followed), so a single dark value matches the rendered default — a
+// prefers-color-scheme variant would mis-tint OS-light visitors on the dark page.
 export const viewport: Viewport = {
-  themeColor: "#faf9f6",
+  themeColor: "#020305",
 };
 
 export default function RootLayout({
@@ -101,9 +101,14 @@ export default function RootLayout({
     */
     <html
       lang="en-IN"
-      className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} scroll-smooth`}
+      /*
+        `dark` is on the server-rendered element so the very first paint is
+        already dark; the inline theme script only removes it for visitors who
+        saved a light preference, before anything renders.
+      */
+      className={`${bodyFont.variable} ${monoFont.variable} ${displayFont.variable} dark scroll-smooth`}
       suppressHydrationWarning
-      data-theme="light"
+      data-theme="dark"
     >
       <head>
         {/*
@@ -132,7 +137,7 @@ export default function RootLayout({
         <noscript>
           <style>
             {
-              ".reveal-root,.reveal-stagger [data-reveal-item],.scene-root,.scene-root [data-scene-item],.scene-root [data-scene-accent],.aegis-visual [data-aegis-rise],.aegis-visual [data-aegis-dot],.aegis-console [data-console-step],nav[aria-label='Table of contents'] a{opacity:1!important;transform:none!important;animation:none!important}.aegis-visual [data-aegis-line]{stroke-dashoffset:0!important;opacity:.5!important}.aegis-visual [data-aegis-bar],.svc-flow [data-svc-bar]{transform:none!important;animation:none!important}.aegis-console .aegis-console-query{max-width:100%!important;white-space:normal!important;animation:none!important}"
+              ".reveal-root,.reveal-stagger [data-reveal-item],.scene-root,.scene-root [data-scene-item],.scene-root [data-scene-accent],.aegis-visual [data-aegis-rise],.aegis-visual [data-aegis-hub],.aegis-visual [data-aegis-sat],.aegis-visual [data-aegis-dot],.aegis-visual .aegis-port,.aegis-visual .aegis-ring,.aegis-visual .aegis-status-done,.aegis-console [data-console-step],nav[aria-label='Table of contents'] a{opacity:1!important;transform:none!important;animation:none!important}.aegis-visual [data-aegis-line]{stroke-dashoffset:0!important;opacity:.5!important}.aegis-visual [data-aegis-bar],.aegis-visual .aegis-beam-line,.svc-flow [data-svc-bar]{transform:none!important;animation:none!important}.aegis-visual .aegis-packet,.aegis-visual .aegis-status-pending{display:none!important}.aegis-console .aegis-console-query{max-width:100%!important;white-space:normal!important;animation:none!important}"
             }
           </style>
         </noscript>
