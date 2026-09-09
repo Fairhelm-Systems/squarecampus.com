@@ -187,7 +187,7 @@ export default function RootLayout({
                   },
                   sameAs: [
                     "https://www.linkedin.com/company/square-campus",
-                    "https://x.com/squarecampus",
+                    "https://x.com/squarecampushq",
                     "https://instagram.com/squarecampus",
                   ],
                   brand: "SquareCampus",
