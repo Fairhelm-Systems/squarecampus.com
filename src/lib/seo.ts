@@ -58,6 +58,8 @@ export const SEO_CONFIG = {
     "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
   language: "en-IN",
   openGraphLocale: "en_IN",
+  /** Company account; attribution for Twitter/X cards. */
+  twitterHandle: "@squarecampushq",
   // 1200x630 social card (correct OG/Twitter aspect ratio). The square brand
   // mark below is the JSON-LD logo, not the share image.
   ogImage: {
@@ -69,7 +71,7 @@ export const SEO_CONFIG = {
   // Entity links: help Google/Knowledge Graph connect the brand to profiles.
   sameAs: [
     "https://www.linkedin.com/company/square-campus",
-    "https://x.com/squarecampus",
+    "https://x.com/squarecampushq",
     "https://instagram.com/squarecampus",
   ],
   // Logo used in structured data.
@@ -140,6 +142,8 @@ export function createPageMetadata(config: PageMetadataConfig) {
     },
     twitter: {
       card: "summary_large_image" as const,
+      site: SEO_CONFIG.twitterHandle,
+      creator: SEO_CONFIG.twitterHandle,
       title: twitterTitle || ogTitle || title,
       description: twitterDescription || ogDescription || description,
       images: [imageUrl],

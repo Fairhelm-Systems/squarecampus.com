@@ -62,6 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@squarecampushq",
+    creator: "@squarecampushq",
     title: "SquareCampus | School Operating System for Indian Schools and Trusts",
     description:
       "A system of record stores what happened. A decision layer shows what requires attention, who owns it, and what happens next.",
