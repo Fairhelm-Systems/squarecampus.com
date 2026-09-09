@@ -7,6 +7,7 @@
     "build": "bun run check:claims && bun run check:content && next build",
     "check:claims": "bash scripts/check-claims.sh",
     "check:content": "bun scripts/check-content.ts",
+    "gen:hero": "bun scripts/hero-workflow-screen.ts",
     "preview": "bunx serve out",
     "deploy": "./scripts/deploy.sh",
     "lint": "biome lint .",
