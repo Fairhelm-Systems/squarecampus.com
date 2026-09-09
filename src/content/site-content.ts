@@ -39,7 +39,8 @@ export const footerGroups = [
       { href: siteCtas.platformHref, label: "Platform" },
       { href: siteCtas.aegisHref, label: "AEGIS Intelligence" },
       { href: siteCtas.ecosystemHref, label: "Ecosystem" },
-      { href: "/school-management-system", label: "School Management System" },
+      { href: siteCtas.rolloutHref, label: "Rollout" },
+      { href: "/services", label: "Data & Integration Services" },
     ],
   },
   {
@@ -51,36 +52,36 @@ export const footerGroups = [
       { href: "/school-admission-management-software", label: "Admissions" },
       { href: "/school-exam-management-software", label: "Exams & Results" },
       { href: "/parent-communication-app-for-schools", label: "Parent Communication" },
+    ],
+  },
+  {
+    title: "Institutions",
+    links: [
+      { href: "/school-management-system", label: "School Management System" },
       { href: "/multi-campus-school-management-software", label: "Multi-Campus Groups" },
       { href: "/school-management-software-for-cbse-schools", label: "CBSE Schools" },
+      { href: "/launch-partners/higher-education", label: "Higher Education" },
+      { href: siteCtas.launchPartnersHref, label: "Founding Partners" },
     ],
   },
   {
-    title: "Commercial",
+    title: "Evaluate",
     links: [
       { href: siteCtas.pricingHref, label: "Pricing" },
-      { href: siteCtas.launchPartnersHref, label: "Founding Partners" },
-      { href: siteCtas.rolloutHref, label: "Rollout" },
-      { href: "/services", label: "Data & Integration Services" },
+      { href: siteCtas.whyDifferentHref, label: "Why SquareCampus" },
       { href: "/compare", label: "Compare School ERPs" },
+      { href: "/faq", label: "FAQ" },
+      { href: "/blog", label: "Blog" },
     ],
   },
   {
-    title: "Company",
+    title: "Company & Trust",
     links: [
       { href: "/about", label: "About" },
-      { href: siteCtas.whyDifferentHref, label: "Why SquareCampus" },
-      { href: "/blog", label: "Blog" },
-      { href: "/faq", label: "FAQ" },
-    ],
-  },
-  {
-    title: "Trust",
-    links: [
+      { href: "/contact", label: "Contact" },
       { href: siteCtas.securityHref, label: "Security" },
       { href: "/infrastructure", label: "Infrastructure" },
       { href: "/pgp", label: "PGP Key" },
-      { href: "/data-processing-addendum", label: "Data Processing" },
       /*
         The site's machine-readable summary. It sat at /llms.txt with nothing
         on the site linking to it, so the only crawlers that could find it were
@@ -102,7 +103,7 @@ export const footerGroups = [
       { href: "/terms-of-service", label: "Terms of Service" },
       { href: "/acceptable-use", label: "Acceptable Use" },
       { href: "/refund-policy", label: "Cancellation & Refunds" },
-      { href: "/contact", label: "Contact" },
+      { href: "/data-processing-addendum", label: "Data Processing Addendum" },
     ],
   },
 ] as const;
