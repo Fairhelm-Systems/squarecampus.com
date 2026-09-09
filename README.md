@@ -19,6 +19,8 @@ bun run dev            # local dev server
 bun run build          # claims check + static export to ./out (needs env, see below)
 bun run check:claims   # forbidden-claims regression check on its own
 bun run check:content  # structural check of comparison pages and blog posts
+bun run check:build    # post-build: llms.txt, Markdown alternates, sitemap, JSON-LD, stale claims
+bun run test           # commercial-facts, llms.txt, sitemap and agent-readability tests
 bun run lint / format  # biome
 bun run check-types    # tsc --noEmit
 bun run deploy         # build + S3 sync + CloudFront invalidation + IndexNow
@@ -40,6 +42,17 @@ Production builds require `NEXT_PUBLIC_CONTACT_ENDPOINT` (or the explicit
   page and blog post: competitor strengths and "they fit when" present, a FAQ
   block, minimum sections, valid dates, and CTAs that resolve to a live route
   in trailing-slash form — never to a redirect stub.
+- **One commercial truth.** Pricing availability, identity by plan, the
+  Founding Institutional Partner programme (two positions, ever) and the
+  canonical short description live in [src/content/commercial.ts](src/content/commercial.ts).
+  Pages, FAQs, JSON-LD and `/llms.txt` derive from it; `bun run test` fails if
+  they drift. No rupee figure exists in this repository and none may be added
+  without an approved rate card.
+- **Machine-readable surfaces are generated, not hand-written.** `/llms.txt`
+  comes from [src/content/llms.ts](src/content/llms.ts); Markdown alternates
+  (`/<route>/index.md`) are produced from the rendered HTML after `next build`
+  by `scripts/markdown-alternates.ts` for the routes in
+  [src/content/markdown-alternates.ts](src/content/markdown-alternates.ts).
 - Say "unified institutional data model" / "one governed system of record" —
   never "single/shared database".
 - Legal pages carry `LEGAL REVIEW` markers; don't edit their substantive

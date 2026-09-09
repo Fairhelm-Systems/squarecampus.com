@@ -18,8 +18,28 @@ The old Amplify app was deleted on 2026-07-11.
 ### Redeploy
 
 ```bash
-bun run deploy          # scripts/deploy.sh: build + sync + invalidate + wait
+bun run deploy          # scripts/deploy.sh: build + sync + invalidate + wait + IndexNow
 ```
+
+`bun run build` runs, in order: the forbidden-claims check, the content-shape
+check, `next build`, the Markdown-alternate generator
+(`scripts/markdown-alternates.ts`, writes `out/<route>/index.md` from the
+rendered HTML of the routes in `src/content/markdown-alternates.ts`) and the
+post-build machine-readability check (`scripts/check-build.ts`). The deploy
+uploads `*.md` in a separate pass with `Content-Type: text/markdown` so agents
+fetching `/pricing/index.md` receive Markdown, not `binary/octet-stream`.
+
+### IndexNow (Bing and other IndexNow engines; not Google)
+
+`scripts/deploy.sh` fetches the live `sitemap.xml` before uploading, and after
+the CloudFront invalidation runs `bun scripts/indexnow.ts --previous <file>`.
+The script diffs the previous sitemap against the one just deployed and
+submits only URLs that are new, whose git-derived `<lastmod>` changed, or that
+disappeared — never the whole sitemap, never per request, never a
+non-canonical or noindex URL (nothing outside the sitemap is eligible). The
+key file is `public/<32-hex>.txt`; if it is absent the step is skipped. Dry
+run locally with `bun run indexnow:dry-run` after a build. Google is notified
+through the sitemap only.
 
 `SKIP_BUILD=1 bun run deploy` uploads the existing `./out` without rebuilding.
 Override targets with `DEPLOY_BUCKET` / `DEPLOY_DISTRIBUTION_ID` env vars.
