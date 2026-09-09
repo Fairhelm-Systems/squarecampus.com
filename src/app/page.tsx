@@ -40,10 +40,10 @@ export const metadata: Metadata = {
 };
 
 const heroProofPoints = [
-  "Exceptions surface with an owner — before term end.",
-  "Leadership sees current state, not stitched reports.",
-  "Every approval and override remains auditable.",
-  "Processes survive staff changes because ownership is recorded.",
+  "Exceptions get an owner before term end.",
+  "Current state, not stitched reports.",
+  "Every override stays auditable.",
+  "Ownership survives staff changes.",
 ] as const;
 
 const governanceMoves = [
@@ -219,11 +219,13 @@ export default function Home() {
               immediate
               className="space-y-4 sm:space-y-5 lg:col-start-1 lg:row-start-1 lg:self-end"
             >
-              <p className="section-kicker">Institutional operating command</p>
-              <h1 className="type-display">Know what requires attention today.</h1>
+              <p className="section-kicker">Built for school leadership</p>
+              <h1 className="type-display">
+                Know what requires <span className="hero-emphasis">attention</span> today.
+              </h1>
               <p className="type-body measure text-muted-foreground">
-                SquareCampus connects school operations, assigns ownership to exceptions, and gives
-                leadership a governed view of what is changing across the institution.
+                One system for operations, ownership, and leadership visibility. Every exception
+                gets an owner. Every change stays governed.
               </p>
               {/* Stacked and full-width on phones; one row from sm up. */}
               <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">

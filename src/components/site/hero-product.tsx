@@ -28,6 +28,31 @@ import { TiltStage } from "./tilt-stage";
  *    any breakpoint, and the aluminium follows the theme.
  */
 
+/** Synthetic entries; the note under the composition says so. */
+const heroSignals = [
+  {
+    time: "09:41",
+    text: "Attendance exception, 7B",
+    status: "Owner set",
+    tone: "var(--state-attention)",
+    toneSoft: "var(--state-attention-soft)",
+  },
+  {
+    time: "09:44",
+    text: "Fee reminder, ₹4,200",
+    status: "Routed",
+    tone: "var(--brand)",
+    toneSoft: "var(--brand-tint)",
+  },
+  {
+    time: "09:52",
+    text: "Override, transport fee",
+    status: "Logged",
+    tone: "var(--state-ok)",
+    toneSoft: "var(--state-ok-soft)",
+  },
+] as const;
+
 export function HeroProductComposition() {
   return (
     <div className="w-full">
@@ -39,7 +64,7 @@ export function HeroProductComposition() {
           screen; at lg the aluminium is drawn around it. TiltStage is a
           client island that only adds a pointer listener — the SVG itself is
           still server-rendered markup, so LCP is unaffected. */}
-      <TiltStage className="device-stage">
+      <TiltStage className="device-stage hero-device">
         <LaptopDevice collapsible shine>
           <HeroWorkflowScreen className="h-full w-full" />
         </LaptopDevice>
@@ -47,17 +72,51 @@ export function HeroProductComposition() {
 
       {/* Supporting layer: AEGIS always, student phone only when there is
           genuinely room for it without shrinking either one. */}
-      <div className="mt-6 flex items-stretch gap-4 lg:mt-8">
-        <div className="surface-panel flex-1 rounded-[var(--radius-panel)] p-5">
-          <div className="flex items-center gap-2">
-            <Sparkles aria-hidden className="size-4 shrink-0 text-[color:var(--brand)]" />
-            <p className="text-sm font-medium text-[color:var(--foreground)]">
-              AEGIS governed intelligence
-            </p>
+      <div className="mt-6 flex items-stretch gap-4 lg:mt-8 xl:min-h-36">
+        <div className="hero-signal surface-panel flex flex-1 flex-col rounded-[var(--radius-panel)] p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Sparkles aria-hidden className="size-4 shrink-0 text-[color:var(--brand)]" />
+              <p className="text-sm font-medium text-[color:var(--foreground)]">
+                AEGIS governed intelligence
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
+              <span
+                aria-hidden
+                className="hero-signal__dot size-1.5 rounded-full bg-(--state-ok)"
+              />
+              Live
+            </span>
           </div>
-          <p className="type-support mt-2">
-            Explains what changed, who owns it, and what leadership should review next.
-          </p>
+
+          {/* A three-entry operating log. Each entry says what changed, who
+              owns it, and what happened next — the AEGIS promise in the
+              product's own vocabulary instead of a sentence about it. Entries
+              roll up through a two-row log on a CSS loop; reduced-motion shows
+              all three at once. */}
+          <ol className="hero-feed mt-3" aria-label="Example AEGIS signals">
+            {heroSignals.map((entry, index) => (
+              <li
+                key={entry.text}
+                className="hero-feed__entry flex items-center gap-3 text-[0.8rem] leading-5"
+                style={{ "--i": index } as React.CSSProperties}
+              >
+                <span className="shrink-0 font-mono text-[0.62rem] tracking-[0.08em] text-muted-foreground">
+                  {entry.time}
+                </span>
+                <span className="min-w-0 flex-1 truncate text-[color:var(--foreground)]">
+                  {entry.text}
+                </span>
+                <span
+                  className="shrink-0 rounded-full px-2 py-0.5 font-mono text-[0.5rem] uppercase tracking-[0.16em]"
+                  style={{ color: entry.tone, backgroundColor: entry.toneSoft }}
+                >
+                  {entry.status}
+                </span>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {/* A portrait phone shown whole is ~360px tall — taller than the
