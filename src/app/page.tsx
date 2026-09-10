@@ -286,30 +286,38 @@ export default function Home() {
           title="The problem is rarely a missing feature. It is delayed visibility and unclear ownership."
           body="Recurring school cycles break in predictable places. Each one has a hidden cost, a remedy, an accountable owner, and something a pilot can measure."
         >
-          <Reveal>
-            <PainRemedyGrid ids={homepagePainIds} />
-          </Reveal>
+          {/*
+            Collapsed on phones like every other content section. Measured on
+            the live site at 390px: this one was 2839px tall against ~260px for
+            the six sections that already had the pill, and together with
+            founding partners it was 57% of the whole mobile page.
+          */}
+          <MobileExpand label="See the breaks and remedies">
+            <Reveal>
+              <PainRemedyGrid ids={homepagePainIds} />
+            </Reveal>
 
-          <Reveal delay={80}>
-            <div className="surface-panel-strong mt-5 rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
-              <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-12">
-                <div>
-                  <p className="eyebrow">Record versus decision</p>
-                  <p className="type-quote mt-4 text-balance">{RECORD_VS_DECISION}</p>
-                </div>
-                <div className="grid gap-4 border-t border-[color:var(--line)] pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-                  <p className="type-body measure text-muted-foreground">{CANONICAL_PROMISE}</p>
-                  <div className="flex flex-wrap gap-3">
-                    <ButtonLink
-                      href="/what-is-squarecampus"
-                      label="What is SquareCampus?"
-                      variant="secondary"
-                    />
+            <Reveal delay={80}>
+              <div className="surface-panel-strong mt-5 rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
+                <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-12">
+                  <div>
+                    <p className="eyebrow">Record versus decision</p>
+                    <p className="type-quote mt-4 text-balance">{RECORD_VS_DECISION}</p>
+                  </div>
+                  <div className="grid gap-4 border-t border-[color:var(--line)] pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                    <p className="type-body measure text-muted-foreground">{CANONICAL_PROMISE}</p>
+                    <div className="flex flex-wrap gap-3">
+                      <ButtonLink
+                        href="/what-is-squarecampus"
+                        label="What is SquareCampus?"
+                        variant="secondary"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </MobileExpand>
         </SectionShell>
 
         {/* 3 — Command centre */}

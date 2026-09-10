@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/site/button-link";
 import { CTAGroup, Eyebrow, TrustNote } from "@/components/site/marketing";
+import { MobileExpand } from "@/components/site/mobile-expand";
 import { MotionPoster } from "@/components/site/motion-poster";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
@@ -32,19 +33,27 @@ export function FoundingPartnerSection() {
       title={home.heading}
       body={home.lead}
     >
-      <Reveal staggerChildren className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {home.benefits.map((benefit) => (
-          <article
-            key={benefit.number}
-            data-reveal-item
-            className="surface-panel rounded-[var(--radius-panel)] p-6"
-          >
-            <p className="eyebrow">{benefit.number}</p>
-            <h3 className="type-card-title mt-4">{benefit.title}</h3>
-            <p className="type-support mt-3">{benefit.body}</p>
-          </article>
-        ))}
-      </Reveal>
+      {/*
+        The three benefit cards collapse on phones; the offer panel below does
+        not. This section was 2650px tall at 390px, but it also carries the
+        only route into a programme with two positions in total, so burying
+        that behind a tap would cost more than the height saves.
+      */}
+      <MobileExpand label="See the founding partner terms">
+        <Reveal staggerChildren className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {home.benefits.map((benefit) => (
+            <article
+              key={benefit.number}
+              data-reveal-item
+              className="surface-panel rounded-[var(--radius-panel)] p-6"
+            >
+              <p className="eyebrow">{benefit.number}</p>
+              <h3 className="type-card-title mt-4">{benefit.title}</h3>
+              <p className="type-support mt-3">{benefit.body}</p>
+            </article>
+          ))}
+        </Reveal>
+      </MobileExpand>
 
       <Reveal delay={80}>
         <div className="surface-panel-strong mt-4 rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
