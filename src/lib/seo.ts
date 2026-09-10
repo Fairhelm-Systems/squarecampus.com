@@ -79,11 +79,25 @@ export const SEO_CONFIG = {
     height: 630,
   },
 
-  // Entity links: help Google/Knowledge Graph connect the brand to profiles.
+  /**
+   * Entity links: help Google and the Knowledge Graph connect the brand to
+   * the places it is described elsewhere.
+   *
+   * Social profiles and vendor-directory listings both belong here, because
+   * `sameAs` asks for references to the *same entity* rather than for social
+   * accounts specifically. Note what these are not: a listing that links back
+   * with `rel="nofollow"`, as SoftwareSuggest does, passes no ranking signal,
+   * so this array buys entity association and nothing more.
+   *
+   * This is the only copy. `layout.tsx` renders the Organization JSON-LD from
+   * it rather than repeating the URLs, because repeating them is what made a
+   * single X-handle change take two pull requests (#67 and #68) to land.
+   */
   sameAs: [
     "https://www.linkedin.com/company/square-campus",
     "https://x.com/squarecampushq",
     "https://instagram.com/squarecampus",
+    "https://www.softwaresuggest.com/squarecampus",
   ],
   // Logo used in structured data.
   logo: "https://squarecampus.com/brand/squarecampus.png",
