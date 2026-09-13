@@ -126,13 +126,21 @@ export const socialLinks = [
   {
     href: "https://www.linkedin.com/company/square-campus",
     label: "LinkedIn",
+    icon: "linkedin",
   },
   {
     href: "https://x.com/squarecampushq",
     label: "X",
+    icon: "x",
   },
   {
     href: "https://instagram.com/squarecampus",
     label: "Instagram",
+    icon: "instagram",
+  },
+  {
+    href: "https://github.com/Fairhelm-Systems",
+    label: "GitHub",
+    icon: "github",
   },
 ] as const;
