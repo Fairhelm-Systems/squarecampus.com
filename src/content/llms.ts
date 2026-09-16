@@ -247,6 +247,7 @@ export const llmsSections: LlmsSection[] = [
  */
 const FEATURED_POSTS = [
   "how-to-choose-school-management-system",
+  "ai-in-school-erp-governed-intelligence-vs-chatbot",
   "eighteen-thousand-rupee-school-erp-true-cost",
   "school-erp-implementation",
   "school-erp-data-exit",
