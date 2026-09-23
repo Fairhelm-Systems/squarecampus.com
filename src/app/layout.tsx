@@ -170,12 +170,21 @@ export default function RootLayout({
                   // provisioned — an empty string would publish a claim we
                   // cannot honour.
                   ...(company.phone ? { telephone: company.phone } : {}),
-                  identifier: {
-                    "@type": "PropertyValue",
-                    propertyID: "CIN",
-                    name: "Corporate Identity Number",
-                    value: company.cin,
-                  },
+                  taxID: company.gstin,
+                  identifier: [
+                    {
+                      "@type": "PropertyValue",
+                      propertyID: "CIN",
+                      name: "Corporate Identity Number",
+                      value: company.cin,
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      propertyID: "GSTIN",
+                      name: "Goods and Services Tax Identification Number",
+                      value: company.gstin,
+                    },
+                  ],
                   address: {
                     "@type": "PostalAddress",
                     name: "Registered office",

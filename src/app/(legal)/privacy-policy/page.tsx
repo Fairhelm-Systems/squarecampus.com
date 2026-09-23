@@ -331,6 +331,8 @@ export default function PrivacyPolicyPage() {
               <br />
               CIN: {company.cin}
               <br />
+              GSTIN: {company.gstin}
+              <br />
               Email: <a href="mailto:privacy@squarecampus.com">privacy@squarecampus.com</a>
               <br />
               Website:{" "}

@@ -61,6 +61,12 @@ function CompanyDisclosure() {
           {company.cin}
         </p>
         <p className="mt-1">{company.incorporationStatus}</p>
+        <p className="mt-2">
+          GSTIN{" "}
+          <span className="font-mono text-[0.78rem] tracking-tight text-[color:var(--foreground)]">
+            {company.gstin}
+          </span>
+        </p>
       </DisclosureField>
       <DisclosureField label="Contact">
         <a
