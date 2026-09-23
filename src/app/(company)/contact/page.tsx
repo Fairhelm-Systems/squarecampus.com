@@ -89,6 +89,18 @@ export default function ContactPage() {
                 </dt>
                 <dd className="mt-1.5 text-foreground">{company.incorporationDateDisplay}</dd>
               </div>
+              <div>
+                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                  GSTIN
+                </dt>
+                <dd className="mt-1.5 font-mono text-[0.8rem] text-foreground">{company.gstin}</dd>
+              </div>
+              <div>
+                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                  GST registered
+                </dt>
+                <dd className="mt-1.5 text-foreground">{company.gstinRegistrationDateDisplay}</dd>
+              </div>
               <div className="sm:col-span-2">
                 <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
                   Telephone

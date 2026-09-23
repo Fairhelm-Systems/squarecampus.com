@@ -201,7 +201,7 @@ export const llmsSections: LlmsSection[] = [
       {
         path: "/about",
         title: "About",
-        description: `${company.legalNameDisplay}, ${product.operator.locality}. CIN ${company.cin}, incorporated ${company.incorporationDateDisplay}. Founder-led`,
+        description: `${company.legalNameDisplay}, ${product.operator.locality}. CIN ${company.cin}, incorporated ${company.incorporationDateDisplay}; GSTIN ${company.gstin}. Founder-led`,
       },
       {
         path: "/contact",
@@ -290,7 +290,7 @@ export function llmsOrientation(): string[] {
     `- ${foundingProgramme.name}: ${foundingProgramme.positionsStatement}`,
     `- Deployment: a bounded deployment can run alongside the institution's current ERP, LMS, payment portal and identity provider, which stay authoritative; consolidation is a later choice and never a precondition of starting.`,
     `- Evidence: ${product.evidenceNote} Product screenshots use synthetic data and are labelled as such.`,
-    `- Operator: ${company.legalNameDisplay} (CIN ${company.cin}), ${product.operator.locality}. SquareCampus™ trademark registration pending.`,
+    `- Operator: ${company.legalNameDisplay} (CIN ${company.cin}, GSTIN ${company.gstin}), ${product.operator.locality}. SquareCampus™ trademark registration pending.`,
   ];
 }
 

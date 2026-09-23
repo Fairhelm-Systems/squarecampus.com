@@ -1,5 +1,3 @@
-import { faqs } from "../src/content/faq";
-import { foundingPartners, higherEducationPartners } from "../src/content/founding-partners";
 import {
   enterpriseBeyondModules,
   fit,
@@ -9,7 +7,10 @@ import {
   pricingAvailability,
   product,
 } from "../src/content/commercial";
-import { pricingFaqs, plans } from "../src/content/pricing";
+import { company } from "../src/content/company";
+import { faqs } from "../src/content/faq";
+import { foundingPartners, higherEducationPartners } from "../src/content/founding-partners";
+import { plans, pricingFaqs } from "../src/content/pricing";
 import { securityFaqs } from "../src/content/security-faq";
 import { entityFaqs } from "../src/content/what-is-squarecampus";
 import { assert, suite, test } from "./harness";
@@ -117,4 +118,28 @@ test("no stale commercial claims in any FAQ array", () => {
     [],
     `stale claims: ${hits.map((h) => String(h.pattern)).join(", ")}`
   );
+});
+
+test("GSTIN is well-formed, Karnataka-registered and passes its check digit", () => {
+  const gstin = company.gstin;
+  assert.match(gstin, /^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/);
+  // State code 29 is Karnataka, where the registered office is.
+  assert.equal(gstin.slice(0, 2), "29");
+  assert.equal(company.address.region, "Karnataka");
+  // The embedded PAN belongs to a company ("C" in the fourth position).
+  assert.equal(gstin[5], "C");
+  // Check digit: GSTN's base-36 weighted checksum over the first 14 chars.
+  const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let sum = 0;
+  for (let i = 0; i < 14; i++) {
+    const product = chars.indexOf(gstin[i]) * (i % 2 === 0 ? 1 : 2);
+    sum += Math.floor(product / 36) + (product % 36);
+  }
+  assert.equal(gstin[14], chars[(36 - (sum % 36)) % 36]);
+});
+
+test("the GST FAQ names the invoicing entity and its GSTIN", () => {
+  const answer = pricingFaqs.find((f) => f.question === "Is GST included?")?.answer ?? "";
+  assert.ok(answer.includes(company.gstin), "GST FAQ must quote company.gstin");
+  assert.ok(answer.includes(company.legalNameDisplay));
 });

@@ -14,6 +14,7 @@
  */
 
 import { foundingProgramme, identity, pricingAvailability } from "./commercial";
+import { company } from "./company";
 
 export type PlanId = "starter" | "pro" | "enterprise";
 
@@ -408,7 +409,7 @@ export const pricingFaqs = [
   },
   {
     question: "Is GST included?",
-    answer: `${pricingAvailability.taxes} Applicable Indian taxes are shown on the order form and invoices.`,
+    answer: `${pricingAvailability.taxes} Applicable Indian taxes are shown on the order form and on tax invoices issued by ${company.legalNameDisplay} under GSTIN ${company.gstin}.`,
   },
   {
     question: "How is AEGIS usage handled?",

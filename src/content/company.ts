@@ -25,6 +25,15 @@ export const company = {
   incorporationDateDisplay: "5 August 2026",
   incorporationStatus:
     "Incorporated in India on 5 August 2026 under the Companies Act, 2013 · One Person Company",
+  /**
+   * Goods and Services Tax Identification Number, Karnataka (state code 29),
+   * from Form GST REG-06. Required on tax invoices; published so a school's
+   * accounts or procurement team can verify it on the GST portal before
+   * raising a purchase order. Change only against the GST registration.
+   */
+  gstin: "29AAHCF1819L1ZA",
+  gstinRegistrationDate: "2026-09-22",
+  gstinRegistrationDateDisplay: "22 September 2026",
   /** Product brand operated by the company above. */
   brand: "SquareCampus",
   trademarkNotice:

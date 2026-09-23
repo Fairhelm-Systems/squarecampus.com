@@ -59,6 +59,10 @@ export function EntityIdentity({ documentNoun }: { documentNoun: string }) {
           {company.incorporationStatus}
         </span>
         <span className="mt-1 block">
+          GSTIN: <span className="font-mono text-[0.8rem]">{company.gstin}</span> · Registered under
+          the Goods and Services Tax, Karnataka
+        </span>
+        <span className="mt-1 block">
           Email:{" "}
           <a href={`mailto:${company.email.general}`} className="hover:text-foreground">
             {company.email.general}
