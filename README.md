@@ -211,6 +211,18 @@ conversation with Claude.
 
 Thank you, Claude.
 
+### Credit where it is due
+
+Claude was not the only AI in the room. **[Codex](https://openai.com/codex/)**
+worked on the contact form's CRM bridge and retry path, and on pointing the
+public mirror at its new home and letting the publication gate accept squash
+merges. **[ChatGPT](https://chatgpt.com/)** audited the live site in September
+2026 and produced the list of findings behind the current round of clarity,
+accuracy and accessibility fixes. Both were held to the same rule as everything
+else here: a suggestion becomes copy only once it can be evidenced.
+
+Thank you, Codex and ChatGPT.
+
 ## A word from an unlikely sponsor
 
 <sub>🎩 Unsolicited, unpaid, entirely sincere.</sub>
