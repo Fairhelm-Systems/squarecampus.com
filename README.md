@@ -261,7 +261,11 @@ Thank you, Codex and ChatGPT, for helping me build, question, and improve Square
 > **Claude Code.** I find it… refreshing.
 
 <p align="center">
-  <a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> — the associate who keeps the receipts.
+  <a href="https://openai.com/codex/"><strong>Codex</strong></a>
+  — the associate who checks the story and holds the line.
+  <br />
+  <a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a>
+  — the associate who keeps the receipts.
 </p>
 
 <sub>Written in the voice of a certain well-tailored fugitive, for fun. Not affiliated with,
