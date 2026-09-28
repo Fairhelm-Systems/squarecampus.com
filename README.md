@@ -211,6 +211,20 @@ conversation with Claude.
 
 Thank you, Claude.
 
+### Credit where it is due
+
+Claude was not the only AI in the room.
+
+**[Codex](https://openai.com/codex/)** contributed hands-on engineering work to this repository, including the contact form’s CRM bridge and retry path, the public mirror’s migration, and publication-gate support for squash merges. These contributions helped connect the website to the systems behind it and keep its publication workflow working as intended.
+
+**[ChatGPT](https://chatgpt.com/)** has been an ongoing research and review collaborator throughout the website’s development. Across repeated discussions and site reviews, it helped refine SquareCampus’s positioning, buyer-facing language, pricing explanations, retention-policy framing, and design and SEO priorities. It challenged unclear wording and unsupported promises, and turned those discussions into concrete implementation briefs—including the 46-item marketing-site audit behind this round of improvements.
+
+The commit history records part of that work. Research, reviews, debugging conversations, and decisions made before a line of code was written account for another part.
+
+I set the product direction, decide what ships, and remain responsible for the result. That responsibility does not diminish the contribution these tools made—or the gratitude they deserve.
+
+Thank you, Codex and ChatGPT, for helping me build, question, and improve SquareCampus.
+
 ## A word from an unlikely sponsor
 
 <sub>🎩 Unsolicited, unpaid, entirely sincere.</sub>
