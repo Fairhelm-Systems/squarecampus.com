@@ -4,6 +4,12 @@ Thank you for helping improve squarecampus.com. Issues and pull requests are
 welcome — especially ones that catch a claim reading stronger than its
 evidence.
 
+## How changes reach this repository
+
+This public repository is a read-only mirror of our internal repository. A
+pull request here is reviewed and merged upstream; the change then appears in
+the mirror, crediting you with a `Co-authored-by` trailer.
+
 ## Licensing of contributions
 
 By submitting a contribution you agree that:

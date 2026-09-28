@@ -32,6 +32,11 @@
   <a href="#built-with-claude-code"><img alt="Built with Claude Code" src="https://img.shields.io/badge/built%20with-Claude%20Code-D97757?logo=anthropic&logoColor=white" /></a>
 </p>
 
+> This repository is a read-only public mirror of our internal repository,
+> published automatically after every change to `main`. Issues are welcome
+> here; pull requests are welcome too and are merged upstream, after which
+> they appear in this mirror.
+
 ---
 
 ## Why this repository is public

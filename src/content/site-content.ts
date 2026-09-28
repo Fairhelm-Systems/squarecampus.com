@@ -153,7 +153,7 @@ export const socialLinks = [
  */
 export const siteSource = {
   repoUrl:
-    "https://fairhelm-systems-private-limited.ghe.com/Fairhelm-Systems-Pvt-Ltd/square_campus.marketing",
+    "https://github.com/Fairhelm-Systems/squarecampus.com",
   label: "This site is open source",
   tooltip:
     "Read the code behind every page, including the claims register and the build checks that keep this site honest. Issues and pull requests welcome.",
