@@ -47,7 +47,7 @@ const controls = [
   {
     title: "Incident readiness",
     icon: TimerReset,
-    body: "A credible security posture includes how issues are monitored, handled, communicated, and learned from.",
+    body: "How issues are monitored, handled, communicated to the institution and learned from.",
   },
 ] as const;
 
@@ -82,7 +82,7 @@ export default function SecurityPage() {
               />
             </div>
           </Reveal>
-          <Reveal delay={120}>
+          <Reveal immediate delay={120}>
             <SecurityMockup />
           </Reveal>
         </div>
@@ -91,7 +91,7 @@ export default function SecurityPage() {
       <SectionShell
         eyebrow="Control domains"
         title="The trust posture is designed for institutional accountability"
-        body="Security is not a decorative trust page. It is the control layer that lets schools and colleges rely on the platform for real operational work."
+        body="How access, encryption, audit history and operational reliability are handled — and what a review team can ask to see in writing."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {controls.map((item) => (

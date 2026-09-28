@@ -15,6 +15,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { PlatformMockupRow } from "@/components/site/mockups";
 import { MotionFigure } from "@/components/site/motion-figure";
@@ -76,7 +77,7 @@ const sharedSystem = [
   {
     title: "Shared observability",
     icon: ChartColumnIncreasing,
-    body: "Leaders see the institution through live dashboards instead of stitched reports and spreadsheet exports.",
+    body: "Leaders see the institution through dashboards built on current records instead of stitched reports and spreadsheet exports.",
   },
 ] as const;
 
@@ -91,19 +92,19 @@ const experienceSurfaces = [
   },
   {
     title: "Parent and student app",
-    body: "Fees, receipts, circulars, attendance, academic visibility, and service requests in familiar, multilingual flows.",
+    body: "Fees, receipts, circulars, attendance, academic visibility, and service requests, designed for the family's preferred language.",
   },
   {
     title: "Leadership visibility",
-    body: "Board reviews, campus-level dashboards, fee risk, academic exceptions, and operational exposure in real time.",
+    body: "Board reviews, campus-level dashboards, fee risk, academic exceptions, and operational exposure from current records.",
   },
 ] as const;
 
 const operatingClaims = [
   "One login and one governed record for admissions, academics, finance, and communication.",
   "Institution-aware structure for schools, colleges, and multi-campus organizations.",
-  "Multilingual parent-facing usage without turning English-first reporting into a mess.",
-  "AEGIS layered inside the platform as governed intelligence, not marketed as a substitute for operational depth.",
+  "Parent-facing communication in families' languages, with institutional reporting kept consistent.",
+  "AEGIS answers leadership questions from the same records, inside the same permissions.",
 ] as const;
 
 export default function PlatformPage() {
@@ -160,12 +161,13 @@ export default function PlatformPage() {
         <Reveal>
           <SystemLayerGrid showCapabilities />
         </Reveal>
+        <AvailabilityNote className="mt-4" />
       </SectionShell>
 
       <SectionShell
         eyebrow="Operating domains"
         title="The cycles the backbone has to carry"
-        body="Evidence that the operating model is complete, rather than the reason to choose it."
+        body="The school cycles each record passes through, from first enquiry to fees, results and campus services."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {backboneLayers.map((layer) => (
@@ -185,7 +187,7 @@ export default function PlatformPage() {
       <SectionShell
         eyebrow="Shared core"
         title="The system underneath the UI matters"
-        body="The real product advantage is not a prettier dashboard. It is that the institution stops operating through sync gaps, duplicate records, and broken reporting chains."
+        body="Every surface works from one identity, data and workflow core, so a change made once reaches the rest without an export, a sync job or a second copy of the record."
       >
         {/* One core, many surfaces: the argument the cards below make in prose. */}
         <Reveal className="mb-5">
@@ -245,9 +247,9 @@ export default function PlatformPage() {
                 AEGIS is embedded where context already exists.
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-                SquareCampus remains the primary identity. AEGIS adds governed intelligence on top
-                of the School OS by working with the same timelines, permissions, and records rather
-                than inventing a second system beside them.
+                AEGIS works inside SquareCampus, not beside it. It reads the same timelines,
+                permissions and records the School OS already holds, so there is no second system to
+                reconcile.
               </p>
               <div className="mt-6">
                 <ButtonLink href="/aegis" label="Meet AEGIS" variant="secondary" />
@@ -261,7 +263,7 @@ export default function PlatformPage() {
                 },
                 {
                   icon: CircleCheckBig,
-                  label: "Exception detection from live records",
+                  label: "Exception detection from current records",
                 },
                 {
                   icon: ShieldCheck,

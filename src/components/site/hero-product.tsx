@@ -56,8 +56,11 @@ const heroSignals = [
 export function HeroProductComposition() {
   return (
     <div data-md-skip className="w-full">
-      <div className="mb-3 flex items-center justify-between gap-3">
+      {/* The synthetic-data label sits beside the illustration it qualifies,
+          not under the fold of the composition. */}
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <p className="eyebrow">Admin &amp; trust command centre</p>
+        <SyntheticDataNote variant="chip" label="Illustrative example — synthetic data" />
       </div>
 
       {/* The screen is 16:10 at every breakpoint. Below lg the box is the
@@ -81,12 +84,8 @@ export function HeroProductComposition() {
                 AEGIS governed intelligence
               </p>
             </div>
-            <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
-              <span
-                aria-hidden
-                className="hero-signal__dot size-1.5 rounded-full bg-(--state-ok)"
-              />
-              Live
+            <span className="shrink-0 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
+              Example
             </span>
           </div>
 
@@ -139,8 +138,6 @@ export function HeroProductComposition() {
           </PhoneDevice>
         </div>
       </div>
-
-      <SyntheticDataNote className="mt-4" />
     </div>
   );
 }

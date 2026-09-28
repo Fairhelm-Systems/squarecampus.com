@@ -11,7 +11,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-TARGETS=(src)
+# The OG card generator is included: its copy is baked into the PNGs in public/og.
+TARGETS=(src scripts/og-cards/generate.mjs)
 
 # Pattern | description
 PATTERNS=(
@@ -55,6 +56,24 @@ PATTERNS=(
   "ap-south-1|stale hosting region"
   "[Mm]ulti-AZ|unevidenced availability claim (offer documentation instead)"
   "our AWS|stale hosting claim (AWS is for Enterprise private deployments)"
+  # Capability and availability (audit 2026-09-29; content/commercial.ts › availability,
+  # deploymentOptions, integrationScope). Languages, apps, integrations and BYOC are
+  # confirmed per institution in the proposal, never asserted site-wide.
+  "[Tt]en (Indian )?languages|unsupported language count (languages are confirmed in the proposal)"
+  "BYOC[^.]*coming soon|BYOC availability is 'not offered today' (content/commercial.ts)"
+  "early-access list|no BYOC early-access list exists"
+  "iOS and Android|app-store availability is not established"
+  "[Pp]re-built integrations?|no pre-built connector catalogue exists (integrations are scoped)"
+  "webhooks for real-time|unimplemented integration capability"
+  "API (&|and) WebSocket|WebSocket connectors are not offered"
+  "LIVE ·|an illustration must not look like live telemetry"
+  "Questions audited|numeric assurance shown on an illustration"
+  "Records copied out|numeric assurance shown on an illustration"
+  "(behaves|run|runs) in production|implies production usage that is not evidenced"
+  "without drama, outages|unsupported reliability promise"
+  "automated backups, redundant|unevidenced backup/redundancy claim"
+  "[Qq]ueue reminder circular|AEGIS depicted taking an action (it is read-only)"
+  "positioned as a School|internal positioning commentary in public copy"
 )
 
 FAILED=0

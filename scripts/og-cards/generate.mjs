@@ -235,7 +235,7 @@ export const CARDS = {
     label: "WHY SQUARECAMPUS",
     headline: "A School OS, not stitched ERP modules.",
     subhead:
-      "One governed system of record, connected workflows, live visibility, and clear accountability.",
+      "One governed system of record, connected workflows, current visibility, and clear accountability.",
     path: "why-squarecampus",
   },
   platform: {
@@ -256,7 +256,7 @@ export const CARDS = {
     label: "ECOSYSTEM",
     headline: "One platform. Every campus touchpoint.",
     subhead:
-      "Admin console, teacher workspace, parent and student apps, payments, SMS, WhatsApp, and biometrics.",
+      "Admin console, teacher workspace, and parent and student apps on one record, with scoped integrations.",
     path: "ecosystem",
   },
   security: {
@@ -275,9 +275,9 @@ export const CARDS = {
   },
   infrastructure: {
     label: "INFRASTRUCTURE",
-    headline: "Built on AWS Mumbai. India-first.",
+    headline: "Hosted on Microsoft Azure in India.",
     subhead:
-      "Multi-AZ architecture, encryption in transit and at rest, and an India data-residency posture.",
+      "Encryption in transit and at rest by design, with availability and recovery documented in writing during security review.",
     path: "infrastructure",
   },
   about: {

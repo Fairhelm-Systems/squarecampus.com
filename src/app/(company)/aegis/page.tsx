@@ -2,6 +2,7 @@ import {
   BellRing,
   Building2,
   ChartNoAxesCombined,
+  Check,
   Fingerprint,
   Landmark,
   MessageSquareShare,
@@ -14,12 +15,15 @@ import {
 import type { Metadata } from "next";
 import { AegisConsole } from "@/components/site/aegis-console";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { MotionFigure } from "@/components/site/motion-figure";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { availability } from "@/content/commercial";
 import { motionAssets } from "@/content/motion-assets";
 import { siteCtas } from "@/content/site-content";
+import { AEGIS_DEFINITION, aegisBoundaries } from "@/content/what-is-squarecampus";
 import {
   createBreadcrumbSchema,
   createPageMetadata,
@@ -30,7 +34,7 @@ import {
 export const metadata: Metadata = createPageMetadata({
   title: "AEGIS — Governed Intelligence for School Operations",
   description:
-    "AEGIS is the intelligence inside SquareCampus, not a chatbot on an ERP: plain-language answers from live records, in role scope, with an audit trail on every question.",
+    "AEGIS is the intelligence inside SquareCampus, not a chatbot on an ERP: read-only, plain-language answers from the institution's own records, in role scope, with an audit trail on every question.",
   path: "/aegis",
   ogImage: "https://squarecampus.com/og/aegis.png",
 });
@@ -76,7 +80,7 @@ const governancePillars = [
   {
     title: "Auditable by default",
     icon: ScrollText,
-    body: "Every question, answer, and suggested action lands on the audit trail — so intelligence strengthens governance instead of bypassing it.",
+    body: "Every question and answer is recorded on the audit trail. Suggested follow-ups are for people to act on through normal workflows — AEGIS never carries them out itself.",
   },
   {
     title: "Decision support, not noise",
@@ -89,11 +93,12 @@ const eraComparison = [
   {
     legacy:
       "Ask the office to prepare a report, wait days, get a spreadsheet that's already stale.",
-    aegis: "Ask AEGIS in plain language and get an answer from live records, in seconds.",
+    aegis: "Ask AEGIS in plain language and get an answer from the institution's own records.",
   },
   {
     legacy: "Exceptions surface at term end, when the damage is already done.",
-    aegis: "Attendance, fee, academic, and communication exceptions are flagged as they emerge.",
+    aegis:
+      "Attendance, fee, academic, and communication exceptions are flagged against thresholds the institution sets.",
   },
   {
     legacy: "Every export is another uncontrolled copy of student data floating around.",
@@ -141,11 +146,10 @@ export default function AegisPage() {
               Ask AEGIS. Don&rsquo;t chase reports.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-              AEGIS is the intelligence that lives inside SquareCampus, not a chatbot bolted onto an
-              ERP. It reads the same role graph, timelines, fee state and communication trail the
-              institution already runs on, and answers inside the same permissions and audit trail.
-              Ask in plain language. Get an answer from live records. For a 300-student school or a
-              30,000-student group.
+              AEGIS is the intelligence inside SquareCampus, not a chatbot bolted onto an ERP. It is
+              designed to read the same records, timelines and permissions the institution already
+              runs on, and to answer in plain language inside the same audit trail. It is read-only:
+              it can suggest a follow-up, but people decide and act.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label="See AEGIS in a guided demo" />
@@ -156,11 +160,7 @@ export default function AegisPage() {
               />
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
-              {[
-                "Lives inside the system",
-                "Answers in role scope",
-                "Audit trail on every query",
-              ].map((item) => (
+              {["Inside SquareCampus", "Answers in role scope", "Read-only"].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
@@ -171,10 +171,38 @@ export default function AegisPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
+          {/* Above the fold: `immediate`, so the console paints complete on the
+              first frame instead of waiting for hydration (audit SC-018). */}
+          <Reveal immediate delay={120}>
             <AegisConsole />
           </Reveal>
         </div>
+      </SectionShell>
+
+      {/* The boundary, stated once in content/what-is-squarecampus.ts and
+          shown here beside the demo, so no illustration on this page can be
+          read as AEGIS acting on the institution's behalf. */}
+      <SectionShell
+        id="boundaries"
+        eyebrow="What AEGIS does, and does not do"
+        title="Answers and suggestions. People decide and act."
+        body={AEGIS_DEFINITION}
+        compactBody
+      >
+        <Reveal className="surface-panel rounded-[1.8rem] p-6 lg:p-7">
+          <ul className="grid gap-3 md:grid-cols-2">
+            {aegisBoundaries.map((item) => (
+              <li key={item} className="flex gap-3 text-sm leading-6 text-foreground">
+                <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-(--teal)" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <AvailabilityNote
+          className="mt-4"
+          text={`The examples on this page are illustrative and use synthetic data. ${availability.short}`}
+        />
       </SectionShell>
 
       <SectionShell
@@ -312,8 +340,8 @@ export default function AegisPage() {
                 Bring one question you currently wait days to answer.
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-                In a guided demo we&rsquo;ll show how AEGIS answers it from live, governed records —
-                and what your leadership team sees on day one.
+                In a guided demo we&rsquo;ll walk through how AEGIS is designed to answer it, what
+                it would draw on in your records, and where its limits are.
               </p>
             </div>
             <div className="grid gap-3">

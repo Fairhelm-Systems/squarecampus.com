@@ -13,10 +13,13 @@ export const SYNTHETIC_DATA_LABEL = "Illustrative product preview using syntheti
 export function SyntheticDataNote({
   className,
   variant = "inline",
+  label,
 }: {
   className?: string;
   /** `chip` for a compact corner label, `inline` for a full sentence. */
   variant?: "inline" | "chip";
+  /** Overrides the default wording; it must still say the data is synthetic. */
+  label?: string;
 }) {
   if (variant === "chip") {
     return (
@@ -27,7 +30,7 @@ export function SyntheticDataNote({
         )}
       >
         <Info aria-hidden className="size-2.5" />
-        Synthetic data
+        {label ?? "Synthetic data"}
       </span>
     );
   }
@@ -40,7 +43,7 @@ export function SyntheticDataNote({
       )}
     >
       <Info aria-hidden className="size-3 shrink-0" />
-      {SYNTHETIC_DATA_LABEL}
+      {label ?? SYNTHETIC_DATA_LABEL}
     </p>
   );
 }

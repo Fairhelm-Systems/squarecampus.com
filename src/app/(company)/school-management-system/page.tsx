@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
@@ -82,7 +83,7 @@ const faqItems = [
   {
     question: "Can SquareCampus integrate with our existing tools?",
     answer:
-      "Yes. We support SIS/finance exports, webhooks, and targeted integrations. If a critical integration is missing, we scope and ship it with clear timelines.",
+      "Yes, as scoped work. There is no catalogue of pre-built connectors: each integration is assessed during discovery and confirmed in writing.",
   },
   {
     question: "Will teachers and admins need heavy training?",
@@ -349,7 +350,7 @@ export default function SchoolManagementSystemPage() {
       <SectionShell
         eyebrow="Modules as workflows"
         title="Modules inside SquareCampus, explained as workflows"
-        body="Feature lists hide the real question: does the work actually connect? Here is how each module behaves in production."
+        body="Feature lists hide the real question: does the work actually connect? Here is how each module is designed to connect."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {workflowModules.map((item) => (
@@ -364,6 +365,7 @@ export default function SchoolManagementSystemPage() {
             </article>
           ))}
         </Reveal>
+        <AvailabilityNote className="mt-4" />
       </SectionShell>
 
       <SectionShell

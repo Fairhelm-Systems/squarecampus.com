@@ -49,7 +49,7 @@ const INTENTS = ["demo", "founding-partner"] as const;
 const expectations = {
   demo: [
     {
-      title: "Live platform walkthrough",
+      title: "Platform walkthrough",
       icon: Building2,
       body: "See how SquareCampus handles the actual workflows institutions compare vendors on: admissions, academics, fees, communication, visibility, and controls.",
     },

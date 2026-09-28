@@ -18,7 +18,7 @@
  *   and one post, so the graph is dense in both directions.
  */
 
-import { multiCampusContrast } from "./commercial";
+import { multiCampusContrast, product } from "./commercial";
 
 export type IntentPage = {
   slug: string;
@@ -91,10 +91,10 @@ export const intentPages: IntentPage[] = [
     indiaSpecifics: [
       "Fee structures with term plans, sibling and staff concessions, transport slabs, late fees and GST-aware receipts.",
       "CBSE, ICSE and state-board grading templates and report formats.",
-      "Ten Indian languages across the parent and student apps.",
+      "Parent and student apps designed for the family's preferred language; available languages confirmed in the proposal.",
       "Multi-campus and trust-level structures as a first-class model, not a customisation.",
-      "Parent communication over the app and WhatsApp-style channels, with acknowledgements recorded.",
-      "An India-first data-residency posture, with the hosting region named in writing on the infrastructure page.",
+      "Parent communication over the app, with other channels such as SMS or WhatsApp scoped per institution and acknowledgements recorded.",
+      "Hosted on Microsoft Azure in India, with hosting details given in writing during evaluation.",
     ],
     evaluation: [
       "Does a change in admissions, attendance or fees appear everywhere else without re-entry?",
@@ -107,8 +107,7 @@ export const intentPages: IntentPage[] = [
     faqs: [
       {
         question: "Is SquareCampus a school ERP?",
-        answer:
-          "SquareCampus includes the record and workflow capabilities schools expect from ERP software, and is positioned as a School Operating System: the same capabilities, connected by one record and governed by ownership and audit trails.",
+        answer: product.categoryRelationship,
       },
       {
         question: "Can school ERP software run alongside the tools we already use?",
@@ -261,7 +260,7 @@ export const intentPages: IntentPage[] = [
     },
     workflows: [
       {
-        title: "Marking in seconds",
+        title: "Quick marking",
         body: "Class and period attendance from the teacher app or a device at the gate, with late arrivals and early departures captured with a reason.",
       },
       {
@@ -780,7 +779,7 @@ export const intentPages: IntentPage[] = [
     ],
     indiaSpecifics: [
       "Notifications on the app with fallbacks on channels Indian parents actually read.",
-      "Ten Indian languages across the parent and student apps, circulars and notifications.",
+      "Apps, circulars and notifications designed for each family's preferred language; available languages confirmed in the proposal.",
       "Fee reminders that link to payment and record the acknowledgement.",
       "Multi-campus sending with trust-level oversight.",
       "Communication logs that help when a dispute or inspection asks what was communicated.",
@@ -811,7 +810,7 @@ export const intentPages: IntentPage[] = [
       {
         question: "Can communication be sent in more than one language?",
         answer:
-          "Yes. The parent and student apps, circulars and notifications are available in ten Indian languages, so families use the language they are comfortable in while the institution keeps one record.",
+          "Yes, that is the design: the parent and student apps, circulars and notifications are built so each family can use the language it is comfortable in, while the institution keeps one record. The languages available to your institution are confirmed in your proposal.",
       },
     ],
     related: [
@@ -878,7 +877,7 @@ export const intentPages: IntentPage[] = [
       "ICSE and ISC assessment structures maintained as configuration, not a build per session.",
       "Report card formats per class group, including internal assessment and co-scholastic areas.",
       "Student master data kept complete for CISCE registration from the day of admission.",
-      "Ten Indian languages across the parent and student apps.",
+      "Parent and student apps designed for the family's preferred language; available languages confirmed in the proposal.",
       "Fees, transport and communication on the same record as academics.",
     ],
     evaluation: [
@@ -943,9 +942,9 @@ export const intentPages: IntentPage[] = [
     keyword: "School management software for state board schools",
     metaTitle: "School Management Software for State Board Schools",
     metaDescription:
-      "School management software for state-board schools in India: state formats and calendars, ten Indian languages for parents, fees and registers on one record.",
+      "School management software for state-board schools in India: state formats and calendars, parents reached in their language, fees and registers on one record.",
     h1: "Your state's formats, your families' languages, one record.",
-    lede: "State-board schools serve the widest range of families in India, and the office pays for it in translated circulars, hand-filled state registers and fee structures that follow local rules. SquareCampus carries state formats and calendars as configuration and speaks to parents in ten Indian languages, while the institution keeps one governed record underneath.",
+    lede: "State-board schools serve the widest range of families in India, and the office pays for it in translated circulars, hand-filled state registers and fee structures that follow local rules. SquareCampus is designed to carry state formats and calendars as configuration and to reach parents in the languages they read, while the institution keeps one governed record underneath.",
     audience: ["State-board school principals", "Administrators", "Class teachers", "Parents"],
     definition: {
       title: "What should state board school management software include?",
@@ -961,7 +960,7 @@ export const intentPages: IntentPage[] = [
         body: "Attendance, admission and fee registers come out of the daily record in the layouts district and board inspections expect.",
       },
       {
-        title: "Parent communication in ten languages",
+        title: "Parent communication in families' languages",
         body: "Circulars, dues reminders, results and notices reach families in the language they read, with delivery and acknowledgement recorded against the student.",
       },
       {
@@ -975,7 +974,7 @@ export const intentPages: IntentPage[] = [
     ],
     indiaSpecifics: [
       "State-board assessment schemes, report formats and calendars as configuration.",
-      "Ten Indian languages across the parent and student apps, circulars and notifications.",
+      "Apps, circulars and notifications designed for each family's preferred language; available languages confirmed in the proposal.",
       "Scheme and concession records kept against the student for audits and claims.",
       "Registers in the layouts district inspections ask for.",
       "Trusts running state-board, CBSE and ICSE campuses on one system.",
@@ -996,7 +995,7 @@ export const intentPages: IntentPage[] = [
       {
         question: "Which languages are available for parents?",
         answer:
-          "The parent and student apps, circulars and notifications are available in ten Indian languages, chosen per family, while the institution keeps one record.",
+          "The parent and student apps, circulars and notifications are designed so each family can choose its language while the institution keeps one record. The languages available to your institution are confirmed in your proposal.",
       },
       {
         question: "Can we run a state-board school and a CBSE school under one trust?",

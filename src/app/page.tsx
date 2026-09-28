@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { FoundingPartnerSection } from "@/components/site/founding-partner-section";
 import { GlyphField } from "@/components/site/glyph-field";
@@ -26,6 +27,7 @@ import { SectionShell } from "@/components/site/section-shell";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { SyntheticDataNote } from "@/components/site/synthetic-data-note";
+import { deploymentSummary } from "@/content/commercial";
 import {
   CANONICAL_PROMISE,
   homepagePainIds,
@@ -77,7 +79,7 @@ const fragmentationCosts = [
 
 const governedSystemGains = [
   "An admission confirmed in one campus flows into academics, fees, and communication on the same record.",
-  "Management sees live institutional health instead of retrospective spreadsheet packages.",
+  "Management sees current institutional health instead of retrospective spreadsheet packages.",
   "Parents, students, staff, and operators interact with one coordinated system.",
   "Auditability is native because every approval and update lives on the same timeline.",
 ] as const;
@@ -110,7 +112,7 @@ const journeys = [
     icon: ChartNoAxesCombined,
     summary: "From signal to action while the problem is still small.",
     steps: [
-      "Live signals across attendance, fees, and academics",
+      "Current signals across attendance, fees, and academics",
       "Exceptions flagged against policy, not discovered at term end",
       "Reviews run on shared numbers, not competing exports",
       "Actions and follow-ups tracked to closure",
@@ -122,7 +124,7 @@ const sovereigntyPillars = [
   {
     title: "Deployment on your terms",
     icon: Landmark,
-    body: "Managed cloud on Microsoft Azure in India by default, Enterprise private deployment on AWS, a private cloud or on premises, and BYOC — your own cloud account — coming soon.",
+    body: deploymentSummary,
   },
   {
     title: "India-first residency posture",
@@ -346,7 +348,7 @@ export default function Home() {
                     Attendance, fee exposure, and exceptions — before the review meeting.
                   </h2>
                   <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">
-                    Leadership reads live signals across campuses instead of waiting for stitched
+                    Leadership reads current signals across campuses instead of waiting for stitched
                     reports assembled after the fact.
                   </p>
 
@@ -516,10 +518,10 @@ export default function Home() {
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.06),rgba(16,24,38,0.76))]" />
                       <div className="absolute inset-x-5 bottom-5 rounded-[1.3rem] border border-white/14 bg-[rgba(12,20,32,0.55)] p-4 text-white backdrop-blur-md">
                         <p className="font-mono text-[0.54rem] uppercase tracking-[0.18em] text-white/70">
-                          Built for institutional buyers
+                          Who it is for
                         </p>
                         <p className="mt-3 font-display text-2xl tracking-[-0.04em]">
-                          A serious platform for trustees, principals, finance teams, and operators.
+                          Trustees, principals, finance teams and campus operators, on one record.
                         </p>
                       </div>
                     </div>
@@ -657,6 +659,7 @@ export default function Home() {
                 </article>
               ))}
             </Reveal>
+            <AvailabilityNote className="mt-4" />
           </MobileExpand>
         </SectionShell>
 
@@ -676,8 +679,9 @@ export default function Home() {
                   Sovereign does not mean rigid.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                  Parent-facing flows run in ten Indian languages while the institution keeps
-                  consistent controls, reporting, and audit-ready records underneath.
+                  Parent-facing communication is designed to reach each family in its preferred
+                  language while the institution keeps consistent controls, reporting, and
+                  audit-ready records underneath.
                 </p>
                 <div className="mt-8 grid gap-4 xl:grid-cols-[0.82fr_1.18fr]">
                   <div className="grid gap-4">
@@ -688,7 +692,7 @@ export default function Home() {
                         record.
                       </p>
                       <div className="mt-4 flex flex-wrap gap-2">
-                        {["English", "Hindi", "Kannada", "Tamil"].map((item) => (
+                        {["English", "Hindi", "Kannada"].map((item) => (
                           <span
                             key={item}
                             className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
@@ -773,8 +777,8 @@ export default function Home() {
                 <div className="surface-panel rounded-[1.6rem] p-6">
                   <p className="section-kicker">Deployment details</p>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    Managed cloud, private deployment, and the BYOC early-access list live on the
-                    services page.
+                    What managed cloud and Enterprise private deployment each involve, with the
+                    status of every option, is set out on the services page.
                   </p>
                   <div className="mt-4">
                     <ButtonLink href="/services" label="See deployment options" variant="ghost" />
@@ -804,16 +808,16 @@ export default function Home() {
                     Ask AEGIS. Don&rsquo;t chase reports.
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                    Because AEGIS works from the same permissions, timelines and live records, it
-                    can surface exceptions, suggest next steps and answer leadership in plain
-                    language, with governance, tenant boundaries and auditability built in. As
-                    simple as asking. For a 300-student school or a 30,000-student group.
+                    AEGIS is designed to work from the same permissions, timelines and records as
+                    the rest of SquareCampus. It surfaces exceptions and answers leadership in plain
+                    language. It is read-only: it can suggest a follow-up, but people decide and
+                    act, and every question is recorded on the audit trail.
                   </p>
                   <div className="mt-6 grid gap-3">
                     {[
                       {
                         icon: Sparkles,
-                        text: "Operational questions answered from live institutional context",
+                        text: "Operational questions answered from the institution's own records",
                       },
                       {
                         icon: ShieldCheck,
@@ -899,8 +903,7 @@ export default function Home() {
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
                   Bring your current stack. We will map it against the governed operating model and
-                  walk through rollout, controls, and institutional fit — without reducing the
-                  conversation to a card wall of features.
+                  walk through rollout, controls, and institutional fit.
                 </p>
               </div>
               <div className="grid gap-3">
