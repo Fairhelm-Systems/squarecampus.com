@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
 import { DetailsFaq } from "@/components/site/details-faq";
 import { FactTable } from "@/components/site/fact-table";
@@ -6,10 +7,10 @@ import { CTAGroup, Eyebrow, OperationalBadge } from "@/components/site/marketing
 import { MotionPoster } from "@/components/site/motion-poster";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { SystemLayerGrid } from "@/components/site/system-layers";
+import { availability, product } from "@/content/commercial";
 import { motionAssets } from "@/content/motion-assets";
 import { CANONICAL_PROMISE, RECORD_VS_DECISION } from "@/content/operational-pains";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import {
   AEGIS_DEFINITION,
   aegisBoundaries,
@@ -19,6 +20,7 @@ import {
   glossary,
   multiCampusContrast,
 } from "@/content/what-is-squarecampus";
+import { workflows } from "@/content/workflows";
 
 export default function WhatIsSquareCampusPage() {
   return (
@@ -33,8 +35,12 @@ export default function WhatIsSquareCampusPage() {
               {CANONICAL_DEFINITION}
             </p>
             <CTAGroup>
-              <ButtonLink href={siteCtas.platformHref} label="See the four layers" variant="cta" />
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="secondary" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
+              <ButtonLink
+                href={siteCtas.platformHref}
+                label="See the platform"
+                variant="secondary"
+              />
             </CTAGroup>
           </Reveal>
 
@@ -52,15 +58,82 @@ export default function WhatIsSquareCampusPage() {
         </div>
       </SectionShell>
 
-      {/* Four layers */}
+      {/* At a glance (audit SC-012): the four introductory questions answered
+          in one place, each linking to the page that goes deeper, instead of
+          repeating the Platform page's architecture here. */}
       <SectionShell
-        id="layers"
-        eyebrow="How it is organised"
-        title="Four layers, each with an operational outcome."
-        body="SquareCampus is not described by how many modules it contains. It is described by what each layer changes about the way the institution runs."
+        id="at-a-glance"
+        eyebrow="At a glance"
+        title="What it is, who it serves, what it includes."
       >
         <Reveal>
-          <SystemLayerGrid />
+          <dl className="surface-panel divide-y divide-[color:var(--line)] rounded-[var(--radius-panel-lg)] px-6 sm:px-8">
+            <div className="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+              <dt className="type-card-title">What it is</dt>
+              <dd className="type-support">{product.categoryRelationship}</dd>
+            </div>
+            <div className="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+              <dt className="type-card-title">Who it serves</dt>
+              <dd className="type-support">
+                <ul className="grid gap-1.5">
+                  {product.audiences.map((audience) => (
+                    <li key={audience}>{audience}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+            <div className="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+              <dt className="type-card-title">What it includes</dt>
+              <dd className="type-support">
+                <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
+                  {workflows.map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        href={item.href}
+                        className="text-[color:var(--foreground)] underline underline-offset-4"
+                      >
+                        {item.linkLabel}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link
+                      href="/aegis/"
+                      className="text-[color:var(--foreground)] underline underline-offset-4"
+                    >
+                      AEGIS, the read-only intelligence layer
+                    </Link>
+                  </li>
+                </ul>
+                <p className="mt-3">{availability.short}</p>
+              </dd>
+            </div>
+            <div className="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+              <dt className="type-card-title">How it relates to ERP</dt>
+              <dd className="type-support">
+                It covers the record-keeping and workflows expected from school ERP software; the
+                difference is that ownership, approvals and audit history sit on the same record.{" "}
+                <Link
+                  href="/school-erp-software/"
+                  className="text-[color:var(--foreground)] underline underline-offset-4"
+                >
+                  School ERP software, explained
+                </Link>
+              </dd>
+            </div>
+            <div className="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+              <dt className="type-card-title">How it is organised</dt>
+              <dd className="type-support">
+                Four layers — record, workflow, governance and intelligence.{" "}
+                <Link
+                  href="/platform/#layers"
+                  className="text-[color:var(--foreground)] underline underline-offset-4"
+                >
+                  See the platform
+                </Link>
+              </dd>
+            </div>
+          </dl>
         </Reveal>
       </SectionShell>
 
@@ -189,7 +262,7 @@ export default function WhatIsSquareCampusPage() {
             <div className="grid gap-3">
               <ButtonLink
                 href={siteCtas.demoHref}
-                label="Diagnose an operational bottleneck"
+                label={ctaLabels.demo}
                 variant="cta"
                 className="justify-center"
               />

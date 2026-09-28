@@ -26,43 +26,6 @@ export const foundingPartners = {
     eyebrow: "Founding institutional partners",
     heading: "Don't just adopt the School OS. Help shape it.",
     lead: `${foundingProgramme.positionsStatement} ${foundingProgramme.nature}`,
-    benefits: [
-      {
-        number: "01",
-        title: "Two positions, ever",
-        body: "One school or eligible school institution and one university. When both are allocated, the programme closes permanently; it is not a launch programme or an early-customer discount.",
-      },
-      {
-        number: "02",
-        title: "Protected 40% Enterprise discount",
-        body: "A protected 40% discount on Enterprise commercial terms, set out in the executed Founding Partner agreement.",
-      },
-      {
-        number: "03",
-        title: "Defined roadmap influence",
-        body: "Structured, written consideration of the partner's operating requirements in roadmap planning, and material participation in product validation.",
-      },
-      {
-        number: "04",
-        title: "White-labelled mobile apps",
-        body: "The parent and staff apps published under the institution's own branding and store listings, without the standard white-label charge.",
-      },
-      {
-        number: "05",
-        title: "Founder-led rollout",
-        body: "A named counterpart maps the workflow, coordinates implementation, and validates the result alongside your team.",
-      },
-      {
-        number: "06",
-        title: "Transition without disruption",
-        body: "Parallel validation, scoped migration, and coexistence with current systems until the institution trusts the new operating model.",
-      },
-    ],
-    qualification: {
-      eyebrow: "A strategic commitment, not a subscription",
-      heading: "Partnership requires commitment on both sides.",
-      body: "Founding partnership is for an institution with an executive sponsor, a measurable operating bottleneck, and the willingness to make a strategic capital commitment under a separately executed agreement and take part in product validation. This is not a free trial, a launch discount or an unlimited custom-development programme.",
-    },
     ctaNote:
       "Scope, success measure and commercial terms are agreed in writing before work begins.",
   },
@@ -466,8 +429,8 @@ export const higherEducationPartners = {
 } as const;
 
 /**
- * The demo form records where an enquiry came from. `founding-partner` is the
- * only intent the CTAs pass today; anything else in the query string falls
- * back to the default so a crafted URL cannot inject a value.
+ * The founding-partner diagnosis form, on /launch-partners/ itself (see
+ * content/demo-intents.ts). The old /demo/?intent=founding-partner URL still
+ * forwards here.
  */
-export const FOUNDING_PARTNER_DEMO_HREF = "/demo/?intent=founding-partner";
+export const FOUNDING_PARTNER_DEMO_HREF = "/launch-partners/#request-diagnosis";

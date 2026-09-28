@@ -93,7 +93,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sources: [`${APP}/page.tsx`, `${APP}/layout.tsx`],
       changeFrequency: "weekly",
       priority: 0.9,
-      images: [img("/images/screens/mobile/student-day-view.webp")],
+      images: [img("/images/editorial/campus-courtyard.webp")],
     },
 
     // Canonical entity answer: "what is SquareCampus". High authority for

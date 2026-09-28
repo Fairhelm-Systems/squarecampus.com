@@ -1,4 +1,4 @@
-import { Check, KeyRound } from "lucide-react";
+import { Check, KeyRound, Plus } from "lucide-react";
 import { RetentionPointer } from "@/components/pricing/retention-pointer";
 import { ButtonLink } from "@/components/site/button-link";
 import { OperationalBadge } from "@/components/site/marketing";
@@ -107,7 +107,7 @@ export function PlanArchitecture() {
             </div>
 
             <div className="flex flex-col">
-              <p className="eyebrow">Capability themes</p>
+              <p className="eyebrow">Included capability themes</p>
               <ul className="mt-4 grid gap-x-6 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {plan.capabilities.map((capability) => (
                   <li key={capability} className="type-support flex gap-2.5">
@@ -119,6 +119,29 @@ export function PlanArchitecture() {
                   </li>
                 ))}
               </ul>
+
+              <div className="mt-6 border-t border-[color:var(--line)] pt-5">
+                <p className="eyebrow">Scoped separately</p>
+                <ul className="mt-3 space-y-2">
+                  {plan.scopedExtras.map((item) => (
+                    <li key={item} className="type-support flex gap-2.5">
+                      <Plus
+                        aria-hidden
+                        className="mt-1 size-3.5 shrink-0 text-[color:var(--muted-foreground)]"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="type-support mt-3">
+                  <a
+                    href="#proposal"
+                    className="text-[color:var(--foreground)] underline underline-offset-4"
+                  >
+                    What we need for a proposal
+                  </a>
+                </p>
+              </div>
 
               {plan.spotlight ? (
                 <div className="mt-6 rounded-[var(--radius-chip)] border border-[color:var(--line-strong)] bg-[color:var(--brand-tint)] px-5 py-5">
@@ -132,7 +155,7 @@ export function PlanArchitecture() {
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {plan.spotlight.labels.map((label) => (
                       <li key={label}>
-                        <span className="inline-flex rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-[color:var(--muted-foreground)]">
+                        <span className="inline-flex rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-[color:var(--muted-foreground)]">
                           {label}
                         </span>
                       </li>

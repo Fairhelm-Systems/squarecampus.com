@@ -43,7 +43,7 @@ export default function Hello() {
             {item.word}
           </span>
         ))}
-        <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
+        <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[0.6875rem] uppercase tracking-[0.3em] text-white/40">
           SquareCampus · Built in India
         </p>
       </div>

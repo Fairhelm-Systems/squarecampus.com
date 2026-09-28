@@ -8,45 +8,53 @@ import {
   Shield,
   Sparkles,
 } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
+import { FactTable } from "@/components/site/fact-table";
 import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
-const comparisonRows = [
+/**
+ * Evaluation criteria instead of blanket "traditional ERP vs us" claims
+ * (audit SC-020): each row is something a buyer can ask any vendor to show,
+ * beside how SquareCampus is designed to answer it. No competitor is
+ * characterised here; named comparisons live on /compare/, with each
+ * competitor's genuine strengths.
+ */
+const evaluationCriteria = [
   {
-    label: "System model",
-    erp: "Modules adapted or stitched together for education use cases.",
-    pointTools: "Separate apps with separate records, permissions, and reporting logic.",
+    label: "Concession approvals",
+    ask: "Grant a sibling concession above the desk's limit. Who approves it, and where is that approval recorded?",
     squareCampus:
-      "One governed operating model designed for institution-wide education operations.",
+      "Concessions follow the institution's limits; anything above a limit goes to a named approver and is recorded on the fee record's audit trail.",
   },
   {
-    label: "Daily work",
-    erp: "Teams work around the product to keep data aligned.",
-    pointTools: "Teams repeat the same context across tools.",
-    squareCampus: "Teams work inside shared workflows with fewer handoffs and fewer dead zones.",
+    label: "Cross-campus permissions",
+    ask: "Sign in as a campus principal, then as a trust administrator. What can each one see?",
+    squareCampus:
+      "Access is scoped by role and by campus: a trust role sees across its campuses, a campus role sees its own.",
   },
   {
-    label: "Reporting",
-    erp: "Exports, reconciliation, and manual cleanup remain common.",
-    pointTools: "Reporting becomes a stitching exercise after the fact.",
-    squareCampus: "Leadership visibility comes from the live operating system itself.",
+    label: "Exception ownership",
+    ask: "Show an attendance exception. Who owns it, and what closes it?",
+    squareCampus:
+      "Each exception is routed to a named owner and stays open until it is closed with a recorded reason.",
   },
   {
-    label: "Accountability",
-    erp: "Ownership blurs across modules and service layers.",
-    pointTools: "Many vendors, unclear responsibility, broken context.",
-    squareCampus: "One operating model, one vendor, one clear line of accountability.",
+    label: "Migration validation",
+    ask: "How are migrated balances and records checked before the old system is switched off?",
+    squareCampus:
+      "Trial imports reconcile against agreed checks, and a parallel run continues until finance and academic owners sign off.",
   },
   {
-    label: "Implementation reality",
-    erp: "Heavy and often generic to the institution.",
-    pointTools: "Light to buy, heavy to coordinate over time.",
-    squareCampus: "Guided rollout built around real institutional operating constraints.",
+    label: "Exports and exit",
+    ask: "What can we take out when we leave — in what format, by when, and at what cost?",
+    squareCampus:
+      "Export scope, format, timing and charges are agreed in the order form, not left for the day you leave.",
   },
-];
+] as const;
 
 const schoolOsPrinciples = [
   {
@@ -60,19 +68,19 @@ const schoolOsPrinciples = [
     body: "Approvals, communication, attendance, dues, and reporting happen in a coordinated sequence rather than across disconnected tabs.",
   },
   {
-    title: "The institution is visible live",
+    title: "The institution is visible now",
     icon: FileSpreadsheet,
     body: "Leaders operate with current signals, not after-action exports assembled under pressure.",
   },
   {
     title: "The trust posture is product-level",
     icon: Shield,
-    body: "Auditability, access control, and institutional reliability are built in because the system is the operating backbone.",
+    body: "Auditability and access control are part of the product design, and availability and recovery are documented in writing during security review.",
   },
 ] as const;
 
 const switchingReasons = [
-  "The institution wants fewer tools without losing operational depth.",
+  "The institution wants fewer tools without losing admissions, fees, exams or reporting capability.",
   "Leadership wants live visibility instead of delayed reporting rituals.",
   "Finance and compliance teams need controls that survive real scrutiny.",
   "Parents and staff need one clear place for notices, dues and follow-ups instead of several apps and message threads.",
@@ -99,57 +107,46 @@ export default function WhyDifferentPage() {
             history that connect them sit on that record too.
           </p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="See the difference live" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink href={siteCtas.platformHref} label="View platform" variant="secondary" />
           </div>
         </Reveal>
       </SectionShell>
 
       <SectionShell
-        eyebrow="Comparison"
-        title="What changes when you move from software stack to operating system"
-        body="Five criteria worth checking in any system you evaluate, including this one."
+        eyebrow="How to evaluate"
+        title="Five things to check in any school management system"
+        body="Differences you can verify in a demo, including in ours."
       >
-        <Reveal className="overflow-hidden rounded-[2rem] border border-[color:var(--line)]">
-          <div className="grid bg-[color:var(--surface-strong)] md:grid-cols-[0.9fr_1fr_1fr_1fr]">
-            <div className="border-b border-[color:var(--line)] p-5 md:border-b-0 md:border-r">
-              <p className="section-kicker">Criteria</p>
-            </div>
-            <div className="border-b border-[color:var(--line)] p-5 md:border-b-0 md:border-r">
-              <p className="font-display text-xl tracking-[-0.04em]">Traditional ERP</p>
-            </div>
-            <div className="border-b border-[color:var(--line)] p-5 md:border-b-0 md:border-r">
-              <p className="font-display text-xl tracking-[-0.04em]">Point tools</p>
-            </div>
-            <div className="p-5">
-              <p className="font-display text-xl tracking-[-0.04em]">SquareCampus School OS</p>
-            </div>
-          </div>
-          <div className="divide-y divide-[color:var(--line)] bg-[color:var(--surface)]">
-            {comparisonRows.map((row) => (
-              <div key={row.label} className="grid md:grid-cols-[0.9fr_1fr_1fr_1fr]">
-                <div className="border-r border-[color:var(--line)] px-5 py-5">
-                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                    {row.label}
-                  </p>
-                </div>
-                <div className="border-r border-[color:var(--line)] px-5 py-5 text-sm leading-7 text-[color:var(--muted-foreground)]">
-                  {row.erp}
-                </div>
-                <div className="border-r border-[color:var(--line)] px-5 py-5 text-sm leading-7 text-[color:var(--muted-foreground)]">
-                  {row.pointTools}
-                </div>
-                <div className="px-5 py-5 text-sm leading-7 text-[color:var(--foreground)]">
-                  {row.squareCampus}
-                </div>
-              </div>
-            ))}
-          </div>
+        <Reveal>
+          <FactTable
+            caption="Evaluation criteria to check in any school management system, and how SquareCampus is designed to answer each."
+            columns={[
+              { key: "ask", label: "Ask any vendor to show you" },
+              { key: "squareCampus", label: "How SquareCampus is designed to answer" },
+            ]}
+            rows={evaluationCriteria.map((row) => ({
+              label: row.label,
+              values: [row.ask, row.squareCampus],
+            }))}
+          />
+        </Reveal>
+        <Reveal delay={80} className="mt-4">
+          <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+            Comparing against a named product?{" "}
+            <Link
+              href="/compare/"
+              className="text-[color:var(--foreground)] underline underline-offset-4"
+            >
+              Our comparison pages
+            </Link>{" "}
+            list each competitor&rsquo;s genuine strengths and when it is the better fit.
+          </p>
         </Reveal>
       </SectionShell>
 
       <SectionShell
-        eyebrow="Why the School OS thesis matters"
+        eyebrow="What the label commits us to"
         title="What “School OS” means in practice"
         body="Four properties you can ask to see in a demo. If a system cannot show them, the label does not apply."
       >
@@ -172,8 +169,8 @@ export default function WhyDifferentPage() {
 
       <SectionShell
         eyebrow="Why institutions move"
-        title="The switch usually starts with one pressure point and ends in a bigger realization"
-        body="They may enter the conversation because of fees, reporting, admissions, communication, or compliance. They switch when they realize the deeper problem is fragmentation."
+        title="Where the conversation usually starts"
+        body="Usually with one pressure point — fees, reporting, admissions, communication or compliance. Underneath it, the work is often split across tools that do not share a record."
       >
         <Reveal className="grid gap-4 lg:grid-cols-[1fr_0.92fr]">
           <div className="surface-panel rounded-[1.8rem] p-7">
@@ -206,7 +203,7 @@ export default function WhyDifferentPage() {
                 },
                 {
                   icon: CircleCheckBig,
-                  text: "The institution gains a calmer, more legible operating posture under pressure.",
+                  text: "Fee deadlines, inspections and board reviews are handled from one record instead of a scramble for spreadsheets.",
                 },
               ].map((item) => (
                 <div
@@ -236,7 +233,7 @@ export default function WhyDifferentPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a comparison walkthrough" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.rolloutHref}
                 label="See rollout model"

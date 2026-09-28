@@ -70,11 +70,11 @@ export function AegisConsole({ className }: { className?: string }) {
             <span className="flex size-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-soft),transparent_70%)]">
               <Radar className="size-3.5 text-(--brand)" />
             </span>
-            <span className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
               AEGIS · Governed console
             </span>
           </div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-3 py-1.5 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
             <Fingerprint className="size-3 text-(--brand)" />
             Scoped: Trust Administrator
           </span>
@@ -135,7 +135,7 @@ export function AegisConsole({ className }: { className?: string }) {
           {/* Suggested next steps */}
           <div data-console-step style={{ "--d": "1.9s" } as React.CSSProperties}>
             <div className="max-w-[92%] rounded-[1.3rem] rounded-bl-md border border-(--line) bg-(--surface) p-4">
-              <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                 Suggested follow-ups · your team decides
               </p>
               <div className="mt-2.5 flex flex-wrap gap-2">
@@ -165,7 +165,7 @@ export function AegisConsole({ className }: { className?: string }) {
               ].map((item) => (
                 <span
                   key={item.text}
-                  className="inline-flex items-center gap-1.5 font-mono text-[0.56rem] uppercase tracking-[0.16em] text-muted-foreground"
+                  className="inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted-foreground"
                 >
                   <item.icon className="size-3 text-(--teal)" />
                   {item.text}

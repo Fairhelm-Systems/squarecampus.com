@@ -1857,7 +1857,7 @@ export const allBlogPosts: BlogPost[] = [
     cta: {
       heading: "Bring one bottleneck to the first conversation",
       body: "A 30-minute institutional diagnosis, with no commitment on either side: where the workflow stalls, what a bounded 60–90 day pilot would cover, what it would measure, and whether a Founding Partner position is the right fit at all.",
-      href: "/demo/?intent=founding-partner",
+      href: "/launch-partners/#request-diagnosis",
       label: "Request a partnership diagnosis",
     },
   },

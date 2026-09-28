@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/accordion";
 import { identity, pricingAvailability } from "@/content/commercial";
 import { intentPages } from "@/content/intent-pages";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 
 const securityPackMailto =
@@ -195,14 +195,14 @@ export default function SchoolManagementSystemPage() {
               {["Guided rollout", "One governed record", "Audit-ready by design"].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
+                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground"
                 >
                   {item}
                 </span>
               ))}
             </div>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.ecosystemHref}
                 label="See how workflows connect"
@@ -212,7 +212,7 @@ export default function SchoolManagementSystemPage() {
           </Reveal>
 
           <Reveal immediate delay={120} className="surface-panel-strong rounded-[2rem] p-5 lg:p-6">
-            <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+            <div className="flex items-center justify-between font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
               <span>One view, zero chaos</span>
               <span className="inline-flex items-center gap-2">
                 <span className="size-1.5 animate-pulse rounded-full bg-(--teal)" />
@@ -242,7 +242,7 @@ export default function SchoolManagementSystemPage() {
                   key={label}
                   className="rounded-[1.2rem] border border-(--line) bg-(--surface) p-3"
                 >
-                  <p className="font-mono text-[0.5rem] uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
                     {label}
                   </p>
                   <p className="mt-1.5 text-sm font-medium text-foreground">{value}</p>
@@ -338,7 +338,7 @@ export default function SchoolManagementSystemPage() {
                   {page.definition.title}
                 </span>
               </span>
-              <span className="inline-flex items-center gap-1.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground group-hover:text-(--brand)">
+              <span className="inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground group-hover:text-(--brand)">
                 Read the answer
                 <ArrowRightLeft className="size-3" />
               </span>
@@ -542,7 +542,7 @@ export default function SchoolManagementSystemPage() {
             academic calendar.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink
               href={securityPackMailto}
               label="Request Security & Compliance Pack"

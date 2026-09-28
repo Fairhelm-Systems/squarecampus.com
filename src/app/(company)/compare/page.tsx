@@ -6,7 +6,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { comparisons } from "@/content/comparisons";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -85,7 +85,7 @@ export default function CompareHubPage() {
             for evaluating any of them.
           </p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink
               href="/school-management-system"
               label="See the platform"
@@ -127,7 +127,7 @@ export default function CompareHubPage() {
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {evaluationCriteria.map((item, index) => (
             <article key={item.q} data-reveal-item className="surface-panel rounded-[1.6rem] p-6">
-              <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h2 className="mt-3 font-display text-xl tracking-[-0.03em]">{item.q}</h2>
@@ -144,7 +144,7 @@ export default function CompareHubPage() {
             Bring your shortlist. We&rsquo;ll map SquareCampus against it, honestly.
           </h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink href="/why-squarecampus" label="Why SquareCampus" variant="secondary" />
           </div>
         </Reveal>

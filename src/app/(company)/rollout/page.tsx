@@ -15,47 +15,67 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Rollout",
+  title: "School ERP Implementation & Migration",
   description:
-    "See how SquareCampus handles onboarding, migration, training, parallel runs, and go-live for schools, colleges, and multi-campus institutions.",
+    "How a SquareCampus implementation runs: what the school provides, what we deliver and when each stage is done — from blueprint and data migration to parallel runs and go-live.",
   path: "/rollout",
   ogImage: "https://squarecampus.com/og/rollout.png",
 });
 
+/**
+ * Each stage states what the school provides, what SquareCampus delivers and
+ * when the stage is complete (audit SC-019). No durations or deadlines are
+ * published: timelines depend on scope and data, and are agreed in writing.
+ */
 const rolloutSteps = [
   {
     title: "Institution blueprint",
     icon: BriefcaseBusiness,
-    body: "We map your current operational reality: admissions, academics, finance, communication, campus structure, and approval paths.",
+    school: "Current systems, campus structure, roles, approval paths and the academic calendar.",
+    squarecampus:
+      "A written blueprint of the workflows in scope, their owners and the go-live sequence.",
+    done: "The institution signs off the blueprint and the sequence.",
   },
   {
-    title: "Data migration clinic",
+    title: "Data migration",
     icon: DatabaseBackup,
-    body: "Active data, hierarchy, roles, and policies are cleaned, structured, and moved with clear ownership instead of ad hoc imports.",
+    school: "Exports from current systems, and a named person to answer questions about the data.",
+    squarecampus:
+      "Mapping, cleaning and trial imports, with a list of issues for the institution to resolve.",
+    done: "Trial imports reconcile against the checks agreed in the blueprint — for example student counts and dues totals — and the data owner signs off.",
   },
   {
     title: "Role-based training",
     icon: GraduationCap,
-    body: "Admins, academic leaders, finance teams, teachers, and support staff train against the workflows they will actually use.",
+    school: "Staff time by role, scheduled around the calendar.",
+    squarecampus: "Training on the workflows each role will actually use.",
+    done: "Each role has completed its sessions and can carry out its core tasks.",
   },
   {
     title: "Parallel validation",
     icon: ArrowRightLeft,
-    body: "Critical workflows are run in parallel so confidence builds before the institution fully depends on the system.",
+    school:
+      "The current system kept running for the workflows in scope, and people to compare results.",
+    squarecampus: "Side-by-side runs and a list of every difference with its cause.",
+    done: "Finance and academic owners agree the results match on the agreed checks.",
   },
   {
     title: "Go-live under guardrails",
     icon: ShieldCheck,
-    body: "Launch is staged, accountable, and supported, with escalation paths and success monitoring built in.",
+    school: "Approval of the go-live date, and escalation contacts on each side.",
+    squarecampus: "A staged launch with named counterparts and an agreed escalation path.",
+    done: "The workflows in scope run in SquareCampus, and the old system is retired or kept read-only, as agreed.",
   },
   {
     title: "Adoption follow-through",
     icon: UserRoundCheck,
-    body: "Post-launch support focuses on adoption, operational consistency, and the places where institutions usually regress to patchwork habits.",
+    school: "Feedback from each role after launch.",
+    squarecampus: "Follow-up where teams slip back into spreadsheets and side channels.",
+    done: "The success measures agreed at the start are reviewed together.",
   },
 ] as const;
 
@@ -85,7 +105,7 @@ export default function RolloutPage() {
   return (
     <main>
       <PageSchema
-        name="Rollout"
+        name="School ERP Implementation & Migration"
         description="How a SquareCampus rollout runs: institution blueprint, migration clinic, role-based training, parallel validation, staged go-live and adoption follow-through."
         path="/rollout"
       />
@@ -103,7 +123,7 @@ export default function RolloutPage() {
               predictable go-live support.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Plan a rollout review" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="See the platform"
@@ -172,9 +192,9 @@ export default function RolloutPage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Execution path"
-        title="A rollout sequence built for operational reality"
-        body="This is the part many vendors under-design. SquareCampus treats rollout as the institution’s first proof of product quality."
+        eyebrow="Six stages"
+        title="What each stage needs, delivers and signs off"
+        body="A stage is complete only when its criteria are met, so nothing moves forward on a date alone. Timelines are agreed in writing during scoping."
       >
         {/* Redundant by design: it animates exactly the six stages listed
             below, so it is hidden from assistive technology rather than read
@@ -196,23 +216,47 @@ export default function RolloutPage() {
             >
               <div className="flex items-center justify-between">
                 <step.icon className="size-5 text-[color:var(--brand)]" />
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
-                  {String(index + 1).padStart(2, "0")}
+                <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
+                  Stage {index + 1}
                 </span>
               </div>
-              <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{step.title}</h2>
-              <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                {step.body}
-              </p>
+              <h3 className="mt-5 font-display text-2xl tracking-[-0.04em]">{step.title}</h3>
+              <dl className="mt-4 grid gap-3 text-sm leading-6">
+                <div>
+                  <dt className="font-medium text-foreground">The school provides</dt>
+                  <dd className="mt-0.5 text-[color:var(--muted-foreground)]">{step.school}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-foreground">SquareCampus delivers</dt>
+                  <dd className="mt-0.5 text-[color:var(--muted-foreground)]">
+                    {step.squarecampus}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-foreground">Done when</dt>
+                  <dd className="mt-0.5 text-[color:var(--muted-foreground)]">{step.done}</dd>
+                </div>
+              </dl>
             </article>
           ))}
+        </Reveal>
+        <Reveal delay={80} className="mt-4">
+          <div className="surface-panel rounded-[1.4rem] px-5 py-4 text-sm leading-6 text-[color:var(--muted-foreground)] sm:px-6">
+            <p className="font-medium text-[color:var(--foreground)]">Migration dependencies</p>
+            <p className="mt-1.5">
+              Migration moves only as fast as the data allows: how complete and consistent it is,
+              and how quickly the current vendor provides exports. Legacy migration and data
+              cleaning are scoped and quoted separately, and the parallel run continues until the
+              agreed checks pass — not until a date arrives.
+            </p>
+          </div>
         </Reveal>
       </SectionShell>
 
       <SectionShell
         eyebrow="Operator confidence"
-        title="Why institutions feel safer switching"
-        body="The strongest implementation message is not speed alone. It is control, clarity, and a process that respects how education operations really work."
+        title="What a switch has to protect"
+        body="Admissions, fees and results cannot pause for a system change, so the rollout is sequenced around them."
       >
         <Reveal className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="surface-panel rounded-[1.8rem] p-7">
@@ -262,10 +306,10 @@ export default function RolloutPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book rollout session" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.whyDifferentHref}
-                label="See why institutions choose us"
+                label="Why SquareCampus"
                 variant="secondary"
               />
             </div>

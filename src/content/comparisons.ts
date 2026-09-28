@@ -267,7 +267,7 @@ export const comparisons: Comparison[] = [
     differentiators: [...sharedDifferentiators],
     theyFitWhen: [
       "Your top priority is classroom teaching, LMS, and ready-made content.",
-      "You want a mobile-first learning experience above operational depth.",
+      "You want a mobile-first learning experience more than admissions, fees and multi-campus administration.",
       "You're primarily digitizing teaching rather than back-office operations.",
     ],
     weFitWhen: [
@@ -279,7 +279,7 @@ export const comparisons: Comparison[] = [
       {
         question: "Is SquareCampus a good Teachmint alternative?",
         answer:
-          "For institutions that want operational depth — admissions, fees, attendance, compliance, and multi-campus control — SquareCampus is a strong Teachmint alternative because operations are the core of the product, not an addition. Teachmint remains a strong choice when teaching, LMS, and content are the primary need.",
+          "For institutions that want admissions, fees, attendance, compliance and multi-campus control on one record, SquareCampus is a strong Teachmint alternative because operations are the core of the product, not an addition. Teachmint remains a strong choice when teaching, LMS, and content are the primary need.",
       },
       {
         question: "Does SquareCampus handle teaching and academics too?",

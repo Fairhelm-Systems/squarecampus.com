@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/accordion";
 import { product } from "@/content/commercial";
 import { intentPageBySlug, intentPages } from "@/content/intent-pages";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import {
   canonicalUrl,
   createAlternates,
@@ -118,14 +118,14 @@ export default async function IntentPage({ params }: PageProps) {
               {page.audience.map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
+                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground"
                 >
                   {item}
                 </span>
               ))}
             </div>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="See the platform"
@@ -180,6 +180,42 @@ export default async function IntentPage({ params }: PageProps) {
         </Reveal>
         <AvailabilityNote className="mt-4" />
       </SectionShell>
+
+      {page.example || page.limits ? (
+        <SectionShell
+          id="example-and-limits"
+          eyebrow="A worked example"
+          title={page.example ? page.example.title : "What is configured and what is scoped"}
+          body="How the workflow is designed to run, step by step, and where configuration, scoping or separate quotes apply."
+        >
+          <Reveal className="grid gap-4 lg:grid-cols-2">
+            {page.example ? (
+              <ol className="surface-panel grid gap-3 rounded-[1.6rem] p-6">
+                {page.example.steps.map((step, index) => (
+                  <li key={step} className="flex gap-3 text-sm leading-6 text-foreground">
+                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-(--brand-tint) font-mono text-xs text-(--brand-ink)">
+                      {index + 1}
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            ) : null}
+            {page.limits ? (
+              <div className="surface-panel rounded-[1.6rem] p-6">
+                <p className="section-kicker">Configured, scoped or quoted separately</p>
+                <ul className="mt-4 grid gap-2.5">
+                  {page.limits.map((item) => (
+                    <li key={item} className="text-sm leading-6 text-muted-foreground">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </Reveal>
+        </SectionShell>
+      ) : null}
 
       {page.contrast ? (
         <SectionShell
@@ -239,7 +275,7 @@ export default async function IntentPage({ params }: PageProps) {
             <ol className="mt-5 grid gap-3">
               {page.evaluation.map((item, index) => (
                 <li key={item} className="flex items-start gap-3 text-sm leading-6 text-foreground">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-(--surface-muted) font-mono text-[0.6rem] text-muted-foreground">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-(--surface-muted) font-mono text-[0.6875rem] text-muted-foreground">
                     {index + 1}
                   </span>
                   {item}
@@ -323,7 +359,7 @@ export default async function IntentPage({ params }: PageProps) {
             . The licensing model is published; figures follow a written proposal.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink href="/pricing/" label="How pricing works" variant="secondary" />
           </div>
         </Reveal>

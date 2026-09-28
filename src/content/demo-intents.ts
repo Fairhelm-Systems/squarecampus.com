@@ -1,121 +1,154 @@
 /**
- * /demo/ copy, in its two intents.
+ * Enquiry journeys and their copy.
  *
- * There is one page and one form. `?intent=founding-partner` switches the
- * framing from a generic guided demo to a Founding Institutional Partner
- * diagnosis; anything else (including no parameter at all) gets the guided
- * demo exactly as it was.
+ * One form component, three entry points, each on its own page so each
+ * journey has one heading and one next step (audit SC-026, SC-027):
  *
- * How the switch happens, and why it is done this way:
+ *  - `demo`             → /demo/                              "Book a demo"
+ *  - `founding-partner` → /launch-partners/#request-diagnosis  partnership diagnosis
+ *  - `proposal`         → /pricing/#request-proposal           "Request a proposal"
  *
- *  - Both variants are server-rendered into the same static HTML and one of
- *    them is hidden with CSS, keyed off `data-demo-intent` on <html>. A tiny
- *    synchronous script sets that attribute before the page paints (the same
- *    mechanism the theme uses), so a visitor arriving on the founding-partner
- *    link never sees the generic heading flash first.
- *  - The site is a static export: there is no server to branch on a query
- *    string, and a second URL would split the canonical and the crawl.
- *  - Only the two keys below are honoured. The raw parameter is never
- *    rendered, stored or echoed back, so a crafted URL cannot inject copy.
+ * Previously /demo/ rendered the demo and founding-partner variants into one
+ * <h1> and hid one with CSS, so extracted text concatenated both headings.
+ * Old links to /demo/?intent=founding-partner still work: the tiny script
+ * below forwards them to the founding-partner form.
  *
  * Claim discipline is the same as /launch-partners/ (see
  * content/founding-partners.ts): no equity or investment language, no
  * exclusivity, no guaranteed outcome, no published price.
  */
 
-export const DEMO_INTENT_ATTRIBUTE = "data-demo-intent";
+export type FormIntent = "demo" | "founding-partner" | "proposal";
 
-/** The founding-partner variant's attribute value. */
+/** The founding-partner query value honoured by the legacy redirect. */
 export const FOUNDING_PARTNER_INTENT = "founding-partner";
 
-export const demoIntents = {
-  demo: {
-    eyebrow: "Guided demo",
-    heading: "Bring the patchwork. We will show the operating model.",
-    lead: "A SquareCampus demo is not a feature parade. It is a guided review of how your institution currently runs, where the current stack breaks, and how a School OS changes the day-to-day reality for operators and leadership.",
-    points: [
-      "Built for schools, colleges, and multi-campus institutions in India.",
-      "Structured for leadership, operations, finance, and academic stakeholders.",
-      "Grounded in rollout, controls, adoption, and coexistence with what you already run.",
-    ],
-    form: {
-      eyebrow: "Request walkthrough",
-      heading: "Tell us what is not working.",
-      body: "The more specific you are, the better the session. Admissions chaos, fee operations, parent communication overload, fragmented reporting, or all of the above.",
-      submitLabel: "Request Demo",
-      emailSubmitLabel: "Request Demo via Email",
-      idleNote:
-        "We reply with a guided walkthrough plan and the right stakeholders to bring into the evaluation.",
-    },
-    expectations: {
-      eyebrow: "What to expect",
-      heading: "A serious evaluation session, not a generic sales call",
-      body: "The session is planned around the workflows and systems you describe in the form.",
-    },
-    close: {
-      eyebrow: "Confidence check",
-      heading: "The goal is clarity.",
-      body: "By the end of the session, your team should know where SquareCampus would sit against the systems you already run, what a first deployment would involve, and how the operating-layer model changes reporting, communication and institutional control.",
-      points: [
-        "One connected system for operations, not a collection of isolated demos.",
-        "A serious India-first product posture across language, trust, and compliance realities.",
-        "A rollout conversation that respects calendar pressure and internal complexity.",
-      ],
-    },
-  },
-
-  "founding-partner": {
-    eyebrow: "Founding institutional partner",
-    heading: "Bring one operational bottleneck. We will map the governed path around it.",
-    lead: "This is not a product walkthrough. It is a diagnosis: we look at one workflow that currently loses time, ownership or money, and establish whether it belongs in a Founding Institutional Partner pilot.",
-    points: [
-      "SquareCampus may sit above or alongside your existing ERP, LMS, payment, identity and communication systems during the pilot.",
-      "One bounded workflow or one campus, a written baseline, and one agreed success measure.",
-      "Founding pilots are paid, scoped commercial engagements, agreed in writing before implementation begins.",
-    ],
-    form: {
-      eyebrow: "Request a diagnosis",
-      heading: "Describe the bottleneck, not the wishlist.",
-      body: "Tell us where visibility arrives late, ownership becomes unclear, or staff rebuild the same truth by hand. The more precise the bottleneck, the more useful the first conversation.",
-      submitLabel: "Request a partnership diagnosis",
-      emailSubmitLabel: "Request a partnership diagnosis via email",
-      idleNote:
-        "We reply with a written view of whether this belongs in a founding pilot, and what a bounded scope would look like.",
-    },
-    expectations: {
-      eyebrow: "What to expect",
-      heading: "A 30-minute diagnosis, then a written scope or an honest no",
-      body: "Founding partnership is a commercial engagement with an evidence test attached. The first conversation is shaped accordingly.",
-    },
-    close: {
-      eyebrow: "Coexistence, not compulsory replacement",
-      heading: "Nothing is switched off to find out whether this works.",
-      body: "A founding pilot runs beside the systems the institution already depends on. SquareCampus governs the workflow across them — routing exceptions, assigning ownership, and recording what happened — while the current ERP, LMS, payment portal and identity provider stay in place. What gets replaced later, if anything, is the institution's decision, taken after the evidence exists.",
-      points: [
-        "Your current systems keep running throughout the pilot.",
-        "Parallel validation on anything finance or academic teams must trust.",
-        "Convert, extend or stop against the measure agreed at the start.",
-      ],
-    },
-  },
+/** Where each journey's form lives. */
+export const FORM_ANCHORS = {
+  foundingPartner: "request-diagnosis",
+  proposal: "request-proposal",
 } as const;
 
-export type DemoIntentKey = keyof typeof demoIntents;
+export const FOUNDING_PARTNER_FORM_HREF = `/launch-partners/#${FORM_ANCHORS.foundingPartner}`;
 
 /**
- * Sets `data-demo-intent` on <html> before first paint, so neither variant
- * flashes on a direct hit. Client-side navigations do not re-run an inline
- * script, so `ContactForm` keeps the attribute in sync after hydration.
- *
- * Deliberately tiny and total: any value other than the one key below leaves
- * the attribute unset, which is the generic guided-demo state.
+ * Enquiry type stored with each submission. The first two values are what
+ * the intake has always received; "Proposal request" is new with the pricing
+ * form. `source` keeps its historical shape (`demo-form`,
+ * `demo-form:founding-partner`) so existing CRM routing is unchanged.
  */
-export const demoIntentScript = `
+export const enquiryTypes: Record<FormIntent, string> = {
+  demo: "Guided platform demo",
+  "founding-partner": "Founding Institutional Partnership",
+  proposal: "Proposal request",
+};
+
+export const sourceTags: Record<FormIntent, string> = {
+  demo: "demo-form",
+  "founding-partner": `demo-form:${FOUNDING_PARTNER_INTENT}`,
+  proposal: "demo-form:proposal",
+};
+
+/** Copy for the form itself, per journey. */
+export const formCopy: Record<
+  FormIntent,
+  {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    submitLabel: string;
+    emailSubmitLabel: string;
+    idleNote: string;
+    successNote: string;
+  }
+> = {
+  demo: {
+    eyebrow: "Book a demo",
+    heading: "Tell us what to cover.",
+    body: "Name the areas that matter most — admissions, attendance, fees, exams, parent communication or reporting — and the session is planned around them.",
+    submitLabel: "Book a demo",
+    emailSubmitLabel: "Book a demo via email",
+    idleNote:
+      "We reply with a proposed session plan and the people worth bringing into the conversation.",
+    successNote:
+      "We reply within one business day with a proposed session plan and the people worth bringing into the conversation.",
+  },
+  "founding-partner": {
+    eyebrow: "Request a diagnosis",
+    heading: "Describe the bottleneck, not the wishlist.",
+    body: "Tell us where visibility arrives late, ownership becomes unclear, or staff rebuild the same truth by hand. The more precise the bottleneck, the more useful the first conversation.",
+    submitLabel: "Request a partnership diagnosis",
+    emailSubmitLabel: "Request a partnership diagnosis via email",
+    idleNote:
+      "We reply with a written view of whether this belongs in a founding pilot, and what a bounded scope would look like.",
+    successNote:
+      "We reply within one business day with a written view of whether this belongs in a founding pilot, and what a bounded scope would look like.",
+  },
+  proposal: {
+    eyebrow: "Request a proposal",
+    heading: "Start the proposal with the basics.",
+    body: "Student volume, campuses and the workflows in scope are enough to begin. Figures follow a short institutional discovery, in a written proposal.",
+    submitLabel: "Request a proposal",
+    emailSubmitLabel: "Request a proposal via email",
+    idleNote:
+      "We reply to arrange discovery; the written proposal follows once the inputs are agreed.",
+    successNote:
+      "We reply within one business day to arrange discovery; the written proposal follows once the inputs are agreed.",
+  },
+};
+
+/** Page copy for /demo/ (the standard demo journey only). */
+export const demoPage = {
+  eyebrow: "Book a demo",
+  heading: "See SquareCampus with your school’s workflows.",
+  lead: "A guided session built around the workflows you choose and how your institution runs them today. You leave knowing where SquareCampus would fit and what a first rollout would involve.",
+  points: [
+    "For schools, school groups and trusts in India.",
+    "Useful for principals, trustees, administrators, finance and IT.",
+    "Covers rollout and how SquareCampus would sit beside what you already run.",
+  ],
+  expectations: {
+    eyebrow: "What the session covers",
+    heading: "Your workflows, your questions, your next step",
+    body: "The session is planned around the workflows and systems you describe in the form.",
+  },
+  close: {
+    eyebrow: "After the session",
+    heading: "A clear next step.",
+    body: "Your team should know where SquareCampus would sit against the systems you already run, what a first rollout would involve, and what a proposal would need from you.",
+    points: [
+      "Where SquareCampus would sit beside the systems you already run.",
+      "What a first rollout would involve around your academic calendar.",
+      "What a proposal needs: enrolment, campuses and the workflows in scope.",
+    ],
+  },
+  foundingPartnerNote:
+    "Considering the Founding Institutional Partner programme? It has its own diagnosis request.",
+} as const;
+
+/** Page copy for the founding-partner form section on /launch-partners/. */
+export const foundingPartnerForm = {
+  eyebrow: "Founding institutional partner",
+  heading: "Bring one operational bottleneck. We will map the governed path around it.",
+  lead: "This is not a product walkthrough. It is a diagnosis: we look at one workflow that currently loses time, ownership or money, and establish whether it belongs in a Founding Institutional Partner pilot.",
+  points: [
+    "SquareCampus may sit above or alongside your existing ERP, LMS, payment, identity and communication systems during the pilot.",
+    "One bounded workflow or one campus, a written baseline, and one agreed success measure.",
+    "Founding pilots are paid, scoped commercial engagements, agreed in writing before implementation begins.",
+  ],
+} as const;
+
+/**
+ * Legacy links: /demo/?intent=founding-partner used to switch this page's
+ * copy. It now forwards to the founding-partner form before first paint.
+ * Only the one exact value is honoured, and the query string is never
+ * rendered or echoed back.
+ */
+export const legacyIntentRedirectScript = `
 (() => {
   try {
-    var intent = new URLSearchParams(window.location.search).get("intent");
-    if (intent === "${FOUNDING_PARTNER_INTENT}") {
-      document.documentElement.setAttribute("${DEMO_INTENT_ATTRIBUTE}", "${FOUNDING_PARTNER_INTENT}");
+    if (new URLSearchParams(window.location.search).get("intent") === "${FOUNDING_PARTNER_INTENT}") {
+      window.location.replace("${FOUNDING_PARTNER_FORM_HREF}");
     }
   } catch (error) {}
 })();

@@ -86,6 +86,9 @@
   --line: rgba(32, 44, 68, 0.09);
   --line-strong: rgba(32, 44, 68, 0.16);
   --brand: oklch(0.6 0.11 247);
+  /* Brand-coloured TEXT on light surfaces: --brand itself measures ~3.9:1
+     there, under the 4.5:1 minimum for body-size text (audit SC-031). */
+  --brand-ink: oklch(0.48 0.12 247);
   --brand-soft: rgba(88, 124, 204, 0.18);
   --teal: oklch(0.73 0.1 181);
   --amber: oklch(0.76 0.12 74);
@@ -171,6 +174,7 @@
   --line: rgba(214, 222, 238, 0.085);
   --line-strong: rgba(214, 222, 238, 0.15);
   --brand: oklch(0.69 0.09 247);
+  --brand-ink: var(--brand);
   --brand-soft: rgba(76, 109, 203, 0.14);
   --teal: oklch(0.72 0.07 181);
   --amber: oklch(0.79 0.09 74);
@@ -266,28 +270,6 @@
       64px 64px;
     mask-image: linear-gradient(180deg, black 0%, black 45%, transparent 100%);
     opacity: 0.65;
-  }
-
-  /*
-   * Hero student-phone screen loaded via CSS, not <img>.
-   *
-   * `display:none` does NOT prevent an <img> from being fetched, and neither
-   * does loading="lazy" on a hidden element — Chrome downloads both. A
-   * background-image declared inside a media query that does not match is
-   * genuinely never requested, so phones never pay for the student screen
-   * (51 kB). The device bezels themselves are drawn in CSS (see "Device
-   * frames" below) and cost no request at any breakpoint.
-   */
-  .hero-phone-screen {
-    background-repeat: no-repeat;
-  }
-
-  @media (min-width: 80rem) {
-    .hero-phone-screen {
-      background-image: url("/images/screens/mobile/student-day-view.webp");
-      background-size: cover;
-      background-position: top center;
-    }
   }
 
   /* Phones get a sparser, fainter grid: at 28px the dot field competes with
@@ -423,7 +405,7 @@
 
   .type-caption {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     line-height: 1.5;
     color: var(--muted-foreground);
   }
@@ -433,11 +415,13 @@
     max-width: 62ch;
   }
 
+  /* 12px with moderate tracking (audit SC-031): the previous 10.9px at
+     0.28em tracking was hard to read in uppercase mono. */
   .section-kicker,
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted-foreground);
   }
@@ -484,23 +468,6 @@
 
 /* Safari/Firefox leave their own affordance behind without this. */
 .select-field::-ms-expand {
-  display: none;
-}
-
-/*
- * Intent-aware /demo/ copy.
- *
- * The page ships both variants and hides one. `data-demo-intent` is written to
- * <html> before first paint by the inline script in src/content/demo-intents.ts
- * (and kept in sync afterwards by the form), so the founding-partner heading
- * never flashes the generic one first — which a query-string branch decided
- * after hydration always would.
- *
- * These rules only ever *hide*. Nothing here restores a display value, so the
- * visible variant keeps whatever layout its own classes give it.
- */
-html:not([data-demo-intent="founding-partner"]) [data-when-intent="founding-partner"],
-html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   display: none;
 }
 
@@ -637,49 +604,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 }
 
-.hero-signal__dot {
-  animation: aegis-pulse 2s ease-in-out infinite;
-}
-
-/* A two-row log. Each entry arrives in the lower row, moves up to the top
-   row when the next one lands, then leaves; two are visible at any moment. */
-.hero-feed {
-  position: relative;
-  height: 3.1rem;
-  overflow: hidden;
-}
-
-.hero-feed__entry {
-  position: absolute;
-  inset: 0 0 auto;
-  opacity: 0;
-  transform: translateY(1.6rem);
-  animation: hero-feed 12s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  animation-delay: calc(var(--i, 0) * 4s + 0.8s);
-}
-
-@keyframes hero-feed {
-  0% {
-    opacity: 0;
-    transform: translateY(2.4rem);
-  }
-  5%,
-  31% {
-    opacity: 1;
-    transform: translateY(1.6rem);
-  }
-  38%,
-  62% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  68%,
-  100% {
-    opacity: 0;
-    transform: translateY(-0.8rem);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-emphasis {
     animation: none;
@@ -687,24 +611,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 
   .hero-device {
-    animation: none;
-  }
-
-  .hero-signal__dot {
-    animation: none;
-  }
-
-  .hero-feed {
-    height: auto;
-    overflow: visible;
-    display: grid;
-    gap: 0.4rem;
-  }
-
-  .hero-feed__entry {
-    position: static;
-    opacity: 1;
-    transform: none;
     animation: none;
   }
 }

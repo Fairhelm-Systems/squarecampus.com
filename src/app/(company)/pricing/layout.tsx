@@ -16,7 +16,7 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: "https://squarecampus.com/og/pricing.png",
   ogTitle: "SquareCampus Pricing | Plans for Schools, Trusts and Multi-Campus Groups",
   ogDescription:
-    "Annual institutional licensing calculated through student-volume bands and scoped to operational depth, governance and deployment. Tailored proposal after institutional discovery.",
+    "Annual institutional licensing calculated through student-volume bands and shaped by the plan chosen (Starter, Pro or Enterprise), governance needs and deployment. Tailored proposal after institutional discovery.",
 });
 
 /**
@@ -35,7 +35,7 @@ const structuredData = {
     createWebPageSchema({
       name: "SquareCampus Pricing | School OS Plans for Schools and Trusts",
       description:
-        "How SquareCampus is licensed: annual institutional licensing calculated through student-volume bands and scoped to operational depth, governance and deployment profile.",
+        "How SquareCampus is licensed: annual institutional licensing calculated through student-volume bands and shaped by the plan chosen (Starter, Pro or Enterprise), governance needs and deployment profile.",
       url: `${SEO_CONFIG.baseUrl}/pricing`,
     }),
     createBreadcrumbSchema([

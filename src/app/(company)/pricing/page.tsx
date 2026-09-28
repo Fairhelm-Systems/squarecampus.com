@@ -14,6 +14,7 @@ import { PlanMatrix } from "@/components/pricing/plan-matrix";
 import { ScopedCostGrid } from "@/components/pricing/scoped-cost-grid";
 import { VolumeRationale } from "@/components/pricing/volume-rationale";
 import { ButtonLink } from "@/components/site/button-link";
+import { ContactForm } from "@/components/site/contact-form";
 import { DetailsFaq } from "@/components/site/details-faq";
 import { FactTable } from "@/components/site/fact-table";
 import {
@@ -26,6 +27,8 @@ import {
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { enterpriseBeyondModules, fit, identity, pricingAvailability } from "@/content/commercial";
+import { FORM_ANCHORS, formCopy } from "@/content/demo-intents";
+import { FOUNDING_PARTNER_DEMO_HREF } from "@/content/founding-partners";
 import {
   ALLOWANCE_NOTE,
   DISCOVERY_NOTE,
@@ -35,12 +38,12 @@ import {
   pricingFaqs,
   proposalInputs,
 } from "@/content/pricing";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const heroSignals = [
   { label: "Licence", value: "Annual, institutional" },
   { label: "Calculated on", value: "Student-volume bands" },
-  { label: "Shaped by", value: "Operational depth" },
+  { label: "Shaped by", value: "The plan chosen and the institution's complexity" },
 ] as const;
 
 export default function PricingPage() {
@@ -55,17 +58,13 @@ export default function PricingPage() {
               Pricing that scales with the institution &mdash; not with software complexity.
             </h1>
             <p className="type-body measure text-[color:var(--muted-foreground)]">
-              SquareCampus is licensed annually as one institutional platform. The licence is
-              calculated through student-volume bands and scoped according to the operational depth,
-              governance requirements and deployment profile the institution actually needs.
+              One annual institutional licence, calculated on student-volume bands and shaped by the
+              plan you choose. The three plans are below; figures follow in a written proposal after
+              a short discovery.
             </p>
             <CTAGroup>
-              <ButtonLink href={siteCtas.demoHref} label="Get a tailored proposal" variant="cta" />
-              <ButtonLink
-                href={siteCtas.launchPartnersHref}
-                label="Explore the Founding Partner programme"
-                variant="secondary"
-              />
+              <ButtonLink href={siteCtas.proposalHref} label={ctaLabels.proposal} variant="cta" />
+              <ButtonLink href="#plans" label="Compare the plans" variant="secondary" />
             </CTAGroup>
             <TrustNote>
               No hidden module wall. No compulsory rip-and-replace. Scope, ownership and success
@@ -75,19 +74,16 @@ export default function PricingPage() {
 
           <Reveal delay={120} className="lg:pt-2">
             <FeaturePanel tone="strong">
-              <Eyebrow>Commercial doctrine</Eyebrow>
-              <p className="font-display mt-4 text-2xl leading-[1.25] tracking-[-0.04em] sm:text-[1.75rem]">
-                Students price platform scale. The plan prices operational and governance depth.
-              </p>
+              <Eyebrow>How pricing works</Eyebrow>
               <p className="type-support mt-4">
-                Two separate dimensions, decided separately. Scale is a fact about the institution;
-                depth is a decision about how much command it wants over daily operations.
+                Student numbers set the scale. The plan sets how much operational and governance
+                control you get. The two are decided separately.
               </p>
 
               {/* Stacked rows rather than three columns: the labels are very
                   different lengths, so a column layout goes ragged in this
                   narrow panel at laptop widths. */}
-              <dl className="mt-7 border-t border-[color:var(--line)]">
+              <dl className="mt-5 border-t border-[color:var(--line)]">
                 {heroSignals.map((signal) => (
                   <div
                     key={signal.label}
@@ -105,19 +101,7 @@ export default function PricingPage() {
         </div>
       </SectionShell>
 
-      {/* 2 — Commercial model explainer */}
-      <SectionShell
-        id="model"
-        eyebrow="How the licence is composed"
-        title="Four inputs, agreed openly, before any number is issued."
-        body="The annual platform licence is not a module count. It is the sum of institutional scale, the depth of operational command selected, the complexity of the institution and how the platform is delivered."
-      >
-        <Reveal>
-          <CommercialModel />
-        </Reveal>
-      </SectionShell>
-
-      {/* 3 — Plan architecture */}
+      {/* 2 — Plans, straight after a short introduction (audit SC-013). */}
       <SectionShell
         id="plans"
         eyebrow="Plan architecture"
@@ -170,6 +154,18 @@ export default function PricingPage() {
               </div>
             </div>
           </div>
+        </Reveal>
+      </SectionShell>
+
+      {/* 3 — How the licence is composed (the detail, below the plans) */}
+      <SectionShell
+        id="model"
+        eyebrow="How the licence is composed"
+        title="Four inputs, agreed openly, before any number is issued."
+        body="The annual platform licence is not a module count. It is the sum of institutional scale, the plan selected (how much operational and governance control it includes), the complexity of the institution and how the platform is delivered."
+      >
+        <Reveal>
+          <CommercialModel />
         </Reveal>
       </SectionShell>
 
@@ -313,8 +309,8 @@ export default function PricingPage() {
             <FileText aria-hidden className="size-5 shrink-0 text-[color:var(--brand)]" />
             <p className="text-sm leading-6 text-[color:var(--foreground)]">{DISCOVERY_NOTE}</p>
             <ButtonLink
-              href={siteCtas.demoHref}
-              label="Begin discovery"
+              href={siteCtas.proposalHref}
+              label={ctaLabels.proposal}
               variant="link"
               className="ml-auto"
             />
@@ -379,7 +375,11 @@ export default function PricingPage() {
                   closed against the baseline written down at the start.
                 </p>
                 <CTAGroup className="mt-7">
-                  <ButtonLink href={siteCtas.demoHref} label="Scope a pilot" variant="cta" />
+                  <ButtonLink
+                    href={FOUNDING_PARTNER_DEMO_HREF}
+                    label={ctaLabels.foundingPartner}
+                    variant="cta"
+                  />
                   <ButtonLink
                     href={siteCtas.launchPartnersHref}
                     label="Founding Institutional Partners"
@@ -416,50 +416,46 @@ export default function PricingPage() {
         </Reveal>
       </SectionShell>
 
-      {/* 9 — Final CTA */}
-      <SectionShell className="pb-22">
-        <Reveal className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-            <div>
-              <Eyebrow>Next step</Eyebrow>
-              <h2 className="type-section-title mt-4">
-                Price the institution you operate &mdash; not a generic software package.
-              </h2>
-              <p className="type-body measure mt-4 text-[color:var(--muted-foreground)]">
-                Bring your campus structure, student volume, the workflows in scope, the migration
-                you are carrying and the governance your board expects. We map them, then issue a
-                written proposal against that reality.
-              </p>
-              <p className="type-support mt-4 flex items-start gap-3">
-                <Sparkles
-                  aria-hidden
-                  className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
-                />
-                <span>{pricingAvailability.positioning}</span>
-              </p>
-            </div>
-            <div className="grid gap-3">
-              <ButtonLink
-                href={siteCtas.demoHref}
-                label="Request a tailored proposal"
-                variant="cta"
-                className="justify-center"
-              />
-              <ButtonLink
-                href={siteCtas.demoHref}
-                label="Book an operational diagnosis"
-                variant="secondary"
-                className="justify-center"
-              />
+      {/* 9 — Request a proposal. Pricing's own next step, with its own form
+          (audit SC-005): the label and the destination say the same thing. */}
+      <SectionShell id={FORM_ANCHORS.proposal} className="scroll-mt-28 pb-22">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <Reveal className="space-y-6">
+            <Eyebrow>Next step</Eyebrow>
+            <h2 className="type-section-title">
+              Price the institution you operate &mdash; not a generic software package.
+            </h2>
+            <p className="type-body measure text-[color:var(--muted-foreground)]">
+              Bring your campus structure, student volume, the workflows in scope, the migration you
+              are carrying and the governance your board expects. We map them, then issue a written
+              proposal against that reality.
+            </p>
+            <p className="type-support flex items-start gap-3">
+              <Sparkles aria-hidden className="mt-1 size-4 shrink-0 text-[color:var(--amber)]" />
+              <span>{pricingAvailability.positioning}</span>
+            </p>
+            <CTAGroup>
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="secondary" />
               <ButtonLink
                 href={siteCtas.rolloutHref}
                 label="See how rollout works"
                 variant="ghost"
-                className="justify-center"
               />
+            </CTAGroup>
+          </Reveal>
+          <Reveal delay={120} className="surface-panel-strong rounded-[2rem] p-6 lg:p-8">
+            <Eyebrow>{formCopy.proposal.eyebrow}</Eyebrow>
+            <h3 className="mt-4 font-display text-3xl tracking-[-0.05em]">
+              {formCopy.proposal.heading}
+            </h3>
+            <p className="mt-3 max-w-xl text-base leading-7 text-[color:var(--muted-foreground)]">
+              {formCopy.proposal.body}
+            </p>
+            <div className="mt-6">
+              <ContactForm intent="proposal" />
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </SectionShell>
     </main>
   );

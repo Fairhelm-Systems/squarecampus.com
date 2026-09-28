@@ -5,7 +5,6 @@ import {
   Check,
   Fingerprint,
   Landmark,
-  MessageSquareShare,
   Radar,
   ScrollText,
   ShieldCheck,
@@ -22,8 +21,8 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { availability } from "@/content/commercial";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
-import { AEGIS_DEFINITION, aegisBoundaries } from "@/content/what-is-squarecampus";
+import { ctaLabels, siteCtas } from "@/content/site-content";
+import { AEGIS_PLAIN_DEFINITION, aegisBoundaries } from "@/content/what-is-squarecampus";
 import {
   createBreadcrumbSchema,
   createPageMetadata,
@@ -39,30 +38,41 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: "https://squarecampus.com/og/aegis.png",
 });
 
-const roleScenarios = [
-  {
-    role: "Trust leadership",
-    icon: Landmark,
-    question: "“How is the institution actually doing this term?”",
-    body: "A trust-level view across campuses: fee exposure, attendance drift, academic health, and operational exceptions — without waiting for stitched reporting packs.",
-  },
+/**
+ * Three realistic questions (audit SC-015). Each states what the answer is
+ * drawn from, how its sources and as-of time are shown, and where AEGIS
+ * stops. This is the designed behaviour, labelled as such on the page; it is
+ * not a transcript of a live system.
+ */
+const exampleQuestions = [
   {
     role: "Principal",
     icon: Building2,
-    question: "“What needs my attention before the review meeting?”",
-    body: "Contextual operational insight for one campus: exceptions surfaced early, follow-ups tracked, and the story behind each number one question away.",
+    question: "“Which Class 8 sections had attendance below 85% this week?”",
+    scope: "Attendance records for the principal's own campus only.",
+    sources:
+      "Each section in the answer links to the attendance entries behind it, with the time the data was last updated.",
+    limit: "It can suggest raising the pattern with class teachers. It does not message anyone.",
   },
   {
     role: "Finance & accounts",
     icon: WalletCards,
-    question: "“Where is collection drifting, and why?”",
-    body: "Dues, receipts, concessions, and approval history on live records — with anomalies flagged before they become term-end surprises.",
+    question:
+      "“How much of this term's fees is overdue by more than 30 days, and in which classes?”",
+    scope: "The fee ledger for the campuses the finance role is permitted to see.",
+    sources:
+      "Totals link to the invoices and receipts they are built from, as of the last posted payment.",
+    limit:
+      "It does not send reminders or change any fee record; a person does that in the fees workflow.",
   },
   {
-    role: "Operations & admin",
-    icon: MessageSquareShare,
-    question: "“Which follow-ups slipped this week?”",
-    body: "Communication trails, acknowledgements, transport and service exceptions — connected to the same student and family context staff already work in.",
+    role: "Trust leadership",
+    icon: Landmark,
+    question: "“Which campuses have approvals waiting longer than a week?”",
+    scope: "Approval records across the campuses under the trust administrator's role.",
+    sources:
+      "Each item names the approval, its owner and how long it has waited, with an as-of time.",
+    limit: "It cannot approve, reassign or escalate. It shows who owns each item.",
   },
 ] as const;
 
@@ -152,7 +162,7 @@ export default function AegisPage() {
               it can suggest a follow-up, but people decide and act.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="See AEGIS in a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"
@@ -163,7 +173,7 @@ export default function AegisPage() {
               {["Inside SquareCampus", "Answers in role scope", "Read-only"].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground"
+                  className="rounded-full border border-(--line) bg-(--surface) px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground"
                 >
                   {item}
                 </span>
@@ -186,7 +196,7 @@ export default function AegisPage() {
         id="boundaries"
         eyebrow="What AEGIS does, and does not do"
         title="Answers and suggestions. People decide and act."
-        body={AEGIS_DEFINITION}
+        body={AEGIS_PLAIN_DEFINITION}
         compactBody
       >
         <Reveal className="surface-panel rounded-[1.8rem] p-6 lg:p-7">
@@ -206,23 +216,39 @@ export default function AegisPage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Who asks AEGIS"
-        title="Built for the people accountable for the institution"
-        body="Every role gets decision support inside its own permissions — the question is the interface, the governance is the guarantee."
+        id="examples"
+        eyebrow="Three example questions"
+        title="What an answer is drawn from, and where AEGIS stops"
+        body="How AEGIS is designed to answer three everyday questions. Each answer stays inside the asker's permissions, shows its sources and when the data was last updated, and ends with a suggestion rather than an action."
       >
-        <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
-          {roleScenarios.map((scenario) => (
+        <Reveal staggerChildren className="grid gap-4 lg:grid-cols-3">
+          {exampleQuestions.map((item) => (
             <article
-              key={scenario.role}
+              key={item.role}
               data-reveal-item
-              className="surface-panel rounded-[1.6rem] p-6"
+              className="surface-panel flex flex-col rounded-[1.6rem] p-6"
             >
               <div className="flex items-center justify-between gap-3">
-                <p className="section-kicker">{scenario.role}</p>
-                <scenario.icon className="size-5 shrink-0 text-(--brand)" />
+                <p className="section-kicker">{item.role}</p>
+                <item.icon aria-hidden className="size-5 shrink-0 text-(--brand)" />
               </div>
-              <h2 className="mt-4 font-display text-2xl tracking-[-0.04em]">{scenario.question}</h2>
-              <p className="mt-3 text-base leading-7 text-muted-foreground">{scenario.body}</p>
+              <h3 className="mt-4 font-display text-xl leading-snug tracking-[-0.03em]">
+                {item.question}
+              </h3>
+              <dl className="mt-4 grid gap-3 text-sm leading-6">
+                <div>
+                  <dt className="font-medium text-foreground">Answer scope</dt>
+                  <dd className="mt-0.5 text-muted-foreground">{item.scope}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-foreground">Sources and as-of time</dt>
+                  <dd className="mt-0.5 text-muted-foreground">{item.sources}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-foreground">Limit</dt>
+                  <dd className="mt-0.5 text-muted-foreground">{item.limit}</dd>
+                </div>
+              </dl>
             </article>
           ))}
         </Reveal>
@@ -231,7 +257,7 @@ export default function AegisPage() {
       <SectionShell
         eyebrow="Governance first"
         title="Intelligence that strengthens control instead of leaking it"
-        body="Most 'AI in ERP' pitches bolt a chatbot onto old software. AEGIS was designed the other way around: governance first, intelligence inside it."
+        body="AEGIS is designed governance-first: the permission check happens before an answer exists, not after it."
       >
         {/* The composition shows the part the copy below cannot: records being
             refused before an answer exists. It carries a caption because it is
@@ -262,7 +288,7 @@ export default function AegisPage() {
       <SectionShell
         eyebrow="Context is the moat"
         title="AEGIS works because the operating system underneath is connected"
-        body="Generic assistants guess. AEGIS reads the same role graph, timelines, fee state, and communication trails that already run your institution inside SquareCampus."
+        body="AEGIS is designed to work from the records your institution already runs on in SquareCampus — who may see what, timelines, fee state and communication history — rather than guessing."
       >
         <Reveal className="mx-auto max-w-3xl">
           <AegisIntelligenceVisual />
@@ -278,13 +304,13 @@ export default function AegisPage() {
           {eraComparison.map((row) => (
             <article key={row.aegis} data-reveal-item className="grid gap-3 lg:grid-cols-2">
               <div className="rounded-[1.4rem] bg-(--surface-muted) p-5">
-                <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                   Legacy ERP reporting
                 </p>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">{row.legacy}</p>
               </div>
               <div className="surface-panel-strong rounded-[1.4rem] p-5">
-                <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-(--brand)">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-(--brand-ink)">
                   With AEGIS
                 </p>
                 <p className="mt-3 text-sm leading-7 text-foreground">{row.aegis}</p>
@@ -345,7 +371,7 @@ export default function AegisPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.securityHref}
                 label="Review the trust posture"

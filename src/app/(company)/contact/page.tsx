@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/site/button-link";
 import { PageSchema } from "@/components/site/page-schema";
 import { SectionShell } from "@/components/site/section-shell";
 import { company } from "@/content/company";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -78,31 +78,31 @@ export default function ContactPage() {
             </address>
             <dl className="mt-6 grid gap-4 border-t border-(--line) pt-6 text-sm sm:grid-cols-2">
               <div>
-                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
                   CIN
                 </dt>
                 <dd className="mt-1.5 font-mono text-[0.8rem] text-foreground">{company.cin}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
                   Incorporated
                 </dt>
                 <dd className="mt-1.5 text-foreground">{company.incorporationDateDisplay}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
                   GSTIN
                 </dt>
                 <dd className="mt-1.5 font-mono text-[0.8rem] text-foreground">{company.gstin}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
                   GST registered
                 </dt>
                 <dd className="mt-1.5 text-foreground">{company.gstinRegistrationDateDisplay}</dd>
               </div>
               <div className="sm:col-span-2">
-                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+                <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
                   Telephone
                 </dt>
                 <dd className="mt-1.5 text-muted-foreground">
@@ -152,7 +152,7 @@ export default function ContactPage() {
                 institution actually runs.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href={siteCtas.demoHref} label="Book a Guided Demo" />
+                <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
                 <ButtonLink
                   href={siteCtas.pricingHref}
                   label="See pricing model"
