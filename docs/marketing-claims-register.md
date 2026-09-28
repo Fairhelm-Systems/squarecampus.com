@@ -193,6 +193,19 @@ changing anything. "Every question, answer, and suggested action lands on the
 audit trail" was reworded so suggestions are not presented as executed actions.
 AEGIS capability statements remain **NEEDS BACKEND EVIDENCE** (see AI claims).
 
+### Journeys, workflows and examples (site audit P1, 2026-09-29)
+
+| Claim | Where | Status |
+| --- | --- | --- |
+| Six workflow cards (admission → enrolment, attendance → follow-up, fees → reconciliation, exams → results, notice → acknowledgement, campus → leadership view) | homepage, /platform (`content/workflows.ts`) | **NEEDS BACKEND EVIDENCE** as capability; published as design beside `AvailabilityNote`. The wording restates the solution pages |
+| AEGIS example questions with answer scope, sources, as-of time and limits | /aegis | **NEEDS BACKEND EVIDENCE**; labelled "how AEGIS is designed to answer", not a transcript |
+| Rollout stages: school input, SquareCampus deliverable, completion criteria | /rollout | **NEEDS BACKEND EVIDENCE** (service model; keep only while staffed). No durations or deadlines are published |
+| Worked examples and "configured, scoped or quoted separately" limits | /school-erp-software, /fee-management-software-for-schools | Examples **NEEDS BACKEND EVIDENCE** (design); limits **VERIFIED** as restatements of `pricingAvailability` and `integrationScope` |
+| Per-plan "Scoped separately" lists; Pro AEGIS "optional, in scope only where the proposal includes it"; Enterprise AEGIS "within an agreed allowance" | /pricing | **NEEDS LEGAL REVIEW** as commercial policy (must match the proposal and order form); the Pro AEGIS wording interprets the previous "eligibility or controlled access" and needs owner confirmation |
+| Proposal request form on /pricing (enquiry type "Proposal request", source `demo-form:proposal`) | /pricing | **VERIFIED** against `infra/contact-intake` (enquiry type is free text up to 60 characters; source up to 40). The CRM receives a new campaign name |
+| Evaluation criteria on /why-squarecampus (concession approvals, cross-campus permissions, exception ownership, migration validation, exports) | /why-squarecampus | **NEEDS BACKEND EVIDENCE** for the SquareCampus column; no competitor is characterised |
+| Company facts on /about (legal name, CIN, registered-office locality, founder) | /about | **VERIFIED** (company record, `content/company.ts`) |
+
 ## Company & legal facts
 
 | Claim | Where | Status |
