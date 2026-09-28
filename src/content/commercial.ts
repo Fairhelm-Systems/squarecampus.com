@@ -39,7 +39,7 @@ export const product = {
     "Private universities and multi-school higher-education groups, as a governed operating layer over the systems they already run",
   ],
   geography:
-    "India-first. Managed cloud in the AWS Mumbai region (ap-south-1); private-cloud and on-premises deployment are available under Enterprise, subject to scoping.",
+    "India-first. The platform is hosted on Microsoft Azure in India. Enterprise private deployments are available on AWS, in a private cloud or on premises, subject to scoping.",
   distinction:
     "A system of record stores what happened. SquareCampus also carries the workflows, ownership, exceptions, approvals and audit history that turn records into accountable operations, and shows leadership what requires attention, who owns it and what happens next.",
   competesOn: [

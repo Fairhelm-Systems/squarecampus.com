@@ -1,4 +1,5 @@
 import { foundingProgramme, identity, pricingAvailability } from "./commercial";
+import { retentionReuse } from "./retention";
 
 export type FaqCategoryId = "getting-started" | "features" | "security" | "pricing";
 
@@ -97,7 +98,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How secure is our data?",
     answer:
-      "Data is encrypted in transit and at rest. Access is role-based with granular permissions, audit trails are part of the product design, and the platform runs on monitored cloud infrastructure with automated backups. Detailed security documentation is available through the security review process.",
+      "Data is encrypted in transit and at rest. Access is role-based with granular permissions, audit trails are part of the product design, and availability and backup design are documented in writing during security review. Detailed security documentation is available through the security review process.",
     category: "security",
   },
   {
@@ -108,8 +109,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "What compliance standards do you follow?",
-    answer:
-      "SquareCampus is designed with privacy-by-default principles and built to support institutions' obligations under the IT Act 2000, the DPDP Act, and education sector guidelines. The platform includes consent management, data retention controls, and export capabilities for regulatory requests.",
+    answer: retentionReuse.faqCompliance,
     category: "security",
   },
   {
@@ -120,8 +120,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "What happens to our data if we leave?",
-    answer:
-      "You own your data. If you decide to leave, we provide a complete export in standard formats (CSV, JSON) within 30 days of request. After the transition period, we securely delete all your data from our systems as per our data retention policy.",
+    answer: retentionReuse.faqExit,
     category: "security",
   },
   {

@@ -1,12 +1,12 @@
 # Contact intake — Lambda + API Gateway + DynamoDB + Platform CRM bridge
 
-Live since 2026-07-14 in `ap-south-1`, account `ACCOUNT_ID`.
+Live since 2026-07-14 in `ap-south-1`.
 
 | Resource | Value |
 |---|---|
 | Public endpoint | `POST https://squarecampus.com/api/contact` — same-origin, proxied by the existing CloudFront distribution (existing ACM cert; no CORS preflight) |
 | CloudFront | distribution `E3ATKH99UOL8C2`: origin `contact-api` → execute-api with secret `x-intake-edge-key` header; behavior `/api/*` (CachingDisabled + origin request policy `squarecampus-api-origin`, no viewer functions) |
-| HTTP API | `squarecampus-contact` (`API_ID`), stage `$default`, throttle 5 rps / burst 10; routes `POST /contact` and `POST /api/contact` |
+| HTTP API | `squarecampus-contact`, stage `$default`, throttle 5 rps / burst 10; routes `POST /contact` and `POST /api/contact` |
 | Lambda | `squarecampus-contact-intake` (nodejs22.x, 128 MB, 10 s) — source: [index.mjs](index.mjs) |
 | CRM retry worker | `squarecampus-contact-crm-retry` (nodejs22.x) — same package, `retryHandler` entry point |
 | CRM queue | `squarecampus-contact-crm-retry` with an operator-visible redrive DLQ; message bodies contain only a submission UUID |
@@ -108,7 +108,7 @@ content or the bridge secret.
 
 Required Lambda configuration, supplied only during deployment:
 
-- `CRM_INTAKE_URL=https://crm-intake.internal/api/platform/v1/crm/marketing-intake`
+- `CRM_INTAKE_URL` — the Platform CRM marketing-intake REST route
 - `CRM_BRIDGE_SECRET_ID` — AWS Secrets Manager id for the bridge secret
 - `CRM_RETRY_QUEUE_URL` — retry queue URL (not the DLQ)
 

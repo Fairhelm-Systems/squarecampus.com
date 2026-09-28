@@ -37,13 +37,9 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     reason: "forbidden Founding Partner wording",
   },
   {
-    pattern: /not an investment/i,
-    reason: "programme is a strategic capital commitment under a separate agreement",
-  },
-  {
     pattern:
       /\b(equity|shareholder|shareholding|securities|convertible|debenture|profit[- ]share|board seat)\b/i,
-    reason: "securities language must not appear in public copy",
+    reason: "no securities or ownership language in marketing copy",
   },
   {
     pattern: /Google Workspace (SSO|single sign-on|sign-in)/i,
@@ -58,6 +54,24 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     reason: "boilerplate",
   },
   { pattern: /Trusted by \d|\d+\+ schools|India's #1|bank-grade/i, reason: "fabricated proof" },
+  { pattern: /within 30 days of request/i, reason: "unsupported export deadline" },
+  {
+    pattern: /consent management, data retention controls/i,
+    reason: "unimplemented capabilities described as available",
+  },
+  {
+    pattern: /complete exports? in standard formats/i,
+    reason: "export terms are agreed in the order form",
+  },
+  {
+    pattern: /AWS Mumbai|ap-south-1/i,
+    reason: "the platform is hosted on Microsoft Azure in India",
+  },
+  { pattern: /multi-AZ/i, reason: "unevidenced availability claim" },
+  {
+    pattern: /retention schedule is under legal review/i,
+    reason: "implies an engaged legal review that is not established",
+  },
 ];
 
 /** Phrases that would turn llms.txt into instructions for assistants. */

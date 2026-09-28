@@ -5,11 +5,11 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Data Processing Addendum (DPA)",
   description:
-    "SquareCampus Data Processing Addendum: Legal framework governing how we process personal data on behalf of educational institutions, ensuring GDPR and Indian data protection compliance.",
+    "The SquareCampus Data Processing Addendum: the terms on which personal data is processed on behalf of educational institutions, including roles, security measures, sub-processors, data subject requests, and return or deletion of data.",
   path: "/data-processing-addendum",
-  ogTitle: "Data Processing Agreement | SquareCampus",
+  ogTitle: "Data Processing Addendum | SquareCampus",
   ogDescription:
-    "Our legal commitment to data protection, privacy, and compliance when processing your institution's data.",
+    "The terms on which SquareCampus processes personal data on behalf of educational institutions.",
 });
 
 export default function TOCLayout({ children }: { children: ReactNode }) {

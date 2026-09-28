@@ -1906,3 +1906,93 @@ nav[aria-label="Table of contents"] a:nth-child(n + 13) {
     stroke-dashoffset: 0;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Citation preview thumbnail (data-retention page).
+ *
+ * An SVG sketch of the cited document, drawn fresh each time the preview card
+ * opens: the seal draws in, the text lines settle, the relevant clause is
+ * highlighted, and a sheen passes across the page every few seconds. Only
+ * transform, opacity and stroke-dashoffset move. Reduced motion: the finished
+ * drawing, no sheen.
+ * ------------------------------------------------------------------------- */
+.cite-seal {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: cite-draw 0.9s 0.08s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.cite-line {
+  opacity: 0;
+  transform: translateY(3px);
+  animation: cite-line-in 0.45s var(--cite-delay, 0ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.cite-highlight {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: cite-highlight 0.7s 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.cite-sheen {
+  transform: translateX(-140px);
+  animation: cite-sheen 3.6s 0.6s ease-in-out infinite;
+}
+
+@keyframes cite-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes cite-line-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cite-highlight {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes cite-sheen {
+  0% {
+    transform: translateX(-140px);
+  }
+  45%,
+  100% {
+    transform: translateX(460px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cite-seal,
+  .cite-line,
+  .cite-highlight {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
+  }
+
+  .cite-sheen {
+    animation: none;
+    display: none;
+  }
+}
+
+/* Neon for the citation thumbnail: brand blue into teal. Stronger in dark,
+   where a glow reads as light; restrained on the light paper. */
+:root {
+  --cite-neon: oklch(0.58 0.17 250);
+  --cite-neon-2: oklch(0.64 0.13 195);
+}
+
+.dark {
+  --cite-neon: oklch(0.8 0.15 245);
+  --cite-neon-2: oklch(0.86 0.14 190);
+}

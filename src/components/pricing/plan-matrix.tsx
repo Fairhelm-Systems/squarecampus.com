@@ -1,3 +1,4 @@
+import { RetentionPointer } from "@/components/pricing/retention-pointer";
 import { ComparisonRow } from "@/components/site/marketing";
 import { plans, SCOPE_NOTE } from "@/content/pricing";
 
@@ -129,6 +130,7 @@ export function PlanMatrix() {
         </table>
       </div>
       <p className="type-caption mt-4">{SCOPE_NOTE}</p>
+      <RetentionPointer className="mt-3" />
     </div>
   );
 }

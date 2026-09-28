@@ -29,6 +29,8 @@ import { company } from "./company";
 import { comparisons } from "./comparisons";
 import { intentPages } from "./intent-pages";
 import { hasMarkdownAlternate, markdownAlternatePath } from "./markdown-alternates";
+import { RETENTION_PATH, retentionPointer } from "./retention";
+import { siteSource } from "./site-content";
 import { AEGIS_DEFINITION, aegisBoundaries } from "./what-is-squarecampus";
 
 export type LlmsLink = { path: string; title: string; description: string };
@@ -212,7 +214,7 @@ export const llmsSections: LlmsSection[] = [
         path: "/infrastructure",
         title: "Infrastructure",
         description:
-          "AWS Mumbai (ap-south-1), multi-AZ design, encryption in transit and at rest, India data-residency posture; documentation through security review",
+          "Microsoft Azure in India, encryption in transit and at rest, India data-residency posture, Enterprise private deployment on AWS; documentation through security review",
       },
       {
         path: "/privacy-policy",
@@ -229,6 +231,12 @@ export const llmsSections: LlmsSection[] = [
         path: "/data-processing-addendum",
         title: "Data processing addendum",
         description: "Processor obligations, sub-processors, security measures, return or deletion",
+      },
+      {
+        path: RETENTION_PATH,
+        title: "Data retention",
+        description:
+          "Who is responsible for retaining institutional data, what determines retention, how export, deletion and preservation requests are handled, and what is confirmed today versus awaiting confirmation",
       },
       {
         path: "/ai-policy",
@@ -286,10 +294,12 @@ export function llmsOrientation(): string[] {
     `- Competes on: ${product.competesOn.map((c) => c.toLowerCase()).join(", ")}. It is not designed to be the cheapest attendance, fees and report-card product, and will look expensive to an institution that needs only that.`,
     `- Plans: ${planHierarchy.map((p) => `${p.name} — ${p.summary}`).join(" ")}`,
     `- Pricing availability: ${pricingAvailability.short}`,
+    `- Retention: ${retentionPointer.text}`,
     `- Identity: ${identity.baseline.body} ${identity.pro.body} ${identity.enterprise.body} ${identity.notes[0]}`,
     `- ${foundingProgramme.name}: ${foundingProgramme.positionsStatement}`,
     `- Deployment: a bounded deployment can run alongside the institution's current ERP, LMS, payment portal and identity provider, which stay authoritative; consolidation is a later choice and never a precondition of starting.`,
     `- Evidence: ${product.evidenceNote} Product screenshots use synthetic data and are labelled as such.`,
+    `- Website source: the code for this site is public at ${siteSource.repoUrl}`,
     `- Operator: ${company.legalNameDisplay} (CIN ${company.cin}, GSTIN ${company.gstin}), ${product.operator.locality}. SquareCampus™ trademark registration pending.`,
   ];
 }

@@ -284,6 +284,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.2,
     },
     {
+      path: "/data-retention",
+      sources: [`${APP}/(legal)/data-retention`, `${CONTENT}/retention.ts`],
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
+    {
       path: "/refund-policy",
       sources: [`${APP}/(legal)/refund-policy`],
       changeFrequency: "yearly",

@@ -30,12 +30,12 @@ const ogImage = {
 export const metadata: Metadata = {
   title: "Integration, Data & Deployment Services",
   description:
-    "SquareCampus services: connect your existing school tools over APIs and WebSockets, ETL/ELT pipelines into one custom dashboard — on your servers or our AWS — plus private and BYOC deployment options.",
+    "SquareCampus services: connect your existing school tools over APIs and WebSockets, ETL/ELT pipelines into one custom dashboard — on your servers or our cloud — plus private and BYOC deployment options.",
   alternates: createAlternates("/services"),
   openGraph: {
     title: "Your school's tools, finally talking to each other | SquareCampus",
     description:
-      "Integrations, ETL/ELT pipelines, and one leadership dashboard — on your servers, our AWS, or your own cloud.",
+      "Integrations, ETL/ELT pipelines, and one leadership dashboard — on your servers, our cloud, or your own cloud.",
     images: [ogImage],
   },
   twitter: {
@@ -79,9 +79,9 @@ const dataPoints = [
     body: "Leadership gets a single dashboard built around your institution's questions: collections, attendance, academics, operations — not a generic BI template.",
   },
   {
-    title: "Your servers or our AWS",
+    title: "Your servers or our cloud",
     icon: Server,
-    body: "Pipelines and the dashboard run where you decide: on infrastructure you already own, or on our AWS Mumbai setup with the same India-residency posture as SquareCampus.",
+    body: "Pipelines and the dashboard run where you decide: on infrastructure you already own, or on our Microsoft Azure setup in India with the same residency posture as SquareCampus.",
   },
 ] as const;
 
@@ -90,13 +90,13 @@ const deploymentOptions = [
     title: "Managed cloud",
     kicker: "Default",
     icon: Cloud,
-    body: "SquareCampus on our AWS Mumbai infrastructure — multi-AZ, encrypted, audited, and maintained by us. Most institutions start here.",
+    body: "SquareCampus on our Microsoft Azure infrastructure in India — encrypted, audited, and maintained by us. Most institutions start here.",
   },
   {
     title: "Private deployment",
     kicker: "Dedicated",
     icon: Lock,
-    body: "A dedicated, single-tenant SquareCampus environment — isolated compute and storage for institutions with strict segregation requirements.",
+    body: "A dedicated, single-tenant SquareCampus environment — isolated compute and storage on AWS, in a private cloud or on premises, for institutions with strict segregation requirements.",
   },
   {
     title: "BYOC — your cloud",
@@ -124,8 +124,8 @@ export default function ServicesPage() {
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground">
               Beyond the School OS, we connect the systems you already run, unify their data into
-              one dashboard, and deploy wherever your governance demands — your servers, our AWS, or
-              your own cloud account.
+              one dashboard, and deploy wherever your governance demands — your servers, our cloud,
+              or your own cloud account.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label="Scope it in a demo" variant="cta" />

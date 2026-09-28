@@ -217,7 +217,7 @@ export default function EcosystemPage() {
       <SectionShell
         eyebrow="Beyond the platform"
         title="Already invested in other tools? We connect them."
-        body="Where a system exposes an API or WebSocket we build the bridge — plus ETL/ELT pipelines into one custom dashboard, on your servers or our AWS."
+        body="Where a system exposes an API or WebSocket we build the bridge — plus ETL/ELT pipelines into one custom dashboard, on your servers or our cloud."
         compactBody
       >
         <Reveal className="surface-panel rounded-[1.8rem] p-6 lg:p-7">

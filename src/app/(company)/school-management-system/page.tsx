@@ -514,16 +514,13 @@ export default function SchoolManagementSystemPage() {
 
       <SectionShell eyebrow="FAQs" title="Questions procurement teams ask">
         <Reveal>
-          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+          <Accordion className="surface-panel rounded-[1.6rem] px-6">
             {faqItems.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent
-                  forceMount
-                  className="max-w-3xl text-base leading-7 text-muted-foreground"
-                >
+                <AccordionContent className="max-w-3xl text-base leading-7 text-muted-foreground">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

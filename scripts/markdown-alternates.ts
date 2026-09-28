@@ -134,13 +134,17 @@ function parseAttrs(raw: string): Attrs {
 }
 
 /**
- * Is the element visible in the desktop representation? Tailwind's bare
+ * Is the element part of the desktop representation? Tailwind's bare
  * `hidden` is display:none at every width unless a responsive display class
  * re-enables it; `sm:hidden` and friends hide it from that breakpoint up,
  * which for our purposes means it is the phone-only duplicate.
  */
 function visibleOnDesktop(attrs: Attrs): boolean {
-  if (attrs.hidden !== undefined) return false;
+  // Collapsed-but-present content opts in with `data-md-include`: closed
+  // accordion answers are server-rendered with `hidden` (the browser upgrades
+  // them to hidden="until-found"), yet they are page content and the
+  // FAQPage structured data declares them.
+  if (attrs.hidden !== undefined && attrs["data-md-include"] === undefined) return false;
   if (attrs["aria-hidden"] === "true") return false;
   if (attrs["data-md-skip"] !== undefined) return false;
   const classes = (attrs.class ?? "").split(/\s+/).filter(Boolean);
@@ -224,7 +228,7 @@ class MarkdownBuilder {
   private separate(sep = " ") {
     const buffer = this.buffer();
     const last = buffer[buffer.length - 1];
-    if (last && !/[\s(\[]$/.test(last) && !/^\*\*$|^_$|^`$/.test(last)) buffer.push(sep);
+    if (last && !/[\s([]$/.test(last) && !/^\*\*$|^_$|^`$/.test(last)) buffer.push(sep);
   }
 
   text(raw: string) {

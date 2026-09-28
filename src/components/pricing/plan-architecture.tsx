@@ -1,4 +1,5 @@
 import { Check, KeyRound } from "lucide-react";
+import { RetentionPointer } from "@/components/pricing/retention-pointer";
 import { ButtonLink } from "@/components/site/button-link";
 import { OperationalBadge } from "@/components/site/marketing";
 import { plans } from "@/content/pricing";
@@ -101,6 +102,7 @@ export function PlanArchitecture() {
               <div className="mt-6 border-t border-[color:var(--line)] pt-5">
                 <p className="eyebrow">Deployment posture</p>
                 <p className="type-support mt-2">{plan.deployment}</p>
+                <RetentionPointer className="mt-4" />
               </div>
             </div>
 

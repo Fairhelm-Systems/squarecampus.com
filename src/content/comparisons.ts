@@ -48,7 +48,7 @@ const sharedDifferentiators = [
   },
   {
     title: "Infrastructure questions answered in writing",
-    body: "We name our region (AWS Mumbai, ap-south-1) on the infrastructure page and answer infrastructure questionnaires in writing during evaluation. Ask any vendor for the same detail and compare the answers.",
+    body: "We name our cloud and region (Microsoft Azure in India) on the infrastructure page and answer infrastructure questionnaires in writing during evaluation. Ask any vendor for the same detail and compare the answers.",
   },
   {
     title: "A published licensing model",
@@ -100,12 +100,13 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Deployment",
-        squarecampus: "Managed cloud (AWS Mumbai); private deployment; BYOC coming soon.",
+        squarecampus:
+          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
         competitor: "Cloud (SaaS).",
       },
       {
         dimension: "Data residency",
-        squarecampus: "India — AWS Mumbai (ap-south-1) by design; documentation on request.",
+        squarecampus: "India — Microsoft Azure regions in India; documentation on request.",
         competitor: "India-based (per vendor).",
       },
     ],
@@ -176,7 +177,8 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Deployment",
-        squarecampus: "Managed cloud (AWS Mumbai); private deployment; BYOC coming soon.",
+        squarecampus:
+          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
         competitor: "Cloud or self-hosted.",
       },
       {
@@ -205,7 +207,7 @@ export const comparisons: Comparison[] = [
       {
         question: "Does SquareCampus offer self-hosting like Fedena's open source?",
         answer:
-          "SquareCampus is delivered as a managed platform on our AWS Mumbai infrastructure, with private single-tenant deployment available and BYOC (your own cloud account) coming soon. It is not open-source self-hosting, but BYOC gives you your own boundary with our operations.",
+          "SquareCampus is delivered as a managed platform on our Microsoft Azure infrastructure in India, with Enterprise private deployment on AWS available and BYOC (your own cloud account) coming soon. It is not open-source self-hosting, but BYOC gives you your own boundary with our operations.",
       },
     ],
   },
@@ -257,7 +259,8 @@ export const comparisons: Comparison[] = [
       },
       {
         dimension: "Deployment",
-        squarecampus: "Managed cloud (AWS Mumbai); private deployment; BYOC coming soon.",
+        squarecampus:
+          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
         competitor: "Cloud (SaaS).",
       },
     ],

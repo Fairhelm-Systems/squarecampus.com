@@ -20,14 +20,14 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Infrastructure",
   description:
-    "How SquareCampus infrastructure is designed: AWS Mumbai (ap-south-1), multi-AZ architecture, encryption in transit and at rest, and an India data-residency posture — with documentation available through the security review process.",
+    "How SquareCampus infrastructure is designed: Microsoft Azure in India, encryption in transit and at rest, an India data-residency posture, and Enterprise private deployment on AWS — with documentation available through the security review process.",
   path: "/infrastructure",
   ogImage: "https://squarecampus.com/og/infrastructure.png",
 });
 
 const heroSignals = [
-  ["Cloud region", "AWS Mumbai"],
-  ["Architecture", "Multi-AZ design"],
+  ["Cloud", "Microsoft Azure"],
+  ["Region", "India"],
   ["Residency", "India-first posture"],
   ["Encryption", "Transit & at rest"],
 ] as const;
@@ -36,9 +36,9 @@ const comparisonData = [
   {
     category: "Data residency",
     us: {
-      title: "AWS Mumbai (ap-south-1)",
+      title: "Microsoft Azure, India",
       details:
-        "The platform is designed to keep institutional data in the AWS Mumbai region, with controls intended to restrict resources to that region.",
+        "The platform is hosted on Microsoft Azure in India. The specific regions and data flows are named in writing during evaluation.",
     },
     them: {
       title: "“India” (unspecified)",
@@ -49,9 +49,9 @@ const comparisonData = [
   {
     category: "Reliability design",
     us: {
-      title: "Multi-AZ architecture",
+      title: "Documented resilience",
       details:
-        "Designed across multiple availability zones so a single facility issue does not take the platform down. Recovery objectives are documented and shared during evaluation.",
+        "High availability, backup and recovery design are documented in writing and shared during evaluation, so the answer is specific to your deployment rather than a marketing line.",
     },
     them: {
       title: "Single location",
@@ -62,9 +62,9 @@ const comparisonData = [
   {
     category: "Physical security",
     us: {
-      title: "AWS data centres",
+      title: "Microsoft Azure data centres",
       details:
-        "AWS facilities carry independent certifications (published by AWS). Our application-level controls are documented separately and shared on request.",
+        "Azure facilities carry independent certifications (published by Microsoft). Our application-level controls are documented separately and shared on request.",
     },
     them: {
       title: "“Secure” (undefined)",
@@ -77,7 +77,7 @@ const comparisonData = [
     us: {
       title: "Cloud auto-scaling",
       details:
-        "Capacity scales with admission season and exam-week load without hardware purchases, in the same region.",
+        "Capacity can be added for admission season and exam-week load without hardware purchases, in the same region.",
     },
     them: {
       title: "Hardware bottleneck",
@@ -104,12 +104,12 @@ const capabilities = [
   {
     icon: Server,
     title: "Built to stay available",
-    body: "The platform is architected across multiple availability zones in the AWS Mumbai region, so a problem in one facility is designed not to take daily campus operations down.",
+    body: "The platform runs on a hyperscale cloud designed so that a problem in one facility does not take daily campus operations down. The availability design for your deployment is documented during security review.",
   },
   {
     icon: Database,
     title: "Backups by design",
-    body: "Automated, encrypted backups are part of the platform design. Backup cadence, retention, and restore procedures are documented and shared during security review.",
+    body: "Backup cadence, retention and restore procedures are documented in writing and shared during security review.",
   },
   {
     icon: ShieldCheck,
@@ -119,7 +119,7 @@ const capabilities = [
   {
     icon: Lock,
     title: "India residency posture",
-    body: "The deployment is designed to keep institutional data in the AWS Mumbai region, with account-level controls intended to restrict where resources can be created.",
+    body: "The platform is designed to keep institutional data in Microsoft Azure regions in India. Enterprise private deployments on AWS, in a private cloud or on premises are scoped with the same residency expectations.",
   },
   {
     icon: Network,
@@ -130,9 +130,9 @@ const capabilities = [
 
 const faqData = [
   {
-    question: "Why Amazon Web Services instead of “own servers”?",
+    question: "Why a hyperscale cloud instead of “own servers”?",
     answer:
-      "Data residency is defined by where data physically sits and how access is governed — not by who owns the racks. AWS Mumbai gives us mature managed services, multiple availability zones in one Indian region, and independently certified facilities, which is a stronger foundation than self-managed hardware for a platform schools depend on daily.",
+      "Data residency is defined by where data physically sits and how access is governed — not by who owns the racks. Microsoft Azure in India gives us mature managed services, availability zones within an Indian region, and independently certified facilities, which is a stronger foundation than self-managed hardware for a platform schools depend on daily. Institutions that need their own boundary can scope an Enterprise private deployment on AWS, in a private cloud or on premises.",
   },
   {
     question: "How do we verify where our data is hosted?",
@@ -142,7 +142,7 @@ const faqData = [
   {
     question: "What happens if a data centre has an outage?",
     answer:
-      "The architecture spans multiple availability zones in the Mumbai region so the platform is designed to continue operating if one facility has issues. Recovery objectives and procedures are documented and shared during the security review process.",
+      "Availability, recovery objectives and procedures are documented in writing and shared during the security review process.",
   },
   {
     question: "Is our data encrypted?",
@@ -161,20 +161,20 @@ const dueDiligenceQuestions = [
     question: "What region and provider host our data?",
     whyItMatters: "“Hosted in India” without a named region and provider is unverifiable.",
     ourAnswer:
-      "AWS Mumbai (ap-south-1). We document this in writing during evaluation, along with the controls designed to keep resources in that region.",
+      "Microsoft Azure in India. The specific regions and data flows are documented in writing during evaluation.",
   },
   {
     question: "What happens when a facility fails?",
     whyItMatters: "This separates a real architecture from a single server in a rack.",
     ourAnswer:
-      "The platform is designed across multiple availability zones; recovery objectives and tested procedures are part of the documentation we share during security review.",
+      "Availability design, recovery objectives and procedures are part of the documentation we share during security review.",
   },
   {
     question: "Can you share third-party attestations?",
     whyItMatters:
       "Anyone can say “secure”. Attestation and documentation are what procurement can rely on.",
     ourAnswer:
-      "AWS publishes its facility certifications. Our application-level security documentation is shared on request, and we support vendor questionnaires.",
+      "Microsoft publishes Azure's facility certifications. Our application-level security documentation is shared on request, and we support vendor questionnaires.",
   },
   {
     question: "Will you answer these questions in writing?",
@@ -199,7 +199,7 @@ export default function InfrastructurePage() {
             Infrastructure, stated plainly.
           </h1>
           <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-            SquareCampus runs on Amazon Web Services in Mumbai. This page describes how the platform
+            SquareCampus is hosted on Microsoft Azure in India. This page describes how the platform
             is designed — and anything it does not answer, we will answer in writing during your
             evaluation.
           </p>
@@ -222,8 +222,8 @@ export default function InfrastructurePage() {
 
       <SectionShell
         eyebrow="Why managed cloud"
-        title="Why AWS Mumbai? Why not &ldquo;own servers&rdquo;?"
-        body="Data residency isn't defined by who makes the servers — it's defined by where they physically sit and how access is governed. Choosing AWS Mumbai is an engineering decision."
+        title="Why Azure in India? Why not &ldquo;own servers&rdquo;?"
+        body="Data residency isn't defined by who makes the servers — it's defined by where they physically sit and how access is governed. Choosing Microsoft Azure in India is an engineering decision."
       >
         <Reveal className="surface-panel-strong rounded-[1.8rem] p-7 lg:p-8">
           <div className="flex items-start gap-4">
@@ -277,7 +277,7 @@ export default function InfrastructurePage() {
               <div className="mt-4 grid gap-3 lg:grid-cols-2">
                 <div className="rounded-[1.3rem] border border-(--line) bg-(--surface-strong) p-5">
                   <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-(--brand)">
-                    SquareCampus · AWS Mumbai
+                    SquareCampus · Azure, India
                   </p>
                   <p className="mt-2.5 font-display text-xl tracking-[-0.03em]">{row.us.title}</p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{row.us.details}</p>
@@ -343,7 +343,7 @@ export default function InfrastructurePage() {
         body="Use these during your evaluation and compare the answers in writing."
       >
         <Reveal>
-          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+          <Accordion className="surface-panel rounded-[1.6rem] px-6">
             {dueDiligenceQuestions.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
@@ -366,7 +366,7 @@ export default function InfrastructurePage() {
 
       <SectionShell eyebrow="Infrastructure FAQ" title="The technical questions, answered plainly">
         <Reveal>
-          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+          <Accordion className="surface-panel rounded-[1.6rem] px-6">
             {faqData.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">

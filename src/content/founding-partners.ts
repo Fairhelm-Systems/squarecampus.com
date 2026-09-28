@@ -237,7 +237,7 @@ export const foundingPartners = {
         {
           question: "Who owns the data, and can we get it out?",
           answer:
-            "The institution does, throughout. Access is role-scoped and every approval and override lands on an audit timeline while you operate — and complete exports in standard formats are available if you decide to leave. That is the same posture the platform runs on, not a concession made for pilots.",
+            "The institution does, throughout. Access is role-scoped and every approval and override lands on an audit timeline while you operate — and export and deletion terms are agreed in writing, in the order form and the Data Processing Addendum, before you depend on them. That is the same posture the platform runs on, not a concession made for pilots.",
         },
         {
           question: "What does it cost to find out?",

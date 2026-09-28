@@ -13,7 +13,6 @@
 | Route53 | A/AAAA aliases on both zones → the distribution |
 
 squarecampus.in and all www hosts 301 to https://squarecampus.com at the edge.
-The old Amplify app was deleted on 2026-07-11.
 
 ### Redeploy
 
@@ -361,7 +360,7 @@ aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
   health checks are CloudFront/S3's concern now
 - `headers()` / `redirects()` in next.config.ts → response headers policy +
   CloudFront Function above
-- Resend/Upstash/AWS SDK server dependencies → no longer needed at runtime
+- Server-side email, rate-limit and AWS SDK dependencies → no longer needed at runtime
 
 ## Contact API routes
 

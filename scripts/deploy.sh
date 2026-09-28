@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Deploy the static export to S3 + CloudFront.
-# Requires: bun, aws cli with credentials for account ACCOUNT_ID.
+# Requires: bun, aws cli with credentials for the site's AWS account.
 #
 # Usage:
 #   ./scripts/deploy.sh                # build + upload + invalidate
