@@ -98,7 +98,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How secure is our data?",
     answer:
-      "Data is encrypted in transit and at rest. Access is role-based with granular permissions, audit trails are part of the product design, and the platform runs on monitored cloud infrastructure with automated backups. Detailed security documentation is available through the security review process.",
+      "Data is encrypted in transit and at rest. Access is role-based with granular permissions, audit trails are part of the product design, and availability and backup design are documented in writing during security review. Detailed security documentation is available through the security review process.",
     category: "security",
   },
   {

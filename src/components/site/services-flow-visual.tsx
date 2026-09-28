@@ -206,7 +206,7 @@ export function ServicesFlowVisual({ className }: { className?: string }) {
             style={{ "--d": "1100ms" } as React.CSSProperties}
             className="absolute bottom-0 translate-x-1/2 whitespace-nowrap rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.42rem] uppercase tracking-[0.16em] text-muted-foreground sm:px-4 sm:py-2 sm:text-[0.56rem]"
           >
-            Runs on your servers · our AWS · or your own cloud
+            Runs on your servers · our cloud · or your own cloud
           </div>
         </div>
       </div>

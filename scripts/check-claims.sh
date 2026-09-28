@@ -50,6 +50,11 @@ PATTERNS=(
   "[Cc]omplete exports? in standard formats|unsupported export commitment (terms are agreed in the order form)"
   "ensuring GDPR|GDPR compliance claim without assessment"
   "[Rr]etention schedule is under legal review|implies an engaged legal review that is not established"
+  # Hosting (the platform is on Microsoft Azure in India; see docs/marketing-claims-register.md)
+  "AWS Mumbai|stale hosting claim (the platform is hosted on Microsoft Azure in India)"
+  "ap-south-1|stale hosting region"
+  "[Mm]ulti-AZ|unevidenced availability claim (offer documentation instead)"
+  "our AWS|stale hosting claim (AWS is for Enterprise private deployments)"
 )
 
 FAILED=0

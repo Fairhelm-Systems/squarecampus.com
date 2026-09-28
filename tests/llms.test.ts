@@ -80,7 +80,7 @@ test("states the canonical facts an evaluator needs", () => {
     "optional single sign-on with Microsoft Entra ID",
     "identity governance",
     "publishes no customer counts",
-    "AWS Mumbai",
+    "Microsoft Azure in India",
     "CIN ",
   ]) {
     assert.ok(doc.includes(fact), `missing fact: ${fact}`);

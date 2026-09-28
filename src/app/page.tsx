@@ -122,7 +122,7 @@ const sovereigntyPillars = [
   {
     title: "Deployment on your terms",
     icon: Landmark,
-    body: "Managed cloud on AWS Mumbai by default, private single-tenant deployment for strict segregation, and BYOC — your own cloud account — coming soon.",
+    body: "Managed cloud on Microsoft Azure in India by default, Enterprise private deployment on AWS, a private cloud or on premises, and BYOC — your own cloud account — coming soon.",
   },
   {
     title: "India-first residency posture",

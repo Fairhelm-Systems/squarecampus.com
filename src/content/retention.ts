@@ -271,7 +271,7 @@ export const retentionPage = {
     heading: "Backups and other copies",
     paragraphs: [
       "Backups exist to recover from failure, not to keep records for longer. Data deleted from live systems can remain in backups until those backups expire on their cycle.",
-      "Backup retention periods for the production service have not been confirmed for publication, so this page does not state them.",
+      "Backup retention periods are documented in writing during security review rather than published on this page.",
     ],
   },
 
@@ -314,7 +314,6 @@ export const retentionPage = {
     awaiting: [
       "A reviewed retention schedule for institutional records.",
       "A retention period for website enquiries and their copies.",
-      "Backup retention periods for the production service.",
       "Retention deadlines, preservation holds and consent withdrawal as product capabilities for institutional data.",
       "Self-service institution-wide export.",
     ],

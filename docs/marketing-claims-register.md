@@ -35,8 +35,11 @@ Every security, infrastructure, AI, rollout, customer, and compliance claim that
 
 | Claim | Where | Status |
 | --- | --- | --- |
-| Runs on AWS Mumbai (ap-south-1) | /infrastructure, /services, comparisons, llms.txt | **NEEDS BACKEND EVIDENCE** — stated as current architecture; keep only while true. Evidence: AWS account/region of app.squarecampus.com production stack. |
-| Multi-AZ architecture | /infrastructure, /services | **NEEDS BACKEND EVIDENCE** (stated as design; evidence: infra-as-code / AWS console) |
+| The platform is hosted on Microsoft Azure in India | /infrastructure, /services, homepage, comparisons, blog, llms.txt, `commercial.ts` | **VERIFIED** (company confirmation, 2026-09-28). Specific regions are named in writing during evaluation, not on the site. |
+| Enterprise private deployments on AWS, in a private cloud or on premises | /infrastructure, /services, homepage, comparisons, `commercial.ts` | **VERIFIED** as a commercial offer (company confirmation, 2026-09-28); scoped per engagement |
+| Availability, backup and recovery design "documented in writing during security review" | /infrastructure, faq.ts, /data-retention | **VERIFIED** as an offer to document; no specific availability, backup or recovery property is stated publicly |
+| Runs on AWS Mumbai (ap-south-1) | /infrastructure, /services, comparisons, blog, llms.txt (old) | **REMOVE** (removed 2026-09-28: the platform is hosted on Microsoft Azure in India; the marketing website itself is separately hosted on AWS). Forbidden by `check-claims.sh`. |
+| Multi-AZ architecture / "multi-AZ design" | /infrastructure, /services, blog, llms.txt (old) | **REMOVE** (removed 2026-09-28; replaced by the offer to document availability design). Forbidden by `check-claims.sh`. |
 | "99.99% SLA (AWS)" and "99.97% actual measured" uptime | /infrastructure (old) | **REMOVE** (removed; forbidden by check script. Reinstate only with a real, contractual SLA and real measurement) |
 | "RTO 4 hours, RPO 15 minutes, tested quarterly" | /infrastructure (old) | **REMOVE** (removed; reinstate only with documented, tested DR objectives) |
 | "Backups every 15 minutes / 35-day recovery window / 99.999999999% durability" | /infrastructure (old) | **REMOVE** (replaced with "automated, encrypted backups; cadence documented in review"; reinstate with real backup config) |
@@ -46,7 +49,7 @@ Every security, infrastructure, AI, rollout, customer, and compliance claim that
 | Fake "live status" panel ("No incidents reported", "All replicas synchronized") | /infrastructure (old) | **REMOVE** (removed; forbidden. Reinstate only as a real status-page integration) |
 | ISO 27001 / SOC 2 / PCI DSS presented as our compliance | /infrastructure (old) | **REMOVE** as our claims. AWS facility certifications are AWS's (public fact — VERIFIED as attributed to AWS). Application-level certification claims require actual certification. |
 | "₹1–5 Cr upfront… AWS is cheaper" cost comparisons | /infrastructure (old) | **REMOVE** (removed; unverifiable market figures) |
-| "In 5+ years of AWS Mumbai operations, no region-wide outage" | /infrastructure (old) | **REMOVE** (removed; not our claim to make and not verified) |
+| "In 5+ years of cloud-region operations, no region-wide outage" | /infrastructure (old) | **REMOVE** (removed; not our claim to make and not verified) |
 | Encryption in transit and at rest | /security, /infrastructure, FAQ | **NEEDS BACKEND EVIDENCE** (stated as baseline design; evidence: TLS config, storage encryption settings) |
 | TLS 1.3 / AES-256 specific ciphers | /school-management-system, faq.ts, llms.txt (old) | **REMOVE** as specifics (generalized to "encryption in transit and at rest"; reinstate with config evidence) |
 | DDoS protection, private networking, WAF ("never directly exposed") | /infrastructure | **NEEDS BACKEND EVIDENCE** (softened to "designed to sit behind managed network protections") |

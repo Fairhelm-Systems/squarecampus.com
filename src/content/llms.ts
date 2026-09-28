@@ -214,7 +214,7 @@ export const llmsSections: LlmsSection[] = [
         path: "/infrastructure",
         title: "Infrastructure",
         description:
-          "AWS Mumbai (ap-south-1), multi-AZ design, encryption in transit and at rest, India data-residency posture; documentation through security review",
+          "Microsoft Azure in India, encryption in transit and at rest, India data-residency posture, Enterprise private deployment on AWS; documentation through security review",
       },
       {
         path: "/privacy-policy",

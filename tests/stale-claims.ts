@@ -64,6 +64,11 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     reason: "export terms are agreed in the order form",
   },
   {
+    pattern: /AWS Mumbai|ap-south-1/i,
+    reason: "the platform is hosted on Microsoft Azure in India",
+  },
+  { pattern: /multi-AZ/i, reason: "unevidenced availability claim" },
+  {
     pattern: /retention schedule is under legal review/i,
     reason: "implies an engaged legal review that is not established",
   },
