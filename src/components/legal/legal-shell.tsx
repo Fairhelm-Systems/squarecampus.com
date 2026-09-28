@@ -22,6 +22,10 @@ export const legalPageLinks: LegalPageLink[] = [
     href: "/data-processing-addendum",
   },
   {
+    title: "Data Retention",
+    href: "/data-retention",
+  },
+  {
     title: "Acceptable Use",
     href: "/acceptable-use",
   },

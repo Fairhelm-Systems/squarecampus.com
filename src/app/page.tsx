@@ -132,7 +132,7 @@ const sovereigntyPillars = [
   {
     title: "Your data, your exit rights",
     icon: ShieldCheck,
-    body: "Role-scoped access and audit trails while you operate — and complete exports in standard formats if you ever decide to leave.",
+    body: "Role-scoped access and audit trails while you operate — and export and deletion terms agreed in writing for the day you decide to leave.",
   },
 ] as const;
 

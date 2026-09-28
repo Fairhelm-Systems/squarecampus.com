@@ -106,6 +106,7 @@ export const footerGroups = [
       { href: "/acceptable-use", label: "Acceptable Use" },
       { href: "/refund-policy", label: "Cancellation & Refunds" },
       { href: "/data-processing-addendum", label: "Data Processing Addendum" },
+      { href: "/data-retention", label: "Data Retention" },
     ],
   },
 ] as const;

@@ -29,6 +29,7 @@ import { company } from "./company";
 import { comparisons } from "./comparisons";
 import { intentPages } from "./intent-pages";
 import { hasMarkdownAlternate, markdownAlternatePath } from "./markdown-alternates";
+import { RETENTION_PATH, retentionPointer } from "./retention";
 import { AEGIS_DEFINITION, aegisBoundaries } from "./what-is-squarecampus";
 
 export type LlmsLink = { path: string; title: string; description: string };
@@ -231,6 +232,12 @@ export const llmsSections: LlmsSection[] = [
         description: "Processor obligations, sub-processors, security measures, return or deletion",
       },
       {
+        path: RETENTION_PATH,
+        title: "Data retention",
+        description:
+          "Who is responsible for retaining institutional data, what determines retention, how export, deletion and preservation requests are handled, and what is confirmed today versus awaiting confirmation",
+      },
+      {
         path: "/ai-policy",
         title: "AI policy",
         description: "Commitments on how AEGIS uses institutional data",
@@ -286,6 +293,7 @@ export function llmsOrientation(): string[] {
     `- Competes on: ${product.competesOn.map((c) => c.toLowerCase()).join(", ")}. It is not designed to be the cheapest attendance, fees and report-card product, and will look expensive to an institution that needs only that.`,
     `- Plans: ${planHierarchy.map((p) => `${p.name} — ${p.summary}`).join(" ")}`,
     `- Pricing availability: ${pricingAvailability.short}`,
+    `- Retention: ${retentionPointer.text}`,
     `- Identity: ${identity.baseline.body} ${identity.pro.body} ${identity.enterprise.body} ${identity.notes[0]}`,
     `- ${foundingProgramme.name}: ${foundingProgramme.positionsStatement}`,
     `- Deployment: a bounded deployment can run alongside the institution's current ERP, LMS, payment portal and identity provider, which stay authoritative; consolidation is a later choice and never a precondition of starting.`,

@@ -244,7 +244,7 @@ export const proposalInputs = [
   { label: "AEGIS usage", detail: "Whether governed intelligence is in scope, and at what depth." },
   {
     label: "Communication and storage requirements",
-    detail: "Messaging volume and document retention.",
+    detail: "Messaging volume and document storage.",
   },
 ] as const;
 

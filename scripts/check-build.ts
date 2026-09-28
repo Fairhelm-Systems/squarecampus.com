@@ -12,15 +12,27 @@
  *   - the sitemap or robots.txt lacks a required entry;
  *   - JSON-LD on a critical page fails to parse, carries a rating/review/
  *     priced-offer node, or lacks the stable root entity ids;
- *   - a stale commercial claim survives in rendered HTML or Markdown.
+ *   - a stale commercial claim survives in rendered HTML or Markdown;
+ *   - /data-retention/ renders an unreviewed period, a deadline, money or an
+ *     overclaim, or its metadata drifts from the visible wording; the pricing
+ *     retention pointer is missing from a plan; or a retention link is absent.
  *
  *   bun scripts/check-build.ts   (also part of `bun run build`)
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { llmsLinks, llmsRoute, renderLlmsTxt } from "../src/content/llms";
 import { markdownAlternatePath, markdownAlternatePaths } from "../src/content/markdown-alternates";
+import { plans } from "../src/content/pricing";
+import {
+  publicRetentionSchedule,
+  RETENTION_PATH,
+  retentionContentReview,
+  retentionPage,
+  retentionPointer,
+} from "../src/content/retention";
+import { retentionCopyProblems } from "../tests/retention-guards";
 import { findStaleClaims } from "../tests/stale-claims";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -43,6 +55,7 @@ const CRITICAL = [
   "/multi-campus-school-management-software",
   "/faq",
   "/about",
+  "/data-retention",
 ];
 
 function htmlFile(route: string) {
@@ -202,6 +215,65 @@ for (const route of markdownAlternatePaths) {
   }
   for (const hit of findStaleClaims(md))
     fail(`${route}: Markdown alternate stale claim ${hit.pattern}`);
+}
+
+// --- data retention -------------------------------------------------------
+{
+  const escapeHtml = (text: string) =>
+    text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  const html = existsSync(htmlFile(RETENTION_PATH))
+    ? readFileSync(htmlFile(RETENTION_PATH), "utf8")
+    : "";
+  const mdFile = join(OUT, markdownAlternatePath(RETENTION_PATH).replace(/^\//, ""));
+  const md = existsSync(mdFile) ? readFileSync(mdFile, "utf8") : "";
+  const schedule = publicRetentionSchedule();
+
+  // Metadata and structured data say what the page says.
+  const description = escapeHtml(retentionPage.description);
+  if (!html.includes(`<meta name="description" content="${description}"`))
+    fail(`${RETENTION_PATH}: meta description differs from retentionPage.description`);
+  if (!html.includes(`"description":${JSON.stringify(retentionPage.description)}`))
+    fail(`${RETENTION_PATH}: JSON-LD description differs from retentionPage.description`);
+
+  // The visible and Markdown representations carry the approved wording.
+  for (const [label, doc] of [
+    ["HTML", html],
+    ["Markdown", md],
+  ] as const) {
+    if (!doc.includes(retentionPage.disclaimer))
+      fail(`${RETENTION_PATH}: ${label} lacks the disclaimer`);
+    if (schedule.length === 0 && !doc.includes(retentionPage.schedule.emptyNotice))
+      fail(`${RETENTION_PATH}: ${label} lacks the empty-schedule notice`);
+  }
+  if (!retentionContentReview.reviewedOn && /Content last reviewed/.test(html))
+    fail(`${RETENTION_PATH}: renders a review date that is not recorded`);
+
+  // No period may appear unless it belongs to a reviewed schedule entry.
+  let body = md;
+  for (const entry of schedule) body = body.split(entry.period).join("");
+  for (const problem of retentionCopyProblems(body, `${RETENTION_PATH} (Markdown)`)) fail(problem);
+
+  // One pointer per plan band, plus the comparison table.
+  // Count rendered markup only: the RSC payload in <script> repeats every string.
+  const pricingFile = htmlFile("/pricing");
+  const pricing = (existsSync(pricingFile) ? readFileSync(pricingFile, "utf8") : "").replace(
+    /<script[\s\S]*?<\/script>/g,
+    ""
+  );
+  const pointers = pricing.split('data-retention-pointer="true"').length - 1;
+  if (pointers !== plans.length + 1)
+    fail(`/pricing: expected ${plans.length + 1} retention pointers, found ${pointers}`);
+  if (pricing.split(retentionPointer.text).length - 1 !== pointers)
+    fail("/pricing: a retention pointer does not carry the shared wording");
+  if (!pricing.includes(`href="${retentionPointer.href}"`))
+    fail(`/pricing: retention pointer does not link to ${retentionPointer.href}`);
+
+  // Reachable from the footer and the legal navigation, in canonical form.
+  for (const route of ["/", "/privacy-policy"]) {
+    const page = existsSync(htmlFile(route)) ? readFileSync(htmlFile(route), "utf8") : "";
+    if (!page.includes(`href="${RETENTION_PATH}/"`))
+      fail(`${route}: no link to ${RETENTION_PATH}/`);
+  }
 }
 
 // --- report -----------------------------------------------------------------

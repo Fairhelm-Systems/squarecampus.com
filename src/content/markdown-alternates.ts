@@ -31,6 +31,7 @@ export const markdownAlternatePaths = [
   "/why-squarecampus",
   "/faq",
   "/rollout",
+  "/data-retention",
 ] as const;
 
 export type MarkdownAlternatePath = (typeof markdownAlternatePaths)[number];

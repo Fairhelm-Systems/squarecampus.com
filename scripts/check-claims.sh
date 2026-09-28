@@ -45,6 +45,12 @@ PATTERNS=(
   "not an investment|stale Founding Partner wording (strategic capital commitment under a separate agreement)"
   "Enterprise-only|stale identity tier wording"
   "SSO-ready|vague identity capability wording"
+  # Retention and exit (see /data-retention/ and docs/marketing-claims-register.md)
+  "within 30 days of request|unsupported export deadline"
+  "consent management, data retention controls|unimplemented capabilities described as available"
+  "[Cc]omplete exports? in standard formats|unsupported export commitment (terms are agreed in the order form)"
+  "ensuring GDPR|GDPR compliance claim without assessment"
+  "[Rr]etention schedule is under legal review|implies an engaged legal review that is not established"
 )
 
 FAILED=0

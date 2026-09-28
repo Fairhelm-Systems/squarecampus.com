@@ -1,6 +1,7 @@
 # Marketing Claims Register
 
-Last updated: 2026-09-09 (commercial-consistency pass: canonical commercial facts in
+Last updated: 2026-09-28 (data retention page and exit-claim reconciliation). Previous: 2026-09-09
+(commercial-consistency pass: canonical commercial facts in
 `src/content/commercial.ts`, identity model by plan, two-position Founding Partner
 programme, generated /llms.txt and Markdown alternates).
 
@@ -65,7 +66,9 @@ Every security, infrastructure, AI, rollout, customer, and compliance claim that
 | "Designed to support DPDP Act / IT Act 2000 obligations" | faq.ts, /school-management-system | **NEEDS LEGAL REVIEW** (kept in softened "designed to support" form) |
 | "GDPR aligned", "SOC 2 practices" | /security metadata (old) | **REMOVE** (removed; no certification/assessment evidence) |
 | "Bank-grade security" | /security, /infrastructure (old) | **REMOVE** (removed; forbidden phrase) |
-| Data export within 30 days of exit + deletion per retention policy | faq.ts | **NEEDS LEGAL REVIEW** (service commitment; align with ToS/DPA) |
+| Data export within 30 days of exit, CSV/JSON, deletion of all data after transition | faq.ts (old) | **REMOVE** (removed 2026-09-28; no deadline, format or complete-deletion commitment is evidenced, and the DPA is narrower. Forbidden by `check-claims.sh`. See "Data retention and exit" below) |
+| "The platform includes consent management, data retention controls, and export capabilities" | faq.ts (old) | **REMOVE** (removed 2026-09-28; designed and partly built in the platform's data layer but not available for institutional data) |
+| "Ensuring GDPR … compliance" | /data-processing-addendum metadata (old) | **REMOVE** (metadata now describes the document; no GDPR assessment exists) |
 | Security questionnaire support / documentation on request | /security, /infrastructure | **VERIFIED** as an offer (it is a commitment to respond, not a certification) |
 
 ## AI (AEGIS) claims
@@ -115,6 +118,36 @@ SAML, SCIM, multi-directory federation or break-glass path implemented).
 | "Enterprise includes Entra ID SSO for one approved institutional tenant" | pricing, security, faq (old) | **REMOVE** (SSO is optional from Pro; the tenant cap is not the Enterprise differentiator; forbidden by `check-claims.sh`) |
 | Break-glass access | — | **ABSENT.** No such mechanism exists; do not describe one. |
 | Authorisation stays in SquareCampus; never derived from email/domain alone | security, pricing, faq | **VERIFIED** as design (backend: Entra `tid` is directory metadata only; authority resolved server-side from memberships) |
+
+## Data retention and exit
+
+Public wording lives in `src/content/retention.ts` and renders on `/data-retention/`,
+the pricing plan bands, the FAQ and `/llms.txt`. The reviewed retention schedule is
+rendered only from rules that pass `publicationBlocker()` (qualified review of the
+exact version, recorded by reference); no rule has passed, so the page shows the
+empty-schedule notice. Legal research, proposed periods and review records are kept
+outside this repository. Approval of website wording is not legal review.
+
+| Claim | Where | Status |
+| --- | --- | --- |
+| "Your plan does not determine your legal retention obligations. Storage and archive arrangements are specified in your proposal and order form." | /pricing (every plan band and the comparison), llms.txt | **NEEDS LEGAL REVIEW** as commercial policy (must match the proposal and order form); the principle itself is approved website wording (2026-09-28) |
+| Institution is the Data Fiduciary for its records; SquareCampus processes them as Data Processor under the DPA | /data-retention | **VERIFIED** as a restatement of the published DPA and Privacy Policy |
+| Contract end: delete/anonymise or return where export is agreed; retention for law, disputes, backups | /data-retention, faq.ts | **VERIFIED** as a restatement of DPA §11. Substantive terms unchanged; any change needs counsel |
+| Export scope, formats, timing, responsibilities and charges agreed in the order form; no published format or turnaround; no self-service institution-wide export | /data-retention, faq.ts, homepage, /launch-partners FAQ, blog `school-erp-data-exit` | **VERIFIED** as the approved position (2026-09-28). No institution-wide export capability is evidenced in the platform |
+| Retention deadlines, preservation holds and consent withdrawal "being built into the platform's data layer", not available for institutional data | /data-retention | **NEEDS BACKEND EVIDENCE** before any stronger wording: design and synthetic-only implementation exist; nothing runs on institutional data |
+| Website enquiries: stored with IP address and browser details, passed to the CRM, notified by email; anti-abuse records set to expire automatically | /data-retention | **VERIFIED** against `infra/contact-intake/index.mjs` and the live table configuration (2026-09-28). Submission records carry no expiry |
+| No retention period yet for website enquiries or their CRM, email and log copies | /data-retention | **VERIFIED** as a statement of the current gap. Setting a period is an operational decision, not a website change |
+| Backup retention periods for production not stated | /data-retention | **VERIFIED** as a statement of the gap. Backup cadence and retention remain **NEEDS BACKEND EVIDENCE** (see Infrastructure claims) |
+| Preservation and data requests made in writing and assessed individually; no self-service preservation control | /data-retention | **VERIFIED** as the approved handling arrangement (2026-09-28). No automated or tested fulfilment is claimed |
+| Official source references (DPDP Act 2023, DPDP Rules 2025, CBSE Affiliation Bye-Laws Ch. 14) | /data-retention | **VERIFIED** as references only (official URLs read 2026-09-28). No period, interpretation or applicability is drawn from them on the site |
+| "Retention schedule is under legal review" | — | **ABSENT.** No qualified legal review is established; forbidden by `check-claims.sh` |
+| Statutory penalty figures and consequences | — | **ABSENT** by decision (2026-09-28): not published in this change |
+| "Complete exports in standard formats" / "within 30 days of request" | homepage, /launch-partners FAQ, blog "Our own posture", faq.ts (old) | **REMOVE** (removed; forbidden by `check-claims.sh`) |
+
+Still open (not changed in this pass): blog posts `founding-institutional-partner-pilot`
+and `eighteen-thousand-rupee-school-erp-true-cost` and the DPDP checklist post describe
+exports "in standard formats" as SquareCampus practice; they need the same
+reconciliation before those statements are relied on.
 
 ## Company & legal facts
 

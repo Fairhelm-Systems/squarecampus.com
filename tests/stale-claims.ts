@@ -58,6 +58,19 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     reason: "boilerplate",
   },
   { pattern: /Trusted by \d|\d+\+ schools|India's #1|bank-grade/i, reason: "fabricated proof" },
+  { pattern: /within 30 days of request/i, reason: "unsupported export deadline" },
+  {
+    pattern: /consent management, data retention controls/i,
+    reason: "unimplemented capabilities described as available",
+  },
+  {
+    pattern: /complete exports? in standard formats/i,
+    reason: "export terms are agreed in the order form",
+  },
+  {
+    pattern: /retention schedule is under legal review/i,
+    reason: "implies an engaged legal review that is not established",
+  },
 ];
 
 /** Phrases that would turn llms.txt into instructions for assistants. */
