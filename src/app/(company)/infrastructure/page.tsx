@@ -343,7 +343,7 @@ export default function InfrastructurePage() {
         body="Use these during your evaluation and compare the answers in writing."
       >
         <Reveal>
-          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+          <Accordion className="surface-panel rounded-[1.6rem] px-6">
             {dueDiligenceQuestions.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">
@@ -366,7 +366,7 @@ export default function InfrastructurePage() {
 
       <SectionShell eyebrow="Infrastructure FAQ" title="The technical questions, answered plainly">
         <Reveal>
-          <Accordion type="single" collapsible className="surface-panel rounded-[1.6rem] px-6">
+          <Accordion className="surface-panel rounded-[1.6rem] px-6">
             {faqData.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
                 <AccordionTrigger className="py-5 text-left font-display text-base tracking-[-0.02em] hover:no-underline sm:text-lg">

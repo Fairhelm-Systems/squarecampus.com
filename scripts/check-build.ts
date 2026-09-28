@@ -22,6 +22,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { faqs } from "../src/content/faq";
 import { llmsLinks, llmsRoute, renderLlmsTxt } from "../src/content/llms";
 import { markdownAlternatePath, markdownAlternatePaths } from "../src/content/markdown-alternates";
 import { plans } from "../src/content/pricing";
@@ -215,6 +216,19 @@ for (const route of markdownAlternatePaths) {
   }
   for (const hit of findStaleClaims(md))
     fail(`${route}: Markdown alternate stale claim ${hit.pattern}`);
+}
+
+// --- collapsed FAQ answers ----------------------------------------------------
+// Closed accordion answers must survive into the Markdown alternate: the
+// FAQPage JSON-LD declares every one of them.
+{
+  const mdFile = join(OUT, markdownAlternatePath("/faq").replace(/^\//, ""));
+  const md = existsSync(mdFile) ? readFileSync(mdFile, "utf8").replace(/\s+/g, " ") : "";
+  const missing = faqs.filter((f) => !md.includes(f.answer.slice(0, 80).replace(/\s+/g, " ")));
+  if (missing.length > 0)
+    fail(
+      `/faq: ${missing.length} FAQ answers missing from the Markdown alternate (first: "${missing[0].question}")`
+    );
 }
 
 // --- data retention -------------------------------------------------------

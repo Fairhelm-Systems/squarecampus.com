@@ -254,7 +254,7 @@ export default async function IntentPage({ params }: PageProps) {
         body="Short answers, the way a buyer asks them. The FAQ page covers evaluation, security and rollout in more depth."
       >
         <Reveal className="mx-auto max-w-3xl">
-          <Accordion type="single" collapsible className="grid gap-3">
+          <Accordion className="grid gap-3">
             {page.faqs.map((faq) => (
               <AccordionItem
                 key={faq.question}
