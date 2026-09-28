@@ -395,7 +395,7 @@ custom error responses to exclude `/api/*` would fix it.
 ## Public source mirror
 
 The website's source is published to a public, read-only mirror at
-https://github.com/Fairhelm-Systems/squarecampus.com by
+https://github.com/fairhelmsystems/squarecampus.com by
 `.github/workflows/public-mirror.yml` on every push to `main`:
 
 - The job clones the full history, then runs `scripts/publication-gate.sh`
