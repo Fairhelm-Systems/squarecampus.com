@@ -259,7 +259,7 @@ for (const page of intentPages) {
 }
 
 // ---------------------------------------------------------------------------
-// Blog posts. Framework-first posts (see docs/growth-playbook.md) need real
+// Blog posts. Framework-first posts need real
 // structure: several sections with headings, a lede, and a CTA that goes to a
 // live page.
 // ---------------------------------------------------------------------------

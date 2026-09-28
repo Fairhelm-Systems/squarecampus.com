@@ -119,8 +119,8 @@ bun run motion:studio  # preview/edit those compositions in Remotion Studio
 - **Motion is produced at build time, never at runtime.**
 - **Vocabulary.** Say "unified institutional data model" / "one governed
   system of record" — never "single/shared database".
-- **Legal pages carry `LEGAL REVIEW` markers.** Their substantive language is
-  not edited without counsel.
+- **Legal pages carry `LEGAL` markers.** Their substantive language changes
+  only with legal sign-off.
 
 ## Project map
 
@@ -133,7 +133,7 @@ src/
   lib/            seo helpers and utilities
 scripts/          claims, content and build checks; Markdown alternates; deploy
 tests/            commercial facts, retention gate, llms.txt, sitemap
-docs/             claims register, page-intent map, playbooks
+docs/             the claims register
 infra/            the contact-intake Lambda
 motion/           build-time Remotion compositions
 ```
@@ -141,11 +141,9 @@ motion/           build-time Remotion compositions
 ## Key docs
 
 - [docs/marketing-claims-register.md](docs/marketing-claims-register.md) — every claim and its evidence status
-- [docs/page-intent-map.md](docs/page-intent-map.md) — what each indexable page is for
 - [DEPLOYMENT.md](DEPLOYMENT.md) — infrastructure, edge config, deploy flow
 - [infra/contact-intake/README.md](infra/contact-intake/README.md) — the enquiry form's backend
 - [motion/README.md](motion/README.md) — the build-time motion pipeline
-- [docs/growth-playbook.md](docs/growth-playbook.md) — growth strategy and content cadence
 - [src/content/blog/BLOG_TOPICS.md](src/content/blog/BLOG_TOPICS.md)
 
 ## Contributing and security

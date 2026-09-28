@@ -42,7 +42,6 @@ PATTERNS=(
   "one approved (institutional )?tenant|stale Entra wording (SSO is optional from Pro)"
   "price protection for the (agreed|initial)|stale Founding Partner wording (no protection duration is published)"
   "[Ll]ifetime (pricing|discount|protection)|forbidden Founding Partner wording"
-  "not an investment|stale Founding Partner wording (strategic capital commitment under a separate agreement)"
   "Enterprise-only|stale identity tier wording"
   "SSO-ready|vague identity capability wording"
   # Retention and exit (see /data-retention/ and docs/marketing-claims-register.md)

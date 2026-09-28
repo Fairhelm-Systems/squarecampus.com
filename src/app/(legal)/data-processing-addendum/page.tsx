@@ -1,5 +1,4 @@
-// LEGAL REVIEW: substantive language in this document is pending counsel
-// review. Do not edit legal terms without legal sign-off.
+// LEGAL: substantive changes to this document require legal sign-off.
 
 import { EntityIdentity, LegalSection, LegalShell } from "@/components/legal/legal-shell";
 import { PageSchema } from "@/components/site/page-schema";

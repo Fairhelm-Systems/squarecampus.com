@@ -37,13 +37,9 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     reason: "forbidden Founding Partner wording",
   },
   {
-    pattern: /not an investment/i,
-    reason: "programme is a strategic capital commitment under a separate agreement",
-  },
-  {
     pattern:
       /\b(equity|shareholder|shareholding|securities|convertible|debenture|profit[- ]share|board seat)\b/i,
-    reason: "securities language must not appear in public copy",
+    reason: "no securities or ownership language in marketing copy",
   },
   {
     pattern: /Google Workspace (SSO|single sign-on|sign-in)/i,

@@ -20,8 +20,7 @@ import "@/styles/competitor-notice-print.css";
 
 const linkClassName = "text-teal-300 hover:underline";
 
-// LEGAL REVIEW: substantive language on this page is pending counsel review.
-// Do not edit the notice text without legal sign-off. This page is a legal
+// LEGAL: substantive changes to this notice require legal sign-off. This page is a legal
 // artifact, not marketing: it stays noindex and out of customer-facing
 // navigation, reachable only by direct link.
 export const metadata: Metadata = {

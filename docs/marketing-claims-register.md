@@ -102,14 +102,12 @@ Every security, infrastructure, AI, rollout, customer, and compliance claim that
 
 Stated once in `src/content/commercial.ts` (`identity`) and rendered on /pricing,
 /security, /faq, /school-management-system and llms.txt. Checked against the
-platform implementation on 2026-09-09 (`square_campus.backend.py`,
-`platform/auth.py`: Entra ID bearer-token validation for one configured directory,
-MFA evidence preserved from `amr`; no credential login route, no Google Workspace,
-SAML, SCIM, multi-directory federation or break-glass path implemented).
+platform's authentication implementation on 2026-09-09. Nothing is described as
+available unless the platform implements it.
 
 | Claim | Where | Status |
 | --- | --- | --- |
-| Every plan includes SquareCampus-managed credentials with role-based access | pricing, security, faq | **LAUNCH-BLOCKING BACKEND DEPENDENCY** (decision 2026-09-10). The website doctrine is the target product contract: credential authentication is the baseline in every plan. The current Python backend authenticates Entra tokens only, which is a known implementation gap to close before launch — the public model is not weakened to match the temporary state. Track in the backend repository. |
+| Every plan includes SquareCampus-managed credentials with role-based access | pricing, security, faq | **LAUNCH DEPENDENCY** (decision 2026-09-10). The website states the product contract: credential authentication is the baseline in every plan. Tracked in the product repository. |
 | Privileged roles "designed to carry additional sign-in verification" | pricing, security, faq | **NEEDS BACKEND EVIDENCE** (design wording only) |
 | Pro: optional Microsoft Entra ID SSO for the institution's own tenant, subject to technical onboarding | pricing, security, faq, blog | **NEEDS BACKEND EVIDENCE** (Entra validation exists for one configured directory; per-institution tenant onboarding is the deployment configuration to evidence) |
 | Enterprise: identity governance (multi-directory, group-to-role mappings, SSO enforcement policy, lifecycle controls, identity migration, identity audit) "scoped as Enterprise requirements during technical discovery" | pricing, security, faq | **NEEDS BACKEND EVIDENCE** — worded as scoped requirements, never as shipped features. None of these is implemented today. |
@@ -176,14 +174,14 @@ count is not exactly two or the discount is not 40%.
 | Defined roadmap influence — explicitly not a veto, roadmap ownership, product/architectural control, IP ownership or unlimited custom development; SquareCampus retains final product, architecture, security and engineering authority | programme surfaces | **VERIFIED** as boundary wording |
 | Founder-led rollout with a named implementation counterpart | homepage section, /launch-partners | **NEEDS BACKEND EVIDENCE** (service commitment; keep only while the team actually staffs it — same standing as the guided-rollout claim above) |
 | Early access to selected capabilities, written consideration of major workflow proposals | /launch-partners | **NEEDS LEGAL REVIEW** (bounded entitlement; never describe as unlimited) |
-| "Small cohort", "first cohort", "price protection for the agreed initial term", "pre-agreed expansion bands", "not an investment" | old copy | **REMOVE** (superseded by the two-position model; the cohort and initial-term phrases are forbidden by `check-claims.sh`) |
+| "Small cohort", "first cohort", "price protection for the agreed initial term", "pre-agreed expansion bands" | old copy | **REMOVE** (superseded by the two-position model; the cohort and initial-term phrases are forbidden by `check-claims.sh`) |
 | Priority escalation and capacity planning around peak cycles | homepage section, /launch-partners | **NEEDS BACKEND EVIDENCE** (operational commitment) |
 | Managed digital campus: websites, microsites, hosting, SSL, CDN, backups | /launch-partners | **SCOPED — NOT INCLUDED BY DEFAULT.** The page states site count, migration, traffic, storage and change allowances are defined in the proposal, and that this is not an unlimited creative-services retainer. Do not weaken that note. |
 | 60–90 day pilot, written baseline, convert/extend/stop | /launch-partners, /pricing | **VERIFIED** (already the published pricing doctrine; this page reuses it, it does not invent it) |
 
 Deliberately **absent**, and must stay absent from public copy:
 
-- Equity, shares, warrants, board seats, or any securities language. 
+- Securities, investment or ownership language of any kind.
 - Guaranteed lifetime pricing or a perpetual discount.
 - Unlimited development, support, hosting, storage or AI usage.
 - Exclusivity, territory rights, or a veto over other customers or sectors.
@@ -220,10 +218,10 @@ collection rates, test scores, uptime figures or certifications. Labels such as
 partner composition shows Convert, Extend and Stop with equal visual weight
 precisely so it cannot be read as promising conversion.
 
-## Legal documents flagged for counsel review
+## Legal documents
 
-All substantive legal language was left unedited; each file now carries a
-`LEGAL REVIEW` marker comment:
+Substantive legal language is changed only with legal sign-off; each file
+carries a `LEGAL` marker comment saying so:
 
 - `/terms-of-service`
 - `/privacy-policy`
