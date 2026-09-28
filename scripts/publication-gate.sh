@@ -50,12 +50,15 @@ else
 fi
 
 # 4. People: authors and committers must be allowlisted; web merges may be
-#    committed by the forge itself; co-authors must be allowlisted or Claude.
+#    committed by the forge itself, as may a GHE squash merge (one parent,
+#    committed by noreply@ghe.com); co-authors must be allowlisted or Claude.
 while IFS='|' read -r sha author committer parents; do
   case " $ALLOWED_PEOPLE " in *" $author "*) ;; *) fail "commit ${sha:0:7}: author $author is not allowlisted" ;; esac
   case " $ALLOWED_PEOPLE " in
     *" $committer "*) ;;
-    *) if [ "$(wc -w <<<"$parents")" -gt 1 ] && [[ "$committer" == noreply@* ]]; then :; else fail "commit ${sha:0:7}: committer $committer is not allowlisted"; fi ;;
+    *) if [ "$(wc -w <<<"$parents")" -gt 1 ] && [[ "$committer" == noreply@* ]]; then :
+       elif [ "$(wc -w <<<"$parents")" -eq 1 ] && [ "$committer" = "noreply@ghe.com" ]; then :
+       else fail "commit ${sha:0:7}: committer $committer is not allowlisted"; fi ;;
   esac
 done < <(git log --format='%H|%ae|%ce|%P' "$RANGE")
 while read -r email; do
