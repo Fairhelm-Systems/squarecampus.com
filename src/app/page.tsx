@@ -1,7 +1,6 @@
 import {
   ArrowRightLeft,
   BellRing,
-  BookOpenCheck,
   Building2,
   ChartNoAxesCombined,
   Check,
@@ -11,7 +10,6 @@ import {
   Radar,
   ShieldCheck,
   Sparkles,
-  WalletCards,
 } from "lucide-react";
 import type { Metadata } from "next";
 import { AegisIntelligenceVisual } from "@/components/site/aegis-intelligence-visual";
@@ -27,19 +25,20 @@ import { SectionShell } from "@/components/site/section-shell";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { SyntheticDataNote } from "@/components/site/synthetic-data-note";
-import { deploymentSummary } from "@/content/commercial";
+import { WorkflowCards } from "@/components/site/workflow-cards";
+import { deploymentSummary, product } from "@/content/commercial";
 import {
   CANONICAL_PROMISE,
   homepagePainIds,
   RECORD_VS_DECISION,
 } from "@/content/operational-pains";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "SquareCampus | School Operating System for Indian Schools and Trusts",
+  title: "SquareCampus | School Management Software for Indian Schools and Trusts",
   description:
-    "SquareCampus connects school operations, workflow ownership, institutional visibility and governed intelligence in one School Operating System for schools and educational trusts.",
+    "School management software built as a connected School OS: admissions, attendance, fees, exams and parent communication on one record for Indian schools.",
   // Canonical plus the homepage's Markdown alternate (content/markdown-alternates.ts).
   alternates: createAlternates("/"),
 };
@@ -67,56 +66,6 @@ const governanceMoves = [
   {
     title: "Every action stays accountable",
     body: "Approvals, overrides, and edits land on one auditable timeline — who, what, when, and in which campus context.",
-  },
-] as const;
-
-const fragmentationCosts = [
-  "Multiple tools create multiple truths. Reports become reconciliation exercises instead of decision tools.",
-  "Parents bounce between channels while staff repeat the same update across apps, calls, and spreadsheets.",
-  "Auditability breaks when approvals, fees, attendance, and communication live in different systems.",
-  "Leadership sees the institution late, usually through exports prepared after the problem has already started.",
-] as const;
-
-const governedSystemGains = [
-  "An admission confirmed in one campus flows into academics, fees, and communication on the same record.",
-  "Management sees current institutional health instead of retrospective spreadsheet packages.",
-  "Parents, students, staff, and operators interact with one coordinated system.",
-  "Auditability is native because every approval and update lives on the same timeline.",
-] as const;
-
-const journeys = [
-  {
-    title: "The student journey",
-    icon: BookOpenCheck,
-    summary: "One record from first inquiry to final transcript.",
-    steps: [
-      "Inquiry and application captured with documents and status",
-      "Enrolment flows into sections, timetable, and attendance",
-      "Assessments, remarks, and results build one academic history",
-      "Promotion and records stay audit-ready year over year",
-    ],
-  },
-  {
-    title: "The money journey",
-    icon: WalletCards,
-    summary: "Every rupee traceable from fee plan to audit.",
-    steps: [
-      "Fee plans, concessions, and transport slabs set by policy",
-      "Invoices, reminders, and online payments run on schedule",
-      "Receipts and reconciliation happen on the same record",
-      "Approvals and refunds carry a complete audit trail",
-    ],
-  },
-  {
-    title: "The decision journey",
-    icon: ChartNoAxesCombined,
-    summary: "From signal to action while the problem is still small.",
-    steps: [
-      "Current signals across attendance, fees, and academics",
-      "Exceptions flagged against policy, not discovered at term end",
-      "Reviews run on shared numbers, not competing exports",
-      "Actions and follow-ups tracked to closure",
-    ],
   },
 ] as const;
 
@@ -224,25 +173,29 @@ export default function Home() {
               immediate
               className="space-y-4 sm:space-y-5 lg:col-start-1 lg:row-start-1 lg:self-end"
             >
-              <p className="section-kicker">Built for school leadership</p>
+              {/* Category and audience first (audit SC-007): a first-time
+                  visitor should know what this is before the proposition. */}
+              <p className="section-kicker">{product.categoryDescriptor}</p>
               <h1 className="type-display">
-                Know what requires <span className="hero-emphasis">attention</span> today.
+                Run daily operations. See what needs{" "}
+                <span className="hero-emphasis">attention</span>.
               </h1>
               <p className="type-body measure text-muted-foreground">
-                One system for operations, ownership, and leadership visibility. Every exception
-                gets an owner. Every change stays governed.
+                Admissions, attendance, fees, exams and parent communication in one connected system
+                — with clear responsibilities for school teams and one shared view for leadership
+                across campuses.
               </p>
               {/* Stacked and full-width on phones; one row from sm up. */}
               <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
                 <ButtonLink
                   href={siteCtas.demoHref}
-                  label="Diagnose an operational bottleneck"
+                  label={ctaLabels.demo}
                   variant="cta"
                   className="w-full justify-center text-center sm:w-auto"
                 />
                 <ButtonLink
                   href={siteCtas.platformHref}
-                  label="See the School OS"
+                  label="See how it works"
                   variant="secondary"
                   className="w-full justify-center sm:w-auto"
                 />
@@ -277,6 +230,19 @@ export default function Home() {
               </ul>
             </Reveal>
           </div>
+        </SectionShell>
+
+        {/* 2 — The everyday workflows, straight after the hero (audit SC-006,
+            SC-008): the tasks a school recognises come before the governance
+            model that connects them. Each card links to its solution page. */}
+        <SectionShell
+          id="workflows"
+          eyebrow="What school teams do in SquareCampus"
+          title="The daily work, from first enquiry to results"
+          body="Each workflow has an owner at every step and ends on the same school record, so nothing is re-typed between departments."
+        >
+          <WorkflowCards />
+          <AvailabilityNote className="mt-4" />
         </SectionShell>
 
         {/* 2 — Operational pain and the remedy. This sits directly under the
@@ -578,91 +544,6 @@ export default function Home() {
           </MobileExpand>
         </SectionShell>
 
-        {/* 3 — Cost of fragmentation */}
-        <SectionShell
-          eyebrow="The cost of fragmentation"
-          compactBody
-          title="Fragmented software taxes the institution every single day"
-          body="Most campuses are not missing features. They are missing one governed operating model."
-        >
-          <MobileExpand label="Compare fragmented vs governed">
-            <Reveal className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="surface-panel rounded-[1.8rem] p-7">
-                <p className="section-kicker">What fragmentation costs</p>
-                <div className="mt-5 grid gap-3">
-                  {fragmentationCosts.map((problem) => (
-                    <div
-                      key={problem}
-                      className="rounded-[1.2rem] bg-(--surface-muted) px-4 py-4 text-sm leading-6 text-muted-foreground"
-                    >
-                      {problem}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="surface-panel-strong rounded-[1.8rem] p-7">
-                <p className="section-kicker">What one governed system changes</p>
-                <h2 className="mt-4 font-display text-3xl tracking-tighter">
-                  Exports, sync gaps, and operational guessing stop being the job.
-                </h2>
-                <div className="mt-5 grid gap-3">
-                  {governedSystemGains.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[1.2rem] border border-(--line) bg-(--surface) px-4 py-4 text-sm leading-6 text-muted-foreground"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </MobileExpand>
-        </SectionShell>
-
-        {/* 4 — Three connected journeys */}
-        <SectionShell
-          eyebrow="Three connected journeys"
-          compactBody
-          title="Students, money, and decisions move through one system"
-          body="Every campus runs the same three journeys. SquareCampus keeps each one connected end to end — on the same institutional record."
-        >
-          <MobileExpand label="Explore the three journeys">
-            <Reveal staggerChildren className="grid gap-4 lg:grid-cols-3">
-              {journeys.map((journey) => (
-                <article
-                  key={journey.title}
-                  data-reveal-item
-                  className="surface-panel flex flex-col rounded-[1.8rem] p-6"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <journey.icon className="size-5 text-(--brand)" />
-                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-1.5 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-muted-foreground">
-                      Connected
-                    </span>
-                  </div>
-                  <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{journey.title}</h2>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{journey.summary}</p>
-                  <div className="mt-5 grid flex-1 content-start gap-2.5">
-                    {journey.steps.map((step, index) => (
-                      <div
-                        key={step}
-                        className="flex items-start gap-3 rounded-[1.1rem] border border-(--line) bg-(--surface-strong) px-3.5 py-3"
-                      >
-                        <p className="font-mono text-[0.58rem] leading-6 text-muted-foreground">
-                          {String(index + 1).padStart(2, "0")}
-                        </p>
-                        <p className="text-sm leading-6 text-foreground">{step}</p>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </Reveal>
-            <AvailabilityNote className="mt-4" />
-          </MobileExpand>
-        </SectionShell>
-
         {/* 5 — Sovereignty */}
         <SectionShell
           eyebrow="Sovereignty"
@@ -907,7 +788,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="grid gap-3">
-                <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+                <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
                 <ButtonLink
                   href={siteCtas.platformHref}
                   label="View platform architecture"

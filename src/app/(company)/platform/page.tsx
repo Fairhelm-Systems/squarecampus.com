@@ -24,7 +24,7 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SystemLayerGrid } from "@/components/site/system-layers";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -128,7 +128,7 @@ export default function PlatformPage() {
             operations work off the same institutional truth.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink href={siteCtas.rolloutHref} label="See rollout" variant="secondary" />
           </div>
         </Reveal>
