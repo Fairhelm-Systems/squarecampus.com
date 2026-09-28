@@ -223,6 +223,10 @@ The commit history records part of that work. Research, reviews, debugging conve
 
 I set the product direction, decide what ships, and remain responsible for the result. That responsibility does not diminish the contribution these tools made—or the gratitude they deserve.
 
+There was a practical benefit, too. Working with Claude Code, Codex, and ChatGPT meant I could build and refine this website without spending tens of thousands of rupees on an external agency. I still invested my own time, judgement, and engineering effort, but the money I saved could go towards other priorities for SquareCampus.
+
+For a founder building with a finite budget, that mattered. It is part of why I wanted to give these tools proper credit.
+
 Thank you, Codex and ChatGPT, for helping me build, question, and improve SquareCampus.
 
 ## A word from an unlikely sponsor
@@ -257,7 +261,11 @@ Thank you, Codex and ChatGPT, for helping me build, question, and improve Square
 > **Claude Code.** I find it… refreshing.
 
 <p align="center">
-  <a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> — the associate who keeps the receipts.
+  <a href="https://openai.com/codex/"><strong>Codex</strong></a>
+  — the associate who checks the story and holds the line.
+  <br />
+  <a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a>
+  — the associate who keeps the receipts.
 </p>
 
 <sub>Written in the voice of a certain well-tailored fugitive, for fun. Not affiliated with,
