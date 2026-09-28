@@ -60,9 +60,49 @@ export default function ContactPage() {
         titleSize="page"
         eyebrow="Contact"
         title="Talk to the company behind SquareCampus."
-        body="Registered particulars, the right mailbox for what you need, and a guided demo when you are ready to see the system run."
+        body="The right mailbox for what you need, a demo when you are ready to see the system, and the company's registered particulars."
       >
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          {/* Contact choices first, registered particulars after (audit
+              SC-029): most visitors want the right mailbox. The statutory
+              particulars stay complete, below on phones and beside on desktop. */}
+          <div className="grid content-start gap-4">
+            <div className="surface-panel rounded-[1.6rem] p-6">
+              <p className="section-kicker">Reach the right desk</p>
+              <ul className="mt-5 grid gap-4">
+                {channels.map(({ icon: Icon, ...channel }) => (
+                  <li key={channel.href} className="flex items-start gap-3">
+                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-(--surface-strong) text-(--brand)">
+                      <Icon className="size-3.5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-xs text-muted-foreground">{channel.label}</p>
+                      <a href={channel.href} className="text-sm text-foreground hover:underline">
+                        {channel.value}
+                      </a>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="surface-panel rounded-[1.6rem] p-6">
+              <p className="section-kicker">Evaluating SquareCampus?</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                A guided walkthrough is the fastest way to judge whether the system fits how your
+                institution actually runs.
+              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
+                <ButtonLink
+                  href={siteCtas.pricingHref}
+                  label="See pricing model"
+                  variant="secondary"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="surface-panel rounded-[1.6rem] p-6 sm:p-8">
             <div className="flex items-center gap-3">
               <span className="flex size-10 items-center justify-center rounded-full bg-(--surface-strong) text-(--brand)">
@@ -123,43 +163,6 @@ export default function ContactPage() {
               {company.incorporationStatus}. These particulars are published under section 12(3) of
               the Companies Act, 2013.
             </p>
-          </div>
-
-          <div className="grid content-start gap-4">
-            <div className="surface-panel rounded-[1.6rem] p-6">
-              <p className="section-kicker">Reach the right desk</p>
-              <ul className="mt-5 grid gap-4">
-                {channels.map(({ icon: Icon, ...channel }) => (
-                  <li key={channel.href} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-(--surface-strong) text-(--brand)">
-                      <Icon className="size-3.5" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <p className="text-xs text-muted-foreground">{channel.label}</p>
-                      <a href={channel.href} className="text-sm text-foreground hover:underline">
-                        {channel.value}
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="surface-panel rounded-[1.6rem] p-6">
-              <p className="section-kicker">Evaluating SquareCampus?</p>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                A guided walkthrough is the fastest way to judge whether the system fits how your
-                institution actually runs.
-              </p>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
-                <ButtonLink
-                  href={siteCtas.pricingHref}
-                  label="See pricing model"
-                  variant="secondary"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </SectionShell>

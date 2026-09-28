@@ -216,7 +216,7 @@ export const intentPages: IntentPage[] = [
       "Partial payments and instalment plans without losing the original due.",
       "Late-fee rules that respect board holidays and school-specific grace periods.",
       "Trust-level visibility across campuses with campus-level execution.",
-      "Defaulter follow-up as a workflow with an owner, not a printed list.",
+      "Follow-up on overdue fees as a workflow with an owner, not a printed list.",
     ],
     evaluation: [
       "Can one student carry a term plan, a concession and a transport slab without a manual override?",
@@ -252,7 +252,7 @@ export const intentPages: IntentPage[] = [
           "Online payments through a payment gateway, counter cash, cheques and bank transfers post to one ledger. Gateway options are confirmed during scoping.",
       },
       {
-        question: "How are defaulters handled?",
+        question: "How is follow-up on overdue fees handled?",
         answer:
           "Outstanding dues become a follow-up workflow with reminders in context, an owner, and a record of every contact, so leadership sees the state without chasing the office.",
       },

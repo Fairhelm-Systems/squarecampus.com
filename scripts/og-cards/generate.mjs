@@ -253,8 +253,8 @@ export const CARDS = {
     path: "aegis",
   },
   ecosystem: {
-    label: "ECOSYSTEM",
-    headline: "One platform. Every campus touchpoint.",
+    label: "APPS & INTEGRATIONS",
+    headline: "An app for every role, on one school record.",
     subhead:
       "Admin console, teacher workspace, and parent and student apps on one record, with scoped integrations.",
     path: "ecosystem",

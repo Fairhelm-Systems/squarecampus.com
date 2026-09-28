@@ -22,7 +22,7 @@ import { createPageMetadata } from "@/lib/seo";
  * /demo/?intent=founding-partner links are forwarded before first paint.
  */
 export const metadata: Metadata = createPageMetadata({
-  title: "Book a Guided Demo",
+  title: "Book a School Management Software Demo",
   description:
     "Book a guided SquareCampus demo and see how the School OS maps to admissions, academics, finance, communication, and institutional operations.",
   path: "/demo",
@@ -61,7 +61,7 @@ export default function DemoPage() {
       <script dangerouslySetInnerHTML={{ __html: legacyIntentRedirectScript }} />
 
       <PageSchema
-        name="Book a Guided Demo"
+        name="Book a School Management Software Demo"
         description="Request a guided SquareCampus walkthrough mapped to the institution's own admissions, academics, finance, communication and governance workflows."
         path="/demo"
       />

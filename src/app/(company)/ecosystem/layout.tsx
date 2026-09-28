@@ -5,15 +5,15 @@ import { createPageMetadata } from "@/lib/seo";
 // Target: Users looking for comprehensive/integrated solutions
 
 export const metadata: Metadata = createPageMetadata({
-  title: "School Management Ecosystem | Apps, Integrations and Platform",
+  title: "School Apps & Integrations",
   description:
     "The SquareCampus ecosystem: admin console, teacher workspace, and parent and student apps on one record, with integrations to the tools you keep scoped and confirmed in writing.",
   path: "/ecosystem",
   ogImage: "https://squarecampus.com/og/ecosystem.png",
-  ogTitle: "School Ecosystem | SquareCampus Platform",
+  ogTitle: "School Apps & Integrations | SquareCampus",
   ogDescription:
     "Admin console, teacher workspace, and parent and student apps on one record, with scoped integrations to the tools you keep.",
-  twitterTitle: "School Management Ecosystem | SquareCampus",
+  twitterTitle: "School Apps & Integrations | SquareCampus",
   twitterDescription:
     "Admin console, teacher workspace, parent and student apps, and scoped integrations — on one record.",
 });
