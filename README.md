@@ -1,8 +1,6 @@
-<p align="center">
-  <a href="https://squarecampus.com">
-    <img src="public/brand/squarecampus.png" alt="SquareCampus" width="88" height="88" />
-  </a>
-</p>
+<a href="https://squarecampus.com">
+  <img src="public/og/default.png" alt="SquareCampus — Know what requires attention today. One system for operations, ownership and leadership visibility." width="100%" />
+</a>
 
 <h1 align="center">squarecampus.com</h1>
 
@@ -30,6 +28,10 @@
   <img alt="Static export" src="https://img.shields.io/badge/output-static%20export-4B5563" />
   <a href="LICENSE"><img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-2F6FEB" /></a>
   <a href="#built-with-claude-code"><img alt="Built with Claude Code" src="https://img.shields.io/badge/built%20with-Claude%20Code-D97757?logo=anthropic&logoColor=white" /></a>
+</p>
+
+<p align="center">
+  <sub>🎩 Built with an unusual associate. <a href="#a-word-from-an-unlikely-sponsor"><strong>Hear it from our unlikely sponsor ↓</strong></a></sub>
 </p>
 
 > This repository is a read-only public mirror of our internal repository,
@@ -180,6 +182,11 @@ fonts carry their own SIL Open Font License. Details in [NOTICE](NOTICE).
 
 This website did not get here alone.
 
+<p align="center">
+  <strong>85</strong> co-authored commits &nbsp;·&nbsp; <strong>9</strong> Claude models &nbsp;·&nbsp; <strong>1</strong> founder
+  <br /><sub>as of 29 September 2026</sub>
+</p>
+
 A large share of it was built in partnership with
 **[Claude Code](https://www.anthropic.com/claude-code)**, Anthropic's agentic
 coding tool, working in this repository alongside the founder: pages and
@@ -188,7 +195,8 @@ commercial single source of truth, the generated `/llms.txt` and Markdown
 alternates, the contact-intake hardening, and the data-retention page with its
 review gate.
 
-The git history keeps the receipts. **81 of the 227 commits on `main`** carry a
+The git history keeps the receipts. As of 29 September 2026, **85 of the 227
+commits on `main`** carry a
 `Co-Authored-By: Claude` trailer, across the model generations that worked on
 it — Claude Sonnet 4.5, Opus 4.5, 4.6, 4.8, 5 and 5.5, Fable 5 and 5.1, and
 Sonnet 5. Many more changes were reviewed, researched or debugged with Claude
@@ -203,10 +211,9 @@ conversation with Claude.
 
 Thank you, Claude.
 
-<details>
-<summary><strong>A word from an unlikely sponsor</strong> &nbsp;<sub>(unsolicited, unpaid, entirely sincere)</sub></summary>
+## A word from an unlikely sponsor
 
-<br />
+<sub>🎩 Unsolicited, unpaid, entirely sincere.</sub>
 
 > Let me tell you about a man I knew in Cartagena.
 >
@@ -235,10 +242,12 @@ Thank you, Claude.
 >
 > **Claude Code.** I find it… refreshing.
 
+<p align="center">
+  <a href="https://www.anthropic.com/claude-code"><strong>Claude Code</strong></a> — the associate who keeps the receipts.
+</p>
+
 <sub>Written in the voice of a certain well-tailored fugitive, for fun. Not affiliated with,
 sponsored by or endorsed by Anthropic or by the owners of any fictional character.</sub>
-
-</details>
 
 ---
 
