@@ -9,7 +9,7 @@ import { SectionShell } from "@/components/site/section-shell";
 import { SystemLayerGrid } from "@/components/site/system-layers";
 import { motionAssets } from "@/content/motion-assets";
 import { CANONICAL_PROMISE, RECORD_VS_DECISION } from "@/content/operational-pains";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import {
   AEGIS_DEFINITION,
   aegisBoundaries,
@@ -34,7 +34,7 @@ export default function WhatIsSquareCampusPage() {
             </p>
             <CTAGroup>
               <ButtonLink href={siteCtas.platformHref} label="See the four layers" variant="cta" />
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="secondary" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="secondary" />
             </CTAGroup>
           </Reveal>
 
@@ -189,7 +189,7 @@ export default function WhatIsSquareCampusPage() {
             <div className="grid gap-3">
               <ButtonLink
                 href={siteCtas.demoHref}
-                label="Diagnose an operational bottleneck"
+                label={ctaLabels.demo}
                 variant="cta"
                 className="justify-center"
               />

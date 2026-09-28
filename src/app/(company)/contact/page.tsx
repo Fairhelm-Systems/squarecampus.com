@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/site/button-link";
 import { PageSchema } from "@/components/site/page-schema";
 import { SectionShell } from "@/components/site/section-shell";
 import { company } from "@/content/company";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -152,7 +152,7 @@ export default function ContactPage() {
                 institution actually runs.
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href={siteCtas.demoHref} label="Book a Guided Demo" />
+                <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
                 <ButtonLink
                   href={siteCtas.pricingHref}
                   label="See pricing model"

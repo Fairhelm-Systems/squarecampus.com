@@ -268,28 +268,6 @@
     opacity: 0.65;
   }
 
-  /*
-   * Hero student-phone screen loaded via CSS, not <img>.
-   *
-   * `display:none` does NOT prevent an <img> from being fetched, and neither
-   * does loading="lazy" on a hidden element — Chrome downloads both. A
-   * background-image declared inside a media query that does not match is
-   * genuinely never requested, so phones never pay for the student screen
-   * (51 kB). The device bezels themselves are drawn in CSS (see "Device
-   * frames" below) and cost no request at any breakpoint.
-   */
-  .hero-phone-screen {
-    background-repeat: no-repeat;
-  }
-
-  @media (min-width: 80rem) {
-    .hero-phone-screen {
-      background-image: url("/images/screens/mobile/student-day-view.webp");
-      background-size: cover;
-      background-position: top center;
-    }
-  }
-
   /* Phones get a sparser, fainter grid: at 28px the dot field competes with
      body copy on a small, often lower-contrast panel. */
   @media (max-width: 640px) {
@@ -487,23 +465,6 @@
   display: none;
 }
 
-/*
- * Intent-aware /demo/ copy.
- *
- * The page ships both variants and hides one. `data-demo-intent` is written to
- * <html> before first paint by the inline script in src/content/demo-intents.ts
- * (and kept in sync afterwards by the form), so the founding-partner heading
- * never flashes the generic one first — which a query-string branch decided
- * after hydration always would.
- *
- * These rules only ever *hide*. Nothing here restores a display value, so the
- * visible variant keeps whatever layout its own classes give it.
- */
-html:not([data-demo-intent="founding-partner"]) [data-when-intent="founding-partner"],
-html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
-  display: none;
-}
-
 /* Scroll-reveal system: Reveal toggles `.is-revealed`; everything else is CSS. */
 .reveal-root {
   opacity: 0;
@@ -637,49 +598,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 }
 
-.hero-signal__dot {
-  animation: aegis-pulse 2s ease-in-out infinite;
-}
-
-/* A two-row log. Each entry arrives in the lower row, moves up to the top
-   row when the next one lands, then leaves; two are visible at any moment. */
-.hero-feed {
-  position: relative;
-  height: 3.1rem;
-  overflow: hidden;
-}
-
-.hero-feed__entry {
-  position: absolute;
-  inset: 0 0 auto;
-  opacity: 0;
-  transform: translateY(1.6rem);
-  animation: hero-feed 12s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  animation-delay: calc(var(--i, 0) * 4s + 0.8s);
-}
-
-@keyframes hero-feed {
-  0% {
-    opacity: 0;
-    transform: translateY(2.4rem);
-  }
-  5%,
-  31% {
-    opacity: 1;
-    transform: translateY(1.6rem);
-  }
-  38%,
-  62% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  68%,
-  100% {
-    opacity: 0;
-    transform: translateY(-0.8rem);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-emphasis {
     animation: none;
@@ -687,24 +605,6 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 
   .hero-device {
-    animation: none;
-  }
-
-  .hero-signal__dot {
-    animation: none;
-  }
-
-  .hero-feed {
-    height: auto;
-    overflow: visible;
-    display: grid;
-    gap: 0.4rem;
-  }
-
-  .hero-feed__entry {
-    position: static;
-    opacity: 1;
-    transform: none;
     animation: none;
   }
 }

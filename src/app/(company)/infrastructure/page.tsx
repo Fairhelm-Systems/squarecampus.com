@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 // Rule of this page: every statement is either a design decision we can show,
@@ -392,7 +392,7 @@ export default function InfrastructurePage() {
             infrastructure questions in writing as part of an evaluation.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a technical deep-dive" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink
               href="mailto:security@squarecampus.com?subject=Infrastructure%20Questions"
               label="Email security"

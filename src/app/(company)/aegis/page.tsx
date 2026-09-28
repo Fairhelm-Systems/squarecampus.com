@@ -22,7 +22,7 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { availability } from "@/content/commercial";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { AEGIS_DEFINITION, aegisBoundaries } from "@/content/what-is-squarecampus";
 import {
   createBreadcrumbSchema,
@@ -152,7 +152,7 @@ export default function AegisPage() {
               it can suggest a follow-up, but people decide and act.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="See AEGIS in a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"
@@ -345,7 +345,7 @@ export default function AegisPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.securityHref}
                 label="Review the trust posture"

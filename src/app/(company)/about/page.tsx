@@ -4,7 +4,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { product } from "@/content/commercial";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const values = [
   {
@@ -118,7 +118,7 @@ export default function AboutPage() {
               that flows with how institutions actually work.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"
@@ -317,7 +317,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"

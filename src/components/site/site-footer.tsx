@@ -3,9 +3,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { company, copyrightLine } from "@/content/company";
 import {
+  ctaLabels,
   footerContact,
   footerGroups,
-  footerSignals,
   siteCtas,
   socialLinks,
 } from "@/content/site-content";
@@ -112,83 +112,17 @@ export function SiteFooter() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="surface-panel-strong relative hidden overflow-hidden rounded-[2rem] px-6 py-10 sm:block lg:px-12 lg:py-14">
-          {/* Decorative background layers */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(83,117,194,0.18),transparent_60%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(83,117,194,0.22),transparent_60%)]" />
-            <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(74,153,142,0.12),transparent_62%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(74,153,142,0.16),transparent_64%)]" />
-            <div
-              className="absolute inset-0 opacity-[0.06] dark:opacity-[0.04]"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 1px 1px, currentColor 0.5px, transparent 0.5px)",
-                backgroundSize: "24px 24px",
-                maskImage:
-                  "radial-gradient(ellipse 70% 60% at 80% 20%, black 20%, transparent 70%)",
-              }}
-            />
-          </div>
-
-          {/* Content */}
-          <div className="relative z-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <div className="space-y-6">
-              <p className="section-kicker">School OS for serious institutions</p>
-              <h2 className="font-display text-3xl leading-[1.15] tracking-[-0.04em] sm:text-4xl lg:text-[2.6rem]">
-                Run every campus. Govern them as one.
-              </h2>
-              <p className="max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                SquareCampus brings admissions, academics, finance, communication, compliance, and
-                daily operations into one dependable system of record.
-              </p>
-              <div className="flex flex-wrap gap-3 pt-1">
-                {footerSignals.map((signal) => (
-                  <div
-                    key={signal.label}
-                    className="flex items-center gap-3 rounded-xl border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-3"
-                  >
-                    {/* Decorative: the label and value beside it carry the
-                        meaning, so it stays out of the accessibility tree. */}
-                    <svg
-                      aria-hidden="true"
-                      className="size-4 shrink-0 text-[color:var(--brand)]"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                    >
-                      <circle
-                        cx="8"
-                        cy="8"
-                        r="7"
-                        stroke="currentColor"
-                        strokeWidth="1.2"
-                        opacity="0.3"
-                      />
-                      <circle cx="8" cy="8" r="3" fill="currentColor" />
-                    </svg>
-                    <div>
-                      <p className="font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
-                        {signal.label}
-                      </p>
-                      <p className="mt-0.5 text-sm font-medium text-[color:var(--foreground)]">
-                        {signal.value}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-3 lg:items-end">
-              <ButtonLink href={siteCtas.demoHref} label="Book a Guided Demo" />
-              <ButtonLink href={siteCtas.loginHref} label="Log In" external variant="secondary" />
-              <p className="mt-1 text-center font-mono text-[0.58rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)] lg:text-right">
-                No commitment · 30-min walkthrough
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-8 border-b border-[color:var(--line)] pb-8 sm:mt-10 sm:gap-10 sm:pb-10 lg:grid-cols-[1fr_1.95fr] lg:gap-12">
+        {/* No shared closing CTA here (audit SC-032): every page ends with its
+            own context-specific next step, so a second, generic conversion
+            panel directly underneath it only repeated the ask — and on /demo/
+            it linked the page to itself. */}
+        <div className="grid gap-8 border-b border-[color:var(--line)] pb-8 sm:gap-10 sm:pb-10 lg:grid-cols-[1fr_1.95fr] lg:gap-12">
           <div className="space-y-5">
             <BrandLogo subtitle="One login. One timeline. One truth." />
+            <div className="flex flex-wrap items-center gap-2">
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="secondary" />
+              <ButtonLink href={siteCtas.loginHref} label="Sign in" external variant="ghost" />
+            </div>
             <p className="hidden max-w-md text-sm leading-7 text-[color:var(--muted-foreground)] sm:block">
               Built for schools, colleges, and multi-campus institutions that need operational
               clarity without sacrificing reliability.

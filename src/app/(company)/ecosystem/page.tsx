@@ -18,7 +18,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const ecosystemRules = [
   {
@@ -88,7 +88,7 @@ export default function EcosystemPage() {
               forcing the ecosystem to be assembled from separate products.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="See the ecosystem live" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="View platform structure"
@@ -255,7 +255,7 @@ export default function EcosystemPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book ecosystem walkthrough" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.securityHref}
                 label="Review trust posture"

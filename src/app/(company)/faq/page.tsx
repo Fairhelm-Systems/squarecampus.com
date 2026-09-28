@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/site/button-link";
 import { FaqExplorer } from "@/components/site/faq-explorer";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 export default function FAQPage() {
   return (
@@ -40,7 +40,7 @@ export default function FAQPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"

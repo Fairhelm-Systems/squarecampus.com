@@ -16,7 +16,7 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { identity } from "@/content/commercial";
 import { securityFaqs } from "@/content/security-faq";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const controls = [
   {
@@ -74,7 +74,7 @@ export default function SecurityPage() {
               on the system every day.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Request security walkthrough" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href="mailto:security@squarecampus.com"
                 label="Contact security"
@@ -248,7 +248,7 @@ export default function SecurityPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book trust review" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href="mailto:security@squarecampus.com"
                 label="Email security"

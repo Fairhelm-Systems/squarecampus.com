@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/accordion";
 import { identity, pricingAvailability } from "@/content/commercial";
 import { intentPages } from "@/content/intent-pages";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createBreadcrumbSchema, createWebPageSchema, SEO_CONFIG } from "@/lib/seo";
 
 const securityPackMailto =
@@ -202,7 +202,7 @@ export default function SchoolManagementSystemPage() {
               ))}
             </div>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.ecosystemHref}
                 label="See how workflows connect"
@@ -542,7 +542,7 @@ export default function SchoolManagementSystemPage() {
             academic calendar.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink
               href={securityPackMailto}
               label="Request Security & Compliance Pack"

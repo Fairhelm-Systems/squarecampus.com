@@ -12,7 +12,7 @@ import { ButtonLink } from "@/components/site/button-link";
 import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const comparisonRows = [
   {
@@ -99,7 +99,7 @@ export default function WhyDifferentPage() {
             history that connect them sit on that record too.
           </p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="See the difference live" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
             <ButtonLink href={siteCtas.platformHref} label="View platform" variant="secondary" />
           </div>
         </Reveal>
@@ -236,7 +236,7 @@ export default function WhyDifferentPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a comparison walkthrough" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
               <ButtonLink
                 href={siteCtas.rolloutHref}
                 label="See rollout model"

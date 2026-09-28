@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/accordion";
 import { product } from "@/content/commercial";
 import { intentPageBySlug, intentPages } from "@/content/intent-pages";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import {
   canonicalUrl,
   createAlternates,
@@ -125,7 +125,7 @@ export default async function IntentPage({ params }: PageProps) {
               ))}
             </div>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="See the platform"
@@ -323,7 +323,7 @@ export default async function IntentPage({ params }: PageProps) {
             . The licensing model is published; figures follow a written proposal.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink href="/pricing/" label="How pricing works" variant="secondary" />
           </div>
         </Reveal>

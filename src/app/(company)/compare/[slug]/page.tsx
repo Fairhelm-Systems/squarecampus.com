@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { COMPARISON_AS_OF, comparisonBySlug, comparisons } from "@/content/comparisons";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import {
   canonicalUrl,
   createAlternates,
@@ -107,7 +107,7 @@ export default async function ComparePage({ params }: PageProps) {
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-muted-foreground">{c.lede}</p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink
               href="/school-management-system"
               label="See the platform"
@@ -254,7 +254,7 @@ export default async function ComparePage({ params }: PageProps) {
             The fastest way to compare is to see SquareCampus run your workflows.
           </h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink href="/compare" label="See all comparisons" variant="secondary" />
           </div>
         </Reveal>

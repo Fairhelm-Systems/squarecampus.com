@@ -1,14 +1,10 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, Handshake, MonitorPlay } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import type { FormEvent, ReactNode } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
-import {
-  DEMO_INTENT_ATTRIBUTE,
-  demoIntents,
-  FOUNDING_PARTNER_INTENT,
-} from "@/content/demo-intents";
+import { enquiryTypes, type FormIntent, formCopy, sourceTags } from "@/content/demo-intents";
 import { cn } from "@/lib/utils";
 import { ButtonLink } from "./button-link";
 import { HumanCheck, type HumanCheckResult } from "./human-check";
@@ -55,36 +51,7 @@ const initialState: DemoFormState = {
   successMeasure: "",
 };
 
-/**
- * Enquiry type. The form has always tagged submissions with a fixed
- * `source: "demo-form"`; this is the visitor-editable version of the same
- * idea, so the Founding Partner CTAs can hand over their intent without a
- * second form or a second backend.
- */
-const enquiryTypeOptions = [
-  {
-    value: "Guided platform demo",
-    title: "Guided platform demo",
-    body: "A walkthrough mapped to how your institution runs today.",
-    icon: MonitorPlay,
-  },
-  {
-    value: "Founding Institutional Partnership",
-    title: "Founding partnership",
-    body: "Pilot one bottleneck against a written baseline.",
-    icon: Handshake,
-  },
-] as const;
-
-/**
- * Query-string intents, mapped to the options above. Only these exact keys are
- * honoured and the value used is always one of our own constants — the raw
- * parameter is never rendered, stored or echoed back.
- */
-const INTENT_PARAM: Record<string, (typeof enquiryTypeOptions)[number]["value"]> = {
-  [FOUNDING_PARTNER_INTENT]: "Founding Institutional Partnership",
-};
-const FOUNDING_PARTNER_ENQUIRY = INTENT_PARAM[FOUNDING_PARTNER_INTENT];
+const FOUNDING_PARTNER_ENQUIRY = enquiryTypes["founding-partner"];
 
 const roleOptions = [
   "Trustee / Director",
@@ -196,12 +163,6 @@ function buildEmailDraft(state: DemoFormState) {
     .join("\n");
 
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-/** Stable machine tag for the intake record. */
-function sourceTag(enquiryType: string) {
-  const intent = Object.entries(INTENT_PARAM).find(([, label]) => label === enquiryType)?.[0];
-  return intent ? `demo-form:${intent}` : "demo-form";
 }
 
 type SubmitStatus = "idle" | "verifying" | "submitting" | "success" | "error" | "draft";
@@ -420,8 +381,16 @@ function StepRail({ current, onJump }: { current: StepIndex; onJump: (step: Step
   );
 }
 
-export function ContactForm() {
-  const [state, setState] = useState(initialState);
+/**
+ * One enquiry form, placed on three pages. The journey is fixed by the page
+ * (`intent`), never by a query string or a choice inside the form, so each
+ * page has one heading and one purpose (see content/demo-intents.ts).
+ */
+export function ContactForm({ intent = "demo" }: { intent?: FormIntent }) {
+  const [state, setState] = useState<DemoFormState>({
+    ...initialState,
+    enquiryType: enquiryTypes[intent],
+  });
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [step, setStep] = useState<StepIndex>(0);
   const [errors, setErrors] = useState<Partial<Record<keyof DemoFormState, string>>>({});
@@ -432,43 +401,12 @@ export function ContactForm() {
   const firstRenderRef = useRef(true);
   const ids = useId();
   const isFoundingPartner = state.enquiryType === FOUNDING_PARTNER_ENQUIRY;
-  const intentCopy = demoIntents[isFoundingPartner ? FOUNDING_PARTNER_INTENT : "demo"].form;
+  const intentCopy = formCopy[intent];
 
   useEffect(() => {
     return () => {
       mountedRef.current = false;
     };
-  }, []);
-
-  /*
-    Keep the page copy and the choice in agreement, in both directions.
-
-    On a hard load the inline script in demo-intents.ts has already set this
-    attribute before paint; this effect is then a no-op. It earns its keep on a
-    client-side navigation (where no inline script re-runs) and when a visitor
-    changes the enquiry type by hand — the surrounding copy follows the choice
-    rather than contradicting it. The attribute is cleared on unmount so it
-    cannot leak into another route.
-  */
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isFoundingPartner) {
-      root.setAttribute(DEMO_INTENT_ATTRIBUTE, FOUNDING_PARTNER_INTENT);
-    } else {
-      root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
-    }
-    return () => root.removeAttribute(DEMO_INTENT_ATTRIBUTE);
-  }, [isFoundingPartner]);
-
-  // /demo/?intent=founding-partner preselects the founding-partner enquiry
-  // type. It stays a normal choice the visitor can change; an unrecognised
-  // value simply leaves the default in place.
-  useEffect(() => {
-    const intent = new URLSearchParams(window.location.search).get("intent");
-    const mapped = intent ? INTENT_PARAM[intent] : undefined;
-    if (mapped) {
-      setState((current) => ({ ...current, enquiryType: mapped }));
-    }
   }, []);
 
   // Moving between steps: announce, and put focus on the first control of
@@ -532,7 +470,7 @@ export function ContactForm() {
     if (state.website) {
       setStatus("success");
       toast.success("Your request has been sent.");
-      setState(initialState);
+      setState({ ...initialState, enquiryType: enquiryTypes[intent] });
       return;
     }
 
@@ -582,7 +520,7 @@ export function ContactForm() {
         // even before the handler's field allowlist is redeployed.
         body: JSON.stringify({
           ...buildPayload(state),
-          source: sourceTag(state.enquiryType),
+          source: sourceTags[intent],
           ...(humanToken ? { humanToken } : {}),
         }),
       });
@@ -650,7 +588,7 @@ export function ContactForm() {
           <p className="type-support mt-2 max-w-md">
             {status === "draft"
               ? "Send it from your mail app to complete the request. We reply within one business day."
-              : `We reply within one business day with a walkthrough plan for ${state.institution || "your institution"} and the right people to bring into the evaluation.`}
+              : intentCopy.successNote}
           </p>
           <div className="mt-6 text-sm text-muted-foreground">
             Something to add?{" "}
@@ -687,44 +625,6 @@ export function ContactForm() {
         >
           {step === 0 ? (
             <>
-              <fieldset>
-                <legend className={labelClassName}>What is this about?</legend>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {enquiryTypeOptions.map((option) => (
-                    <label
-                      key={option.value}
-                      className="group/card relative flex cursor-pointer gap-3 rounded-2xl border border-(--line-strong) bg-(--surface-raised) p-4 transition-[border-color,box-shadow] hover:border-(--brand) has-checked:border-(--brand) has-checked:shadow-[0_0_0_4px_var(--brand-tint)] has-focus-visible:ring-4 has-focus-visible:ring-(--brand-tint)"
-                    >
-                      <input
-                        type="radio"
-                        name="enquiryType"
-                        value={option.value}
-                        checked={state.enquiryType === option.value}
-                        onChange={() => set("enquiryType", option.value)}
-                        className="sr-only"
-                      />
-                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-(--brand-tint) text-(--brand) transition-colors group-has-checked/card:bg-(--brand) group-has-checked/card:text-white">
-                        <option.icon aria-hidden className="size-4" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-sm font-medium text-foreground">
-                          {option.title}
-                        </span>
-                        <span className="mt-0.5 block text-sm leading-5 text-muted-foreground">
-                          {option.body}
-                        </span>
-                      </span>
-                      <span
-                        aria-hidden
-                        className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full border border-(--line-strong) bg-(--surface-raised) text-white transition-colors group-has-checked/card:border-(--brand) group-has-checked/card:bg-(--brand)"
-                      >
-                        <Check className="size-3 opacity-0 group-has-checked/card:opacity-100" />
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-
               <Field id={`${ids}-name`} label="Your name" error={errors.name}>
                 <input
                   id={`${ids}-name`}

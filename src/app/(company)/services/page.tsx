@@ -18,7 +18,7 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { ServicesFlowVisual } from "@/components/site/services-flow-visual";
 import { deploymentOptions, integrationScope } from "@/content/commercial";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createAlternates } from "@/lib/seo";
 
 const ogImage = {
@@ -111,7 +111,7 @@ export default function ServicesPage() {
               environment.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Scope it in a demo" variant="cta" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
               <ButtonLink
                 href={siteCtas.platformHref}
                 label="Explore the platform"
@@ -276,7 +276,7 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="grid gap-3">
-              <ButtonLink href={siteCtas.demoHref} label="Book a scoping session" variant="cta" />
+              <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
               <ButtonLink
                 href="mailto:contact@squarecampus.com?subject=Integration%20%26%20Data%20Services"
                 label="Email the services team"

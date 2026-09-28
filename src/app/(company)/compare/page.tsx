@@ -6,7 +6,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { comparisons } from "@/content/comparisons";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -85,7 +85,7 @@ export default function CompareHubPage() {
             for evaluating any of them.
           </p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink
               href="/school-management-system"
               label="See the platform"
@@ -144,7 +144,7 @@ export default function CompareHubPage() {
             Bring your shortlist. We&rsquo;ll map SquareCampus against it, honestly.
           </h2>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={siteCtas.demoHref} label="Book a guided demo" variant="cta" />
+            <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="cta" />
             <ButtonLink href="/why-squarecampus" label="Why SquareCampus" variant="secondary" />
           </div>
         </Reveal>

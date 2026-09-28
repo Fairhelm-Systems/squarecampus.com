@@ -9,18 +9,95 @@ export const siteCtas = {
   pricingHref: "/pricing",
   launchPartnersHref: "/launch-partners",
   loginHref: "https://app.squarecampus.com",
+  /** Pricing's own next step: the proposal request form on /pricing/. */
+  proposalHref: "/pricing/#request-proposal",
 } as const;
 
-export const primaryNavigation = [
-  { href: "/", label: "Home" },
-  { href: siteCtas.platformHref, label: "Platform" },
-  { href: siteCtas.aegisHref, label: "AEGIS" },
-  { href: siteCtas.rolloutHref, label: "Rollout" },
-  { href: siteCtas.whyDifferentHref, label: "Why us?" },
-  { href: siteCtas.ecosystemHref, label: "Ecosystem" },
-  { href: siteCtas.securityHref, label: "Security" },
-  { href: siteCtas.pricingHref, label: "Pricing" },
+/**
+ * Call-to-action labels, one per journey (audit SC-005). The main product
+ * journey says "Book a demo" everywhere and lands on /demo/; Pricing asks for
+ * a proposal; diagnosis language belongs only to the Founding Partner journey.
+ */
+export const ctaLabels = {
+  demo: "Book a demo",
+  proposal: "Request a proposal",
+  foundingPartner: "Request a partnership diagnosis",
+} as const;
+
+export type NavLink = { href: string; label: string; description?: string };
+export type NavGroup = { label: string; links: readonly NavLink[] };
+
+/**
+ * Primary navigation, grouped by what a buyer is trying to do rather than by
+ * product vocabulary (audit SC-030). Every route the old flat menu exposed is
+ * still one click away inside a group; AEGIS and the apps stay under Product.
+ */
+export const primaryNavigation: readonly (NavGroup | NavLink)[] = [
+  {
+    label: "Product",
+    links: [
+      { href: "/platform", label: "Platform", description: "Everything on one school record" },
+      { href: "/aegis", label: "AEGIS", description: "Read-only AI for school leaders" },
+      {
+        href: "/ecosystem",
+        label: "Apps & Integrations",
+        description: "Admin, teacher, parent and student apps",
+      },
+      { href: "/security", label: "Security", description: "Access, audit and hosting" },
+      {
+        href: "/what-is-squarecampus",
+        label: "What is SquareCampus?",
+        description: "A short definition",
+      },
+    ],
+  },
+  {
+    label: "Solutions",
+    links: [
+      { href: "/school-admission-management-software", label: "Admissions" },
+      { href: "/school-attendance-management-system", label: "Attendance" },
+      { href: "/fee-management-software-for-schools", label: "Fee management" },
+      { href: "/school-exam-management-software", label: "Exams & results" },
+      { href: "/parent-communication-app-for-schools", label: "Parent communication" },
+      { href: "/school-erp-software", label: "School ERP" },
+      { href: "/multi-campus-school-management-software", label: "Multi-campus groups" },
+      { href: "/school-management-system", label: "School management system" },
+    ],
+  },
+  {
+    label: "Implementation",
+    links: [
+      {
+        href: "/rollout",
+        label: "Rollout & migration",
+        description: "Stages, inputs and sign-off",
+      },
+      {
+        href: "/services",
+        label: "Data & integration services",
+        description: "Scoped integrations and deployment",
+      },
+      { href: "/infrastructure", label: "Infrastructure", description: "Where the platform runs" },
+    ],
+  },
+  { href: "/pricing", label: "Pricing" },
+  {
+    label: "Resources",
+    links: [
+      { href: "/why-squarecampus", label: "Why SquareCampus" },
+      { href: "/compare", label: "Compare school ERPs" },
+      { href: "/faq", label: "FAQ" },
+      { href: "/blog", label: "Blog" },
+      { href: "/launch-partners", label: "Founding partners" },
+      { href: "/about", label: "About" },
+      { href: "/contact", label: "Contact" },
+    ],
+  },
 ] as const;
+
+export function isNavGroup(item: NavGroup | NavLink): item is NavGroup {
+  return "links" in item;
+}
 
 /**
  * Five balanced columns rather than one long "Platform" list and three short
@@ -38,7 +115,7 @@ export const footerGroups = [
       { href: "/what-is-squarecampus", label: "What is SquareCampus?" },
       { href: siteCtas.platformHref, label: "Platform" },
       { href: siteCtas.aegisHref, label: "AEGIS Intelligence" },
-      { href: siteCtas.ecosystemHref, label: "Ecosystem" },
+      { href: siteCtas.ecosystemHref, label: "Apps & Integrations" },
       { href: siteCtas.rolloutHref, label: "Rollout" },
       { href: "/services", label: "Data & Integration Services" },
     ],
@@ -116,12 +193,6 @@ export const footerContact = {
   support: "support@squarecampus.com",
   location: "Bangalore, India",
 } as const;
-
-export const footerSignals = [
-  { label: "School OS", value: "One governed system" },
-  { label: "India-first", value: "Local reality" },
-  { label: "Rollout", value: "Guided go-live" },
-] as const;
 
 export const socialLinks = [
   {

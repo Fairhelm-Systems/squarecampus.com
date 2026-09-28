@@ -1,6 +1,7 @@
 import { Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/site/button-link";
+import { ContactForm } from "@/components/site/contact-form";
 import {
   CTAGroup,
   Eyebrow,
@@ -12,13 +13,14 @@ import { MotionFigure } from "@/components/site/motion-figure";
 import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { FORM_ANCHORS, formCopy, foundingPartnerForm } from "@/content/demo-intents";
 import {
   FOUNDING_PARTNER_DEMO_HREF,
   foundingPartners,
   higherEducationPartners,
 } from "@/content/founding-partners";
 import { motionAssets } from "@/content/motion-assets";
-import { siteCtas } from "@/content/site-content";
+import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 /**
@@ -75,7 +77,7 @@ export default function LaunchPartnersPage() {
             <CTAGroup>
               <ButtonLink
                 href={FOUNDING_PARTNER_DEMO_HREF}
-                label="Discuss founding partnership"
+                label={ctaLabels.foundingPartner}
                 variant="cta"
                 className="w-full justify-center sm:w-auto"
               />
@@ -403,34 +405,47 @@ export default function LaunchPartnersPage() {
         </Reveal>
       </SectionShell>
 
-      {/* 7 — Final CTA */}
-      <SectionShell className="pb-12 sm:pb-22">
-        <Reveal className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-10">
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-            <div>
-              <Eyebrow>{page.finalCta.eyebrow}</Eyebrow>
-              <h2 className="type-section-title mt-4">{page.finalCta.heading}</h2>
-              <p className="type-body measure mt-4 text-[color:var(--muted-foreground)]">
-                {page.finalCta.body}
-              </p>
-              <TrustNote className="mt-6">{page.finalCta.microcopy}</TrustNote>
-            </div>
+      {/* 7 — The founding-partner diagnosis request. The form lives here, on
+          the programme's own page, rather than as a variant of /demo/ (audit
+          SC-026): this journey has its own heading, copy and routing. */}
+      <SectionShell id={FORM_ANCHORS.foundingPartner} className="scroll-mt-28 pb-12 sm:pb-22">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <Reveal className="space-y-6">
+            <Eyebrow>{page.finalCta.eyebrow}</Eyebrow>
+            <h2 className="type-section-title">{page.finalCta.heading}</h2>
+            <p className="type-body measure text-[color:var(--muted-foreground)]">
+              {page.finalCta.body}
+            </p>
             <div className="grid gap-3">
-              <ButtonLink
-                href={FOUNDING_PARTNER_DEMO_HREF}
-                label="Discuss founding partnership"
-                variant="cta"
-                className="justify-center"
-              />
-              <ButtonLink
-                href={siteCtas.rolloutHref}
-                label="Review rollout and trust"
-                variant="secondary"
-                className="justify-center"
-              />
+              {foundingPartnerForm.points.map((item) => (
+                <div
+                  key={item}
+                  className="surface-panel rounded-[1.35rem] px-4 py-3 text-sm leading-6 text-[color:var(--muted-foreground)]"
+                >
+                  {item}
+                </div>
+              ))}
             </div>
-          </div>
-        </Reveal>
+            <TrustNote>{page.finalCta.microcopy}</TrustNote>
+            <ButtonLink
+              href={siteCtas.rolloutHref}
+              label="Review rollout and trust"
+              variant="secondary"
+            />
+          </Reveal>
+          <Reveal delay={120} className="surface-panel-strong rounded-[2rem] p-6 lg:p-8">
+            <Eyebrow>{formCopy["founding-partner"].eyebrow}</Eyebrow>
+            <h3 className="mt-4 font-display text-3xl tracking-[-0.05em]">
+              {formCopy["founding-partner"].heading}
+            </h3>
+            <p className="mt-3 max-w-xl text-base leading-7 text-[color:var(--muted-foreground)]">
+              {formCopy["founding-partner"].body}
+            </p>
+            <div className="mt-6">
+              <ContactForm intent="founding-partner" />
+            </div>
+          </Reveal>
+        </div>
       </SectionShell>
     </main>
   );
