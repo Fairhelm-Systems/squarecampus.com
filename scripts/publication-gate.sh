@@ -71,6 +71,13 @@ if git diff --name-only --diff-filter=AR "$FROM" "$TO" | grep -E -i '(^|/)(\.env
   fail "a key or environment file is being added"
 fi
 
+# 6. Infrastructure stays private. The enquiry-form backend and its human
+# check moved to a private repository on 2026-09-29; publishing either again
+# would hand a bot-builder the answer generator and the abuse thresholds.
+if git diff --name-only --diff-filter=ACMR "$FROM" "$TO" | grep -E '^infra/|(^|/)challenge\.mjs$'; then
+  fail "infrastructure or human-check code must not be published"
+fi
+
 if [ "$FAILED" -ne 0 ]; then
   echo "gate: BLOCKED — nothing was published." >&2
   exit 1

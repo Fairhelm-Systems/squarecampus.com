@@ -65,7 +65,7 @@ const rows: readonly MatrixRow[] = [
   {
     label: "AEGIS intelligence",
     starter: "Not included",
-    pro: "Optional: in scope only where the proposal includes it",
+    pro: "When the proposal includes it",
     enterprise: "Included within an agreed allowance",
   },
   {

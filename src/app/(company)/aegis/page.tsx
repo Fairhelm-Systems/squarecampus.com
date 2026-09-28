@@ -156,10 +156,9 @@ export default function AegisPage() {
               Ask AEGIS. Don&rsquo;t chase reports.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-              AEGIS is the intelligence inside SquareCampus, not a chatbot bolted onto an ERP. It is
-              designed to read the same records, timelines and permissions the institution already
-              runs on, and to answer in plain language inside the same audit trail. It is read-only:
-              it can suggest a follow-up, but people decide and act.
+              The AI inside SquareCampus, not a chatbot bolted onto an ERP. Ask in plain language;
+              it answers from your school&rsquo;s records, inside your permissions, on the audit
+              trail. It suggests — people decide and act.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />

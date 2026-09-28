@@ -659,15 +659,10 @@ export function ContactForm({ intent = "demo" }: { intent?: FormIntent }) {
                     onChange={(event) => set("email", event.target.value)}
                   />
                 </Field>
-                <Field
-                  id={`${ids}-phone`}
-                  label="Phone, to arrange the session"
-                  error={errors.phone}
-                >
+                <Field id={`${ids}-phone`} label="Phone" error={errors.phone} optional>
                   <input
                     id={`${ids}-phone`}
                     name="phone"
-                    required
                     type="tel"
                     autoComplete="tel"
                     inputMode="tel"

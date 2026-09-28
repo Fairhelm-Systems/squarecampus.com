@@ -97,11 +97,10 @@ export const product = {
  * Deployment state is deliberately not described here or anywhere public.
  */
 export const availability = {
-  note: "Capabilities on this site describe how SquareCampus is designed to work. The modules, apps, languages and integrations included in your rollout, and when each becomes available to your institution, are confirmed in writing in your proposal.",
-  short:
-    "Modules, apps, languages and integrations for your rollout are confirmed in writing in your proposal.",
+  note: "This is how SquareCampus is designed to work. Your written proposal confirms what your institution gets, and when.",
+  short: "Your written proposal confirms which modules, apps, languages and integrations you get.",
   languages:
-    "Parent-facing screens and messages are designed to reach each family in its preferred language. The languages available to your institution are confirmed in your proposal.",
+    "Designed to reach each family in its own language; your proposal confirms which languages.",
 } as const;
 
 /** Status vocabulary for deployment options and integrations. */

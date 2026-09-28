@@ -136,7 +136,7 @@ outside this repository. Approval of website wording is not legal review.
 | Contract end: delete/anonymise or return where export is agreed; retention for law, disputes, backups | /data-retention, faq.ts | **VERIFIED** as a restatement of DPA §11. Substantive terms unchanged; any change needs counsel |
 | Export scope, formats, timing, responsibilities and charges agreed in the order form; no published format or turnaround; no self-service institution-wide export | /data-retention, faq.ts, homepage, /launch-partners FAQ, blog `school-erp-data-exit` | **VERIFIED** as the approved position (2026-09-28). No institution-wide export capability is evidenced in the platform |
 | Retention deadlines, preservation holds and consent withdrawal "being built into the platform's data layer", not available for institutional data | /data-retention | **NEEDS BACKEND EVIDENCE** before any stronger wording: design and synthetic-only implementation exist; nothing runs on institutional data |
-| Website enquiries: stored with IP address and browser details, passed to the CRM, notified by email; anti-abuse records set to expire automatically | /data-retention | **VERIFIED** against `infra/contact-intake/index.mjs` and the live table configuration (2026-09-28). Submission records carry no expiry |
+| Website enquiries: stored with IP address and browser details, passed to the CRM, notified by email; anti-abuse records set to expire automatically | /data-retention | **VERIFIED** against the intake handler (now in the private infrastructure repository) and the live table configuration (2026-09-28). Submission records carry no expiry |
 | No retention period yet for website enquiries or their CRM, email and log copies | /data-retention | **VERIFIED** as a statement of the current gap. Setting a period is an operational decision, not a website change |
 | Backup retention periods for production not stated | /data-retention | **VERIFIED** as a statement of the gap. Backup cadence and retention remain **NEEDS BACKEND EVIDENCE** (see Infrastructure claims) |
 | Preservation and data requests made in writing and assessed individually; no self-service preservation control | /data-retention | **VERIFIED** as the approved handling arrangement (2026-09-28). No automated or tested fulfilment is claimed |
@@ -201,8 +201,8 @@ AEGIS capability statements remain **NEEDS BACKEND EVIDENCE** (see AI claims).
 | AEGIS example questions with answer scope, sources, as-of time and limits | /aegis | **NEEDS BACKEND EVIDENCE**; labelled "how AEGIS is designed to answer", not a transcript |
 | Rollout stages: school input, SquareCampus deliverable, completion criteria | /rollout | **NEEDS BACKEND EVIDENCE** (service model; keep only while staffed). No durations or deadlines are published |
 | Worked examples and "configured, scoped or quoted separately" limits | /school-erp-software, /fee-management-software-for-schools | Examples **NEEDS BACKEND EVIDENCE** (design); limits **VERIFIED** as restatements of `pricingAvailability` and `integrationScope` |
-| Per-plan "Scoped separately" lists; Pro AEGIS "optional, in scope only where the proposal includes it"; Enterprise AEGIS "within an agreed allowance" | /pricing | **NEEDS LEGAL REVIEW** as commercial policy (must match the proposal and order form); the Pro AEGIS wording interprets the previous "eligibility or controlled access" and needs owner confirmation |
-| Proposal request form on /pricing (enquiry type "Proposal request", source `demo-form:proposal`) | /pricing | **VERIFIED** against `infra/contact-intake` (enquiry type is free text up to 60 characters; source up to 40). The CRM receives a new campaign name |
+| Per-plan "Scoped separately" lists; Pro AEGIS "when the proposal includes it"; Enterprise AEGIS "within an agreed allowance" | /pricing | **NEEDS LEGAL REVIEW** as commercial policy (must match the proposal and order form); the Pro AEGIS wording was confirmed by the owner on 2026-09-29 |
+| Proposal request form on /pricing (enquiry type "Proposal request", source `demo-form:proposal`) | /pricing | **VERIFIED** against the intake handler (private infrastructure repository): enquiry type is free text up to 60 characters, source up to 40, and the CRM landing page follows the source. The CRM receives a new campaign name |
 | Evaluation criteria on /why-squarecampus (concession approvals, cross-campus permissions, exception ownership, migration validation, exports) | /why-squarecampus | **NEEDS BACKEND EVIDENCE** for the SquareCampus column; no competitor is characterised |
 | Company facts on /about (legal name, CIN, registered-office locality, founder) | /about | **VERIFIED** (company record, `content/company.ts`) |
 
@@ -213,7 +213,7 @@ AEGIS capability statements remain **NEEDS BACKEND EVIDENCE** (see AI claims).
 | SquareCampus is a product of Fairhelm Systems OPC | footer, press, about, competitor-notice | **VERIFIED** (company record; ™ used, not ® — registration pending) |
 | SquareCampus™ (trademark pending, not registered) | footer, llms.txt | **VERIFIED** (keep ™; never ® until registration completes) |
 | Founder-led; Mohit Gupta, Founder & CTO | about, press | **VERIFIED** (company fact) |
-| "Built systems processing 100M+ records daily" (founder bio) | about | **NEEDS BACKEND EVIDENCE** (personal-history claim; keep or remove at founder's discretion) |
+| "Built systems processing 100M+ records daily" (founder bio) | about | **VERIFIED** as the founder's own account of prior work (confirmed by the founder, 2026-09-29) |
 | Location: Bangalore, India (footer) | footer | **VERIFIED** (company fact; note: old Mumbai JSON-LD address removed as fabricated) |
 
 ## Founding Institutional Partner programme

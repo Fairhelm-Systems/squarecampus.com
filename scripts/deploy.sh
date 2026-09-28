@@ -7,8 +7,9 @@
 #   SKIP_BUILD=1 ./scripts/deploy.sh   # upload the existing ./out as-is
 set -euo pipefail
 
-BUCKET="${DEPLOY_BUCKET:-squarecampus-marketing-site}"
-DISTRIBUTION_ID="${DEPLOY_DISTRIBUTION_ID:-E3ATKH99UOL8C2}"
+# Targets come from the environment; the values live in the private runbook.
+BUCKET="${DEPLOY_BUCKET:?set DEPLOY_BUCKET (see the private infrastructure runbook)}"
+DISTRIBUTION_ID="${DEPLOY_DISTRIBUTION_ID:?set DEPLOY_DISTRIBUTION_ID (see the private infrastructure runbook)}"
 OUT_DIR="out"
 
 cd "$(dirname "$0")/.."

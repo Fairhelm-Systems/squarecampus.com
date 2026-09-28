@@ -6,7 +6,6 @@ import {
   Minus,
   ShieldCheck,
   Smartphone,
-  Sparkles,
 } from "lucide-react";
 import { CommercialModel } from "@/components/pricing/commercial-model";
 import { PlanArchitecture } from "@/components/pricing/plan-architecture";
@@ -429,10 +428,6 @@ export default function PricingPage() {
               Bring your campus structure, student volume, the workflows in scope, the migration you
               are carrying and the governance your board expects. We map them, then issue a written
               proposal against that reality.
-            </p>
-            <p className="type-support flex items-start gap-3">
-              <Sparkles aria-hidden className="mt-1 size-4 shrink-0 text-[color:var(--amber)]" />
-              <span>{pricingAvailability.positioning}</span>
             </p>
             <CTAGroup>
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} variant="secondary" />

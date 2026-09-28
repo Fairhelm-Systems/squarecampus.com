@@ -689,10 +689,9 @@ export default function Home() {
                     Ask AEGIS. Don&rsquo;t chase reports.
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                    AEGIS is designed to work from the same permissions, timelines and records as
-                    the rest of SquareCampus. It surfaces exceptions and answers leadership in plain
-                    language. It is read-only: it can suggest a follow-up, but people decide and
-                    act, and every question is recorded on the audit trail.
+                    Leaders ask in plain language; AEGIS answers from the school&rsquo;s own
+                    records, inside their permissions. It is read-only: it suggests, people decide,
+                    and every question is on the audit trail.
                   </p>
                   <div className="mt-6 grid gap-3">
                     {[

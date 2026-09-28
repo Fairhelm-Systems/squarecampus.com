@@ -244,10 +244,9 @@ export default function RolloutPage() {
           <div className="surface-panel rounded-[1.4rem] px-5 py-4 text-sm leading-6 text-[color:var(--muted-foreground)] sm:px-6">
             <p className="font-medium text-[color:var(--foreground)]">Migration dependencies</p>
             <p className="mt-1.5">
-              Migration moves only as fast as the data allows: how complete and consistent it is,
-              and how quickly the current vendor provides exports. Legacy migration and data
-              cleaning are scoped and quoted separately, and the parallel run continues until the
-              agreed checks pass — not until a date arrives.
+              Migration moves as fast as your data and your current vendor&rsquo;s exports allow. It
+              is scoped and quoted separately, and the parallel run ends when the checks pass, not
+              on a date.
             </p>
           </div>
         </Reveal>
