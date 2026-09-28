@@ -62,7 +62,7 @@ here, and so is the check that should have caught it. Issues are welcome.
 | --- | --- |
 | **What it is** | A static Next.js export: no server, no runtime database |
 | **Where it runs** | S3 + CloudFront; redirects and security headers live at the edge |
-| **Forms** | The demo form posts to a small intake API — see [infra/contact-intake](infra/contact-intake/README.md) |
+| **Forms** | The enquiry forms post to a small intake API, kept in a private repository with the rest of the infrastructure |
 | **Content model** | Typed modules in [`src/content/`](src/content) — pages, FAQs, JSON-LD and `/llms.txt` all derive from them |
 | **Motion** | Rendered at build time with Remotion in [`motion/`](motion/README.md); the site ships video files, not an animation library |
 | **UI primitives** | shadcn components; new components use [Base UI](https://base-ui.com) |
@@ -142,15 +142,13 @@ src/
 scripts/          claims, content and build checks; Markdown alternates; deploy
 tests/            commercial facts, retention gate, llms.txt, sitemap
 docs/             the claims register
-infra/            the contact-intake Lambda
 motion/           build-time Remotion compositions
 ```
 
 ## Key docs
 
 - [docs/marketing-claims-register.md](docs/marketing-claims-register.md) — every claim and its evidence status
-- [DEPLOYMENT.md](DEPLOYMENT.md) — infrastructure, edge config, deploy flow
-- [infra/contact-intake/README.md](infra/contact-intake/README.md) — the enquiry form's backend
+- [DEPLOYMENT.md](DEPLOYMENT.md) — build, deploy and the public mirror
 - [motion/README.md](motion/README.md) — the build-time motion pipeline
 - [src/content/blog/BLOG_TOPICS.md](src/content/blog/BLOG_TOPICS.md)
 

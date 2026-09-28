@@ -104,7 +104,7 @@ export const plans: readonly Plan[] = [
       "Deeper auditability",
       "Optional institutional single sign-on with Microsoft Entra ID",
       "Standard integrations and development API access, scoped in the proposal",
-      "AEGIS as an option: in scope only where the proposal includes it",
+      "AEGIS, when the proposal includes it",
     ],
     scopedExtras: [
       "Legacy data migration and cleaning",

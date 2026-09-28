@@ -4,9 +4,10 @@ import type { NextConfig } from "next";
  * Static export build for CloudFront + S3 hosting.
  *
  * Everything that used to live in `headers()` / `redirects()` / middleware
- * must now be configured at the edge. See DEPLOYMENT.md for the matching
- * CloudFront Function (redirects + index rewrites) and Response Headers
- * Policy (CSP, HSTS, and the rest of the security header set).
+ * must now be configured at the edge: a CloudFront Function (redirects +
+ * index rewrites) and a Response Headers Policy (CSP, HSTS and the rest of
+ * the security header set), both documented in the private infrastructure
+ * runbook.
  */
 // The demo form posts to an external intake endpoint (the static export has
 // no server). A production build without it would ship a broken form, so the
