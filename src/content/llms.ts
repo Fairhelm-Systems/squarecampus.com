@@ -19,6 +19,8 @@
 
 import { blogPosts } from "./blog/posts";
 import {
+  availability,
+  deploymentSummary,
   foundingProgramme,
   identity,
   planHierarchy,
@@ -149,7 +151,7 @@ export const llmsSections: LlmsSection[] = [
       ),
       intentLink(
         "parent-communication-app-for-schools",
-        "Addressed communication with acknowledgement, replies routed to a named owner, in ten Indian languages"
+        "Addressed communication with acknowledgement, replies routed to a named owner, in the family's preferred language where supported"
       ),
       intentLink(
         "school-management-software-for-cbse-schools",
@@ -173,7 +175,7 @@ export const llmsSections: LlmsSection[] = [
         path: "/services",
         title: "Data and integration services",
         description:
-          "API and WebSocket integrations with existing tools, ETL pipelines, private deployments",
+          "Scoped integrations with existing tools (no pre-built connector catalogue), ETL pipelines, Enterprise private deployment",
       },
     ],
   },
@@ -287,9 +289,11 @@ export const llmsOptional: LlmsSection = {
 /** Lines of the short factual orientation under the summary. */
 export function llmsOrientation(): string[] {
   return [
-    `- Category: ${product.category}. It includes the record and workflow capabilities expected from institutional ERP software, positioned as a School Operating System; neither "just an ERP" nor "no ERP capabilities".`,
+    `- Category: ${product.categoryDescriptor}. ${product.categoryRelationship}`,
     `- Intended institutions: ${product.audiences.join("; ")}.`,
     `- Geography: ${product.geography}`,
+    `- Deployment: ${deploymentSummary} Running in the institution's own cloud account (BYOC) is not offered today.`,
+    `- Availability: ${availability.note}`,
     `- Core distinction: ${product.distinction}`,
     `- Competes on: ${product.competesOn.map((c) => c.toLowerCase()).join(", ")}. It is not designed to be the cheapest attendance, fees and report-card product, and will look expensive to an institution that needs only that.`,
     `- Plans: ${planHierarchy.map((p) => `${p.name} — ${p.summary}`).join(" ")}`,

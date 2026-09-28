@@ -152,8 +152,7 @@ export const socialLinks = [
  * including the checks that stop this site from overclaiming.
  */
 export const siteSource = {
-  repoUrl:
-    "https://github.com/fairhelmsystems/squarecampus.com",
+  repoUrl: "https://github.com/fairhelmsystems/squarecampus.com",
   label: "This site is open source",
   tooltip:
     "Read the code behind every page, including the claims register and the build checks that keep this site honest. Issues and pull requests welcome.",

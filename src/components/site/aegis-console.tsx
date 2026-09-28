@@ -1,14 +1,26 @@
 "use client";
 
-import { ChartNoAxesCombined, Fingerprint, Radar, ScrollText, ShieldCheck } from "lucide-react";
+import { Eye, Fingerprint, Radar, ScrollText, ShieldCheck } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { SyntheticDataNote } from "./synthetic-data-note";
+
+export const AEGIS_EXAMPLE_LABEL = "Illustrative example — synthetic data";
 
 /**
- * The AEGIS governed console: a staged exchange where a trust administrator
- * asks an operational question and AEGIS answers with scoped, audited cards.
- * All choreography is CSS (`.aegis-console` rules in globals.css); this
- * component only flips `.is-live` when scrolled into view.
+ * The AEGIS governed console: an illustrative exchange where a trust
+ * administrator asks an operational question and AEGIS answers with scoped,
+ * audited cards. Every figure is synthetic and labelled as such.
+ *
+ * Static first. The server-rendered markup is the finished exchange, so it is
+ * complete without JavaScript, with reduced motion, and for a visitor who
+ * lands with the console already on screen. Only when the console starts
+ * below the fold does the component add `.will-animate` (which hides the
+ * steps) and then `.is-live` on scroll, so the choreography is an enhancement
+ * and never a wait. All choreography is CSS (`.aegis-console` in globals.css).
+ *
+ * AEGIS is read-only (content/what-is-squarecampus.ts › aegisBoundaries): the
+ * follow-ups are suggestions for a person to act on, never actions it takes.
  */
 export function AegisConsole({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -18,6 +30,13 @@ export function AegisConsole({ className }: { className?: string }) {
     if (!node) {
       return;
     }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const alreadyVisible = node.getBoundingClientRect().top < window.innerHeight;
+    if (reduceMotion || alreadyVisible) {
+      return;
+    }
+    node.classList.add("will-animate");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -59,6 +78,9 @@ export function AegisConsole({ className }: { className?: string }) {
             <Fingerprint className="size-3 text-(--brand)" />
             Scoped: Trust Administrator
           </span>
+        </div>
+        <div className="border-b border-(--line) px-5 py-2.5">
+          <SyntheticDataNote variant="chip" label={AEGIS_EXAMPLE_LABEL} />
         </div>
 
         <div className="grid gap-3 p-5">
@@ -114,13 +136,13 @@ export function AegisConsole({ className }: { className?: string }) {
           <div data-console-step style={{ "--d": "1.9s" } as React.CSSProperties}>
             <div className="max-w-[92%] rounded-[1.3rem] rounded-bl-md border border-(--line) bg-(--surface) p-4">
               <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-muted-foreground">
-                Suggested next steps
+                Suggested follow-ups · your team decides
               </p>
               <div className="mt-2.5 flex flex-wrap gap-2">
                 {[
-                  "Queue reminder circular (Hindi + English)",
+                  "Send a reminder circular (Hindi + English)",
                   "Review concession approvals at North",
-                  "Flag for principal review",
+                  "Raise with the North principal",
                 ].map((item) => (
                   <span
                     key={item}
@@ -137,9 +159,9 @@ export function AegisConsole({ className }: { className?: string }) {
           <div data-console-step style={{ "--d": "2.5s" } as React.CSSProperties}>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-[1.1rem] bg-(--surface-muted) px-4 py-3">
               {[
-                { icon: ShieldCheck, text: "Answer scoped to your role" },
-                { icon: ScrollText, text: "Query logged to audit trail" },
-                { icon: ChartNoAxesCombined, text: "Live records, not exports" },
+                { icon: ShieldCheck, text: "Scoped to your role" },
+                { icon: ScrollText, text: "Question recorded on the audit trail" },
+                { icon: Eye, text: "Read-only: AEGIS takes no action" },
               ].map((item) => (
                 <span
                   key={item.text}

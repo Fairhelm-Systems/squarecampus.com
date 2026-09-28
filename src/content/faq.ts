@@ -1,4 +1,10 @@
-import { foundingProgramme, identity, pricingAvailability } from "./commercial";
+import {
+  availability,
+  foundingProgramme,
+  identity,
+  integrationScope,
+  pricingAvailability,
+} from "./commercial";
 import { retentionReuse } from "./retention";
 
 export type FaqCategoryId = "getting-started" | "features" | "security" | "pricing";
@@ -59,20 +65,18 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Will it integrate with our existing systems?",
-    answer:
-      "Yes. We provide APIs and connectors for LMS, ERP, HR, and payment partners so data flows cleanly without manual exports. Our REST APIs support webhooks for real-time sync, and we have pre-built integrations for popular payment gateways and government portals.",
+    answer: `Where they offer a documented API, usually yes — as scoped work. ${integrationScope.summary}`,
     category: "features",
   },
   {
     question: "Can we build our own frontend or mobile apps on SquareCampus?",
     answer:
-      "Yes. Institutions that want their own portal, frontend or mobile apps can build on SquareCampus development APIs. Access is scoped to the same role-based permissions and audit trail as the platform and is granted after a compliance review, so what you build inherits the institution's governance rather than bypassing it.",
+      "Yes, as scoped work. Institutions that want their own portal, frontend or mobile apps can scope access to SquareCampus development APIs. Access is scoped to the same role-based permissions and audit trail as the platform and is granted after a compliance review, so what you build inherits the institution's governance rather than bypassing it.",
     category: "features",
   },
   {
     question: "Do you have mobile apps?",
-    answer:
-      "Yes. Parents and students use dedicated mobile apps (iOS and Android) for fee payments, attendance tracking, progress reports, and announcements, available in ten Indian languages. Staff have a fully responsive web experience optimized for day-to-day operations on any device.",
+    answer: `The standard SquareCampus parent and staff mobile apps are included in the licence. They are designed for fee payments, attendance, progress reports and announcements, and staff also get a responsive web experience for day-to-day operations. ${availability.languages} ${availability.short}`,
     category: "features",
   },
   {

@@ -50,7 +50,7 @@ export const demoIntents = {
     expectations: {
       eyebrow: "What to expect",
       heading: "A serious evaluation session, not a generic sales call",
-      body: "SquareCampus should feel credible to institutional buyers. The demo process reflects that.",
+      body: "The session is planned around the workflows and systems you describe in the form.",
     },
     close: {
       eyebrow: "Confidence check",

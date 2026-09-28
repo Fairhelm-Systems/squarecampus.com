@@ -389,7 +389,7 @@ export default function InfrastructurePage() {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted-foreground">
             Bring your security questionnaire, your IT committee, or your auditor. We answer
-            infrastructure questions in writing as part of every serious evaluation.
+            infrastructure questions in writing as part of an evaluation.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <ButtonLink href={siteCtas.demoHref} label="Book a technical deep-dive" />

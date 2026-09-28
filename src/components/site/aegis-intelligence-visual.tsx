@@ -36,7 +36,7 @@ const sources = [
   },
   {
     title: "Communication",
-    detail: "App, WhatsApp, circulars, acknowledgements",
+    detail: "App messages, circulars, acknowledgements",
     icon: MessageSquareShare,
   },
   {
@@ -48,9 +48,9 @@ const sources = [
 
 const governanceChecks = [
   { label: "Tenant boundary", width: "100%" },
-  { label: "Role-scoped answers", width: "94%" },
+  { label: "Role-scoped answers", width: "100%" },
   { label: "Audit trail per question", width: "100%" },
-  { label: "Live operating context", width: "90%" },
+  { label: "Read-only: no actions taken", width: "100%" },
 ] as const;
 
 const capabilities = ["Role-aware answers", "Exception detection", "Audit-ready by default"];
@@ -74,7 +74,7 @@ const T = {
 type Vars = React.CSSProperties & Record<`--${string}`, string>;
 
 /**
- * The AEGIS signal bus: six live record streams feeding one governed
+ * The AEGIS signal bus: six record streams feeding one governed
  * intelligence layer. Three sources sit above the hub and three below, each
  * wired to a hub port by a vertical beam that carries data packets inward.
  *
@@ -199,14 +199,15 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
                 </p>
 
                 <h3 className="mt-4 font-display text-[1.45rem] leading-[1.15] tracking-[-0.045em] text-foreground sm:text-2xl">
-                  Live records in.
+                  Institution records in.
                   <br />
                   Governed answers out.
                 </h3>
 
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Nothing is exported, copied, or re-keyed. AEGIS reads each record where it already
-                  lives, inside the same permissions and audit trail as the rest of the School OS.
+                  AEGIS is designed to read each record where it already lives, without exporting or
+                  re-keying it, inside the same permissions and audit trail as the rest of the
+                  School OS.
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -229,8 +230,7 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
                     Governance checks
                   </p>
                   <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.5rem] uppercase tracking-[0.18em] text-muted-foreground">
-                    <span className="aegis-live-dot size-1.5 rounded-full bg-(--state-ok)" />
-                    Live
+                    Illustrative
                   </span>
                 </div>
                 <div className="mt-3.5 space-y-3">
@@ -246,7 +246,7 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
                             </span>
                             <span className="aegis-status-done inline-flex items-center gap-1 text-(--state-ok)">
                               <Check className="size-2.5" strokeWidth={3} />
-                              Enforced
+                              Applied
                             </span>
                           </span>
                         </div>
@@ -262,23 +262,9 @@ export function AegisIntelligenceVisual({ className }: { className?: string }) {
                   })}
                 </div>
 
-                <dl className="mt-auto grid grid-cols-2 gap-3 border-t border-(--line) pt-3.5 font-mono text-[0.5rem] uppercase tracking-[0.16em] text-muted-foreground">
-                  {[
-                    { label: "Records copied out", value: "0" },
-                    { label: "Questions audited", value: "100%" },
-                  ].map((stat, index) => (
-                    <div
-                      key={stat.label}
-                      data-aegis-rise
-                      style={{ "--d": `${T.chip + 120 + index * T.chipStep}ms` } as Vars}
-                    >
-                      <dt>{stat.label}</dt>
-                      <dd className="mt-1 font-display text-base tracking-[-0.03em] text-foreground normal-case">
-                        {stat.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+                <p className="mt-auto border-t border-(--line) pt-3.5 text-[0.68rem] leading-5 text-muted-foreground">
+                  How AEGIS is designed to answer. Not a measurement of any institution.
+                </p>
               </div>
             </div>
           </div>

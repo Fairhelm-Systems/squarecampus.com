@@ -7,15 +7,15 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "School Management Ecosystem | Apps, Integrations and Platform",
   description:
-    "The SquareCampus ecosystem: admin console, teacher workspace, parent and student apps, payment integrations, SMS, WhatsApp, and biometrics — one platform, all touchpoints.",
+    "The SquareCampus ecosystem: admin console, teacher workspace, and parent and student apps on one record, with integrations to the tools you keep scoped and confirmed in writing.",
   path: "/ecosystem",
   ogImage: "https://squarecampus.com/og/ecosystem.png",
   ogTitle: "School Ecosystem | SquareCampus Platform",
   ogDescription:
-    "Admin console, teacher workspace, parent and student apps, payment gateways, SMS, WhatsApp, biometrics. One platform connecting your entire school.",
+    "Admin console, teacher workspace, and parent and student apps on one record, with scoped integrations to the tools you keep.",
   twitterTitle: "School Management Ecosystem | SquareCampus",
   twitterDescription:
-    "Admin console, mobile apps, payment integrations, communication tools. All connected in one platform.",
+    "Admin console, teacher workspace, parent and student apps, and scoped integrations — on one record.",
 });
 
 export default function EcosystemLayout({ children }: { children: React.ReactNode }) {

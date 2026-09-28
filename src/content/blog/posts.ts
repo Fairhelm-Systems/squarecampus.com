@@ -1283,7 +1283,7 @@ export const allBlogPosts: BlogPost[] = [
       {
         heading: "Where software helps — and where the work stays yours",
         paragraphs: [
-          "Software’s honest role in all of this is enforcement. Once the institution has decided who may see what, a well-built system applies that decision every hour of every day without getting tired: role-based access, an audit trail recording who changed what and when, encryption in transit and at rest, and exports in standard formats so your data is never trapped. That is the standard we hold SquareCampus to. It is built as a School Operating System — a governed operating layer for the institution — and it is designed to support DPDP Act obligations. We do not claim a compliance certificate, because no software purchase can make that claim true on its own.",
+          "Software’s honest role in all of this is enforcement. Once the institution has decided who may see what, a well-built system applies that decision every hour of every day without getting tired: role-based access, an audit trail recording who changed what and when, encryption in transit and at rest, and an exit whose export scope and format are agreed in writing so your data is never trapped. That is the standard we hold SquareCampus to. It is built as a School Operating System — a governed operating layer for the institution — and it is designed to support DPDP Act obligations. We do not claim a compliance certificate, because no software purchase can make that claim true on its own.",
           "On infrastructure, we publish what we run and stop there: hosted on Microsoft Azure in India with an India-first residency posture, with optional Microsoft Entra ID single sign-on from the Pro plan so staff sign in under your institution’s own policies, and SquareCampus-managed credentials in every plan. Our AI layer, AEGIS, answers questions inside the same role permissions as the rest of the platform, grounded in your own records, with every query landing on the audit trail — read-only in its first version, and deliberately not autonomous. The details live on the security page at squarecampus.com/security/ and the infrastructure page at squarecampus.com/infrastructure/, and we answer security questionnaires in writing.",
           "Two closing honesties. First, a SquareCampus deployment is bounded by design: it coexists with the ERP, payment portal, or identity provider you already run, which stay authoritative for their domains — consolidating tools is a later choice, if you ever make it, never a precondition. Second, and more important: no vendor can decide your access map, empty your WhatsApp groups, or revoke your leavers’ accounts. That work is the institution’s, it is mostly free, and it is where student data protection is actually won. Print the checklist. Walk the campus with it. Do that much, and every software decision you make afterwards gets easier.",
         ],
@@ -1788,7 +1788,7 @@ export const allBlogPosts: BlogPost[] = [
         paragraphs: [
           "During the pilot, everything you already run stays in place and stays authoritative. Your ERP or student information system remains the system of record — the system whose numbers are treated as final whenever two systems disagree. Your LMS keeps teaching, your payment portal keeps collecting, your identity provider keeps deciding who logs in. SquareCampus is deployed as a governed operating layer around the chosen bottleneck, not as a replacement for the estate. Nothing is switched off to find out whether this works.",
           "Anything your finance or academic teams must trust runs as a parallel run — the old process and the new one operating side by side, with results compared until the numbers agree and the teams say so. That is the same discipline described on the rollout page at squarecampus.com/rollout/, sequenced around admissions, fee deadlines, examinations and results. Where the AEGIS intelligence layer is part of the agreed scope, the same caution applies: it is role-scoped, grounded in your institution’s own records, auditable, and read-only in its first version. It is not a chatbot, and it does not act on its own.",
-          "This is also, frankly, your protection against us. A young vendor asking you to switch off working systems is asking you to carry its risk. We are asking for something much narrower: run the pilot alongside what you have, compare the results, and keep complete exports of your data in standard formats available throughout — not only at the end. If SquareCampus disappeared mid-pilot, your operations would continue exactly as they did before it arrived.",
+          "This is also, frankly, your protection against us. A young vendor asking you to switch off working systems is asking you to carry its risk. We are asking for something much narrower: run the pilot alongside what you have, compare the results, and agree in writing, before the pilot starts, what data you can take out and in what form. If SquareCampus disappeared mid-pilot, your operations would continue exactly as they did before it arrived.",
         ],
         image: {
           src: "/images/blog/founding-partner-parallel.webp",
@@ -2143,11 +2143,11 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Reliability is a promise, not a slogan",
         paragraphs: [
           "Schools cannot pause operations when a system slows down. Fee collection cannot wait. Attendance must be marked. Report cards must go out. We engineer for predictable performance, clear audit trails, and secure access boundaries. When a school trusts us with their data, we treat that trust as sacred.",
-          "This is why we invest in infrastructure discipline: automated backups, redundant systems, and proactive monitoring. It is why we obsess over role-based access controls—ensuring that a class teacher can see their students but not the salary data of their colleagues. It is why we build consistent reporting that leadership can share with trustees without double-checking every number.",
+          "This is why we invest in infrastructure discipline, with the availability, backup and recovery design documented in writing during security review rather than promised in a blog post. It is why we obsess over role-based access controls—ensuring that a class teacher can see their students but not the salary data of their colleagues. It is why we build consistent reporting that leadership can share with trustees without double-checking every number.",
           "Reliability also means responsive support. When something goes wrong—and in software, something always eventually goes wrong—schools need a partner who picks up the phone and fixes the problem. Not a chatbot. Not a ticket queue. A human who understands school operations and can resolve issues quickly.",
         ],
         bullets: [
-          "Operational visibility for principals and finance teams in real-time.",
+          "Operational visibility for principals and finance teams from current records.",
           "Data safeguards aligned to Indian compliance expectations including DPDP Act.",
           "Structured onboarding so teams know exactly what to do on day one.",
           "Named success partners, not anonymous support tickets.",
@@ -2158,7 +2158,7 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Built for Indian schools, specifically",
         paragraphs: [
           "India's education landscape is unique. We have CBSE, ICSE, state boards, international boards—each with different grading patterns, exam structures, and reporting requirements. We have schools that run on single campuses and education groups that manage 50+ branches. We have urban schools with digital-native parents and rural schools where SMS is still the primary communication channel.",
-          "SquareCampus is built for this complexity. Our fee structures support the installment patterns that Indian parents expect. Our report cards generate in the formats that different boards require. Our communication module handles WhatsApp, SMS, email, and app notifications because different parents prefer different channels. Our multi-campus architecture supports everything from centralized control to federated management.",
+          "SquareCampus is built for this complexity. Our fee structures support the installment patterns that Indian parents expect. Our report cards generate in the formats that different boards require. Our communication design treats the channel as a family preference, because different parents prefer different channels; which channels an institution uses, including SMS and WhatsApp, is scoped with it. Our multi-campus architecture supports everything from centralized control to federated management.",
           "We also understand that data residency matters. SquareCampus is designed to keep institutional data in India, in an Indian cloud region. This is not just a compliance checkbox—it is a reflection of our belief that Indian schools should not have to send their students' data overseas.",
         ],
       },
@@ -2292,7 +2292,7 @@ export const allBlogPosts: BlogPost[] = [
       {
         heading: "How the SquareCampus licence is built, for comparison",
         paragraphs: [
-          "We publish the model rather than the figures, because the figures depend on scoping. The model is one annual institutional licence calculated on student-volume bands, with every module and the standard parent and staff mobile apps included. White-labelled apps under the school's own branding carry a single charge that covers the whole agreed term. Implementation, migration and training are scoped explicitly rather than folded into an unstated blended rate, and your data exports in standard formats whenever you decide to leave. The sheet above is one we are happy to fill in first.",
+          "We publish the model rather than the figures, because the figures depend on scoping. The model is one annual institutional licence calculated on student-volume bands, with every module and the standard parent and staff mobile apps included. White-labelled apps under the school's own branding carry a single charge that covers the whole agreed term. Implementation, migration and training are scoped explicitly rather than folded into an unstated blended rate, and the export scope, format and timing for the day you decide to leave are agreed in the order form. The sheet above is one we are happy to fill in first.",
         ],
       },
     ],
@@ -2386,7 +2386,7 @@ export const allBlogPosts: BlogPost[] = [
   },
   {
     slug: "multilingual-parent-communication-indian-schools",
-    title: "Ten Languages, One Record: Parent Communication in Multilingual Indian Schools",
+    title: "Many Languages, One Record: Parent Communication in Multilingual Indian Schools",
     summary:
       "Most Indian schools speak to families in two or three languages and pay for it in translated circulars and missed messages. How to make language a per-family preference without fragmenting the institution's record.",
     date: "2026-09-23",
@@ -2420,7 +2420,7 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Why broadcast tools cannot fix it",
         paragraphs: [
           "Messaging tools treat language as a property of the message: you write one version, then another, then send each to a list. The school ends up maintaining lists per language, and the lists drift from the student record the moment a family changes phones or a sibling joins. The fix is to treat language as a property of the family, held on the student record, and to have every message generated from the record in that family's language, automatically, with delivery and acknowledgement recorded against the student.",
-          "That is what 'ten Indian languages' means in SquareCampus: not ten translated apps, but one parent and student app, one set of circulars and notifications, rendered per family in the language the family chose, while the institution keeps exactly one record underneath.",
+          "That is how SquareCampus is designed to handle language: not a translated app per language, but one parent and student app, one set of circulars and notifications, rendered per family in the language the family chose, while the institution keeps exactly one record underneath. The languages available to an institution are confirmed in its proposal.",
         ],
       },
       {
@@ -2460,7 +2460,7 @@ export const allBlogPosts: BlogPost[] = [
     ],
     cta: {
       heading: "See parent communication with a record",
-      body: "Messages tied to context, in ten Indian languages, with delivery and acknowledgement recorded against the student.",
+      body: "Messages tied to context, designed for each family's language, with delivery and acknowledgement recorded against the student.",
       href: "/parent-communication-app-for-schools/",
       label: "Parent communication in SquareCampus",
     },

@@ -101,7 +101,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Deployment",
         squarecampus:
-          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
+          "Managed cloud (Microsoft Azure, India) by default; Enterprise private deployment on AWS, a private cloud or on premises as a scoped service.",
         competitor: "Cloud (SaaS).",
       },
       {
@@ -178,7 +178,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Deployment",
         squarecampus:
-          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
+          "Managed cloud (Microsoft Azure, India) by default; Enterprise private deployment on AWS, a private cloud or on premises as a scoped service.",
         competitor: "Cloud or self-hosted.",
       },
       {
@@ -207,7 +207,7 @@ export const comparisons: Comparison[] = [
       {
         question: "Does SquareCampus offer self-hosting like Fedena's open source?",
         answer:
-          "SquareCampus is delivered as a managed platform on our Microsoft Azure infrastructure in India, with Enterprise private deployment on AWS available and BYOC (your own cloud account) coming soon. It is not open-source self-hosting, but BYOC gives you your own boundary with our operations.",
+          "No. SquareCampus is delivered as a managed platform on our Microsoft Azure infrastructure in India. Institutions that need their own boundary can scope an Enterprise private deployment on AWS, in a private cloud or on premises. Running it in the institution's own cloud account (BYOC) is not offered today, and there is no open-source self-hosting.",
       },
     ],
   },
@@ -260,7 +260,7 @@ export const comparisons: Comparison[] = [
       {
         dimension: "Deployment",
         squarecampus:
-          "Managed cloud (Microsoft Azure, India); Enterprise private deployment on AWS; BYOC coming soon.",
+          "Managed cloud (Microsoft Azure, India) by default; Enterprise private deployment on AWS, a private cloud or on premises as a scoped service.",
         competitor: "Cloud (SaaS).",
       },
     ],

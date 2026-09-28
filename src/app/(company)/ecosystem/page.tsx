@@ -62,7 +62,7 @@ const ecosystemActors = [
   {
     title: "Leadership and trustees",
     icon: ShieldCheck,
-    body: "Live visibility into branch health, academic performance, operational exposure, and finance signals.",
+    body: "Current visibility into branch health, academic performance, operational exposure, and finance signals.",
   },
 ] as const;
 
@@ -96,7 +96,7 @@ export default function EcosystemPage() {
               />
             </div>
           </Reveal>
-          <Reveal delay={120}>
+          <Reveal immediate delay={120}>
             <EcosystemMockup />
           </Reveal>
         </div>
@@ -217,16 +217,16 @@ export default function EcosystemPage() {
       <SectionShell
         eyebrow="Beyond the platform"
         title="Already invested in other tools? We connect them."
-        body="Where a system exposes an API or WebSocket we build the bridge — plus ETL/ELT pipelines into one custom dashboard, on your servers or our cloud."
+        body="Where a system offers a documented API, we assess and scope a bridge — plus ETL/ELT pipelines into one custom dashboard. Nothing connects automatically; each integration is confirmed in writing."
         compactBody
       >
         <Reveal className="surface-panel rounded-[1.8rem] p-6 lg:p-7">
           <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
             <div className="grid gap-2.5 sm:grid-cols-3">
               {[
-                "API & WebSocket connectors for the tools you keep",
+                "Scoped connectors for tools that offer an API",
                 "ETL/ELT into one governed leadership dashboard",
-                "Private deployments today; BYOC coming soon",
+                "Enterprise private deployment as a scoped service",
               ].map((item) => (
                 <p
                   key={item}

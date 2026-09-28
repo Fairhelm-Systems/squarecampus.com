@@ -40,6 +40,16 @@ export const product = {
   ],
   geography:
     "India-first. The platform is hosted on Microsoft Azure in India. Enterprise private deployments are available on AWS, in a private cloud or on premises, subject to scoping.",
+  /**
+   * How "School OS" relates to the categories buyers search for. SquareCampus
+   * is school management software; "School OS" describes how it is built, not
+   * a claim that it belongs to a different category. Every page that explains
+   * the relationship (About, Home, Platform, the category pages, the ERP FAQ)
+   * uses these sentences, so the answer cannot differ between pages.
+   */
+  categoryDescriptor: "School management software for Indian schools and trusts",
+  categoryRelationship:
+    "SquareCampus is school management software built as a connected School OS. It covers the record-keeping and workflows schools expect from school management and ERP software, and connects them with owners, approvals and audit history on one institutional record.",
   distinction:
     "A system of record stores what happened. SquareCampus also carries the workflows, ownership, exceptions, approvals and audit history that turn records into accountable operations, and shows leadership what requires attention, who owns it and what happens next.",
   competesOn: [
@@ -74,6 +84,97 @@ export const product = {
     logo: `${SITE}/brand/squarecampus.png`,
     llms: `${SITE}/llms.txt`,
   },
+} as const;
+
+/**
+ * Availability, stated once.
+ *
+ * The site describes how SquareCampus is designed to work. Which modules,
+ * apps, languages and integrations an institution receives, and when, is a
+ * matter for the proposal — never for a page. Every surface that lists
+ * capabilities carries this note (see components/site/availability-note.tsx)
+ * rather than implying that everything described is switched on for everyone.
+ * Deployment state is deliberately not described here or anywhere public.
+ */
+export const availability = {
+  note: "Capabilities on this site describe how SquareCampus is designed to work. The modules, apps, languages and integrations included in your rollout, and when each becomes available to your institution, are confirmed in writing in your proposal.",
+  short:
+    "Modules, apps, languages and integrations for your rollout are confirmed in writing in your proposal.",
+  languages:
+    "Parent-facing screens and messages are designed to reach each family in its preferred language. The languages available to your institution are confirmed in your proposal.",
+} as const;
+
+/** Status vocabulary for deployment options and integrations. */
+export type OfferStatus = "Default" | "Scoped service" | "Not offered today";
+
+/**
+ * Deployment options, with an explicit status each. Every page that mentions
+ * where SquareCampus runs derives from this list, so an option cannot be
+ * "available" on one page and "coming soon" on another.
+ */
+export const deploymentOptions = [
+  {
+    id: "managed",
+    title: "Managed cloud",
+    status: "Default" as OfferStatus,
+    body: "SquareCampus on our Microsoft Azure infrastructure in India, operated and maintained by us. Every plan starts here.",
+  },
+  {
+    id: "private",
+    title: "Enterprise private deployment",
+    status: "Scoped service" as OfferStatus,
+    body: "A dedicated SquareCampus environment on AWS, in a private cloud or on premises, for institutions with strict segregation requirements. Enterprise only; scope, responsibilities and charges are agreed in writing.",
+  },
+  {
+    id: "byoc",
+    title: "Your own cloud account (BYOC)",
+    status: "Not offered today" as OfferStatus,
+    body: "Running SquareCampus inside the institution's own cloud account is not offered today. If your governance requires it, raise it during scoping.",
+  },
+] as const;
+
+/** One sentence for surfaces that name deployment without the full list. */
+export const deploymentSummary =
+  "Managed cloud on Microsoft Azure in India by default; Enterprise private deployment on AWS, in a private cloud or on premises as a scoped service.";
+
+/**
+ * Integration scope. SquareCampus publishes no catalogue of pre-built
+ * connectors, so no page may imply that a named tool connects automatically.
+ */
+export const integrationScope = {
+  summary:
+    "SquareCampus does not publish a catalogue of pre-built connectors. Connecting another system is scoped work: we assess each tool during discovery, and what connects, in which direction, how often and at what cost is confirmed in writing before any build.",
+  prerequisites: [
+    "The other system must offer a documented API or a data export the institution is licensed to use.",
+    "Vendor access, vendor-side charges and the vendor's own limits remain the institution's.",
+    "Sync direction, frequency, error handling and ownership of each record are agreed per integration.",
+  ],
+  groups: [
+    {
+      label: "Sign-in",
+      status: "By plan",
+      detail:
+        "SquareCampus-managed credentials in every plan; Microsoft Entra ID single sign-on from Pro, subject to technical onboarding.",
+    },
+    {
+      label: "Payment gateway, SMS and WhatsApp",
+      status: "Scoped service",
+      detail:
+        "The provider is confirmed during scoping; metered usage is passed through rather than folded into the licence.",
+    },
+    {
+      label: "Accounting software, biometric devices, LMS and government portals",
+      status: "Scoped service",
+      detail:
+        "Assessed tool by tool. There is no pre-built connector; each one is scoped, quoted and confirmed in writing.",
+    },
+    {
+      label: "Development APIs for the institution's own apps",
+      status: "Scoped service",
+      detail:
+        "Scoped per institution and granted after a compliance review, inside the same role-based permissions and audit trail.",
+    },
+  ],
 } as const;
 
 /** The three plans as a hierarchy of institutional depth, not feature bundles. */

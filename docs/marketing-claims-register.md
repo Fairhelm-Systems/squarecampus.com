@@ -1,6 +1,6 @@
 # Marketing Claims Register
 
-Last updated: 2026-09-28 (data retention page and exit-claim reconciliation). Previous: 2026-09-09
+Last updated: 2026-09-29 (site audit: capability, availability, deployment and integration reconciliation). Previous: 2026-09-28 (data retention page and exit-claim reconciliation); 2026-09-09
 (commercial-consistency pass: canonical commercial facts in
 `src/content/commercial.ts`, identity model by plan, two-position Founding Partner
 programme, generated /llms.txt and Markdown alternates).
@@ -145,10 +145,53 @@ outside this repository. Approval of website wording is not legal review.
 | Statutory penalty figures and consequences | — | **ABSENT** by decision (2026-09-28): not published in this change |
 | "Complete exports in standard formats" / "within 30 days of request" | homepage, /launch-partners FAQ, blog "Our own posture", faq.ts (old) | **REMOVE** (removed; forbidden by `check-claims.sh`) |
 
-Still open (not changed in this pass): blog posts `founding-institutional-partner-pilot`
-and `eighteen-thousand-rupee-school-erp-true-cost` and the DPDP checklist post describe
-exports "in standard formats" as SquareCampus practice; they need the same
-reconciliation before those statements are relied on.
+Closed 2026-09-29: the blog posts `founding-institutional-partner-pilot`,
+`eighteen-thousand-rupee-school-erp-true-cost` and the DPDP checklist post no longer
+describe exports "in standard formats" as SquareCampus practice; buyer-checklist
+questions that ask *any* vendor about standard formats remain.
+
+## Capability, availability and integrations (site audit, 2026-09-29)
+
+Stated once in `src/content/commercial.ts` (`availability`, `deploymentOptions`,
+`deploymentSummary`, `integrationScope`) and rendered by `AvailabilityNote`
+beside capability lists (Home, Platform, AEGIS, category pages, the School
+Management System page), on /services and in llms.txt. Capability copy
+describes the product design; which modules, apps, languages and integrations
+an institution receives, and when, is confirmed in its proposal.
+
+| Claim | Where | Status |
+| --- | --- | --- |
+| "Capabilities on this site describe how SquareCampus is designed to work… confirmed in writing in your proposal" | capability surfaces, llms.txt | **VERIFIED** as the availability qualifier (a statement about how the site should be read) |
+| SquareCampus is school management software built as a connected School OS (`product.categoryRelationship`) | About, Why, category pages, ERP FAQ, llms.txt | **VERIFIED** as positioning; replaces "This is not school management software" |
+| "Ten Indian languages" across apps, circulars and notifications | homepage, category pages, FAQ, llms.txt, blog | **REMOVE** (no language count is published; languages are confirmed per institution in the proposal). Forbidden by `check-claims.sh` |
+| Parent and student apps "iOS and Android" | FAQ | **REMOVE** as a store-availability statement; the licence-inclusion of the standard apps (commercial policy) stays |
+| BYOC "coming soon" / "early-access list" | homepage, services, ecosystem, comparisons | **REMOVE**. BYOC is listed as "Not offered today" in `deploymentOptions`; no early-access list exists |
+| Enterprise private deployment on AWS, private cloud or on premises | services, homepage, comparisons, llms.txt | **VERIFIED** as a scoped Enterprise service (status "Scoped service") |
+| Pre-built integrations, "webhooks for real-time sync", "API & WebSocket connectors", tools that "talk to each other — automatically" | FAQ, services, ecosystem, School Management System FAQ | **REMOVE**. Integrations are scoped work with stated prerequisites (`integrationScope`); no connector catalogue is published |
+| Named third-party tools (Tally, WhatsApp, biometric devices) as connected systems | services visual, AEGIS visual, ecosystem metadata | **REMOVE** as connection claims; named only as tools an institution may ask to scope |
+| "In seconds", "instantly", "in real time", "live sync" | AEGIS, About, Platform, services, category pages | **REMOVE** as speed/freshness assurances; replaced by "current records" |
+| "How each module behaves in production" / "as they run in production" | category pages | **REMOVE** (implies production usage that is not evidenced) |
+| "Without drama, outages, or surprises" | About | **REMOVE** (reliability promise); availability and recovery design documented during security review |
+| "Automated backups, redundant systems" | blog `why-squarecampus-exists` | **REMOVE** (see Infrastructure claims: backup and redundancy properties are not stated publicly) |
+| "For a 300-student school or a 30,000-student group" | homepage, AEGIS | **REMOVE** (scale claim without evidence) |
+| "Exports in standard formats" as SquareCampus practice | three blog posts | **REMOVE** (export scope, format and timing are agreed in the order form; closes the item left open on 2026-09-28) |
+
+### Illustrations
+
+| Claim | Where | Status |
+| --- | --- | --- |
+| "LIVE · 09:52" badge with a pulsing dot; "Live" chips on illustrations | homepage hero screen, hero AEGIS panel, AEGIS visual | **REMOVE** (an illustration must not look like live telemetry). Replaced by "Sample data" / "Illustrative" labels; forbidden by `check-claims.sh` |
+| "Records copied out: 0", "Questions audited: 100%", partial governance-check bars (94%, 90%) | AEGIS visual | **REMOVE** (numeric assurances shown as if measured) |
+| Synthetic-data label placement | homepage hero, AEGIS console | **VERIFIED**: the label now sits beside the illustration it qualifies (`SyntheticDataNote`) |
+
+### AEGIS action boundary
+
+AEGIS is read-only (`aegisBoundaries` in `src/content/what-is-squarecampus.ts`,
+rendered on /aegis and /what-is-squarecampus). Illustrations show *suggested
+follow-ups for a person to act on*; no surface may show AEGIS queuing, sending or
+changing anything. "Every question, answer, and suggested action lands on the
+audit trail" was reworded so suggestions are not presented as executed actions.
+AEGIS capability statements remain **NEEDS BACKEND EVIDENCE** (see AI claims).
 
 ## Company & legal facts
 
@@ -238,4 +281,6 @@ carries a `LEGAL` marker comment saying so:
 `bun run build` runs `scripts/check-claims.sh`, which fails the build if any
 forbidden pattern ("500+", "India's #1", "only you hold the keys", "bank-grade",
 uptime figures, fabricated live-status strings, RTO/RPO numbers, etc.) reappears
-in `src/` or `public/llms.txt`.
+in `src/` or in the OG card generator (`scripts/og-cards/generate.mjs`, whose copy is
+baked into `public/og/*.png`; the Infrastructure card still said "AWS Mumbai" and
+"Multi-AZ" until 2026-09-29).

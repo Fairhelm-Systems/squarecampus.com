@@ -23,9 +23,9 @@ import { cn } from "@/lib/utils";
 const tools = [
   { label: "Biometric", icon: Fingerprint, top: "2%" },
   { label: "Payments", icon: Wallet, top: "18.4%" },
-  { label: "Tally / accounts", icon: Calculator, top: "34.8%" },
+  { label: "Accounts", icon: Calculator, top: "34.8%" },
   { label: "LMS", icon: BookOpenCheck, top: "51.2%" },
-  { label: "WhatsApp", icon: MessageCircleMore, top: "67.6%" },
+  { label: "Messaging", icon: MessageCircleMore, top: "67.6%" },
   { label: "Spreadsheets", icon: FileSpreadsheet, top: "84%" },
 ] as const;
 
@@ -206,7 +206,7 @@ export function ServicesFlowVisual({ className }: { className?: string }) {
             style={{ "--d": "1100ms" } as React.CSSProperties}
             className="absolute bottom-0 translate-x-1/2 whitespace-nowrap rounded-full border border-(--line) bg-(--surface) px-2.5 py-1 font-mono text-[0.42rem] uppercase tracking-[0.16em] text-muted-foreground sm:px-4 sm:py-2 sm:text-[0.56rem]"
           >
-            Runs on your servers · our cloud · or your own cloud
+            Illustrative · each source scoped separately
           </div>
         </div>
       </div>

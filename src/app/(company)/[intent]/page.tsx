@@ -1,6 +1,7 @@
 import { ArrowUpRight, Check, CircleHelp, MapPinned, Workflow } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { FactTable } from "@/components/site/fact-table";
 import { Reveal } from "@/components/site/reveal";
@@ -11,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { product } from "@/content/commercial";
 import { intentPageBySlug, intentPages } from "@/content/intent-pages";
 import { siteCtas } from "@/content/site-content";
 import {
@@ -145,8 +147,7 @@ export default async function IntentPage({ params }: PageProps) {
             </h2>
             <p className="mt-3 text-base leading-7 text-muted-foreground">{page.definition.body}</p>
             <p className="mt-5 border-t border-(--line) pt-4 text-sm leading-6 text-muted-foreground">
-              SquareCampus includes these capabilities and is positioned as a School Operating
-              System.{" "}
+              {product.categoryRelationship}{" "}
               <Link
                 href="/what-is-squarecampus/"
                 className="text-foreground underline-offset-4 hover:underline"
@@ -162,7 +163,7 @@ export default async function IntentPage({ params }: PageProps) {
       <SectionShell
         eyebrow="How it runs in SquareCampus"
         title="Each step has an owner and leaves a record"
-        body="A module list hides the real question: does the work connect? These are the workflows as they run in production."
+        body="A module list hides the real question: does the work connect? These are the workflows as SquareCampus is designed to run them."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {page.workflows.map((item) => (
@@ -177,6 +178,7 @@ export default async function IntentPage({ params }: PageProps) {
             </article>
           ))}
         </Reveal>
+        <AvailabilityNote className="mt-4" />
       </SectionShell>
 
       {page.contrast ? (

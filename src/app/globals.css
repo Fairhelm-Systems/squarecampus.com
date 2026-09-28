@@ -1106,8 +1106,11 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   }
 }
 
-/* AEGIS governed console: typed query, then answer cards land in sequence. */
-.aegis-console .aegis-console-query {
+/* AEGIS governed console. Static first: the finished exchange is the default
+   state (no JavaScript, reduced motion, or already on screen). Only a console
+   that starts below the fold gets `.will-animate` from aegis-console.tsx, and
+   only then do the typed query and the landing answer cards play on scroll. */
+.aegis-console.will-animate .aegis-console-query {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
@@ -1115,13 +1118,13 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
   border-right: 2px solid transparent;
 }
 
-.aegis-console.is-live .aegis-console-query {
+.aegis-console.will-animate.is-live .aegis-console-query {
   animation:
     console-type 1.4s steps(44, end) 0.3s forwards,
     console-caret 0.7s step-end 0.3s 3;
 }
 
-.aegis-console [data-console-step] {
+.aegis-console.will-animate [data-console-step] {
   opacity: 0;
   transform: translateY(14px);
   transition:
@@ -1129,7 +1132,7 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.aegis-console.is-live [data-console-step] {
+.aegis-console.will-animate.is-live [data-console-step] {
   opacity: 1;
   transform: none;
   transition-delay: var(--d, 0s);
@@ -1156,7 +1159,8 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
 
 @media (max-width: 640px) {
   /* Typing effect needs nowrap; allow wrapping on narrow screens instead. */
-  .aegis-console .aegis-console-query {
+  .aegis-console.will-animate .aegis-console-query,
+  .aegis-console.will-animate.is-live .aegis-console-query {
     white-space: normal;
     max-width: 100%;
     animation: none;
@@ -1165,14 +1169,14 @@ html[data-demo-intent="founding-partner"] [data-when-intent="demo"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aegis-console .aegis-console-query {
+  .aegis-console.will-animate .aegis-console-query {
     max-width: 100%;
     white-space: normal;
     animation: none !important;
     border-right: none;
   }
 
-  .aegis-console [data-console-step] {
+  .aegis-console.will-animate [data-console-step] {
     opacity: 1;
     transform: none;
     transition: none;

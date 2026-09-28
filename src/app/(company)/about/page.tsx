@@ -3,13 +3,14 @@ import { ButtonLink } from "@/components/site/button-link";
 import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { product } from "@/content/commercial";
 import { siteCtas } from "@/content/site-content";
 
 const values = [
   {
     title: "Reliability over decoration",
     icon: ShieldCheck,
-    body: "SquareCampus is built to quietly run your day — attendance, fees, exams, and approvals — without drama, outages, or surprises.",
+    body: "SquareCampus is built for the days that matter most — fee deadlines, results, inspections. Availability and recovery design are documented in writing during security review, not promised on a web page.",
   },
   {
     title: "Real-world operations first",
@@ -39,7 +40,7 @@ const pillars = [
     points: [
       "Connects admissions, academics, and finance into one flow.",
       "Turns paper-based approvals into clear, trackable workflows.",
-      "Ensures every update is reflected across the system instantly.",
+      "A change made once reaches the shared record, instead of being re-keyed into another system.",
     ],
   },
   {
@@ -55,8 +56,8 @@ const pillars = [
 
 const operatingPosture = [
   {
-    label: "Institutions served",
-    value: "Multi-campus ready",
+    label: "Built for",
+    value: "One campus or many",
     note: "Branch structures, shared services, and autonomy without chaos.",
   },
   {
@@ -171,8 +172,8 @@ export default function AboutPage() {
                 ))}
               </ul>
             </div>
-            <p className="mt-6 font-display text-xl tracking-[-0.03em]">
-              This is not school management software. This is a Campus Operating System.
+            <p className="mt-6 font-display text-lg leading-snug tracking-[-0.02em]">
+              {product.categoryRelationship}
             </p>
           </div>
 

@@ -38,7 +38,7 @@ export default function WhatIsSquareCampusPage() {
             </CTAGroup>
           </Reveal>
 
-          <Reveal delay={120}>
+          <Reveal immediate delay={120}>
             <div className="surface-panel-strong rounded-[var(--radius-panel-lg)] p-6 sm:p-8">
               <Eyebrow>The distinction that matters</Eyebrow>
               {/* A pull-quote, not a section heading: the sentence is long, and

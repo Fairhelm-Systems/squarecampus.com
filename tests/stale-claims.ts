@@ -72,6 +72,21 @@ export const STALE_CLAIMS: ReadonlyArray<{ pattern: RegExp; reason: string }> = 
     pattern: /retention schedule is under legal review/i,
     reason: "implies an engaged legal review that is not established",
   },
+  { pattern: /ten (indian )?languages/i, reason: "languages are confirmed in the proposal" },
+  { pattern: /BYOC[^.]*coming soon/i, reason: "BYOC is not offered today" },
+  { pattern: /early-access list/i, reason: "no BYOC early-access list exists" },
+  { pattern: /iOS and Android/i, reason: "app-store availability is not established" },
+  {
+    pattern: /pre-built integrations?/i,
+    reason: "integrations are scoped; no connector catalogue",
+  },
+  { pattern: /API (&|and) WebSocket/i, reason: "WebSocket connectors are not offered" },
+  { pattern: /LIVE ·/, reason: "an illustration must not look like live telemetry" },
+  {
+    pattern: /(behaves|run|runs) in production/i,
+    reason: "implies production usage that is not evidenced",
+  },
+  { pattern: /positioned as a School/i, reason: "internal positioning commentary" },
 ];
 
 /** Phrases that would turn llms.txt into instructions for assistants. */

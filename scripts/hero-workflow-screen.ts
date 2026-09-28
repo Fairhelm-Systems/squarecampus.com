@@ -241,7 +241,9 @@ function header() {
     weight: 600,
     tracking: "-.02em",
   });
-  out += pill(X1, 78, "LIVE · 09:52", "var(--state-ok)", "var(--state-ok-soft)", { dot: "pulse" });
+  // An illustration must not look like live telemetry: no "LIVE" badge and no
+  // pulsing status dot. The pill says what the screen is.
+  out += pill(X1, 78, "SAMPLE DATA", "var(--wmut)", "var(--wcard2)");
   return out;
 }
 

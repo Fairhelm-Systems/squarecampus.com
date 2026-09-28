@@ -8,7 +8,7 @@
  * to an ERP.
  */
 
-import { multiCampusContrast } from "./commercial";
+import { multiCampusContrast, product } from "./commercial";
 
 export const CANONICAL_DEFINITION =
   "SquareCampus is a School Operating System and institutional decision layer for schools, educational trusts and multi-campus groups in India. It includes the operational systems of record institutions expect, but its primary purpose is to connect recurring school cycles to ownership, exception handling, auditability and leadership decisions.";
@@ -145,8 +145,7 @@ export { multiCampusContrast };
 export const entityFaqs = [
   {
     question: "Is SquareCampus an ERP?",
-    answer:
-      "SquareCampus includes the core record and workflow capabilities commonly expected from institutional ERP software. However, it is designed and positioned as a School Operating System: a connected operating backbone where school cycles, ownership, exceptions, governance and leadership visibility share one institutional model.",
+    answer: `Yes, in the sense buyers usually mean. ${product.categoryRelationship} "School OS" describes how it is built: school cycles, ownership, exceptions, governance and leadership visibility share one institutional model.`,
   },
   {
     question: "What is a School Operating System?",

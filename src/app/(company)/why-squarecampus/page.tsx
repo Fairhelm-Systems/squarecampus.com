@@ -75,7 +75,7 @@ const switchingReasons = [
   "The institution wants fewer tools without losing operational depth.",
   "Leadership wants live visibility instead of delayed reporting rituals.",
   "Finance and compliance teams need controls that survive real scrutiny.",
-  "The product must feel modern without becoming a soft, generic edtech template.",
+  "Parents and staff need one clear place for notices, dues and follow-ups instead of several apps and message threads.",
 ] as const;
 
 export default function WhyDifferentPage() {
@@ -89,14 +89,14 @@ export default function WhyDifferentPage() {
 
       <SectionShell className="pt-12 sm:pt-16">
         <Reveal immediate className="space-y-6">
-          <p className="section-kicker">School OS positioning</p>
+          <p className="section-kicker">Why SquareCampus</p>
           <h1 className="max-w-4xl font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
             Not a rebranded ERP. Not a bundle of point tools.
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
-            SquareCampus is positioned as a School OS because the difference is structural. The
-            product does not just collect modules. It keeps the institution working from one
-            connected operating model.
+            SquareCampus is school management software built as a connected School OS. Admissions,
+            academics, fees and communication share one record, and the approvals, owners and audit
+            history that connect them sit on that record too.
           </p>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href={siteCtas.demoHref} label="See the difference live" />
@@ -108,7 +108,7 @@ export default function WhyDifferentPage() {
       <SectionShell
         eyebrow="Comparison"
         title="What changes when you move from software stack to operating system"
-        body="This is the framing that matters in a real institutional buying conversation."
+        body="Five criteria worth checking in any system you evaluate, including this one."
       >
         <Reveal className="overflow-hidden rounded-[2rem] border border-[color:var(--line)]">
           <div className="grid bg-[color:var(--surface-strong)] md:grid-cols-[0.9fr_1fr_1fr_1fr]">
@@ -150,8 +150,8 @@ export default function WhyDifferentPage() {
 
       <SectionShell
         eyebrow="Why the School OS thesis matters"
-        title="The label changes expectations because the product actually behaves differently"
-        body="If the structure underneath is the same as everyone else, calling it a School OS would be marketing fluff. The point is that SquareCampus is built to justify the claim."
+        title="What “School OS” means in practice"
+        body="Four properties you can ask to see in a demo. If a system cannot show them, the label does not apply."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {schoolOsPrinciples.map((item) => (

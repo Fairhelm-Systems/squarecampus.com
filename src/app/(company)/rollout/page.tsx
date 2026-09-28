@@ -121,7 +121,7 @@ export default function RolloutPage() {
               ))}
             </div>
           </Reveal>
-          <Reveal delay={120}>
+          <Reveal immediate delay={120}>
             <RolloutMockup />
           </Reveal>
         </div>
