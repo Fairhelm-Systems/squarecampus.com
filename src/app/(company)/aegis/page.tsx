@@ -31,7 +31,7 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "AEGIS — Governed Intelligence for School Operations",
+  title: "AEGIS: AI for School Operations",
   description:
     "AEGIS is the intelligence inside SquareCampus, not a chatbot on an ERP: read-only, plain-language answers from the institution's own records, in role scope, with an audit trail on every question.",
   path: "/aegis",
@@ -125,7 +125,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     createWebPageSchema({
-      name: "AEGIS — Governed Intelligence for School Operations",
+      name: "AEGIS: AI for School Operations",
       description:
         "AEGIS is SquareCampus' governed intelligence layer for school leaders: role-aware answers, exception detection, and audit-ready decision support.",
       url: `${SEO_CONFIG.baseUrl}/aegis`,

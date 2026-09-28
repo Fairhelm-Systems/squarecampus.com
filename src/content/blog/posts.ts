@@ -1232,12 +1232,12 @@ export const allBlogPosts: BlogPost[] = [
         heading: "Fix these before you talk to any vendor",
         paragraphs: [
           "Most school data incidents will never involve a hacker. They involve an account that should have been closed, a chat group that should never have held a marks list, and a spreadsheet that walked out of the building on a personal laptop. Everything in this list costs nothing but attention and a little firmness. Do these before you evaluate any software — partly because they matter more than any feature, and partly because doing them will change what you ask vendors for.",
-          "None of this needs a budget line. It needs an owner — usually whoever manages IT, with the principal’s visible backing, because the hardest part of every item below is social, not technical. Somebody has to tell a senior colleague that the shared login is over, and that the fee-defaulter list is leaving the staff WhatsApp group. That conversation goes far better as policy than as confrontation, which is exactly why it belongs in a checklist the whole school has seen.",
+          "None of this needs a budget line. It needs an owner — usually whoever manages IT, with the principal’s visible backing, because the hardest part of every item below is social, not technical. Somebody has to tell a senior colleague that the shared login is over, and that the overdue-fees list is leaving the staff WhatsApp group. That conversation goes far better as policy than as confrontation, which is exactly why it belongs in a checklist the whole school has seen.",
         ],
         bullets: [
           "End shared logins. A computer four people use under one account means nobody is accountable for anything done on it. Give every staff member their own account, even on the front-desk machine — especially on the front-desk machine.",
           "Revoke access the day someone leaves. Keep a leaver checklist: email, school software, shared drives, WhatsApp groups, and the keys to the records cupboard. An ex-employee with a live account is your single most preventable risk.",
-          "Get student data out of WhatsApp. Marks lists, fee-defaulter lists, medical notes, and admission spreadsheets do not belong in group chats, because a group chat forwards forever and remembers everything. Use it for coordination, not for records.",
+          "Get student data out of WhatsApp. Marks lists, overdue-fee lists, medical notes, and admission spreadsheets do not belong in group chats, because a group chat forwards forever and remembers everything. Use it for coordination, not for records.",
           "Stop exports to personal devices and drives. A spreadsheet on a personal laptop leaves the institution with the laptop. If staff need data at home, the answer is controlled access to the system, not a copy.",
           "Lock the paper too. Admission files, transfer certificates, and health records in an unlocked cupboard are a data breach that requires no computer at all.",
           "Switch on the basics everywhere: screen locks, software updates, a different password for every system, and two-step sign-in — a second check at login, such as a code on a phone — wherever it is offered.",
@@ -2246,7 +2246,7 @@ export const allBlogPosts: BlogPost[] = [
         },
         paragraphs: [
           "The first year is expensive. The second year is where the structure reveals itself. The renewal letter arrives with an escalation of ten percent, which is inside the eight-to-twelve percent range that published guides describe as common. The annual maintenance charge is calculated as a percentage of the 'list value' of the modules, not of the ₹18,000 the school actually paid, so it is larger than the licence itself. The school has changed boards for its senior section; the report-card templates need 'reconfiguration', which is chargeable. Storage of scanned documents has crossed a quota nobody knew existed.",
-          "Then there is the quiet arithmetic of dependency. The SMS sender ID that parents recognise belongs to the vendor. The Play Store listing parents installed belongs to the vendor. The receipt numbering sequence, the one the auditor checks, lives inside the vendor's database. The custom fee-defaulter report the accountant relies on was built by the vendor as a paid customisation and is not exportable. Every one of these makes leaving a little more expensive than staying, and that, not the price, is the product being sold.",
+          "Then there is the quiet arithmetic of dependency. The SMS sender ID that parents recognise belongs to the vendor. The Play Store listing parents installed belongs to the vendor. The receipt numbering sequence, the one the auditor checks, lives inside the vendor's database. The custom overdue-fees report the accountant relies on was built by the vendor as a paid customisation and is not exportable. Every one of these makes leaving a little more expensive than staying, and that, not the price, is the product being sold.",
         ],
       },
       {
@@ -2341,7 +2341,7 @@ export const allBlogPosts: BlogPost[] = [
           "Run these with your own roles, in the vendor's sandbox, during the evaluation. Each one takes a minute and each one has a right answer that is easy to check.",
         ],
         bullets: [
-          "Scope: log in as a class teacher and ask about another class's fee defaulters. Governed intelligence declines, because the teacher's role cannot see that. A bolted-on chatbot answers, because the copy has no roles.",
+          "Scope: log in as a class teacher and ask about another class's overdue fees. Governed intelligence declines, because the teacher's role cannot see that. A bolted-on chatbot answers, because the copy has no roles.",
           "Source: ask a question and then ask 'which records did you use?'. Governed intelligence points at the records, with a link the role can open. A chatbot restates the answer.",
           "Freshness: change one attendance mark, then ask the question that depends on it. Governed intelligence reflects the change now. A chatbot reflects it after the next sync, if there is one.",
           "Audit: ask the vendor to show the question you just asked in the audit log, with your name and time against it. If it is not there, nothing you ask will ever be there.",
