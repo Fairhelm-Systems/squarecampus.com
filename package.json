@@ -2,6 +2,7 @@
   "name": "square_campus_marketing",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "bun run check:claims && bun run check:content && next build && bun run build:markdown && bun run check:build",

@@ -28,6 +28,7 @@
   <img alt="Bun" src="https://img.shields.io/badge/Bun-runtime-14151A?logo=bun&logoColor=white" />
   <img alt="Biome" src="https://img.shields.io/badge/Biome-lint%20%2B%20format-60A5FA?logo=biome&logoColor=white" />
   <img alt="Static export" src="https://img.shields.io/badge/output-static%20export-4B5563" />
+  <a href="LICENSE"><img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-2F6FEB" /></a>
   <a href="#built-with-claude-code"><img alt="Built with Claude Code" src="https://img.shields.io/badge/built%20with-Claude%20Code-D97757?logo=anthropic&logoColor=white" /></a>
 </p>
 
@@ -149,8 +150,24 @@ motion/           build-time Remotion compositions
 ## Contributing and security
 
 Issues and pull requests are welcome — especially ones that catch a claim
-reading stronger than its evidence. Please report security issues privately as
-described in [SECURITY.md](SECURITY.md), not in a public issue.
+reading stronger than its evidence. See [CONTRIBUTING.md](CONTRIBUTING.md), and
+please report security issues privately as described in
+[SECURITY.md](SECURITY.md), not in a public issue.
+
+## Licence
+
+**Code:** the source code in this repository — components, pages as code,
+scripts, checks and build tooling — is licensed under the
+[Apache License 2.0](LICENSE). Use it, learn from it, build on it.
+
+**Content and trademarks:** the website's content and brand are **not** covered
+by that licence and remain all rights reserved. That means the SquareCampus
+name and logo; the page copy, blog posts, FAQs and legal documents (including
+where that text lives inside `src/content/` and `src/app/`); and the images,
+illustrations, video and motion renders in `public/` and `motion/`.
+SquareCampus™ is a trademark (registration pending) of Fairhelm Systems (OPC)
+Private Limited, and the Apache License grants no rights to it. The OG-card
+fonts carry their own SIL Open Font License. Details in [NOTICE](NOTICE).
 
 ---
 
