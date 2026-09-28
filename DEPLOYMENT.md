@@ -391,3 +391,22 @@ distribution maps `403 -> /404.html` for the whole distribution. It is
 misleading when debugging and harmless in practice: 400, 429 and 503 pass
 through untouched, and a real browser always sends `Origin`. Narrowing the
 custom error responses to exclude `/api/*` would fix it.
+
+## Public source mirror
+
+The website's source is published to a public, read-only mirror at
+https://github.com/Fairhelm-Systems/squarecampus.com by
+`.github/workflows/public-mirror.yml` on every push to `main`:
+
+- The job clones the full history, then runs `scripts/publication-gate.sh`
+  over exactly the commits the mirror does not have yet: gitleaks, the claims
+  check, a private denylist (the `PUBLICATION_DENYLIST` secret), an
+  author/committer/co-author allowlist and a check for key or env files.
+  If the gate fails, nothing is published.
+- The push is fast-forward only, using a deploy key (`MIRROR_DEPLOY_KEY`) that
+  can write to the mirror and nothing else. The mirror's branches are
+  protected so that only that key can change them.
+- Only `main` is ever published. Never add the mirror as a push remote in a
+  working clone.
+- To stop publishing, disable the workflow or delete the deploy key; the
+  internal repository is unaffected.

@@ -1,0 +1,76 @@
+# Publishes `main` to the public read-only mirror on github.com, one way.
+#
+# The mirror is written only by this job (its branches are protected so that
+# nothing but this job's deploy key can push). Every run first passes
+# scripts/publication-gate.sh over exactly the commits about to become public;
+# if the gate fails, nothing is pushed. The push is fast-forward only: a
+# diverged mirror fails loudly instead of being overwritten.
+#
+# Secrets (repository settings, never in this repository):
+#   MIRROR_DEPLOY_KEY     private half of the mirror's write deploy key
+#   PUBLICATION_DENYLIST  one extended regex per line; terms that must never be published
+name: Publish public mirror
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-mirror
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      MIRROR: git@github.com:Fairhelm-Systems/squarecampus.com.git
+      GITLEAKS_VERSION: 8.30.1
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - name: Check out full history
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          git clone --quiet "https://x-access-token:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" repo
+          git -C repo checkout --quiet "$GITHUB_SHA"
+
+      - name: Install gitleaks (pinned, checksum verified)
+        run: |
+          f="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSL -o "$f" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/$f"
+          echo "${GITLEAKS_SHA256}  $f" | sha256sum -c -
+          tar -xzf "$f" gitleaks
+          sudo install -m 755 gitleaks /usr/local/bin/gitleaks
+
+      - name: Configure mirror access
+        env:
+          MIRROR_DEPLOY_KEY: ${{ secrets.MIRROR_DEPLOY_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$MIRROR_DEPLOY_KEY" > ~/.ssh/mirror_key
+          chmod 600 ~/.ssh/mirror_key
+          curl -fsSL https://api.github.com/meta | jq -r '.ssh_keys[] | "github.com " + .' > ~/.ssh/known_hosts
+          echo "GIT_SSH_COMMAND=ssh -i $HOME/.ssh/mirror_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" >> "$GITHUB_ENV"
+
+      - name: Gate and publish
+        working-directory: repo
+        env:
+          PUBLICATION_DENYLIST: ${{ secrets.PUBLICATION_DENYLIST }}
+        run: |
+          published=$(git ls-remote "$MIRROR" refs/heads/main | cut -f1)
+          [ -n "$published" ] || { echo "The mirror has no main branch."; exit 1; }
+          if [ "$published" = "$GITHUB_SHA" ]; then echo "The mirror is already at $GITHUB_SHA."; exit 0; fi
+          git cat-file -e "${published}^{commit}" || { echo "The mirror's main ($published) is not in this history."; exit 1; }
+          bash scripts/publication-gate.sh "$published" "$GITHUB_SHA"
+          git push "$MIRROR" "$GITHUB_SHA:refs/heads/main"
+          echo "Published $GITHUB_SHA to the public mirror."
+
+      - name: Remove the deploy key
+        if: always()
+        run: rm -f ~/.ssh/mirror_key
