@@ -145,3 +145,16 @@ export const socialLinks = [
     icon: "github",
   },
 ] as const;
+
+/**
+ * This website's own source code. The repository is public, so the claims
+ * register, the build checks and every page's copy can be read by anyone —
+ * including the checks that stop this site from overclaiming.
+ */
+export const siteSource = {
+  repoUrl:
+    "https://fairhelm-systems-private-limited.ghe.com/Fairhelm-Systems-Pvt-Ltd/square_campus.marketing",
+  label: "This site is open source",
+  tooltip:
+    "Read the code behind every page, including the claims register and the build checks that keep this site honest. Issues and pull requests welcome.",
+} as const;

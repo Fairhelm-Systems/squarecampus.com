@@ -30,6 +30,7 @@ import { comparisons } from "./comparisons";
 import { intentPages } from "./intent-pages";
 import { hasMarkdownAlternate, markdownAlternatePath } from "./markdown-alternates";
 import { RETENTION_PATH, retentionPointer } from "./retention";
+import { siteSource } from "./site-content";
 import { AEGIS_DEFINITION, aegisBoundaries } from "./what-is-squarecampus";
 
 export type LlmsLink = { path: string; title: string; description: string };
@@ -298,6 +299,7 @@ export function llmsOrientation(): string[] {
     `- ${foundingProgramme.name}: ${foundingProgramme.positionsStatement}`,
     `- Deployment: a bounded deployment can run alongside the institution's current ERP, LMS, payment portal and identity provider, which stay authoritative; consolidation is a later choice and never a precondition of starting.`,
     `- Evidence: ${product.evidenceNote} Product screenshots use synthetic data and are labelled as such.`,
+    `- Website source: the code for this site is public at ${siteSource.repoUrl}`,
     `- Operator: ${company.legalNameDisplay} (CIN ${company.cin}, GSTIN ${company.gstin}), ${product.operator.locality}. SquareCampus™ trademark registration pending.`,
   ];
 }

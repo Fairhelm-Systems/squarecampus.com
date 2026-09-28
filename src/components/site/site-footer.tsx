@@ -12,6 +12,7 @@ import {
 import { BrandLogo } from "./brand-logo";
 import { ButtonLink } from "./button-link";
 import { MobileExpand } from "./mobile-expand";
+import { SourceLink } from "./source-link";
 
 const socialIconPaths: Record<(typeof socialLinks)[number]["icon"], string> = {
   linkedin:
@@ -51,11 +52,31 @@ function DisclosureField({ label, children }: { label: string; children: ReactNo
  */
 function CompanyDisclosure() {
   return (
-    <address className="grid gap-6 not-italic py-6 sm:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr]">
-      <DisclosureField label="Registered office">
-        <p className="font-medium text-[color:var(--foreground)]">{company.legalName}</p>
-        <p className="mt-1">{company.address.full}</p>
-      </DisclosureField>
+    <address className="grid gap-6 not-italic py-6 sm:grid-cols-[1.7fr_1fr]">
+      {/* Contact sits directly under the registered office: both answer
+          "where do I reach the company", so they read as one block. */}
+      <div className="flex flex-col gap-6">
+        <DisclosureField label="Registered office">
+          <p className="font-medium text-[color:var(--foreground)]">{company.legalName}</p>
+          <p className="mt-1">{company.address.full}</p>
+        </DisclosureField>
+        <DisclosureField label="Contact">
+          <a
+            href={`mailto:${company.email.general}`}
+            className="block transition-colors hover:text-[color:var(--foreground)]"
+          >
+            {company.email.general}
+          </a>
+          {company.phone ? (
+            <a
+              href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
+              className="mt-1 block transition-colors hover:text-[color:var(--foreground)]"
+            >
+              {company.phone}
+            </a>
+          ) : null}
+        </DisclosureField>
+      </div>
       <DisclosureField label="CIN">
         <p className="font-mono text-[0.78rem] tracking-tight text-[color:var(--foreground)]">
           {company.cin}
@@ -67,22 +88,6 @@ function CompanyDisclosure() {
             {company.gstin}
           </span>
         </p>
-      </DisclosureField>
-      <DisclosureField label="Contact">
-        <a
-          href={`mailto:${company.email.general}`}
-          className="block transition-colors hover:text-[color:var(--foreground)]"
-        >
-          {company.email.general}
-        </a>
-        {company.phone ? (
-          <a
-            href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
-            className="mt-1 block transition-colors hover:text-[color:var(--foreground)]"
-          >
-            {company.phone}
-          </a>
-        ) : null}
       </DisclosureField>
     </address>
   );
@@ -264,6 +269,7 @@ export function SiteFooter() {
             <span className="h-1 w-1 rounded-full bg-[color:var(--muted-foreground)]/50" />
             <span>For institutions that cannot afford operational drift.</span>
           </div>
+          <SourceLink />
           <div className="sm:max-w-md sm:text-right">
             <p>{copyrightLine(new Date().getFullYear())}</p>
             <p className="mt-1">{company.trademarkNotice}</p>
