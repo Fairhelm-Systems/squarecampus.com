@@ -408,5 +408,8 @@ https://github.com/fairhelmsystems/squarecampus.com by
   protected so that only that key can change them.
 - Only `main` is ever published. Never add the mirror as a push remote in a
   working clone.
+- Pull requests opened on the mirror are brought upstream with
+  `scripts/upstream-public-pr.sh <number>`, merged here, and closed on the
+  mirror with a link to the published commit.
 - To stop publishing, disable the workflow or delete the deploy key; the
   internal repository is unaffected.
