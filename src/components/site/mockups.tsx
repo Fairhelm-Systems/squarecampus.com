@@ -93,7 +93,7 @@ function FrameLabel({ title, align = "between" }: { title: string; align?: "betw
         align === "between" ? "justify-between" : "flex-col justify-center"
       )}
     >
-      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-muted-foreground">
+      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-muted-foreground">
         {title}
       </p>
       {/* Every screen in these frames shows fictional institutions, campuses

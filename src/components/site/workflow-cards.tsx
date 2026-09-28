@@ -30,7 +30,7 @@ export function WorkflowCards({ className }: { className?: string }) {
           </dl>
           <Link
             href={item.href}
-            className="group/link mt-5 inline-flex items-center gap-1.5 self-start text-sm font-medium text-(--brand) underline-offset-4 hover:underline"
+            className="group/link mt-5 inline-flex items-center gap-1.5 self-start text-sm font-medium text-(--brand-ink) underline-offset-4 hover:underline"
           >
             {item.linkLabel}
             <ArrowRight

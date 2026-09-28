@@ -301,7 +301,7 @@ export default function Home() {
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(88,124,204,0.14),transparent)]" />
                 <div className="relative flex h-full flex-col">
                   <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-(--line) bg-(--surface) px-4 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                       <ChartNoAxesCombined className="size-4 text-(--teal)" />
                       Institution view
                     </div>
@@ -334,7 +334,7 @@ export default function Home() {
                           ["Grade 6", 97],
                         ].map(([label, value]) => (
                           <div key={label as string} className="flex items-center gap-3">
-                            <span className="w-16 shrink-0 text-right font-mono text-[0.6rem] text-muted-foreground">
+                            <span className="w-16 shrink-0 text-right font-mono text-[0.6875rem] text-muted-foreground">
                               {label as string}
                             </span>
                             <div className="relative h-5 flex-1 overflow-hidden rounded-full bg-(--surface-muted)">
@@ -349,7 +349,7 @@ export default function Home() {
                                 }}
                               />
                             </div>
-                            <span className="w-8 shrink-0 font-mono text-[0.65rem] font-medium text-foreground">
+                            <span className="w-8 shrink-0 font-mono text-[0.6875rem] font-medium text-foreground">
                               {value as number}%
                             </span>
                           </div>
@@ -359,7 +359,7 @@ export default function Home() {
                         {["Campus roll-up", "Exceptions flagged"].map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-2 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
+                            className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
                           >
                             {item}
                           </span>
@@ -438,7 +438,7 @@ export default function Home() {
                             <span className="font-display text-2xl tracking-[-0.04em] text-[color:var(--foreground)]">
                               72%
                             </span>
-                            <span className="mt-0.5 font-mono text-[0.5rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
+                            <span className="mt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)]">
                               Collected
                             </span>
                           </div>
@@ -483,7 +483,7 @@ export default function Home() {
                       <EditorialGeometryOverlay />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.06),rgba(16,24,38,0.76))]" />
                       <div className="absolute inset-x-5 bottom-5 rounded-[1.3rem] border border-white/14 bg-[rgba(12,20,32,0.55)] p-4 text-white backdrop-blur-md">
-                        <p className="font-mono text-[0.54rem] uppercase tracking-[0.18em] text-white/70">
+                        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-white/85">
                           Who it is for
                         </p>
                         <p className="mt-3 font-display text-2xl tracking-[-0.04em]">
@@ -504,7 +504,7 @@ export default function Home() {
                         Trust-level governance. Campus-level autonomy.
                       </h2>
                     </div>
-                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-4 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                       <Building2 className="mr-2 inline size-4 text-(--brand)" />
                       Every campus
                     </span>
@@ -576,7 +576,7 @@ export default function Home() {
                         {["English", "Hindi", "Kannada"].map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
+                            className="rounded-full border border-[color:var(--line)] bg-[color:var(--surface-strong)] px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]"
                           >
                             {item}
                           </span>
@@ -611,14 +611,14 @@ export default function Home() {
 
                     <div className="absolute right-4 top-4 max-w-[16rem] rounded-[1.35rem] border border-white/14 bg-[rgba(255,255,255,0.76)] p-4 text-[color:var(--foreground)] shadow-[0_18px_50px_rgba(8,15,30,0.14)] backdrop-blur-md dark:border-white/10 dark:bg-[rgba(12,20,32,0.72)] dark:text-white dark:shadow-[0_18px_50px_rgba(0,0,0,0.4)]">
                       <div className="flex items-center justify-between gap-3">
-                        <p className="font-mono text-[0.52rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)] dark:text-white/60">
+                        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-[color:var(--muted-foreground)] dark:text-white/60">
                           Circular delivery
                         </p>
                         <div className="flex gap-1.5">
                           {["ENG", "HIN"].map((item) => (
                             <span
                               key={item}
-                              className="rounded-full bg-[color:var(--surface-strong)] px-2 py-1 font-mono text-[0.48rem] uppercase tracking-[0.16em] text-[color:var(--muted-foreground)] dark:bg-white/10 dark:text-white/60"
+                              className="rounded-full bg-[color:var(--surface-strong)] px-2 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-[color:var(--muted-foreground)] dark:bg-white/10 dark:text-white/60"
                             >
                               {item}
                             </span>
@@ -635,7 +635,7 @@ export default function Home() {
                     </div>
 
                     <div className="absolute inset-x-4 bottom-4 rounded-[1.35rem] border border-white/14 bg-[rgba(12,20,32,0.58)] p-5 text-white backdrop-blur-md">
-                      <p className="font-mono text-[0.54rem] uppercase tracking-[0.18em] text-white/70">
+                      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-white/85">
                         India-aware operating model
                       </p>
                       <p className="mt-3 font-display text-2xl tracking-[-0.04em]">

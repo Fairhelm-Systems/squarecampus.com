@@ -4,6 +4,7 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { product } from "@/content/commercial";
+import { company } from "@/content/company";
 import { ctaLabels, siteCtas } from "@/content/site-content";
 
 const values = [
@@ -54,24 +55,6 @@ const pillars = [
   },
 ] as const;
 
-const operatingPosture = [
-  {
-    label: "Built for",
-    value: "One campus or many",
-    note: "Branch structures, shared services, and autonomy without chaos.",
-  },
-  {
-    label: "Time-to-launch",
-    value: "Fast, guided",
-    note: "Playbooks for rollout, data import support, and parallel dry runs.",
-  },
-  {
-    label: "Support",
-    value: "Human + product",
-    note: "Direct line to ops and engineering; no ticket bots, no runaround.",
-  },
-] as const;
-
 const founders = [
   {
     initials: "MG",
@@ -83,16 +66,9 @@ const founders = [
 
 const wePractice = [
   "Infrastructure that runs admission to alumni",
-  "Systems that work during fee season, not just pilots",
+  "Workflows designed around fee season, results and inspections",
   "Software built for Indian institutional reality",
   "A sustainable business that respects its team",
-] as const;
-
-const weReject = [
-  "Predatory sales calls to struggling institutions",
-  "Recycled video content sold as 'transformation'",
-  "Software that works in demos, fails in reality",
-  "Burning out staff to hit growth targets",
 ] as const;
 
 export default function AboutPage() {
@@ -109,13 +85,12 @@ export default function AboutPage() {
           <Reveal immediate className="space-y-6">
             <p className="section-kicker">About SquareCampus</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-              Educational institutions shape the future. Their software should respect that.
+              A founder-led company building software for Indian schools.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-              Most schools and colleges still run on software built for the 1990s. Simple tasks like
-              fee collection or publishing results turn into multi-week ordeals of spreadsheets,
-              calls, and stress. SquareCampus exists to replace that with a Campus Operating System
-              that flows with how institutions actually work.
+              SquareCampus is built by {company.legalNameDisplay}, in Bangalore. It exists to put
+              admissions, academics, fees and communication on one record, with a clear owner for
+              every exception — for standalone schools, school groups and education trusts.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
@@ -127,14 +102,23 @@ export default function AboutPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="grid content-start gap-3">
-            {operatingPosture.map((item) => (
-              <div key={item.label} className="surface-panel rounded-[1.5rem] p-5">
-                <p className="section-kicker">{item.label}</p>
-                <p className="mt-3 font-display text-2xl tracking-[-0.04em]">{item.value}</p>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.note}</p>
-              </div>
-            ))}
+          {/* Company identity first (audit SC-028): facts a buyer can check,
+              from the same record the footer's statutory disclosure uses. */}
+          <Reveal immediate delay={120}>
+            <dl className="surface-panel divide-y divide-(--line) rounded-[1.5rem] px-5">
+              {[
+                ["Company", company.legalNameDisplay],
+                ["CIN", company.cin],
+                ["Registered office", `${company.address.locality}, ${company.address.region}`],
+                ["Founder", "Mohit Gupta, Founder & CTO"],
+                ["Product", "SquareCampus™ (trademark registration pending)"],
+              ].map(([term, value]) => (
+                <div key={term} className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-4">
+                  <dt className="section-kicker">{term}</dt>
+                  <dd className="text-sm leading-6 text-foreground">{value}</dd>
+                </div>
+              ))}
+            </dl>
           </Reveal>
         </div>
       </SectionShell>
@@ -211,29 +195,18 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="surface-panel rounded-[1.6rem] p-6">
-                <h3 className="font-display text-lg tracking-[-0.02em]">What we build</h3>
-                <ul className="mt-4 grid gap-2.5">
-                  {wePractice.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
-                      <span className="text-(--teal)">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="surface-panel rounded-[1.6rem] p-6">
-                <h3 className="font-display text-lg tracking-[-0.02em]">What we reject</h3>
-                <ul className="mt-4 grid gap-2.5">
-                  {weReject.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
-                      <span className="text-(--destructive)">×</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className="surface-panel rounded-[1.6rem] p-6">
+              <h3 className="font-display text-lg tracking-[-0.02em]">What we build</h3>
+              <ul className="mt-4 grid gap-2.5">
+                {wePractice.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                    <span aria-hidden className="text-(--teal)">
+                      ✓
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Reveal>

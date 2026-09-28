@@ -23,14 +23,15 @@ import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
 import { SystemLayerGrid } from "@/components/site/system-layers";
+import { WorkflowCards } from "@/components/site/workflow-cards";
 import { motionAssets } from "@/content/motion-assets";
 import { ctaLabels, siteCtas } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Platform",
+  title: "School Management Platform",
   description:
-    "The four layers of the SquareCampus School Operating System: record, workflow, governance and intelligence — and the operational outcome each one changes.",
+    "The SquareCampus school management platform: admissions, attendance, fees, exams and parent communication as connected workflows on one record, and the four layers underneath.",
   path: "/platform",
   ogImage: "https://squarecampus.com/og/platform.png",
 });
@@ -111,21 +112,20 @@ export default function PlatformPage() {
   return (
     <main>
       <PageSchema
-        name="Platform"
-        description="The SquareCampus platform architecture: four layers, the operating domains they carry, and the shared core underneath every surface."
+        name="School Management Platform"
+        description="The SquareCampus school management platform: connected workflows for admissions, attendance, fees, exams and communication, the four layers underneath, and the shared core behind every surface."
         path="/platform"
       />
 
       <SectionShell className="pt-12 sm:pt-16">
         <Reveal immediate className="mx-auto max-w-3xl space-y-6 text-center">
-          <p className="section-kicker">Platform architecture</p>
+          <p className="section-kicker">School management platform</p>
           <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-            One governed core. Many surfaces. No institutional drift.
+            Every school workflow on one shared record.
           </h1>
           <p className="mx-auto max-w-xl text-lg leading-8 text-muted-foreground">
-            SquareCampus is built like an operating system for institutions, not a loose bundle of
-            modules. Admissions, academics, finance, communication, compliance, and day-to-day
-            operations work off the same institutional truth.
+            Admissions, attendance, fees, exams and parent communication run as connected workflows.
+            What staff do in one reaches the others without re-typing, and every step has an owner.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
@@ -149,19 +149,30 @@ export default function PlatformPage() {
         </Reveal>
       </SectionShell>
 
+      {/* Workflows first (audit SC-011): what staff do and what they get,
+          before the architecture that makes it possible. */}
+      <SectionShell
+        id="workflows"
+        eyebrow="Supported workflows"
+        title="What staff do, and what they get"
+        body="Each workflow runs from the first step to a recorded result, and links to a page that covers it in depth."
+      >
+        <WorkflowCards />
+        <AvailabilityNote className="mt-4" />
+      </SectionShell>
+
       {/* The four layers, outcome first. This replaces the old domain-area
           grid so the page is organised by what each layer changes about the
           institution, not by which modules exist. */}
       <SectionShell
         id="layers"
-        eyebrow="How the School OS is structured"
-        title="Four layers, each with an operational outcome"
-        body="Every institutional workflow sits on the same foundation. What matters is not how many modules are present, but what each layer changes about the way the institution runs."
+        eyebrow="Underneath the workflows"
+        title="Four layers make the workflows connect"
+        body="Records, workflows, governance and intelligence share one foundation. Each layer changes something specific about how the institution runs."
       >
         <Reveal>
           <SystemLayerGrid showCapabilities />
         </Reveal>
-        <AvailabilityNote className="mt-4" />
       </SectionShell>
 
       <SectionShell

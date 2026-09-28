@@ -326,7 +326,7 @@ function StepRail({ current, onJump }: { current: StepIndex; onJump: (step: Step
                 "flex size-7 shrink-0 items-center justify-center rounded-full border font-mono text-[0.7rem] transition-colors",
                 state === "done" && "border-(--brand) bg-(--brand) text-white",
                 state === "current" &&
-                  "border-(--brand) bg-(--surface-raised) text-(--brand) ring-4 ring-(--brand-tint)",
+                  "border-(--brand) bg-(--surface-raised) text-(--brand-ink) ring-4 ring-(--brand-tint)",
                 state === "todo" &&
                   "border-(--line-strong) bg-(--surface-raised) text-muted-foreground"
               )}
@@ -336,7 +336,9 @@ function StepRail({ current, onJump }: { current: StepIndex; onJump: (step: Step
             <span className="min-w-0">
               <span
                 className={cn(
-                  "block whitespace-nowrap text-sm font-medium",
+                  // truncate, not nowrap: a nowrap label gave the rail a 342px
+                  // minimum width, wider than the form panel on a 375px phone.
+                  "block truncate text-sm font-medium",
                   state === "todo" ? "text-muted-foreground" : "text-foreground"
                 )}
               >

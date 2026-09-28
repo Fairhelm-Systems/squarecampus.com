@@ -167,7 +167,7 @@ export default function ServicesPage() {
                 >
                   <dt className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-sm font-medium text-foreground">{group.label}</span>
-                    <span className="rounded-full border border-(--line) px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground">
+                    <span className="rounded-full border border-(--line) px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
                       {group.status}
                     </span>
                   </dt>
@@ -250,11 +250,11 @@ export default function ServicesPage() {
         </Reveal>
         <Reveal delay={120} className="mt-4">
           <div className="surface-panel flex flex-wrap items-center gap-x-5 gap-y-2 rounded-[1.4rem] px-5 py-4">
-            <span className="inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
               <ShieldCheck className="size-3.5 text-(--teal)" />
               Same role-based access and audit design in every model
             </span>
-            <span className="inline-flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
               <Lock className="size-3.5 text-(--teal)" />
               Hosted on Microsoft Azure in India by default
             </span>

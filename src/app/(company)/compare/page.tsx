@@ -127,7 +127,7 @@ export default function CompareHubPage() {
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
           {evaluationCriteria.map((item, index) => (
             <article key={item.q} data-reveal-item className="surface-panel rounded-[1.6rem] p-6">
-              <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h2 className="mt-3 font-display text-xl tracking-[-0.03em]">{item.q}</h2>

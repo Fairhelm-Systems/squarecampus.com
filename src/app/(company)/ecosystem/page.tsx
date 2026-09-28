@@ -1,68 +1,88 @@
 import {
-  BadgeCheck,
-  BarChart3,
   BellRing,
   Building2,
-  Database,
-  Fingerprint,
   Globe2,
-  Network,
-  ShieldCheck,
-  Sparkles,
-  Users,
+  GraduationCap,
+  Landmark,
+  MonitorSmartphone,
+  Smartphone,
 } from "lucide-react";
+import Link from "next/link";
+import { AvailabilityNote } from "@/components/site/availability-note";
 import { ButtonLink } from "@/components/site/button-link";
 import { EcosystemMockup } from "@/components/site/mockups";
 import { MotionPoster } from "@/components/site/motion-poster";
 import { PageSchema } from "@/components/site/page-schema";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
+import { integrationScope } from "@/content/commercial";
 import { motionAssets } from "@/content/motion-assets";
 import { ctaLabels, siteCtas } from "@/content/site-content";
 
-const ecosystemRules = [
+/**
+ * Apps & Integrations (audit SC-021). The route stays /ecosystem/; the page
+ * is organised by who uses what, then by what connects and on what terms.
+ *
+ * Each audience states its tasks and its surface (mobile app or web). Store
+ * availability and supported device versions are not asserted here: they are
+ * confirmed per institution in the proposal (content/commercial.ts ›
+ * availability), like every other capability on the site.
+ */
+const audiences = [
   {
-    title: "One identity layer",
-    icon: Fingerprint,
-    body: "Roles, permissions, and organizational boundaries are shared instead of re-created across separate tools.",
+    title: "Parents",
+    icon: Globe2,
+    surface: "Mobile app",
+    surfaceIcon: Smartphone,
+    tasks: [
+      "Attendance and absence alerts",
+      "Fee dues, payments and receipts",
+      "Circulars and acknowledgements",
+      "Progress and results",
+    ],
   },
   {
-    title: "One event timeline",
-    icon: BadgeCheck,
-    body: "Admissions, attendance, fees, communication, and approvals stay legible because they are part of one sequence.",
-  },
-  {
-    title: "One operating surface across audiences",
-    icon: Users,
-    body: "Admins, teachers, parents, and students each get purpose-built interfaces without fragmenting the institutional model.",
-  },
-  {
-    title: "One reporting truth",
-    icon: BarChart3,
-    body: "Dashboards and reviews pull from the operating core instead of from stitched exports prepared after the fact.",
-  },
-] as const;
-
-const ecosystemActors = [
-  {
-    title: "Admin and operations",
-    icon: Building2,
-    body: "Institution-wide control, campus setup, approval chains, fee oversight, policy management, and operational monitoring.",
+    title: "Students",
+    icon: GraduationCap,
+    surface: "Mobile app",
+    surfaceIcon: Smartphone,
+    tasks: ["Timetable and the day's classes", "Assignments due", "Notices", "Results"],
   },
   {
     title: "Teachers and staff",
     icon: BellRing,
-    body: "Attendance, class updates, student context, communication, academic workflows, and daily action queues.",
+    surface: "Mobile app and web",
+    surfaceIcon: MonitorSmartphone,
+    tasks: [
+      "Class and period attendance",
+      "Marks entry and remarks",
+      "Messages to parents",
+      "Their own queue of follow-ups",
+    ],
   },
   {
-    title: "Parents and students",
-    icon: Globe2,
-    body: "One app for attendance, dues, receipts, circulars, progress visibility, and institution communication.",
+    title: "Administrators and office",
+    icon: Building2,
+    surface: "Web",
+    surfaceIcon: MonitorSmartphone,
+    tasks: [
+      "Admissions and student records",
+      "Fee plans, concessions and reconciliation",
+      "Campus setup, roles and approvals",
+      "Circulars and communication logs",
+    ],
   },
   {
-    title: "Leadership and trustees",
-    icon: ShieldCheck,
-    body: "Current visibility into branch health, academic performance, operational exposure, and finance signals.",
+    title: "Principals, trustees and leadership",
+    icon: Landmark,
+    surface: "Web",
+    surfaceIcon: MonitorSmartphone,
+    tasks: [
+      "Current position across campuses",
+      "Open exceptions and who owns them",
+      "Approvals waiting on them",
+      "Questions to AEGIS, inside their permissions",
+    ],
   },
 ] as const;
 
@@ -70,30 +90,26 @@ export default function EcosystemPage() {
   return (
     <main>
       <PageSchema
-        name="Ecosystem"
-        description="The SquareCampus ecosystem: admin console, teacher workspace, parent and student apps, integrations and institutional controls acting on one record."
+        name="Apps & Integrations"
+        description="SquareCampus apps for parents, students, teachers, administrators and leadership on one school record, and how integrations with the tools an institution keeps are scoped."
         path="/ecosystem"
       />
 
       <SectionShell className="pt-12 sm:pt-16">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <Reveal immediate className="space-y-6">
-            <p className="section-kicker">Connected ecosystem</p>
+            <p className="section-kicker">Apps &amp; Integrations</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-              Every operator, every surface, one institutional source of truth.
+              An app for every role, on one school record.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-[color:var(--muted-foreground)]">
-              SquareCampus connects admins, staff, parents, students, finance workflows,
-              communication channels, and institutional controls inside one shared system instead of
-              forcing the ecosystem to be assembled from separate products.
+              Parents, students, teachers, the office and leadership each get the screens their work
+              needs. Everything they do lands on the same record, and the tools you keep can be
+              connected as scoped work.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
-              <ButtonLink
-                href={siteCtas.platformHref}
-                label="View platform structure"
-                variant="secondary"
-              />
+              <ButtonLink href="#integrations" label="What connects" variant="secondary" />
             </div>
           </Reveal>
           <Reveal immediate delay={120}>
@@ -103,164 +119,96 @@ export default function EcosystemPage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Ecosystem logic"
-        title="The connective tissue matters more than the module count"
-        body="An ecosystem only becomes an advantage when identity, events, communication, and reporting are actually shared."
+        id="apps"
+        eyebrow="By audience"
+        title="What each person does, and where"
+        body="The standard parent and staff mobile apps are included in the licence; staff and leadership also work on the web."
       >
-        <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
-          {ecosystemRules.map((item) => (
-            <article
-              key={item.title}
-              data-reveal-item
-              className="surface-panel rounded-[1.6rem] p-6"
-            >
-              <item.icon className="size-5 text-[color:var(--brand)]" />
-              <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{item.title}</h2>
-              <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                {item.body}
-              </p>
-            </article>
-          ))}
-        </Reveal>
-      </SectionShell>
-
-      <SectionShell
-        eyebrow="Who it serves"
-        title="Built across the institution, not just for the administrator"
-        body="Each audience has a purpose-built experience, but the institutional model underneath stays connected and consistent."
-      >
-        {/* Tier 2 in the motion plan: the still only. No video ships on this
-            page until the tier-1 placements have cleared their gates. */}
         <MotionPoster
           asset={motionAssets["ecosystem-core-surfaces"]}
-          className="mx-auto mb-5 w-full max-w-4xl"
           alt="Parents, teachers, principals, finance teams and trustees connected to one institutional record, each seeing the part their role owns."
         />
 
-        <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
-          {ecosystemActors.map((item) => (
+        <Reveal staggerChildren className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {audiences.map((item) => (
             <article
               key={item.title}
               data-reveal-item
-              className="surface-panel rounded-[1.6rem] p-6"
+              className="surface-panel flex flex-col rounded-[1.6rem] p-6"
             >
-              <item.icon className="size-5 text-[color:var(--teal)]" />
+              <div className="flex items-center justify-between gap-3">
+                <item.icon aria-hidden className="size-5 text-[color:var(--teal)]" />
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--line)] px-2.5 py-1 text-xs text-[color:var(--muted-foreground)]">
+                  <item.surfaceIcon aria-hidden className="size-3.5" />
+                  {item.surface}
+                </span>
+              </div>
               <h2 className="mt-5 font-display text-2xl tracking-[-0.04em]">{item.title}</h2>
-              <p className="mt-3 text-base leading-7 text-[color:var(--muted-foreground)]">
-                {item.body}
-              </p>
+              <ul className="mt-3 grid gap-1.5 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                {item.tasks.map((task) => (
+                  <li key={task}>{task}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </Reveal>
+        <AvailabilityNote
+          className="mt-4"
+          text="App-store availability, supported device versions and the modules in each app for your institution are confirmed in writing in your proposal. White-labelled apps under your own branding are a separately scoped option."
+        />
       </SectionShell>
 
       <SectionShell
-        eyebrow="Why it feels different"
-        title="The ecosystem removes institutional drag"
-        body="When the system is connected, communication becomes clearer, reporting becomes faster, and responsibility becomes easier to trace."
+        id="integrations"
+        eyebrow="Integrations"
+        title="What connects, and on what terms"
+        body={integrationScope.summary}
       >
-        <Reveal className="grid gap-4 lg:grid-cols-[1fr_0.92fr]">
-          <div className="surface-panel rounded-[1.8rem] p-7">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-2 text-sm text-[color:var(--foreground)]">
-              <Network className="size-4 text-[color:var(--brand)]" />
-              Ecosystem effects
-            </div>
-            <div className="mt-5 grid gap-3">
-              {[
-                "Parents stop asking which app or message thread matters today.",
-                "Operators stop repeating the same action across multiple systems.",
-                "Leadership stops waiting for stitched reporting packs.",
-                "The institution gains a more coherent posture across finance, academics, communication, and service operations.",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-[1.2rem] bg-[color:var(--surface-muted)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="surface-panel-strong rounded-[1.8rem] p-7">
-            <p className="section-kicker">Integration posture</p>
-            <h2 className="mt-4 font-display text-3xl tracking-[-0.05em]">
-              Connected core first. Practical integrations second.
-            </h2>
-            <div className="mt-5 grid gap-3">
-              {[
-                {
-                  icon: Database,
-                  text: "The core workflows should not depend on fragile external stitching to stay coherent.",
-                },
-                {
-                  icon: Sparkles,
-                  text: "Integrations extend the ecosystem where institutions already need them, without breaking the single source of truth.",
-                },
-                {
-                  icon: ShieldCheck,
-                  text: "Security, identity, and auditability stay legible even when external systems are part of the operational picture.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.text}
-                  className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
-                >
-                  <item.icon className="mb-3 size-4 text-[color:var(--brand)]" />
-                  {item.text}
-                </div>
-              ))}
-            </div>
-          </div>
+        <Reveal>
+          <dl className="grid gap-3 md:grid-cols-2">
+            {integrationScope.groups.map((group) => (
+              <div key={group.label} className="surface-panel rounded-[1.4rem] p-5">
+                <dt className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-sm font-medium text-foreground">{group.label}</span>
+                  <span className="rounded-full border border-(--line) px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
+                    {group.status}
+                  </span>
+                </dt>
+                <dd className="mt-2 text-sm leading-6 text-muted-foreground">{group.detail}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
-      </SectionShell>
-
-      <SectionShell
-        eyebrow="Beyond the platform"
-        title="Already invested in other tools? We connect them."
-        body="Where a system offers a documented API, we assess and scope a bridge — plus ETL/ELT pipelines into one custom dashboard. Nothing connects automatically; each integration is confirmed in writing."
-        compactBody
-      >
-        <Reveal className="surface-panel rounded-[1.8rem] p-6 lg:p-7">
-          <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div className="grid gap-2.5 sm:grid-cols-3">
-              {[
-                "Scoped connectors for tools that offer an API",
-                "ETL/ELT into one governed leadership dashboard",
-                "Enterprise private deployment as a scoped service",
-              ].map((item) => (
-                <p
-                  key={item}
-                  className="rounded-[1.2rem] border border-(--line) bg-(--surface-strong) px-4 py-3.5 text-sm leading-6 text-muted-foreground"
-                >
-                  {item}
-                </p>
-              ))}
-            </div>
-            <ButtonLink href="/services" label="Explore services" variant="secondary" />
-          </div>
+        <Reveal delay={80} className="mt-4">
+          <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+            Prerequisites, pipelines into one dashboard and deployment options are set out on{" "}
+            <Link
+              href="/services/#integration-scope"
+              className="text-[color:var(--foreground)] underline underline-offset-4"
+            >
+              data and integration services
+            </Link>
+            .
+          </p>
         </Reveal>
       </SectionShell>
 
       <SectionShell className="pb-22">
         <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.82fr] lg:items-center">
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="section-kicker">Move from stack to system</p>
+              <p className="section-kicker">Next step</p>
               <h2 className="mt-4 font-display text-3xl tracking-[-0.05em] sm:text-4xl">
-                Review how your institution’s current ecosystem actually behaves.
+                See the apps for the roles in your institution.
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)]">
-                We can map the current tools, handoffs, and communication paths, then show where a
-                connected School OS changes the operational picture.
+                Tell us which roles and tools matter most. We will show the relevant screens and map
+                which of your current tools could connect.
               </p>
             </div>
-            <div className="grid gap-3">
+            <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
-              <ButtonLink
-                href={siteCtas.securityHref}
-                label="Review trust posture"
-                variant="secondary"
-              />
+              <ButtonLink href={siteCtas.securityHref} label="Security" variant="secondary" />
             </div>
           </div>
         </Reveal>

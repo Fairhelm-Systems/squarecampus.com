@@ -23,7 +23,7 @@ export const systemLayers = [
   {
     id: "record",
     name: "System of Record",
-    outcome: "One institutional truth.",
+    outcome: "One shared school record.",
     body: "Students, staff, fees, attendance, assessments and documents live on one model, so a question has one answer rather than one answer per tool.",
     capabilities: [
       "Student, staff and guardian records",
@@ -91,6 +91,10 @@ export const dashboardVsDecisionLayer = {
 
 export const AEGIS_DEFINITION =
   "AEGIS is the governed intelligence layer inside SquareCampus. It produces permission-scoped, source-grounded and auditable operational answers from institutional context.";
+
+/** The same definition in plain language, for first-time readers (audit SC-015). */
+export const AEGIS_PLAIN_DEFINITION =
+  "AEGIS is the AI assistant inside SquareCampus. School leaders ask questions in plain language and get answers from their own school records, limited to what their role can already see. It suggests follow-ups; it does not change anything.";
 
 /** V1 boundaries. These are constraints, not roadmap promises. */
 export const aegisBoundaries = [

@@ -1,61 +1,61 @@
 import {
   Bell,
   Database,
+  FileText,
   Fingerprint,
-  Globe2,
   LockKeyhole,
   MapPin,
-  ShieldCheck,
   TimerReset,
 } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "@/components/site/button-link";
 import { DetailsFaq } from "@/components/site/details-faq";
 import { IdentityFlow } from "@/components/site/identity-flow";
 import { SecurityMockup } from "@/components/site/mockups";
 import { Reveal } from "@/components/site/reveal";
 import { SectionShell } from "@/components/site/section-shell";
-import { identity } from "@/content/commercial";
+import { deploymentSummary, identity } from "@/content/commercial";
 import { securityFaqs } from "@/content/security-faq";
 import { ctaLabels, siteCtas } from "@/content/site-content";
 
+/**
+ * The questions a procurement or IT review asks first, each answered with a
+ * statement the site can stand behind (audit SC-023). Design statements say
+ * "by design"; anything that needs evidence is offered in writing during
+ * security review rather than asserted here. No certification, uptime,
+ * backup cadence or response-time figure is published.
+ */
 const controls = [
   {
-    title: "India-aware hosting posture",
-    icon: MapPin,
-    body: "SquareCampus is built with an India-first operational posture around hosting, institutional trust, and jurisdictional clarity.",
-  },
-  {
-    title: "Access control and identity",
+    title: "Access control",
     icon: Fingerprint,
-    body: "Role-based access, administrative boundaries, and least-privilege expectations are part of how the product is structured.",
+    body: `Access is role-based and scoped by campus. ${identity.baseline.body} Authorisation is always decided inside SquareCampus, never by an email domain.`,
   },
   {
-    title: "Encryption and transport security",
-    icon: LockKeyhole,
-    body: "Data protection in transit and at rest is treated as baseline product infrastructure, not optional hardening.",
-  },
-  {
-    title: "Auditability and traceability",
+    title: "Audit history",
     icon: Database,
-    body: "Institutional operators need to understand who changed what, when, and in which operational context.",
+    body: "Approvals, overrides and record changes are designed to be recorded with who made them, what changed and when, in the campus context they happened in.",
   },
   {
-    title: "Operational reliability",
-    icon: Bell,
-    body: "Uptime, backups, alerting, and recovery posture matter because the platform is part of daily campus operations.",
+    title: "Encryption",
+    icon: LockKeyhole,
+    body: "Data is encrypted in transit and at rest as part of the platform's baseline design. Implementation details are shared during security review.",
   },
   {
-    title: "Incident readiness",
+    title: "Hosting",
+    icon: MapPin,
+    body: `${deploymentSummary} Hosting details and data-flow documentation are given in writing during evaluation.`,
+  },
+  {
+    title: "Backups and recovery",
     icon: TimerReset,
-    body: "How issues are monitored, handled, communicated to the institution and learned from.",
+    body: "Availability, backup and recovery design are documented in writing during security review. We do not publish uptime, backup or recovery figures.",
   },
-] as const;
-
-const trustNotes = [
-  "Security should support institutional calm on pressure days, not just satisfy a procurement checklist.",
-  "Role-based access matters because real institutions span trustees, principals, finance teams, teachers, operators, parents, and students.",
-  "Audit-ready operations matter because education institutions are accountable to boards, regulators, families, and internal leadership.",
-  "India-aware posture matters because data trust and operational context are not abstract concerns in this category.",
+  {
+    title: "Reporting a security concern",
+    icon: Bell,
+    body: "Email security@squarecampus.com with a description, steps to reproduce and the likely impact. Sensitive reports can be encrypted with our PGP key.",
+  },
 ] as const;
 
 export default function SecurityPage() {
@@ -66,12 +66,12 @@ export default function SecurityPage() {
           <Reveal immediate className="space-y-6">
             <p className="section-kicker">Trust and security</p>
             <h1 className="font-display text-4xl leading-none tracking-[-0.06em] sm:text-5xl lg:text-6xl">
-              Security is the campus nervous system. It has to stay calm under load.
+              Security answers for the people who review school software.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-[color:var(--muted-foreground)]">
-              SquareCampus treats trust as part of the product. Access control, India-aware hosting
-              posture, auditability, and operational reliability are built into how institutions run
-              on the system every day.
+              Access control, audit history, encryption, hosting, backups and how to report an issue
+              — stated plainly, with the evidence behind each one shared in writing during security
+              review.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={siteCtas.demoHref} label={ctaLabels.demo} />
@@ -89,8 +89,8 @@ export default function SecurityPage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Control domains"
-        title="The trust posture is designed for institutional accountability"
+        eyebrow="What review teams ask"
+        title="Six questions, answered directly"
         body="How access, encryption, audit history and operational reliability are handled — and what a review team can ask to see in writing."
       >
         <Reveal staggerChildren className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -152,7 +152,7 @@ export default function SecurityPage() {
                   key={mode}
                   className="rounded-[1.2rem] bg-[color:var(--surface-muted)] px-4 py-4 text-sm leading-6 text-[color:var(--foreground)]"
                 >
-                  <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
+                  <span className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--muted-foreground)]">
                     Mode {index + 1}
                   </span>
                   <span className="mt-2 block">{mode}</span>
@@ -171,53 +171,41 @@ export default function SecurityPage() {
       </SectionShell>
 
       <SectionShell
-        eyebrow="Why this matters"
-        title="The security story is really an operations story"
-        body="Institutions trust software when it remains understandable, controllable, and accountable during the moments that matter."
+        id="documents"
+        eyebrow="Documents on request"
+        title="What we share in writing during a security review"
+        body="Ask for any of these by email. They are shared under the security review process, not published."
+        compactBody
       >
-        <Reveal className="grid gap-4 lg:grid-cols-[1fr_0.92fr]">
-          <div className="surface-panel rounded-[1.8rem] p-7">
-            <p className="section-kicker">Institutional realities</p>
-            <div className="mt-5 grid gap-3">
-              {trustNotes.map((note) => (
-                <div
-                  key={note}
-                  className="rounded-[1.2rem] bg-[color:var(--surface-muted)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
-                >
-                  {note}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="surface-panel-strong rounded-[1.8rem] p-7">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-2 text-sm text-[color:var(--foreground)]">
-              <Globe2 className="size-4 text-[color:var(--brand)]" />
-              Trust posture summary
-            </div>
-            <div className="mt-5 grid gap-3">
-              {[
-                {
-                  icon: ShieldCheck,
-                  text: "Controls are part of the School OS, not isolated to a security appendix.",
-                },
-                {
-                  icon: Bell,
-                  text: "Monitoring and reliability matter because the product supports daily campus motion.",
-                },
-                {
-                  icon: Database,
-                  text: "Audit trails and role boundaries matter because institutional accountability is not optional.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.text}
-                  className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:var(--surface)] px-4 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]"
-                >
-                  <item.icon className="mb-3 size-4 text-[color:var(--brand)]" />
-                  {item.text}
-                </div>
-              ))}
-            </div>
+        <Reveal className="surface-panel rounded-[1.6rem] p-6 lg:p-7">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {[
+              "Completed vendor security questionnaires",
+              "Hosting and data-flow documentation",
+              "Availability, backup and recovery design",
+              "Encryption and access-control implementation notes",
+              "The Data Processing Addendum and data retention approach",
+              "Identity and sign-in configuration for your plan",
+            ].map((item) => (
+              <li key={item} className="flex gap-3 text-sm leading-6 text-foreground">
+                <FileText aria-hidden className="mt-0.5 size-4 shrink-0 text-(--brand)" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-(--line) pt-5 text-sm">
+            <Link href="/data-processing-addendum/" className="underline underline-offset-4">
+              Data Processing Addendum
+            </Link>
+            <Link href="/data-retention/" className="underline underline-offset-4">
+              Data retention
+            </Link>
+            <Link href="/infrastructure/" className="underline underline-offset-4">
+              Infrastructure
+            </Link>
+            <Link href="/pgp/" className="underline underline-offset-4">
+              PGP key
+            </Link>
           </div>
         </Reveal>
       </SectionShell>

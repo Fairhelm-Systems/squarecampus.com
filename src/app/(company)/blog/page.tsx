@@ -19,7 +19,7 @@ function BannerHover({ readingTime }: { readingTime: string }) {
     <>
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,24,38,0.02),rgba(16,24,38,0.34))] transition-opacity duration-500 group-hover:opacity-100 sm:opacity-70" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent,rgba(8,15,30,0.55))] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <span className="pointer-events-none absolute bottom-4 left-4 inline-flex translate-y-2 items-center gap-2 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-white opacity-0 backdrop-blur-sm transition-[opacity,translate] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+      <span className="pointer-events-none absolute bottom-4 left-4 inline-flex translate-y-2 items-center gap-2 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-white opacity-0 backdrop-blur-sm transition-[opacity,translate] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
         <span className="size-1.5 rounded-full bg-(--teal)" />
         Read · {readingTime.replace(" read", "")}
       </span>
@@ -41,7 +41,7 @@ function TypographicBanner({ tag, title }: { tag: string; title: string }) {
       >
         {initial}
       </span>
-      <span className="absolute left-6 top-6 font-mono text-[0.56rem] uppercase tracking-[0.22em] text-white/60">
+      <span className="absolute left-6 top-6 font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-white/60">
         SquareCampus · {tag}
       </span>
       <span className="absolute inset-x-6 bottom-6 h-px bg-[linear-gradient(90deg,var(--brand),var(--teal),transparent)] opacity-60" />
@@ -136,10 +136,10 @@ export default function BlogPage() {
 
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-1.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground">
+                    <span className="rounded-full border border-(--line) bg-(--surface-strong) px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
                       {post.tag ?? "Update"}
                     </span>
-                    <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted-foreground">
+                    <span className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted-foreground">
                       {post.date} · {post.readingTime}
                     </span>
                   </div>

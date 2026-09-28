@@ -206,7 +206,7 @@ export default function InfrastructurePage() {
           <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
             {heroSignals.map(([label, value]) => (
               <div key={label} className="surface-panel rounded-[1.2rem] p-4">
-                <p className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                   {label}
                 </p>
                 <p className="mt-2 font-display text-lg tracking-[-0.03em]">{value}</p>
@@ -276,14 +276,14 @@ export default function InfrastructurePage() {
               <p className="section-kicker">{row.category}</p>
               <div className="mt-4 grid gap-3 lg:grid-cols-2">
                 <div className="rounded-[1.3rem] border border-(--line) bg-(--surface-strong) p-5">
-                  <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-(--brand)">
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-(--brand)">
                     SquareCampus · Azure, India
                   </p>
                   <p className="mt-2.5 font-display text-xl tracking-[-0.03em]">{row.us.title}</p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{row.us.details}</p>
                 </div>
                 <div className="rounded-[1.3rem] bg-(--surface-muted) p-5">
-                  <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-muted-foreground">
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                     Typical unspecified claims
                   </p>
                   <p className="mt-2.5 font-display text-xl tracking-[-0.03em] text-muted-foreground">

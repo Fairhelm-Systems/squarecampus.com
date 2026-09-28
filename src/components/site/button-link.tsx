@@ -22,7 +22,7 @@ const variantClasses: Record<NonNullable<ButtonLinkProps["variant"]>, string> = 
   ghost:
     "min-h-11 rounded-full border px-5 border-transparent bg-transparent text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)] active:bg-[color:var(--surface)]",
   cta: "min-h-11 rounded-full border px-5 cta-button border-transparent text-white",
-  link: "min-h-11 rounded-md text-[color:var(--brand)] underline decoration-[color:var(--line-strong)] underline-offset-4 hover:decoration-current",
+  link: "min-h-11 rounded-md text-[color:var(--brand-ink)] underline decoration-[color:var(--line-strong)] underline-offset-4 hover:decoration-current",
 };
 
 export function ButtonLink({

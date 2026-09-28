@@ -53,7 +53,7 @@ export function BrandLogo({
         </span>
         <span
           className={cn(
-            "mt-0.5 block font-mono text-[0.58rem] uppercase tracking-[0.24em] text-[color:var(--muted-foreground)]",
+            "mt-0.5 block font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-[color:var(--muted-foreground)]",
             subtitleClassName
           )}
         >

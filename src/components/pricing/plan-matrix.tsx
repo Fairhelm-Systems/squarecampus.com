@@ -52,9 +52,9 @@ const rows: readonly MatrixRow[] = [
   },
   {
     label: "Integrations",
-    starter: "Standard configuration",
-    pro: "API and standard integration readiness",
-    enterprise: "Enterprise integrations, custom integrations",
+    starter: "Scoped separately if needed",
+    pro: "Standard integrations and development API access, scoped in the proposal",
+    enterprise: "Deeper and custom integrations, scoped in the proposal",
   },
   {
     label: "Mobile apps",
@@ -65,8 +65,8 @@ const rows: readonly MatrixRow[] = [
   {
     label: "AEGIS intelligence",
     starter: "Not included",
-    pro: "Eligibility or controlled access",
-    enterprise: "Governed access within an agreed allowance",
+    pro: "Optional: in scope only where the proposal includes it",
+    enterprise: "Included within an agreed allowance",
   },
   {
     label: "Chosen because",
@@ -78,7 +78,13 @@ const rows: readonly MatrixRow[] = [
     label: "Deployment",
     starter: "Managed SquareCampus Cloud",
     pro: "Managed SquareCampus Cloud",
-    enterprise: "Managed, private-cloud or on-premises eligibility",
+    enterprise: "Managed cloud; private cloud or on premises as a scoped service",
+  },
+  {
+    label: "Scoped separately",
+    starter: "Migration, custom integrations, premium support, metered usage",
+    pro: "Migration, custom integrations, premium support, metered usage",
+    enterprise: "Private or on-premises deployment, identity governance, custom engineering",
   },
   {
     label: "Implementation and support",

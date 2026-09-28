@@ -74,7 +74,7 @@ export default function DataRetentionPage() {
                 key={point}
                 className="rounded-[1.1rem] border border-[color:var(--line)] bg-[color:var(--surface)] p-4 transition-[border-color,box-shadow] dark:bg-black/40 dark:hover:border-[color:var(--cite-neon)]/40 dark:hover:shadow-[0_0_32px_-14px_var(--cite-neon)]"
               >
-                <span className="font-mono text-[0.62rem] tracking-[0.2em] text-[color:var(--brand)] dark:text-[color:var(--cite-neon)] dark:[text-shadow:0_0_10px_var(--cite-neon)]">
+                <span className="font-mono text-[0.6875rem] tracking-[0.2em] text-[color:var(--brand)] dark:text-[color:var(--cite-neon)] dark:[text-shadow:0_0_10px_var(--cite-neon)]">
                   0{index + 1}
                 </span>
                 <p className="mt-2 text-[0.82rem] leading-6">{point}</p>

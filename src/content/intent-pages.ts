@@ -36,6 +36,17 @@ export type IntentPage = {
   faqs: readonly { question: string; answer: string }[];
   related: readonly { href: string; label: string; note: string }[];
   /**
+   * Optional worked example and stated limits (audit SC-036): original,
+   * page-specific evidence of how the workflow is designed to run, and what
+   * is configured, scoped or outside it. Restates the design; adds no
+   * capability, customer or result.
+   */
+  example?: {
+    title: string;
+    steps: readonly string[];
+  };
+  limits?: readonly string[];
+  /**
    * Optional two-column fact table for pages whose buyer question is a
    * distinction ("governance" versus "support"). Rendered as a real table.
    */
@@ -103,6 +114,21 @@ export const intentPages: IntentPage[] = [
       "What does the rollout involve: migration, parallel run, role-based training, and a rollback plan?",
       "Will the vendor answer an infrastructure and security questionnaire in writing?",
       "What happens to your data when you leave, in what format, and by when?",
+    ],
+    example: {
+      title: "A confirmed admission, followed through",
+      steps: [
+        "The admissions desk accepts an offer; the student record is created once.",
+        "The class section, fee plan and guardian contacts are set on that same record.",
+        "Attendance, fees and parent communication all start from it — nothing is re-typed.",
+        "Each hand-off has an owner, and each change is recorded with who made it.",
+      ],
+    },
+    limits: [
+      "Modules, apps and languages for your rollout are confirmed in writing in your proposal.",
+      "Board-specific report formats and fee rules are set up as configuration during implementation.",
+      "Integrations with tools you keep are scoped work with stated prerequisites; nothing connects automatically.",
+      "Legacy migration is scoped separately and validated in a parallel run before the old system is retired.",
     ],
     faqs: [
       {
@@ -198,6 +224,21 @@ export const intentPages: IntentPage[] = [
       "Is every concession and refund approved by a named role with a recorded reason?",
       "How long does month-end reconciliation take, and who does it?",
       "Can the trust board see collections across campuses without a prepared report?",
+    ],
+    example: {
+      title: "A sibling concession above the desk's limit",
+      steps: [
+        "The accounts desk applies a sibling concession larger than its approval limit.",
+        "The request routes to the approver the institution named for that limit, with the reason attached.",
+        "Once approved, the fee plan, the next invoice and the receipt reflect it; if refused, nothing changes.",
+        "The approval, the approver and the reason stay on the student's fee record for audit.",
+      ],
+    },
+    limits: [
+      "Fee heads, instalments, concessions and late-fee rules are configured from your current structure during implementation.",
+      "The payment gateway is confirmed during scoping; gateway charges are passed through, not folded into the licence.",
+      "Connections to accounting software are scoped integration work, assessed per package; there is no pre-built connector.",
+      "Migrating historical dues and receipts is scoped and quoted separately, and validated in a parallel run.",
     ],
     faqs: [
       {

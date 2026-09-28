@@ -86,6 +86,9 @@
   --line: rgba(32, 44, 68, 0.09);
   --line-strong: rgba(32, 44, 68, 0.16);
   --brand: oklch(0.6 0.11 247);
+  /* Brand-coloured TEXT on light surfaces: --brand itself measures ~3.9:1
+     there, under the 4.5:1 minimum for body-size text (audit SC-031). */
+  --brand-ink: oklch(0.48 0.12 247);
   --brand-soft: rgba(88, 124, 204, 0.18);
   --teal: oklch(0.73 0.1 181);
   --amber: oklch(0.76 0.12 74);
@@ -171,6 +174,7 @@
   --line: rgba(214, 222, 238, 0.085);
   --line-strong: rgba(214, 222, 238, 0.15);
   --brand: oklch(0.69 0.09 247);
+  --brand-ink: var(--brand);
   --brand-soft: rgba(76, 109, 203, 0.14);
   --teal: oklch(0.72 0.07 181);
   --amber: oklch(0.79 0.09 74);
@@ -401,7 +405,7 @@
 
   .type-caption {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     line-height: 1.5;
     color: var(--muted-foreground);
   }
@@ -411,11 +415,13 @@
     max-width: 62ch;
   }
 
+  /* 12px with moderate tracking (audit SC-031): the previous 10.9px at
+     0.28em tracking was hard to read in uppercase mono. */
   .section-kicker,
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted-foreground);
   }

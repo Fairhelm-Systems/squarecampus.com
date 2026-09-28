@@ -35,7 +35,7 @@ function SocialIcon({ name }: { name: (typeof socialLinks)[number]["icon"] }) {
 function DisclosureField({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
         {label}
       </p>
       <div className="text-sm leading-6 text-[color:var(--muted-foreground)]">{children}</div>
@@ -160,7 +160,7 @@ export function SiteFooter() {
             <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 lg:gap-x-8">
               {footerGroups.map((group) => (
                 <div key={group.title}>
-                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
                     {group.title}
                   </p>
                   <ul className="mt-4 space-y-3">
@@ -197,7 +197,7 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-4 border-t border-[color:var(--line)] pt-6 text-sm text-[color:var(--muted-foreground)] sm:flex-row sm:items-start sm:justify-between">
           <div className="inline-flex items-center gap-3">
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
               Built in India
             </span>
             <span className="h-1 w-1 rounded-full bg-[color:var(--muted-foreground)]/50" />
@@ -212,7 +212,10 @@ export function SiteFooter() {
       </div>
 
       <div className="pointer-events-none relative hidden overflow-hidden pt-6 sm:block">
-        <p className="select-none text-center font-display text-[4rem] uppercase tracking-[0.22em] text-[color:var(--foreground)]/[0.045] md:text-[5.5rem] lg:text-[7rem]">
+        <p
+          aria-hidden="true"
+          className="select-none text-center font-display text-[4rem] uppercase tracking-[0.22em] text-[color:var(--foreground)]/[0.045] md:text-[5.5rem] lg:text-[7rem]"
+        >
           SquareCampus
         </p>
         <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[color:var(--background)] to-transparent" />

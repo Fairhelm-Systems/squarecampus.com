@@ -205,7 +205,7 @@ export default function PGPPage() {
               ["Expires", pgpKeyData.expires],
             ].map(([label, value]) => (
               <div key={label} className="surface-panel overflow-hidden rounded-[1.2rem] p-4">
-                <p className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted-foreground">
                   {label}
                 </p>
                 <p className="mt-2 truncate font-mono text-sm text-foreground" title={value}>

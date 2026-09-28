@@ -140,7 +140,7 @@ export default async function ComparePage({ params }: PageProps) {
               <table className="w-full min-w-[40rem] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-(--line)">
-                    <th className="px-5 py-4 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-muted-foreground">
+                    <th className="px-5 py-4 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground">
                       Dimension
                     </th>
                     <th className="px-5 py-4 font-display text-base tracking-[-0.02em] text-(--brand)">
@@ -157,7 +157,7 @@ export default async function ComparePage({ params }: PageProps) {
                       key={row.dimension}
                       className={index % 2 === 1 ? "bg-(--surface-muted)" : undefined}
                     >
-                      <th className="px-5 py-4 align-top font-mono text-[0.56rem] uppercase tracking-[0.16em] text-muted-foreground">
+                      <th className="px-5 py-4 align-top font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted-foreground">
                         {row.dimension}
                       </th>
                       <td className="px-5 py-4 align-top text-sm leading-6 text-foreground">

@@ -185,7 +185,8 @@ type BadgeTone = "neutral" | "brand" | "ok" | "attention";
 const badgeTones: Record<BadgeTone, string> = {
   neutral:
     "border-[color:var(--line-strong)] bg-[color:var(--surface-muted)] text-[color:var(--muted-foreground)]",
-  brand: "border-[color:var(--line-strong)] bg-[color:var(--brand-tint)] text-[color:var(--brand)]",
+  brand:
+    "border-[color:var(--line-strong)] bg-[color:var(--brand-tint)] text-[color:var(--brand-ink)]",
   ok: "border-[color:var(--line-strong)] bg-[color:var(--state-ok-soft)] text-[color:var(--state-ok)]",
   attention:
     "border-[color:var(--line-strong)] bg-[color:var(--state-attention-soft)] text-[color:var(--state-attention)]",
@@ -209,7 +210,7 @@ export function OperationalBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.16em]",
+        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.16em]",
         badgeTones[tone],
         className
       )}

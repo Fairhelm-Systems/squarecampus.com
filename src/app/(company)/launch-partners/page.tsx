@@ -409,7 +409,7 @@ export default function LaunchPartnersPage() {
           the programme's own page, rather than as a variant of /demo/ (audit
           SC-026): this journey has its own heading, copy and routing. */}
       <SectionShell id={FORM_ANCHORS.foundingPartner} className="scroll-mt-28 pb-12 sm:pb-22">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <Reveal className="space-y-6">
             <Eyebrow>{page.finalCta.eyebrow}</Eyebrow>
             <h2 className="type-section-title">{page.finalCta.heading}</h2>

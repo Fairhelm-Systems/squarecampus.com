@@ -67,7 +67,7 @@ export default function DemoPage() {
       />
 
       <SectionShell className="pt-12 sm:pt-16">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <Reveal immediate className="space-y-6">
             <p className="section-kicker">{demoPage.eyebrow}</p>
 

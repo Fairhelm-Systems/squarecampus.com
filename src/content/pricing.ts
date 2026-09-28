@@ -29,6 +29,11 @@ export type Plan = {
   problem: string;
   bestFor: readonly string[];
   capabilities: readonly string[];
+  /**
+   * What is quoted as its own line for this plan rather than folded into the
+   * licence — drawn from `separatelyScoped` below, never a new commitment.
+   */
+  scopedExtras: readonly string[];
   deployment: string;
   badge?: string;
   /**
@@ -68,8 +73,14 @@ export const plans: readonly Plan[] = [
       "Audit history",
       "Standard operational dashboards",
     ],
+    scopedExtras: [
+      "Legacy data migration and cleaning",
+      "Custom integrations",
+      "Premium implementation or support",
+      "Metered SMS, WhatsApp and payment-gateway usage",
+    ],
     deployment: "Managed SquareCampus Cloud, with standard onboarding and support.",
-    cta: { label: "Discuss Starter", href: "/demo" },
+    cta: { label: "Request a Starter proposal", href: "/pricing/#request-proposal" },
   },
   {
     id: "pro",
@@ -92,8 +103,14 @@ export const plans: readonly Plan[] = [
       "Workflow SLAs",
       "Deeper auditability",
       "Optional institutional single sign-on with Microsoft Entra ID",
-      "API and standard integration readiness",
-      "AEGIS eligibility or controlled access",
+      "Standard integrations and development API access, scoped in the proposal",
+      "AEGIS as an option: in scope only where the proposal includes it",
+    ],
+    scopedExtras: [
+      "Legacy data migration and cleaning",
+      "Custom integrations beyond the standard set",
+      "Premium implementation or support",
+      "Metered SMS, WhatsApp, payment-gateway and AEGIS usage",
     ],
     deployment: "Managed SquareCampus Cloud, with priority implementation and support options.",
     spotlight: {
@@ -107,7 +124,7 @@ export const plans: readonly Plan[] = [
       ],
       note: "Single sign-on is an option the institution chooses, not a requirement. SquareCampus-managed credentials remain available in every plan, and an institution is not asked to change its directory to use SquareCampus.",
     },
-    cta: { label: "Explore Pro", href: "/demo" },
+    cta: { label: "Request a Pro proposal", href: "/pricing/#request-proposal" },
   },
   {
     id: "enterprise",
@@ -131,8 +148,14 @@ export const plans: readonly Plan[] = [
       "Advanced policy and audit controls",
       "Identity governance requirements, scoped during technical discovery",
       "Deeper and custom integrations",
-      "Governed AEGIS access within an allowance",
+      "AEGIS within an agreed allowance",
       "Advanced audit exports and data portability",
+    ],
+    scopedExtras: [
+      "Private-cloud or on-premises deployment",
+      "Identity governance requirements",
+      "Custom integrations and engineering",
+      "Usage beyond agreed allowances",
     ],
     deployment:
       "Managed cloud, private-cloud or on-premises eligibility, with enterprise implementation governance and tailored support structures.",
@@ -148,7 +171,7 @@ export const plans: readonly Plan[] = [
       ],
       note: "Enterprise is not Pro with more modules. It is selected when governance, identity, audit or cross-campus requirements sit above what ordinary controls provide. Identity governance requirements are established during technical discovery and set out in the proposal.",
     },
-    cta: { label: "Design an Enterprise plan", href: "/demo" },
+    cta: { label: "Request an Enterprise proposal", href: "/pricing/#request-proposal" },
   },
 ] as const;
 
@@ -189,7 +212,7 @@ export const ALLOWANCE_NOTE =
 
 /** Capability themes are positioning, not contractual entitlements. */
 export const SCOPE_NOTE =
-  "Capability themes are indicative. Final inclusions, limits and service levels are set by the proposal and the signed order form.";
+  "Capability themes are indicative. Final inclusions, limits and service levels are set by the proposal and the signed order form, and the modules available to your institution, and when, are confirmed there too.";
 
 /** The four dimensions of the annual licence. Deliberately non-numeric. */
 export const modelDimensions = [
