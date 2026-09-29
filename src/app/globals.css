@@ -1906,3 +1906,25 @@ nav[aria-label="Table of contents"] a:nth-child(n + 13) {
   --cite-neon: oklch(0.8 0.15 245);
   --cite-neon-2: oklch(0.86 0.14 190);
 }
+
+/* Bottom sheet (components/site/bottom-sheet.tsx, Base UI Drawer): follows
+   the finger while swiping, slides in and out otherwise. */
+.bottom-sheet {
+  transform: translateY(var(--drawer-swipe-movement-y, 0px));
+  transition: transform 450ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.bottom-sheet[data-swiping] {
+  transition-duration: 0ms;
+}
+
+.bottom-sheet[data-starting-style],
+.bottom-sheet[data-ending-style] {
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-sheet {
+    transition: none;
+  }
+}

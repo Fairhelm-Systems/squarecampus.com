@@ -214,15 +214,15 @@ export const pricingAvailability = {
   short:
     "The licensing model is published on the pricing page; figures are issued in a written proposal after institutional discovery.",
   model:
-    "One annual institutional licence, calculated through progressive student-volume bands and shaped by the plan selected (Starter, Pro or Enterprise), the institution's complexity and its deployment profile.",
+    "One annual institutional licence, calculated on progressive student-volume bands and shaped by the plan (Starter, Pro or Enterprise), the institution's complexity and its deployment profile.",
   volume:
-    "Billable enrolment is agreed in the order form using active enrolled students. The marginal per-student rate reduces as enrolment grows through successive volume bands; growth is reconciled through an agreed true-up mechanism, and reductions are normally considered at renewal.",
+    "Billable enrolment is the active enrolled students agreed in the order form. The per-student rate falls as enrolment moves up through the volume bands; growth is reconciled through an agreed true-up, and reductions are normally considered at renewal.",
   included:
-    "The licence covers the platform capability represented by the plan, the standard SquareCampus parent and staff mobile apps, and the standard onboarding and support that belong to that plan.",
+    "The licence covers the plan's platform capability, the standard SquareCampus parent and staff mobile apps, and the plan's standard onboarding and support.",
   scopedSeparately:
-    "Complex legacy migration and data cleaning, bespoke integrations, custom engineering, premium implementation, private-cloud or on-premises deployment, exceptional SLA or support requirements and metered third-party usage are scoped and quoted as their own lines rather than folded into the licence.",
+    "Complex migration and data cleaning, bespoke integrations, custom engineering, premium implementation, private-cloud or on-premises deployment, exceptional SLA or support needs and metered third-party usage are quoted as their own lines, not folded into the licence.",
   positioning:
-    "SquareCampus is priced for institutions that want operational governance, workflow ownership, exception management, institutional visibility, accountability and auditability. To an institution that needs only the cheapest attendance, fees and report-card product it will look expensive, and that is a correct reading rather than a misunderstanding.",
+    "SquareCampus is priced for institutions that want governance, workflow ownership, exception management, visibility and auditability. To one that needs only the cheapest attendance, fees and report-card product it will look expensive — and that reading is correct.",
   taxes:
     "Quoted commercial figures are exclusive of applicable taxes unless the proposal states otherwise.",
 } as const;
