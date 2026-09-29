@@ -20,22 +20,10 @@ type MatrixRow = {
 
 const rows: readonly MatrixRow[] = [
   {
-    label: "Operational scope",
-    starter: "Connected core operations",
-    pro: "Core operations plus workflow governance",
-    enterprise: "Cross-campus operations under central policy",
-  },
-  {
     label: "Leadership visibility",
     starter: "Standard operational dashboards",
     pro: "Owner command views and richer analytics",
     enterprise: "Trust-level command and advanced analytics",
-  },
-  {
-    label: "Accountability model",
-    starter: "Role-based access and audit history",
-    pro: "Exception routing, workflow SLAs, deeper auditability",
-    enterprise: "Approval and governance chains, advanced policy controls",
   },
   {
     label: "Institutional structure",
@@ -67,12 +55,6 @@ const rows: readonly MatrixRow[] = [
     starter: "Not included",
     pro: "When the proposal includes it",
     enterprise: "Included within an agreed allowance",
-  },
-  {
-    label: "Chosen because",
-    starter: "The core needs to work as one system",
-    pro: "Leadership needs visibility and accountability",
-    enterprise: "Governance, identity or audit requirements — at any enrolment",
   },
   {
     label: "Deployment",

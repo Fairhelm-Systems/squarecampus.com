@@ -1,40 +1,58 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
+import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+
+/** Loaded only when a visitor first opens a section on a phone. */
+const BottomSheet = dynamic(() => import("./bottom-sheet"), { ssr: false });
 
 /**
- * Progressive disclosure for phones: on small screens the children are
- * collapsed behind a "show" pill; from sm: up they always render. Content
- * stays in the DOM either way (hidden via CSS), so crawlers see everything.
+ * Progressive disclosure for phones. From sm: up the children always render
+ * inline. On a phone they are collapsed behind a pill that opens them in a
+ * draggable bottom sheet — the site's phone "know more" pattern — so the page
+ * stays short and the reader never loses their place in it.
+ *
+ * The inline copy stays in the DOM on every screen (hidden with CSS below sm),
+ * so crawlers and the Markdown alternates see everything; the sheet renders
+ * its own copy only while it is open.
  */
 export function MobileExpand({
   label,
+  title,
   children,
   className,
 }: {
   label: string;
+  /** Sheet heading; defaults to the pill label. */
+  title?: string;
   children: ReactNode;
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   return (
     <div className={className}>
-      <div className={cn(!open && "hidden", "sm:block")}>{children}</div>
+      <div className="hidden sm:block">{children}</div>
       <button
         type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "mt-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-(--line) bg-(--surface) px-5 text-sm font-medium text-foreground transition-colors active:bg-(--surface-muted) sm:hidden",
-          open && "hidden"
-        )}
+        aria-haspopup="dialog"
+        onClick={() => {
+          setMounted(true);
+          setOpen(true);
+        }}
+        className="mt-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-(--line) bg-(--surface) px-5 text-sm font-medium text-foreground transition-colors active:bg-(--surface-muted) sm:hidden"
       >
         {label}
-        <ChevronDown className="size-4" />
+        <ChevronUp aria-hidden className="size-4" />
       </button>
+      {mounted ? (
+        <BottomSheet open={open} onOpenChange={setOpen} title={title ?? label}>
+          {children}
+        </BottomSheet>
+      ) : null}
     </div>
   );
 }

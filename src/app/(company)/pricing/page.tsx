@@ -136,17 +136,6 @@ export default function PricingPage() {
               </div>
 
               <div>
-                <p className="eyebrow">Reasons a single-campus school lands on Enterprise</p>
-                <ul className="mt-4">
-                  {enterpriseForSmallerInstitutions.triggers.map((trigger) => (
-                    <li
-                      key={trigger}
-                      className="type-support border-t border-[color:var(--line)] py-3 first:border-t-0 first:pt-0"
-                    >
-                      {trigger}
-                    </li>
-                  ))}
-                </ul>
                 <p className="type-support mt-5 border-t border-[color:var(--line)] pt-5">
                   {ALLOWANCE_NOTE}
                 </p>
@@ -191,40 +180,20 @@ export default function PricingPage() {
         </Reveal>
       </SectionShell>
 
-      {/* 3c — Identity options by plan. The doctrine: credentials everywhere,
-          optional SSO from Pro, identity governance under Enterprise. */}
-      <SectionShell
-        id="identity"
-        eyebrow="Identity options"
-        title="Sign-in is the institution's choice. Authorisation is always SquareCampus's."
-        body={identity.principle}
-      >
+      {/* 3c — Identity by plan is stated on the plan cards, in the comparison
+          and in the FAQ; the full explanation lives on /security/#identity. */}
+      <SectionShell className="pt-0">
         <Reveal>
-          <FactTable
-            caption="Identity and access options by plan."
-            columns={[
-              { key: "starter", label: "Starter" },
-              { key: "pro", label: "Pro" },
-              { key: "enterprise", label: "Enterprise" },
-            ]}
-            rows={identity.byPlan.map((row) => ({
-              label: row.capability,
-              values: [row.starter, row.pro, row.enterprise],
-            }))}
-          />
-        </Reveal>
-        <Reveal delay={80}>
-          <ul className="surface-panel mt-5 grid gap-3 rounded-[var(--radius-panel)] px-6 py-5 sm:grid-cols-2">
-            {identity.notes.map((note) => (
-              <li key={note} className="type-support flex items-start gap-3">
-                <ShieldCheck
-                  aria-hidden
-                  className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
-                />
-                <span>{note}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="surface-panel flex flex-wrap items-center gap-x-3 gap-y-2 rounded-[var(--radius-panel)] px-6 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
+            <ShieldCheck aria-hidden className="size-4 shrink-0 text-[color:var(--brand)]" />
+            <span>{identity.principle}</span>
+            <a
+              href="/security/#identity"
+              className="text-[color:var(--foreground)] underline underline-offset-4"
+            >
+              Sign-in options by plan
+            </a>
+          </p>
         </Reveal>
       </SectionShell>
 

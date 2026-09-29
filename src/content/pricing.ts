@@ -187,12 +187,10 @@ export const enterpriseForSmallerInstitutions = {
   compact: "Small institution. Enterprise-grade control.",
   /** Reasons a smaller institution legitimately lands on Enterprise. */
   triggers: [
-    "Identity governance beyond a single tenant's single sign-on: enforcement policy, group-to-role mappings, lifecycle controls",
-    "Deeper approval chains and configurable exception ownership",
-    "Executive command views for a board or trustee group",
-    "Stricter access governance and advanced audit exports",
-    "Governed AEGIS access within an internal allowance",
-    "Implementation governance and support escalation policy",
+    "Identity governance beyond single sign-on: enforcement, group-to-role mappings, lifecycle",
+    "Deeper approval chains and exception ownership",
+    "Board or trustee command views",
+    "Stricter access governance and audit exports",
   ],
   /** Guards against reading this as "everyone should buy Enterprise". */
   counterNote:
@@ -208,7 +206,7 @@ export const enterpriseForSmallerInstitutions = {
  * so plainly rather than implying "unlimited".
  */
 export const ALLOWANCE_NOTE =
-  "Enterprise capabilities are institutional controls rather than open-ended service commitments. Governed AEGIS access, messaging, storage and third-party usage run within agreed allowances or on a metered basis, and implementation, migration and custom engineering are scoped as their own lines. Allowances and fair-use terms are set in the proposal and the order form.";
+  "Enterprise capabilities are controls, not open-ended service commitments: AEGIS, messaging, storage and third-party usage run within agreed allowances or are metered, and implementation, migration and custom engineering are quoted separately. Allowances and fair-use terms are set in the order form.";
 
 /** Capability themes are positioning, not contractual entitlements. */
 export const SCOPE_NOTE =
@@ -342,7 +340,7 @@ export const separatelyScoped: ReadonlyArray<{
  * Partners receive the white-labelled build without that charge.
  */
 export const MOBILE_APP_NOTE =
-  "The SquareCampus parent and staff mobile apps are included in every plan at no additional charge. White-labelled Android and iOS apps, published under the institution's own branding and store listings, carry a single charge that covers the entire agreed term, whether that is one year or many. Founding Institutional Partners receive the white-labelled apps without the standard white-label charge.";
+  "The SquareCampus parent and staff mobile apps are included in every plan at no extra charge. White-labelled Android and iOS apps under the institution's own branding carry one charge for the whole agreed term, however long; Founding Institutional Partners receive them without it.";
 
 /** Procurement-grade fit statement, rendered on /pricing and reused elsewhere. */
 export const PRICING_POSITIONING = pricingAvailability.positioning;
@@ -365,70 +363,45 @@ export const pilot = {
 export const pricingFaqs = [
   {
     question: "Is pricing public?",
-    answer: `${pricingAvailability.short} ${pricingAvailability.model} A single published figure would be wrong for most institutions in both directions, so the proposal is written against the institution's actual enrolment, plan, complexity and deployment profile.`,
-  },
-  {
-    question: "What is included in the licence, and what is scoped separately?",
-    answer: `${pricingAvailability.included} ${pricingAvailability.scopedSeparately} Every separately scoped line appears in the proposal before signature.`,
-  },
-  {
-    question: "How is student count determined?",
-    answer:
-      "Billable enrolment is agreed in the order form using active enrolled records. Growth may be reconciled through an agreed true-up mechanism, while reductions are normally considered at renewal. The signed order form governs in every case.",
-  },
-  {
-    question: "What happens as enrolment grows?",
-    answer: pricingAvailability.volume,
+    answer: `${pricingAvailability.short} One published figure would be wrong for most institutions, in both directions.`,
   },
   {
     question: "What does Enterprise add beyond ordinary ERP modules?",
     answer:
-      "Enterprise is selected by governance requirement, not by enrolment or module count. It adds the trust-school-campus hierarchy with policy set once and executed locally, cross-campus command views built on the records campuses run on, approval and governance chains with configurable exception ownership, identity governance requirements scoped during discovery, advanced policy and audit controls with audit exports and data portability, governed AEGIS access within an agreed allowance, and managed, private-cloud or on-premises deployment eligibility with enterprise implementation governance.",
+      "Governance rather than modules: the trust-school-campus hierarchy, cross-campus command, approval chains with exception ownership, identity governance, advanced policy and audit controls with audit exports and data portability, AEGIS within an agreed allowance, and private-cloud or on-premises eligibility. It is chosen by governance need, not enrolment.",
   },
   {
     question: "Is SquareCampus appropriate if we only need attendance and fees?",
-    answer: `Usually not. ${pricingAvailability.positioning} Starter is the right conversation only when the institution wants those functions connected on one governed record with owners against exceptions.`,
+    answer: `Usually not. ${pricingAvailability.positioning}`,
   },
   {
     question: "Can we keep our existing ERP during the pilot?",
     answer:
-      "Yes. A pilot is deliberately scoped to one campus or one workflow bundle, so the existing ERP keeps running and stays authoritative alongside it. Replacing anything is a later decision the institution takes once the evidence exists, never a precondition of starting.",
+      "Yes. A pilot covers one campus or one workflow bundle, and your ERP keeps running and stays authoritative. Replacing anything is a later decision, taken on evidence.",
   },
   {
     question: "Is migration included?",
     answer:
-      "Legacy data migration and historical data cleaning are scoped separately from the annual licence, because the effort depends entirely on how much history moves and what condition it is in. The scope and its commercial treatment are agreed in the proposal.",
+      "No. Legacy migration and data cleaning are scoped and quoted separately, because the effort depends on how much history moves and its condition.",
   },
   {
-    question: "Can SquareCampus run in our cloud account?",
+    question: "Can SquareCampus run in our own cloud account?",
     answer:
-      "Private-cloud and on-premises deployment are available under Enterprise, subject to scoping. Deployment profile is one of the inputs to the proposal, and the resulting responsibilities are set out before implementation begins.",
+      "Not today. Enterprise can scope a dedicated deployment on AWS, in a private cloud or on premises, with responsibilities set out before implementation.",
   },
   {
-    question: "Is the mobile app charged separately?",
-    answer: `No. ${MOBILE_APP_NOTE}`,
-  },
-  {
-    question: "Can an institution use normal SquareCampus credentials?",
-    answer: `Yes. ${identity.baseline.body} Single sign-on is an option, not a requirement.`,
-  },
-  {
-    question: "Does Pro support institutional single sign-on?",
-    answer: `Yes. ${identity.pro.body} The institution chooses the sign-in mode: ${identity.modes.join("; ")}.`,
+    question: "Which sign-in options does each plan have?",
+    answer: `${identity.baseline.body} From Pro: ${identity.pro.body} Enterprise: ${identity.enterprise.body}`,
   },
   {
     question: "Does SquareCampus access our Outlook or Microsoft 365 data?",
     answer:
-      "No. Standard Microsoft Entra ID sign-in is used to authenticate identity. Access to email, files, Teams, SharePoint or other Microsoft Graph data is not required for sign-in.",
+      "No. Entra ID sign-in authenticates identity only; no access to email, files, Teams or SharePoint is needed.",
   },
   {
     question: "Does single sign-on automatically create and remove users?",
     answer:
-      "No. Single sign-on authenticates users. Automated provisioning, deprovisioning and joiner-mover-leaver lifecycle controls are identity governance requirements scoped under Enterprise rather than part of SSO.",
-  },
-  {
-    question: "What identity governance does Enterprise add?",
-    answer: `${identity.enterprise.body} ${identity.principle}`,
+      "No. Single sign-on authenticates. Automated provisioning and joiner-mover-leaver controls are identity governance, scoped under Enterprise.",
   },
   {
     question: "Is GST included?",
@@ -437,12 +410,12 @@ export const pricingFaqs = [
   {
     question: "How is AEGIS usage handled?",
     answer:
-      "AEGIS availability depends on the plan, and governed usage is part of the scoping conversation. Ordinary institutional use is covered by the plan; unusually high usage is treated as a separately scoped, metered dimension so it never distorts the base licence.",
+      "Not included in Starter; in Pro when the proposal includes it; in Enterprise within an agreed allowance. Unusually high usage is metered separately, so it never distorts the licence.",
   },
   {
     question: "Can a trust contract cover multiple campuses?",
     answer:
-      "Yes. Enterprise is built for trust and campus hierarchies, and a single trust-level agreement can cover multiple campuses with central policy and local accountability. Campus coverage is defined in the order form.",
+      "Yes. One trust-level agreement can cover several campuses under central policy; coverage is defined in the order form.",
   },
   {
     question: "How many Founding Institutional Partner positions exist?",

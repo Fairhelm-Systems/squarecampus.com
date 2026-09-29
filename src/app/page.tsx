@@ -260,7 +260,7 @@ export default function Home() {
             the six sections that already had the pill, and together with
             founding partners it was 57% of the whole mobile page.
           */}
-          <MobileExpand label="See the breaks and remedies">
+          <MobileExpand label="See the breaks and remedies" title="Where school cycles break">
             <Reveal>
               <PainRemedyGrid ids={homepagePainIds} />
             </Reveal>
@@ -295,7 +295,7 @@ export default function Home() {
           title="Management sees the institution the way a board expects to"
           body="Trust-level governance with campus-level autonomy: policy is set once, campuses execute inside guardrails, and exceptions reach the right desk early."
         >
-          <MobileExpand label="See the command centre">
+          <MobileExpand label="See the command centre" title="The command centre">
             <Reveal className="grid gap-4 xl:grid-cols-[1.06fr_0.94fr]">
               <article className="surface-panel-strong relative overflow-hidden rounded-[2.15rem] p-6 lg:p-7">
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(88,124,204,0.14),transparent)]" />
@@ -551,7 +551,7 @@ export default function Home() {
           title="Your institution's data, under your institution's governance"
           body="Sovereign means the institution stays in control: where the platform runs, who can see what, and how the data leaves if you ever want it to."
         >
-          <MobileExpand label="See the sovereignty model">
+          <MobileExpand label="See the sovereignty model" title="Data, deployment and exit">
             <Reveal className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
               <div className="surface-panel-strong relative overflow-hidden rounded-[1.8rem] p-8">
                 <div className="pointer-events-none absolute right-[-3rem] top-[-2rem] h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(88,124,204,0.16),transparent_72%)] blur-3xl" />
@@ -677,7 +677,7 @@ export default function Home() {
           title="AEGIS is the governed intelligence layer inside SquareCampus"
           body="AEGIS is the intelligence that lives inside SquareCampus, not a chatbot bolted onto an ERP. It surfaces what needs attention across the institution, inside the same permissions and audit trails as everything else."
         >
-          <MobileExpand label="See AEGIS in action">
+          <MobileExpand label="See AEGIS in action" title="AEGIS in action">
             <Reveal className="surface-panel-strong rounded-[2rem] p-8 lg:p-10">
               <div className="grid gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
                 <div>
@@ -734,7 +734,7 @@ export default function Home() {
           title="Switching systems is an institutional decision. We treat it that way."
           body="The move is sequenced around your academic calendar, validated in parallel, and governed by the same trust posture the platform runs on."
         >
-          <MobileExpand label="See rollout and trust">
+          <MobileExpand label="See rollout and trust" title="Rollout and trust">
             <Reveal staggerChildren className="grid gap-4 md:grid-cols-2">
               {rolloutTrust.map((item) => (
                 <article

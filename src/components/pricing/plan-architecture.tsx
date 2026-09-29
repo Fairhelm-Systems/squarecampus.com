@@ -1,25 +1,46 @@
-import { Check, KeyRound, Plus } from "lucide-react";
+"use client";
+
+import { Check, ChevronDown, KeyRound, Plus } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useEffect, useId, useRef, useState } from "react";
 import { RetentionPointer } from "@/components/pricing/retention-pointer";
 import { ButtonLink } from "@/components/site/button-link";
 import { OperationalBadge } from "@/components/site/marketing";
-import { plans } from "@/content/pricing";
+import { type Plan, plans } from "@/content/pricing";
 import { cn } from "@/lib/utils";
 
 /**
- * Ascending capability architecture.
+ * Plan cards that expand.
  *
- * Not three interchangeable cards: the plans are horizontal bands that gain
- * visual weight as they gain institutional depth — quiet surface, then a
- * raised panel, then a strong panel with a brand rail. The depth meter states
- * its own value in text, so the progression is never colour-only.
+ * Three compact cards sit in one row with the essentials (name, positioning,
+ * depth, who it suits). "See what's included" opens that plan's full band in a
+ * panel beneath the row on desktop, or directly beneath its own card on a
+ * phone — one plan open at a time. The band keeps the look of the original
+ * full-width bands: the scoping detail in the left column, and the included
+ * capabilities with the identity card on the right, so the card sits high.
+ *
+ * Closed panels stay in the served HTML as `hidden="until-found"` with
+ * `data-md-include`, so search engines, find-in-page and the Markdown
+ * alternates still see every plan's detail (see scripts/markdown-alternates.ts),
+ * and find-in-page opens the panel it lands in.
  */
 
-const bandTone = ["surface-quiet", "surface-panel", "surface-panel-strong"] as const;
+/** Phones get a bottom sheet instead; its code loads only when first opened. */
+const BottomSheet = dynamic(() => import("@/components/site/bottom-sheet"), { ssr: false });
+
+/** Matches Tailwind's `lg`: the breakpoint where the cards sit in one row. */
+const DESKTOP_QUERY = "(min-width: 64rem)";
+
+const cardTone = ["surface-quiet", "surface-panel", "surface-panel-strong"] as const;
 const railTone = [
   "bg-[color:var(--line-strong)]",
   "bg-[color:var(--brand)]/55",
   "bg-[color:var(--brand)]",
 ] as const;
+
+/** Grid order: on a phone each panel follows its card; on desktop all panels follow the row. */
+const cardOrder = ["order-1 lg:order-1", "order-3 lg:order-2", "order-5 lg:order-3"] as const;
+const panelOrder = ["order-2 lg:order-4", "order-4 lg:order-4", "order-6 lg:order-4"] as const;
 
 function DepthMeter({ level }: { level: number }) {
   return (
@@ -42,141 +63,243 @@ function DepthMeter({ level }: { level: number }) {
   );
 }
 
-export function PlanArchitecture() {
+function Bullets({ items, icon }: { items: readonly string[]; icon: "check" | "plus" | "dot" }) {
   return (
-    <div className="space-y-4 sm:space-y-5">
-      {plans.map((plan, index) => (
-        <article
-          key={plan.id}
-          id={`plan-${plan.id}`}
-          className={cn(
-            "relative overflow-hidden rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:p-9",
-            bandTone[index]
+    <ul className="mt-3 space-y-2">
+      {items.map((item) => (
+        <li key={item} className="type-support flex gap-2.5">
+          {icon === "check" ? (
+            <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-[color:var(--brand)]" />
+          ) : icon === "plus" ? (
+            <Plus
+              aria-hidden
+              className="mt-1 size-3.5 shrink-0 text-[color:var(--muted-foreground)]"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="mt-[0.55rem] size-1 shrink-0 rounded-full bg-[color:var(--brand)]"
+            />
           )}
-        >
-          <span aria-hidden className={cn("absolute inset-y-0 left-0 w-1", railTone[index])} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.92fr] lg:gap-12">
-            <div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+export function PlanArchitecture() {
+  const [open, setOpen] = useState<Plan["id"] | null>(null);
+  const baseId = useId();
+  const panelRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // React serialises `hidden` as a plain boolean. Upgrade closed panels to
+  // hidden="until-found" so find-in-page can reach (and open) them.
+  useEffect(() => {
+    for (const plan of plans) {
+      const node = panelRefs.current[plan.id];
+      if (node && open !== plan.id) node.setAttribute("hidden", "until-found");
+    }
+  }, [open]);
+
+  // Find-in-page lands inside a closed panel: open that plan.
+  useEffect(() => {
+    const cleanups = plans.map((plan) => {
+      const node = panelRefs.current[plan.id];
+      if (!node) return () => undefined;
+      const onMatch = () => setOpen(plan.id);
+      node.addEventListener("beforematch", onMatch);
+      return () => node.removeEventListener("beforematch", onMatch);
+    });
+    return () => {
+      for (const cleanup of cleanups) cleanup();
+    };
+  }, []);
+
+  const [sheet, setSheet] = useState<Plan["id"] | null>(null);
+  const sheetPlan = plans.find((plan) => plan.id === sheet);
+  const sheetIndex = plans.findIndex((plan) => plan.id === sheet);
+
+  const toggle = (id: Plan["id"]) => {
+    if (!window.matchMedia(DESKTOP_QUERY).matches) {
+      setSheet(id);
+      return;
+    }
+    const next = open === id ? null : id;
+    setOpen(next);
+    if (next) {
+      // Bring the opened panel into view without jumping past it.
+      requestAnimationFrame(() =>
+        panelRefs.current[next]?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+      );
+    }
+  };
+
+  return (
+    <>
+      {sheetPlan ? (
+        <BottomSheet
+          open={sheet !== null}
+          onOpenChange={(next) => {
+            if (!next) setSheet(null);
+          }}
+          title={`${sheetPlan.name} in detail`}
+          closeLabel="Close plan details"
+        >
+          <PlanDetail plan={sheetPlan} index={sheetIndex} />
+        </BottomSheet>
+      ) : null}
+      <div className="grid gap-4 sm:gap-5 lg:grid-cols-3">
+        {plans.map((plan, index) => {
+          const isOpen = open === plan.id;
+          const panelId = `${baseId}-${plan.id}`;
+          return [
+            <article
+              key={`${plan.id}-card`}
+              id={`plan-${plan.id}`}
+              className={cn(
+                "relative flex flex-col overflow-hidden rounded-[var(--radius-panel-lg)] p-6 sm:p-7",
+                cardTone[index],
+                cardOrder[index],
+                isOpen && "ring-2 ring-[color:var(--brand)]/60"
+              )}
+            >
+              <span aria-hidden className={cn("absolute inset-y-0 left-0 w-1", railTone[index])} />
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <span className="type-caption text-[color:var(--brand)]">{plan.step}</span>
-                <h3 className="font-display text-2xl tracking-[-0.045em] sm:text-3xl">
-                  {plan.name}
-                </h3>
+                <h3 className="font-display text-2xl tracking-[-0.045em]">{plan.name}</h3>
                 {plan.badge ? <OperationalBadge tone="brand">{plan.badge}</OperationalBadge> : null}
               </div>
-
-              <p className="type-body mt-4 max-w-lg text-[color:var(--foreground)]">
-                {plan.positioning}
-              </p>
-
-              <div className="mt-6">
+              <p className="type-body mt-3 text-[color:var(--foreground)]">{plan.positioning}</p>
+              <div className="mt-5">
                 <DepthMeter level={index + 1} />
               </div>
-
-              <div className="mt-6 rounded-[var(--radius-chip)] border border-[color:var(--line)] bg-[color:var(--surface-muted)] px-4 py-4">
-                <p className="eyebrow">The problem it solves</p>
-                <p className="type-support mt-2 text-[color:var(--muted-foreground)]">
-                  {plan.problem}
-                </p>
-              </div>
-
-              <div className="mt-6">
-                <p className="eyebrow">Best suited for</p>
-                <ul className="mt-3 space-y-2">
-                  {plan.bestFor.map((item) => (
-                    <li key={item} className="type-support flex gap-2.5">
-                      <span
-                        aria-hidden
-                        className="mt-[0.55rem] size-1 shrink-0 rounded-full bg-[color:var(--brand)]"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Deployment lives with the "who is this for" column: it is a
-                  fact about the institution's context, and it keeps the two
-                  columns from drifting badly out of balance. */}
-              <div className="mt-6 border-t border-[color:var(--line)] pt-5">
-                <p className="eyebrow">Deployment posture</p>
-                <p className="type-support mt-2">{plan.deployment}</p>
-                <RetentionPointer className="mt-4" />
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <p className="eyebrow">Included capability themes</p>
-              <ul className="mt-4 grid gap-x-6 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                {plan.capabilities.map((capability) => (
-                  <li key={capability} className="type-support flex gap-2.5">
-                    <Check
-                      aria-hidden
-                      className="mt-1 size-3.5 shrink-0 text-[color:var(--brand)]"
-                    />
-                    <span>{capability}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6 border-t border-[color:var(--line)] pt-5">
-                <p className="eyebrow">Scoped separately</p>
-                <ul className="mt-3 space-y-2">
-                  {plan.scopedExtras.map((item) => (
-                    <li key={item} className="type-support flex gap-2.5">
-                      <Plus
-                        aria-hidden
-                        className="mt-1 size-3.5 shrink-0 text-[color:var(--muted-foreground)]"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="type-support mt-3">
-                  <a
-                    href="#proposal"
-                    className="text-[color:var(--foreground)] underline underline-offset-4"
-                  >
-                    What we need for a proposal
-                  </a>
-                </p>
-              </div>
-
-              {plan.spotlight ? (
-                <div className="mt-6 rounded-[var(--radius-chip)] border border-[color:var(--line-strong)] bg-[color:var(--brand-tint)] px-5 py-5">
-                  <div className="flex items-center gap-2.5">
-                    <KeyRound aria-hidden className="size-4 text-[color:var(--brand)]" />
-                    <h4 className="text-sm font-medium text-[color:var(--foreground)]">
-                      {plan.spotlight.title}
-                    </h4>
-                  </div>
-                  <p className="type-support mt-3">{plan.spotlight.body}</p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {plan.spotlight.labels.map((label) => (
-                      <li key={label}>
-                        <span className="inline-flex rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-[color:var(--muted-foreground)]">
-                          {label}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="type-support mt-4">{plan.spotlight.note}</p>
-                </div>
-              ) : null}
-
-              <div className="mt-6 lg:mt-auto lg:pt-6">
-                <ButtonLink
-                  href={plan.cta.href}
-                  label={plan.cta.label}
-                  variant={index === 2 ? "cta" : "secondary"}
-                  className="w-full justify-center sm:w-auto"
+              <p className="type-support mt-5 flex-1">
+                <span className="font-medium text-[color:var(--foreground)]">Best for: </span>
+                {plan.bestFor[0]}
+              </p>
+              <button
+                type="button"
+                aria-expanded={isOpen || sheet === plan.id}
+                aria-controls={panelId}
+                onClick={() => toggle(plan.id)}
+                className="mt-6 inline-flex min-h-11 items-center justify-between gap-2 rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-4 text-sm font-medium text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--surface-muted)]"
+              >
+                {isOpen ? "Hide details" : "See what's included"}
+                <ChevronDown
+                  aria-hidden
+                  className={cn("size-4 transition-transform duration-200", isOpen && "rotate-180")}
                 />
+              </button>
+            </article>,
+            <div
+              key={`${plan.id}-panel`}
+              id={panelId}
+              ref={(node) => {
+                panelRefs.current[plan.id] = node;
+              }}
+              role="region"
+              aria-label={`${plan.name} plan details`}
+              data-md-include=""
+              // React passes the string through; a closed panel stays findable.
+              hidden={!isOpen}
+              className={cn(
+                "relative scroll-mt-28 overflow-hidden rounded-[var(--radius-panel-lg)] p-6 sm:p-8 lg:col-span-3 lg:p-9",
+                cardTone[index],
+                panelOrder[index]
+              )}
+            >
+              <span aria-hidden className={cn("absolute inset-y-0 left-0 w-1", railTone[index])} />
+              <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+                <span className="type-caption text-[color:var(--brand)]">{plan.step}</span>
+                <p className="font-display text-xl tracking-[-0.04em]">{plan.name} in detail</p>
               </div>
+              <PlanDetail plan={plan} index={index} />
+            </div>,
+          ];
+        })}
+      </div>
+    </>
+  );
+}
+
+/** The full band for one plan: scoping on the left, inclusions and identity on the right. */
+function PlanDetail({ plan, index }: { plan: Plan; index: number }) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
+      <div>
+        <div className="rounded-[var(--radius-chip)] border border-[color:var(--line)] bg-[color:var(--surface-muted)] px-4 py-4">
+          <p className="eyebrow">The problem it solves</p>
+          <p className="type-support mt-2 text-[color:var(--muted-foreground)]">{plan.problem}</p>
+        </div>
+
+        <div className="mt-6">
+          <p className="eyebrow">Best suited for</p>
+          <Bullets items={plan.bestFor} icon="dot" />
+        </div>
+
+        <div className="mt-6 border-t border-[color:var(--line)] pt-5">
+          <p className="eyebrow">Scoped separately</p>
+          <Bullets items={plan.scopedExtras} icon="plus" />
+          <p className="type-support mt-3">
+            <a
+              href="#proposal"
+              className="text-[color:var(--foreground)] underline underline-offset-4"
+            >
+              What we need for a proposal
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-6 border-t border-[color:var(--line)] pt-5">
+          <p className="eyebrow">Deployment</p>
+          <p className="type-support mt-2">{plan.deployment}</p>
+          <RetentionPointer className="mt-4" />
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        <p className="eyebrow">Included capability themes</p>
+        <ul className="mt-4 grid gap-x-6 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {plan.capabilities.map((capability) => (
+            <li key={capability} className="type-support flex gap-2.5">
+              <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-[color:var(--brand)]" />
+              <span>{capability}</span>
+            </li>
+          ))}
+        </ul>
+
+        {plan.spotlight ? (
+          <div className="mt-6 rounded-[var(--radius-chip)] border border-[color:var(--line-strong)] bg-[color:var(--brand-tint)] px-5 py-5">
+            <div className="flex items-center gap-2.5">
+              <KeyRound aria-hidden className="size-4 text-[color:var(--brand)]" />
+              <h4 className="text-sm font-medium text-[color:var(--foreground)]">
+                {plan.spotlight.title}
+              </h4>
             </div>
+            <p className="type-support mt-3">{plan.spotlight.body}</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {plan.spotlight.labels.map((label) => (
+                <li key={label}>
+                  <span className="inline-flex rounded-full border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-[color:var(--muted-foreground)]">
+                    {label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="type-support mt-4">{plan.spotlight.note}</p>
           </div>
-        </article>
-      ))}
+        ) : null}
+
+        <div className="mt-6 lg:mt-auto lg:pt-6">
+          <ButtonLink
+            href={plan.cta.href}
+            label={plan.cta.label}
+            variant={index === 2 ? "cta" : "secondary"}
+            className="w-full justify-center sm:w-auto"
+          />
+        </div>
+      </div>
     </div>
   );
 }
