@@ -1,12 +1,4 @@
-import {
-  Building2,
-  CalendarRange,
-  Check,
-  FileText,
-  Minus,
-  ShieldCheck,
-  Smartphone,
-} from "lucide-react";
+import { Building2, CalendarRange, Check, FileText, Minus, ShieldCheck } from "lucide-react";
 import { CommercialModel } from "@/components/pricing/commercial-model";
 import { PlanArchitecture } from "@/components/pricing/plan-architecture";
 import { PlanMatrix } from "@/components/pricing/plan-matrix";
@@ -32,7 +24,6 @@ import {
   ALLOWANCE_NOTE,
   DISCOVERY_NOTE,
   enterpriseForSmallerInstitutions,
-  MOBILE_APP_NOTE,
   pilot,
   pricingFaqs,
   proposalInputs,
@@ -291,33 +282,10 @@ export default function PricingPage() {
         id="scoped-separately"
         eyebrow="Included versus separately scoped"
         title="No hidden subsidies. No surprise implementation bill."
-        body={`${pricingAvailability.included} ${pricingAvailability.scopedSeparately}`}
+        body="The licence covers your plan, the standard apps and standard onboarding. Migration, custom work, premium support and metered usage are quoted as their own lines, so you see each one before you sign."
       >
         <Reveal>
           <ScopedCostGrid />
-        </Reveal>
-
-        <Reveal delay={80}>
-          <div className="surface-panel mt-5 grid gap-4 rounded-[var(--radius-panel)] px-6 py-5 sm:grid-cols-2 sm:gap-6">
-            <p className="type-support flex items-start gap-3">
-              <ShieldCheck
-                aria-hidden
-                className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
-              />
-              <span>
-                Each of these is quoted as a distinct line in the proposal. Metered third-party
-                usage &mdash; messaging, payment gateways, storage &mdash; is passed through rather
-                than marked into the licence.
-              </span>
-            </p>
-            <p className="type-support flex items-start gap-3">
-              <Smartphone
-                aria-hidden
-                className="mt-0.5 size-4 shrink-0 text-[color:var(--brand)]"
-              />
-              <span>{MOBILE_APP_NOTE}</span>
-            </p>
-          </div>
         </Reveal>
       </SectionShell>
 

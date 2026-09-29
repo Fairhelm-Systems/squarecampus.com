@@ -273,6 +273,32 @@ export const DISCOVERY_NOTE =
   "Exact commercial terms are issued after a short institutional discovery.";
 
 /**
+ * What every licence already covers, drawn from `pricingAvailability.included`
+ * and the note on mobile apps below. Shown opposite the separately scoped lines so the
+ * split is visible at a glance.
+ */
+export const licenceIncludes = [
+  {
+    id: "platform",
+    title: "Your plan's platform",
+    detail: "Every capability theme listed for your plan.",
+  },
+  {
+    id: "apps",
+    title: "Parent and staff apps",
+    detail: "The standard SquareCampus apps, in every plan, at no extra charge.",
+  },
+  {
+    id: "onboarding",
+    title: "Onboarding and support",
+    detail: "Your plan's standard onboarding and support.",
+  },
+] as const;
+
+/** One line for the metered group: third-party fees are not marked up into the licence. */
+export const METERED_NOTE = "Third-party fees are passed through, not marked into the licence.";
+
+/**
  * Scoped independently so the licence stays predictable. Not punitive.
  *
  * `tag` carries only what is factually established: a one-time charge, a
@@ -307,7 +333,7 @@ export const separatelyScoped: ReadonlyArray<{
   },
   {
     id: "identity",
-    group: "Identity governance requirements",
+    group: "Identity governance",
     items: [
       { label: "Automated provisioning and lifecycle controls", tag: "Enterprise" },
       { label: "Multi-directory and multi-campus identity governance", tag: "Enterprise" },
@@ -339,8 +365,8 @@ export const separatelyScoped: ReadonlyArray<{
  * the whole agreed term, however long that term is. Founding Institutional
  * Partners receive the white-labelled build without that charge.
  */
-export const MOBILE_APP_NOTE =
-  "The SquareCampus parent and staff mobile apps are included in every plan at no extra charge. White-labelled Android and iOS apps under the institution's own branding carry one charge for the whole agreed term, however long; Founding Institutional Partners receive them without it.";
+export const WHITE_LABEL_NOTE =
+  "White-labelled Android and iOS apps under your own branding carry one charge for the whole agreed term. Founding Institutional Partners receive them without it.";
 
 /** Procurement-grade fit statement, rendered on /pricing and reused elsewhere. */
 export const PRICING_POSITIONING = pricingAvailability.positioning;
