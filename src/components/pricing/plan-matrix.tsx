@@ -54,7 +54,7 @@ const rows: readonly MatrixRow[] = [
     label: "AEGIS intelligence",
     starter: "Not included",
     pro: "When the proposal includes it",
-    enterprise: "Included within an agreed allowance",
+    enterprise: "Included within an agreed monthly allowance",
   },
   {
     label: "Deployment",
@@ -64,15 +64,16 @@ const rows: readonly MatrixRow[] = [
   },
   {
     label: "Scoped separately",
-    starter: "Migration, custom integrations, premium support, metered usage",
-    pro: "Migration, custom integrations, premium support, metered usage",
-    enterprise: "Private or on-premises deployment, identity governance, custom engineering",
+    starter: "Migration, custom integrations, premium support, prepaid usage top-ups",
+    pro: "Custom integrations, premium support, prepaid usage top-ups",
+    enterprise:
+      "Private or on-premises deployment, identity governance, custom engineering, custom SLA",
   },
   {
     label: "Implementation and support",
     starter: "Standard onboarding and support",
-    pro: "Priority implementation and support options",
-    enterprise: "Enterprise implementation governance, tailored SLA structures",
+    pro: "Priority implementation and support options, with data migration",
+    enterprise: "Full implementation and support, with data migration; custom SLA quoted",
   },
 ] as const;
 

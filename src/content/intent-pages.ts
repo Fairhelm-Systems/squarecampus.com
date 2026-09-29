@@ -128,7 +128,7 @@ export const intentPages: IntentPage[] = [
       "Modules, apps and languages for your rollout are confirmed in writing in your proposal.",
       "Board-specific report formats and fee rules are set up as configuration during implementation.",
       "Integrations with tools you keep are scoped work with stated prerequisites; nothing connects automatically.",
-      "Legacy migration is scoped separately and validated in a parallel run before the old system is retired.",
+      "Data migration is included from Pro (quoted on Starter) and validated in a parallel run before the old system is retired.",
     ],
     faqs: [
       {
@@ -236,9 +236,9 @@ export const intentPages: IntentPage[] = [
     },
     limits: [
       "Fee heads, instalments, concessions and late-fee rules are configured from your current structure during implementation.",
-      "The payment gateway is confirmed during scoping; gateway charges are passed through, not folded into the licence.",
+      "Payments run through your institution's own gateway account; SquareCampus never handles the money, and gateway fees are between you and the gateway.",
       "Connections to accounting software are scoped integration work, assessed per package; there is no pre-built connector.",
-      "Migrating historical dues and receipts is scoped and quoted separately, and validated in a parallel run.",
+      "Historical dues and receipts are migrated from Pro and validated in a parallel run; anything the old records cannot support is flagged before go-live.",
     ],
     faqs: [
       {

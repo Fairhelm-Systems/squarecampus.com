@@ -46,13 +46,13 @@ export const faqs: FaqItem[] = [
   {
     question: "How do we get started?",
     answer:
-      "Book a guided demo. We map your workflows, share a rollout plan, and align on timelines and commercial terms. After discovery you receive a written proposal with the licence, the separately scoped lines such as migration and integrations, the training schedule and go-live milestones.",
+      "Book a guided demo. We map your workflows, share a rollout plan, and align on timelines and commercial terms. After discovery you receive a written proposal with the licence, any optional lines such as custom integrations, the training schedule and go-live milestones.",
     category: "getting-started",
   },
   {
     question: "What data can be migrated from our existing systems?",
     answer:
-      "We support migration of student records, fee history, attendance data, academic records, staff information, and communication history. Our team works with you to map your existing data structure to SquareCampus and validates the migration with a parallel run before go-live.",
+      "We support migration of student records, fee history, attendance data, academic records, staff information, and communication history. Our team works with you to map your existing data structure to SquareCampus and validates the migration with a parallel run before go-live. Migration is included in Pro and Enterprise. If your current system lacks data SquareCampus needs, or it is too fragmented to reconcile, we show you what cannot move before go-live.",
     category: "getting-started",
   },
 
@@ -190,7 +190,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What about support after launch?",
     answer:
-      "You get a named success partner, live chat/email support during business hours, and proactive health checks. We help with new session rollovers, audits, policy tweaks, and any questions that arise. Premium support tiers with extended hours are available.",
+      "You get a named success partner, live chat/email support during business hours, and proactive health checks. We help with new session rollovers, audits, policy tweaks, and any questions that arise. Enterprise includes full implementation and support; a custom SLA, such as 24×7 cover, is quoted.",
     category: "pricing",
   },
   {

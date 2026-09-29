@@ -1,10 +1,12 @@
 import {
+  ArrowRightLeft,
   Database,
   Gauge,
   Headset,
   KeyRound,
   Layers,
   LifeBuoy,
+  MessagesSquare,
   Plus,
   Server,
   Smartphone,
@@ -13,9 +15,9 @@ import type { ElementType } from "react";
 import { OperationalBadge } from "@/components/site/marketing";
 import {
   licenceIncludes,
-  METERED_NOTE,
   type ScopedGroupId,
   separatelyScoped,
+  USAGE_NOTE,
   WHITE_LABEL_NOTE,
 } from "@/content/pricing";
 import { cn } from "@/lib/utils";
@@ -23,10 +25,10 @@ import { cn } from "@/lib/utils";
 /**
  * Included versus separately scoped.
  *
- * The licence band comes first, so a reader sees what they already get before
- * the list of what is quoted on its own line. The scoped groups sit in three
- * balanced columns (the two short groups share the first), and metered usage
- * runs full width beneath them. A tag every item in a group shares ("Enterprise")
+ * The licence band comes first, so a reader sees how much is already covered
+ * before the short list of optional lines. The optional groups sit in three
+ * balanced columns (the two short groups share the first), and usage beyond
+ * the allowance runs full width beneath them. A tag every item in a group shares ("Enterprise")
  * is shown once on the group instead of on each row.
  */
 
@@ -41,7 +43,9 @@ const groupIcons: Record<ScopedGroupId, ElementType> = {
 const includeIcons: Record<(typeof licenceIncludes)[number]["id"], ElementType> = {
   platform: Layers,
   apps: Smartphone,
-  onboarding: Headset,
+  support: Headset,
+  allowance: MessagesSquare,
+  migration: ArrowRightLeft,
 };
 
 type Group = (typeof separatelyScoped)[number];
@@ -125,16 +129,23 @@ export function ScopedCostGrid() {
           <h3 className="eyebrow">In every licence</h3>
           <OperationalBadge tone="brand">Included</OperationalBadge>
         </div>
-        <ul className="mt-6 grid gap-6 sm:grid-cols-3">
+        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {licenceIncludes.map((item) => {
             const Icon = includeIcons[item.id];
             return (
-              <li key={item.id} className="flex gap-3.5">
+              <li
+                key={item.id}
+                // Migration carries its honest limit, so it takes the wider cell.
+                className={cn("flex gap-3.5", item.plans && "sm:col-span-2")}
+              >
                 <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-chip)] bg-[color:var(--brand-tint)]">
                   <Icon aria-hidden className="size-[1.125rem] text-[color:var(--brand)]" />
                 </span>
                 <div>
-                  <p className="font-medium text-[color:var(--foreground)]">{item.title}</p>
+                  <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-medium text-[color:var(--foreground)]">
+                    {item.title}
+                    {item.plans ? <Tag>{item.plans}</Tag> : null}
+                  </p>
                   <p className="type-support mt-1">{item.detail}</p>
                 </div>
               </li>
@@ -148,7 +159,7 @@ export function ScopedCostGrid() {
 
       {/* Quoted as its own line */}
       <div className="mt-8 mb-5 flex items-center gap-4">
-        <h3 className="eyebrow shrink-0">Quoted as its own line</h3>
+        <h3 className="eyebrow shrink-0">Only if you need it</h3>
         <span aria-hidden className="h-px flex-1 bg-[color:var(--line)]" />
       </div>
 
@@ -164,7 +175,7 @@ export function ScopedCostGrid() {
       <section className="surface-panel mt-4 rounded-[var(--radius-panel)] p-6 sm:p-7">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <GroupHeader group={metered} />
-          <p className="type-support text-sm">{METERED_NOTE}</p>
+          <p className="type-support text-sm">{USAGE_NOTE}</p>
         </div>
         <ul className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {metered.items.map((item) => (

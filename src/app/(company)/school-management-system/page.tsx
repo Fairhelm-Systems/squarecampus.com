@@ -78,7 +78,7 @@ const faqItems = [
   },
   {
     question: "What does pricing look like?",
-    answer: `${pricingAvailability.short} ${pricingAvailability.model} ${pricingAvailability.included} Migration, custom integrations and premium implementation are scoped as their own lines and shown in the proposal before signature.`,
+    answer: `${pricingAvailability.short} ${pricingAvailability.model} ${pricingAvailability.included} Anything optional, such as custom integrations, is shown in the proposal before signature.`,
   },
   {
     question: "Can SquareCampus integrate with our existing tools?",
@@ -461,7 +461,7 @@ export default function SchoolManagementSystemPage() {
                 "One annual institutional licence — no per-module surprises.",
                 "Standard parent and staff mobile apps included; no hidden 'parent app' fees.",
                 "Calculated on active enrolled students in progressive volume bands, not usage penalties.",
-                "Migration, integrations and premium implementation scoped as their own lines, stated before signature.",
+                "Data migration included from Pro; optional lines are priced before signature.",
                 "The model is published on the pricing page; figures follow a written proposal after discovery.",
               ].map((item) => (
                 <li

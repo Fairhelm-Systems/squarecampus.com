@@ -13,7 +13,7 @@
  * Every plan block therefore carries `scopeNote`, which the page renders.
  */
 
-import { foundingProgramme, identity, pricingAvailability } from "./commercial";
+import { commercialScope, foundingProgramme, identity, pricingAvailability } from "./commercial";
 import { company } from "./company";
 
 export type PlanId = "starter" | "pro" | "enterprise";
@@ -74,10 +74,10 @@ export const plans: readonly Plan[] = [
       "Standard operational dashboards",
     ],
     scopedExtras: [
-      "Legacy data migration and cleaning",
+      "Data migration and cleaning",
       "Custom integrations",
       "Premium implementation or support",
-      "Metered SMS, WhatsApp and payment-gateway usage",
+      "Usage beyond the monthly allowance, prepaid",
     ],
     deployment: "Managed SquareCampus Cloud, with standard onboarding and support.",
     cta: { label: "Request a Starter proposal", href: "/pricing/#request-proposal" },
@@ -105,12 +105,12 @@ export const plans: readonly Plan[] = [
       "Optional institutional single sign-on with Microsoft Entra ID",
       "Standard integrations and development API access, scoped in the proposal",
       "AEGIS, when the proposal includes it",
+      "Data migration from your current system",
     ],
     scopedExtras: [
-      "Legacy data migration and cleaning",
       "Custom integrations beyond the standard set",
       "Premium implementation or support",
-      "Metered SMS, WhatsApp, payment-gateway and AEGIS usage",
+      "Usage beyond the monthly allowance, prepaid",
     ],
     deployment: "Managed SquareCampus Cloud, with priority implementation and support options.",
     spotlight: {
@@ -150,15 +150,18 @@ export const plans: readonly Plan[] = [
       "Deeper and custom integrations",
       "AEGIS within an agreed allowance",
       "Advanced audit exports and data portability",
+      "Data migration from your current system",
+      "Full implementation and support",
     ],
     scopedExtras: [
       "Private-cloud or on-premises deployment",
       "Identity governance requirements",
       "Custom integrations and engineering",
-      "Usage beyond agreed allowances",
+      "A custom SLA, such as 24×7 cover",
+      "Usage beyond agreed allowances, prepaid",
     ],
     deployment:
-      "Managed cloud, private-cloud or on-premises eligibility, with enterprise implementation governance and tailored support structures.",
+      "Managed cloud, private-cloud or on-premises eligibility, with full implementation and support included.",
     badge: "Selected by governance need",
     spotlight: {
       title: identity.enterprise.name,
@@ -206,7 +209,7 @@ export const enterpriseForSmallerInstitutions = {
  * so plainly rather than implying "unlimited".
  */
 export const ALLOWANCE_NOTE =
-  "Enterprise capabilities are controls, not open-ended service commitments: AEGIS, messaging, storage and third-party usage run within agreed allowances or are metered, and implementation, migration and custom engineering are quoted separately. Allowances and fair-use terms are set in the order form.";
+  "Enterprise capabilities are controls, not open-ended service commitments: AEGIS, messaging and storage run within agreed monthly allowances, and usage beyond them is prepaid. Implementation and support are included; custom engineering and a custom SLA are quoted. Allowances are set in the order form.";
 
 /** Capability themes are positioning, not contractual entitlements. */
 export const SCOPE_NOTE =
@@ -235,8 +238,8 @@ export const modelDimensions = [
   {
     id: "delivery",
     term: "Delivery",
-    summary: "Migration, deployment, integrations and support",
-    body: "Data migration, deployment profile, integrations and the support model are scoped explicitly rather than folded into an unstated blended rate.",
+    summary: "Deployment, integrations and support",
+    body: "The deployment profile, integrations and support model are set out explicitly rather than folded into an unstated blended rate. Migration is included from Pro.",
   },
 ] as const;
 
@@ -247,7 +250,7 @@ export const proposalInputs = [
   { label: "Workflows selected", detail: "Which operational areas move onto the platform." },
   {
     label: "Migration volume and data quality",
-    detail: "How much history moves, and in what state.",
+    detail: "How much history moves, and in what state, so we can say early what cannot.",
   },
   {
     label: "Integrations",
@@ -273,11 +276,16 @@ export const DISCOVERY_NOTE =
   "Exact commercial terms are issued after a short institutional discovery.";
 
 /**
- * What every licence already covers, drawn from `pricingAvailability.included`
- * and the note on mobile apps below. Shown opposite the separately scoped lines so the
- * split is visible at a glance.
+ * What the licence already covers, drawn from `pricingAvailability.included`
+ * and `commercialScope`. Shown before the optional lines so the split is
+ * visible at a glance; `plans` marks an inclusion that is not in every plan.
  */
-export const licenceIncludes = [
+export const licenceIncludes: ReadonlyArray<{
+  id: "platform" | "apps" | "support" | "allowance" | "migration";
+  title: string;
+  detail: string;
+  plans?: string;
+}> = [
   {
     id: "platform",
     title: "Your plan's platform",
@@ -286,24 +294,36 @@ export const licenceIncludes = [
   {
     id: "apps",
     title: "Parent and staff apps",
-    detail: "The standard SquareCampus apps, in every plan, at no extra charge.",
+    detail: "The standard SquareCampus apps, at no extra charge.",
   },
   {
-    id: "onboarding",
+    id: "support",
     title: "Onboarding and support",
-    detail: "Your plan's standard onboarding and support.",
+    detail: "Standard in every plan. Enterprise includes full implementation and support.",
   },
-] as const;
+  {
+    id: "allowance",
+    title: "Monthly usage allowance",
+    detail: "SMS, WhatsApp and storage, plus AEGIS where your plan includes it.",
+  },
+  {
+    id: "migration",
+    title: "Data migration",
+    detail: commercialScope.migrationLimit,
+    plans: "Pro and Enterprise",
+  },
+];
 
-/** One line for the metered group: third-party fees are not marked up into the licence. */
-export const METERED_NOTE = "Third-party fees are passed through, not marked into the licence.";
+/** The usage group's one line: top-ups are prepaid, so nothing is billed afterwards. */
+export const USAGE_NOTE =
+  "Top-ups are bought in advance at the rates in your proposal, so there is never a bill after the fact.";
 
 /**
  * Scoped independently so the licence stays predictable. Not punitive.
  *
- * `tag` carries only what is factually established: a one-time charge, a
- * pass-through of a third party's own fee, or a metered dimension. Items with
- * no tag are ordinary scoped project work — no commercial shape is implied.
+ * `tag` carries only what is factually established: the plans a line applies
+ * to, a one-time charge, a prepaid top-up, or a fee SquareCampus never bills.
+ * Items with no tag are ordinary scoped work — no commercial shape is implied.
  */
 export type ScopedGroupId = "data" | "engineering" | "identity" | "implementation" | "metered";
 
@@ -314,10 +334,9 @@ export const separatelyScoped: ReadonlyArray<{
 }> = [
   {
     id: "data",
-    group: "Data and migration",
+    group: "Data and reporting",
     items: [
-      { label: "Legacy data migration" },
-      { label: "Historical data cleaning" },
+      { label: "Data migration and cleaning", tag: "On Starter" },
       { label: "Bespoke reporting" },
     ],
   },
@@ -343,17 +362,20 @@ export const separatelyScoped: ReadonlyArray<{
   },
   {
     id: "implementation",
-    group: "Implementation and support",
-    items: [{ label: "Premium implementation services" }, { label: "Premium support SLA" }],
+    group: "Support beyond the plan",
+    items: [
+      { label: "Premium implementation", tag: "On Starter and Pro" },
+      { label: "A custom SLA, such as 24×7 cover" },
+    ],
   },
   {
     id: "metered",
-    group: "Metered third-party usage",
+    group: "Usage beyond the allowance",
     items: [
-      { label: "SMS and WhatsApp usage", tag: "Passed through" },
-      { label: "Payment-gateway charges", tag: "Passed through" },
-      { label: "Excess storage", tag: "Metered" },
-      { label: "Unusually high AEGIS usage", tag: "Metered" },
+      { label: "SMS and WhatsApp", tag: "Prepaid" },
+      { label: "Storage", tag: "Prepaid" },
+      { label: "AEGIS", tag: "Prepaid" },
+      { label: "Payment-gateway fees", tag: "Not billed by us" },
     ],
   },
 ] as const;
@@ -407,8 +429,11 @@ export const pricingFaqs = [
   },
   {
     question: "Is migration included?",
-    answer:
-      "No. Legacy migration and data cleaning are scoped and quoted separately, because the effort depends on how much history moves and its condition.",
+    answer: `${commercialScope.migration} ${commercialScope.migrationLimit}`,
+  },
+  {
+    question: "Can the price grow after we sign?",
+    answer: `Not by surprise. ${commercialScope.noSurprises} Enrolment growth is reconciled through the agreed true-up.`,
   },
   {
     question: "Can SquareCampus run in our own cloud account?",
@@ -436,7 +461,7 @@ export const pricingFaqs = [
   {
     question: "How is AEGIS usage handled?",
     answer:
-      "Not included in Starter; in Pro when the proposal includes it; in Enterprise within an agreed allowance. Unusually high usage is metered separately, so it never distorts the licence.",
+      "Not included in Starter; in Pro when the proposal includes it; in Enterprise within an agreed monthly allowance. Usage beyond the allowance is prepaid, so it never becomes a surprise bill.",
   },
   {
     question: "Can a trust contract cover multiple campuses?",

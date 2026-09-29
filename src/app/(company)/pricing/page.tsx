@@ -282,7 +282,7 @@ export default function PricingPage() {
         id="scoped-separately"
         eyebrow="Included versus separately scoped"
         title="No hidden subsidies. No surprise implementation bill."
-        body="The licence covers your plan, the standard apps and standard onboarding. Migration, custom work, premium support and metered usage are quoted as their own lines, so you see each one before you sign."
+        body="The licence already covers your plan, the apps, onboarding and support, a monthly usage allowance and, from Pro, data migration. Anything else is optional and priced in the proposal before you sign."
       >
         <Reveal>
           <ScopedCostGrid />
