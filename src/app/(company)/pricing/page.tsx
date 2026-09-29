@@ -169,21 +169,21 @@ export default function PricingPage() {
             }))}
           />
         </Reveal>
-      </SectionShell>
 
-      {/* 3c — Identity by plan is stated on the plan cards, in the comparison
-          and in the FAQ; the full explanation lives on /security/#identity. */}
-      <SectionShell className="pt-0">
-        <Reveal>
-          <p className="surface-panel flex flex-wrap items-center gap-x-3 gap-y-2 rounded-[var(--radius-panel)] px-6 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
-            <ShieldCheck aria-hidden className="size-4 shrink-0 text-[color:var(--brand)]" />
-            <span>{identity.principle}</span>
-            <a
-              href="/security/#identity"
-              className="text-[color:var(--foreground)] underline underline-offset-4"
-            >
-              Sign-in options by plan
-            </a>
+        {/* Identity by plan is stated on the plan cards, in the comparison and
+            in the FAQ; the full explanation lives on /security/#identity. */}
+        <Reveal delay={80}>
+          <p className="surface-panel mt-4 flex items-start gap-3 rounded-[var(--radius-panel)] px-6 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
+            <ShieldCheck aria-hidden className="mt-1 size-4 shrink-0 text-[color:var(--brand)]" />
+            <span>
+              {identity.principle}{" "}
+              <a
+                href="/security/#identity"
+                className="whitespace-nowrap text-[color:var(--foreground)] underline underline-offset-4"
+              >
+                Sign-in options by plan
+              </a>
+            </span>
           </p>
         </Reveal>
       </SectionShell>
