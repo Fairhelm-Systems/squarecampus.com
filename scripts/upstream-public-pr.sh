@@ -14,7 +14,7 @@
 # request with a link to the published commit.
 set -euo pipefail
 
-PUBLIC_REPO="Fairhelm-Systems/squarecampus.com"
+PUBLIC_REPO="fairhelmsystems/squarecampus.com"
 PUBLIC_URL="https://github.com/$PUBLIC_REPO.git"
 N="${1:?usage: scripts/upstream-public-pr.sh <public-pr-number> [--open-pr]}"
 OPEN_PR="${2:-}"
