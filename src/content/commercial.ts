@@ -218,9 +218,9 @@ export const pricingAvailability = {
   volume:
     "Billable enrolment is the active enrolled students agreed in the order form. The per-student rate falls as enrolment moves up through the volume bands; growth is reconciled through an agreed true-up, and reductions are normally considered at renewal.",
   included:
-    "The licence covers the plan's platform capability, the standard SquareCampus parent and staff mobile apps, the plan's onboarding and support, and a monthly usage allowance. Pro and Enterprise also include data migration, and Enterprise includes full implementation and support.",
+    "The licence covers the plan's platform capability, the standard SquareCampus parent and staff mobile apps, self-serve reporting, the plan's onboarding and support, and a monthly usage allowance. Pro and Enterprise also include data migration, and Enterprise includes full implementation and support.",
   scopedSeparately:
-    "Migration on Starter, custom integrations and engineering, bespoke reporting, premium implementation on Starter and Pro, private-cloud or on-premises deployment, a custom SLA and usage beyond the allowance are quoted as their own lines, not folded into the licence.",
+    "Migration on Starter, custom integrations and engineering, fixed-format documents made for one institution, premium implementation on Starter and Pro, private-cloud or on-premises deployment, a custom SLA and usage beyond the allowance are quoted as their own lines, not folded into the licence.",
   positioning:
     "SquareCampus is priced for institutions that want governance, workflow ownership, exception management, visibility and auditability. To one that needs only the cheapest attendance, fees and report-card product it will look expensive — and that reading is correct.",
   taxes:
@@ -235,11 +235,21 @@ export const pricingAvailability = {
  * support, with only a custom SLA quoted; every plan carries a monthly usage
  * allowance with prepaid top-ups; payments run on the institution's own gateway
  * account. Nothing here promises a complete migration.
+ *
+ * Owner-confirmed 2026-09-30, second pass: reporting is self-serve in every
+ * plan (the data table in the product UI library: filters, grouping, totals,
+ * charts, saved views, CSV/Excel/PDF export; saved views still need their
+ * backend endpoint, so it is described as design). Enterprise identity
+ * governance is part of the Enterprise licence, established in discovery.
  */
 export const commercialScope = {
   migration: "Data migration is included in Pro and Enterprise, and quoted on Starter.",
   migrationLimit:
     "We move everything your current system can export in usable form. If it lacks data SquareCampus needs, or is too fragmented to reconcile, we show you what cannot move before go-live instead of guessing.",
+  migrationShort:
+    "Everything your current system can export in usable form. Anything that cannot move is shown before go-live.",
+  reporting:
+    "Reporting is self-serve in every plan: staff filter, group, total and chart their tables, save views for the team and export to Excel, CSV or PDF. A fixed-format document made only for your institution, such as your own report-card layout, is quoted; a format many schools need becomes a standard report at no charge.",
   implementation:
     "Every plan includes onboarding and support. Enterprise includes full implementation and support; only a custom SLA, such as 24×7 cover or guaranteed response times, is quoted.",
   allowance:

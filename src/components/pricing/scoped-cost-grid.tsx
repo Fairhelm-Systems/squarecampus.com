@@ -1,9 +1,9 @@
 import {
   ArrowRightLeft,
+  ChartColumn,
   Database,
   Gauge,
   Headset,
-  KeyRound,
   Layers,
   LifeBuoy,
   MessagesSquare,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { ElementType } from "react";
 import { OperationalBadge } from "@/components/site/marketing";
+import { availability } from "@/content/commercial";
 import {
   licenceIncludes,
   type ScopedGroupId,
@@ -26,7 +27,7 @@ import { cn } from "@/lib/utils";
  * Included versus separately scoped.
  *
  * The licence band comes first, so a reader sees how much is already covered
- * before the short list of optional lines. The optional groups sit in three
+ * before the short list of optional lines. The optional groups sit in two
  * balanced columns (the two short groups share the first), and usage beyond
  * the allowance runs full width beneath them. A tag every item in a group shares ("Enterprise")
  * is shown once on the group instead of on each row.
@@ -35,7 +36,6 @@ import { cn } from "@/lib/utils";
 const groupIcons: Record<ScopedGroupId, ElementType> = {
   data: Database,
   engineering: Server,
-  identity: KeyRound,
   implementation: LifeBuoy,
   metered: Gauge,
 };
@@ -43,6 +43,7 @@ const groupIcons: Record<ScopedGroupId, ElementType> = {
 const includeIcons: Record<(typeof licenceIncludes)[number]["id"], ElementType> = {
   platform: Layers,
   apps: Smartphone,
+  reports: ChartColumn,
   support: Headset,
   allowance: MessagesSquare,
   migration: ArrowRightLeft,
@@ -133,11 +134,7 @@ export function ScopedCostGrid() {
           {licenceIncludes.map((item) => {
             const Icon = includeIcons[item.id];
             return (
-              <li
-                key={item.id}
-                // Migration carries its honest limit, so it takes the wider cell.
-                className={cn("flex gap-3.5", item.plans && "sm:col-span-2")}
-              >
+              <li key={item.id} className="flex gap-3.5">
                 <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-chip)] bg-[color:var(--brand-tint)]">
                   <Icon aria-hidden className="size-[1.125rem] text-[color:var(--brand)]" />
                 </span>
@@ -152,9 +149,10 @@ export function ScopedCostGrid() {
             );
           })}
         </ul>
-        <p className="type-support mt-6 border-t border-[color:var(--line)] pt-5 text-sm">
-          {WHITE_LABEL_NOTE}
-        </p>
+        <div className="type-support mt-6 space-y-1.5 border-t border-[color:var(--line)] pt-5 text-sm">
+          <p>{WHITE_LABEL_NOTE}</p>
+          <p>{availability.short}</p>
+        </div>
       </section>
 
       {/* Quoted as its own line */}
@@ -163,13 +161,12 @@ export function ScopedCostGrid() {
         <span aria-hidden className="h-px flex-1 bg-[color:var(--line)]" />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
           <GroupCard group={group("data")} />
           <GroupCard group={group("implementation")} className="flex-1" />
         </div>
         <GroupCard group={group("engineering")} />
-        <GroupCard group={group("identity")} />
       </div>
 
       <section className="surface-panel mt-4 rounded-[var(--radius-panel)] p-6 sm:p-7">
