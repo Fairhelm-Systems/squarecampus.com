@@ -66,8 +66,7 @@ const rows: readonly MatrixRow[] = [
     label: "Scoped separately",
     starter: "Migration, custom integrations, premium support, prepaid usage top-ups",
     pro: "Custom integrations, premium support, prepaid usage top-ups",
-    enterprise:
-      "Private or on-premises deployment, identity governance, custom engineering, custom SLA",
+    enterprise: "Private or on-premises deployment, custom engineering, custom SLA",
   },
   {
     label: "Implementation and support",

@@ -72,6 +72,7 @@ export const plans: readonly Plan[] = [
       "SquareCampus-managed sign-in with role-based access",
       "Audit history",
       "Standard operational dashboards",
+      "Self-serve reports: saved views, charts and Excel, CSV or PDF export",
     ],
     scopedExtras: [
       "Data migration and cleaning",
@@ -146,7 +147,7 @@ export const plans: readonly Plan[] = [
       "Cross-campus command",
       "Approval and governance chains with configurable exception ownership",
       "Advanced policy and audit controls",
-      "Identity governance requirements, scoped during technical discovery",
+      "Identity governance, established during technical discovery",
       "Deeper and custom integrations",
       "AEGIS within an agreed allowance",
       "Advanced audit exports and data portability",
@@ -155,7 +156,6 @@ export const plans: readonly Plan[] = [
     ],
     scopedExtras: [
       "Private-cloud or on-premises deployment",
-      "Identity governance requirements",
       "Custom integrations and engineering",
       "A custom SLA, such as 24×7 cover",
       "Usage beyond agreed allowances, prepaid",
@@ -279,9 +279,11 @@ export const DISCOVERY_NOTE =
  * What the licence already covers, drawn from `pricingAvailability.included`
  * and `commercialScope`. Shown before the optional lines so the split is
  * visible at a glance; `plans` marks an inclusion that is not in every plan.
+ * Capabilities here are described as designed; the band carries the
+ * availability line, and the proposal confirms what an institution gets.
  */
 export const licenceIncludes: ReadonlyArray<{
-  id: "platform" | "apps" | "support" | "allowance" | "migration";
+  id: "platform" | "apps" | "reports" | "support" | "allowance" | "migration";
   title: string;
   detail: string;
   plans?: string;
@@ -297,6 +299,12 @@ export const licenceIncludes: ReadonlyArray<{
     detail: "The standard SquareCampus apps, at no extra charge.",
   },
   {
+    id: "reports",
+    title: "Your own reports",
+    detail:
+      "Filter, group, total and chart your tables, save views and export to Excel, CSV or PDF.",
+  },
+  {
     id: "support",
     title: "Onboarding and support",
     detail: "Standard in every plan. Enterprise includes full implementation and support.",
@@ -309,7 +317,7 @@ export const licenceIncludes: ReadonlyArray<{
   {
     id: "migration",
     title: "Data migration",
-    detail: commercialScope.migrationLimit,
+    detail: commercialScope.migrationShort,
     plans: "Pro and Enterprise",
   },
 ];
@@ -325,7 +333,7 @@ export const USAGE_NOTE =
  * to, a one-time charge, a prepaid top-up, or a fee SquareCampus never bills.
  * Items with no tag are ordinary scoped work — no commercial shape is implied.
  */
-export type ScopedGroupId = "data" | "engineering" | "identity" | "implementation" | "metered";
+export type ScopedGroupId = "data" | "engineering" | "implementation" | "metered";
 
 export const separatelyScoped: ReadonlyArray<{
   id: ScopedGroupId;
@@ -337,7 +345,7 @@ export const separatelyScoped: ReadonlyArray<{
     group: "Data and reporting",
     items: [
       { label: "Data migration and cleaning", tag: "On Starter" },
-      { label: "Bespoke reporting" },
+      { label: "Fixed-format documents made only for you" },
     ],
   },
   {
@@ -348,16 +356,6 @@ export const separatelyScoped: ReadonlyArray<{
       { label: "Private-cloud deployment" },
       { label: "On-premises deployment" },
       { label: "White-label Android and iOS apps", tag: "One charge, full term" },
-    ],
-  },
-  {
-    id: "identity",
-    group: "Identity governance",
-    items: [
-      { label: "Automated provisioning and lifecycle controls", tag: "Enterprise" },
-      { label: "Multi-directory and multi-campus identity governance", tag: "Enterprise" },
-      { label: "Identity migration", tag: "Enterprise" },
-      { label: "Custom federation requirements", tag: "Enterprise" },
     ],
   },
   {
@@ -432,6 +430,10 @@ export const pricingFaqs = [
     answer: `${commercialScope.migration} ${commercialScope.migrationLimit}`,
   },
   {
+    question: "Do custom reports cost extra?",
+    answer: commercialScope.reporting,
+  },
+  {
     question: "Can the price grow after we sign?",
     answer: `Not by surprise. ${commercialScope.noSurprises} Enrolment growth is reconciled through the agreed true-up.`,
   },
@@ -452,7 +454,7 @@ export const pricingFaqs = [
   {
     question: "Does single sign-on automatically create and remove users?",
     answer:
-      "No. Single sign-on authenticates. Automated provisioning and joiner-mover-leaver controls are identity governance, scoped under Enterprise.",
+      "No. Single sign-on authenticates. Automated provisioning and joiner-mover-leaver controls are identity governance, part of Enterprise and established during technical discovery.",
   },
   {
     question: "Is GST included?",
