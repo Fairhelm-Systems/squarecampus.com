@@ -245,8 +245,8 @@ export default function RolloutPage() {
             <p className="font-medium text-[color:var(--foreground)]">Migration dependencies</p>
             <p className="mt-1.5">
               Migration moves as fast as your data and your current vendor&rsquo;s exports allow. It
-              is scoped and quoted separately, and the parallel run ends when the checks pass, not
-              on a date.
+              is included from Pro and quoted on Starter. Anything the old system cannot supply is
+              flagged before go-live, and the parallel run ends when the checks pass, not on a date.
             </p>
           </div>
         </Reveal>

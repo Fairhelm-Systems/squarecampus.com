@@ -130,7 +130,7 @@ export const comparisons: Comparison[] = [
       {
         question: "Can we migrate from Entab CampusCare to SquareCampus?",
         answer:
-          "Yes. We provide guided migration of student records, fee history, attendance, academic records, and staff data, with a parallel run before go-live so nothing is lost in the switch.",
+          "Yes. We provide guided migration of student records, fee history, attendance, academic records, and staff data, with a parallel run before go-live. Anything the old system cannot supply is flagged before go-live, not discovered after.",
       },
     ],
   },
