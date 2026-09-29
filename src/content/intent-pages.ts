@@ -143,7 +143,7 @@ export const intentPages: IntentPage[] = [
       {
         question: "How is pricing structured?",
         answer:
-          "One annual institutional licence calculated on student-volume bands, with the platform's modules and the standard parent and staff mobile apps included. The model is published on the pricing page; figures are issued in a written proposal after discovery, and migration, integrations and premium implementation are scoped as their own lines.",
+          "One annual institutional licence calculated on student-volume bands, with the platform's modules and the standard parent and staff mobile apps included. The model is published on the pricing page; figures are issued in a written proposal after discovery, implementation and support are included, and custom integrations are scoped as their own lines.",
       },
       {
         question: "What does implementation involve?",

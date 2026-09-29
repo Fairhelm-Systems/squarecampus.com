@@ -5,7 +5,6 @@ import {
   Gauge,
   Headset,
   Layers,
-  LifeBuoy,
   MessagesSquare,
   Plus,
   Server,
@@ -28,7 +27,7 @@ import { cn } from "@/lib/utils";
  *
  * The licence band comes first, so a reader sees how much is already covered
  * before the short list of optional lines. The optional groups sit in two
- * balanced columns (the two short groups share the first), and usage beyond
+ * columns, and usage beyond
  * the allowance runs full width beneath them. A tag every item in a group shares ("Enterprise")
  * is shown once on the group instead of on each row.
  */
@@ -36,7 +35,6 @@ import { cn } from "@/lib/utils";
 const groupIcons: Record<ScopedGroupId, ElementType> = {
   data: Database,
   engineering: Server,
-  implementation: LifeBuoy,
   metered: Gauge,
 };
 
@@ -162,10 +160,7 @@ export function ScopedCostGrid() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
-          <GroupCard group={group("data")} />
-          <GroupCard group={group("implementation")} className="flex-1" />
-        </div>
+        <GroupCard group={group("data")} />
         <GroupCard group={group("engineering")} />
       </div>
 

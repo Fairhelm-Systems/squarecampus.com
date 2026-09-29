@@ -218,9 +218,9 @@ export const pricingAvailability = {
   volume:
     "Billable enrolment is the active enrolled students agreed in the order form. The per-student rate falls as enrolment moves up through the volume bands; growth is reconciled through an agreed true-up, and reductions are normally considered at renewal.",
   included:
-    "The licence covers the plan's platform capability, the standard SquareCampus parent and staff mobile apps, self-serve reporting, the plan's onboarding and support, and a monthly usage allowance. Pro and Enterprise also include data migration, and Enterprise includes full implementation and support.",
+    "The licence covers the plan's platform capability, the standard SquareCampus parent and staff mobile apps, self-serve reporting, implementation and support, and a monthly usage allowance. Pro and Enterprise also include data migration.",
   scopedSeparately:
-    "Migration on Starter, custom integrations and engineering, fixed-format documents made for one institution, premium implementation on Starter and Pro, private-cloud or on-premises deployment, a custom SLA and usage beyond the allowance are quoted as their own lines, not folded into the licence.",
+    "Migration on Starter, custom integrations and engineering, fixed-format documents made for one institution, private-cloud or on-premises deployment, a custom SLA and usage beyond the allowance are quoted as their own lines, not folded into the licence.",
   positioning:
     "SquareCampus is priced for institutions that want governance, workflow ownership, exception management, visibility and auditability. To one that needs only the cheapest attendance, fees and report-card product it will look expensive — and that reading is correct.",
   taxes:
@@ -241,6 +241,9 @@ export const pricingAvailability = {
  * charts, saved views, CSV/Excel/PDF export; saved views still need their
  * backend endpoint, so it is described as design). Enterprise identity
  * governance is part of the Enterprise licence, established in discovery.
+ * Third pass: there is no premium or paid implementation tier on any plan;
+ * the rollout is the same for everyone and designed to need little training.
+ * (Campus visits are currently free, but that is deliberately not published.)
  */
 export const commercialScope = {
   migration: "Data migration is included in Pro and Enterprise, and quoted on Starter.",
@@ -251,7 +254,7 @@ export const commercialScope = {
   reporting:
     "Reporting is self-serve in every plan: staff filter, group, total and chart their tables, save views for the team and export to Excel, CSV or PDF. A fixed-format document made only for your institution, such as your own report-card layout, is quoted; a format many schools need becomes a standard report at no charge.",
   implementation:
-    "Every plan includes onboarding and support. Enterprise includes full implementation and support; only a custom SLA, such as 24×7 cover or guaranteed response times, is quoted.",
+    "Implementation and support are included in every plan, and every institution gets the same rollout: there is no paid fast track. SquareCampus is designed to need little or no training. Only a custom SLA, such as 24×7 cover or guaranteed response times, is quoted.",
   allowance:
     "Every plan includes a monthly allowance for SMS, WhatsApp and storage, and for AEGIS where the plan includes it. Usage beyond it is bought in advance at the rates in your proposal, so there is never a bill after the fact.",
   paymentGateway:

@@ -64,15 +64,15 @@ const rows: readonly MatrixRow[] = [
   },
   {
     label: "Scoped separately",
-    starter: "Migration, custom integrations, premium support, prepaid usage top-ups",
-    pro: "Custom integrations, premium support, prepaid usage top-ups",
+    starter: "Migration, custom integrations, custom SLA, prepaid usage top-ups",
+    pro: "Custom integrations, custom SLA, prepaid usage top-ups",
     enterprise: "Private or on-premises deployment, custom engineering, custom SLA",
   },
   {
     label: "Implementation and support",
-    starter: "Standard onboarding and support",
-    pro: "Priority implementation and support options, with data migration",
-    enterprise: "Full implementation and support, with data migration; custom SLA quoted",
+    starter: "Included; migration quoted",
+    pro: "Included, with data migration",
+    enterprise: "Included, with data migration and implementation governance across campuses",
   },
 ] as const;
 
