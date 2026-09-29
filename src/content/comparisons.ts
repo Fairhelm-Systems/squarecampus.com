@@ -52,7 +52,7 @@ const sharedDifferentiators = [
   },
   {
     title: "A published licensing model",
-    body: "Like most vendors, we issue figures after scoping — but the model is published up front: one annual institutional licence on student-volume bands with the platform's modules and the standard parent and staff apps included, no per-module upsells and no hidden 'parent app' fees. Migration, integrations and premium implementation are scoped as their own lines.",
+    body: "Like most vendors, we issue figures after scoping — but the model is published up front: one annual institutional licence on student-volume bands with the platform's modules and the standard parent and staff apps included, no per-module upsells and no hidden 'parent app' fees. Implementation and support are included; custom integrations are scoped as their own lines.",
   },
 ] as const;
 

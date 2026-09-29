@@ -190,7 +190,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What about support after launch?",
     answer:
-      "You get a named success partner, live chat/email support during business hours, and proactive health checks. We help with new session rollovers, audits, policy tweaks, and any questions that arise. Enterprise includes full implementation and support; a custom SLA, such as 24×7 cover, is quoted.",
+      "You get a named success partner, live chat/email support during business hours, and proactive health checks. We help with new session rollovers, audits, policy tweaks, and any questions that arise. Implementation and support are included in every plan; only a custom SLA, such as 24×7 cover, is quoted.",
     category: "pricing",
   },
   {

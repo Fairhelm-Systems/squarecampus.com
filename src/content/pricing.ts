@@ -77,10 +77,10 @@ export const plans: readonly Plan[] = [
     scopedExtras: [
       "Data migration and cleaning",
       "Custom integrations",
-      "Premium implementation or support",
+      "A custom SLA, such as 24×7 cover",
       "Usage beyond the monthly allowance, prepaid",
     ],
-    deployment: "Managed SquareCampus Cloud, with standard onboarding and support.",
+    deployment: "Managed SquareCampus Cloud, with implementation and support included.",
     cta: { label: "Request a Starter proposal", href: "/pricing/#request-proposal" },
   },
   {
@@ -110,10 +110,10 @@ export const plans: readonly Plan[] = [
     ],
     scopedExtras: [
       "Custom integrations beyond the standard set",
-      "Premium implementation or support",
+      "A custom SLA, such as 24×7 cover",
       "Usage beyond the monthly allowance, prepaid",
     ],
-    deployment: "Managed SquareCampus Cloud, with priority implementation and support options.",
+    deployment: "Managed SquareCampus Cloud, with implementation and support included.",
     spotlight: {
       title: identity.pro.name,
       body: identity.pro.body,
@@ -152,7 +152,7 @@ export const plans: readonly Plan[] = [
       "AEGIS within an agreed allowance",
       "Advanced audit exports and data portability",
       "Data migration from your current system",
-      "Full implementation and support",
+      "Implementation governance across campuses",
     ],
     scopedExtras: [
       "Private-cloud or on-premises deployment",
@@ -306,8 +306,8 @@ export const licenceIncludes: ReadonlyArray<{
   },
   {
     id: "support",
-    title: "Onboarding and support",
-    detail: "Standard in every plan. Enterprise includes full implementation and support.",
+    title: "Implementation and support",
+    detail: "In every plan, with no paid fast track. Designed to need little or no training.",
   },
   {
     id: "allowance",
@@ -333,7 +333,7 @@ export const USAGE_NOTE =
  * to, a one-time charge, a prepaid top-up, or a fee SquareCampus never bills.
  * Items with no tag are ordinary scoped work — no commercial shape is implied.
  */
-export type ScopedGroupId = "data" | "engineering" | "implementation" | "metered";
+export type ScopedGroupId = "data" | "engineering" | "metered";
 
 export const separatelyScoped: ReadonlyArray<{
   id: ScopedGroupId;
@@ -342,10 +342,11 @@ export const separatelyScoped: ReadonlyArray<{
 }> = [
   {
     id: "data",
-    group: "Data and reporting",
+    group: "Data, reports and SLAs",
     items: [
       { label: "Data migration and cleaning", tag: "On Starter" },
       { label: "Fixed-format documents made only for you" },
+      { label: "A custom SLA, such as 24×7 cover" },
     ],
   },
   {
@@ -356,14 +357,6 @@ export const separatelyScoped: ReadonlyArray<{
       { label: "Private-cloud deployment" },
       { label: "On-premises deployment" },
       { label: "White-label Android and iOS apps", tag: "One charge, full term" },
-    ],
-  },
-  {
-    id: "implementation",
-    group: "Support beyond the plan",
-    items: [
-      { label: "Premium implementation", tag: "On Starter and Pro" },
-      { label: "A custom SLA, such as 24×7 cover" },
     ],
   },
   {
@@ -432,6 +425,10 @@ export const pricingFaqs = [
   {
     question: "Do custom reports cost extra?",
     answer: commercialScope.reporting,
+  },
+  {
+    question: "What does implementation cost?",
+    answer: `Nothing extra. ${commercialScope.implementation}`,
   },
   {
     question: "Can the price grow after we sign?",
